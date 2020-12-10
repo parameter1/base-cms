@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-IMAGE=basecms/$1:$2
+IMAGE=${DOCKER_ORG-basecms}/$1:$2
 
 npx @endeavorb2b/rancher2cli dl basecms-service $1 $IMAGE
 
