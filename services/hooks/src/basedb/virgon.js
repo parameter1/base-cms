@@ -1,6 +1,6 @@
 const { createBaseDB, createMongoClient } = require('@base-cms/db');
-const { PICON_DSN } = require('../env');
+const { VIRGON_DSN } = require('../env');
 
-const client = createMongoClient(PICON_DSN);
+const client = createMongoClient(VIRGON_DSN);
 
 module.exports = tenant => createBaseDB({ tenant, client });

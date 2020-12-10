@@ -8,13 +8,11 @@ const {
 const { nonemptystr } = custom;
 
 module.exports = cleanEnv(process.env, {
-  AERILON_DSN: nonemptystr({ desc: 'The Base Aerilon MongoDB connection URL.' }),
-  PICON_DSN: nonemptystr({ desc: 'The Base Picon MongoDB connection URL.' }),
-  CAPRICA_DSN: nonemptystr({ desc: 'The Base Caprica MongoDB connection URL.' }),
-  GEMENON_DSN: nonemptystr({ desc: 'The Base Gemenon MongoDB connection URL.' }),
   ENABLE_BASEDB_LOGGING: bool({ desc: 'Whether the BaseDB instance should log to the console.', default: false }),
   NEW_RELIC_ENABLED: bool({ desc: 'Whether New Relic is enabled.', default: true, devDefault: false }),
   NEW_RELIC_LICENSE_KEY: nonemptystr({ desc: 'The license key for New Relic.', devDefault: '(unset)' }),
+  CAPRICA_DSN: nonemptystr({ desc: 'The Base Caprica MongoDB connection URL.' }),
   LEONIS_DSN: nonemptystr({ desc: 'The Base Leonis MongoDB connection URL.' }),
   TAURON_DSN: nonemptystr({ desc: 'The Base Tauron MongoDB connection URL.' }),
+  VIRGON_DSN: nonemptystr({ desc: 'The Base Tauron MongoDB connection URL.' }),
 });
