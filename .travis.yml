@@ -2,6 +2,14 @@ language: node_js
 node_js: "10.15"
 cache: yarn
 
+_production-job: &production-job
+  stage: production
+  name: SERVICE_NAME
+  script: scripts/deploy.js SERVICE_NAME
+  install: skip
+  env:
+    - "ENVIRONMENT=production RANCHER_CLUSTERID=c-njflm"
+
 stages:
   - name: test
 
@@ -24,119 +32,84 @@ jobs:
     - stage: test
       env: [NODE_ENV=test]
 
-    - stage: production-started
+    - <<: *production-job
+      stage: production-started
       name: Deployment Started
       script: npx @base-cms/website-deployment-tool notify-started
-      install: skip
-      env: [ENVIRONMENT=production RANCHER_CLUSTERID=c-gxsr7]
-
-    - stage: staging-started
-      name: Deployment Started
-      script: npx @base-cms/website-deployment-tool notify-started
-      install: skip
-      env: [ENVIRONMENT=staging RANCHER_CLUSTERID=c-rc5kp]
+    # - <<: *staging-job
+    #   stage: staging-started
+    #   name: Deployment Started
+    #   script: npx @base-cms/website-deployment-tool notify-started
 
     #############################
     # vvv ADD SERVICES HERE vvv #
     #############################
 
-    - stage: production
+    - <<: *production-job
       name: GraphQL Server
       script: scripts/deploy.js graphql-server
-      install: skip
-      env: [ENVIRONMENT=production RANCHER_CLUSTERID=c-gxsr7]
-    - stage: staging
-      name: GraphQL Server
-      script: scripts/deploy.js graphql-server
-      install: skip
-      env: [ENVIRONMENT=staging RANCHER_CLUSTERID=c-rc5kp]
+    # - <<: *staging-job
+    #   name: GraphQL Server
+    #   script: scripts/deploy.js graphql-server
 
-    - stage: production
+    - <<: *production-job
       name: Sitemaps
       script: scripts/deploy.js sitemaps
-      install: skip
-      env: [ENVIRONMENT=production RANCHER_CLUSTERID=c-gxsr7]
-    - stage: staging
-      name: Sitemaps
-      script: scripts/deploy.js sitemaps
-      install: skip
-      env: [ENVIRONMENT=staging RANCHER_CLUSTERID=c-rc5kp]
+    # - <<: *staging-job
+    #   name: Sitemaps
+    #   script: scripts/deploy.js sitemaps
 
-    - stage: production
+    - <<: *production-job
       name: RSS
       script: scripts/deploy.js rss
-      install: skip
-      env: [ENVIRONMENT=production RANCHER_CLUSTERID=c-gxsr7]
-    - stage: staging
-      name: RSS
-      script: scripts/deploy.js rss
-      install: skip
-      env: [ENVIRONMENT=staging RANCHER_CLUSTERID=c-rc5kp]
+    # - <<: *staging-job
+    #   name: RSS
+    #   script: scripts/deploy.js rss
 
-    - stage: production
+    - <<: *production-job
       name: Hooks
       script: scripts/deploy.js hooks
-      install: skip
-      env: [ENVIRONMENT=production RANCHER_CLUSTERID=c-gxsr7]
-    - stage: staging
-      name: Hooks
-      script: scripts/deploy.js hooks
-      install: skip
-      env: [ENVIRONMENT=staging RANCHER_CLUSTERID=c-rc5kp]
+    # - <<: *staging-job
+    #   name: Hooks
+    #   script: scripts/deploy.js hooks
 
-    - stage: production
+    - <<: *production-job
       name: oEmbed
       script: scripts/deploy.js oembed
-      install: skip
-      env: [ENVIRONMENT=production RANCHER_CLUSTERID=c-gxsr7]
-    - stage: staging
-      name: oEmbed
-      script: scripts/deploy.js oembed
-      install: skip
-      env: [ENVIRONMENT=staging RANCHER_CLUSTERID=c-rc5kp]
+    # - <<: *staging-job
+    #   name: oEmbed
+    #   script: scripts/deploy.js oembed
 
-    - stage: production
+    - <<: *production-job
       name: Google Data API
       script: scripts/deploy.js google-data-api
-      install: skip
-      env: [ENVIRONMENT=production RANCHER_CLUSTERID=c-gxsr7]
-    - stage: staging
-      name: Google Data API
-      script: scripts/deploy.js google-data-api
-      install: skip
-      env: [ENVIRONMENT=staging RANCHER_CLUSTERID=c-rc5kp]
+    # - <<: *staging-job
+    #   name: Google Data API
+    #   script: scripts/deploy.js google-data-api
 
-    - stage: production
+    - <<: *production-job
       name: Omail Link Processor
       script: scripts/deploy.js omail-link-processor
-      install: skip
-      env: [ENVIRONMENT=production RANCHER_CLUSTERID=c-gxsr7]
-
-    - stage: production
-      name: Algolia Sync
-      script: scripts/deploy.js algolia-sync
-      install: skip
-      env: [ENVIRONMENT=production RANCHER_CLUSTERID=c-gxsr7]
-
-    # has yet to be configured
-    # - stage: staging
+    # - <<: *staging-job
     #   name: Omail Link Processor
     #   script: scripts/deploy.js omail-link-processor
-    #   install: skip
-    #   env: [ENVIRONMENT=staging RANCHER_CLUSTERID=c-rc5kp]
+
+    # - <<: *production-job
+    #   name: Algolia Sync
+    #   script: scripts/deploy.js algolia-sync
+    # - <<: *staging-job
+    #   name: Algolia Sync
+    #   script: scripts/deploy.js algolia-sync
 
     #############################
     # ^^^ ADD SERVICES HERE ^^^ #
     #############################
 
-    - stage: production-finished
+    - <<: *production-job
+      stage: production-finished
       name: Deployment Finished
       script: npx @base-cms/website-deployment-tool notify-finished
-      install: skip
-      env: [ENVIRONMENT=production RANCHER_CLUSTERID=c-gxsr7]
-
-    - stage: staging-finished
-      name: Deployment Finished
-      script: npx @base-cms/website-deployment-tool notify-finished
-      install: skip
-      env: [ENVIRONMENT=staging RANCHER_CLUSTERID=c-rc5kp]
+    # - <<: *staging-job
+    #   stage: staging-finished
+    #   name: Deployment Finished
+    #   script: npx @base-cms/website-deployment-tool notify-finished
