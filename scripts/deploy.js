@@ -21,11 +21,12 @@ const lerna = require('../lerna.json');
 
 const { log } = console;
 const { TRAVIS_TAG } = process.env;
+const DOCKER_ORG = process.env.DOCKER_ORG || 'basecms';
 
 const version = `v${lerna.version}`;
 const service = process.argv[2];
 const servicePath = join('services', service);
-const image = `basecms/${service}`;
+const image = `${DOCKER_ORG}/${service}`;
 
 const nrIds = {
   'graphql-server': 222815958,

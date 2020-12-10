@@ -12,6 +12,6 @@ docker build -t "$1:$2" --build-arg SERVICE=$1 .
 mv ../services/* services/
 rm -rf ../services
 
-docker tag "$1:$2" "basecms/$1:$2"
-docker push "basecms/$1:$2"
+docker tag "$1:$2" "${DOCKER_ORG-basecms}/$1:$2"
+docker push "${DOCKER_ORG-basecms}/$1:$2"
 docker image rm "$1:$2"
