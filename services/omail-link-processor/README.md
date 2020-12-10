@@ -1,6 +1,7 @@
 # Omail Link Processor
 
 ## Query Parameters for `/retrieve`
+
 - `tenantKey` (**required**): The tenant key to query content data from, e.g. `acbm_fcp`
 - `host` (**required**): The host to retrieve the HTML from, e.g. `email.forconstructionpros.com`
 - `alias` (**required**): The email deployment alias to retrieve, e.g. `power-rental`
