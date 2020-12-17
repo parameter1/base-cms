@@ -33,4 +33,5 @@ module.exports = cleanEnv(process.env, {
   TERMINUS_SHUTDOWN_DELAY: num({ desc: 'Number of milliseconds before the HTTP server starts its shutdown', default: 10000 }),
   CDN_IMAGE_HOSTNAME: nonemptystr({ desc: 'The default CDN hostname for image delivery', default: 'base.imgix.net' }),
   CDN_ASSET_HOSTNAME: nonemptystr({ desc: 'The default CDN hostname for asset delivery', default: 'cdn.baseplatform.io' }),
+  IMAGE_IMPORT_URL: nonemptystr({ desc: 'The BASE image import URL.', default: 'https://opq20fu9p2.execute-api.us-east-1.amazonaws.com/default/base-media-importer' }),
 });

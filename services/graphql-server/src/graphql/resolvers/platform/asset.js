@@ -1,3 +1,4 @@
+const fetch = require('node-fetch');
 const {
   createAltFor,
   createSrcFor,
@@ -10,6 +11,7 @@ const validateRest = require('../../utils/validate-rest');
 const buildProjection = require('../../utils/build-projection');
 const getImageDimensions = require('../../utils/get-image-dimensions');
 const defaults = require('../../defaults');
+const { IMAGE_IMPORT_URL } = require('../../../env');
 
 module.exports = {
   /**
@@ -70,23 +72,25 @@ module.exports = {
     /**
      *
      */
-    createAssetImageFromUrl: async (_, { input }, { base4rest, basedb }, info) => {
+    createAssetImageFromUrl: async (_, { input }, { tenant, base4rest, basedb }, info) => {
       validateRest(base4rest);
+      if (!IMAGE_IMPORT_URL) throw new Error('Unable to upload image, missing IMAGE_IMPORT_URL.');
+      const [account, group] = tenant.split('_');
+
       const { url } = input;
-      const {
-        fileName,
-        filePath,
-        location,
-        height,
-        width,
-      } = await base4rest.uploadImageFromUrl({ url });
+      const res = await fetch(IMAGE_IMPORT_URL, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ account, group, url }),
+      });
+      if (!res.ok) throw new Error(res.statusText);
+      const { fileName, filePath } = await res.json();
+
       const type = 'platform/asset/image';
       const body = (new Base4RestPayload({ type }))
         .set('fileName', fileName)
         .set('filePath', filePath)
-        .set('source.location', location)
-        .set('source.height', height)
-        .set('source.width', width);
+        .set('source.location', url);
       const { data } = await base4rest.insertOne({ model: type, body });
       const projection = buildProjection({ info, type: 'AssetImage' });
       return basedb.findOne('platform.Asset', { _id: ObjectID(data.id) }, { projection });
