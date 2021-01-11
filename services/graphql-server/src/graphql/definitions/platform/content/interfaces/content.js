@@ -58,7 +58,7 @@ interface Content @requiresProject(fields: ["type"]) {
 
   # GraphQL-only fields.
   statusText: String! @projection(localField: "status", needs: ["published", "unpublished"])
-  metadata: ContentMetadata! @projection(localField: "name", needs: ["type", "company", "primaryImage", "mutations.Website.name", "mutations.Website.seoTitle", "teaser", "mutations.Website.teaser", "mutations.Website.seoDescription", "mutations.Website.seoDescription", "published", "updated", "unpublished"])
+  metadata: ContentMetadata! @projection(localField: "name", needs: ["type", "company", "primaryImage", "mutations.Website.name", "mutations.Website.seoTitle", "teaser", "mutations.Website.teaser", "mutations.Website.seoDescription", "published", "updated", "unpublished"])
   createdDate(input: FormatDate = {}): String @projection(localField: "created") @momentFormat(localField: "created")
   updatedDate(input: FormatDate = {}): String @projection(localField: "updated") @momentFormat(localField: "updated")
   publishedDate(input: FormatDate = {}): String @projection(localField: "published") @momentFormat(localField: "published")
