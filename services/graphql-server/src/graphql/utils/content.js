@@ -65,6 +65,8 @@ const createTitle = async (doc, ctx) => {
 
 const createDescription = (doc) => {
   if (!isObject(doc)) return null;
+  const seoDescription = BaseDB.extractMutationValue(doc, 'Website', 'seoDescription');
+  if (seoDescription) return seoDescription.trim();
   const description = stripTags((BaseDB.fillMutation(doc, 'Website', 'teaser') || '').trim());
   return description;
   // This should not require the entire body, and rather should be handled at save time.
