@@ -51,13 +51,14 @@ interface Content @requiresProject(fields: ["type"]) {
 
   # fields from platform.trait::Content\SeoFields
   seoTitle: String @projection(localField: "mutations.Website.seoTitle", needs: ["name"]) @value(localField: "mutations.Website.seoTitle", fallbackField: "name")
+  seoDescription: String @projection(localField: "mutations.Website.seoDescription", needs: ["teaser"]) @value(localField: "mutations.Website.seoDescription", fallbackField: "teaser")
   alias: String @projection(localField: "mutations.Website.alias") @value(localField: "mutations.Website.alias")
   redirects: [String]! @projection(localField: "mutations.Website.redirects") @arrayValue(localField: "mutations.Website.redirects")
   slug: String @projection(localField: "mutations.Website.slug") @value(localField: "mutations.Website.slug")
 
   # GraphQL-only fields.
   statusText: String! @projection(localField: "status", needs: ["published", "unpublished"])
-  metadata: ContentMetadata! @projection(localField: "name", needs: ["type", "company", "primaryImage", "mutations.Website.name", "mutations.Website.seoTitle", "teaser", "mutations.Website.teaser", "published", "updated", "unpublished"])
+  metadata: ContentMetadata! @projection(localField: "name", needs: ["type", "company", "primaryImage", "mutations.Website.name", "mutations.Website.seoTitle", "teaser", "mutations.Website.teaser", "mutations.Website.seoDescription", "published", "updated", "unpublished"])
   createdDate(input: FormatDate = {}): String @projection(localField: "created") @momentFormat(localField: "created")
   updatedDate(input: FormatDate = {}): String @projection(localField: "updated") @momentFormat(localField: "updated")
   publishedDate(input: FormatDate = {}): String @projection(localField: "published") @momentFormat(localField: "published")
