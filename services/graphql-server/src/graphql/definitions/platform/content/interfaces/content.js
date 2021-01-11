@@ -51,7 +51,7 @@ interface Content @requiresProject(fields: ["type"]) {
 
   # fields from platform.trait::Content\SeoFields
   seoTitle: String @projection(localField: "mutations.Website.seoTitle", needs: ["name"]) @value(localField: "mutations.Website.seoTitle", fallbackField: "name")
-  seoDescription: String @projection(localField: "mutations.Website.seoDescription", needs: ["name"]) @value(localField: "mutations.Website.seoDescription", fallbackField: "teaser")
+  seoDescription: String @projection(localField: "mutations.Website.seoDescription", needs: ["teaser"]) @value(localField: "mutations.Website.seoDescription", fallbackField: "teaser")
   alias: String @projection(localField: "mutations.Website.alias") @value(localField: "mutations.Website.alias")
   redirects: [String]! @projection(localField: "mutations.Website.redirects") @arrayValue(localField: "mutations.Website.redirects")
   slug: String @projection(localField: "mutations.Website.slug") @value(localField: "mutations.Website.slug")
