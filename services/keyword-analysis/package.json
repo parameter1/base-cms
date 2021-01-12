@@ -1,5 +1,5 @@
 {
-  "name": "@base-cms/keyword-analysis",
+  "name": "@parameter1/base-cms-keyword-analysis",
   "description": "Analyzes BaseCMS content based on keywords using ElasticSearch.",
   "version": "1.37.0",
   "main": "src/index.js",
@@ -22,7 +22,7 @@
     }
   },
   "dependencies": {
-    "@base-cms/tooling": "^1.37.0",
+    "@parameter1/base-cms-tooling": "^1.37.0",
     "async": "^2.6.3",
     "chalk": "^2.4.2",
     "clear": "^0.1.0",

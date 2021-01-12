@@ -1,5 +1,5 @@
 {
-  "name": "@base-cms/manage",
+  "name": "@parameter1/base-cms-manage",
   "version": "0.10.0",
   "private": true,
   "description": "The BaseCMS Management Interface",
@@ -17,7 +17,7 @@
     "start": "ember serve"
   },
   "devDependencies": {
-    "@base-cms/graphql-fragment-types": "^0.10.0",
+    "@parameter1/base-cms-graphql-fragment-types": "^0.10.0",
     "@ember/jquery": "^0.5.2",
     "@ember/optional-features": "^0.6.3",
     "animate.css": "^3.7.0",

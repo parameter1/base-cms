@@ -1,5 +1,5 @@
 {
-  "name": "@base-cms/base4-rest-api",
+  "name": "@parameter1/base-cms-base4-rest-api",
   "version": "1.37.0",
   "description": "A Base4 REST API client.",
   "main": "src/index.js",
@@ -11,9 +11,9 @@
     "test": "yarn lint"
   },
   "dependencies": {
-    "@base-cms/inflector": "^1.37.0",
-    "@base-cms/object-path": "^1.37.0",
-    "@base-cms/utils": "^1.37.0",
+    "@parameter1/base-cms-inflector": "^1.37.0",
+    "@parameter1/base-cms-object-path": "^1.37.0",
+    "@parameter1/base-cms-utils": "^1.37.0",
     "http-errors": "^1.7.3",
     "node-fetch": "^2.6.1"
   },

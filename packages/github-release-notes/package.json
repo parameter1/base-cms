@@ -1,5 +1,5 @@
 {
-  "name": "@base-cms/github-release-notes",
+  "name": "@parameter1/base-cms-github-release-notes",
   "version": "1.37.0",
   "author": "Jacob Bare <jacob@limit0.io>",
   "repository": "https://github.com/base-cms/parameter1/tree/master/packages/github-release-notes",
@@ -13,7 +13,7 @@
     "test": "yarn lint"
   },
   "dependencies": {
-    "@base-cms/env": "^1.37.0",
+    "@parameter1/base-cms-env": "^1.37.0",
     "@octokit/rest": "^16.28.2",
     "numeral": "^2.0.6"
   },

@@ -1,5 +1,5 @@
 {
-  "name": "@base-cms/marko-compiler",
+  "name": "@parameter1/base-cms-marko-compiler",
   "version": "1.37.0",
   "description": "A simple, CLI Marko template compiler.",
   "bin": {

@@ -1,5 +1,5 @@
 {
-  "name": "@base-cms/nextjs-apollo",
+  "name": "@parameter1/base-cms-nextjs-apollo",
   "version": "0.6.0",
   "description": "Apollo GraphQL Client & HOC for BaseCMS+NextJS apps",
   "main": "dist/index.cjs.js",
@@ -13,7 +13,7 @@
     "build": "yarn clean && rollup -c"
   },
   "dependencies": {
-    "@base-cms/graphql-fragment-types": "^0.6.0",
+    "@parameter1/base-cms-graphql-fragment-types": "^0.6.0",
     "apollo-cache-inmemory": "^1.6.3",
     "apollo-client": "^2.6.4",
     "apollo-link": "^1.2.6",

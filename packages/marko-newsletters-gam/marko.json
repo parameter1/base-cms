@@ -1,5 +1,5 @@
 {
-  "taglib-id": "@base-cms/marko-newsletters-gam",
+  "taglib-id": "@parameter1/base-cms-marko-newsletters-gam",
   "taglib-imports": [
     "./components/marko.json"
   ]

@@ -1,5 +1,5 @@
 {
-  "name": "@base-cms/marko-web",
+  "name": "@parameter1/base-cms-marko-web",
   "version": "1.49.0",
   "description": "Core Marko+Express components for BaseCMS websites",
   "author": "Jacob Bare <jacob@limit0.io>",
@@ -14,15 +14,15 @@
     "test": "yarn compile && yarn lint"
   },
   "dependencies": {
-    "@base-cms/embedded-media": "^1.37.0",
-    "@base-cms/express-apollo": "^1.37.0",
-    "@base-cms/graphql-fragment-types": "^1.37.0",
-    "@base-cms/image": "^1.37.0",
-    "@base-cms/inflector": "^1.37.0",
-    "@base-cms/object-path": "^1.37.0",
-    "@base-cms/tenant-context": "^1.37.0",
-    "@base-cms/utils": "^1.37.0",
-    "@base-cms/web-common": "^1.49.0",
+    "@parameter1/base-cms-embedded-media": "^1.37.0",
+    "@parameter1/base-cms-express-apollo": "^1.37.0",
+    "@parameter1/base-cms-graphql-fragment-types": "^1.37.0",
+    "@parameter1/base-cms-image": "^1.37.0",
+    "@parameter1/base-cms-inflector": "^1.37.0",
+    "@parameter1/base-cms-object-path": "^1.37.0",
+    "@parameter1/base-cms-tenant-context": "^1.37.0",
+    "@parameter1/base-cms-utils": "^1.37.0",
+    "@parameter1/base-cms-web-common": "^1.49.0",
     "@godaddy/terminus": "^4.2.0",
     "apollo-cache-inmemory": "^1.6.3",
     "apollo-client": "^2.6.4",
@@ -42,7 +42,7 @@
     "vue-apollo": "^3.0.0"
   },
   "peerDependencies": {
-    "@base-cms/marko-core": "^1.0.0"
+    "@parameter1/base-cms-marko-core": "^1.0.0"
   },
   "publishConfig": {
     "access": "public"

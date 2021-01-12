@@ -1,5 +1,5 @@
 {
-  "name": "@base-cms/tooling",
+  "name": "@parameter1/base-cms-tooling",
   "version": "1.37.0",
   "description": "Generic tooling helpers for use with other BaseCMS packages.",
   "main": "src/index.js",

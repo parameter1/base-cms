@@ -1,5 +1,5 @@
 {
-  "name": "@base-cms/async",
+  "name": "@parameter1/base-cms-async",
   "version": "1.37.0",
   "description": "Promise wrappers for the async library.",
   "main": "src/index.js",

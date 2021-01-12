@@ -1,5 +1,5 @@
 {
-  "name": "@base-cms/cli-utils",
+  "name": "@parameter1/base-cms-cli-utils",
   "version": "1.37.0",
   "description": "Utility functions for BaseCMS CLI projects.",
   "main": "src/index.js",

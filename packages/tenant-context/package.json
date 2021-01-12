@@ -1,5 +1,5 @@
 {
-  "name": "@base-cms/tenant-context",
+  "name": "@parameter1/base-cms-tenant-context",
   "version": "1.37.0",
   "description": "Ensures that required headers are present",
   "main": "index.js",

@@ -1,5 +1,5 @@
 {
-  "name": "@base-cms/inflector",
+  "name": "@parameter1/base-cms-inflector",
   "version": "1.37.0",
   "description": "Inflector functions for JavaScript projects.",
   "main": "src/index.js",
