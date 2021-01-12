@@ -1,8 +1,8 @@
 {
-  "name": "@base-cms/marko-web-radix",
+  "name": "@parameter1/base-cms-marko-web-radix",
   "version": "1.37.0",
-  "author": "Jacob Bare <jacob@limit0.io>",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/packages/marko-web-radix",
+  "author": "Jacob Bare <jacob@parameter1.com>",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-radix",
   "license": "MIT",
   "scripts": {
     "lint": "yarn lint:js",
@@ -11,8 +11,8 @@
     "test": "yarn compile && yarn lint"
   },
   "peerDependencies": {
-    "@base-cms/marko-core": "^1.25.11",
-    "@base-cms/marko-web": "^1.25.11"
+    "@parameter1/base-cms-marko-core": "^2.0.0",
+    "@parameter1/base-cms-marko-web": "^2.0.0"
   },
   "publishConfig": {
     "access": "public"

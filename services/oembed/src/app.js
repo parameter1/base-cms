@@ -1,7 +1,7 @@
 const express = require('express');
 const helmet = require('helmet');
 const { json } = require('body-parser');
-const { asyncRoute } = require('@base-cms/utils');
+const { asyncRoute } = require('@parameter1/base-cms-utils');
 const embedly = require('./embedly');
 
 const app = express();

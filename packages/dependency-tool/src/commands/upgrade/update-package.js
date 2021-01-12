@@ -1,4 +1,4 @@
-const { get, set } = require('@base-cms/object-path');
+const { get, set } = require('@parameter1/base-cms-object-path');
 const depTypes = require('./dep-types');
 
 module.exports = (info, pkg) => {

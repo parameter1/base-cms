@@ -3,7 +3,7 @@ Provides fragment types for the BaseCMS GraphQL API. For use with Apollo GraphQL
 
 ## Usage
 ```js
-import introspectionQueryResultData from '@base-cms/graphql-fragment-types';
+import introspectionQueryResultData from '@parameter1/base-cms-graphql-fragment-types';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 

@@ -1,5 +1,5 @@
 const { SchemaDirectiveVisitor } = require('graphql-tools');
-const { get } = require('@base-cms/object-path');
+const { get } = require('@parameter1/base-cms-object-path');
 
 class MutatedValueDirective extends SchemaDirectiveVisitor {
   /**

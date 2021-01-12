@@ -1,5 +1,5 @@
 const { URLSearchParams } = require('url');
-const { asObject } = require('@base-cms/utils');
+const { asObject } = require('@parameter1/base-cms-utils');
 
 module.exports = ({ path, query } = {}) => {
   const params = new URLSearchParams(asObject(query));

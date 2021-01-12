@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 const moment = require('moment');
-const { asArray } = require('@base-cms/utils');
+const { asArray } = require('@parameter1/base-cms-utils');
 const buildQuery = require('./build-query');
 const buildUrl = require('./build-url');
 

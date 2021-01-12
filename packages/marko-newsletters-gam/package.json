@@ -1,22 +1,22 @@
 {
-  "name": "@base-cms/marko-newsletters-gam",
+  "name": "@parameter1/base-cms-marko-newsletters-gam",
   "version": "1.37.0",
   "description": "GAM/DFP Marko components for BaseCMS newsletters.",
-  "author": "Jacob Bare <jacob@limit0.io>",
+  "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/packages/marko-newsletters-gam",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-newsletters-gam",
   "scripts": {
     "lint": "eslint --ext .js --max-warnings 5 ./",
     "compile": "basecms-marko-compile compile --dir ./ --silent true",
     "test": "yarn compile && yarn lint"
   },
   "dependencies": {
-    "@base-cms/object-path": "^1.37.0",
-    "@base-cms/utils": "^1.37.0",
-    "moment": "^2.24.0"
+    "@parameter1/base-cms-object-path": "^1.37.0",
+    "@parameter1/base-cms-utils": "^1.37.0",
+    "moment": "^2.29.1"
   },
   "peerDependencies": {
-    "@base-cms/marko-core": "^1.0.0"
+    "@parameter1/base-cms-marko-core": "^2.0.0"
   },
   "publishConfig": {
     "access": "public"

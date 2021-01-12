@@ -1,4 +1,4 @@
-const { BaseDB } = require('@base-cms/db');
+const { BaseDB } = require('@parameter1/base-cms-db');
 const { createAlias } = require('./utils');
 
 const loadParents = async (taxonomy, db, projection, parents = []) => {

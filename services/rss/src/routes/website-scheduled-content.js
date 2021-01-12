@@ -1,4 +1,4 @@
-const { asyncRoute } = require('@base-cms/utils');
+const { asyncRoute } = require('@parameter1/base-cms-utils');
 const gql = require('graphql-tag');
 const createChannel = require('../utils/create-channel');
 const createItem = require('../utils/create-item');

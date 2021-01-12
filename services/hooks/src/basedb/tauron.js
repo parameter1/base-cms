@@ -1,4 +1,4 @@
-const { createBaseDB, createMongoClient } = require('@base-cms/db');
+const { createBaseDB, createMongoClient } = require('@parameter1/base-cms-db');
 const { TAURON_DSN } = require('../env');
 
 const client = createMongoClient(TAURON_DSN);

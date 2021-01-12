@@ -4,9 +4,9 @@ const {
   createSrcFor,
   createCaptionFor,
   cropRectangle,
-} = require('@base-cms/image');
-const { Base4RestPayload } = require('@base-cms/base4-rest-api');
-const { ObjectID } = require('@base-cms/db').MongoDB;
+} = require('@parameter1/base-cms-image');
+const { Base4RestPayload } = require('@parameter1/base-cms-base4-rest-api');
+const { ObjectID } = require('@parameter1/base-cms-db').MongoDB;
 const validateRest = require('../../utils/validate-rest');
 const buildProjection = require('../../utils/build-projection');
 const getImageDimensions = require('../../utils/get-image-dimensions');

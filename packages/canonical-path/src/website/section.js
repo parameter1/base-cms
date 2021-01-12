@@ -1,4 +1,4 @@
-const { isFunction: isFn, cleanPath } = require('@base-cms/utils');
+const { isFunction: isFn, cleanPath } = require('@parameter1/base-cms-utils');
 
 const pathResolvers = {
   alias: section => section.alias,

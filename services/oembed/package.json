@@ -1,10 +1,10 @@
 {
-  "name": "@base-cms/oembed",
+  "name": "@parameter1/base-cms-oembed",
   "version": "1.50.1",
   "description": "The BaseCMS oEmbed service",
   "main": "src/index.js",
-  "author": "Josh Worden <josh@limit0.io>",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/services/oembed",
+  "author": "Josh Worden <josh@parameter1.com>",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/services/oembed",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -12,13 +12,13 @@
     "test": "yarn lint"
   },
   "dependencies": {
-    "@base-cms/embedly": "^1.37.0",
-    "@base-cms/tooling": "^1.37.0",
-    "@base-cms/utils": "^1.37.0",
-    "@godaddy/terminus": "^4.2.0",
+    "@parameter1/base-cms-embedly": "^1.37.0",
+    "@parameter1/base-cms-tooling": "^1.37.0",
+    "@parameter1/base-cms-utils": "^1.37.0",
+    "@godaddy/terminus": "^4.5.0",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "helmet": "^3.21.0",
-    "newrelic": "^6.12.1"
+    "helmet": "^3.23.3",
+    "newrelic": "^6.14.0"
   }
 }

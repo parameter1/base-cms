@@ -1,4 +1,4 @@
-const { filterDsn } = require('@base-cms/db/utils');
+const { filterDsn } = require('@parameter1/base-cms-db/utils');
 const mongodb = require('mongodb');
 
 const { GOOGLE_DATA_MONGO_DSN } = require('./env');

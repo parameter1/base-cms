@@ -1,5 +1,5 @@
 {
-  "taglib-id": "@base-cms/marko-web-social-sharing",
+  "taglib-id": "@parameter1/base-cms-marko-web-social-sharing",
   "taglib-imports": [
     "./components/marko.json"
   ]

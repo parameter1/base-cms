@@ -1,6 +1,6 @@
 const bodyParser = require('body-parser');
 const express = require('express');
-const { asyncRoute } = require('@base-cms/utils');
+const { asyncRoute } = require('@parameter1/base-cms-utils');
 const getDB = require('./platform-history/utils/get-db');
 const handle = require('./platform-history');
 

@@ -1,4 +1,4 @@
-const { getDefaultContentTypes, getDefaultTaxonomyTypes } = require('@base-cms/utils');
+const { getDefaultContentTypes, getDefaultTaxonomyTypes } = require('@parameter1/base-cms-utils');
 
 const contentTypes = getDefaultContentTypes();
 const taxonomyTypes = getDefaultTaxonomyTypes();

@@ -1,16 +1,16 @@
 {
-  "name": "@base-cms/website-deployment-tool",
+  "name": "@parameter1/base-cms-website-deployment-tool",
   "version": "1.42.1",
-  "description": "The deployment tool for use with @base-cms/marko-web",
+  "description": "The deployment tool for use with @parameter1/base-cms-marko-web",
   "main": "src/index.js",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/packages/website-deployment-tool",
-  "author": "Josh Worden <josh@limit0.io>",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/website-deployment-tool",
+  "author": "Josh Worden <josh@parameter1.com>",
   "license": "MIT",
   "dependencies": {
-    "@endeavorb2b/rancher2cli": "^1.0.4",
-    "envalid": "^6.0.0",
+    "@endeavorb2b/rancher2cli": "^1.0.5",
+    "envalid": "^6.0.2",
     "node-fetch": "^2.6.1",
-    "yargs": "^15.0.2"
+    "yargs": "^15.4.1"
   },
   "bin": {
     "deploy": "./src/index.js"
@@ -18,7 +18,7 @@
   "devDependencies": {
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.2.0",
-    "eslint-plugin-import": "^2.18.2"
+    "eslint-plugin-import": "^2.22.1"
   },
   "publishConfig": {
     "access": "public"

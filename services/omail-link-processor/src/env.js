@@ -4,7 +4,7 @@ const {
   num,
   port,
   str,
-} = require('@base-cms/env');
+} = require('@parameter1/base-cms-env');
 
 module.exports = cleanEnv(process.env, {
   GRAPHQL_URI: str({ desc: 'The BaseCMS GraphQL URL.' }),

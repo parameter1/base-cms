@@ -1,4 +1,4 @@
-const { cleanPath } = require('@base-cms/utils');
+const { cleanPath } = require('@parameter1/base-cms-utils');
 
 /**
  * Determines if an alias should go to the index/home page.

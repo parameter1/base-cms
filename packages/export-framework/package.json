@@ -1,36 +1,36 @@
 {
-  "name": "@base-cms/export-framework",
+  "name": "@parameter1/base-cms-export-framework",
   "version": "1.49.0",
   "description": "Core framework for BaseCMS Exports.",
-  "author": "Josh Worden <josh@limit0.io>",
+  "author": "Josh Worden <josh@parameter1.com>",
   "main": "src/index.js",
   "license": "MIT",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/packages/export-framework",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/export-framework",
   "scripts": {
     "lint": "eslint --ext .js --max-warnings 5 ./",
     "test": "yarn lint"
   },
   "dependencies": {
-    "@base-cms/express-apollo": "^1.37.0",
-    "@base-cms/image": "^1.37.0",
-    "@base-cms/object-path": "^1.37.0",
-    "@base-cms/tenant-context": "^1.37.0",
-    "@base-cms/utils": "^1.37.0",
-    "@base-cms/web-common": "^1.49.0",
-    "@godaddy/terminus": "^4.2.0",
+    "@parameter1/base-cms-express-apollo": "^1.37.0",
+    "@parameter1/base-cms-image": "^1.37.0",
+    "@parameter1/base-cms-object-path": "^1.37.0",
+    "@parameter1/base-cms-tenant-context": "^1.37.0",
+    "@parameter1/base-cms-utils": "^1.37.0",
+    "@parameter1/base-cms-web-common": "^1.49.0",
+    "@godaddy/terminus": "^4.5.0",
     "express": "^4.17.1",
-    "graphql": "^14.5.4",
-    "graphql-tag": "^2.10.1",
-    "helmet": "^3.21.0",
-    "http-errors": "^1.7.3",
+    "graphql": "^14.7.0",
+    "graphql-tag": "^2.11.0",
+    "helmet": "^3.23.3",
+    "http-errors": "^1.8.0",
     "marko": "~4.20.0",
-    "moment": "^2.24.0",
-    "moment-timezone": "^0.5.26",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.32",
     "node-fetch": "^2.6.1",
     "recursive-readdir": "^2.2.2"
   },
   "peerDependencies": {
-    "@base-cms/marko-core": "^1.0.0"
+    "@parameter1/base-cms-marko-core": "^2.0.0"
   },
   "publishConfig": {
     "access": "public"

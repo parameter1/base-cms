@@ -1,4 +1,4 @@
-const { eachSeries } = require('@base-cms/async');
+const { eachSeries } = require('@parameter1/base-cms-async');
 const createDB = require('./src/basedb');
 const indexes = require('./src/graphql/utils/indexes');
 

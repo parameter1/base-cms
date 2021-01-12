@@ -1,5 +1,5 @@
-const { getAsObject, get } = require('@base-cms/object-path');
-const { dasherize } = require('@base-cms/inflector');
+const { getAsObject, get } = require('@parameter1/base-cms-object-path');
+const { dasherize } = require('@parameter1/base-cms-inflector');
 
 const { keys } = Object;
 

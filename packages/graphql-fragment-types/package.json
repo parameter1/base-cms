@@ -1,9 +1,9 @@
 {
-  "name": "@base-cms/graphql-fragment-types",
+  "name": "@parameter1/base-cms-graphql-fragment-types",
   "version": "1.37.0",
   "main": "src/index.js",
-  "author": "Jacob Bare <jacob@limit0.io>",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/packages/graphql-fragment-types",
+  "author": "Jacob Bare <jacob@parameter1.com>",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/graphql-fragment-types",
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ext .js --max-warnings 5 ./",

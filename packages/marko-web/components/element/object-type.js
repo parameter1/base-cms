@@ -1,4 +1,4 @@
-const { dasherize } = require('@base-cms/inflector');
+const { dasherize } = require('@parameter1/base-cms-inflector');
 
 module.exports = (type, def = 'obj') => {
   if (!type) return def;

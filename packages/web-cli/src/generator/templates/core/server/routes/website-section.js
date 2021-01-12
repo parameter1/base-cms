@@ -1,4 +1,4 @@
-const { withWebsiteSection } = require('@base-cms/marko-web/middleware');
+const { withWebsiteSection } = require('@parameter1/base-cms-marko-web/middleware');
 const section = require('../templates/website-section');
 
 module.exports = (app) => {

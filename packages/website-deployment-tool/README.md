@@ -1,6 +1,6 @@
 # Website Deployment Tool
 
-To use the deployment tool with your `@base-cms/marko-web` project, include and modify (as appropriate) the following files in the `templates` directory at the root of your project.
+To use the deployment tool with your `@parameter1/base-cms-marko-web` project, include and modify (as appropriate) the following files in the `templates` directory at the root of your project.
 
 ## Dockerfile
 

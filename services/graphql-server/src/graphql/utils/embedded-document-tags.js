@@ -1,5 +1,5 @@
 const { extname } = require('path');
-const { extractEmbeddedTags } = require('@base-cms/embedded-media');
+const { extractEmbeddedTags } = require('@parameter1/base-cms-embedded-media');
 
 module.exports = async (body, { imageHost, basedb }) => {
   if (!body) return [];

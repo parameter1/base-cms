@@ -1,5 +1,5 @@
-const { isObject } = require('@base-cms/utils');
-const { get } = require('@base-cms/object-path');
+const { isObject } = require('@parameter1/base-cms-utils');
+const { get } = require('@parameter1/base-cms-object-path');
 
 /**
  * Use `siteContext.path` first and then fallback to `canonicalPath`.

@@ -1,5 +1,5 @@
 const gql = require('graphql-tag');
-const { asyncRoute } = require('@base-cms/utils');
+const { asyncRoute } = require('@parameter1/base-cms-utils');
 const userFragment = require('../api/fragments/active-user');
 
 const mutation = gql`

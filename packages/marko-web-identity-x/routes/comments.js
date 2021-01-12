@@ -1,5 +1,5 @@
 const gql = require('graphql-tag');
-const { asyncRoute } = require('@base-cms/utils');
+const { asyncRoute } = require('@parameter1/base-cms-utils');
 
 const query = gql`
   query ListComments($input: CommentsForStreamQueryInput!) {

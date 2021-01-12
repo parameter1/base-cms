@@ -1,5 +1,5 @@
 const { json, createError } = require('micro');
-const { get } = require('@base-cms/object-path');
+const { get } = require('@parameter1/base-cms-object-path');
 
 const createParamError = require('./param-error');
 const jsonErrors = require('./json-errors');

@@ -1,4 +1,4 @@
-const { createSrcFor } = require('@base-cms/image');
+const { createSrcFor } = require('@parameter1/base-cms-image');
 const defaults = require('../../defaults');
 
 module.exports = {

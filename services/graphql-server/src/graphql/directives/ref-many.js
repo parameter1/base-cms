@@ -1,5 +1,5 @@
 const { SchemaDirectiveVisitor } = require('graphql-tools');
-const { BaseDB } = require('@base-cms/db');
+const { BaseDB } = require('@parameter1/base-cms-db');
 const { UserInputError } = require('apollo-server-express');
 const formatStatus = require('../utils/format-status');
 const criteriaFor = require('../utils/criteria-for');

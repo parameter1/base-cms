@@ -9,7 +9,7 @@ const { dest, src } = require('gulp');
 const { getIfUtils } = require('webpack-config-utils');
 const { existsSync } = require('fs');
 const { join } = require('path');
-const completeTask = require('@base-cms/cli-utils/task-callback');
+const completeTask = require('@parameter1/base-cms-cli-utils/task-callback');
 
 const absoluteRuntime = path.dirname(require.resolve('@babel/runtime/package.json'));
 
@@ -19,7 +19,7 @@ const absoluteRuntime = path.dirname(require.resolve('@babel/runtime/package.jso
  */
 const readRcFile = (cwd) => {
   const excludeFn = file => (
-    /node_modules\/(?!@base-cms\/marko-web.*?\/browser)/.test(file)
+    /node_modules\/(?!@parameter1\/base-cms-marko-web.*?\/browser)/.test(file)
     && !/\.vue\.js/.test(file)
   );
 

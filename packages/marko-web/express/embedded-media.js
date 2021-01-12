@@ -1,5 +1,5 @@
-const { isFunction: isFn } = require('@base-cms/utils');
-const { extractEmbeddedTags } = require('@base-cms/embedded-media');
+const { isFunction: isFn } = require('@parameter1/base-cms-utils');
+const { extractEmbeddedTags } = require('@parameter1/base-cms-embedded-media');
 const buildMarkoGlobal = require('../utils/build-marko-global');
 const { imageHandler, oembedHandler, invalidHandler } = require('../utils/embedded-media');
 

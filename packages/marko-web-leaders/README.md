@@ -2,12 +2,12 @@
 
 ## Installation
 
-1. Include `@base-cms/marko-web-leaders` as a project/website dependency.
+1. Include `@parameter1/base-cms-marko-web-leaders` as a project/website dependency.
 
 2. Include the Browser plugin.
 ```js
 // your-site/browser/index.js
-import Leaders from '@base-cms/marko-web-leaders/browser';
+import Leaders from '@parameter1/base-cms-marko-web-leaders/browser';
 
 Leaders(Browser);
 
@@ -18,7 +18,7 @@ export default Browser;
 ```scss
 // your-site/server/styles/index.scss
 @import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,500,600,700&display=swap");
-@import "../../node_modules/@base-cms/marko-web-leaders/scss/leaders";
+@import "../../node_modules/@parameter1/base-cms-marko-web-leaders/scss/leaders";
 ```
 
 4. Include the dropdown portal component in your template or document root. _Include immediately after the opening `<body>` tag!_ **<< Don't forget this step >>**

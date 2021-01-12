@@ -1,4 +1,4 @@
-const { MongoDB } = require('@base-cms/db');
+const { MongoDB } = require('@parameter1/base-cms-db');
 const SiteContext = require('./index');
 
 const { ObjectID } = MongoDB;

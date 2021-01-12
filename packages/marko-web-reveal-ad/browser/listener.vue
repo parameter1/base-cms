@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import $ from '@base-cms/marko-web/browser/jquery';
+import $ from '@parameter1/base-cms-marko-web/browser/jquery';
 
 const parseJson = (str) => {
   try {

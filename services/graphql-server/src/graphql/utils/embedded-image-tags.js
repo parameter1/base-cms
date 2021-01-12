@@ -1,5 +1,5 @@
-const { extractEmbeddedTags } = require('@base-cms/embedded-media');
-const { createAltFor, createSrcFor, createCaptionFor } = require('@base-cms/image');
+const { extractEmbeddedTags } = require('@parameter1/base-cms-embedded-media');
+const { createAltFor, createSrcFor, createCaptionFor } = require('@parameter1/base-cms-image');
 
 module.exports = async (body, { imageHost, basedb }) => {
   if (!body) return [];

@@ -1,4 +1,4 @@
-const { asObject } = require('@base-cms/utils');
+const { asObject } = require('@parameter1/base-cms-utils');
 
 module.exports = (input) => {
   const o = asObject(input);

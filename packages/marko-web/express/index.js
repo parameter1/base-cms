@@ -1,4 +1,4 @@
-const { buildRequestHeaders } = require('@base-cms/tenant-context');
+const { buildRequestHeaders } = require('@parameter1/base-cms-tenant-context');
 const cookieParser = require('cookie-parser');
 const express = require('express');
 const marko = require('marko/express');

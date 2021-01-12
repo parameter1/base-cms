@@ -1,9 +1,9 @@
 {
-  "name": "@base-cms/marko-web-leaders",
+  "name": "@parameter1/base-cms-marko-web-leaders",
   "version": "1.37.0",
   "description": "Marko Wrapper for the Leaders Program",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/packages/marko-web-leaders",
-  "author": "Jacob Bare <jacob@limit0.io>",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-leaders",
+  "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
   "scripts": {
     "lint": "yarn lint:js && yarn lint:css",
@@ -13,12 +13,12 @@
     "test": "yarn compile && yarn lint"
   },
   "dependencies": {
-    "@base-cms/leaders-program": "^1.37.0",
-    "graphql": "^14.5.4",
-    "graphql-tag": "^2.10.1"
+    "@parameter1/base-cms-leaders-program": "^1.37.0",
+    "graphql": "^14.7.0",
+    "graphql-tag": "^2.11.0"
   },
   "peerDependencies": {
-    "@base-cms/marko-web": "^1.0.0"
+    "@parameter1/base-cms-marko-web": "^2.0.0"
   },
   "publishConfig": {
     "access": "public"

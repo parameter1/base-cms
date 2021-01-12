@@ -1,4 +1,4 @@
-const { BaseDB } = require('@base-cms/db');
+const { BaseDB } = require('@parameter1/base-cms-db');
 
 const getProjection = require('../../utils/get-projection');
 const getGraphType = require('../../utils/get-graph-type');

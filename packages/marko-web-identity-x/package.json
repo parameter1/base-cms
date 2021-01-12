@@ -1,9 +1,9 @@
 {
-  "name": "@base-cms/marko-web-identity-x",
+  "name": "@parameter1/base-cms-marko-web-identity-x",
   "version": "1.37.0",
   "description": "Marko Wrapper for IdentityX",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/packages/marko-web-identity-x",
-  "author": "Josh Worden <josh@limit0.io>",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-identity-x",
+  "author": "Josh Worden <josh@parameter1.com>",
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ext .js --ext .vue --max-warnings 5 ./",
@@ -11,21 +11,21 @@
     "test": "yarn compile && yarn lint"
   },
   "dependencies": {
-    "@base-cms/object-path": "^1.37.0",
-    "@base-cms/utils": "^1.37.0",
-    "apollo-cache-inmemory": "^1.6.3",
-    "apollo-client": "^2.6.4",
-    "apollo-link-http": "^1.5.16",
+    "@parameter1/base-cms-object-path": "^1.37.0",
+    "@parameter1/base-cms-utils": "^1.37.0",
+    "apollo-cache-inmemory": "^1.6.6",
+    "apollo-client": "^2.6.10",
+    "apollo-link-http": "^1.5.17",
     "body-parser": "^1.19.0",
     "cookie": "0.3.1",
     "express": "^4.17.1",
-    "graphql-tag": "^2.10.1",
-    "moment": "^2.24.0",
+    "graphql-tag": "^2.11.0",
+    "moment": "^2.29.1",
     "node-fetch": "^2.6.1"
   },
   "peerDependencies": {
-    "@base-cms/marko-core": "^1.0.0",
-    "@base-cms/marko-web": "^1.0.0"
+    "@parameter1/base-cms-marko-core": "^2.0.0",
+    "@parameter1/base-cms-marko-web": "^2.0.0"
   },
   "publishConfig": {
     "access": "public"

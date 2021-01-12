@@ -1,7 +1,7 @@
 const {
   cleanEnv,
   validators,
-} = require('@base-cms/env');
+} = require('@parameter1/base-cms-env');
 
 const { nonemptystr } = validators;
 

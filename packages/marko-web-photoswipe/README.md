@@ -2,12 +2,12 @@
 
 ## Installation
 
-1. Include `@base-cms/marko-web-photoswipe` as a project/website dependency.
+1. Include `@parameter1/base-cms-marko-web-photoswipe` as a project/website dependency.
 
 2. Include the Browser plugin.
 ```js
 // your-site/browser/index.js
-import PhotoSwipe from '@base-cms/marko-web-photoswipe/browser';
+import PhotoSwipe from '@parameter1/base-cms-marko-web-photoswipe/browser';
 
 PhotoSwipe(Browser);
 
@@ -17,13 +17,13 @@ export default Browser;
 3. Include the styles.
 ```scss
 // your-site/server/styles/index.scss
-@import "../../node_modules/@base-cms/marko-web-photoswipe/scss/main";
+@import "../../node_modules/@parameter1/base-cms-marko-web-photoswipe/scss/main";
 ```
 
 4. If you're using the default theme (or something similar) you'll need to adjust the photoswipe z-index:
 ```scss
 $pswp__root-z-index: $theme-site-header-z-index + 1 !default;
-@import "../../node_modules/@base-cms/marko-web-photoswipe/scss/main";
+@import "../../node_modules/@parameter1/base-cms-marko-web-photoswipe/scss/main";
 ```
 
 ## Usage
@@ -41,7 +41,7 @@ You must specify a body gallery ID as well as an image selector.
 
 2. Immediately after this block, load the gallery component:
 ```marko
-import { getAsArray } from "@base-cms/object-path";
+import { getAsArray } from "@parameter1/base-cms-object-path";
 
 $ const images = resolved.getEdgeNodesFor("images");
 

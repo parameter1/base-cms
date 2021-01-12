@@ -1,5 +1,5 @@
 {
-  "taglib-id": "@base-cms/marko-web",
+  "taglib-id": "@parameter1/base-cms-marko-web",
   "taglib-imports": [
     "./components/marko.json"
   ]

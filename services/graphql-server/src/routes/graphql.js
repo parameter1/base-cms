@@ -1,9 +1,9 @@
 const { ApolloServer } = require('apollo-server-express');
-const { get } = require('@base-cms/object-path');
-const { getFromRequest } = require('@base-cms/tenant-context');
+const { get } = require('@parameter1/base-cms-object-path');
+const { getFromRequest } = require('@parameter1/base-cms-tenant-context');
 const { Router } = require('express');
-const { isObject } = require('@base-cms/utils');
-const { requestParser: canonicalRules } = require('@base-cms/canonical-path');
+const { isObject } = require('@parameter1/base-cms-utils');
+const { requestParser: canonicalRules } = require('@parameter1/base-cms-canonical-path');
 const ApolloNewrelicExtension = require('apollo-newrelic-extension');
 const createAuthContext = require('../auth-context/create');
 const createUserService = require('../user/create');

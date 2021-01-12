@@ -1,5 +1,5 @@
-const { get, getAsObject, getAsArray } = require('@base-cms/object-path');
-const { asObject } = require('@base-cms/utils');
+const { get, getAsObject, getAsArray } = require('@parameter1/base-cms-object-path');
+const { asObject } = require('@parameter1/base-cms-utils');
 
 class ResolvedNode {
   constructor(data) {

@@ -1,4 +1,4 @@
-const envalid = require('@base-cms/env');
+const envalid = require('@parameter1/base-cms-env');
 
 const {
   bool,

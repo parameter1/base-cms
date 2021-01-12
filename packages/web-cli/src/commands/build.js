@@ -1,5 +1,5 @@
-const logCmd = require('@base-cms/cli-utils/log-command');
-const cwd = require('@base-cms/cli-utils/get-cwd');
+const logCmd = require('@parameter1/base-cms-cli-utils/log-command');
+const cwd = require('@parameter1/base-cms-cli-utils/get-cwd');
 const build = require('../gulp/build');
 
 module.exports = ({ path }) => {

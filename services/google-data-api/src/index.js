@@ -1,5 +1,5 @@
 require('./newrelic');
-const { service } = require('@base-cms/micro');
+const { service } = require('@parameter1/base-cms-micro');
 const newrelic = require('./newrelic');
 const { PORT, EXPOSED_PORT } = require('./env');
 const pkg = require('../package.json');

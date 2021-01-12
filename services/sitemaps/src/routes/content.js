@@ -1,4 +1,4 @@
-const { asyncRoute, getDefaultContentTypes } = require('@base-cms/utils');
+const { asyncRoute, getDefaultContentTypes } = require('@parameter1/base-cms-utils');
 const createError = require('http-errors');
 const moment = require('moment');
 const gql = require('graphql-tag');

@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
-const { createClient } = require('@base-cms/express-apollo');
-const { buildRequestHeaders } = require('@base-cms/tenant-context');
+const { createClient } = require('@parameter1/base-cms-express-apollo');
+const { buildRequestHeaders } = require('@parameter1/base-cms-tenant-context');
 
 module.exports = ({
   uri,

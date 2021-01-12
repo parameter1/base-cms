@@ -1,8 +1,8 @@
 const fetch = require('node-fetch');
 const createError = require('http-errors');
-const { cleanPath } = require('@base-cms/utils');
-const { dasherize } = require('@base-cms/inflector');
-const { getAsObject } = require('@base-cms/object-path');
+const { cleanPath } = require('@parameter1/base-cms-utils');
+const { dasherize } = require('@parameter1/base-cms-inflector');
+const { getAsObject } = require('@parameter1/base-cms-object-path');
 const pkg = require('../package.json');
 
 const { isArray } = Array;

@@ -24,7 +24,7 @@ This repository uses Yarn workspaces for managing packages and services.
 - To add dependencies to a workspace run `scripts/workspace.sh [WORKSPACE_NAME] add [package]`
 - To remove dependencies from a workspace run `scripts/workspace.sh [WORKSPACE_NAME] remove [package]`
 
-The `WORKSPACE_NAME` is equivalent to the `name` field found in the `package.json` file of the package or service. For example, to add a package to the `graphql-server` service, run `scripts/workspace.sh @base-cms/graphql-server add [package]`
+The `WORKSPACE_NAME` is equivalent to the `name` field found in the `package.json` file of the package or service. For example, to add a package to the `graphql-server` service, run `scripts/workspace.sh @parameter1/base-cms-graphql-server add [package]`
 
 ## Yarn
 Do _NOT_ run Yarn from your local machine. Instead run Yarn commands using `scripts/yarn.sh [command]`

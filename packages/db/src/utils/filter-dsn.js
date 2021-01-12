@@ -4,7 +4,7 @@
  * @param {Connection} connection The MongoDB connection object.
  * @return {string} The filtered MongoDB connection URI.
  */
-const { get } = require('@base-cms/object-path');
+const { get } = require('@parameter1/base-cms-object-path');
 
 const filter = (connection) => {
   const url = get(connection, 's.url');

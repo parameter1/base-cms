@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import IconDash from '@base-cms/marko-web-icons/browser/dash.vue';
-import IconPlus from '@base-cms/marko-web-icons/browser/plus.vue';
-import IconThreeBars from '@base-cms/marko-web-icons/browser/three-bars.vue';
-import IconX from '@base-cms/marko-web-icons/browser/x.vue';
+import IconDash from '@parameter1/base-cms-marko-web-icons/browser/dash.vue';
+import IconPlus from '@parameter1/base-cms-marko-web-icons/browser/plus.vue';
+import IconThreeBars from '@parameter1/base-cms-marko-web-icons/browser/three-bars.vue';
+import IconX from '@parameter1/base-cms-marko-web-icons/browser/x.vue';
 
 const validateIcon = v => ['dash', 'plus', 'three-bars', 'x'].includes(v);
 

@@ -1,4 +1,4 @@
-const { createBaseDB, createMongoClient } = require('@base-cms/db');
+const { createBaseDB, createMongoClient } = require('@parameter1/base-cms-db');
 const pkg = require('../package.json');
 const { MONGO_DSN } = require('./env');
 

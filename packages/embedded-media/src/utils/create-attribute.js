@@ -1,5 +1,5 @@
-const { dasherize } = require('@base-cms/inflector');
-const { htmlEntities } = require('@base-cms/html');
+const { dasherize } = require('@parameter1/base-cms-inflector');
+const { htmlEntities } = require('@parameter1/base-cms-html');
 const {
   TAG_ATTR_PREFIX,
 } = require('../constants');

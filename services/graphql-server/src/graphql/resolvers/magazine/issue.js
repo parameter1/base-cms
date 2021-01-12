@@ -1,5 +1,5 @@
-const { BaseDB } = require('@base-cms/db');
-const { magazineIssue: canonicalPathFor } = require('@base-cms/canonical-path');
+const { BaseDB } = require('@parameter1/base-cms-db');
+const { magazineIssue: canonicalPathFor } = require('@parameter1/base-cms-canonical-path');
 const { createTitle, createDescription } = require('../../utils/magazine-issue');
 const connectionProjection = require('../../utils/connection-projection');
 const shouldCollate = require('../../utils/should-collate');

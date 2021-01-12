@@ -1,21 +1,21 @@
 {
-  "name": "@base-cms/marko-compiler",
+  "name": "@parameter1/base-cms-marko-compiler",
   "version": "1.37.0",
   "description": "A simple, CLI Marko template compiler.",
   "bin": {
     "basecms-marko-compile": "bin/compile.js"
   },
-  "repository": "https://github.com/base-cms/base-cms/tree/master/packages/marko-compiler",
-  "author": "Jacob Bare <jacob@limit0.io>",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-compiler",
+  "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ext .js --max-warnings 5 ./",
     "test": "yarn lint"
   },
   "dependencies": {
-    "glob": "^7.1.4",
+    "glob": "^7.1.6",
     "marko": "~4.20.0",
-    "yargs": "^14.1.0"
+    "yargs": "^14.2.3"
   },
   "publishConfig": {
     "access": "public"

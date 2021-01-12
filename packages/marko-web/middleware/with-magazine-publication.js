@@ -1,6 +1,6 @@
-const { asyncRoute } = require('@base-cms/utils');
-const { magazinePublication: loader } = require('@base-cms/web-common/page-loaders');
-const { blockMagazinePublication: queryFactory } = require('@base-cms/web-common/query-factories');
+const { asyncRoute } = require('@parameter1/base-cms-utils');
+const { magazinePublication: loader } = require('@parameter1/base-cms-web-common/page-loaders');
+const { blockMagazinePublication: queryFactory } = require('@parameter1/base-cms-web-common/query-factories');
 const PageNode = require('./page-node');
 
 module.exports = ({

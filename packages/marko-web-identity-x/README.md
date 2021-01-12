@@ -2,12 +2,12 @@
 
 ## Installation
 
-1. Include `@base-cms/marko-web-identity-x` as a project/website dependency.
+1. Include `@parameter1/base-cms-marko-web-identity-x` as a project/website dependency.
 
 2. Include IdentityX tenant configuration within your site
 ```js
 // your-site/config/identity-x.js
-const IdentityX = require('@base-cms/marko-web-identity-x/config');
+const IdentityX = require('@parameter1/base-cms-marko-web-identity-x/config');
 
 const config = new IdentityX({
   appId: '<MY-APPLICATION-ID>',
@@ -18,7 +18,7 @@ module.exports = config;
 3. Create an IdentityX router to load the IdentityX middleware.
 ```js
 // your-site/server/routes/identity-x.js
-const IdentityX = require('@base-cms/marko-web-identity-x');
+const IdentityX = require('@parameter1/base-cms-marko-web-identity-x');
 const config = require('../../config/identity-x');
 const authenticate = require('../templates/user/authenticate');
 const login = require('../templates/user/login');
@@ -74,7 +74,7 @@ module.exports = (app) => {
 5. Include the Browser plugin.
 ```js
 // your-site/browser/index.js
-import IdentityX from '@base-cms/marko-web-identity-x/browser';
+import IdentityX from '@parameter1/base-cms-marko-web-identity-x/browser';
 
 IdentityX(Browser);
 // ...
@@ -141,7 +141,7 @@ $ const { isRequired, accessLevels } = getAsObject(content, 'userRegistration');
 
 You can change the default IdentityX Vue components by passing them to the component loader in your site's browser config:
 ```diff
-import IdentityX from '@base-cms/marko-web-identity-x/browser';
+import IdentityX from '@parameter1/base-cms-marko-web-identity-x/browser';
 + import MyLoginComponent from './my-login-component.vue';
 
 -IdentityX(Browser);

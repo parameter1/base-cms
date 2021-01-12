@@ -1,5 +1,5 @@
 const objectHash = require('object-hash');
-const { MongoDB } = require('@base-cms/db');
+const { MongoDB } = require('@parameter1/base-cms-db');
 
 const { ObjectID } = MongoDB;
 const { keys, values } = Object;

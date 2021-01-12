@@ -1,20 +1,20 @@
 {
-  "name": "@base-cms/express-apollo",
+  "name": "@parameter1/base-cms-express-apollo",
   "version": "1.37.0",
   "description": "Apollo GraphQL SSR Client for BaseCMS+Express apps",
   "main": "src/index.js",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/packages/express-apollo",
-  "author": "Jacob Bare <jacob@limit0.io>",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/express-apollo",
+  "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ext .js --max-warnings 5 ./",
     "test": "yarn lint"
   },
   "dependencies": {
-    "@base-cms/graphql-fragment-types": "^1.37.0",
-    "apollo-cache-inmemory": "^1.6.3",
-    "apollo-client": "^2.6.4",
-    "apollo-link-http": "^1.5.16",
+    "@parameter1/base-cms-graphql-fragment-types": "^1.37.0",
+    "apollo-cache-inmemory": "^1.6.6",
+    "apollo-client": "^2.6.10",
+    "apollo-link-http": "^1.5.17",
     "node-fetch": "^2.6.1"
   },
   "peerDependencies": {

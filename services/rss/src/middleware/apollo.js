@@ -1,5 +1,5 @@
-const { createClient } = require('@base-cms/express-apollo');
-const { passRequestHeaders } = require('@base-cms/tenant-context');
+const { createClient } = require('@parameter1/base-cms-express-apollo');
+const { passRequestHeaders } = require('@parameter1/base-cms-tenant-context');
 const { GRAPHQL_URI } = require('../env');
 const pkg = require('../../package.json');
 

@@ -1,5 +1,5 @@
-const { titleize } = require('@base-cms/inflector');
-const { htmlEntities, stripHtml } = require('@base-cms/html');
+const { titleize } = require('@parameter1/base-cms-inflector');
+const { htmlEntities, stripHtml } = require('@parameter1/base-cms-html');
 
 const altFrom = (value = '') => {
   if (!value) return '';
