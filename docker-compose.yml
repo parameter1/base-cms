@@ -101,12 +101,12 @@ services:
       CDN_ASSET_HOSTNAME: ${CDN_ASSET_HOSTNAME-cdn.baseplatform.io}
       CDN_IMAGE_HOSTNAME: ${CDN_IMAGE_HOSTNAME-base.imgix.net}
       PORT: 80
-      EXPOSED_PORT: 10002
+      EXPOSED_PORT: 10100
     depends_on:
       - mongodb
       - google-data-api
     ports:
-      - "10002:80"
+      - "10100:80"
 
   graphql-server-leonis:
     << : *node
@@ -124,12 +124,12 @@ services:
       TOKEN_SECRET: ${TOKEN_SECRET-ThisValueIsNotSecretChangeIt}
       TOKEN_NAMESPACE: ${TOKEN_NAMESPACE-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee}
       PORT: 80
-      EXPOSED_PORT: 11001
+      EXPOSED_PORT: 10101
     depends_on:
       - mongodb
       - google-data-api
     ports:
-      - "11001:80"
+      - "10101:80"
 
   graphql-server-tauron:
     << : *node
@@ -147,12 +147,12 @@ services:
       TOKEN_SECRET: ${TOKEN_SECRET-ThisValueIsNotSecretChangeIt}
       TOKEN_NAMESPACE: ${TOKEN_NAMESPACE-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee}
       PORT: 80
-      EXPOSED_PORT: 11000
+      EXPOSED_PORT: 10102
     depends_on:
       - mongodb
       - google-data-api
     ports:
-      - "11000:80"
+      - "10102:80"
 
   graphql-server-virgon:
     << : *node
@@ -170,12 +170,12 @@ services:
       TOKEN_SECRET: ${TOKEN_SECRET-ThisValueIsNotSecretChangeIt}
       TOKEN_NAMESPACE: ${TOKEN_NAMESPACE-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee}
       PORT: 80
-      EXPOSED_PORT: 11001
+      EXPOSED_PORT: 10103
     depends_on:
       - mongodb
       - google-data-api
     ports:
-      - "11001:80"
+      - "10103:80"
 
   # RSS
 
@@ -189,11 +189,11 @@ services:
       GRAPHQL_URI: http://graphql-server
       ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
       PORT: 80
-      EXPOSED_PORT: 10011
+      EXPOSED_PORT: 10200
     depends_on:
       - graphql-server
     ports:
-      - "10011:80"
+      - "10200:80"
 
   rss-leonis:
     << : *node
@@ -205,11 +205,11 @@ services:
       GRAPHQL_URI: http://graphql-server-leonis
       ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
       PORT: 80
-      EXPOSED_PORT: 11002
+      EXPOSED_PORT: 10201
     depends_on:
       - graphql-server-leonis
     ports:
-      - "11002:80"
+      - "10201:80"
 
   rss-tauron:
     << : *node
@@ -221,11 +221,11 @@ services:
       GRAPHQL_URI: http://graphql-server-tauron
       ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
       PORT: 80
-      EXPOSED_PORT: 11002
+      EXPOSED_PORT: 10202
     depends_on:
       - graphql-server-tauron
     ports:
-      - "11002:80"
+      - "10202:80"
 
   rss-virgon:
     << : *node
@@ -237,11 +237,11 @@ services:
       GRAPHQL_URI: http://graphql-server-virgon
       ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
       PORT: 80
-      EXPOSED_PORT: 11003
+      EXPOSED_PORT: 10203
     depends_on:
       - graphql-server-virgon
     ports:
-      - "11003:80"
+      - "10203:80"
 
   # SITEMAPS
 
@@ -255,11 +255,11 @@ services:
       GRAPHQL_URI: http://graphql-server
       ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
       PORT: 80
-      EXPOSED_PORT: 10009
+      EXPOSED_PORT: 10300
     depends_on:
       - graphql-server
     ports:
-      - "10009:80"
+      - "10300:80"
 
   sitemaps-leonis:
     << : *node
@@ -271,11 +271,11 @@ services:
       GRAPHQL_URI: http://graphql-server-leonis
       ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
       PORT: 80
-      EXPOSED_PORT: 11005
+      EXPOSED_PORT: 10301
     depends_on:
       - graphql-server-leonis
     ports:
-      - "11005:80"
+      - "10301:80"
 
   sitemaps-tauron:
     << : *node
@@ -287,11 +287,11 @@ services:
       GRAPHQL_URI: http://graphql-server-tauron
       ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
       PORT: 80
-      EXPOSED_PORT: 11005
+      EXPOSED_PORT: 10302
     depends_on:
       - graphql-server-tauron
     ports:
-      - "11005:80"
+      - "10302:80"
 
   sitemaps-virgon:
     << : *node
@@ -303,22 +303,23 @@ services:
       GRAPHQL_URI: http://graphql-server-virgon
       ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
       PORT: 80
-      EXPOSED_PORT: 11006
+      EXPOSED_PORT: 10303
     depends_on:
       - graphql-server-virgon
     ports:
-      - "11006:80"
+      - "10303:80"
 
-  # EXAMPLES
+  # EXAMPLES / OTHER
+
   example-leaders-program:
     << : *node
     working_dir: /base-cms/packages/leaders-program
     entrypoint: ["/base-cms/node_modules/.bin/vue-cli-service"]
-    command: ["serve", "src/dev.js", "--port", "11164"]
+    command: ["serve", "src/dev.js", "--port", "10400"]
     environment:
       <<: *env
     ports:
-      - "11164:11164"
+      - "10400:10400"
 
   hooks:
     << : *node
@@ -335,7 +336,7 @@ services:
     depends_on:
       - mongodb
     ports:
-      - "10012:80"
+      - "10401:80"
 
   oembed:
     << : *node
@@ -346,7 +347,7 @@ services:
       <<: *env-newrelic
       EMBEDLY_API_KEY: ${EMBEDLY_API_KEY-}
     ports:
-      - "10013:80"
+      - "10402:80"
 
   google-data-api:
     << : *node
@@ -358,11 +359,11 @@ services:
       GOOGLE_DATA_MONGO_DSN: ${GOOGLE_DATA_MONGO_DSN-mongodb://mongodb}
       GOOGLE_API_KEY: ${GOOGLE_API_KEY}
       PORT: 80
-      EXPOSED_PORT: 10014
+      EXPOSED_PORT: 10403
     depends_on:
       - mongodb
     ports:
-      - "10014:80"
+      - "10403:80"
 
   omail-link-processor-virgon:
     <<: *node
@@ -373,11 +374,11 @@ services:
       <<: *env-newrelic
       GRAPHQL_URI: ${GRAPHQL_URI-http://graphql-server-virgon}
       PORT: 80
-      EXPOSED_PORT: 10015
+      EXPOSED_PORT: 10404
     depends_on:
       - graphql-server-virgon
     ports:
-      - "10015:80"
+      - "10404:80"
 
 
 volumes:
