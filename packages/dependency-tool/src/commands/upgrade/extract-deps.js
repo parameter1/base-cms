@@ -5,7 +5,7 @@ const { keys } = Object;
 
 module.exports = pkg => depTypes.reduce((set, depType) => {
   keys(getAsObject(pkg, depType))
-    .filter(name => /^@base-cms\//.test(name))
+    .filter(name => /^@parameter1\/base-cms-/.test(name))
     .forEach(name => set.add(name));
   return set;
 }, new Set());

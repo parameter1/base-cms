@@ -1,11 +1,11 @@
 {
   "name": "@parameter1/base-cms-dependency-tool",
   "version": "1.37.0",
-  "description": "Command line tool for managing @base-cms project dependencies.",
+  "description": "Command line tool for managing BaseCMS project dependencies.",
   "author": "Jacob Bare <jacob@limit0.io>",
   "main": "src/index.js",
   "bin": {
-    "basecms-dependencies": "src/index.js"
+    "p1-basecms-dependencies": "src/index.js"
   },
   "license": "MIT",
   "repository": "https://github.com/base-cms/parameter1/tree/master/packages/dependency-tool",
