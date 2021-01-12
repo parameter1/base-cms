@@ -18,8 +18,8 @@
     "@sendgrid/mail": "^6.4.0",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "graphql": "^14.5.4",
-    "graphql-tag": "^2.10.1",
+    "graphql": "^14.7.0",
+    "graphql-tag": "^2.11.0",
     "node-fetch": "^2.6.1",
     "vue-recaptcha": "^1.2.0"
   },
