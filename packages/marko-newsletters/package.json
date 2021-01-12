@@ -32,7 +32,7 @@
     "recursive-readdir": "^2.2.2"
   },
   "peerDependencies": {
-    "@parameter1/base-cms-marko-core": "^1.0.0"
+    "@parameter1/base-cms-marko-core": "^2.0.0"
   },
   "publishConfig": {
     "access": "public"
