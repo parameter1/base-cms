@@ -8,7 +8,7 @@
     "basecms-website": "bin/cli.js"
   },
   "license": "MIT",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/packages/web-cli",
+  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/web-cli",
   "scripts": {
     "lint": "eslint --ext .js --max-warnings 5 ./",
     "test": "yarn lint"

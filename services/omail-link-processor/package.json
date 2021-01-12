@@ -2,7 +2,7 @@
   "name": "@base-cms/omail-link-processor",
   "version": "1.50.1",
   "author": "Jacob Bare <jacob@limit0.io>",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/services/omail-link-processor",
+  "repository": "https://github.com/base-cms/parameter1/tree/master/services/omail-link-processor",
   "license": "MIT",
   "private": true,
   "scripts": {

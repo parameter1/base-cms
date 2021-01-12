@@ -4,7 +4,7 @@
   "private": true,
   "description": "The BaseCMS Management Interface",
   "author": "Jacob Bare <jacob@limit0.io>",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/packages/manage",
+  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/manage",
   "license": "MIT",
   "directories": {
     "doc": "doc",

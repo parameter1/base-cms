@@ -4,7 +4,7 @@
   "description": "Common HTML utilities for BaseCMS projects.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@limit0.io>",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/packages/html",
+  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/html",
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ext .js --max-warnings 5 ./",

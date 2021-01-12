@@ -3,7 +3,7 @@
   "version": "1.42.1",
   "description": "The deployment tool for use with @base-cms/marko-web",
   "main": "src/index.js",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/packages/website-deployment-tool",
+  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/website-deployment-tool",
   "author": "Josh Worden <josh@limit0.io>",
   "license": "MIT",
   "dependencies": {

@@ -8,7 +8,7 @@
     "basecms-dependencies": "src/index.js"
   },
   "license": "MIT",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/packages/dependency-tool",
+  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/dependency-tool",
   "scripts": {
     "lint": "eslint --ext .js --max-warnings 5 ./",
     "test": "yarn lint"

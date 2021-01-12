@@ -4,7 +4,7 @@
   "description": "Utility functions for BaseCMS CLI projects.",
   "main": "src/index.js",
   "author": "Josh Worden <josh@limit0.io>",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/packages/cli-utils",
+  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/cli-utils",
   "license": "MIT",
   "dependencies": {
     "chalk": "^2.4.2",

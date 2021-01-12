@@ -4,7 +4,7 @@
   "description": "The BaseCMS Google Data API service using micro.",
   "main": "src/index.js",
   "author": "Josh Worden <josh@limit0.io>",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/services/google-data-api",
+  "repository": "https://github.com/base-cms/parameter1/tree/master/services/google-data-api",
   "license": "MIT",
   "private": true,
   "scripts": {

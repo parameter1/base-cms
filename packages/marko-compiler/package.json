@@ -5,7 +5,7 @@
   "bin": {
     "basecms-marko-compile": "bin/compile.js"
   },
-  "repository": "https://github.com/base-cms/base-cms/tree/master/packages/marko-compiler",
+  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/marko-compiler",
   "author": "Jacob Bare <jacob@limit0.io>",
   "license": "MIT",
   "scripts": {

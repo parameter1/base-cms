@@ -4,7 +4,7 @@
   "description": "Google Tag Manager (GAM) Marko components for BaseCMS websites",
   "author": "Jacob Bare <jacob@limit0.io>",
   "license": "MIT",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/packages/marko-web-gtm",
+  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/marko-web-gtm",
   "scripts": {
     "lint": "eslint --ext .js --ext .vue --max-warnings 5 ./",
     "compile": "basecms-marko-compile compile --dir ./ --silent true",

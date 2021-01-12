@@ -3,7 +3,7 @@
   "version": "1.37.0",
   "description": "Apollo GraphQL SSR Client for BaseCMS+Express apps",
   "main": "src/index.js",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/packages/express-apollo",
+  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/express-apollo",
   "author": "Jacob Bare <jacob@limit0.io>",
   "license": "MIT",
   "scripts": {

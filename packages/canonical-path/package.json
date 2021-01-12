@@ -4,7 +4,7 @@
   "description": "Canonical path library for BaseCMS projects.",
   "main": "src/index.js",
   "author": "Josh Worden <josh@limit0.io>",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/packages/canonical-path",
+  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/canonical-path",
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ext .js --max-warnings 5 ./",

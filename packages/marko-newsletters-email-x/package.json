@@ -4,7 +4,7 @@
   "description": "EmailX Marko components for BaseCMS newsletters.",
   "author": "Jacob Bare <jacob@limit0.io>",
   "license": "MIT",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/packages/marko-newsletters-email-x",
+  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/marko-newsletters-email-x",
   "scripts": {
     "lint": "eslint --ext .js --max-warnings 5 ./",
     "compile": "basecms-marko-compile compile --dir ./ --silent true",

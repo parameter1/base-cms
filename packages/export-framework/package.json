@@ -5,7 +5,7 @@
   "author": "Josh Worden <josh@limit0.io>",
   "main": "src/index.js",
   "license": "MIT",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/packages/export-framework",
+  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/export-framework",
   "scripts": {
     "lint": "eslint --ext .js --max-warnings 5 ./",
     "test": "yarn lint"

@@ -4,7 +4,7 @@
   "description": "The BaseCMS RSS service",
   "main": "src/index.js",
   "author": "Josh Worden <josh@limit0.io>",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/services/rss",
+  "repository": "https://github.com/base-cms/parameter1/tree/master/services/rss",
   "license": "MIT",
   "private": true,
   "scripts": {

@@ -4,7 +4,7 @@
   "description": "A Base4 REST API client.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@limit0.io>",
-  "repository": "https://github.com/base-cms/base-cms/tree/master/packages/base4-rest-api",
+  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/base4-rest-api",
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ext .js --max-warnings 5 ./",
