@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-tooling",
-  "version": "1.37.0",
+  "version": "2.0.0",
   "description": "Generic tooling helpers for use with other BaseCMS packages.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",

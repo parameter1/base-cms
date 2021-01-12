@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-express-apollo",
-  "version": "1.37.0",
+  "version": "2.0.0",
   "description": "Apollo GraphQL SSR Client for BaseCMS+Express apps",
   "main": "src/index.js",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/express-apollo",
@@ -11,7 +11,7 @@
     "test": "yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-graphql-fragment-types": "^1.37.0",
+    "@parameter1/base-cms-graphql-fragment-types": "^2.0.0",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
     "apollo-link-http": "^1.5.17",

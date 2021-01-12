@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-embedly",
-  "version": "1.37.0",
+  "version": "2.0.0",
   "description": "BaseCMS embedly API library.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
