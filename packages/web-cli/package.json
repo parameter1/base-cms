@@ -2,7 +2,7 @@
   "name": "@parameter1/base-cms-web-cli",
   "version": "1.49.0",
   "description": "Command line interface for BaseCMS+Marko websites",
-  "author": "Jacob Bare <jacob@limit0.io>",
+  "author": "Jacob Bare <jacob@parameter1.com>",
   "main": "src/index.js",
   "bin": {
     "basecms-website": "bin/cli.js"

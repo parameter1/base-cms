@@ -2,7 +2,7 @@
   "name": "@parameter1/base-cms-marko-web-gtm",
   "version": "1.37.0",
   "description": "Google Tag Manager (GAM) Marko components for BaseCMS websites",
-  "author": "Jacob Bare <jacob@limit0.io>",
+  "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
   "repository": "https://github.com/base-cms/parameter1/tree/master/packages/marko-web-gtm",
   "scripts": {

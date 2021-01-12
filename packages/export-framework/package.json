@@ -2,7 +2,7 @@
   "name": "@parameter1/base-cms-export-framework",
   "version": "1.49.0",
   "description": "Core framework for BaseCMS Exports.",
-  "author": "Josh Worden <josh@limit0.io>",
+  "author": "Josh Worden <josh@parameter1.com>",
   "main": "src/index.js",
   "license": "MIT",
   "repository": "https://github.com/base-cms/parameter1/tree/master/packages/export-framework",

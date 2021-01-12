@@ -2,7 +2,7 @@
   "name": "@parameter1/base-cms-marko-web-theme-default",
   "version": "1.41.1",
   "description": "Default theme for Marko BaseCMS websites",
-  "author": "Jacob Bare <jacob@limit0.io>",
+  "author": "Jacob Bare <jacob@parameter1.com>",
   "main": "index.js",
   "license": "MIT",
   "repository": "https://github.com/base-cms/parameter1/tree/master/packages/marko-web-theme-default",

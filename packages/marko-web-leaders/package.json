@@ -3,7 +3,7 @@
   "version": "1.37.0",
   "description": "Marko Wrapper for the Leaders Program",
   "repository": "https://github.com/base-cms/parameter1/tree/master/packages/marko-web-leaders",
-  "author": "Jacob Bare <jacob@limit0.io>",
+  "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
   "scripts": {
     "lint": "yarn lint:js && yarn lint:css",

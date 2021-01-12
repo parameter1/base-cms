@@ -2,7 +2,7 @@
   "name": "@parameter1/base-cms-marko-newsletters",
   "version": "1.50.0",
   "description": "Core Marko+Express components for BaseCMS newsletter templates",
-  "author": "Jacob Bare <jacob@limit0.io>",
+  "author": "Jacob Bare <jacob@parameter1.com>",
   "main": "index.js",
   "license": "MIT",
   "repository": "https://github.com/base-cms/parameter1/tree/master/packages/marko-newsletters",

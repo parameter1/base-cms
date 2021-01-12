@@ -2,7 +2,7 @@
   "name": "@parameter1/base-cms-newsletter-cli",
   "version": "1.37.0",
   "description": "Command line interface for BaseCMS+Marko newsletters.",
-  "author": "Jacob Bare <jacob@limit0.io>",
+  "author": "Jacob Bare <jacob@parameter1.com>",
   "main": "src/index.js",
   "bin": {
     "basecms-newsletters": "bin/cli.js"
