@@ -1,7 +1,0 @@
-#import '@parameter1/base-cms-manage/gql/fragments/content/edit'
-
-query ContentEdit($input: ContentQueryInput!) {
-  content(input: $input) {
-    ...ContentEditFragment
-  }
-}
