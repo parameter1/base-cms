@@ -20,7 +20,7 @@
     "cookie": "0.3.1",
     "express": "^4.17.1",
     "graphql-tag": "^2.11.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.1",
     "node-fetch": "^2.6.1"
   },
   "peerDependencies": {

@@ -13,7 +13,7 @@
   "dependencies": {
     "@parameter1/base-cms-object-path": "^1.37.0",
     "@parameter1/base-cms-utils": "^1.37.0",
-    "moment": "^2.24.0"
+    "moment": "^2.29.1"
   },
   "peerDependencies": {
     "@parameter1/base-cms-marko-core": "^1.0.0"
