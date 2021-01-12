@@ -32,6 +32,7 @@ const {
 } = require('../../utils/content');
 const contentTeaser = require('../../utils/content-teaser');
 const googleDataApiClient = require('../../../google-data-api-client');
+const SiteContext = require('../../../site-context');
 
 const retrieveYoutubePlaylistId = async ({ youtube }) => {
   const playlistId = get(youtube, 'playlistId');
@@ -234,10 +235,11 @@ module.exports = {
       const { enableLinkUrl } = input;
       const { site, load, basedb } = ctx;
       if (!site.exists()) throw new UserInputError('A website context must be set to generate `Content.siteContext` fields.');
-      const path = await canonicalPathFor(content, ctx, { enableLinkUrl });
+
       return {
-        path: () => path,
-        url: () => {
+        path: () => canonicalPathFor(content, ctx, { enableLinkUrl }),
+        url: async () => {
+          const path = await canonicalPathFor(content, ctx, { enableLinkUrl });
           if (/^http/i.test(path)) return path;
           return `${site.get('origin')}${path}`;
         },
@@ -245,21 +247,36 @@ module.exports = {
           const canonicalUrl = get(content, 'mutations.Website.canonicalUrl');
           // Return the canonical URL when explicitally set on content.
           if (canonicalUrl) return canonicalUrl;
-          const projection = { alias: 1, 'site.$id': 1 };
-          const ref = BaseDB.get(content, 'mutations.Website.primarySection');
-          const id = BaseDB.extractRefId(ref);
-          const section = (id) ? await load('websiteSection', id, projection, { status: 1 }) : await loadHomeSection({
-            basedb,
-            siteId: site.id(),
-            status: 'active',
-            projection,
-          });
 
-          const owningSiteId = section ? BaseDB.extractRefId(section.site) : site.id();
-          const owningSite = `${owningSiteId}` === `${site.id()}` ? site.obj() : await load('platformProduct', owningSiteId, { host: 1 }, { type: 'Site' });
+          const primarySectionRef = BaseDB.get(content, 'mutations.Website.primarySection');
+          const primarySectionId = BaseDB.extractRefId(primarySectionRef);
+          const sectionProjection = { alias: 1, 'site.$id': 1 };
+
+          const primarySection = primarySectionId
+            ? await load('websiteSection', primarySectionId, sectionProjection, { status: 1 })
+            : await loadHomeSection({
+              basedb,
+              siteId: site.id(),
+              status: 'active',
+              projection: sectionProjection,
+            });
+
+          const owningSiteId = primarySection
+            ? BaseDB.extractRefId(primarySection.site)
+            : site.id();
+
+          const owningSite = `${owningSiteId}` === `${site.id()}`
+            ? site.obj()
+            : await load('platformProduct', owningSiteId, { host: 1 }, { type: 'Site' });
+
+          const canonicalPath = await canonicalPathFor(content, {
+            ...ctx,
+            site: new SiteContext(owningSite),
+          }, { enableLinkUrl });
+
 
           const origin = `https://${owningSite.host}`;
-          return `${origin}/${cleanPath(path)}`;
+          return `${origin}/${cleanPath(canonicalPath)}`;
         },
       };
     },
