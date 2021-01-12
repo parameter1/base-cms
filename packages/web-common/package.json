@@ -16,7 +16,7 @@
     "@parameter1/base-cms-utils": "^1.37.0",
     "graphql": "^14.7.0",
     "graphql-tag": "^2.11.0",
-    "http-errors": "^1.7.3"
+    "http-errors": "^1.8.0"
   },
   "publishConfig": {
     "access": "public"
