@@ -108,6 +108,29 @@ services:
     ports:
       - "10002:80"
 
+  graphql-server-leonis:
+    << : *node
+    working_dir: /base-cms/services/graphql-server
+    entrypoint: ["/base-cms/node_modules/.bin/gulp"]
+    environment:
+      <<: *env
+      <<: *env-newrelic
+      GRAPHQL_PLAYGROUND_ENABLED: 1
+      MONGO_DSN: ${MONGO_DSN_LEONIS-mongodb://mongodb:27017}
+      ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
+      ENGINE_API_KEY: ${ENGINE_API_KEY-(unset)}
+      BASE4_REST_USERNAME: ${BASE4_REST_USERNAME-}
+      BASE4_REST_PASSWORD: ${BASE4_REST_PASSWORD-}
+      TOKEN_SECRET: ${TOKEN_SECRET-ThisValueIsNotSecretChangeIt}
+      TOKEN_NAMESPACE: ${TOKEN_NAMESPACE-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee}
+      PORT: 80
+      EXPOSED_PORT: 11001
+    depends_on:
+      - mongodb
+      - google-data-api
+    ports:
+      - "11001:80"
+
   graphql-server-tauron:
     << : *node
     working_dir: /base-cms/services/graphql-server
@@ -172,6 +195,22 @@ services:
     ports:
       - "10011:80"
 
+  rss-leonis:
+    << : *node
+    working_dir: /base-cms/services/rss
+    command: ["/base-cms/node_modules/.bin/gulp"]
+    environment:
+      <<: *env
+      <<: *env-newrelic
+      GRAPHQL_URI: http://graphql-server-leonis
+      ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
+      PORT: 80
+      EXPOSED_PORT: 11002
+    depends_on:
+      - graphql-server-leonis
+    ports:
+      - "11002:80"
+
   rss-tauron:
     << : *node
     working_dir: /base-cms/services/rss
@@ -221,6 +260,22 @@ services:
       - graphql-server
     ports:
       - "10009:80"
+
+  sitemaps-leonis:
+    << : *node
+    working_dir: /base-cms/services/sitemaps
+    command: ["/base-cms/node_modules/.bin/gulp"]
+    environment:
+      <<: *env
+      <<: *env-newrelic
+      GRAPHQL_URI: http://graphql-server-leonis
+      ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
+      PORT: 80
+      EXPOSED_PORT: 11005
+    depends_on:
+      - graphql-server-leonis
+    ports:
+      - "11005:80"
 
   sitemaps-tauron:
     << : *node
