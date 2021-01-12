@@ -23,7 +23,7 @@
     "nocache": "^2.1.0",
     "node-fetch": "^2.6.1",
     "pretty": "^2.0.0",
-    "validator": "^13.0.0"
+    "validator": "^13.5.2"
   },
   "devDependencies": {
     "gulp": "^4.0.2",

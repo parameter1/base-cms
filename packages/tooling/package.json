@@ -11,8 +11,8 @@
     "test": "yarn lint"
   },
   "dependencies": {
-    "envalid": "^5.0.0",
-    "validator": "^11.0.0"
+    "envalid": "^6.0.2",
+    "validator": "^11.1.0"
   },
   "publishConfig": {
     "access": "public"

@@ -29,7 +29,7 @@
     "gulp-cached": "^1.1.1",
     "gulp-eslint": "^5.0.0",
     "lerna": "^3.22.1",
-    "mocha": "^6.2.0",
+    "mocha": "^6.2.3",
     "rimraf": "^2.7.1",
     "stylelint": "^10.1.0",
     "stylelint-config-twbs-bootstrap": "^0.4.0"

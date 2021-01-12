@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@parameter1/base-cms-env": "^1.37.0",
-    "@octokit/rest": "^16.28.2",
+    "@octokit/rest": "^16.43.2",
     "numeral": "^2.0.6"
   },
   "publishConfig": {

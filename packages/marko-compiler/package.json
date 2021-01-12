@@ -13,7 +13,7 @@
     "test": "yarn lint"
   },
   "dependencies": {
-    "glob": "^7.1.4",
+    "glob": "^7.1.6",
     "marko": "~4.20.0",
     "yargs": "^14.2.3"
   },

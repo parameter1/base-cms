@@ -15,7 +15,7 @@
   "dependencies": {
     "@parameter1/base-cms-object-path": "^1.37.0",
     "@parameter1/base-cms-utils": "^1.37.0",
-    "scrollmagic": "^2.0.7"
+    "scrollmagic": "^2.0.8"
   },
   "peerDependencies": {
     "@parameter1/base-cms-marko-core": "^1.0.0",
@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^6.2.0"
+    "mocha": "^6.2.3"
   },
   "publishConfig": {
     "access": "public"

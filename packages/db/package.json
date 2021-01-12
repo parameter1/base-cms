@@ -14,7 +14,7 @@
     "@parameter1/base-cms-async": "^1.37.0",
     "@parameter1/base-cms-object-path": "^1.37.0",
     "@parameter1/base-cms-utils": "^1.37.0",
-    "base64-url": "^2.3.2",
+    "base64-url": "^2.3.3",
     "deepmerge": "^3.3.0",
     "mongodb": "^3.6.3",
     "mongodb-extended-json": "1.10.1",
