@@ -32,7 +32,7 @@
     "html2plaintext": "^2.1.2",
     "inquirer": "^6.5.2",
     "js-yaml": "^3.13.1",
-    "mongodb": "^3.1.10",
+    "mongodb": "^3.6.3",
     "progress": "^2.0.3"
   }
 }
