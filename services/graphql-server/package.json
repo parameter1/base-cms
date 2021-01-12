@@ -4,7 +4,7 @@
   "description": "The BaseCMS GraphQL server using Apollo and Express.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
-  "repository": "https://github.com/base-cms/parameter1/tree/master/services/graphql-server",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/services/graphql-server",
   "license": "MIT",
   "private": true,
   "scripts": {

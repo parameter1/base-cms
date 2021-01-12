@@ -4,7 +4,7 @@
   "description": "Omail (Omeda) Marko components for BaseCMS newsletters.",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
-  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/marko-newsletters-omail",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-newsletters-omail",
   "scripts": {
     "compile": "basecms-marko-compile compile --dir ./ --silent true",
     "test": "yarn compile"

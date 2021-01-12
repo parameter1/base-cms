@@ -4,7 +4,7 @@
   "description": "Utility functions for accessing JavaScript objects by path.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
-  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/object-path",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/object-path",
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ext .js --max-warnings 5 ./",

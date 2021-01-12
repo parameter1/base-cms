@@ -3,7 +3,7 @@
   "version": "1.37.0",
   "description": "Service registration and client library for Micro(services).",
   "main": "src/index.js",
-  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/micro",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/micro",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
   "scripts": {

@@ -4,7 +4,7 @@
   "description": "BaseCMS embedly API library.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
-  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/embedly",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/embedly",
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ext .js --max-warnings 5 ./",

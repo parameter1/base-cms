@@ -3,7 +3,7 @@
   "version": "1.43.0",
   "description": "The deployment tool for use with @parameter1/base-cms-marko-newsletters",
   "main": "src/index.js",
-  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/newsletter-deployment-tool",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/newsletter-deployment-tool",
   "author": "Josh Worden <josh@parameter1.com>",
   "license": "MIT",
   "dependencies": {

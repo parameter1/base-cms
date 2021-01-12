@@ -4,7 +4,7 @@
   "description": "Google Ad Manager (GAM) Marko components for BaseCMS websites",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
-  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/marko-web-gam",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-gam",
   "scripts": {
     "lint": "yarn lint:js && yarn lint:css",
     "lint:js": "eslint --ext .js --ext .vue --max-warnings 5 ./",

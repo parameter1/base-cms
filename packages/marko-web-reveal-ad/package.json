@@ -4,7 +4,7 @@
   "description": "Custom Reveal Ad Marko/Vue components for BaseCMS websites",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
-  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/marko-web-reveal-ad",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-reveal-ad",
   "scripts": {
     "lint": "yarn lint:js && yarn lint:css",
     "lint:js": "eslint --ext .js --ext .vue --max-warnings 5 ./",

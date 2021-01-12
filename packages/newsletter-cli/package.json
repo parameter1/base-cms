@@ -8,7 +8,7 @@
     "basecms-newsletters": "bin/cli.js"
   },
   "license": "MIT",
-  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/newsletter-cli",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/newsletter-cli",
   "scripts": {
     "lint": "eslint --ext .js --max-warnings 5 ./",
     "test": "yarn lint"

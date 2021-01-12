@@ -4,7 +4,7 @@
   "description": "Common utilities, queries and functions for BaseCMS website projects.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
-  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/web-common",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/web-common",
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ext .js --max-warnings 5 ./",

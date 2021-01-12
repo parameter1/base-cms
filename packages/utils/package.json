@@ -4,7 +4,7 @@
   "description": "Utility functions for JavaScript projects.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
-  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/utils",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/utils",
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ext .js --max-warnings 5 ./",

@@ -5,7 +5,7 @@
   "author": "Jacob Bare <jacob@parameter1.com>",
   "main": "index.js",
   "license": "MIT",
-  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/marko-web-theme-default",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-theme-default",
   "scripts": {
     "lint": "yarn lint:js && yarn lint:css",
     "lint:js": "eslint --ext .js --ext .vue --max-warnings 5 ./",

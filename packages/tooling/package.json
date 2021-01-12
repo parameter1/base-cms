@@ -4,7 +4,7 @@
   "description": "Generic tooling helpers for use with other BaseCMS packages.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
-  "repository": "https://github.com/base-cms/parameter1/tree/master/packages/tooling",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/tooling",
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ext .js --max-warnings 5 ./",
