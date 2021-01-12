@@ -24,6 +24,6 @@
     "helmet": "^3.21.0",
     "http-errors": "^1.7.3",
     "moment": "^2.29.1",
-    "newrelic": "^6.12.1"
+    "newrelic": "^6.14.0"
   }
 }
