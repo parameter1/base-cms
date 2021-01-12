@@ -21,7 +21,7 @@ const lerna = require('../lerna.json');
 
 const { log } = console;
 const { TRAVIS_TAG } = process.env;
-const DOCKER_ORG = process.env.DOCKER_ORG || 'basecms';
+const DOCKER_ORG = process.env.DOCKER_ORG || 'parameter1';
 
 const version = `v${lerna.version}`;
 const service = process.argv[2];

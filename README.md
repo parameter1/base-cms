@@ -1,7 +1,7 @@
 # BaseCMS
-[![Build Status](https://img.shields.io/travis/base-cms/base-cms.svg)](https://travis-ci.org/base-cms/base-cms)
-[![Docker Pulls](https://img.shields.io/docker/pulls/basecms/base-cms.svg?)](https://hub.docker.com/r/basecms/base-cms/)
-[![Image Size](https://img.shields.io/microbadger/image-size/basecms/base-cms/latest.svg)](https://microbadger.com/images/basecms/base-cms)
+[![Build Status](https://img.shields.io/travis/com/parameter1/base-cms.svg)](https://travis-ci.org/parameter1/base-cms)
+![GitHub branch checks state](https://img.shields.io/github/checks-status/parameter1/base-cms/master)
+![Github lerna version](https://img.shields.io/github/lerna-json/v/parameter1/base-cms)
 
 ## Usage
 _This repository requires Docker Engine 18.06.0 or greater as Compose file format 3.7 is used._
