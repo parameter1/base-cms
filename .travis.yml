@@ -35,11 +35,11 @@ jobs:
     - <<: *production-job
       stage: production-started
       name: Deployment Started
-      script: npx @base-cms/website-deployment-tool notify-started
+      script: npx @parameter1/base-cms-website-deployment-tool notify-started
     # - <<: *staging-job
     #   stage: staging-started
     #   name: Deployment Started
-    #   script: npx @base-cms/website-deployment-tool notify-started
+    #   script: npx @parameter1/base-cms-website-deployment-tool notify-started
 
     #############################
     # vvv ADD SERVICES HERE vvv #
@@ -108,8 +108,8 @@ jobs:
     - <<: *production-job
       stage: production-finished
       name: Deployment Finished
-      script: npx @base-cms/website-deployment-tool notify-finished
+      script: npx @parameter1/base-cms-website-deployment-tool notify-finished
     # - <<: *staging-job
     #   stage: staging-finished
     #   name: Deployment Finished
-    #   script: npx @base-cms/website-deployment-tool notify-finished
+    #   script: npx @parameter1/base-cms-website-deployment-tool notify-finished

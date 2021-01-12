@@ -3,7 +3,7 @@
 Command line tool for managing @base-cms project dependencies.
 
 ## Installation
-Add `@base-cms/dependency-tool` as a project dependency via Yarn or npm. You can also add this package globally and use it will all of your `@base-cms` projects, via `yarn global add @base-cms/dependency-tool`.
+Add `@parameter1/base-cms-dependency-tool` as a project dependency via Yarn or npm. You can also add this package globally and use it will all of your `@base-cms` projects, via `yarn global add @parameter1/base-cms-dependency-tool`.
 
 ## Usage
 

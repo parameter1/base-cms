@@ -1,12 +1,12 @@
 # BaseCMS Marko Web Reveal Ad Components
 
 ## Installation
-1. Add `@base-cms/marko-web-revel-ad` to your project/site.
+1. Add `@parameter1/base-cms-marko-web-revel-ad` to your project/site.
 
 2. Include the Browser plugin.
   ```js
   // your-site/browser/index.js
-  import RevealAd from '@base-cms/marko-web-reveal-ad/browser';
+  import RevealAd from '@parameter1/base-cms-marko-web-reveal-ad/browser';
 
   RevealAd(Browser);
 
@@ -16,7 +16,7 @@
 3. Include the styles
   ```scss
   // your-site/server/styles/index.scss
-  @import "../../node_modules/@base-cms/marko-web-reveal-ad/scss/reveal-ad";
+  @import "../../node_modules/@parameter1/base-cms-marko-web-reveal-ad/scss/reveal-ad";
   ```
 
 4. Load the listener component on all pages, as close to the opening `<body>` tag as possible. This is usually handled in a common site `document.marko` component

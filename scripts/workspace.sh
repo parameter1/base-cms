@@ -1,2 +1,2 @@
 #!/bin/bash
-scripts/yarn.sh workspace "@base-cms/$@"
+scripts/yarn.sh workspace "@parameter1/base-cms-$@"

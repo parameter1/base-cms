@@ -3,12 +3,12 @@ The BaseCMS database driver. Requires direct MongoDB access.
 
 ## Installation
 ```
-yarn add @base-cms/db
+yarn add @parameter1/base-cms-db
 ```
 
 ## Usage
 ```js
-const { BaseDB, MongoDB } = require('@base-cms/db');
+const { BaseDB, MongoDB } = require('@parameter1/base-cms-db');
 
 // The Base MongoDB url.
 const url = 'mongodb://localhost:1234/platform';
@@ -176,7 +176,7 @@ Utility/helper methods.
 #### `coerceID(id)`
 Coerces a string ID to either a MongoDB ObjectID or an integer. If the `id` value is not a string, or does not match the requirements for the above, the `id` value will be returned as-is.
 ```js
-const BaseDB = require('@base-cms/db');
+const BaseDB = require('@parameter1/base-cms-db');
 const { ObjectID } = require('mongodb');
 
 // Becomes the number `1234`
@@ -195,7 +195,7 @@ const id4 = BaseDB.coerceID('some-value');
 #### `extractMutationValue(doc, type, field)`
 Extracts a mutation value from a document for the provided type and field.
 ```js
-const BaseDB = require('@base-cms/db');
+const BaseDB = require('@parameter1/base-cms-db');
 
 // Get the `Website.name` mutation value. Will return `Foo` since the mutation is set.
 const doc1 = {

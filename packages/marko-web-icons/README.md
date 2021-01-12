@@ -2,7 +2,7 @@
 Icon components for BaseCMS websites.
 
 ## Install
-Add `@base-cms/marko-web-icons` as a dependency to your website project.
+Add `@parameter1/base-cms-marko-web-icons` as a dependency to your website project.
 
 ## Usage
 Icons can be used on the server (as a Marko component) or the browser (as a Vue component).
@@ -29,7 +29,7 @@ Import the icon component into your Vue component and then use it within your te
   <icon-alert />
 </template>
 <script>
-import IconAlert from '@base-cms/marko-web-icons/browser/alert.vue';
+import IconAlert from '@parameter1/base-cms-marko-web-icons/browser/alert.vue';
 
 export default {
   components: { IconAlert },
