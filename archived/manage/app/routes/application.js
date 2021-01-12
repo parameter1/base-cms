@@ -1,6 +1,6 @@
 import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
-import LoadingMixin from '@base-cms/manage/mixins/loading-mixin';
+import LoadingMixin from '@parameter1/base-cms-manage/mixins/loading-mixin';
 
 export default Route.extend(LoadingMixin, {
   errorNotifier: inject(),

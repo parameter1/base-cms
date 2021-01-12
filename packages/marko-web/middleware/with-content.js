@@ -1,7 +1,7 @@
-const { get } = require('@base-cms/object-path');
-const { asyncRoute, isFunction: isFn } = require('@base-cms/utils');
-const { content: loader } = require('@base-cms/web-common/page-loaders');
-const { blockContent: queryFactory } = require('@base-cms/web-common/query-factories');
+const { get } = require('@parameter1/base-cms-object-path');
+const { asyncRoute, isFunction: isFn } = require('@parameter1/base-cms-utils');
+const { content: loader } = require('@parameter1/base-cms-web-common/page-loaders');
+const { blockContent: queryFactory } = require('@parameter1/base-cms-web-common/query-factories');
 const PageNode = require('./page-node');
 const buildContentInput = require('../utils/build-content-input');
 const applyQueryParams = require('../utils/apply-query-params');

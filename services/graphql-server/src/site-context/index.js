@@ -1,5 +1,5 @@
-const { get, getAsArray, getAsObject } = require('@base-cms/object-path');
-const { isObject } = require('@base-cms/utils');
+const { get, getAsArray, getAsObject } = require('@parameter1/base-cms-object-path');
+const { isObject } = require('@parameter1/base-cms-utils');
 const defaults = require('../graphql/defaults');
 
 class SiteContext {

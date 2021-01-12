@@ -2,7 +2,7 @@ const validatePackage = require('validate-npm-package-name');
 const chalk = require('chalk');
 const { isURL } = require('validator');
 const { existsSync } = require('fs');
-const { createClient } = require('@base-cms/express-apollo');
+const { createClient } = require('@parameter1/base-cms-express-apollo');
 const gql = require('graphql-tag');
 const querySections = require('./query-root-sections');
 

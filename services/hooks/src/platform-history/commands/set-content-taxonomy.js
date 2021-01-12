@@ -1,4 +1,4 @@
-const { eachSeries } = require('@base-cms/async');
+const { eachSeries } = require('@parameter1/base-cms-async');
 const { updateContent } = require('../taxonomy');
 const getDB = require('../utils/get-db');
 const getArgs = require('../utils/get-args');

@@ -1,4 +1,4 @@
-const { xmlEntities: xml } = require('@base-cms/html');
+const { xmlEntities: xml } = require('@parameter1/base-cms-html');
 
 module.exports = ({
   title,

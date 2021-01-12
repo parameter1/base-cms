@@ -1,4 +1,4 @@
-const { client } = require('@base-cms/micro');
+const { client } = require('@parameter1/base-cms-micro');
 
 const { GOOGLE_DATA_API_URI } = require('./env');
 

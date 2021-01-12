@@ -1,4 +1,4 @@
-const { get, getAsArray, getAsObject } = require('@base-cms/object-path');
+const { get, getAsArray, getAsObject } = require('@parameter1/base-cms-object-path');
 const googleDataApiClient = require('../../../google-data-api-client');
 
 module.exports = {

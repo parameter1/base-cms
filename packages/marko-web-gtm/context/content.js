@@ -1,5 +1,5 @@
-const { getAsObject, getAsArray, get } = require('@base-cms/object-path');
-const { asObject } = require('@base-cms/utils');
+const { getAsObject, getAsArray, get } = require('@parameter1/base-cms-object-path');
+const { asObject } = require('@parameter1/base-cms-utils');
 const buildQueryString = require('../utils/build-query-string');
 
 module.exports = ({ obj, req }) => {

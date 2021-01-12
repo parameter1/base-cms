@@ -1,4 +1,4 @@
-const { asyncRoute } = require('@base-cms/utils');
+const { asyncRoute } = require('@parameter1/base-cms-utils');
 const mapTemplates = require('../../utils/map-templates');
 const template = require('../templates/index');
 

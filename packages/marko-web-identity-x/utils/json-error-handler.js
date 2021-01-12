@@ -1,4 +1,4 @@
-const { get, getAsArray } = require('@base-cms/object-path');
+const { get, getAsArray } = require('@parameter1/base-cms-object-path');
 
 const dev = process.env.NODE_ENV === 'development';
 const { isArray } = Array;

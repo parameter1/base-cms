@@ -1,7 +1,7 @@
-const { BaseDB } = require('@base-cms/db');
-const { Base4RestPayload } = require('@base-cms/base4-rest-api');
+const { BaseDB } = require('@parameter1/base-cms-db');
+const { Base4RestPayload } = require('@parameter1/base-cms-base4-rest-api');
 const { UserInputError } = require('apollo-server-express');
-const { websiteSection: canonicalPathFor } = require('@base-cms/canonical-path');
+const { websiteSection: canonicalPathFor } = require('@parameter1/base-cms-canonical-path');
 
 const validateRest = require('../../utils/validate-rest');
 const buildProjection = require('../../utils/build-projection');

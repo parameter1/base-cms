@@ -1,4 +1,4 @@
-const { magazinePublication: canonicalPathFor } = require('@base-cms/canonical-path');
+const { magazinePublication: canonicalPathFor } = require('@parameter1/base-cms-canonical-path');
 const { createTitle, createDescription } = require('../../utils/magazine-publication');
 
 module.exports = {

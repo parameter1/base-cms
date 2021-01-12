@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import config from '@base-cms/manage/config/environment';
+import config from '@parameter1/base-cms-manage/config/environment';
 
 export default Component.extend({
   tagName: 'nav',

@@ -2,7 +2,7 @@ const {
   get,
   getAsArray,
   getAsObject,
-} = require('@base-cms/object-path');
+} = require('@parameter1/base-cms-object-path');
 
 class AbstractConfig {
   /**

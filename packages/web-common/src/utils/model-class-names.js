@@ -1,4 +1,4 @@
-const { dasherize } = require('@base-cms/inflector');
+const { dasherize } = require('@parameter1/base-cms-inflector');
 
 module.exports = (modelName, path) => {
   const parts = String(path).split('.');

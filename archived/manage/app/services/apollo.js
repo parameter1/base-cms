@@ -1,7 +1,7 @@
 import ApolloService from 'ember-apollo-client/services/apollo';
 import { computed } from '@ember/object';
 import { IntrospectionFragmentMatcher, InMemoryCache } from 'apollo-cache-inmemory';
-import introspectionQueryResultData from '@base-cms/graphql-fragment-types';
+import introspectionQueryResultData from '@parameter1/base-cms-graphql-fragment-types';
 
 export default ApolloService.extend({
   clientOptions: computed(function() {

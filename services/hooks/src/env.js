@@ -1,4 +1,4 @@
-const { envalid } = require('@base-cms/tooling');
+const { envalid } = require('@parameter1/base-cms-tooling');
 
 const {
   custom,

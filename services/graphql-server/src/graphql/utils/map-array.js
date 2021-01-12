@@ -1,4 +1,4 @@
-const { asArray } = require('@base-cms/utils');
+const { asArray } = require('@parameter1/base-cms-utils');
 
 module.exports = (value, field) => asArray(value).reduce((map, item) => {
   const key = `${item[field]}`;

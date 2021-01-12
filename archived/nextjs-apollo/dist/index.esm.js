@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { ApolloProvider, getDataFromTree } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { IntrospectionFragmentMatcher, InMemoryCache } from 'apollo-cache-inmemory';
-import introspectionQueryResultData from '@base-cms/graphql-fragment-types';
+import introspectionQueryResultData from '@parameter1/base-cms-graphql-fragment-types';
 import { HttpLink } from 'apollo-link-http';
 import { ApolloLink } from 'apollo-link';
 import { onError } from 'apollo-link-error';

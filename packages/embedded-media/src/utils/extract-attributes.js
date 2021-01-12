@@ -1,6 +1,6 @@
 const cheerio = require('cheerio');
-const { htmlEntities } = require('@base-cms/html');
-const { camelize } = require('@base-cms/inflector');
+const { htmlEntities } = require('@parameter1/base-cms-html');
+const { camelize } = require('@parameter1/base-cms-inflector');
 const {
   DB_TAG_END,
   DB_TAG_START,

@@ -1,4 +1,4 @@
-const { getAsObject } = require('@base-cms/object-path');
+const { getAsObject } = require('@parameter1/base-cms-object-path');
 const AbstractConfig = require('./abstract-config');
 
 const defaults = {

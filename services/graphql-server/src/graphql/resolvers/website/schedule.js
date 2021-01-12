@@ -1,6 +1,6 @@
-const { BaseDB, MongoDB } = require('@base-cms/db');
-const { Base4RestPayload } = require('@base-cms/base4-rest-api');
-const { dasherize } = require('@base-cms/inflector');
+const { BaseDB, MongoDB } = require('@parameter1/base-cms-db');
+const { Base4RestPayload } = require('@parameter1/base-cms-base4-rest-api');
+const { dasherize } = require('@parameter1/base-cms-inflector');
 const { UserInputError } = require('apollo-server-express');
 
 const validateRest = require('../../utils/validate-rest');

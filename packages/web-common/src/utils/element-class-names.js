@@ -1,4 +1,4 @@
-const { dasherize } = require('@base-cms/inflector');
+const { dasherize } = require('@parameter1/base-cms-inflector');
 const objectTypeName = require('./object-type-name');
 
 const { isArray } = Array;

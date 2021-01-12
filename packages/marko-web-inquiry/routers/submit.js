@@ -1,8 +1,8 @@
-const { asyncRoute } = require('@base-cms/utils');
-const { getAsArray } = require('@base-cms/object-path');
+const { asyncRoute } = require('@parameter1/base-cms-utils');
+const { getAsArray } = require('@parameter1/base-cms-object-path');
 const fetch = require('node-fetch');
-const { content: contentLoader } = require('@base-cms/web-common/page-loaders');
-const buildMarkoGlobal = require('@base-cms/marko-web/utils/build-marko-global');
+const { content: contentLoader } = require('@parameter1/base-cms-web-common/page-loaders');
+const buildMarkoGlobal = require('@parameter1/base-cms-marko-web/utils/build-marko-global');
 const send = require('../send-mail');
 const { notificationBuilder, confirmationBuilder } = require('../template-builders');
 const storeInquiry = require('../utils/store-inquiry');

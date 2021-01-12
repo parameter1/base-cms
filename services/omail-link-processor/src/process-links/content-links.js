@@ -1,6 +1,6 @@
-const { createClient } = require('@base-cms/express-apollo');
+const { createClient } = require('@parameter1/base-cms-express-apollo');
 const gql = require('graphql-tag');
-const { getAsArray } = require('@base-cms/object-path');
+const { getAsArray } = require('@parameter1/base-cms-object-path');
 const { GRAPHQL_URI } = require('../env');
 
 const query = gql`

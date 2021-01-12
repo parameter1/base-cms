@@ -1,5 +1,5 @@
-const { get } = require('@base-cms/object-path');
-const { stripHtml } = require('@base-cms/html');
+const { get } = require('@parameter1/base-cms-object-path');
+const { stripHtml } = require('@parameter1/base-cms-html');
 const cheerio = require('cheerio');
 const createDB = require('./src/basedb');
 

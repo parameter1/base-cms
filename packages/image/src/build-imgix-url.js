@@ -1,4 +1,4 @@
-const { camelize } = require('@base-cms/inflector');
+const { camelize } = require('@parameter1/base-cms-inflector');
 const { URL, URLSearchParams } = require('url');
 
 const params = [

@@ -1,5 +1,5 @@
-const loadWebsite = require('@base-cms/web-common/website-context');
-const { asyncRoute } = require('@base-cms/utils');
+const loadWebsite = require('@parameter1/base-cms-web-common/website-context');
+const { asyncRoute } = require('@parameter1/base-cms-utils');
 
 module.exports = coreConfig => asyncRoute(async (req, res, next) => {
   const { apollo } = res.locals;

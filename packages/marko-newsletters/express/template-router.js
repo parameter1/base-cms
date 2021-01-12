@@ -1,15 +1,15 @@
 const { Router } = require('express');
-const { asyncRoute } = require('@base-cms/utils');
-const buildMarkoGlobal = require('@base-cms/marko-core/utils/build-marko-global');
-const cleanChunk = require('@base-cms/marko-core/utils/clean-marko-chunk');
+const { asyncRoute } = require('@parameter1/base-cms-utils');
+const buildMarkoGlobal = require('@parameter1/base-cms-marko-core/utils/build-marko-global');
+const cleanChunk = require('@parameter1/base-cms-marko-core/utils/clean-marko-chunk');
 const gql = require('graphql-tag');
 const createError = require('http-errors');
 const moment = require('moment-timezone');
 const pretty = require('pretty');
-const cleanResponse = require('@base-cms/marko-core/middleware/clean-marko-response');
-const siteContextFragment = require('@base-cms/web-common/graphql/website-context-fragment');
-const { extractFragmentData } = require('@base-cms/web-common/utils');
-const { getAsObject } = require('@base-cms/object-path');
+const cleanResponse = require('@parameter1/base-cms-marko-core/middleware/clean-marko-response');
+const siteContextFragment = require('@parameter1/base-cms-web-common/graphql/website-context-fragment');
+const { extractFragmentData } = require('@parameter1/base-cms-web-common/utils');
+const { getAsObject } = require('@parameter1/base-cms-object-path');
 const websiteFactory = require('../utils/website-factory');
 
 const buildQuery = ({ queryFragment }) => {

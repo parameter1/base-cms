@@ -1,5 +1,5 @@
-const { asArray, isObject } = require('@base-cms/utils');
-const { set, getAsObject, get } = require('@base-cms/object-path');
+const { asArray, isObject } = require('@parameter1/base-cms-utils');
+const { set, getAsObject, get } = require('@parameter1/base-cms-object-path');
 
 const { isArray } = Array;
 

@@ -1,6 +1,6 @@
-const { content: canonicalPathFor, requestParser: getCanonicalRules } = require('@base-cms/canonical-path');
-const { BaseDB } = require('@base-cms/db');
-const { get } = require('@base-cms/object-path');
+const { content: canonicalPathFor, requestParser: getCanonicalRules } = require('@parameter1/base-cms-canonical-path');
+const { BaseDB } = require('@parameter1/base-cms-db');
+const { get } = require('@parameter1/base-cms-object-path');
 const createDB = require('./src/basedb');
 
 const cleanPath = (value) => {

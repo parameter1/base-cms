@@ -1,10 +1,10 @@
-const { BaseDB } = require('@base-cms/db');
+const { BaseDB } = require('@parameter1/base-cms-db');
 const {
   isObject,
   getPublishedContentCriteria: getPublishedCriteria,
   getDefaultContentTypes,
-} = require('@base-cms/utils');
-const { stripTags } = require('@base-cms/html');
+} = require('@parameter1/base-cms-utils');
+const { stripTags } = require('@parameter1/base-cms-html');
 const criteriaFor = require('./criteria-for');
 
 const createSeoTitle = (doc) => {

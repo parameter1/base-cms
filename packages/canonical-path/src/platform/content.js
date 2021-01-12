@@ -1,7 +1,7 @@
-const { isFunction: isFn, cleanPath } = require('@base-cms/utils');
-const { get } = require('@base-cms/object-path');
-const { BaseDB } = require('@base-cms/db');
-const { dasherize } = require('@base-cms/inflector');
+const { isFunction: isFn, cleanPath } = require('@parameter1/base-cms-utils');
+const { get } = require('@parameter1/base-cms-object-path');
+const { BaseDB } = require('@parameter1/base-cms-db');
+const { dasherize } = require('@parameter1/base-cms-inflector');
 
 const pathResolvers = {
   id: content => content._id,

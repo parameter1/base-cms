@@ -1,5 +1,5 @@
-const { isObject } = require('@base-cms/utils');
-const { stripTags } = require('@base-cms/html');
+const { isObject } = require('@parameter1/base-cms-utils');
+const { stripTags } = require('@parameter1/base-cms-html');
 
 const createTitle = (doc) => {
   if (!isObject(doc)) return null;

@@ -2,7 +2,7 @@ require('marko/node-require');
 const http = require('http');
 const path = require('path');
 const { createTerminus } = require('@godaddy/terminus');
-const { isFunction: isFn } = require('@base-cms/utils');
+const { isFunction: isFn } = require('@parameter1/base-cms-utils');
 const express = require('./express');
 const loadExports = require('./utils/load-exports');
 const CoreConfig = require('./config/core');

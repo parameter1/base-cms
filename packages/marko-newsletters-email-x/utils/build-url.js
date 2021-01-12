@@ -1,4 +1,4 @@
-const { asArray, asObject } = require('@base-cms/utils');
+const { asArray, asObject } = require('@parameter1/base-cms-utils');
 
 module.exports = ({
   uri,

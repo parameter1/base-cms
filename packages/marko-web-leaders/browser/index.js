@@ -1,4 +1,4 @@
-const LeadersProgram = () => import(/* webpackChunkName: "leaders-program" */ '@base-cms/leaders-program');
+const LeadersProgram = () => import(/* webpackChunkName: "leaders-program" */ '@parameter1/base-cms-leaders-program');
 
 export default (Browser) => {
   const { EventBus } = Browser;

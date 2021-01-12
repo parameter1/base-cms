@@ -1,4 +1,4 @@
-const { asyncRoute } = require('@base-cms/utils');
+const { asyncRoute } = require('@parameter1/base-cms-utils');
 const fetch = require('node-fetch');
 const moment = require('moment');
 const pretty = require('pretty');

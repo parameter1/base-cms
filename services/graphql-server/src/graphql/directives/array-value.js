@@ -1,5 +1,5 @@
 const { SchemaDirectiveVisitor } = require('graphql-tools');
-const { getAsArray } = require('@base-cms/object-path');
+const { getAsArray } = require('@parameter1/base-cms-object-path');
 
 class ArrayValueDirective extends SchemaDirectiveVisitor {
   /**

@@ -1,9 +1,9 @@
 const { Router } = require('express');
-const { asyncRoute } = require('@base-cms/utils');
+const { asyncRoute } = require('@parameter1/base-cms-utils');
 const gql = require('graphql-tag');
 const createError = require('http-errors');
-const cleanResponse = require('@base-cms/marko-core/middleware/clean-marko-response');
-const { getAsArray } = require('@base-cms/object-path');
+const cleanResponse = require('@parameter1/base-cms-marko-core/middleware/clean-marko-response');
+const { getAsArray } = require('@parameter1/base-cms-object-path');
 const websiteFactory = require('../utils/website-factory');
 const outputHeaders = require('./output-headers');
 

@@ -2,7 +2,7 @@ const cache = require('gulp-cached');
 const eslint = require('gulp-eslint');
 const pump = require('pump');
 const { src } = require('gulp');
-const completeTask = require('@base-cms/cli-utils/task-callback');
+const completeTask = require('@parameter1/base-cms-cli-utils/task-callback');
 
 module.exports = (cwd, options) => (cb) => {
   pump([

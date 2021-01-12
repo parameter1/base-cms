@@ -1,4 +1,4 @@
-const { get } = require('@base-cms/object-path');
+const { get } = require('@parameter1/base-cms-object-path');
 
 module.exports = (ad = {}, { sectionName = 'Sponsored' } = {}) => {
   const { campaign, creative, image } = ad;

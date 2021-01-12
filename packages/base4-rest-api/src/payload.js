@@ -1,4 +1,4 @@
-const { set } = require('@base-cms/object-path');
+const { set } = require('@parameter1/base-cms-object-path');
 
 const { isArray } = Array;
 

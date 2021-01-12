@@ -1,6 +1,6 @@
 const { URL, URLSearchParams } = require('url');
 const { UserInputError } = require('apollo-server-express');
-const { asObject } = require('@base-cms/utils');
+const { asObject } = require('@parameter1/base-cms-utils');
 const buildProjection = require('../../utils/build-projection');
 
 const cleanRedirect = async (redirect, from, basedb) => {

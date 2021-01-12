@@ -1,5 +1,5 @@
-const { asArray } = require('@base-cms/utils');
-const { set, get, getAsObject } = require('@base-cms/object-path');
+const { asArray } = require('@parameter1/base-cms-utils');
+const { set, get, getAsObject } = require('@parameter1/base-cms-object-path');
 
 class NativeXConfiguration {
   /**

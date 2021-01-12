@@ -1,4 +1,4 @@
-const { filterDsn } = require('@base-cms/db/utils');
+const { filterDsn } = require('@parameter1/base-cms-db/utils');
 const basedb = require('./basedb')('test');
 const { log } = require('./output');
 const pkg = require('../package.json');

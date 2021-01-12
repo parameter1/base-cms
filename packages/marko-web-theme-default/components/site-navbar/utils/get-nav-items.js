@@ -1,4 +1,4 @@
-const { asArray } = require('@base-cms/utils');
+const { asArray } = require('@parameter1/base-cms-utils');
 
 module.exports = ({
   regEnabled,

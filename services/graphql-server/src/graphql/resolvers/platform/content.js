@@ -1,12 +1,12 @@
-const { BaseDB } = require('@base-cms/db');
+const { BaseDB } = require('@parameter1/base-cms-db');
 const { UserInputError } = require('apollo-server-express');
-const { Base4RestPayload } = require('@base-cms/base4-rest-api');
-const { cleanPath, asObject } = require('@base-cms/utils');
-const { content: canonicalPathFor } = require('@base-cms/canonical-path');
-const { get } = require('@base-cms/object-path');
-const { underscore, dasherize, titleize } = require('@base-cms/inflector');
-const { createSrcFor, createCaptionFor } = require('@base-cms/image');
-const { getAsArray } = require('@base-cms/object-path');
+const { Base4RestPayload } = require('@parameter1/base-cms-base4-rest-api');
+const { cleanPath, asObject } = require('@parameter1/base-cms-utils');
+const { content: canonicalPathFor } = require('@parameter1/base-cms-canonical-path');
+const { get } = require('@parameter1/base-cms-object-path');
+const { underscore, dasherize, titleize } = require('@parameter1/base-cms-inflector');
+const { createSrcFor, createCaptionFor } = require('@parameter1/base-cms-image');
+const { getAsArray } = require('@parameter1/base-cms-object-path');
 const moment = require('moment');
 const momentTZ = require('moment-timezone');
 

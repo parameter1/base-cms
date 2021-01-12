@@ -1,4 +1,4 @@
-const { isObject } = require('@base-cms/utils');
+const { isObject } = require('@parameter1/base-cms-utils');
 const get = require('./get');
 
 const { isArray } = Array;

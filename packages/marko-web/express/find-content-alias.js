@@ -1,5 +1,5 @@
 const gql = require('graphql-tag');
-const { get } = require('@base-cms/object-path');
+const { get } = require('@parameter1/base-cms-object-path');
 const buildContentInput = require('../utils/build-content-input');
 
 const query = gql`

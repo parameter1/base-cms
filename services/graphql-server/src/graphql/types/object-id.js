@@ -1,6 +1,6 @@
 const { GraphQLScalarType } = require('graphql');
 const { Kind } = require('graphql/language');
-const { MongoDB } = require('@base-cms/db');
+const { MongoDB } = require('@parameter1/base-cms-db');
 
 const { ObjectID } = MongoDB;
 

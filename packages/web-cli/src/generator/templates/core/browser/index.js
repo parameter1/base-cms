@@ -1,4 +1,4 @@
-import Browser from '@base-cms/marko-web/browser';
+import Browser from '@parameter1/base-cms-marko-web/browser';
 
 // Register custom Vue components here...
 /*
@@ -12,8 +12,8 @@ This component would now be loadable within server-side templates via.
 If you need to access Vue or jQuery within a browser component you may
 do so by importing them from the core web library:
 
-import Vue from '@base-cms/marko-web/browser/vue';
-import $ from '@base-cms/marko-web/browser/jquery';
+import Vue from '@parameter1/base-cms-marko-web/browser/vue';
+import $ from '@parameter1/base-cms-marko-web/browser/jquery';
 
 */
 

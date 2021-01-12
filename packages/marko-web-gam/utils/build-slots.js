@@ -1,5 +1,5 @@
-const { isObject } = require('@base-cms/utils');
-const defaultValue = require('@base-cms/marko-core/utils/default-value');
+const { isObject } = require('@parameter1/base-cms-utils');
+const defaultValue = require('@parameter1/base-cms-marko-core/utils/default-value');
 const buildTargeting = require('./build-targeting');
 const buildSizeMapping = require('./build-size-mapping');
 

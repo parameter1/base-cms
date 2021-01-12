@@ -1,6 +1,6 @@
 const { SchemaDirectiveVisitor } = require('graphql-tools');
 const moment = require('moment-timezone');
-const { get } = require('@base-cms/object-path');
+const { get } = require('@parameter1/base-cms-object-path');
 const defaults = require('../defaults');
 
 class MomentFormatDirective extends SchemaDirectiveVisitor {

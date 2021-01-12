@@ -1,5 +1,5 @@
-const { parseDelimitedString } = require('@base-cms/utils');
-const { camelize } = require('@base-cms/inflector');
+const { parseDelimitedString } = require('@parameter1/base-cms-utils');
+const { camelize } = require('@parameter1/base-cms-inflector');
 
 const { isArray } = Array;
 

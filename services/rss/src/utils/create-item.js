@@ -1,5 +1,5 @@
-const { xmlEntities: xml } = require('@base-cms/html');
-const { getAsObject } = require('@base-cms/object-path');
+const { xmlEntities: xml } = require('@parameter1/base-cms-html');
+const { getAsObject } = require('@parameter1/base-cms-object-path');
 
 module.exports = ({
   name,
