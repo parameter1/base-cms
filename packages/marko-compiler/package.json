@@ -15,7 +15,7 @@
   "dependencies": {
     "glob": "^7.1.4",
     "marko": "~4.20.0",
-    "yargs": "^14.1.0"
+    "yargs": "^14.2.3"
   },
   "publishConfig": {
     "access": "public"

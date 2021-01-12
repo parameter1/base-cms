@@ -67,7 +67,7 @@
     "webpack-config-utils": "^2.3.1",
     "webpack-manifest-plugin": "^2.2.0",
     "webpack-stream": "^5.2.1",
-    "yargs": "^14.1.0"
+    "yargs": "^14.2.3"
   },
   "publishConfig": {
     "access": "public"
