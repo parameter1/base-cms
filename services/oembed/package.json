@@ -15,7 +15,7 @@
     "@parameter1/base-cms-embedly": "^1.37.0",
     "@parameter1/base-cms-tooling": "^1.37.0",
     "@parameter1/base-cms-utils": "^1.37.0",
-    "@godaddy/terminus": "^4.2.0",
+    "@godaddy/terminus": "^4.5.0",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "helmet": "^3.21.0",

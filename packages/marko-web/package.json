@@ -23,7 +23,7 @@
     "@parameter1/base-cms-tenant-context": "^1.37.0",
     "@parameter1/base-cms-utils": "^1.37.0",
     "@parameter1/base-cms-web-common": "^1.49.0",
-    "@godaddy/terminus": "^4.2.0",
+    "@godaddy/terminus": "^4.5.0",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
     "apollo-link": "^1.2.14",
