@@ -21,7 +21,7 @@
     "express": "^4.17.1",
     "graphql": "^14.7.0",
     "graphql-tag": "^2.11.0",
-    "helmet": "^3.21.0",
+    "helmet": "^3.23.3",
     "http-errors": "^1.8.0",
     "marko": "~4.20.0",
     "moment": "^2.29.1",

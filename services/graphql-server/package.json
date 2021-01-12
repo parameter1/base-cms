@@ -39,7 +39,7 @@
     "graphql-tag": "^2.11.0",
     "graphql-tools": "^4.0.8",
     "graphql-type-json": "^0.2.4",
-    "helmet": "^3.21.0",
+    "helmet": "^3.23.3",
     "jsonwebtoken": "^8.5.1",
     "micro": "^9.3.4",
     "moment": "^2.29.1",
