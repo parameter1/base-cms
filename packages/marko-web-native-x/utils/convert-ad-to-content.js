@@ -29,6 +29,10 @@ module.exports = (ad = {}, { sectionName = 'Sponsored' } = {}) => {
       fullName: sectionName,
       __typename: 'WebsiteSection',
     },
+    company: {
+      name: campaign.advertiserName,
+      __typename: 'ContentCompany',
+    },
     __typename: 'ContentTextAd',
   };
 };
