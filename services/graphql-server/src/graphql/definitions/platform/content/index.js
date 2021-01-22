@@ -294,6 +294,7 @@ input AllPublishedContentQueryInput {
   excludeContentTypes: [ContentType!] = []
   excludeContentIds: [Int!] = []
   includeTaxonomyIds: [Int!] = []
+  includeLabels: [String!] = []
   requiresImage: Boolean = false
   sectionBubbling: Boolean = true
   sort: ContentSortInput = { field: published, order: desc }

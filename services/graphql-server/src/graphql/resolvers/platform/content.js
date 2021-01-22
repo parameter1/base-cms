@@ -645,6 +645,7 @@ module.exports = {
         excludeContentTypes,
         excludeContentIds,
         includeTaxonomyIds,
+        includeLabels,
         requiresImage,
         sectionBubbling,
         sort,
@@ -688,6 +689,9 @@ module.exports = {
       }
       if (includeTaxonomyIds.length) {
         query['taxonomy.$id'] = { $in: includeTaxonomyIds };
+      }
+      if (includeLabels.length) {
+        query.labels = { $in: includeLabels };
       }
 
       const projection = connectionProjection(info);
