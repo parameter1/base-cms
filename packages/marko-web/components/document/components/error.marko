@@ -6,6 +6,9 @@ $ const error = input.error || {};
 <${document}>
   <@head>
     <marko-web-page-title value=`${input.statusCode} ${input.statusMessage}` />
+    <if(input.statusCode === 404)>
+      <meta name="robots" content="noindex">
+    </if>
   </@head>
   <@container>
     <@page for="error">
