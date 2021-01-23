@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-hooks",
-  "version": "2.0.3",
+  "version": "2.1.0",
   "description": "The BaseCMS hooks server using Express.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
@@ -14,7 +14,7 @@
   "dependencies": {
     "@godaddy/terminus": "^4.5.0",
     "@parameter1/base-cms-async": "^2.0.0",
-    "@parameter1/base-cms-db": "^2.0.0",
+    "@parameter1/base-cms-db": "^2.1.0",
     "@parameter1/base-cms-object-path": "^2.0.0",
     "@parameter1/base-cms-tooling": "^2.0.0",
     "@parameter1/base-cms-utils": "^2.0.0",
