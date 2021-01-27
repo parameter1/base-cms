@@ -134,7 +134,7 @@ class RedisCacheGraphQLPlugin {
     const { request, response } = requestContext;
     const { http } = request;
     if (!http) return false;
-    const cacheEnabled = parseBooleanHeader(http.headers.get('x-cache-gql-responses'));
+    const cacheEnabled = parseBooleanHeader(http.headers.get('x-cache-responses'));
     if (!cacheEnabled) return false;
     const { errors } = response || {};
     return isGraphQLQuery(requestContext) && !isIntrospectionQuery(requestContext) && !errors;
