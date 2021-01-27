@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "Core Marko+Express components for BaseCMS websites",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "main": "index.js",
@@ -23,7 +23,7 @@
     "@parameter1/base-cms-object-path": "^2.0.0",
     "@parameter1/base-cms-tenant-context": "^2.0.0",
     "@parameter1/base-cms-utils": "^2.0.0",
-    "@parameter1/base-cms-web-common": "^2.1.0",
+    "@parameter1/base-cms-web-common": "^2.2.0",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
     "apollo-link": "^1.2.14",
