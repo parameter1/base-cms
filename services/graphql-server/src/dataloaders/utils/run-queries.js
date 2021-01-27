@@ -8,6 +8,7 @@ const hashOptions = {
   encoding: 'base64',
   replacer: (v) => {
     if (v instanceof ObjectID) return `${v}`;
+    if (typeof v === 'object' && /^[a-f0-9]{24}$/.test(v)) return `${v}`;
     return v;
   },
 };
