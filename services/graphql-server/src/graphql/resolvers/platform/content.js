@@ -912,30 +912,21 @@ module.exports = {
       } = input;
 
       const since = new Date();
-      const idQuery = {
-        issue: issueId,
-        section: {},
-      };
-      if (sectionId) idQuery.section.$eq = sectionId;
-      if (includeSectionNames.length) {
-        const includeSections = await loadMagazineSections({
-          basedb,
-          names: [...includeSectionNames],
-        });
-        idQuery.section.$in = idQuery.section.$in || [];
-        includeSections.forEach((section) => {
-          idQuery.section.$in.push(section._id);
-        });
-      }
-      if (excludeSectionNames.length) {
-        const excludeSections = await loadMagazineSections({
-          basedb,
-          names: [...excludeSectionNames],
-        });
-        idQuery.section.$nin = idQuery.section.$nin || [];
-        excludeSections.forEach((section) => {
-          idQuery.section.$nin.push(section._id);
-        });
+      const idQuery = { issue: issueId };
+      if (sectionId || includeSectionNames.length || excludeSectionNames.length) {
+        const [include, exclude] = await Promise.all([
+          includeSectionNames.length
+            ? loadMagazineSections({ basedb, names: includeSectionNames })
+            : [],
+          excludeSectionNames.length
+            ? loadMagazineSections({ basedb, names: excludeSectionNames })
+            : [],
+        ]);
+        idQuery.section = {
+          ...(sectionId && { $eq: sectionId }),
+          ...(include.length && { $in: include.map(section => section._id) }),
+          ...(exclude.length && { $nin: exclude.map(section => section._id) }),
+        };
       }
       const ids = await basedb.distinct('magazine.Schedule', 'content.$id', idQuery);
 
