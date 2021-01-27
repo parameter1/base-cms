@@ -12,6 +12,7 @@ const { nonemptystr } = custom;
 
 module.exports = cleanEnv(process.env, {
   MONGO_DSN: nonemptystr({ desc: 'The Base MongoDB connection URL.' }),
+  REDIS_CACHE_DSN: nonemptystr({ desc: 'The Redis DSN where cache values should be saved.' }),
   GRAPHQL_ENDPOINT: nonemptystr({ desc: 'The GraphQL endpoint', default: '/' }),
   PORT: port({ desc: 'The internal port to run on.', default: 80 }),
   EXPOSED_PORT: port({ desc: 'The external port to run on.', default: 80 }),

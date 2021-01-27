@@ -63,6 +63,12 @@ services:
     ports:
       - "10001:5601"
 
+  redis:
+    tty: true
+    image: redis:6.0-alpine
+    ports:
+      - "10002:6379"
+
   keyword-analysis:
     << : *node
     working_dir: /base-cms/services/keyword-analysis
@@ -87,6 +93,7 @@ services:
       <<: *env
       <<: *env-mongo
       <<: *env-newrelic
+      REDIS_CACHE_DSN: ${REDIS_CACHE_DSN-redis://redis}
       APOLLO_ENGINE_ENABLED: ${APOLLO_ENGINE_ENABLED-false}
       APOLLO_ENGINE_API_KEY: ${APOLLO_ENGINE_API_KEY-}
       GRAPHQL_CACHE_CONTROL_ENABLED: ${GRAPHQL_CACHE_CONTROL_ENABLED-false}
@@ -117,6 +124,7 @@ services:
       <<: *env-newrelic
       GRAPHQL_PLAYGROUND_ENABLED: 1
       MONGO_DSN: ${MONGO_DSN_LEONIS-mongodb://mongodb:27017}
+      REDIS_CACHE_DSN: ${REDIS_CACHE_DSN_LEONIS-redis://redis}
       ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
       ENGINE_API_KEY: ${ENGINE_API_KEY-(unset)}
       BASE4_REST_USERNAME: ${BASE4_REST_USERNAME-}
@@ -140,6 +148,7 @@ services:
       <<: *env-newrelic
       GRAPHQL_PLAYGROUND_ENABLED: 1
       MONGO_DSN: ${MONGO_DSN_TAURON-mongodb://mongodb:27017}
+      REDIS_CACHE_DSN: ${REDIS_CACHE_DSN_TAURON-redis://redis}
       ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
       ENGINE_API_KEY: ${ENGINE_API_KEY-(unset)}
       BASE4_REST_USERNAME: ${BASE4_REST_USERNAME-}
@@ -163,6 +172,7 @@ services:
       <<: *env-newrelic
       GRAPHQL_PLAYGROUND_ENABLED: 1
       MONGO_DSN: ${MONGO_DSN_VIRGON-mongodb://mongodb:27017}
+      REDIS_CACHE_DSN: ${REDIS_CACHE_DSN_VIRGON-redis://redis}
       ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
       ENGINE_API_KEY: ${ENGINE_API_KEY-(unset)}
       BASE4_REST_USERNAME: ${BASE4_REST_USERNAME-}
@@ -173,6 +183,7 @@ services:
       EXPOSED_PORT: 10103
     depends_on:
       - mongodb
+      - redis
       - google-data-api
     ports:
       - "10103:80"
