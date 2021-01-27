@@ -914,8 +914,8 @@ module.exports = {
       const since = new Date();
       const idQuery = {
         issue: issueId,
-        section: {},
       };
+      if (sectionId || includeSectionNames.length || excludeSectionNames.length) idQuery.section = {};
       if (sectionId) idQuery.section.$eq = sectionId;
       if (includeSectionNames.length) {
         const includeSections = await loadMagazineSections({
