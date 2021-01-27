@@ -28,5 +28,15 @@
     "@modifiers": "string",
     "@attrs": "object",
     "@link": "expression"
+  },
+  "<marko-web-magazine-issue-pdf-url>": {
+    "template": "./pdf-url.marko",
+    "@block-name": "string",
+    "@obj": "object",
+    "@tag": "string",
+    "@class": "string",
+    "@modifiers": "string",
+    "@attrs": "object",
+    "@link": "expression"
   }
 }
