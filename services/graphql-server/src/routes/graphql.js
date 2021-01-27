@@ -25,6 +25,7 @@ const {
   GRAPHQL_PLAYGROUND_ENABLED,
   GRAPHQL_TRACING_ENABLED,
 } = require('../env');
+const RedisCacheGraphQLPlugin = require('../graphql/plugins/redis-cache');
 
 const { keys } = Object;
 const router = Router();
@@ -105,6 +106,9 @@ const server = new ApolloServer({
     if (code === 'INTERNAL_SERVER_ERROR') newrelic.noticeError(e);
     return e;
   },
+  plugins: [
+    new RedisCacheGraphQLPlugin(),
+  ],
 });
 server.applyMiddleware({ app: router, path: GRAPHQL_ENDPOINT });
 
