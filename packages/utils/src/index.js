@@ -12,6 +12,7 @@ const getPublishedContentCriteria = require('./get-published-content-criteria');
 const isDev = require('./is-dev');
 const isFunction = require('./is-function');
 const isObject = require('./is-object');
+const parseBooleanHeader = require('./parse-boolean-header');
 const parseDelimitedString = require('./parse-delimited-string');
 const randomElementId = require('./random-element-id');
 const sleep = require('./sleep');
@@ -32,6 +33,7 @@ module.exports = {
   isDev,
   isFunction,
   isObject,
+  parseBooleanHeader,
   parseDelimitedString,
   randomElementId,
   sleep,

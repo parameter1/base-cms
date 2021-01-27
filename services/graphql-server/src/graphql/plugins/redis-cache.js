@@ -1,6 +1,6 @@
 const { createHash } = require('crypto');
+const { parseBooleanHeader } = require('@parameter1/base-cms-utils');
 const redis = require('../../redis');
-const booleanHeader = require('../../utils/parse-boolean-header');
 
 /**
  *
@@ -134,7 +134,7 @@ class RedisCacheGraphQLPlugin {
     const { request, response } = requestContext;
     const { http } = request;
     if (!http) return false;
-    const cacheEnabled = booleanHeader(http.headers.get('x-cache-gql-responses'));
+    const cacheEnabled = parseBooleanHeader(http.headers.get('x-cache-gql-responses'));
     if (!cacheEnabled) return false;
     const { errors } = response || {};
     return isGraphQLQuery(requestContext) && !isIntrospectionQuery(requestContext) && !errors;

@@ -2,7 +2,7 @@ const { ApolloServer } = require('apollo-server-express');
 const { get } = require('@parameter1/base-cms-object-path');
 const { getFromRequest } = require('@parameter1/base-cms-tenant-context');
 const { Router } = require('express');
-const { isObject } = require('@parameter1/base-cms-utils');
+const { isObject, parseBooleanHeader } = require('@parameter1/base-cms-utils');
 const { requestParser: canonicalRules } = require('@parameter1/base-cms-canonical-path');
 const ApolloNewrelicExtension = require('apollo-newrelic-extension');
 const createAuthContext = require('../auth-context/create');
@@ -13,7 +13,6 @@ const basedbFactory = require('../basedb');
 const createLoaders = require('../dataloaders');
 const schema = require('../graphql/schema');
 const loadSiteContext = require('../site-context/load');
-const booleanHeader = require('../utils/parse-boolean-header');
 const {
   GRAPHQL_ENDPOINT,
   APOLLO_ENGINE_ENABLED,
@@ -63,7 +62,7 @@ const server = new ApolloServer({
       siteId,
       basedb,
       tenant,
-      enableCache: booleanHeader(req.get('x-cache-site-context')),
+      enableCache: parseBooleanHeader(req.get('x-cache-site-context')),
     });
 
     // Load the (optional) Base4 REST API client.
