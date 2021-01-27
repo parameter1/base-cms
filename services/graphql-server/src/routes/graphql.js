@@ -13,6 +13,7 @@ const basedbFactory = require('../basedb');
 const createLoaders = require('../dataloaders');
 const schema = require('../graphql/schema');
 const loadSiteContext = require('../site-context/load');
+const booleanHeader = require('../utils/parse-boolean-header');
 const {
   GRAPHQL_ENDPOINT,
   APOLLO_ENGINE_ENABLED,
@@ -57,7 +58,12 @@ const server = new ApolloServer({
     const loaders = createLoaders(basedb);
 
     // Load the (optional) site context from the database.
-    const site = await loadSiteContext({ siteId, basedb, tenant });
+    const site = await loadSiteContext({
+      siteId,
+      basedb,
+      tenant,
+      enableCache: booleanHeader(req.get('x-cache-site-context')),
+    });
 
     // Load the (optional) Base4 REST API client.
     // Some GraphQL mutations require this.
