@@ -364,6 +364,8 @@ input MagazineScheduledContentQueryInput {
   sectionId: Int
   excludeContentIds: [Int!] = []
   excludeSectionIds: [Int!] = []
+  includeSectionNames: [String!] = []
+  excludeSectionNames: [String!] = []
   excludeContentTypes: [ContentType!] = []
   includeContentTypes: [ContentType!] = []
   requiresImage: Boolean = false

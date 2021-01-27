@@ -28,7 +28,7 @@ extend type Query {
     )
 }
 
-type MagazineIssue {
+type MagazineIssue implements Media @applyInterfaceFields {
   # fields directly on platform.model::Issue
   id: Int! @projection(localField: "_id") @value(localField: "_id")
   name: String @projection

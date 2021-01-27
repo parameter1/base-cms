@@ -7,6 +7,9 @@ const buildQuery = require('../gql/query-factories/block-magazine-scheduled-cont
  * @param {number} [params.skip] The number of results to skip.
  * @param {string} [params.after] The cursor to start returning results from.
  * @param {number} [params.issueId] The issue identifier to use when finding scheduled content.
+ * @param {array} [params.excludeContentIds] Content ids to exclude when finding scheduled content.
+ * @param {array} [params.includeSectionNames] Sections to include when finding scheduled content.
+ * @param {array} [params.excludeSectionNames] Sections to exclude when finding scheduled content.
  * @param {object} [params.sort] The sort clause
  * @param {string} [params.queryFragment] The `graphql-tag` fragment
  *                                        to apply to the `magazineScheduledContent` query.
@@ -16,6 +19,9 @@ module.exports = async (apolloClient, {
   skip,
   after,
   issueId,
+  excludeContentIds,
+  includeSectionNames,
+  excludeSectionNames,
   sort,
   queryFragment,
   queryName,
@@ -25,6 +31,9 @@ module.exports = async (apolloClient, {
     sort,
     pagination,
     issueId,
+    excludeContentIds,
+    includeSectionNames,
+    excludeSectionNames,
   };
   const query = buildQuery({ queryFragment, queryName });
   const variables = { input };

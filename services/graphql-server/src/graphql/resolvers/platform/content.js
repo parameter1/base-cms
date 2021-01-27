@@ -93,6 +93,23 @@ const loadOptions = async ({
   return basedb.find('website.Option', optionQuery, { projection: { _id: 1 } });
 };
 
+const loadMagazineSections = async ({
+  basedb,
+  ids = [],
+  names = [],
+}) => {
+  if (!ids.length && !names.length) return [];
+  const sectionQuery = {
+    status: 1,
+  };
+  if (ids.length) {
+    sectionQuery._id = { $in: ids };
+  } else {
+    sectionQuery.name = { $in: names };
+  }
+  return basedb.find('magazine.Section', sectionQuery, { projection: { _id: 1 } });
+};
+
 const loadHomeSection = async ({
   basedb,
   siteId,
@@ -888,6 +905,8 @@ module.exports = {
         sectionId,
         excludeContentIds,
         includeContentTypes: contentTypes,
+        includeSectionNames,
+        excludeSectionNames,
         requiresImage,
         pagination,
       } = input;
@@ -895,9 +914,29 @@ module.exports = {
       const since = new Date();
       const idQuery = {
         issue: issueId,
+        section: {},
       };
-      if (sectionId) idQuery.section = sectionId;
-
+      if (sectionId) idQuery.section.$eq = sectionId;
+      if (includeSectionNames.length) {
+        const includeSections = await loadMagazineSections({
+          basedb,
+          names: [...includeSectionNames],
+        });
+        idQuery.section.$in = idQuery.section.$in || [];
+        includeSections.forEach((section) => {
+          idQuery.section.$in.push(section._id);
+        });
+      }
+      if (excludeSectionNames.length) {
+        const excludeSections = await loadMagazineSections({
+          basedb,
+          names: [...excludeSectionNames],
+        });
+        idQuery.section.$nin = idQuery.section.$nin || [];
+        excludeSections.forEach((section) => {
+          idQuery.section.$nin.push(section._id);
+        });
+      }
       const ids = await basedb.distinct('magazine.Schedule', 'content.$id', idQuery);
 
       const query = getPublishedCriteria({ excludeContentIds, contentTypes, since });
