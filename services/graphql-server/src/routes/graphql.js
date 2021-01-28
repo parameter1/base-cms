@@ -2,7 +2,7 @@ const { ApolloServer } = require('apollo-server-express');
 const { get } = require('@parameter1/base-cms-object-path');
 const { getFromRequest } = require('@parameter1/base-cms-tenant-context');
 const { Router } = require('express');
-const { isObject } = require('@parameter1/base-cms-utils');
+const { isObject, parseBooleanHeader } = require('@parameter1/base-cms-utils');
 const { requestParser: canonicalRules } = require('@parameter1/base-cms-canonical-path');
 const ApolloNewrelicExtension = require('apollo-newrelic-extension');
 const createAuthContext = require('../auth-context/create');
@@ -24,6 +24,7 @@ const {
   GRAPHQL_PLAYGROUND_ENABLED,
   GRAPHQL_TRACING_ENABLED,
 } = require('../env');
+const RedisCacheGraphQLPlugin = require('../graphql/plugins/redis-cache');
 
 const { keys } = Object;
 const router = Router();
@@ -57,7 +58,12 @@ const server = new ApolloServer({
     const loaders = createLoaders(basedb);
 
     // Load the (optional) site context from the database.
-    const site = await loadSiteContext({ siteId, basedb, tenant });
+    const site = await loadSiteContext({
+      siteId,
+      basedb,
+      tenant,
+      enableCache: parseBooleanHeader(req.get('x-cache-site-context')),
+    });
 
     // Load the (optional) Base4 REST API client.
     // Some GraphQL mutations require this.
@@ -99,6 +105,9 @@ const server = new ApolloServer({
     if (code === 'INTERNAL_SERVER_ERROR') newrelic.noticeError(e);
     return e;
   },
+  plugins: [
+    new RedisCacheGraphQLPlugin({ onCacheError: newrelic.noticeError.bind(newrelic) }),
+  ],
 });
 server.applyMiddleware({ app: router, path: GRAPHQL_ENDPOINT });
 

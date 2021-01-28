@@ -24,6 +24,8 @@ module.exports = (config = {}) => {
     siteId,
     sitePackage,
     graphqlUri,
+    gqlCacheResponses,
+    gqlCacheSiteContext,
   } = config;
   const distDir = path.resolve(rootDir, 'dist');
   const app = express();
@@ -70,7 +72,11 @@ module.exports = (config = {}) => {
   });
 
   // Register apollo client and server proxy.
-  const headers = buildRequestHeaders({ tenantKey, siteId });
+  const headers = {
+    ...buildRequestHeaders({ tenantKey, siteId }),
+    ...(gqlCacheSiteContext && { 'x-cache-site-context': 'true' }),
+    ...(gqlCacheResponses && { 'x-cache-responses': 'true' }),
+  };
   apollo(app, graphqlUri, {
     name: sitePackage.name,
     version: sitePackage.version,

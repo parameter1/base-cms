@@ -20,6 +20,7 @@ module.exports = new GraphQLScalarType({
     if (typeof value === 'string') {
       return value;
     }
+    if (/^[a-f0-9]{24}$/.test(value)) return `${value}`;
     throw new Error(`${Object.getPrototypeOf(value).constructor.name} not convertible to string.`);
   },
   parseLiteral(ast) {
