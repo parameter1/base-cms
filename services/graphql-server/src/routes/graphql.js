@@ -106,7 +106,7 @@ const server = new ApolloServer({
     return e;
   },
   plugins: [
-    new RedisCacheGraphQLPlugin(),
+    new RedisCacheGraphQLPlugin({ onCacheError: newrelic.noticeError.bind(newrelic) }),
   ],
 });
 server.applyMiddleware({ app: router, path: GRAPHQL_ENDPOINT });
