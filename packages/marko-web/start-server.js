@@ -2,7 +2,7 @@ require('marko/node-require');
 const http = require('http');
 const path = require('path');
 const { createTerminus } = require('@godaddy/terminus');
-const { isFunction: isFn } = require('@parameter1/base-cms-utils');
+const { isFunction: isFn, parseBooleanHeader } = require('@parameter1/base-cms-utils');
 const errorHandlers = require('./express/error-handlers');
 const express = require('./express');
 const loadMore = require('./express/load-more');
@@ -36,6 +36,10 @@ module.exports = async ({
   onFatalError,
   redirectHandler,
   sitemapsHeaders,
+
+  // Cache settings.
+  gqlCacheResponses = parseBooleanHeader(env.CACHE_GQL_RESPONSES),
+  gqlCacheSiteContext = parseBooleanHeader(env.CACHE_GQL_SITE_CONTEXT),
 
   // Terminus settings.
   timeout = 1000,
@@ -71,6 +75,8 @@ module.exports = async ({
     sitePackage,
     embeddedMediaHandlers,
     sitemapsHeaders,
+    gqlCacheResponses,
+    gqlCacheSiteContext,
   });
 
   // Await required services here...
