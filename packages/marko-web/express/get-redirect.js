@@ -24,7 +24,7 @@ module.exports = async (req, handler) => {
   if (to) return websiteRedirect;
   // Attempt to find a redirect using the handler.
   if (typeof handler !== 'function') return null;
-  const result = await handler({ from, params });
+  const result = await handler({ from, params, req });
   if (!result || !result.to) return null;
   return { ...result, code: result.code || 301 };
 };
