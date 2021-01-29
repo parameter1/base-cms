@@ -50,6 +50,9 @@ module.exports = (config = {}) => {
     }));
   }
 
+  // Set the tenant key to the app.
+  app.locals.tenantKey = tenantKey;
+
   // Set the core config.
   app.locals.config = new CoreConfig({ ...config.coreConfig, distDir });
 
