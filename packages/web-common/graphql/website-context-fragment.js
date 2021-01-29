@@ -5,6 +5,7 @@ module.exports = gql`
 fragment MarkoWebsiteContextFragment on WebsiteSite {
   id
   name
+  shortName
   description
   host
   origin
