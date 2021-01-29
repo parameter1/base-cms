@@ -34,6 +34,7 @@ const render = (res, { statusCode, err, template }) => {
 };
 
 const redirectOrError = ({
+  app,
   req,
   res,
   err,
@@ -42,7 +43,7 @@ const redirectOrError = ({
   template,
   fatalErrorHandler,
 }) => {
-  getRedirect(req, redirectHandler).then((redirect) => {
+  getRedirect(req, redirectHandler, app).then((redirect) => {
     if (redirect) {
       const { code, to } = redirect;
       res.redirect(code, to);
@@ -74,6 +75,7 @@ module.exports = (app, { template, redirectHandler, onFatalError }) => {
   app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
     const statusCode = err.status || err.statusCode || 500;
     const opts = {
+      app,
       req,
       res,
       err,
