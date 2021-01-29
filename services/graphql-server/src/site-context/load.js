@@ -25,6 +25,7 @@ module.exports = async ({
   } else {
     const projection = {
       name: 1,
+      shortName: 1,
       host: 1,
       decription: 1,
       language: 1,
