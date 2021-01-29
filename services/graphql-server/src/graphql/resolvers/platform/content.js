@@ -600,10 +600,17 @@ module.exports = {
   ContentCompanyYoutube: {
     videos: ({ videos = [] } = {}) => videos.filter(v => v),
     url: (youtube) => {
-      const { channelId, username } = asObject(youtube);
-      if (!channelId && !username) return null;
-      if (channelId) return `https://youtube.com/channel/${channelId}`;
-      return `https://youtube.com/user/${username}`;
+      const { playlistId, channelId, username } = asObject(youtube);
+      switch (true) {
+        case Boolean(playlistId):
+          return `https://youtube.com/playlist/${playlistId}`;
+        case Boolean(channelId):
+          return `https://youtube.com/channel/${channelId}`;
+        case Boolean(username):
+          return `https://youtube.com/user/${username}`;
+        default:
+          return null;
+      }
     },
   },
 
