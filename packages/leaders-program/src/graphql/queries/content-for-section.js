@@ -13,7 +13,7 @@ query ContentForLeadersSection(
     pagination: { limit: 0 },
     sort: { field: name, order: asc },
     sectionBubbling: false,
-    includeContentTypes: Company
+    includeContentTypes: $includeContentTypes
   }) {
     edges {
       node {
