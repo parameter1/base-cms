@@ -2,11 +2,18 @@ import gql from 'graphql-tag';
 
 export default gql`
 
-query ContentForLeadersSection($sectionId: Int!, $promotionLimit: Int = 4, $videoLimit: Int = 3) {
+query ContentForLeadersSection(
+  $sectionId: Int!,
+  $promotionLimit: Int = 4,
+  $videoLimit: Int = 3,
+  $includeContentTypes: [ContentType!] = [Company]
+) {
   websiteScheduledContent(input: {
     sectionId: $sectionId,
     pagination: { limit: 0 },
     sort: { field: name, order: asc },
+    sectionBubbling: false,
+    includeContentTypes: Company
   }) {
     edges {
       node {
