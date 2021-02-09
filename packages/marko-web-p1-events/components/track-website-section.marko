@@ -1,0 +1,26 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+
+$ const { site } = out.global;
+$ const { node } = input;
+$ const config = site.getAsObject("p1events");
+$ const { TENANT_KEY } = process.env;
+
+$ const tenantKey = TENANT_KEY.replace("_", "-");
+$ const ns = (type) => `base.${tenantKey}.${type}`;
+
+<if(config.enabled)>
+  $ const entity = {
+    id: node.id,
+    ns: ns('website-section'),
+    name: node.fullName,
+    alias: node.alias,
+  };
+  $ const data = {
+    action: 'View',
+    category: 'Website Section',
+    entity,
+  };
+  <script>
+    p1events('track', ${JSON.stringify(data)});
+  </script>
+</if>

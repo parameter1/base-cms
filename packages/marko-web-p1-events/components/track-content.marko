@@ -1,0 +1,42 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+
+$ const { site } = out.global;
+$ const { node } = input;
+$ const config = site.getAsObject("p1events");
+$ const { TENANT_KEY } = process.env;
+
+$ const tenantKey = TENANT_KEY.replace("_", "-");
+$ const ns = (type) => `base.${tenantKey}.${type}`;
+
+<if(config.enabled)>
+  $ const { type, primarySection, company, createdBy } = node;
+  $ const entity = {
+    id: node.id,
+    ns: ns(`content-${type}`),
+    name: node.name,
+    props: { type, published: node.published },
+    refs: {
+      primarySection: primarySection
+        ? { id: primarySection.id, ns: ns("website-section"), name: primarySection.fullName, props: { alias: primarySection.alias } }
+        : null,
+      company: company
+        ? { id: company.id, ns: ns("content-company"), name: company.name }
+        : null,
+      authors: getAsArray(node, "authors.edges").map((edge) => {
+        const { node: author } = edge;
+        return { id: author.id, ns: ns("content-contact"), name: author.name };
+      }),
+      createdBy: createdBy
+        ? { id: createdBy.id, ns: ns("user"), name: createdBy.username, props: { firstName: createdBy.firstName, lastName: createdBy.lastName } }
+        : null,
+    },
+  };
+  $ const data = {
+    action: 'View',
+    category: 'Content',
+    entity,
+  };
+  <script>
+    p1events('track', ${JSON.stringify(data)});
+  </script>
+</if>
