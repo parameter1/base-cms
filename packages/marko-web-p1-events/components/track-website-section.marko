@@ -1,0 +1,23 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+import ns from "../utils/create-namespace";
+
+$ const { site } = out.global;
+$ const { node } = input;
+$ const config = site.getAsObject("p1events");
+
+<if(config.enabled)>
+  $ const entity = {
+    id: node.id,
+    ns: ns('website-section'),
+    name: node.fullName,
+    alias: node.alias,
+  };
+  $ const data = {
+    action: 'View',
+    category: 'Website Section',
+    entity,
+  };
+  <script>
+    p1events('track', ${JSON.stringify(data)});
+  </script>
+</if>
