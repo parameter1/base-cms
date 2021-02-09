@@ -1,12 +1,9 @@
 import { getAsArray } from "@parameter1/base-cms-object-path";
+import ns from "../utils/create-namespace";
 
 $ const { site } = out.global;
 $ const { node } = input;
 $ const config = site.getAsObject("p1events");
-$ const { TENANT_KEY } = process.env;
-
-$ const tenantKey = TENANT_KEY.replace("_", "-");
-$ const ns = (type) => `base.${tenantKey}.${type}`;
 
 <if(config.enabled)>
   $ const { type, primarySection, company, createdBy } = node;
