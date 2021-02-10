@@ -31,7 +31,7 @@
       />
     </div>
     <div v-if="viewAll" class="leaders__footer">
-      <a :href="viewAll">View All Companies &gt;</a>
+      <a :href="viewAll" v-html="viewAllText" />
     </div>
   </div>
 </template>
@@ -98,6 +98,10 @@ export default {
     viewAllHref: {
       type: String,
       default: null,
+    },
+    viewAllText: {
+      type: String,
+      default: 'View All Companies &gt;',
     },
     displayHeader: {
       type: Boolean,
