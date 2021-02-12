@@ -676,6 +676,7 @@ module.exports = {
         pagination,
         beginning,
         ending,
+        withSite,
       } = input;
 
       // @deprecated Prefer includeContentTypes over contentTypes.
@@ -690,7 +691,7 @@ module.exports = {
       });
 
       const siteId = input.siteId || site.id();
-      if (siteId) query['mutations.Website.primarySite'] = siteId;
+      if (withSite && siteId) query['mutations.Website.primarySite'] = siteId;
 
       if (beginning.before) query.$and.push({ startDate: { $lte: beginning.before } });
       if (beginning.after) query.$and.push({ startDate: { $gte: beginning.after } });

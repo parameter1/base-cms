@@ -284,6 +284,7 @@ input ContentSitemapNewsUrlsQueryInput {
 }
 
 input AllPublishedContentQueryInput {
+  withSite: Boolean = true
   siteId: ObjectID
   after: Date
   since: Date
