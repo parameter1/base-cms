@@ -8,6 +8,7 @@ module.exports = ({
   excludeContentTypes = [],
   since,
   after,
+  primarySite,
 } = {}) => {
   const date = since || new Date();
   const types = isArray(contentTypes) && contentTypes.length
@@ -25,6 +26,7 @@ module.exports = ({
       $lte: date,
       ...(after && { $gte: after }),
     },
+    ...(primarySite && { 'mutations.Website.primarySite': primarySite }),
     $and: [
       {
         $or: [
