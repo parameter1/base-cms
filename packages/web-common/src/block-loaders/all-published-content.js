@@ -15,6 +15,7 @@ const date = v => (v instanceof Date ? v.valueOf() : v);
  * @param {number[]} [params.includeTaxonomyIds] An array of taxonomies to include.
  * @param {string[]} [params.includeLabels] An array of labels to include.
  * @param {string[]} [params.contentTypes] An array of content types to include.
+ * @param {boolean} [params.withSite] Whether the content must belong to the current site.
  * @param {boolean} [params.requiresImage] Whether the content must have an image.
  * @param {boolean} [params.sectionBubbling] Whether automatic section bubbling is applied.
  * @param {string} [params.sortField] The field to use for sorting results
@@ -51,6 +52,7 @@ module.exports = async (apolloClient, {
 
   sectionId,
   contentTypes,
+  withSite,
   requiresImage,
   sectionBubbling,
 
@@ -65,6 +67,7 @@ module.exports = async (apolloClient, {
     includeTaxonomyIds,
     includeLabels,
     excludeContentIds,
+    withSite,
     requiresImage,
     sectionBubbling,
     sectionId,
