@@ -418,6 +418,7 @@ input WebsiteScheduledContentQueryInput {
 }
 
 input RelatedPublishedContentQueryInput {
+  withSite: Boolean = true
   siteId: ObjectID
   contentId: Int!
   excludeContentTypes: [ContentType!] = []
