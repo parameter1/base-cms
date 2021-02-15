@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-p1-events",
-  "version": "2.4.0",
+  "version": "2.4.2",
   "description": "Parameter1 user event tracking components for BaseCMS/Marko websites.",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
@@ -11,7 +11,7 @@
     "test": "yarn compile && yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-object-path": "^2.3.0"
+    "@parameter1/base-cms-object-path": "^2.4.2"
   },
   "peerDependencies": {
     "@parameter1/base-cms-marko-core": "^2.0.0",
