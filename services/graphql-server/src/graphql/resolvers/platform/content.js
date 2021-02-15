@@ -1206,6 +1206,7 @@ module.exports = {
       const {
         contentId,
         queryTypes,
+        withSite,
       } = input;
       // If no query types were specified (owned, inverse, etc), return an empty response.
       if (!queryTypes.length) return BaseDB.paginateEmpty();
@@ -1218,11 +1219,9 @@ module.exports = {
       // If no content document was found, return an empty response.
       if (!doc) return BaseDB.paginateEmpty();
 
-      const siteId = input.siteId || site.id();
-
       // Run perform the related content query.
       return relatedContent.performQuery(doc, {
-        siteId,
+        ...(withSite && { siteId: input.siteId || site.id() }),
         input,
         basedb,
         info,

@@ -9,6 +9,7 @@ const buildQuery = require('../gql/query-factories/block-related-published-conte
  * @param {string} [params.after] The cursor to start returning results from.
  * @param {string[]} [params.excludeContentTypes] An array of content types to exclude.
  * @param {string[]} [params.includeContentTypes] An array of content types to include.
+ * @param {boolean} [params.withSite] Whether the content must belong to the current site.
  * @param {boolean} [params.requiresImage] Whether the content must have an image.
  * @param {string} [params.queryFragment] The `graphql-tag` fragment
  *                                        to apply to the `relatedPublishedContent` query.
@@ -24,6 +25,7 @@ module.exports = async (apolloClient, {
   excludeContentTypes,
   includeContentTypes,
   requiresImage,
+  withSite,
 
   queryFragment,
   queryName,
@@ -36,6 +38,7 @@ module.exports = async (apolloClient, {
     excludeContentTypes,
     includeContentTypes,
     requiresImage,
+    withSite,
   };
   const query = buildQuery({ queryFragment, queryName });
   const variables = { input };
