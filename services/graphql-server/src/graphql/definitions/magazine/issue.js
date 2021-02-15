@@ -93,6 +93,7 @@ input MagazineActiveIssuesQueryInput {
   requiresCoverImage: Boolean = false
   sort: MagazineIssueSortInput = { field: mailDate, order: desc }
   pagination: PaginationInput = {}
+  mailing: MagazineActiveIssuesMailingInput = {}
 }
 
 input MagazineIssuesQueryInput {
@@ -100,6 +101,11 @@ input MagazineIssuesQueryInput {
   requiresCoverImage: Boolean = false
   sort: MagazineIssueSortInput = {}
   pagination: PaginationInput = {}
+}
+
+input MagazineActiveIssuesMailingInput {
+  before: Date
+  after: Date
 }
 
 input MagazineIssuePublicationInput {
