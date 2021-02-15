@@ -10,6 +10,7 @@ module.exports = async (apolloClient, {
   publicationId,
   excludeIssueIds,
   requiresCoverImage,
+  mailing,
 
   queryFragment,
   queryName,
@@ -24,6 +25,7 @@ module.exports = async (apolloClient, {
     publicationId,
     excludeIssueIds,
     requiresCoverImage,
+    mailing,
     sort,
     pagination,
   };
