@@ -9,11 +9,11 @@ $ const rel = rels.length ? rels.join(" ") : null;
 <if(hasHref)>
   <${input.before} />
   <a
+    rel=rel
     ...input.attrs
     href=href
     title=input.title
     target=target
-    rel=rel
     class=classNames
   >
     <${input.renderBody} />
