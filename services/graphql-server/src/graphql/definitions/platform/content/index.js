@@ -430,6 +430,7 @@ input RelatedPublishedContentQueryInput {
 }
 
 input ContentRelatedContentInput {
+  withSite: Boolean = true
   siteId: ObjectID
   excludeContentTypes: [ContentType!] = []
   includeContentTypes: [ContentType!] = []
