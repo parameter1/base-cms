@@ -73,6 +73,7 @@ query ContentForLeadersSection(
           teaser(input: { maxLength: 0 })
           website
           promotions: relatedContent(input: {
+            withSite: false,
             queryTypes: [company],
             includeContentTypes: [Promotion],
             pagination: { limit: $promotionLimit },
