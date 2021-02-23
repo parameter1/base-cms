@@ -602,7 +602,7 @@ module.exports = {
       const { playlistId, channelId, username } = asObject(youtube);
       switch (true) {
         case Boolean(playlistId):
-          return `https://youtube.com/playlist/${playlistId}`;
+          return `https://youtube.com/playlist?list=${playlistId}`;
         case Boolean(channelId):
           return `https://youtube.com/channel/${channelId}`;
         case Boolean(username):
