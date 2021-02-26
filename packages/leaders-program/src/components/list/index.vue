@@ -179,6 +179,7 @@ export default {
     document.addEventListener('touchmove', this.onTouchMove);
     document.addEventListener('touchstart', this.onTouchStart);
     document.body.addEventListener(pointerEvent.end, this.onPointerEnd);
+    this.$emit('mounted', this.items);
   },
 
   beforeDestroy() {

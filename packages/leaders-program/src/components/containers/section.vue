@@ -23,6 +23,7 @@
         :offset-bottom="offsetBottom"
         nav-direction="vertical"
         @link-action="emitAction"
+        @mounted="emitCategoryItems"
       >
         <template #nav-link="{ item, isActive }">
           <link-contents
@@ -146,6 +147,19 @@ export default {
 
     emitAction(...args) {
       this.$emit('action', ...args);
+    },
+
+    emitCategoryItems(items) {
+      if (!items || !items.length) return;
+      this.emitAction({
+        type: 'viewed',
+        label: 'Section Company Items',
+        category: 'Leaders Sections Nav',
+      }, {
+        sectionId: this.sectionId,
+        sectionName: this.title,
+        items: items.map(item => ({ id: item.id, name: item.name })),
+      });
     },
 
     toggleExpanded() {
