@@ -46,7 +46,6 @@
             v-for="(item, index) in items"
             ref="sections"
             :key="index"
-            #default="{ isActive }"
             :index="index"
             :active-index="activeIndex"
             :last-active-index="lastActiveIndex"
@@ -179,6 +178,7 @@ export default {
     document.addEventListener('touchmove', this.onTouchMove);
     document.addEventListener('touchstart', this.onTouchStart);
     document.body.addEventListener(pointerEvent.end, this.onPointerEnd);
+    this.$emit('mounted', this.items);
   },
 
   beforeDestroy() {

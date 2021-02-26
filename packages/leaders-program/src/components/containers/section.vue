@@ -23,6 +23,7 @@
         :offset-bottom="offsetBottom"
         nav-direction="vertical"
         @link-action="emitAction"
+        @mounted="emitCategoryItems"
       >
         <template #nav-link="{ item, isActive }">
           <link-contents
@@ -148,6 +149,19 @@ export default {
       this.$emit('action', ...args);
     },
 
+    emitCategoryItems(items) {
+      if (!items || !items.length) return;
+      this.emitAction({
+        type: 'viewed',
+        label: 'Section Company Items',
+        category: 'Leaders Sections Nav',
+      }, {
+        sectionId: this.sectionId,
+        sectionName: this.title,
+        items: items.map(item => ({ id: item.id, name: item.name })),
+      });
+    },
+
     toggleExpanded() {
       this.isExpanded = !this.isExpanded;
       this.emitAction({
@@ -165,7 +179,11 @@ export default {
         this.isLoading = true;
         this.error = null;
         try {
-          const variables = { sectionId: this.sectionId, promotionLimit: this.promotionLimit, videoLimit: this.videoLimit };
+          const variables = {
+            sectionId: this.sectionId,
+            promotionLimit: this.promotionLimit,
+            videoLimit: this.videoLimit,
+          };
           const { data } = await this.$apollo.query({ query, variables });
           this.items = getEdgeNodes(data, 'websiteScheduledContent');
           this.hasLoaded = true;
