@@ -46,7 +46,6 @@
             v-for="(item, index) in items"
             ref="sections"
             :key="index"
-            #default="{ isActive }"
             :index="index"
             :active-index="activeIndex"
             :last-active-index="lastActiveIndex"
