@@ -1,4 +1,4 @@
-const Octokit = require('@octokit/rest');
+const { Octokit } = require('@octokit/rest');
 const { GITHUB_PERSONAL_ACCESS_TOKEN } = require('./env');
 const { name, version } = require('../package.json');
 
