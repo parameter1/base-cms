@@ -69,6 +69,8 @@ export default {
                   const $previous = $(this).prev();
                   if (component.detectEmbeds && $previous.attr('data-embed-type')) {
                     $(this).after(cleaned);
+                  } else if ($previous.is(':header')) {
+                    $previous.before(cleaned);
                   } else {
                     $(this).before(cleaned);
                   }
@@ -78,6 +80,12 @@ export default {
             } else {
               const $next = $(this).next();
               if (component.detectEmbeds && $next.attr('data-embed-type')) {
+                if ($child.prev().is(':header')) {
+                  $child.prev().before(cleaned);
+                } else {
+                  $child.before(cleaned);
+                }
+              } else if ($child.is(':header')) {
                 $child.before(cleaned);
               } else {
                 $child.after(cleaned);
