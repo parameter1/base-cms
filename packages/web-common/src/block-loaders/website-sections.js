@@ -12,13 +12,22 @@ const buildQuery = require('../gql/query-factories/block-website-sections');
  */
 module.exports = async (apolloClient, {
   status,
+  includeIds,
+  limit,
   taxonomyIds,
   queryName,
   queryFragment,
   sort,
 } = {}) => {
   const query = buildQuery({ queryFragment, queryName });
-  const input = { status, sort, taxonomyIds };
+  const pagination = { limit };
+  const input = {
+    pagination,
+    status,
+    includeIds,
+    sort,
+    taxonomyIds,
+  };
   const variables = { input };
 
   const { data } = await apolloClient.query({ query, variables });
