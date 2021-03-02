@@ -2,6 +2,9 @@
   "<marko-web-leaders>": {
     "template": "./index.marko"
   },
+  "<marko-web-leaders-click-emitter>": {
+    "template": "./click-emitter.marko"
+  },
   "<marko-web-leaders-company-social-link>": {
     "template": "./company-social-link.marko",
     "@company": "object",
