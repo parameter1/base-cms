@@ -15,7 +15,7 @@
     "core-js": "^3.8.2",
     "graphql": "^14.7.0",
     "graphql-tag": "^2.11.0",
-    "object-path": "^0.11.4",
+    "object-path": "^0.11.5",
     "portal-vue": "^2.1.7",
     "vue": "^2.6.12"
   },
