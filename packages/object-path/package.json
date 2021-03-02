@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-object-path",
-  "version": "2.4.2",
+  "version": "2.5.0",
   "description": "Utility functions for accessing JavaScript objects by path.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
