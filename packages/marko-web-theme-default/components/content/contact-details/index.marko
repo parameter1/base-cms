@@ -16,6 +16,8 @@ $ const fields = ["title", "website"];
 $ if (showEmail) fields.push("publicEmail");
 $ const showFields = fields.some(k => content[k]);
 
+$ const websiteLinkAttrs = getAsObject(input, "websiteLinkAttrs");
+
 <default-theme-page-contact-details|{ blockName }|
   tag=input.tag
   class=input.class
@@ -39,7 +41,7 @@ $ const showFields = fields.some(k => content[k]);
       <if(showEmail)>
         <marko-web-content-public-email block-name=blockName obj=content link=true/>
       </if>
-      <marko-web-content-website block-name=blockName obj=content link=true />
+      <marko-web-content-website block-name=blockName obj=content link={ attrs: websiteLinkAttrs } />
     </default-theme-content-contact-details-section>
   </if>
 
