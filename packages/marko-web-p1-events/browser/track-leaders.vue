@@ -56,6 +56,18 @@ export default {
           entity: { id: payload.companyId, ns: this.ns('content-company') },
           props: { url: payload.href },
         });
+      } else if (type === 'click' && category === 'Leaders Company Profile') {
+        const matches = /^Company Social - (.+)$/.exec(label);
+        queue.push({
+          ...baseEvent,
+          ...(matches && { label: 'Company Social Link' }),
+          action: 'Click',
+          entity: { id: payload.companyId, ns: this.ns('content-company') },
+          props: {
+            url: payload.href,
+            ...(matches && matches[1] && { provider: matches[1] }),
+          },
+        });
       }
       if (queue.length) p1events('track', queue);
     });
