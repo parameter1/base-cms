@@ -1,5 +1,5 @@
 <template>
-  <div class="marko-web-leaders-gtm-tracker" />
+  <div class="marko-web-leaders-gtm-tracker" style="display: none;" />
 </template>
 
 <script>
