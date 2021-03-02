@@ -69,6 +69,7 @@ export default {
       const data = {
         companyId: this.companyId,
         companyName: this.companyName,
+        href: this.href,
       };
       this.$emit('action', payload, data);
     },
