@@ -1,0 +1,12 @@
+import { get, getAsObject } from "@parameter1/base-cms-object-path";
+
+$ const { id, name } = getAsObject(input, "company");
+$ const { url: href, label, provider } = getAsObject(input, "item");
+$ const props = {
+  companyId: id,
+  companyName: name,
+  href,
+  provider,
+};
+
+<marko-web-browser-component name="LeadersCompanySocialLink" props=props />
