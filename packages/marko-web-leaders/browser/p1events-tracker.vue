@@ -1,5 +1,5 @@
 <template>
-  <div class="p1-events-track-leaders" />
+  <div class="marko-web-leaders-p1events-tracker" style="display: none;" />
 </template>
 
 <script>
@@ -60,6 +60,7 @@ export default {
         const matches = /^Company Social - (.+)$/.exec(label);
         queue.push({
           ...baseEvent,
+          category: 'Company Profile Page',
           ...(matches && { label: 'Company Social Link' }),
           action: 'Click',
           entity: { id: payload.companyId, ns: this.ns('content-company') },
