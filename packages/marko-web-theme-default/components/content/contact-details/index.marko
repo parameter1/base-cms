@@ -17,6 +17,7 @@ $ if (showEmail) fields.push("publicEmail");
 $ const showFields = fields.some(k => content[k]);
 
 $ const websiteLinkAttrs = getAsObject(input, "websiteLinkAttrs");
+$ const socialLinkAttrs = getAsObject(input, "socialLinkAttrs");
 
 <default-theme-page-contact-details|{ blockName }|
   tag=input.tag
@@ -53,6 +54,7 @@ $ const websiteLinkAttrs = getAsObject(input, "websiteLinkAttrs");
           provider=item.provider
           href=item.url
           modifiers=["dark", "lg"]
+          attrs=socialLinkAttrs
         />
       </for>
     </default-theme-content-contact-details-section>
