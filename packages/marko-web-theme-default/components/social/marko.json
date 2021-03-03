@@ -6,7 +6,8 @@
     "@href": "string",
     "@target": "string",
     "@modifiers": "array",
-    "@class": "string"
+    "@class": "string",
+    "@attrs": "object"
   },
   "<default-theme-social-icons>": {
     "template": "./icons.marko"
