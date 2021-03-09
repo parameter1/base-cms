@@ -5,6 +5,8 @@ const {
   cleanEnv,
   bool,
   num,
+  port,
+  str,
 } = envalid;
 const { nonemptystr } = custom;
 
