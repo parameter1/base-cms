@@ -5,6 +5,7 @@ const newrelic = require('./newrelic');
 const {
   GRAPHQL_URI,
   PORT,
+  EXPOSED_HOST,
   EXPOSED_PORT,
   TERMINUS_TIMEOUT: timeout,
   TERMINUS_SHUTDOWN_DELAY: beforeShutdownTimeout,
@@ -31,7 +32,7 @@ const run = async () => {
     onShutdown: () => log('> Cleanup finished. Shutting down.'),
   });
 
-  server.listen(PORT, () => log(`> Ready on http://0.0.0.0:${EXPOSED_PORT}, using GraphQL API ${GRAPHQL_URI}`));
+  server.listen(PORT, () => log(`> Ready on http://${EXPOSED_HOST}:${EXPOSED_PORT}, using GraphQL API ${GRAPHQL_URI}`));
 };
 
 // Simulate future NodeJS behavior by throwing unhandled Promise rejections.

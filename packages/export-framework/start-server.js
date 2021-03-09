@@ -9,6 +9,9 @@ const CoreConfig = require('./config/core');
 const CustomConfig = require('./config/custom');
 
 if (!process.env.LIVERELOAD_PORT) process.env.LIVERELOAD_PORT = 5010;
+if (!process.env.LIVERELOAD_HOST) {
+  process.env.LIVERELOAD_HOST = 'localhost';
+}
 const { env } = process;
 process.on('unhandledRejection', (e) => { throw e; });
 
@@ -19,6 +22,7 @@ module.exports = async ({
   coreConfig: incomingCoreConfig,
   port = env.PORT || 6008,
   exposedPort = env.EXPOSED_PORT || env.PORT || 6008,
+  exposedHost = env.LIVERELOAD_HOST || 'localhost',
   graphqlUri = env.GRAPHQL_URI,
   tenantKey = env.TENANT_KEY,
   onAsyncBlockError,
@@ -103,7 +107,7 @@ module.exports = async ({
             name: sitePackage.name,
             tenantKey,
             graphqlUri,
-            location: `http://0.0.0.0:${exposedPort}`,
+            location: `http://${exposedHost}:${exposedPort}`,
           });
         }
       }

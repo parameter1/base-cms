@@ -8,6 +8,7 @@ const {
 
 module.exports = cleanEnv(process.env, {
   GRAPHQL_URI: str({ desc: 'The BaseCMS GraphQL URL.' }),
+  EXPOSED_HOST: str({ desc: 'The external host to run on.', default: 'localhost' }),
   EXPOSED_PORT: port({ desc: 'The external port that express is exposed on.', default: 80 }),
   NEW_RELIC_ENABLED: bool({ desc: 'Whether New Relic is enabled.', default: true, devDefault: false }),
   NEW_RELIC_LICENSE_KEY: str({ desc: 'The license key for New Relic.', devDefault: '(unset)' }),

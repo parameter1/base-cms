@@ -10,6 +10,9 @@ const loadMore = require('./express/load-more');
 if (!process.env.LIVERELOAD_PORT) {
   process.env.LIVERELOAD_PORT = 4010;
 }
+if (!process.env.LIVERELOAD_HOST) {
+  process.env.LIVERELOAD_HOST = 'localhost';
+}
 const { env } = process;
 
 process.on('unhandledRejection', (e) => { throw e; });
@@ -23,6 +26,7 @@ module.exports = async ({
   helmetConfig,
   port = env.PORT || 4008,
   exposedPort = env.EXPOSED_PORT || env.PORT || 4008,
+  exposedHost = env.LIVERELOAD_HOST || 'localhost',
   routes,
   graphqlUri = env.GRAPHQL_URI,
   tenantKey = env.TENANT_KEY,
@@ -134,7 +138,7 @@ module.exports = async ({
             name: sitePackage.name,
             siteId,
             graphqlUri,
-            location: `http://0.0.0.0:${exposedPort}`,
+            location: `http://${exposedHost}:${exposedPort}`,
           });
         }
       }

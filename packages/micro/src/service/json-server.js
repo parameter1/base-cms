@@ -37,6 +37,7 @@ module.exports = async ({
   signals = ['SIGTERM', 'SIGINT', 'SIGHUP', 'SIGQUIT'],
   healthCheckPath = '/_health',
   port = 80,
+  exposedHost = 'localhost',
   exposedPort = 80,
   onError,
   onStart,
@@ -127,5 +128,5 @@ module.exports = async ({
     },
   });
 
-  server.listen(port, () => log(`Ready on http://0.0.0.0:${exposedPort}`));
+  server.listen(port, () => log(`Ready on http://${exposedHost}:${exposedPort}`));
 };
