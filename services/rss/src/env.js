@@ -6,6 +6,7 @@ const {
   bool,
   port,
   num,
+  str,
 } = envalid;
 const { nonemptystr } = validators;
 
