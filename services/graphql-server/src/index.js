@@ -4,6 +4,7 @@ const { createTerminus } = require('@godaddy/terminus');
 const newrelic = require('./newrelic');
 const {
   PORT,
+  EXPOSED_HOST,
   EXPOSED_PORT,
   TERMINUS_TIMEOUT: timeout,
   TERMINUS_SHUTDOWN_DELAY: beforeShutdownTimeout,
@@ -37,7 +38,7 @@ const run = async () => {
     onShutdown: () => log('> Cleanup finished. Shutting down.'),
   });
 
-  server.listen(PORT, () => log(`> Ready on http://0.0.0.0:${EXPOSED_PORT}`));
+  server.listen(PORT, () => log(`> Ready on http://${EXPOSED_HOST}:${EXPOSED_PORT}`));
 };
 
 // Simulate future NodeJS behavior by throwing unhandled Promise rejections.

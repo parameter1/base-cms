@@ -6,6 +6,7 @@ const pkg = require('../package.json');
 const newrelic = require('./newrelic');
 const {
   PORT,
+  EXPOSED_HOST,
   EXPOSED_PORT,
   TERMINUS_SHUTDOWN_DELAY,
   TERMINUS_TIMEOUT,
@@ -41,7 +42,7 @@ const run = async () => {
 };
 
 run()
-  .then(() => log(`${pkg.name} v${pkg.version} running on http://0.0.0.0:${EXPOSED_PORT}`))
+  .then(() => log(`${pkg.name} v${pkg.version} running on http://${EXPOSED_HOST}:${EXPOSED_PORT}`))
   .catch(e => setImmediate(() => {
     newrelic.noticeError(e);
     throw e;

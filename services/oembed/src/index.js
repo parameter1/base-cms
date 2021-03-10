@@ -8,6 +8,7 @@ const {
 } = require('./env');
 const app = require('./app');
 const pkg = require('../package.json');
+const { EXPOSED_HOST, EXPOSED_PORT } = require('./env');
 
 const { log } = console;
 
@@ -29,7 +30,7 @@ const run = async () => {
     onShutdown: () => log('> Cleanup finished. Shutting down.'),
   });
 
-  server.listen(80, () => log('> Ready on http://0.0.0.0:10013'));
+  server.listen(80, () => log(`> Ready on http://${EXPOSED_HOST}:${EXPOSED_PORT}`));
 };
 
 // Simulate future NodeJS behavior by throwing unhandled Promise rejections.

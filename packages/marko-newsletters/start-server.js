@@ -7,9 +7,9 @@ const { isFunction: isFn } = require('@parameter1/base-cms-utils');
 const express = require('./express');
 const loadTemplates = require('./utils/load-templates');
 
-if (!process.env.LIVERELOAD_PORT) {
-  process.env.LIVERELOAD_PORT = 5010;
-}
+if (!process.env.LIVERELOAD_PORT) process.env.LIVERELOAD_PORT = 5010;
+if (!process.env.EXPOSED_HOST) process.env.EXPOSED_HOST = 'localhost';
+
 const { env } = process;
 
 process.on('unhandledRejection', (e) => { throw e; });
@@ -24,6 +24,7 @@ module.exports = async ({
   coreConfig,
   port = env.PORT || 5008,
   exposedPort = env.EXPOSED_PORT || env.PORT || 5008,
+  exposedHost = env.EXPOSED_HOST,
   graphqlUri = env.GRAPHQL_URI,
   tenantKey = env.TENANT_KEY,
   publicPath, // path to load public assets. will resolve from rootDir.
@@ -111,7 +112,7 @@ module.exports = async ({
             name: sitePackage.name,
             tenantKey,
             graphqlUri,
-            location: `http://0.0.0.0:${exposedPort}`,
+            location: `http://${exposedHost}:${exposedPort}`,
           });
         }
       }

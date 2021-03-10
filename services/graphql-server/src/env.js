@@ -15,6 +15,7 @@ module.exports = cleanEnv(process.env, {
   REDIS_CACHE_DSN: nonemptystr({ desc: 'The Redis DSN where cache values should be saved.' }),
   GRAPHQL_ENDPOINT: nonemptystr({ desc: 'The GraphQL endpoint', default: '/' }),
   PORT: port({ desc: 'The internal port to run on.', default: 80 }),
+  EXPOSED_HOST: str({ desc: 'The external host to run on.', default: 'localhost' }),
   EXPOSED_PORT: port({ desc: 'The external port to run on.', default: 80 }),
   NEW_RELIC_ENABLED: bool({ desc: 'Whether New Relic is enabled.', default: true, devDefault: false }),
   NEW_RELIC_LICENSE_KEY: str({ desc: 'The license key for New Relic.', default: '' }),
