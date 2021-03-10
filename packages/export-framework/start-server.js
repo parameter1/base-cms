@@ -21,7 +21,7 @@ module.exports = async ({
   coreConfig: incomingCoreConfig,
   port = env.PORT || 6008,
   exposedPort = env.EXPOSED_PORT || env.PORT || 6008,
-  exposedHost = env.EXPOSED_HOST || 'localhost',
+  exposedHost = env.EXPOSED_HOST,
   graphqlUri = env.GRAPHQL_URI,
   tenantKey = env.TENANT_KEY,
   onAsyncBlockError,

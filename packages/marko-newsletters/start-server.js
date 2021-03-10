@@ -24,7 +24,7 @@ module.exports = async ({
   coreConfig,
   port = env.PORT || 5008,
   exposedPort = env.EXPOSED_PORT || env.PORT || 5008,
-  exposedHost = env.EXPOSED_HOST || 'localhost',
+  exposedHost = env.EXPOSED_HOST,
   graphqlUri = env.GRAPHQL_URI,
   tenantKey = env.TENANT_KEY,
   publicPath, // path to load public assets. will resolve from rootDir.

@@ -23,7 +23,7 @@ module.exports = async ({
   helmetConfig,
   port = env.PORT || 4008,
   exposedPort = env.EXPOSED_PORT || env.PORT || 4008,
-  exposedHost = env.EXPOSED_HOST || 'localhost',
+  exposedHost = env.EXPOSED_HOST,
   routes,
   graphqlUri = env.GRAPHQL_URI,
   tenantKey = env.TENANT_KEY,
