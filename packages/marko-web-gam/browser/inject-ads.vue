@@ -21,7 +21,7 @@ export default {
     },
     detectEmbeds: {
       type: Boolean,
-      default: false,
+      default: true,
     },
   },
 
@@ -67,10 +67,10 @@ export default {
               $child.nextAll(childSelector).each(function handleBefore() {
                 if ($(this).text().length > 1) {
                   const $previous = $(this).prev();
-                  if (component.detectEmbeds && $previous.attr('data-embed-type')) {
-                    $(this).after(cleaned);
-                  } else if ($previous.is(':header')) {
+                  if ($previous.is('h1,h2,h3,h4,h5,h6')) {
                     $previous.before(cleaned);
+                  } else if ($previous.attr('data-embed-type')) {
+                    $(this).after(cleaned);
                   } else {
                     $(this).before(cleaned);
                   }
@@ -79,13 +79,13 @@ export default {
               });
             } else {
               const $next = $(this).next();
-              if (component.detectEmbeds && $next.attr('data-embed-type')) {
-                if ($child.prev().is(':header')) {
+              if ($next.attr('data-embed-type')) {
+                if ($child.prev().is('h1,h2,h3,h4,h5,h6')) {
                   $child.prev().before(cleaned);
                 } else {
                   $child.before(cleaned);
                 }
-              } else if ($child.is(':header')) {
+              } else if ($child.is('h1,h2,h3,h4,h5,h6')) {
                 $child.before(cleaned);
               } else {
                 $child.after(cleaned);
