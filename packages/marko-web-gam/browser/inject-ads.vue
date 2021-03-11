@@ -21,7 +21,7 @@ export default {
     },
     detectEmbeds: {
       type: Boolean,
-      default: false,
+      default: true,
     },
   },
 
@@ -62,12 +62,15 @@ export default {
           if (contents) {
             // Unescape closing HTML tags.
             const cleaned = contents.replace(/<\\\/(.+?)>/g, '</$1>');
+            const headlineTags = 'h1,h2,h3,h4,h5,h6';
             if ($nextChild.text().length <= 1) {
               // eslint-disable-next-line consistent-return
               $child.nextAll(childSelector).each(function handleBefore() {
                 if ($(this).text().length > 1) {
                   const $previous = $(this).prev();
-                  if (component.detectEmbeds && $previous.attr('data-embed-type')) {
+                  if ($previous.is(headlineTags)) {
+                    $previous.before(cleaned);
+                  } else if ($previous.attr('data-embed-type')) {
                     $(this).after(cleaned);
                   } else {
                     $(this).before(cleaned);
@@ -77,7 +80,13 @@ export default {
               });
             } else {
               const $next = $(this).next();
-              if (component.detectEmbeds && $next.attr('data-embed-type')) {
+              if ($next.attr('data-embed-type')) {
+                if ($child.prev().is(headlineTags)) {
+                  $child.prev().before(cleaned);
+                } else {
+                  $child.before(cleaned);
+                }
+              } else if ($child.is(headlineTags)) {
                 $child.before(cleaned);
               } else {
                 $child.after(cleaned);
