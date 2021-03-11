@@ -43,7 +43,7 @@ type AssetImage {
 
   # GraphQL specific fields
   src(input: AssetImageSrcInput = {}): String! @projection(localField: "fileName", needs: ["filePath", "cropDimensions", "isLogo", "width", "height"])
-  alt: String! @projection(localField: "name", needs: ["caption", "fileName"])
+  alt: String! @projection(localField: "name", needs: ["caption", "fileName", "displayName"])
   cropRectangle: AssetImageCropRectangle! @projection(localField: "cropDimensions", needs: ["width", "height", "fileName", "filePath"])
 }
 
