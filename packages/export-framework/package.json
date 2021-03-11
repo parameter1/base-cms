@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-export-framework",
-  "version": "2.8.0",
+  "version": "2.8.1",
   "description": "Core framework for BaseCMS Exports.",
   "author": "Josh Worden <josh@parameter1.com>",
   "main": "src/index.js",
@@ -13,7 +13,7 @@
   "dependencies": {
     "@godaddy/terminus": "^4.5.0",
     "@parameter1/base-cms-express-apollo": "^2.3.0",
-    "@parameter1/base-cms-image": "^2.0.0",
+    "@parameter1/base-cms-image": "^2.8.1",
     "@parameter1/base-cms-object-path": "^2.5.0",
     "@parameter1/base-cms-tenant-context": "^2.0.0",
     "@parameter1/base-cms-utils": "^2.4.2",
