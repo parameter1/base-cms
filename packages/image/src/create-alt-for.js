@@ -17,7 +17,13 @@ const altFrom = (value = '') => {
 
 const clean = v => htmlEntities.encode(stripHtml(v));
 
-module.exports = ({ caption, name, fileName } = {}) => {
+module.exports = ({
+  displayName,
+  caption,
+  name,
+  fileName,
+} = {}) => {
+  if (displayName) return clean(displayName);
   if (caption) return clean(caption);
   if (name) return clean(altFrom(name));
   return clean(altFrom(fileName));
