@@ -4,7 +4,7 @@ module.exports = (e, cb) => {
   if (e) {
     logError(e);
     process.exit(1);
-  } else {
+  } else if (typeof cb === 'function') {
     cb();
   }
 };
