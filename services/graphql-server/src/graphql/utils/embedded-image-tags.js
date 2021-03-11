@@ -9,6 +9,7 @@ module.exports = async (body, { imageHost, basedb }) => {
       projection: {
         credit: 1,
         caption: 1,
+        displayName: 1,
         name: 1,
         fileName: 1,
         filePath: 1,
