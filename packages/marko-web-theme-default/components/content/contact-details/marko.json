@@ -12,7 +12,9 @@
     },
     "@class": "string",
     "@modifiers": "array",
-    "@attrs": "object"
+    "@attrs": "object",
+    "@website-link-attrs": "object",
+    "@social-link-attrs": "object"
   },
   "<default-theme-content-contact-details-section>": {
     "template": "./section.marko",

@@ -5,7 +5,7 @@
       "extensions": {
         "endpoints": {
           "dev": {
-            "url": "http://0.0.0.0:10002",
+            "url": "http://localhost:10002",
             "headers": {
               "x-tenant-key": "${env:TENANT_KEY}"
             }

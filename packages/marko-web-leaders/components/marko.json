@@ -1,8 +1,23 @@
 {
+  "<marko-web-leaders>": {
+    "template": "./index.marko"
+  },
+  "<marko-web-leaders-company-social-link>": {
+    "template": "./company-social-link.marko",
+    "@company": "object",
+    "@item": "object"
+  },
+  "<marko-web-leaders-company-website-link>": {
+    "template": "./company-website-link.marko",
+    "@company": "object"
+  },
   "<marko-web-leaders-dropdown-portal>": {
     "template": "./dropdown-portal.marko"
   },
-  "<marko-web-leaders>": {
-    "template": "./index.marko"
+  "<marko-web-leaders-gtm-tracker>": {
+    "template": "./gtm-tracker.marko"
+  },
+  "<marko-web-leaders-p1events-tracker>": {
+    "template": "./p1events-tracker.marko"
   }
 }
