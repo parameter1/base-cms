@@ -9,6 +9,10 @@ module.exports = (cwd, options, ignore = ['**/node_modules/**/*']) => (cb) => {
     src(['**/*.js', '!**/*.marko.js'], { cwd, ignore }),
     cache('basecms-newsletters-lint-js'),
     eslint(options),
+    eslint.results((results, lintCb) => {
+      lintCb();
+      cb();
+    }),
     eslint.format(),
   ], e => completeTask(e, cb));
 };

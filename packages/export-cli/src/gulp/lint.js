@@ -9,6 +9,10 @@ module.exports = (cwd, options, ignore = ['**/node_modules/**/*']) => (cb) => {
     src(['**/*.js'], { cwd, ignore }),
     cache('basecms-exports-lint-js'),
     eslint(options),
+    eslint.results((results, lintCb) => {
+      lintCb();
+      cb();
+    }),
     eslint.format(),
   ], e => completeTask(e, cb));
 };
