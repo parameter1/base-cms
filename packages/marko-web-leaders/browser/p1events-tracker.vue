@@ -48,12 +48,14 @@ export default {
           ...baseEvent,
           action: 'Open',
           entity: { id: payload.companyId, ns: this.ns('content-company') },
+          context: { id: payload.sectionId, ns: this.ns('website-section') },
         });
       } else if (type === 'click' && category === 'Leaders Data Card') {
         queue.push({
           ...baseEvent,
           action: 'Click',
           entity: { id: payload.companyId, ns: this.ns('content-company') },
+          context: { id: payload.sectionId, ns: this.ns('website-section') },
           props: { url: payload.href },
         });
       } else if (type === 'click' && category === 'Leaders Company Profile') {
