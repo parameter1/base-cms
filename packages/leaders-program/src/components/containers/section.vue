@@ -145,8 +145,12 @@ export default {
       return `${this.blockName}__${name}`;
     },
 
-    emitAction(...args) {
-      this.$emit('action', ...args);
+    emitAction(event, payload = {}) {
+      this.$emit('action', event, {
+        ...payload,
+        sectionId: this.sectionId,
+        sectionName: this.title,
+      });
     },
 
     emitCategoryItems(items) {
