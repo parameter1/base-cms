@@ -1,4 +1,15 @@
 $ const src = input.src || "https://securepubads.g.doubleclick.net/tag/js/gpt.js";
+$ const { on } = input;
 
-<script>var googletag = googletag || {}; googletag.cmd = googletag.cmd || [];</script>
-<script async src=src></script>
+<if(on)>
+  <marko-web-deferred-script-loader-register
+    name="googletag"
+    src=src
+    on=on
+    init="window.googletag = window.googletag || {}; window.googletag.cmd = window.googletag.cmd || [];"
+  />
+</if>
+<else>
+  <script>var googletag = googletag || {}; googletag.cmd = googletag.cmd || [];</script>
+  <script async src=src></script>
+</else>
