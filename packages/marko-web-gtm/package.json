@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@parameter1/base-cms-inflector": "^2.0.0",
+    "@parameter1/base-cms-marko-web-deferred-script-loader": "^2.9.0",
     "@parameter1/base-cms-object-path": "^2.5.0",
     "@parameter1/base-cms-utils": "^2.4.2",
     "graphql": "^14.7.0",
@@ -20,9 +21,6 @@
   "peerDependencies": {
     "@parameter1/base-cms-marko-core": "^2.0.0",
     "@parameter1/base-cms-marko-web": "^2.0.0"
-  },
-  "optionalDependencies": {
-    "@parameter1/base-cms-deferred-script-loader": "^2.0.0"
   },
   "publishConfig": {
     "access": "public"
