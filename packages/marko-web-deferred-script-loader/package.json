@@ -1,5 +1,5 @@
 {
-  "name": "@parameter1/base-cms-deferred-script-loader",
+  "name": "@parameter1/base-cms-marko-web-deferred-script-loader",
   "version": "0.0.0",
   "description": "Adds deferred script loading support",
   "author": "Jacob Bare <jacob@parameter1.com>",
