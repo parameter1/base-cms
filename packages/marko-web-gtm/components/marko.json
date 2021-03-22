@@ -13,7 +13,8 @@
     "@start": {
       "type": "boolean",
       "default-value": false
-    }
+    },
+    "@on": "string"
   },
   "<marko-web-gtm-start>": {
     "template": "./start.marko",
