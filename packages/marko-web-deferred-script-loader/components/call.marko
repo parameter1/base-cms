@@ -1,0 +1,7 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { NODE_ENV } = process.env;
+$ const on = defaultValue(input.on, "ready");
+$ const fn = `function() { ${input.fn || ''} }`;
+
+<script>deferScript('call', { name: '${input.name}', fn: ${fn} });</script>
