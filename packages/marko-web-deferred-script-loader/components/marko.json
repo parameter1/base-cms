@@ -1,0 +1,30 @@
+{
+  "<marko-web-deferred-script-loader-init>": {
+    "template": "./init.marko",
+    "@script-src": "string"
+  },
+  "<marko-web-deferred-script-loader-call>": {
+    "template": "./call.marko",
+    "@name": {
+      "type": "string",
+      "required": true
+    },
+    "@fn": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "<marko-web-deferred-script-loader-register>": {
+    "template": "./register.marko",
+    "@name": {
+      "type": "string",
+      "required": true
+    },
+    "@src": {
+      "type": "string",
+      "required": true
+    },
+    "@on": "string",
+    "@init": "string"
+  }
+}

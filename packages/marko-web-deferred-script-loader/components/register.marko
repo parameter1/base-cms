@@ -1,0 +1,7 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { NODE_ENV } = process.env;
+$ const on = defaultValue(input.on, "ready");
+$ const init = `function() { ${input.init || ''} }`;
+
+<script>deferScript('register', { name: '${input.name}', src: '${input.src}', on: '${on}', init: ${init} });</script>
