@@ -1,10 +1,10 @@
 {
-  "name": "@parameter1/base-cms-deferred-script-loader",
-  "version": "0.0.0",
+  "name": "@parameter1/base-cms-marko-web-deferred-script-loader",
+  "version": "2.9.0",
   "description": "Adds deferred script loading support",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
-  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/deferred-script-loader",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-deferred-script-loader",
   "scripts": {
     "lint": "eslint --ext .js --max-warnings 5 ./",
     "compile": "basecms-marko-compile compile --dir ./ --silent true",
