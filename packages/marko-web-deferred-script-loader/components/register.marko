@@ -1,7 +1,8 @@
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import { getAsObject } from "@parameter1/base-cms-object-path";
 
-$ const { NODE_ENV } = process.env;
 $ const on = defaultValue(input.on, "ready");
 $ const init = `function() { ${input.init || ''} }`;
+$ const attrs = JSON.stringify(getAsObject(input, "attrs"));
 
-<script>deferScript('register', { name: '${input.name}', src: '${input.src}', on: '${on}', init: ${init} });</script>
+<script>deferScript('register', { name: '${input.name}', src: '${input.src}', on: '${on}', init: ${init}, attrs: ${attrs} });</script>
