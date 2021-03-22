@@ -1,2 +1,1 @@
-# BaseCMS Marko Web P1 Event Components
-Parameter1 user event tracking components for BaseCMS/Marko websites.
+# BaseCMS Marko Web Deferred Script Loader
