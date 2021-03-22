@@ -1,7 +1,8 @@
 {
   "<marko-web-gam-init>": {
     "template": "./init.marko",
-    "@src": "string"
+    "@src": "string",
+    "@on": "string"
   },
   "<marko-web-gam-head>": {
     "template": "./head.marko",
