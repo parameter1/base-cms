@@ -18,9 +18,11 @@
     "scrollmagic": "^2.0.8"
   },
   "peerDependencies": {
-    "@parameter1/base-cms-deferred-script-loader": "^2.0.0",
     "@parameter1/base-cms-marko-core": "^2.0.0",
     "@parameter1/base-cms-marko-web": "^2.0.0"
+  },
+  "optionalDependencies": {
+    "@parameter1/base-cms-deferred-script-loader": "^2.0.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
