@@ -2,7 +2,8 @@
   "<marko-web-native-x-init>": {
     "template": "./init.marko",
     "@uri": "string",
-    "@enabled": "boolean"
+    "@enabled": "boolean",
+    "@on": "string"
   },
   "<marko-web-native-x-retrieve>": {
     "template": "./retrieve.marko",
