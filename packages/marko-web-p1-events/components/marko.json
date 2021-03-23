@@ -3,7 +3,8 @@
     "template": "./init.marko",
     "@script-src": "string",
     "@uri": "string",
-    "@identity-query-builder": "string"
+    "@identity-query-builder": "string",
+    "@on": "string"
   },
   "<marko-web-p1-events-track-content>": {
     "template": "./track-content.marko",
