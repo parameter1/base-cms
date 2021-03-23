@@ -17,7 +17,8 @@
     "@parameter1/base-cms-web-common": "^2.5.0",
     "marko": "~4.20.0",
     "moment": "^2.29.1",
-    "moment-timezone": "^0.5.32"
+    "moment-timezone": "^0.5.32",
+    "pretty": "^2.0.0"
   },
   "publishConfig": {
     "access": "public"
