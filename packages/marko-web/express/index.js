@@ -4,6 +4,7 @@ const express = require('express');
 const marko = require('marko/express');
 const path = require('path');
 const helmet = require('helmet');
+const cleanMarkoResponse = require('@parameter1/base-cms-marko-core/middleware/clean-marko-response');
 const apollo = require('./apollo');
 const graphqlProxy = require('./graphql-proxy');
 const embeddedMedia = require('./embedded-media');
@@ -92,6 +93,7 @@ module.exports = (config = {}) => {
 
   // Register the Marko middleware.
   app.use(marko());
+  app.use(cleanMarkoResponse());
 
   // Serve static assets
   app.use('/dist/css', express.static(`${distDir}/css`, { maxAge: '2y', immutable: true }));
