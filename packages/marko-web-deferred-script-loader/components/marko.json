@@ -25,6 +25,7 @@
       "required": true
     },
     "@on": "string",
-    "@init": "string"
+    "@init": "string",
+    "@attrs": "object"
   }
 }

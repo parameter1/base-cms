@@ -10,6 +10,9 @@
     "compile": "basecms-marko-compile compile --dir ./ --silent true",
     "test": "yarn compile && yarn lint"
   },
+  "dependencies": {
+    "@parameter1/base-cms-object-path": "^2.5.0"
+  },
   "peerDependencies": {
     "@parameter1/base-cms-marko-core": "^2.0.0",
     "@parameter1/base-cms-marko-web": "^2.0.0"
