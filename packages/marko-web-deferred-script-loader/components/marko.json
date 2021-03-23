@@ -1,7 +1,10 @@
 {
   "<marko-web-deferred-script-loader-init>": {
-    "template": "./init.marko",
-    "@script-src": "string"
+    "template": "./init.marko"
+  },
+  "<marko-web-deferred-script-loader-load>": {
+    "template": "./load.marko",
+    "@src": "string"
   },
   "<marko-web-deferred-script-loader-call>": {
     "template": "./call.marko",
