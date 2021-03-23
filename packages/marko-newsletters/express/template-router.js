@@ -1,11 +1,8 @@
 const { Router } = require('express');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
-const buildMarkoGlobal = require('@parameter1/base-cms-marko-core/utils/build-marko-global');
-const cleanChunk = require('@parameter1/base-cms-marko-core/utils/clean-marko-chunk');
 const gql = require('graphql-tag');
 const createError = require('http-errors');
 const moment = require('moment-timezone');
-const pretty = require('pretty');
 const cleanResponse = require('@parameter1/base-cms-marko-core/middleware/clean-marko-response');
 const siteContextFragment = require('@parameter1/base-cms-web-common/graphql/website-context-fragment');
 const { extractFragmentData } = require('@parameter1/base-cms-web-common/utils');
@@ -47,7 +44,7 @@ const buildQuery = ({ queryFragment }) => {
 module.exports = ({ templates }) => {
   const router = Router();
 
-  router.use(cleanResponse());
+  router.use(cleanResponse({ prettyEnvVar: 'MARKO_NEWSLETTERS_PRETTY' }));
 
   templates.forEach(({
     route,
@@ -125,19 +122,7 @@ module.exports = ({ templates }) => {
         isStatic: !newsletter,
       };
 
-      const prettyOutput = process.env.MARKO_NEWSLETTERS_PRETTY || Object.hasOwnProperty.call(req.query, 'pretty');
-      if (prettyOutput) {
-        const $global = buildMarkoGlobal(res);
-        const out = template.createOut();
-        template.render({ $global, ...templateData }, out);
-        out.on('finish', () => {
-          const html = cleanChunk(out.getOutput());
-          res.send(pretty(html));
-        });
-        out.end();
-      } else {
-        res.marko(template, templateData);
-      }
+      res.marko(template, templateData);
     }));
   });
   return router;

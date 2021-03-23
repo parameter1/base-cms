@@ -28,7 +28,6 @@
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.32",
     "node-fetch": "^2.6.1",
-    "pretty": "^2.0.0",
     "recursive-readdir": "^2.2.2"
   },
   "peerDependencies": {
