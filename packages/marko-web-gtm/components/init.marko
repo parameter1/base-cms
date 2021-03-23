@@ -1,4 +1,4 @@
-import { isObject, warn } from '@parameter1/base-cms-utils';
+import { isObject, warn } from "@parameter1/base-cms-utils";
 
 $ const { isArray } = Array;
 
@@ -10,13 +10,29 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','${name}','${containerId}');
 `;
 
-$ const name = input.name || 'dataLayer';
+$ const { on } = input;
+$ const name = input.name || "dataLayer";
 $ const containerIds = (isArray(input.containerId) ? input.containerId : [input.containerId]).filter(v => v);
-$ const scripts = containerIds.map(containerId => createContainerScript(containerId, name));
 $ const start = input.start == null ? false : input.start;
 
-<if(scripts.length)>
+<if(on && containerIds.length)>
+  <for|containerId| of=containerIds>
+    $ let src = `https://www.googletagmanager.com/gtm.js?id=${containerId}`;
+    $ if (name !== "dataLayer") src = `${src}&l=${name}`;
+    <marko-web-deferred-script-loader-register
+      name=`${name}_${containerId}`
+      src=src
+      on=on
+      init=`var w = window, l = '${name}'; w[l] = w[l] || [];`
+    />
+  </for>
+</if>
+<else-if(containerIds.length)>
+  $ const scripts = containerIds.map(containerId => createContainerScript(containerId, name));
   <script>${scripts.join().replace(/\n/g, '')}</script>
+</else-if>
+
+<if(containerIds.length)>
   <if(input.push)>
     <!-- Immediately push data to the container -->
     <marko-web-gtm-push name=name data=input.push />
