@@ -5,6 +5,9 @@ const buildMarkoGlobal = require('../utils/build-marko-global');
 
 module.exports = ({ enabled = true, prettyQueryParam = 'pretty', prettyEnvVar = 'MARKO_PRETTY_OUTPUT' } = {}) => (req, res, next) => {
   if (!enabled || !res.marko) return next();
+  if (res.locals.cleanMarkoResponseApplied) return next();
+
+  res.locals.cleanMarkoResponseApplied = true;
   const { write } = res;
   const prettyOutput = process.env[prettyEnvVar]
     || Object.hasOwnProperty.call(req.query, prettyQueryParam);
