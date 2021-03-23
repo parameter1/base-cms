@@ -23,6 +23,7 @@ module.exports = ({ enabled = true, prettyQueryParam = 'pretty', prettyEnvVar = 
       const out = template.createOut();
       template.render(d, out);
 
+      out.on('error', next);
       out.on('finish', () => {
         const html = cleanChunk(out.getOutput());
         this.send(pretty(html));
