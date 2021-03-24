@@ -16,6 +16,8 @@ $ const identityQueryBuilder = `identityQueryBuilder: function(query) { ${input.
       name="p1events"
       src=scriptSrc
       on=on
+      request-frame=input.requestFrame
+      target-tag=input.targetTag
       init="var i = window, r = 'p1events'; i['__p1e'] = r; i[r] = i[r] || function() { (i[r].q = i[r].q || []).push(arguments); };"
     />
   </if>

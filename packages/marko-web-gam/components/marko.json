@@ -2,7 +2,9 @@
   "<marko-web-gam-init>": {
     "template": "./init.marko",
     "@src": "string",
-    "@on": "string"
+    "@on": "string",
+    "@target-tag": "string",
+    "@request-frame": "boolean"
   },
   "<marko-web-gam-head>": {
     "template": "./head.marko",

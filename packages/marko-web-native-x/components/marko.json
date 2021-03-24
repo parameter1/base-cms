@@ -3,7 +3,9 @@
     "template": "./init.marko",
     "@uri": "string",
     "@enabled": "boolean",
-    "@on": "string"
+    "@on": "string",
+    "@target-tag": "string",
+    "@request-frame": "boolean"
   },
   "<marko-web-native-x-retrieve>": {
     "template": "./retrieve.marko",
