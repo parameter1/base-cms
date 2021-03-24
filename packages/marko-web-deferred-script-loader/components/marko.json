@@ -28,6 +28,8 @@
       "required": true
     },
     "@on": "string",
+    "@target-tag": "string",
+    "@request-frame": "boolean",
     "@init": "string",
     "@attrs": "object"
   }
