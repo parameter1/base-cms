@@ -4,7 +4,9 @@
     "@script-src": "string",
     "@uri": "string",
     "@identity-query-builder": "string",
-    "@on": "string"
+    "@on": "string",
+    "@target-tag": "string",
+    "@request-frame": "boolean"
   },
   "<marko-web-p1-events-track-content>": {
     "template": "./track-content.marko",
