@@ -9,10 +9,10 @@ module.exports = (app, uri, config = {}) => {
    */
   const contextFn = ({ req }) => {
     const headers = ['x-cache-site-context', 'x-cache-responses'].reduce((o, key) => {
-      const cookie = req.cookies[key];
-      if (!cookie) return o; // do nothing if no cookie is set.
+      const value = req.query[key] || req.cookies[key];
+      if (!value) return o; // do nothing if no cookie or query param is set.
       // otherwise parse the value and set the GraphQL header to match.
-      return { ...o, [key]: parseBooleanHeader(cookie) };
+      return { ...o, [key]: parseBooleanHeader(value) };
     }, {});
     return { headers };
   };
