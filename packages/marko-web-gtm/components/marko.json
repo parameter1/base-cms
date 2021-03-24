@@ -14,7 +14,9 @@
       "type": "boolean",
       "default-value": false
     },
-    "@on": "string"
+    "@on": "string",
+    "@target-tag": "string",
+    "@request-frame": "boolean"
   },
   "<marko-web-gtm-start>": {
     "template": "./start.marko",

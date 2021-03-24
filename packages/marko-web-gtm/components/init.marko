@@ -23,6 +23,8 @@ $ const start = input.start == null ? false : input.start;
       name=`${name}_${containerId}`
       src=src
       on=on
+      request-frame=input.requestFrame
+      target-tag=input.targetTag
       init=`var w = window, l = '${name}'; w[l] = w[l] || [];`
     />
   </for>
