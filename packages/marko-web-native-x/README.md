@@ -3,7 +3,7 @@ NativeX components for BaseCMS/Marko websites.
 
 ## Configuration
 
-All NativeX components rely upon an instance of the NativeXConfiguration class being provided. For ease of use, this configuration is typically set into the Express app locals via the `start-server` utility, but must be provided when querying for an advertisement or a story. This configuration defines (at minimum) the NativeX instance URI and the default template alias. If website section-based templates are in use, they must be defined after creation:
+All NativeX components rely upon an instance of the [NativeXConfiguration](config.js) class being provided. For ease of use, this configuration is typically set into the Express app locals via the [start-server](../marko-web/start-server.js) utility, but must be provided when querying for an advertisement or a story. This configuration defines (at minimum) the NativeX instance URI and the default template alias. If website section-based templates are in use, they must be defined after creation:
 ```js
 const NativeXConfiguration = require('@parameter1/base-cms-marko-web-native-x/config');
 
