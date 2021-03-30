@@ -1,6 +1,5 @@
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 const { getAsObject } = require('@parameter1/base-cms-object-path');
-const defaultTemplate = require('../templates/story');
 const createClient = require('../apollo/create-client');
 const defaultFragment = require('../apollo/graphql/fragments/story');
 const buildQuery = require('../apollo/graphql/queries/story');
@@ -12,7 +11,7 @@ const buildQuery = require('../apollo/graphql/queries/story');
  */
 module.exports = ({
   config,
-  template = defaultTemplate,
+  template,
   queryFragment = defaultFragment,
 } = {}) => asyncRoute(async (req, res, next) => {
   if (config.isEnabled()) {
