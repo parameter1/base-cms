@@ -67,6 +67,10 @@ class NativeXConfiguration {
     return this.uri;
   }
 
+  getGraphQLUri() {
+    return `${this.uri}/graph`;
+  }
+
   isEnabled() {
     return this.enabled;
   }
