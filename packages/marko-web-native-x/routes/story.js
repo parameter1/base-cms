@@ -1,10 +1,15 @@
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 const { getAsObject } = require('@parameter1/base-cms-object-path');
-const createClient = require('../utils/create-client');
 const defaultTemplate = require('../templates/story');
-const defaultFragment = require('../graphql/fragments/story');
-const buildQuery = require('../graphql/queries/story');
+const createClient = require('../apollo/create-client');
+const defaultFragment = require('../apollo/graphql/fragments/story');
+const buildQuery = require('../apollo/graphql/queries/story');
 
+/**
+ * @param NativeXConfiguration The NativeX config
+ * @param object The Marko template to render
+ * @param Document A query fragment to be used with the story query
+ */
 module.exports = ({
   config,
   template = defaultTemplate,
