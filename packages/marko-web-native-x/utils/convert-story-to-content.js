@@ -4,7 +4,6 @@ module.exports = (story = {}, { sectionName = 'Sponsored' } = {}) => {
   const advertiser = getAsObject(story, 'advertiser');
   const contentImage = getAsObject(story, 'primaryImage');
   const advertiserImage = getAsObject(story, 'advertiser.logo');
-  const startDate = get(story, 'publishedAt');
   return {
     id: story.id,
     name: story.title,
@@ -13,7 +12,7 @@ module.exports = (story = {}, { sectionName = 'Sponsored' } = {}) => {
     typeTitled: 'Article',
     type: 'article',
     teaser: story.teaser,
-    published: startDate,
+    published: get(story, 'publishedAt'),
     siteContext: {
       path: story.url,
       canonicalUrl: story.url,
