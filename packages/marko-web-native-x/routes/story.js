@@ -13,17 +13,13 @@ module.exports = ({
   config,
   template,
   queryFragment = defaultFragment,
-} = {}) => asyncRoute(async (req, res, next) => {
-  if (config.isEnabled()) {
-    const client = createClient(config.getGraphQLUri());
-    const { id } = req.params;
-    const result = await client.query({
-      query: buildQuery(queryFragment),
-      variables: { input: { id } },
-    });
-    const story = getAsObject(result, 'data.publishedStory');
-    res.marko(template, { story });
-  } else {
-    next();
-  }
+} = {}) => asyncRoute(async (req, res) => {
+  const client = createClient(config.getGraphQLUri());
+  const { id } = req.params;
+  const result = await client.query({
+    query: buildQuery(queryFragment),
+    variables: { input: { id } },
+  });
+  const story = getAsObject(result, 'data.publishedStory');
+  res.marko(template, { story });
 });
