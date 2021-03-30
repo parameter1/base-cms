@@ -10,11 +10,10 @@ module.exports = (story = {}, { sectionName = 'Sponsored' } = {}) => {
     name: story.title,
     shortName: story.title,
     body: story.body,
-    typeTitled: 'Text Ad',
-    type: 'text-ad',
+    typeTitled: 'Article',
+    type: 'article',
     teaser: story.teaser,
     published: startDate,
-    canonicalPath: story.url, // @deprecated. Use siteContext.path instead
     siteContext: {
       path: story.url,
       canonicalUrl: story.url,
@@ -41,6 +40,6 @@ module.exports = (story = {}, { sectionName = 'Sponsored' } = {}) => {
       },
       __typename: 'ContentCompany',
     },
-    __typename: 'ContentTextAd',
+    __typename: 'ContentArticle',
   };
 };
