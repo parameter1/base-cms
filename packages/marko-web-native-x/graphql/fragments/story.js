@@ -7,8 +7,17 @@ module.exports = gql`
     title
     teaser
     body
+    url
+    publishedAt
     primaryImage {
       ...ImageFragment
+    }
+    advertiser {
+      id
+      name
+      logo {
+        ...ImageFragment
+      }
     }
   }
   ${imageFragment}
