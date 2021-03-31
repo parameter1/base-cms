@@ -1,0 +1,27 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import { get, getAsObject } from "@parameter1/base-cms-object-path";
+
+$ const { req } = out.global;
+$ const story = getAsObject(input, "story");
+$ const on = defaultValue(input.on, "load");
+$ const requestFrame = defaultValue(input.requestFrame, true);
+$ const targetTag = defaultValue(input.targetTag, "body");
+$ const push = {
+  story_id: story.id,
+  page_path: req.path,
+  page_title: story.title,
+  publisher_id: get(story, "publisher.id"),
+  advertiser_id: get(story, "advertiser.id"),
+  preview_mode: Boolean(req.query.preview),
+  event: "page_load",
+};
+
+<marko-web-gtm-init
+  name="dataLayerNativeX"
+  container-id="GTM-PVHD8N5"
+  on=on
+  request-frame=requestFrame
+  target-tag=targetTag
+  start=true
+  push=push
+/>

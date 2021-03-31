@@ -29,5 +29,12 @@
     "@uri": "string",
     "@id": "string",
     "@opts": "object"
+  },
+  "<marko-web-native-x-gtm-init>": {
+    "template": "./gtm-init.marko",
+    "@on": "string",
+    "@target-tag": "string",
+    "@request-frame": "boolean",
+    "@story": "object"
   }
 }
