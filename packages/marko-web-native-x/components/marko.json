@@ -36,5 +36,9 @@
     "@target-tag": "string",
     "@request-frame": "boolean",
     "@story": "object"
+  },
+  "<marko-web-native-x-story-track-page-view>": {
+    "template": "./story/track-page-view.marko",
+    "@story": "object"
   }
 }

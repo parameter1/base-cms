@@ -1,0 +1,10 @@
+import { getAsObject } from "@parameter1/base-cms-object-path"
+
+$ const { req } = out.global;
+$ const story = getAsObject(input, "story");
+
+<marko-web-browser-component name="TrackNativeXStoryPageView" props={
+  story: input.story,
+  path: req.path,
+  preview: Boolean(req.query.preview),
+} />
