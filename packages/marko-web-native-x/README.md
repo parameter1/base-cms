@@ -131,3 +131,43 @@ module.exports = gql`
 `;
 
 ```
+#### Event Tracking and analytics
+
+To utilize NativeX's story analytics, you must use the event tracking [utility functions](utils/gtm-events) to send events to the NativeX GTM container.
+
+The GTM container can be initialized by including the `<marko-web-native-x-gtm-init>` component within your `document`'s `<head>`:
+```marko
+<${document}>
+  <@head>
+    <marko-web-native-x-gtm-init />
+  </@head>
+</>
+```
+
+To send a page view, include the `<marko-web-native-x-story-track-page-view>` and pass the `story` property through (from the Nx middleware):
+```marko
+$ const { story } = input;
+
+<${document}>
+  <@head>
+    <marko-web-native-x-gtm-init />
+  </@head>
+  <@page>
+    <marko-web-native-x-story-track-page-view story=story />
+    <h1>${story.title}</h1>
+  </@page>
+</>
+```
+
+You can also send an event directly by using one of the available utility functions:
+```vue
+<script>
+import { endOfContent } from "@parameter1/base-cms-marko-web-native-x/utils/gtm-events";
+
+export default {
+  created() {
+    endOfContent(window);
+  }
+};
+</script>
+```
