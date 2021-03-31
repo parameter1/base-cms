@@ -4,8 +4,6 @@ const createClient = require('../apollo/create-client');
 const defaultFragment = require('../apollo/graphql/fragments/story');
 const buildQuery = require('../apollo/graphql/queries/story');
 
-const gtmContainerId = process.env.NATIVE_X_GTM_CONTAINER_ID || 'GTM-PVHD8N5';
-
 /**
  * @param NativeXConfiguration The NativeX config
  * @param object The Marko template to render
@@ -15,6 +13,7 @@ module.exports = ({
   config,
   template,
   queryFragment = defaultFragment,
+  gtmContainerId = 'GTM-PVHD8N5',
 } = {}) => asyncRoute(async (req, res) => {
   const client = createClient(config.getGraphQLUri());
   const { id } = req.params;
