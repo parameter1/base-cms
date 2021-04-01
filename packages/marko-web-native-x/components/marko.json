@@ -51,5 +51,11 @@
     "template": "./story/track-social-share.marko",
     "@story": "object",
     "@push": "boolean"
+  },
+  "<marko-web-native-x-story-track-outbound-links>": {
+    "template": "./story/track-outbound-links.marko",
+    "@story": "object",
+    "@push": "boolean",
+    "@container": "string"
   }
 }
