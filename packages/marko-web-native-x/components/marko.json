@@ -40,5 +40,9 @@
   "<marko-web-native-x-story-track-page-view>": {
     "template": "./story/track-page-view.marko",
     "@story": "object"
+  },
+  "<marko-web-native-x-story-track-end-of-content>": {
+    "template": "./story/track-end-of-content.marko",
+    "@story": "object"
   }
 }
