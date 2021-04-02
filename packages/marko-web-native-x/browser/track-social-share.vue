@@ -17,7 +17,7 @@ export default {
   created() {
     this.EventBus.$on(this.eventName, (event) => {
       const provider = get(event, 'provider.name');
-      share(window, provider);
+      share(provider);
     });
   },
 };

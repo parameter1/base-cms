@@ -18,7 +18,7 @@ export default {
       const url = element.getAttribute('href');
       element.addEventListener('click', (e) => {
         e.preventDefault();
-        outboundLink(window, url);
+        outboundLink(url);
       });
     });
   },

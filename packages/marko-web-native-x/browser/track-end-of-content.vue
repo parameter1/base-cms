@@ -9,7 +9,7 @@ export default {
   created() {
     this.observer = new IntersectionObserver((event) => {
       if (event[0].isIntersecting) {
-        endOfContent(window);
+        endOfContent();
       }
     });
   },

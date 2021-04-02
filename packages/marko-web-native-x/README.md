@@ -224,7 +224,7 @@ import { endOfContent } from "@parameter1/base-cms-marko-web-native-x/utils/gtm-
 
 export default {
   created() {
-    endOfContent(window);
+    endOfContent();
   }
 };
 </script>
