@@ -29,5 +29,29 @@
     "@uri": "string",
     "@id": "string",
     "@opts": "object"
+  },
+  "<marko-web-native-x-gtm-init>": {
+    "template": "./gtm-init.marko",
+    "@on": "string",
+    "@target-tag": "string",
+    "@request-frame": "boolean",
+    "@story": "object"
+  },
+  "<marko-web-native-x-story-track-init>": {
+    "template": "./story/track-init.marko",
+    "@story": "object"
+  },
+  "<marko-web-native-x-story-track-page-view>": {
+    "template": "./story/track-page-view.marko"
+  },
+  "<marko-web-native-x-story-track-end-of-content>": {
+    "template": "./story/track-end-of-content.marko"
+  },
+  "<marko-web-native-x-story-track-social-share>": {
+    "template": "./story/track-social-share.marko"
+  },
+  "<marko-web-native-x-story-track-outbound-links>": {
+    "template": "./story/track-outbound-links.marko",
+    "@container": "string"
   }
 }

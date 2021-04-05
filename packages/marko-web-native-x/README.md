@@ -131,3 +131,113 @@ module.exports = gql`
 `;
 
 ```
+#### Event Tracking and analytics
+
+To utilize NativeX's story analytics, you must use the event tracking [utility functions](utils/gtm-events) to send events to the NativeX GTM container.
+
+The GTM container can be initialized by including the `<marko-web-native-x-gtm-init>` component within your `document`'s `<head>`:
+```marko
+<${document}>
+  <@head>
+    <marko-web-native-x-gtm-init />
+  </@head>
+</>
+```
+Before sending any events, make sure to include the `<marko-web-native-x-story-track-init>` component. This component initializes the data layer with the story data that other events rely upon.
+```marko
+<${document}>
+  <@head>
+    <marko-web-native-x-gtm-init />
+  </@head>
+  <@page>
+    <marko-web-native-x-story-track-init story=story />
+  </@page>
+</>
+```
+
+See examples of available events below. By default, including the `<marko-web-native-x-story-track-page-view>` component will populate the datalayer with the story details. To disable this behavior, send the `push=false` parameter when including the component. All other story components assume this has already happened -- to force population of the data layer, send the `push=true` parameter when including the relevant component.
+
+##### Page View
+To send a page view, include the `<marko-web-native-x-story-track-page-view>` and pass the `story` property through (from the Nx middleware):
+```marko
+$ const { story } = input;
+
+<${document}>
+  <@head>
+    <marko-web-native-x-gtm-init />
+  </@head>
+  <@page>
+    <marko-web-native-x-story-track-page-view />
+    <h1>${story.title}</h1>
+  </@page>
+</>
+```
+
+##### Outbound Links
+To automatically track outbound links, include the `<marko-web-native-x-story-track-outbound-links>` component. This component requires a DOM selector in order to limit the tracking to a subset of links:
+```marko
+$ const { story } = input;
+
+<${document}>
+  <@head>
+    <marko-web-native-x-gtm-init />
+  </@head>
+  <@page>
+    <h1>${story.title}</h1>
+    <div id="my-story-body">
+      <a href="https://google.com">This will be tracked when clicked!</a>
+    </div>
+    <marko-web-native-x-story-track-outbound-links container="#my-story-body" />
+  </@page>
+</>
+```
+
+##### Social Sharing
+If using the [marko-web-social-sharing](../marko-web-social-sharing) package, you can automatically track any share attempts by including the `<marko-web-native-x-story-track-social-share>` component in your story template:
+```marko
+$ const { story } = input;
+
+<${document}>
+  <@head>
+    <marko-web-native-x-gtm-init />
+  </@head>
+  <@page>
+    <marko-web-native-x-story-track-social-share />
+    <h1>${story.title}</h1>
+    <marko-web-social-sharing path=story.url providers=["facebook", "email"] />
+  </@page>
+</>
+```
+
+##### End of content
+To automatically track when the user reaches the bottom of the page, include the `<marko-web-native-x-story-track-end-of-content>` component below your story. This event will fire when the element comes into view:
+```marko
+$ const { story } = input;
+
+<${document}>
+  <@head>
+    <marko-web-native-x-gtm-init />
+  </@head>
+  <@page>
+    <h1>${story.title}</h1>
+    <p>...</p>
+    <p>...</p>
+    <p>...</p>
+    <marko-web-native-x-story-track-end-of-content />
+  </@page>
+</>
+```
+
+##### Manual/advanced implementations
+You can also send an event directly by using one of the available utility functions:
+```vue
+<script>
+import { endOfContent } from "@parameter1/base-cms-marko-web-native-x/utils/gtm-events";
+
+export default {
+  created() {
+    endOfContent();
+  }
+};
+</script>
+```
