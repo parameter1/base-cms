@@ -1,21 +1,3 @@
-import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
-import { get, getAsObject } from "@parameter1/base-cms-object-path";
-
-$ const { req } = out.global;
-$ const story = getAsObject(input, "story");
-$ const push = defaultValue(input.push, false);
-
-<if(push)>
-  <marko-web-gtm-push name="dataLayerNativeX" data={
-    story_id: story.id,
-    page_path: req.path,
-    page_title: story.title,
-    publisher_id: get(story, "publisher.id"),
-    advertiser_id: get(story, "advertiser.id"),
-    preview_mode: Boolean(req.query.preview),
-  } />
-</if>
-
 <marko-web-browser-component name="NativeXTrackOutboundLinks" props={
   container: input.container,
 } />

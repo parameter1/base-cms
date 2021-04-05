@@ -143,6 +143,18 @@ The GTM container can be initialized by including the `<marko-web-native-x-gtm-i
   </@head>
 </>
 ```
+Before sending any events, make sure to include the `<marko-web-native-x-story-track-init>` component. This component initializes the data layer with the story data that other events rely upon.
+```marko
+<${document}>
+  <@head>
+    <marko-web-native-x-gtm-init />
+  </@head>
+  <@page>
+    <marko-web-native-x-story-track-init story=story />
+  </@page>
+</>
+```
+
 See examples of available events below. By default, including the `<marko-web-native-x-story-track-page-view>` component will populate the datalayer with the story details. To disable this behavior, send the `push=false` parameter when including the component. All other story components assume this has already happened -- to force population of the data layer, send the `push=true` parameter when including the relevant component.
 
 ##### Page View
@@ -155,7 +167,7 @@ $ const { story } = input;
     <marko-web-native-x-gtm-init />
   </@head>
   <@page>
-    <marko-web-native-x-story-track-page-view story=story />
+    <marko-web-native-x-story-track-page-view />
     <h1>${story.title}</h1>
   </@page>
 </>
@@ -175,7 +187,7 @@ $ const { story } = input;
     <div id="my-story-body">
       <a href="https://google.com">This will be tracked when clicked!</a>
     </div>
-    <marko-web-native-x-story-track-outbound-links story=story container="#my-story-body" />
+    <marko-web-native-x-story-track-outbound-links container="#my-story-body" />
   </@page>
 </>
 ```
@@ -190,7 +202,7 @@ $ const { story } = input;
     <marko-web-native-x-gtm-init />
   </@head>
   <@page>
-    <marko-web-native-x-story-track-social-share story=story />
+    <marko-web-native-x-story-track-social-share />
     <h1>${story.title}</h1>
     <marko-web-social-sharing path=story.url providers=["facebook", "email"] />
   </@page>
@@ -211,7 +223,7 @@ $ const { story } = input;
     <p>...</p>
     <p>...</p>
     <p>...</p>
-    <marko-web-native-x-story-track-end-of-content story=story />
+    <marko-web-native-x-story-track-end-of-content />
   </@page>
 </>
 ```
