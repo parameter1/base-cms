@@ -1,4 +1,7 @@
 const { get, getAsArray, getAsObject } = require('@parameter1/base-cms-object-path');
+const { isFunction: isFn } = require('@parameter1/base-cms-utils');
+
+const validHooks = ['onAuthenticationSuccess'];
 
 class IdentityXConfiguration {
   /**
@@ -15,6 +18,23 @@ class IdentityXConfiguration {
     this.options = options && typeof options === 'object' ? options : {};
 
     this.endpointTypes = ['authenticate', 'login', 'logout', 'register', 'profile'];
+    this.hooks = {
+      onAuthenticationSuccess: [],
+    };
+  }
+
+  /**
+   * Adds a function to the hook queue.
+   *
+   * @param {object} params
+   * @param {string} params.string The hook name to register the function with.
+   * @param {function} params.fn The function to call. Can be async/promise.
+   * @param {boolean} [params.shouldAwait=false] Whether the function should be awaited.
+   */
+  addHook({ name, fn, shouldAwait = false } = {}) {
+    if (!validHooks.includes(name)) throw new Error(`No hook found for '${name}'`);
+    if (!isFn(fn)) throw new Error('The hook `fn` must be a function.');
+    this.hooks[name].push({ fn, shouldAwait });
   }
 
   getAppId() {
