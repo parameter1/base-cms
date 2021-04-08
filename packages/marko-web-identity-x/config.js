@@ -35,6 +35,7 @@ class IdentityXConfiguration {
     if (!validHooks.includes(name)) throw new Error(`No hook found for '${name}'`);
     if (!isFn(fn)) throw new Error('The hook `fn` must be a function.');
     this.hooks[name].push({ fn, shouldAwait });
+    return this;
   }
 
   getAppId() {
