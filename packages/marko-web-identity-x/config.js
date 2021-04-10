@@ -6,16 +6,24 @@ const validHooks = ['onAuthenticationSuccess'];
 class IdentityXConfiguration {
   /**
    *
-   * @param {object|string} options When a string, assumes an `appId`, else options object.
-   * @param {array} [options.requiredServerFields] Required fields, server enforced.
-   * @param {array} [options.requiredClientFields] Required fields, client-side only.
+   * @param {object} options
+   * @param {string} options.appId The application ID to use.
+   * @param {string[]} [options.requiredServerFields] Required fields, server enforced.
+   * @param {string[]} [options.requiredClientFields] Required fields, client-side only.
    */
-  constructor(options) {
-    // BC check for when the constructor only had a single `appId` argument.
-    const appId = typeof options === 'string' ? options : get(options, 'appId');
+  constructor({
+    appId,
+    requiredServerFields = [],
+    requiredClientFields = [],
+    ...rest
+  } = {}) {
     if (!appId) throw new Error('Unable to configure IdentityX: no Application ID was provided.');
     this.appId = appId;
-    this.options = options && typeof options === 'object' ? options : {};
+    this.options = {
+      requiredServerFields,
+      requiredClientFields,
+      ...rest,
+    };
 
     this.endpointTypes = ['authenticate', 'login', 'logout', 'register', 'profile'];
     this.hooks = {
