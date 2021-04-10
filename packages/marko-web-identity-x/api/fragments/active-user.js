@@ -11,6 +11,10 @@ fragment ActiveUserFragment on AppUser {
   organization
   organizationTitle
   countryCode
+  country {
+    id
+    alpha3
+  }
   regionCode
   postalCode
   receiveEmail
