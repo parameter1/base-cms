@@ -18,6 +18,18 @@ fragment ActiveUserFragment on AppUser {
   regionCode
   postalCode
   receiveEmail
+  externalIds {
+    id
+    identifier {
+      value
+      type
+    }
+    namespace {
+      provider
+      tenant
+      type
+    }
+  }
   regionalConsentAnswers {
     id
     given
