@@ -8,17 +8,20 @@ class IdentityXConfiguration {
    *
    * @param {object} options
    * @param {string} options.appId The application ID to use.
+   * @param {string} [options.apiToken] An API token to use. Only required when doing write ops.
    * @param {string[]} [options.requiredServerFields] Required fields, server enforced.
    * @param {string[]} [options.requiredClientFields] Required fields, client-side only.
    */
   constructor({
     appId,
+    apiToken,
     requiredServerFields = [],
     requiredClientFields = [],
     ...rest
   } = {}) {
     if (!appId) throw new Error('Unable to configure IdentityX: no Application ID was provided.');
     this.appId = appId;
+    this.apiToken = apiToken;
     this.options = {
       requiredServerFields,
       requiredClientFields,
@@ -48,6 +51,10 @@ class IdentityXConfiguration {
 
   getAppId() {
     return this.appId;
+  }
+
+  getApiToken() {
+    return this.apiToken;
   }
 
   getEndpointFor(type) {
