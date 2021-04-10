@@ -23,6 +23,11 @@ class IdentityX {
     });
   }
 
+  /**
+   * Loads the current application, user, and team context.
+   *
+   * @returns {Promise<object>}
+   */
   async loadActiveContext() {
     if (!this.activeContextQuery) {
       this.activeContextQuery = this.client.query({ query: getActiveContext });
@@ -31,6 +36,12 @@ class IdentityX {
     return data.activeAppContext || {};
   }
 
+  /**
+   * Checks whether the current user can access the given content.
+   *
+   * @param {object} input
+   * @returns {Promise<object>}
+   */
   async checkContentAccess(input) {
     const variables = { input };
     const { data = {} } = await this.client.query({ query: checkContentAccess, variables });
