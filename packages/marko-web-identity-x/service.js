@@ -1,6 +1,7 @@
 const createClient = require('./utils/create-client');
 const getActiveContext = require('./api/queries/get-active-context');
 const checkContentAccess = require('./api/queries/check-content-access');
+const addExternalUserId = require('./api/mutations/add-external-user-id');
 const tokenCookie = require('./utils/token-cookie');
 
 const isEmpty = v => v == null || v === '';
@@ -75,6 +76,28 @@ class IdentityX {
       }
     }
     return access;
+  }
+
+  /**
+   *
+   * @param {object} params
+   * @returns {Promise<object>}
+   */
+  async addExternalUserId({
+    userId,
+    identifier = {},
+    namespace = {},
+  } = {}) {
+    const input = { userId, identifier, namespace };
+    const apiToken = this.config.getApiToken();
+    if (!apiToken) throw new Error('Unable to add external ID: No API token has been configured.');
+    const variables = { input };
+    const { data } = await this.client.mutate({
+      mutation: addExternalUserId,
+      variables,
+      context: { apiToken },
+    });
+    return data.addAppUserExternalId;
   }
 }
 
