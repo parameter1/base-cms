@@ -1,14 +1,24 @@
 const gql = require('graphql-tag');
-const userFragment = require('../fragments/active-user');
 
 module.exports = gql`
 
 mutation AddExternalUserId($input: SetAppUserExternalIdMutationInput!) {
   addAppUserExternalId(input: $input) {
-    ...ActiveUserFragment
+    id
+    email
+    externalIds {
+      id
+      identifier {
+        value
+        type
+      }
+      namespace {
+        provider
+        tenant
+        type
+      }
+    }
   }
-
-  ${userFragment}
 }
 
 `;
