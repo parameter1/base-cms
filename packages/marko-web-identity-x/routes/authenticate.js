@@ -31,7 +31,7 @@ module.exports = asyncRoute(async (req, res) => {
   const { token: authToken, user } = data.loginAppUser;
 
   // call authentication hooks
-  await callHooksFor(identityX, 'onAuthenticationSuccess', { user, authToken });
+  await callHooksFor(identityX, 'onAuthenticationSuccess', { req, user, authToken });
   tokenCookie.setTo(res, authToken.value);
   res.json({ ok: true, user });
 });
