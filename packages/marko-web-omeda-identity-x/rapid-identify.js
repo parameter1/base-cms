@@ -75,7 +75,7 @@ module.exports = async ({
   });
   const { id, encryptedCustomerId } = data.result;
 
-  const namespace = { provider: 'omeda', tenant: brandKey, type: 'customer' };
+  const namespace = { provider: 'omeda', tenant: brandKey.toLowerCase(), type: 'customer' };
   await Promise.all([
     identityX.addExternalUserId({
       userId: appUser.id,
