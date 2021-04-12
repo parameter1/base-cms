@@ -43,19 +43,12 @@ export default {
     const { childSelector } = this;
     const component = this;
     const $el = $(this.selector);
-
-    // Remove empty tags
-    $('p', $el).each(function removeEmptyTags() {
-      if ($(this).html().replace(/\s|&nbsp;/g, '').length === 0) {
-        $(this).remove();
-      }
-    });
-
     const $children = $(`> ${childSelector}`, $el);
 
     $children.each(function injectAds(index) {
       const $child = $(this);
-      const { length } = $child.text();
+      const { length } = $child.text().replace(/\s|&nbsp;/g, '');
+      if (length === 0) return;
       const $nextChild = $(this).next(childSelector);
 
       component.targetLengths.forEach((targetLength) => {
