@@ -47,7 +47,7 @@ export default {
 
     $children.each(function injectAds(index) {
       const $child = $(this);
-      const { length } = $child.text().replace(/\s|&nbsp;/g, '');
+      const { length } = $child.text().trim();
       if (length === 0) return;
       const $nextChild = $(this).next(childSelector);
 
@@ -69,7 +69,9 @@ export default {
               $child.nextAll(childSelector).each(function handleBefore() {
                 if ($(this).text().length > 1) {
                   const $previous = $(this).prev();
-                  if ($previous.is(headlineTags)) {
+                  if ($previous.text().trim().length === 0) {
+                    $(this).after(cleaned);
+                  } else if ($previous.is(headlineTags)) {
                     $previous.before(cleaned);
                   } else if ($previous.attr('data-embed-type')) {
                     $(this).after(cleaned);
