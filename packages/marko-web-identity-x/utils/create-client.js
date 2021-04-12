@@ -28,7 +28,7 @@ module.exports = ({
 
   const httpLink = createHttpLink({
     ...linkConfig,
-    uri: process.env.IDENTITYX_GRAPHQL_URI || 'https://identity-x.io/graphql',
+    uri: process.env.IDENTITYX_GRAPHQL_URI || 'https://identity-x.parameter1.com/graphql',
     fetch,
     headers,
   });
