@@ -43,8 +43,14 @@ export default {
     const { childSelector } = this;
     const component = this;
     const $el = $(this.selector);
+
     // Remove empty tags
-    $(':empty', $el).remove();
+    $('p', $el).each(function removeEmptyTags() {
+      if ($(this).html().replace(/\s|&nbsp;/g, '').length === 0) {
+        $(this).remove();
+      }
+    });
+
     const $children = $(`> ${childSelector}`, $el);
 
     $children.each(function injectAds(index) {
