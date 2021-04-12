@@ -1,6 +1,7 @@
 const createClient = require('./utils/create-client');
 const getActiveContext = require('./api/queries/get-active-context');
 const checkContentAccess = require('./api/queries/check-content-access');
+const addExternalUserId = require('./api/mutations/add-external-user-id');
 const tokenCookie = require('./utils/token-cookie');
 
 const isEmpty = v => v == null || v === '';
@@ -23,6 +24,11 @@ class IdentityX {
     });
   }
 
+  /**
+   * Loads the current application, user, and team context.
+   *
+   * @returns {Promise<object>}
+   */
   async loadActiveContext() {
     if (!this.activeContextQuery) {
       this.activeContextQuery = this.client.query({ query: getActiveContext });
@@ -31,6 +37,12 @@ class IdentityX {
     return data.activeAppContext || {};
   }
 
+  /**
+   * Checks whether the current user can access the given content.
+   *
+   * @param {object} input
+   * @returns {Promise<object>}
+   */
   async checkContentAccess(input) {
     const variables = { input };
     const { data = {} } = await this.client.query({ query: checkContentAccess, variables });
@@ -64,6 +76,28 @@ class IdentityX {
       }
     }
     return access;
+  }
+
+  /**
+   *
+   * @param {object} params
+   * @returns {Promise<object>}
+   */
+  async addExternalUserId({
+    userId,
+    identifier = {},
+    namespace = {},
+  } = {}) {
+    const input = { userId, identifier, namespace };
+    const apiToken = this.config.getApiToken();
+    if (!apiToken) throw new Error('Unable to add external ID: No API token has been configured.');
+    const variables = { input };
+    const { data } = await this.client.mutate({
+      mutation: addExternalUserId,
+      variables,
+      context: { apiToken },
+    });
+    return data.addAppUserExternalId;
   }
 }
 

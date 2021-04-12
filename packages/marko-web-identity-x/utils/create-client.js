@@ -2,6 +2,7 @@ const fetch = require('node-fetch');
 const { ApolloClient } = require('apollo-client');
 const { InMemoryCache } = require('apollo-cache-inmemory');
 const { createHttpLink } = require('apollo-link-http');
+const { setContext } = require('apollo-link-context');
 
 const rootConfig = {
   connectToDevTools: false,
@@ -25,15 +26,20 @@ module.exports = ({
   };
   if (token) headers.authorization = `AppUser ${token}`;
 
+  const httpLink = createHttpLink({
+    ...linkConfig,
+    uri: process.env.IDENTITYX_GRAPHQL_URI || 'https://identity-x.parameter1.com/graphql',
+    fetch,
+    headers,
+  });
+  const contextLink = setContext((_, { apiToken }) => ({
+    headers: { ...(apiToken && { authorization: `OrgUserApiToken ${apiToken}` }) },
+  }));
+
   return new ApolloClient({
     ...config,
     ...rootConfig,
-    link: createHttpLink({
-      ...linkConfig,
-      uri: process.env.IDENTITYX_GRAPHQL_URI || 'https://identity-x.io/graphql',
-      fetch,
-      headers,
-    }),
+    link: contextLink.concat(httpLink),
     cache: new InMemoryCache(),
   });
 };
