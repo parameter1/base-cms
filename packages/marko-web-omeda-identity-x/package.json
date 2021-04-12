@@ -1,0 +1,24 @@
+{
+  "name": "@parameter1/base-cms-marko-web-omeda-identity-x",
+  "version": "2.15.0",
+  "description": "Marko Omeda+IdentityX integration tools",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-omeda-identity-x",
+  "author": "Josh Worden <josh@parameter1.com>",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint --ext .js --ext .vue --max-warnings 5 ./",
+    "compile": "basecms-marko-compile compile --dir ./ --silent true",
+    "test": "yarn compile && yarn lint"
+  },
+  "dependencies": {
+    "@parameter1/base-cms-object-path": "^2.5.0",
+    "graphql": "^14.7.0",
+    "graphql-tag": "^2.11.0"
+  },
+  "peerDependencies": {
+    "@parameter1/base-cms-marko-web-identity-x": "^2.16.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
