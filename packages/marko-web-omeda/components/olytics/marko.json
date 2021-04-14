@@ -1,0 +1,12 @@
+{
+  "<marko-web-omeda-olytics-init>": {
+    "template": "./init.marko",
+    "@oid": {
+      "type": "string",
+      "required": true
+    },
+    "@on": "string",
+    "@target-tag": "string",
+    "@request-frame": "boolean"
+  }
+}
