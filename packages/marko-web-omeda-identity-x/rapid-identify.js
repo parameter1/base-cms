@@ -88,4 +88,5 @@ module.exports = async ({
       namespace,
     }),
   ]);
+  return { id, encryptedCustomerId };
 };
