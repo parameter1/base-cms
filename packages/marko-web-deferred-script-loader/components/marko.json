@@ -31,6 +31,8 @@
     "@target-tag": "string",
     "@request-frame": "boolean",
     "@init": "string",
+    "@on-script-build": "string",
+    "@on-script-loaded": "string",
     "@attrs": "object"
   }
 }
