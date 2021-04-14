@@ -1,0 +1,10 @@
+<marko-web-deferred-script-loader-register
+  name="olytics"
+  src="https://olytics.omeda.com/olytics/js/v3/p/olytics.min.js"
+  on=input.on
+  request-frame=input.requestFrame
+  target-tag=input.targetTag
+  init=`if (!window.olytics) { window.olytics = []; window.olytics.oid = '${input.oid}'; window.olytics.factory = function(i) { return function() { var t = Array.prototype.slice.call(arguments); return t.unshift(i), window.olytics.push(t), window.olytics } }; window.olytics.fire = window.olytics.factory('fire'); window.olytics.confirm = window.olytics.factory('confirm'); }`
+  on-script-build="script.id = 'olyticsImport'; script.setAttribute('data-oid', window.olytics.oid);"
+  on-script-loaded="for (olytics.initialize({ Olytics: { oid: window.olytics.oid } }); window.olytics.length > 0;) { var o = window.olytics.shift(), s = o.shift(); olytics[s] && olytics[s].apply(olytics, o); }"
+/>
