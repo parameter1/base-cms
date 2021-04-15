@@ -1,7 +1,7 @@
 const { get, getAsArray, getAsObject } = require('@parameter1/base-cms-object-path');
 const { isFunction: isFn } = require('@parameter1/base-cms-utils');
 
-const validHooks = ['onAuthenticationSuccess'];
+const validHooks = ['onAuthenticationSuccess', 'onUserProfileUpdate'];
 
 class IdentityXConfiguration {
   /**
@@ -29,9 +29,7 @@ class IdentityXConfiguration {
     };
 
     this.endpointTypes = ['authenticate', 'login', 'logout', 'register', 'profile'];
-    this.hooks = {
-      onAuthenticationSuccess: [],
-    };
+    this.hooks = validHooks.reduce((o, name) => ({ ...o, [name]: [] }), {});
   }
 
   /**

@@ -1,6 +1,7 @@
 const gql = require('graphql-tag');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 const userFragment = require('../api/fragments/active-user');
+const callHooksFor = require('../utils/call-hooks-for');
 
 const mutation = gql`
   mutation UpdateUserProfile($input: UpdateOwnAppUserMutationInput!) {
@@ -73,5 +74,7 @@ module.exports = asyncRoute(async (req, res) => {
   }
 
   const { data } = await identityX.client.mutate({ mutation, variables: { input } });
-  res.json({ ok: true, user: data.updateOwnAppUser });
+  const { updateOwnAppUser: user } = data;
+  await callHooksFor(identityX, 'onUserProfileUpdate', { req, user });
+  res.json({ ok: true, user });
 });
