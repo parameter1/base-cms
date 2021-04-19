@@ -1,0 +1,19 @@
+import { getUrlWithQueryParams } from "./url-with-query-params";
+$ const { req } = out.global;
+$ const { activeType, supportedContentTypes } = input;
+$ const blockName = "content-type-facets";
+$ const keepParams = ["phrase", "contentType", "sectionId"];
+
+<div class=`${blockName}`>
+  <h3 class=`${blockName}__title`>${input.title}</h3>
+  <div class=`${blockName}__list`>
+    <for|key,value| in=supportedContentTypes>
+      $ const linkClass = (key === activeType) ? `${blockName}__link ${blockName}__link--active` : `${blockName}__link ${blockName}__link`;
+      <div class=`${blockName}__item ${blockName}__item--${key}`>
+        <a class=linkClass href=getUrlWithQueryParams({ req, keepParams, updateParams: { contentType: key } })>
+          ${value}
+        </a>
+      </div>
+    </for>
+  </div>
+</div>

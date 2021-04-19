@@ -1,0 +1,15 @@
+{
+  "<marko-web-algolia-site-search-section-facets>": {
+    "template": "./index.marko",
+    "@active-id": "number",
+    "@title": "string",
+    "@sections": {
+      "type": "array",
+      "required": true
+    },
+    "@req": {
+      "type": "object",
+      "required": true
+    }
+  }
+}

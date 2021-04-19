@@ -1,0 +1,53 @@
+import { cleanPath } from "@parameter1/base-cms-utils";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { perPage, totalCount, path } = input;
+$ const asRels = defaultValue(input.asRels, false);
+$ const { pagination: p, req } = out.global;
+
+$ const totalPages = p.totalPages({ perPage, totalCount });
+$ const reqQueryParams = defaultValue(req.query, {});
+$ delete reqQueryParams.page;
+$ const reqQueryParamsStr = Object.keys(reqQueryParams).map((key) => `${key}=${reqQueryParams[key]}`).join('&');
+$ const nextPage = p.nextPage({ perPage, totalCount });
+$ const prevPage = p.prevPage();
+
+
+$ const nextHref = (reqQueryParamsStr) ? `/${cleanPath(path)}?page=${nextPage}&${reqQueryParamsStr}` : `/${cleanPath(path)}?page=${nextPage}`;
+$ const prevHref = (reqQueryParamsStr) ? `/${cleanPath(path)}?page=${prevPage}&${reqQueryParamsStr}` : `/${cleanPath(path)}?page=${prevPage}`;
+
+$ const blockName = "pagination-controls";
+
+<if(asRels)>
+  <!-- <if(prevPage)>
+    <link rel="prev" href=prevHref />
+  </if>
+  <if(nextPage)>
+    <link rel="next" href=nextHref />
+  </if> -->
+</if>
+<else>
+  <marko-web-block name=blockName class=input.class>
+    <if(prevPage)>
+      <marko-web-link
+        class=`btn btn-primary ${blockName}__prev`
+        href=prevHref
+      >
+        Previous Page
+      </marko-web-link>
+    </if>
+    <if(totalPages > 1)>
+      <marko-web-element block-name=blockName name="pages">
+        <marko-web-browser-component name="PaginationPageNumberInput" props={ page: p.page, totalPages, path: cleanPath(path), queryStr: reqQueryParamsStr } />
+      </marko-web-element>
+    </if>
+    <if(nextPage)>
+      <marko-web-link
+        class=`btn btn-primary ${blockName}__next`
+        href=nextHref
+      >
+        Next Page
+      </marko-web-link>
+    </if>
+  </marko-web-block>
+</else>

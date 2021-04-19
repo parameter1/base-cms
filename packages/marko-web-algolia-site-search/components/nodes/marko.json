@@ -1,0 +1,23 @@
+{
+  "<marko-web-algolia-site-search-content-list-node>": {
+    "template": "./content-list.marko",
+    "<image>": {},
+    "<title>": {},
+    "@node": "object",
+    "@display-image": "boolean",
+    "@image-position": "string",
+    "@card": "boolean",
+    "@full-height": "boolean",
+    "@use-placeholder": "boolean",
+
+    "@with-teaser": "boolean",
+    "@with-body": "boolean",
+    "@with-section": "boolean",
+    "@with-attribution": "boolean",
+    "@with-dates": "boolean",
+
+    "@modifiers": "array",
+    "@attrs": "object",
+    "@link-attrs": "object"
+  }
+}

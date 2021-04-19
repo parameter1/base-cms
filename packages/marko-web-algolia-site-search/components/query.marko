@@ -1,0 +1,61 @@
+import { getAsObject, getAsArray } from "@parameter1/base-cms-object-path";
+import { buildContentQuery } from "./queries";
+
+$ const { $algolia, apollo, config } = out.global;
+
+$ const now = Math.floor(Date.now() / 1000);
+$ const getfacetFilters = () => {
+  const filters = [
+    [
+      `primarySiteId:${config.website("id")}`,
+      `websiteSchedules.siteIds:${config.website("id")}`
+    ]
+  ];
+  if (input.sectionIds) {
+    const sectionFilters = [];
+    input.sectionIds.forEach((id) => {
+      sectionFilters.push(`websiteSchedules.sectionIds:${id}`);
+    });
+    filters.push(sectionFilters);
+  }
+  if (input.contentType) {
+    filters.push(`type:${input.contentType}`)
+  } else if (input.supportedContentTypes && input.supportedContentTypes.length !== 0) {
+    const typeFilters = [];
+    Object.keys(input.supportedContentTypes).forEach(key => {
+      typeFilters.push(`type:${key}`);
+    });
+    filters.push(typeFilters);
+
+  }
+  return filters;
+}
+$ const ranking = 'published';
+$ const options = {
+  attributesToRetrieve: ["objectID"],
+  length: input.limit,
+  offset: input.skip,
+  numericFilters: [
+    'status = 1',
+    `published < ${now}`,
+  ],
+  facetFilters: getfacetFilters(),
+};
+$ const algoliaPromise = $algolia.defaultIndex.search(input.phrase || "", options);
+<marko-web-resolve|{ resolved }| promise=algoliaPromise>
+  $ const { hits, nbHits: totalCount } = resolved;
+  $ const ids = hits.map((hit) => parseInt(hit.objectID, 10));
+  <if(!ids.length)>
+    <${input.renderBody} nodes=[] total-count=0 />
+  </if>
+  <else>
+    $ const cmsVars = { ids, limit: ids.length };
+    $ const query = buildContentQuery({ fragment: input.queryFragment })
+    <marko-web-resolve|{ resolved: cms }| promise=apollo.query({ query, variables: cmsVars })>
+      $ const nodes = getAsArray(cms, "data.allContent.edges").map((edge) => edge.node);
+      $ const map = nodes.reduce((m, r) => m.set(`${r.id}`, r), new Map());
+      $ const ordered = ids.map(id => map.get(`${id}`)).filter(id => id);
+      <${input.renderBody} nodes=ordered total-count=totalCount />
+    </marko-web-resolve>
+  </else>
+</marko-web-resolve>

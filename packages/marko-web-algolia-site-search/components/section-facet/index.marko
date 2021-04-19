@@ -1,0 +1,12 @@
+import findActiveFacet from './find-active-facet';
+
+$ const { sections, title, activeId, req } = input
+$ const activeFacet = findActiveFacet(sections, activeId);
+
+<facet-container
+  facets=sections
+  title=title
+  active-id=activeId
+  active-ids=activeFacet.activeIds
+  req=req
+/>

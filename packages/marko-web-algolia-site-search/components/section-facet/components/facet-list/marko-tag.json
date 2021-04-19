@@ -1,0 +1,18 @@
+{
+  "@facets": {
+    "type": "array",
+    "required": true
+  },
+  "@active-id": {
+    "type": "number",
+    "required": true
+  },
+  "@active-ids": {
+    "type": "array",
+    "required": true
+  },
+  "@req": {
+    "type": "object",
+    "required": true
+  }
+}

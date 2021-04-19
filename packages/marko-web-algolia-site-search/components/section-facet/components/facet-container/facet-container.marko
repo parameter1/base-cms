@@ -1,0 +1,15 @@
+$ const { facets, title, activeId, activeIds, req } = input;
+
+<if(facets.length)>
+  <div class="section-facets">
+    <if(title)>
+      <h3 class="section-facets__title">${title}</h3>
+    </if>
+    <facet-list
+      facets=facets
+      active-id=activeId
+      active-ids=activeIds
+      req=req
+    />
+  </div>
+</if>

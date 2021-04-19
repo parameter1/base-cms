@@ -1,0 +1,57 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+import { getUrlWithQueryParams } from "../../../url-with-query-params";
+
+$ const block = "section-facets";
+
+$ const {
+  facets,
+  activeId,
+  activeIds,
+  req,
+} = input;
+
+$ const keepParams = ["phrase", "contentType", "sectionId"];
+
+$ const isActiveId = (id) => (activeId && (`${activeId}` === `${id}`));
+
+<if(facets && facets.length)>
+  <div class=`${block}__list`>
+    <for|facet| of=facets>
+      $ const isOpen = activeIds.includes(facet.id);
+      $ const isActive = isActiveId(facet.id);
+      $ const children = getAsArray(facet, 'children.edges').map((obj) => obj.node);
+      $ const classNames = [`${block}__item`, `${block}__item--${facet.id}`];
+      $ const linkClasses = [`${block}__link`]
+      $ if (isOpen) classNames.push(`${block}__item--open`);
+      $ if (isActive) linkClasses.push(`${block}__link--active`);
+
+      <div class=classNames>
+        <a class=linkClasses href=getUrlWithQueryParams({ req, keepParams, updateParams: { sectionId: facet.id } })>
+          ${facet.name}
+        </a>
+        <if(children.length)>
+          <default-theme-menu-toggle-button
+            class-name=`${block}__toggle`
+            targets=[`.${block}__item--${facet.id}`]
+            toggle-class=`${block}__item--open`
+            initially-expanded=isOpen
+            icon-modifiers=["sm"]
+            icon-name="plus"
+            expanded-icon-name="dash"
+          />
+        </if>
+        <if(isActive)>
+          <marko-web-browser-component
+            name="CommonAutoScroll"
+            props={
+              containerTarget: `.${block} > .${block}__list`,
+              elementTarget: `.${block}__link--active`,
+              offset: -12,
+            }
+          />
+        </if>
+        <facet-list req=req facets=children active-id=activeId active-ids=activeIds />
+      </div>
+    </for>
+  </div>
+</if>

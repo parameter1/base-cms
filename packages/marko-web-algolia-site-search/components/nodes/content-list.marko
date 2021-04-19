@@ -1,0 +1,141 @@
+import { getAsObject, get } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const content = getAsObject(input, "node");
+$ const primaryImage = getAsObject(content, "primaryImage");
+$ const primarySection = getAsObject(content, "primarySection");
+
+$ const withTeaser = defaultValue(input.withTeaser, false);
+$ const withBody = defaultValue(input.withBody, false);
+$ const withSection = defaultValue(input.withSection, true);
+$ const withAttribution = defaultValue(input.withAttribution, false);
+$ const withDates = defaultValue(input.withDates, true);
+
+$ const isWebinar = content.type === "webinar";
+$ const isEbook = content.type === "ebook";
+$ const isPromotion = content.type === "promotion";
+$ const isEvent = ["event", "webinar"].includes(content.type);
+$ const isUpcoming = content.startDate > Date.now();
+
+$ let aspectRatio = get(input, "image.ar", "1:1");
+$ const displayFallbackImage = get(input, "usePlaceholder", true);
+$ if (isEbook) aspectRatio = "3:4";
+
+$ const { linkAttrs } = input;
+
+<marko-web-node
+  type=`${content.type}-content`
+  image-position=defaultValue(input.imagePosition, "right")
+  card=defaultValue(input.card, false)
+  flush=true
+  full-height=defaultValue(input.fullHeight, false)
+  attrs=input.attrs
+  modifiers=input.modifiers
+>
+  <if(defaultValue(input.displayImage, true))>
+    <@image
+      width=75
+      align="top"
+      fluid=false
+      use-placeholder=displayFallbackImage
+      ...input.image
+      ar=aspectRatio
+      src=primaryImage.src
+      alt=primaryImage.alt
+      is-logo=(isEbook ? true : primaryImage.isLogo)
+      link={ href: content.siteContext.path, attrs: linkAttrs }
+    />
+  </if>
+  <@body>
+    <if(withSection || isEvent)>
+      <@header>
+        <@left|{ blockName }|>
+          <if(withSection)>
+            <marko-web-website-section-name obj=primarySection link=true />
+          </if>
+          <else-if(isEvent)>
+            <marko-web-element tag="span" name="upcoming-archived" block-name=blockName>
+              <if(isUpcoming)>
+                Upcoming ${content.type}
+              </if>
+              <else>
+                Archived ${content.type}
+              </else>
+            </marko-web-element>
+          </else-if>
+        </@left>
+      </@header>
+    </if>
+    <@title tag="h5" ...input.title>
+      <marko-web-content-short-name tag=null obj=content link={ attrs: linkAttrs } />
+    </@title>
+    <@text|{ blockName }|
+      modifiers=["event-details"]
+      show=(Boolean(isEvent && (content.startDate || content.endDate || content.linkUrl)))
+    >
+      <if(content.startDate || content.endDate)>
+        <div class=`${blockName}__content-event-dates`>
+          <marko-web-content-start-date tag="span" block-name=blockName obj=content />
+          <marko-web-content-end-date tag="span" block-name=blockName obj=content />
+        </div>
+      </if>
+      <if(isWebinar && content.linkUrl)>
+        <marko-web-link
+          class=`${blockName}__content-link-url`
+          href=content.linkUrl
+          title="View / Register"
+          target="_blank"
+        >
+          <if(isUpcoming)>Register</if>
+          <else>View</else>
+        </marko-web-link>
+      </if>
+    </@text>
+    <@text
+      modifiers=["teaser"]
+      show=(Boolean(withTeaser && content.teaser))
+    >
+      <marko-web-content-teaser tag=null obj=content link={ attrs: linkAttrs } />
+    </@text>
+    <@text
+      modifiers=["body"]
+      show=(Boolean(withBody && content.body))
+    >
+      <marko-web-content-body tag=null obj=content />
+    </@text>
+    <@text
+      modifiers=["promotion-link-button"]
+      show=(Boolean(isPromotion && content.linkUrl && content.linkText))
+    >
+      <marko-web-link
+        class="btn btn-primary btn-block"
+        href=content.linkUrl
+        title=content.linkText
+        target="_blank"
+      >
+        ${content.linkText}
+      </marko-web-link>
+    </@text>
+    <if(withAttribution || withDates)>
+      <@footer>
+        <if(withAttribution)>
+          <@left|{ blockName }|>
+            <if(isWebinar)>
+              <marko-web-content-sponsors|{ node }| block-name=blockName obj=content>
+                <marko-web-content-name tag="span" block-name=blockName obj=node link=true />
+              </marko-web-content-sponsors>
+            </if>
+            <!-- <else>
+              <attribution content=content />
+            </else> -->
+          </@left>
+        </if>
+        <if(withDates && !isEvent)>
+          <@right|{ blockName }|>
+            <marko-web-content-published obj=content />
+          </@right>
+        </if>
+      </@footer>
+    </if>
+  </@body>
+</marko-web-node>

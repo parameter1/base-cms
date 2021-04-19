@@ -1,0 +1,41 @@
+{
+  "taglib-imports": [
+    "./nodes/marko.json",
+    "./section-facet/marko.json"
+  ],
+  "<marko-web-algolia-site-search-block>": {
+    "template": "./index.marko"
+  },
+  "<marko-web-algolia-site-search-query>": {
+    "template": "./query.marko",
+    "@phrase": "string",
+    "@limit": "number",
+    "@skip": "number",
+    "@section-ids": "array",
+    "@supported-content-types": {
+      "type": "object"
+    },
+    "@content-type": "string",
+    "@country": "string",
+    "@query-fragment": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "<marko-web-algolia-site-search-pagination-controls>": {
+    "template": "./pagination-controls.marko",
+    "@per-page": "number",
+    "@total-count": "number",
+    "@path": "string",
+    "@query": "object"
+  },
+  "<marko-web-algolia-site-search-content-type-filter>": {
+    "template": "./content-type-filter.marko",
+    "@supported-content-types": "object",
+    "@active-type": "string",
+    "@title": {
+      "type" : "string",
+      "default-value": "Content Type"
+    }
+  }
+}
