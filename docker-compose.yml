@@ -69,6 +69,26 @@ services:
     ports:
       - "10002:6379"
 
+  playground-site:
+    <<: *node
+    working_dir: /base-cms/services/site
+    command: ["./node_modules/.bin/basecms-website", "dev", "index.js"]
+    environment:
+      <<: *env
+      GRAPHQL_URI: ${GRAPHQL_URI-https://graphql.virgon.base.parameter1.com}
+      OEMBED_URI: ${OEMBED_URI-https://oembed.virgon.base.parameter1.com}
+      RSS_URI: ${RSS_URI-https://rss.virgon.base.parameter1.com}
+      SITEMAPS_URI: ${SITEMAPS_URI-https://sitemaps.virgon.base.parameter1.com}
+
+      PORT: 80
+      EXPOSED_PORT: 25312
+      LIVERELOAD_PORT: 35312
+      TENANT_KEY: randallreilly_all
+      SITE_ID: 5fce563dd28860bc33b829c5
+    ports:
+      - "25312:80"
+      - "35312:35312"
+
   keyword-analysis:
     << : *node
     working_dir: /base-cms/services/keyword-analysis
