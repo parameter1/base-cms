@@ -1,6 +1,5 @@
 /* eslint-disable global-require */
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const path = require('path');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const pump = require('pump');
 const webpack = require('webpack-stream');
@@ -10,43 +9,6 @@ const { getIfUtils } = require('webpack-config-utils');
 const { existsSync } = require('fs');
 const { join } = require('path');
 const completeTask = require('@parameter1/base-cms-cli-utils/task-callback');
-
-const absoluteRuntime = path.dirname(require.resolve('@babel/runtime/package.json'));
-
-/**
- * Loads an RC file from the CWD, if present, to provide gulp configuration
- * @param {String} cwd The current directory
- */
-const readRcFile = (cwd) => {
-  const excludeFn = file => (
-    /node_modules\/(?!@parameter1\/base-cms-marko-web.*?\/browser)/.test(file)
-    && !/\.vue\.js/.test(file)
-  );
-
-  const defaultTargets = {
-    browsers: [
-      'Chrome >= 49',
-      'Firefox >= 45',
-      'Safari >= 10',
-      'Edge >= 12',
-      'Explorer >= 11',
-      'iOS >= 10',
-    ],
-  };
-
-  // eslint-disable-next-line import/no-dynamic-require
-  const rc = existsSync(join(cwd, '.basecmsrc.js')) ? require(join(cwd, '.basecmsrc.js')) : {};
-  const exclude = rc && rc.babelLoader && typeof rc.babelLoader.exclude === 'function'
-    ? rc.babelLoader.exclude : excludeFn;
-
-  const targets = rc && rc.babelLoader && rc.babelLoader.targets
-    ? rc.babelLoader.targets : defaultTargets;
-
-  const debug = rc && rc.babelLoader && typeof rc.babelLoader.debug === 'boolean'
-    ? rc.babelLoader.debug : false;
-
-  return { exclude, targets, debug };
-};
 
 /**
  * Loads a configuration callback in the current working
@@ -67,11 +29,7 @@ const loadConfigCallback = (cwd) => {
   return typeof fn === 'function' ? fn : null;
 };
 
-// @todo Determine how to combine CSS with the main CSS build
-// @todo Add sass to Vue components
-// @todo Add default polyfills to entry point
 module.exports = cwd => (cb) => {
-  const { exclude, targets, debug } = readRcFile(cwd);
   const configCallback = loadConfigCallback(cwd);
   const imagePattern = /\.(png|svg|jpg|gif|webp)$/;
   const { ifProduction, ifNotProduction } = getIfUtils(process.env.NODE_ENV || 'development');
@@ -97,30 +55,32 @@ module.exports = cwd => (cb) => {
         {
           test: /\.js$/,
           loader: require.resolve('babel-loader'),
-          exclude,
+          exclude: file => (
+            /node_modules\/(?!@parameter1\/base-cms-marko-web.*?\/browser)/.test(file)
+            && !/\.vue\.js/.test(file)
+          ),
           options: {
             presets: [
               [
                 require.resolve('@babel/preset-env'),
                 {
-                  modules: false,
-                  useBuiltIns: false,
-                  targets,
-                  loose: false,
-                  debug,
+                  targets: {
+                    chrome: '49',
+                    firefox: '45',
+                    safari: '10',
+                    edge: '12',
+                    ie: '11',
+                    ios: '10',
+                  },
+                  useBuiltIns: 'usage',
+                  corejs: '3.10',
+                  debug: false,
                 },
               ],
             ],
             plugins: [
               [
                 require.resolve('@babel/plugin-transform-runtime'),
-                {
-                  regenerator: true,
-                  corejs: false,
-                  helpers: true,
-                  useESModules: false,
-                  absoluteRuntime,
-                },
               ],
             ],
           },
