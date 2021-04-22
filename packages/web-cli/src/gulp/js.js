@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
 const path = require('path');
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const pump = require('pump');
 const webpack = require('webpack-stream');
 const wp = require('webpack');
@@ -144,7 +144,7 @@ module.exports = cwd => (cb) => {
     },
     plugins: [
       new VueLoaderPlugin(),
-      new ManifestPlugin({
+      new WebpackManifestPlugin({
         publicPath: '',
         filter: ({ name }) => !imagePattern.test(name),
       }),
