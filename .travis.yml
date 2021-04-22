@@ -1,5 +1,5 @@
 language: node_js
-node_js: "10.15"
+node_js: "10.24"
 cache: yarn
 
 _production-job: &production-job
