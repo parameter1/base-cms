@@ -17,7 +17,6 @@ $ const wrapper = getAsObject(input, "bodyWrapper");
     <for|href| of=config.styles()>
       <link rel="stylesheet" href=href />
     </for>
-
     <!-- create browser component queue -->
     <script>
       (function(w) {
@@ -27,6 +26,8 @@ $ const wrapper = getAsObject(input, "bodyWrapper");
         for (var i = 0; i < methods.length; i++) { var method = methods[i]; w[name][method] = w[name][method] || queue(method); }
       })(window);
     </script>
+    <!-- load lazysizes -->
+    <script src="/dist/js/lazysizes/v5.3.2.js" async></script>
 
     <${input.head} />
   </head>

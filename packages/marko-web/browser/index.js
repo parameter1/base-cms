@@ -3,7 +3,6 @@ import 'whatwg-fetch';
 import Vue from './vue';
 import Components from './components';
 import EventBus from './event-bus';
-import './lazysizes';
 
 const apollo = () => import(/* webpackChunkName: "apollo" */ './apollo');
 
