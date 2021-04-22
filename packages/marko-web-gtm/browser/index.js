@@ -1,6 +1,6 @@
-import GTMTrackInViewEvent from './track-in-view-event.vue';
-import GTMTrackLoadMore from './track-load-more.vue';
-import GTMTrackBusEvent from './track-bus-event.vue';
+const GTMTrackInViewEvent = () => import(/* webpackChunkName: "gtm-track-in-view-event" */ './track-in-view-event.vue');
+const GTMTrackLoadMore = () => import(/* webpackChunkName: "gtm-track-load-more" */ './track-load-more.vue');
+const GTMTrackBusEvent = () => import(/* webpackChunkName: "gtm-track-bus-event" */ './track-bus-event.vue');
 
 export default (Browser) => {
   const { EventBus } = Browser;
