@@ -48,7 +48,7 @@ $ const wrapper = getAsObject(input, "bodyWrapper");
 
     <!-- load browser components lib -->
     <for|src| of=config.sources()>
-      <script src=src></script>
+      <script src=src async></script>
     </for>
     <script>CMSBrowserComponents.init();</script>
   </body>
