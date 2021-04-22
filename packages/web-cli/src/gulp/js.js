@@ -1,6 +1,7 @@
 /* eslint-disable global-require */
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+const path = require('path');
 const pump = require('pump');
 const webpack = require('webpack-stream');
 const wp = require('webpack');
@@ -9,6 +10,8 @@ const { getIfUtils } = require('webpack-config-utils');
 const { existsSync } = require('fs');
 const { join } = require('path');
 const completeTask = require('@parameter1/base-cms-cli-utils/task-callback');
+
+const absoluteRuntime = path.dirname(require.resolve('@babel/runtime/package.json'));
 
 /**
  * Loads a configuration callback in the current working
@@ -81,6 +84,7 @@ module.exports = cwd => (cb) => {
             plugins: [
               [
                 require.resolve('@babel/plugin-transform-runtime'),
+                { absoluteRuntime },
               ],
             ],
           },
