@@ -1,4 +1,4 @@
-module.exports = () => {
+export default () => {
   const { referrer } = document;
   const { origin } = window;
   if (!referrer) return '/'; // no referrer
