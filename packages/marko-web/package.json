@@ -39,7 +39,8 @@
     "marko": "~4.20.0",
     "moment": "^2.29.1",
     "vue": "^2.6.12",
-    "vue-apollo": "^3.0.5"
+    "vue-apollo": "^3.0.5",
+    "whatwg-fetch": "^3.6.1"
   },
   "peerDependencies": {
     "@parameter1/base-cms-marko-core": "^2.0.0"

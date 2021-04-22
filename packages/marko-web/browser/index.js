@@ -1,4 +1,5 @@
 /* eslint-disable no-new */
+import 'whatwg-fetch';
 import Vue from './vue';
 import Components from './components';
 import EventBus from './event-bus';

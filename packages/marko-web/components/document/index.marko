@@ -13,9 +13,6 @@ $ const wrapper = getAsObject(input, "bodyWrapper");
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content=viewport>
-    <!-- @todo move polyfills to build script -->
-    <polyfill features=["es6", "es7", "fetch", "Promise.prototype.finally"] />
-
     <!-- @todo eventually determine if styles can be split -->
     <for|href| of=config.styles()>
       <link rel="stylesheet" href=href />
