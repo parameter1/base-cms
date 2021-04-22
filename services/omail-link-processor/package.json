@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-omail-link-processor",
-  "version": "2.8.0",
+  "version": "2.20.0",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "repository": "https://github.com/parameter1/base-cms/tree/master/services/omail-link-processor",
   "license": "MIT",
