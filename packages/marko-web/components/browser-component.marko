@@ -1,12 +1,13 @@
-import { randomElementId } from '@parameter1/base-cms-utils';
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import { randomElementId } from "@parameter1/base-cms-utils";
 
 $ const id = randomElementId({ prefix: 'vue' });
+$ const tag = defaultValue(input.tag, "div");
+$ const hydrate = defaultValue(input.hydrate, false);
 $ const props = JSON.stringify(input.props || {});
-$ const contents = `<script>CMSBrowserComponents.loadComponent('#${id}', '${input.name}', ${props});</script>`;
+$ const contents = `CMSBrowserComponents.load({ el: '#${id}', name: '${input.name}', props: ${props}, hydrate: ${hydrate} });`;
 
-<div id=id>
-  <if(input.renderBody)>
-    <${input.renderBody} />
-  </if>
-  $!{contents}
-</div>
+<${tag} ...input.attrs id=id class=input.class>
+  <${input.renderBody} />
+</>
+<script>$!{contents}</script>
