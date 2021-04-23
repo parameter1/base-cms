@@ -16,6 +16,7 @@ const load = async ({
   name,
   props,
   on,
+  hydrate,
 } = {}) => {
   if (!el || !name) throw new Error('A Vue component name and element must be provided.');
   const Component = components[name];
@@ -25,12 +26,12 @@ const load = async ({
     const { default: provider } = await apollo();
     apolloProvider = provider;
   }
-  new Vue({
+  const component = new Vue({
     provide: providers[name],
-    el,
     apolloProvider,
     render: h => h(Component, { props, on: { ...on, ...listeners[name] } }),
   });
+  component.$mount(el, hydrate);
 };
 
 const register = async (name, Component, { provide, withApollo, on } = {}) => {

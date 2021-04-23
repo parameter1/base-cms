@@ -15,6 +15,10 @@
       "type": "string",
       "required": true
     },
+    "@hydrate": "boolean",
+    "@tag": "string",
+    "@class": "string",
+    "@attrs": "object",
     "@props": "object"
   }
 }
