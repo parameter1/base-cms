@@ -1,7 +1,7 @@
 {
   "name": "@ac-business-media/marko-web-algolia-site-search",
-  "description": "Algoli site search components for BaseCMS websites.",
-  "version": "0.0.0",
+  "description": "Algolia site search components for BaseCMS websites.",
+  "version": "2.19.0",
   "author": "Brian Miller <brian@parameter1.com>",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-algolia-site-search",
   "license": "MIT",
