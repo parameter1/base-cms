@@ -1,11 +1,5 @@
 {
-  "taglib-imports": [
-    "./nodes/marko.json",
-    "./section-facet/marko.json"
-  ],
-  "<marko-web-algolia-site-search-block>": {
-    "template": "./index.marko"
-  },
+  "taglib-imports": [],
   "<marko-web-algolia-site-search-query>": {
     "template": "./query.marko",
     "@phrase": "string",
@@ -20,6 +14,10 @@
     "@query-fragment": {
       "type": "string",
       "required": true
+    },
+    "@facet-filters": {
+      "type": "array",
+      "required": true
     }
   },
   "<marko-web-algolia-site-search-pagination-controls>": {
@@ -28,14 +26,5 @@
     "@total-count": "number",
     "@path": "string",
     "@query": "object"
-  },
-  "<marko-web-algolia-site-search-content-type-filter>": {
-    "template": "./content-type-filter.marko",
-    "@supported-content-types": "object",
-    "@active-type": "string",
-    "@title": {
-      "type" : "string",
-      "default-value": "Content Type"
-    }
   }
 }
