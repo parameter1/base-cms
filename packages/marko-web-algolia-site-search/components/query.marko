@@ -1,36 +1,9 @@
 import { getAsObject, getAsArray } from "@parameter1/base-cms-object-path";
 import { buildContentQuery } from "./queries";
 
-$ const { $algolia, apollo, config } = out.global;
+$ const { $algolia, apollo } = out.global;
 
 $ const now = Math.floor(Date.now() / 1000);
-$ const getfacetFilters = () => {
-  const filters = [
-    [
-      `primarySiteId:${config.website("id")}`,
-      `websiteSchedules.siteIds:${config.website("id")}`
-    ]
-  ];
-  if (input.sectionIds) {
-    const sectionFilters = [];
-    input.sectionIds.forEach((id) => {
-      sectionFilters.push(`websiteSchedules.sectionIds:${id}`);
-    });
-    filters.push(sectionFilters);
-  }
-  if (input.contentType) {
-    filters.push(`type:${input.contentType}`)
-  } else if (input.supportedContentTypes && input.supportedContentTypes.length !== 0) {
-    const typeFilters = [];
-    Object.keys(input.supportedContentTypes).forEach(key => {
-      typeFilters.push(`type:${key}`);
-    });
-    filters.push(typeFilters);
-
-  }
-  return filters;
-}
-$ const ranking = 'published';
 $ const options = {
   attributesToRetrieve: ["objectID"],
   length: input.limit,
@@ -39,10 +12,9 @@ $ const options = {
     'status = 1',
     `published < ${now}`,
   ],
-  facetFilters: getfacetFilters(),
+  facetFilters: input.facetFilters,
 };
-$ const algoliaPromise = $algolia.defaultIndex.search(input.phrase || "", options);
-<marko-web-resolve|{ resolved }| promise=algoliaPromise>
+<marko-web-resolve|{ resolved }| promise=$algolia.defaultIndex.search(input.phrase || "", options)>
   $ const { hits, nbHits: totalCount } = resolved;
   $ const ids = hits.map((hit) => parseInt(hit.objectID, 10));
   <if(!ids.length)>
