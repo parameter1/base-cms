@@ -70,7 +70,7 @@ query ContentForLeadersSection(
               }
             }
           }
-          teaser(input: { maxLength: 0 })
+          teaser(input: { useFallback: false, maxLength: null })
           website
           promotions: relatedContent(input: {
             withSite: false,
