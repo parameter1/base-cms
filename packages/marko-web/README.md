@@ -32,7 +32,7 @@ openssl x509 -req -in client.csr -signkey client-key.pem -out client-cert.pem
 Fill out the CSR fields as needed, making sure to use the `EXPOSED_HOST` (default: `localhost`) for the `Common Name` field.
 
 ### Using your SSL certificate
-To enable local HTTPS serving, ensure that the `sslKey`, and `sslCert` are sent to the `start-server`
+To enable local HTTPS serving, ensure that `sslKey` and `sslCert` are sent to the `start-server`
 utility. The `portHttps` and `exposedPortHttps` fields can also be customized, but will use default
 values (from `PORT_HTTPS` and `EXPOSED_PORT_HTTPS`). The SSL key and certificate data should only be
 sent if it is valid for use -- invalid key/certificate data will cause the https server to fail.
