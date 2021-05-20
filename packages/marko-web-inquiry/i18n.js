@@ -1,8 +1,7 @@
 import translations from './translations';
 
 export default (lang, fieldLabelKey) => {
-  const keys = Object.keys(translations);
-  if (!keys.includes(lang)) {
+  if (!translations[lang]) {
     throw new Error(`No translations available for requested language ${lang}!`);
   }
   if (!translations[lang][fieldLabelKey]) {
