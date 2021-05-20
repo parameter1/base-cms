@@ -1,1 +1,17 @@
-<marko-web-browser-component name="DefaultThemeMenuToggleButton" props=input />
+<marko-web-browser-component
+  name="DefaultThemeMenuToggleButton"
+  props={
+    className: input.className,
+    targets: input.targets,
+    toggleClass: input.toggleClass,
+    iconModifiers: input.iconModifiers,
+    iconName: input.iconName,
+    expandedIconName: input.expandedIconName,
+  }
+  tag=input.tag
+  class=input.className
+  attrs={ type: "button", "aria-label": "Toggle Menu" }
+  hydrate=true
+>
+  <marko-web-icon name=input.iconName modifiers=input.iconModifiers />
+</marko-web-browser-component>
