@@ -5,11 +5,8 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <form-label v-if="labels.firstName" id="inquiry-form.first-name" :required="true">
+          <form-label id="inquiry-form.first-name" :required="true">
             {{ labels.firstName }}
-          </form-label>
-          <form-label v-else id="inquiry-form.first-name" :required="true">
-            First Name
           </form-label>
           <input
             id="inquiry-form.first-name"
@@ -23,11 +20,8 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <form-label v-if="labels.lastName" id="inquiry-form.last-name" :required="true">
+          <form-label id="inquiry-form.last-name" :required="true">
             {{ labels.lastName }}
-          </form-label>
-          <form-label v-else id="inquiry-form.last-name" :required="true">
-            Last Name
           </form-label>
           <input
             id="inquiry-form.last-name"
@@ -43,11 +37,8 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <form-label v-if="labels.email" id="inquiry-form.email" :required="true">
+          <form-label id="inquiry-form.email" :required="true">
             {{ labels.email }}
-          </form-label>
-          <form-label v-else id="inquiry-form.email" :required="true">
-            Email Address
           </form-label>
           <input
             id="inquiry-form.email"
@@ -61,11 +52,8 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <form-label v-if="labels.phone" id="inquiry-form.phone">
+          <form-label id="inquiry-form.phone">
             {{ labels.phone }}
-          </form-label>
-          <form-label v-else id="inquiry-form.phone">
-            Phone Number
           </form-label>
           <input
             id="inquiry-form.phone"
@@ -80,11 +68,8 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <form-label v-if="labels.company" id="inquiry-form.company">
+          <form-label id="inquiry-form.company">
             {{ labels.company }}
-          </form-label>
-          <form-label v-else id="inquiry-form.company">
-            Company Name
           </form-label>
           <input
             id="inquiry-form.company"
@@ -97,11 +82,8 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <form-label v-if="labels.jobTitle" id="inquiry-form.job-title" :required="true">
+          <form-label id="inquiry-form.job-title" :required="true">
             {{ labels.jobTitle }}
-          </form-label>
-          <form-label v-else id="inquiry-form.job-title" :required="true">
-            Job Title
           </form-label>
           <input
             id="inquiry-form.job-title"
@@ -125,11 +107,8 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <form-label v-if="labels.zip" id="inquiry-form.postal-code">
+          <form-label id="inquiry-form.postal-code">
             {{ labels.zip }}
-          </form-label>
-          <form-label v-else id="inquiry-form.postal-code">
-            ZIP/Postal Code
           </form-label>
           <input
             id="inquiry-form.postal-code"
@@ -144,11 +123,8 @@
     <div class="row">
       <div class="col-12">
         <div class="form-group">
-          <form-label v-if="labels.comments" id="inquiry-form.comments">
+          <form-label  id="inquiry-form.comments">
             {{ labels.comments }}
-          </form-label>
-          <form-label v-else id="inquiry-form.comments">
-            Comments
           </form-label>
           <textarea
             id="inquiry-form.comments"
@@ -169,20 +145,11 @@
       @expired="onExpired"
     />
     <button
-      v-if="labels.submit"
       type="submit"
       class="btn btn-primary"
       :disabled="loading"
     >
       {{ labels.submit }}
-    </button>
-    <button
-      v-else
-      type="submit"
-      class="btn btn-primary"
-      :disabled="loading"
-    >
-      Submit
     </button>
   </form>
   <div v-else>
@@ -214,7 +181,7 @@ export default {
     labels: {
       type: Object,
       required: false,
-      default: null,
+      default: this.setDefaultLabels(),
     },
   },
   data: () => ({
@@ -270,6 +237,21 @@ export default {
 
       await this.$submit(payload);
       this.EventBus.$emit('inquiry-form-submit', { contentId, contentType, payload });
+    },
+    setDefaultLabels() {
+      return {
+        firstName: 'First Name',
+        lastName: 'Last Name',
+        email: 'Email Address',
+        phone: 'Phone Number',
+        company: 'Company Name',
+        jobTitle: 'Job Title',
+        country: 'Country',
+        countryPlaceholder: 'Select country...',
+        postalCode: 'ZIP/Postal Code',
+        comments: 'Comments',
+        submit: 'Submit',
+      };
     },
   },
 };
