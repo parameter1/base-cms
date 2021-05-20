@@ -1,7 +1,7 @@
 <template>
   <div class="form-group">
     <form-label id="inquiry-form.country" :required="required">
-      {{ translate(countryLabel) }}
+      {{ translate('countryLabel') }}
     </form-label>
     <select
       id="inquiry-form.country"
@@ -13,7 +13,7 @@
       @change="$emit('input', $event.target.value)"
     >
       <option disabled="disabled" value="">
-        {{ translate(countryPlaceholder) }}
+        {{ translate('countryPlaceholder') }}
       </option>
       <option value="US">
         United States of America 🇺🇸
