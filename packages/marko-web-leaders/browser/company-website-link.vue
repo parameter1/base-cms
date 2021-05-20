@@ -7,7 +7,7 @@
     rel="nofollow"
     @click="emitAction"
   >
-    Visit Site
+    {{ label }}
   </a>
 </template>
 
@@ -25,6 +25,11 @@ export default {
     href: {
       type: String,
       required: true,
+    },
+    label: {
+      type: String,
+      required: false,
+      default: 'Visit Site',
     },
   },
   methods: {

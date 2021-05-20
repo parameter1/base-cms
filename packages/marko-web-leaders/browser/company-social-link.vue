@@ -47,6 +47,11 @@ export default {
       type: String,
       required: true,
     },
+    socialMediaLabel: {
+      type: String,
+      required: false,
+      default: 'Visit us on',
+    },
   },
   data: () => ({
     modifiers: ['dark', 'lg'],
@@ -56,7 +61,7 @@ export default {
       return `icon-${this.provider}`;
     },
     title() {
-      return `Visit us on ${this.provider.charAt(0).toUpperCase()}${this.provider.slice(1)}`;
+      return `${this.socialMediaLabel} ${this.provider.charAt(0).toUpperCase()}${this.provider.slice(1)}`;
     },
   },
   methods: {

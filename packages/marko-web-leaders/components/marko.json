@@ -5,11 +5,13 @@
   "<marko-web-leaders-company-social-link>": {
     "template": "./company-social-link.marko",
     "@company": "object",
-    "@item": "object"
+    "@item": "object",
+    "@label": "string"
   },
   "<marko-web-leaders-company-website-link>": {
     "template": "./company-website-link.marko",
-    "@company": "object"
+    "@company": "object",
+    "@label": "string"
   },
   "<marko-web-leaders-dropdown-portal>": {
     "template": "./dropdown-portal.marko"

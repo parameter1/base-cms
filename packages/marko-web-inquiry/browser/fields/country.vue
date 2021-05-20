@@ -1,7 +1,7 @@
 <template>
   <div class="form-group">
     <form-label id="inquiry-form.country" :required="required">
-      Country
+      {{ label }}
     </form-label>
     <select
       id="inquiry-form.country"
@@ -13,7 +13,7 @@
       @change="$emit('input', $event.target.value)"
     >
       <option disabled="disabled" value="">
-        Select country...
+        {{ placeHolder }}
       </option>
       <option value="US">
         United States of America 🇺🇸
@@ -783,6 +783,14 @@ export default {
     required: {
       type: Boolean,
       default: false,
+    },
+    label: {
+      type: String,
+      default: 'Country',
+    },
+    placeHolder: {
+      type: String,
+      default: 'Select country...',
     },
   },
 };

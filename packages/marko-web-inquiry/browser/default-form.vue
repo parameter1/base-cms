@@ -5,7 +5,10 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <form-label id="inquiry-form.first-name" :required="true">
+          <form-label v-if="labels.firstName" id="inquiry-form.first-name" :required="true">
+            {{ labels.firstName }}
+          </form-label>
+          <form-label v-else id="inquiry-form.first-name" :required="true">
             First Name
           </form-label>
           <input
@@ -20,7 +23,10 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <form-label id="inquiry-form.last-name" :required="true">
+          <form-label v-if="labels.lastName" id="inquiry-form.last-name" :required="true">
+            {{ labels.lastName }}
+          </form-label>
+          <form-label v-else id="inquiry-form.last-name" :required="true">
             Last Name
           </form-label>
           <input
@@ -37,7 +43,10 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <form-label id="inquiry-form.email" :required="true">
+          <form-label v-if="labels.email" id="inquiry-form.email" :required="true">
+            {{ labels.email }}
+          </form-label>
+          <form-label v-else id="inquiry-form.email" :required="true">
             Email Address
           </form-label>
           <input
@@ -52,7 +61,10 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <form-label id="inquiry-form.phone">
+          <form-label v-if="labels.phone" id="inquiry-form.phone">
+            {{ labels.phone }}
+          </form-label>
+          <form-label v-else id="inquiry-form.phone">
             Phone Number
           </form-label>
           <input
@@ -68,7 +80,10 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <form-label id="inquiry-form.company">
+          <form-label v-if="labels.company" id="inquiry-form.company">
+            {{ labels.company }}
+          </form-label>
+          <form-label v-else id="inquiry-form.company">
             Company Name
           </form-label>
           <input
@@ -82,7 +97,10 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <form-label id="inquiry-form.job-title" :required="true">
+          <form-label v-if="labels.jobTitle" id="inquiry-form.job-title" :required="true">
+            {{ labels.jobTitle }}
+          </form-label>
+          <form-label v-else id="inquiry-form.job-title" :required="true">
             Job Title
           </form-label>
           <input
@@ -98,11 +116,19 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <country-field v-model="country" :required="true" />
+        <country-field
+          v-model="country"
+          :required="true"
+          :label="labels.country"
+          :place-holder="labels.countryPlaceholder"
+        />
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <form-label id="inquiry-form.postal-code">
+          <form-label v-if="labels.zip" id="inquiry-form.postal-code">
+            {{ labels.zip }}
+          </form-label>
+          <form-label v-else id="inquiry-form.postal-code">
             ZIP/Postal Code
           </form-label>
           <input
@@ -118,7 +144,10 @@
     <div class="row">
       <div class="col-12">
         <div class="form-group">
-          <form-label id="inquiry-form.comments">
+          <form-label v-if="labels.comments" id="inquiry-form.comments">
+            {{ labels.comments }}
+          </form-label>
+          <form-label v-else id="inquiry-form.comments">
             Comments
           </form-label>
           <textarea
@@ -139,7 +168,20 @@
       @verify="onVerify"
       @expired="onExpired"
     />
-    <button type="submit" class="btn btn-primary" :disabled="loading">
+    <button
+      v-if="labels.submit"
+      type="submit"
+      class="btn btn-primary"
+      :disabled="loading"
+    >
+      {{ labels.submit }}
+    </button>
+    <button
+      v-else
+      type="submit"
+      class="btn btn-primary"
+      :disabled="loading"
+    >
       Submit
     </button>
   </form>
@@ -168,6 +210,11 @@ export default {
     sitekey: {
       type: String,
       required: true,
+    },
+    labels: {
+      type: Object,
+      required: false,
+      default: null,
     },
   },
   data: () => ({

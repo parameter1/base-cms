@@ -2,11 +2,13 @@ import { get, getAsObject } from "@parameter1/base-cms-object-path";
 
 $ const { id, name } = getAsObject(input, "company");
 $ const { url: href, label, provider } = getAsObject(input, "item");
+$ const socialMediaLabel = (input, 'label')
 $ const props = {
   companyId: id,
   companyName: name,
   href,
   provider,
+  socialMediaLabel
 };
 
 <marko-web-browser-component name="LeadersCompanySocialLink" props=props />

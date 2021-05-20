@@ -19,6 +19,8 @@ $ const showFields = fields.some(k => content[k]);
 $ const websiteLinkAttrs = getAsObject(input, "websiteLinkAttrs");
 $ const socialLinkAttrs = getAsObject(input, "socialLinkAttrs");
 
+$ const labels = getAsObject(input, "labels")
+
 <default-theme-page-contact-details|{ blockName }|
   tag=input.tag
   class=input.class
@@ -64,19 +66,34 @@ $ const socialLinkAttrs = getAsObject(input, "socialLinkAttrs");
     <default-theme-content-contact-details-section block-name=blockName>
       <if(content.phone)>
         <div class=`${blockName}__field`>
-          <span class=`${blockName}__label`>Phone:</span>
+          <if(labels.phone)>
+            <span class=`${blockName}__label`>${labels.phone}:</span>
+          </if>
+          <else>
+            <span class=`${blockName}__label`>Phone:</span>
+          </else>
           <marko-web-content-phone block-name=blockName obj=content />
         </div>
       </if>
       <if(content.mobile)>
         <div class=`${blockName}__field`>
-          <span class=`${blockName}__label`>Mobile:</span>
+          <if (labels.mobile)>
+            <span class=`${blockName}__label`>${labels.mobile}:</span>
+          </if>
+          <else>
+            <span class=`${blockName}__label`>Mobile:</span>
+          </else>
           <marko-web-content-mobile block-name=blockName obj=content />
         </div>
       </if>
       <if(content.tollfree)>
         <div class=`${blockName}__field`>
+          <if (labels.tollFree)>
+            <span class=`${blockName}__label`>${labels.tollFree}:</span>
+          </if>
+          <else>
           <span class=`${blockName}__label`>Toll Free:</span>
+          </else>
           <marko-web-content-tollfree block-name=blockName obj=content />
         </div>
       </if>
