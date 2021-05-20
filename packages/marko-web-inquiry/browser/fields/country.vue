@@ -786,7 +786,7 @@ export default {
       default: false,
     },
   },
-  computed: {
+  methods: {
     resolveFieldLabel(label) {
       return i18n(this.lang, label);
     },

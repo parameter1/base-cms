@@ -1,15 +1,12 @@
 import translations from './translations';
 
-let value = '';
-function i18n(lang, fieldLabelKey) {
+export default (lang, fieldLabelKey) => {
   const keys = Object.keys(translations);
-  if (keys.includes(lang)) {
-    value = lang[fieldLabelKey];
-  } else {
-    throw new Error('LANGUAGE STRING MUST BE PROVIDED');
+  if (!keys.includes(lang)) {
+    throw new Error(`No translations available for requested language ${lang}!`);
   }
-  return value;
+  if (!translations[lang][fieldLabelKey]) {
+    throw new Error(`No translations available in ${lang} for requested key ${fieldLabelKey}!`);
+  }
+  return translations[lang][fieldLabelKey];
 }
-
-
-export default i18n;

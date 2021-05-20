@@ -186,12 +186,10 @@ export default {
     postalCode: '',
     comments: '',
   }),
-  computed: {
+  methods: {
     resolveFieldLabel(label) {
       return i18n(this.lang, label);
     },
-  },
-  methods: {
     onSubmit() {
       this.$refs.invisibleRecaptcha.execute();
     },
