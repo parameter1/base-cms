@@ -123,7 +123,7 @@
     <div class="row">
       <div class="col-12">
         <div class="form-group">
-          <form-label  id="inquiry-form.comments">
+          <form-label id="inquiry-form.comments">
             {{ labels.comments }}
           </form-label>
           <textarea
