@@ -1,7 +1,7 @@
 <template>
   <div class="form-group">
     <form-label id="inquiry-form.country" :required="required">
-      {{ resolveFieldLabel(countryLabel) }}
+      {{ translate(countryLabel) }}
     </form-label>
     <select
       id="inquiry-form.country"
@@ -13,7 +13,7 @@
       @change="$emit('input', $event.target.value)"
     >
       <option disabled="disabled" value="">
-        {{ resolveFieldLabel(countryPlaceholder) }}
+        {{ translate(countryPlaceholder) }}
       </option>
       <option value="US">
         United States of America 🇺🇸
@@ -785,10 +785,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    lang: {
+      type: String,
+      default: 'en',
+    },
   },
   methods: {
-    resolveFieldLabel(label) {
-      return i18n(this.lang, label);
+    translate(key) {
+      return i18n(this.lang, key);
     },
   },
 };

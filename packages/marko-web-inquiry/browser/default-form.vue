@@ -6,7 +6,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <form-label id="inquiry-form.first-name" :required="true">
-            {{ resolveFieldLabel(firstNameLabel) }}
+            {{ translate(firstNameLabel) }}
           </form-label>
           <input
             id="inquiry-form.first-name"
@@ -21,7 +21,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <form-label id="inquiry-form.last-name" :required="true">
-            {{ resolveFieldLabel(surnameLabel) }}
+            {{ translate(surnameLabel) }}
           </form-label>
           <input
             id="inquiry-form.last-name"
@@ -38,7 +38,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <form-label id="inquiry-form.email" :required="true">
-            {{ resolveFieldLabel(emailLabel) }}
+            {{ translate(emailLabel) }}
           </form-label>
           <input
             id="inquiry-form.email"
@@ -53,7 +53,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <form-label id="inquiry-form.phone">
-            {{ resolveFieldLabel(phoneLabel) }}
+            {{ translate(phoneLabel) }}
           </form-label>
           <input
             id="inquiry-form.phone"
@@ -69,7 +69,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <form-label id="inquiry-form.company">
-            {{ resolveFieldLabel(companyLabel) }}
+            {{ translate(companyLabel) }}
           </form-label>
           <input
             id="inquiry-form.company"
@@ -83,7 +83,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <form-label id="inquiry-form.job-title" :required="true">
-            {{ resolveFieldLabel(jobTitleLabel) }}
+            {{ translate(jobTitleLabel) }}
           </form-label>
           <input
             id="inquiry-form.job-title"
@@ -103,7 +103,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <form-label id="inquiry-form.postal-code">
-            {{ resolveFieldLabel(zipLabel) }}
+            {{ translate(zipLabel) }}
           </form-label>
           <input
             id="inquiry-form.postal-code"
@@ -119,7 +119,7 @@
       <div class="col-12">
         <div class="form-group">
           <form-label id="inquiry-form.comments">
-            {{ resolveFieldLabel(commentsLabel) }}
+            {{ translate(commentsLabel) }}
           </form-label>
           <textarea
             id="inquiry-form.comments"
@@ -140,7 +140,7 @@
       @expired="onExpired"
     />
     <button type="submit" class="btn btn-primary" :disabled="loading">
-      {{ resolveFieldLabel(submitLabel) }}
+      {{ translate(submitLabel) }}
     </button>
   </form>
   <div v-else>
@@ -187,8 +187,8 @@ export default {
     comments: '',
   }),
   methods: {
-    resolveFieldLabel(label) {
-      return i18n(this.lang, label);
+    translate(key) {
+      return i18n(this.lang, key);
     },
     onSubmit() {
       this.$refs.invisibleRecaptcha.execute();
