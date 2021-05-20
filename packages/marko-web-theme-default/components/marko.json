@@ -14,6 +14,28 @@
     "./social/marko.json"
   ],
   "<default-theme-menu-toggle-button>": {
-    "template": "./menu-toggle-button.marko"
+    "template": "./menu-toggle-button.marko",
+    "@class-name": {
+      "type": "string",
+      "default-value": "site-navbar__toggler"
+    },
+    "@targets": {
+      "type": "array",
+      "default-value": [".site-menu"]
+    },
+    "@toggle-class": {
+      "type": "string",
+      "default-value": "site-menu--open"
+    },
+    "@icon-modifiers": {
+      "type": "array",
+      "default-value": ["lg"]
+    },
+    "@icon-name":  {
+      "type": "string",
+      "default-value": "three-bars"
+    },
+    "@expanded-icon-name": "string",
+    "@tag": "string"
   }
 }

@@ -19,13 +19,7 @@ $ const navigation = {
   <${input.aboveNav} />
   <default-theme-site-navbar modifiers=["secondary"]>
     <if(navigation.menu.length)>
-      <default-theme-menu-toggle-button
-        class-name="site-navbar__toggler"
-        targets=[".site-menu"]
-        toggle-class="site-menu--open"
-        icon-modifiers=["lg"]
-        icon-name="three-bars"
-      />
+      <default-theme-menu-toggle-button />
     </if>
     <default-theme-site-navbar-brand title=`${config.website("name")} Homepage`>
       <default-theme-site-navbar-logo
