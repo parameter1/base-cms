@@ -9,4 +9,4 @@ export default (lang, fieldLabelKey) => {
     throw new Error(`No translations available in ${lang} for requested key ${fieldLabelKey}!`);
   }
   return translations[lang][fieldLabelKey];
-}
+};
