@@ -12,7 +12,13 @@ const cleanRedirect = async (redirect, from, basedb) => {
   // Clean the url.
   const cleaned = from.replace(regex, '.html');
   // Try to find the redirect again.
-  return basedb.findOne('website.Redirects', { from: cleaned });
+  const query = {
+    $or: [
+      { from: cleaned },
+      { from: cleaned.toLowerCase() },
+    ],
+  };
+  return basedb.findOne('website.Redirects', query);
 };
 
 module.exports = {
@@ -38,7 +44,13 @@ module.exports = {
       if (!siteId) throw new UserInputError('A siteId must be provided via input or context.');
 
       const queryParams = new URLSearchParams(asObject(params));
-      const redirect = await basedb.findOne('website.Redirects', { siteId, from });
+      const query = {
+        $or: [
+          { siteId, from },
+          { siteId, from: from.toLowerCase() },
+        ],
+      };
+      const redirect = await basedb.findOne('website.Redirects', query);
       const cleaned = await cleanRedirect(redirect, from, basedb);
 
       // Preserve query string params (if applicable);
