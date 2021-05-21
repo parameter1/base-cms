@@ -35,6 +35,14 @@
       "type": "string",
       "default-value": "three-bars"
     },
+    "@initially-expanded":  {
+      "type": "boolean",
+      "default-value": false
+    },
+    "@buttonLabel": {
+      "type": "string",
+      "default-value": "Toggle Menu"
+    },
     "@expanded-icon-name": "string",
     "@tag": "string"
   }
