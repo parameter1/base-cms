@@ -39,7 +39,7 @@
       "type": "boolean",
       "default-value": false
     },
-    "@buttonLabel": {
+    "@button-label": {
       "type": "string",
       "default-value": "Toggle Menu"
     },
