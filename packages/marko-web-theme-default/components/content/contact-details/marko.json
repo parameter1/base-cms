@@ -14,7 +14,8 @@
     "@modifiers": "array",
     "@attrs": "object",
     "@website-link-attrs": "object",
-    "@social-link-attrs": "object"
+    "@social-link-attrs": "object",
+    "@lang": "string"
   },
   "<default-theme-content-contact-details-section>": {
     "template": "./section.marko",
