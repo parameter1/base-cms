@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   en: {
     phoneLabel: 'Phone',
     mobileLabel: 'Mobile',

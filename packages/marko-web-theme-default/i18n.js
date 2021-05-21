@@ -1,6 +1,6 @@
-import translations from './translations';
+const translations = require ('./translations.js')
 
-export default (lang, fieldLabelKey) => {
+module.exports (lang, fieldLabelKey) => {
   if (!translations[lang]) {
     throw new Error(`No translations available for requested language ${lang}!`);
   }
