@@ -10,7 +10,7 @@ $ const withDescription = defaultValue(input.withDescription, true);
 
 $ const blockName = "inquiry-form";
 $ const { RECAPTCHA_SITE_KEY } = require('../env');
-$ const lang = input.lang
+$ const lang = input.lang;
 
 <if(inquiry.enabled)>
   <marko-web-block name=blockName modifiers=input.modifiers>
@@ -39,7 +39,7 @@ $ const lang = input.lang
       contentId: content.id,
       contentType: content.type,
       sitekey: RECAPTCHA_SITE_KEY,
-      lang: lang
+      lang: lang,
     } />
   </marko-web-block>
 </if>

@@ -6,7 +6,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <form-label id="inquiry-form.first-name" :required="true">
-            {{ translate('firstNameLabel') }}
+            {{ translate("firstNameLabel") }}
           </form-label>
           <input
             id="inquiry-form.first-name"
@@ -21,7 +21,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <form-label id="inquiry-form.last-name" :required="true">
-            {{ translate('surnameLabel') }}
+            {{ translate("surnameLabel") }}
           </form-label>
           <input
             id="inquiry-form.last-name"
@@ -38,7 +38,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <form-label id="inquiry-form.email" :required="true">
-            {{ translate('emailLabel') }}
+            {{ translate("emailLabel") }}
           </form-label>
           <input
             id="inquiry-form.email"
@@ -53,7 +53,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <form-label id="inquiry-form.phone">
-            {{ translate('phoneLabel') }}
+            {{ translate("phoneLabel") }}
           </form-label>
           <input
             id="inquiry-form.phone"
@@ -69,7 +69,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <form-label id="inquiry-form.company">
-            {{ translate('companyLabel') }}
+            {{ translate("companyLabel") }}
           </form-label>
           <input
             id="inquiry-form.company"
@@ -83,7 +83,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <form-label id="inquiry-form.job-title" :required="true">
-            {{ translate('jobTitleLabel') }}
+            {{ translate("jobTitleLabel") }}
           </form-label>
           <input
             id="inquiry-form.job-title"
@@ -103,7 +103,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <form-label id="inquiry-form.postal-code">
-            {{ translate('zipLabel') }}
+            {{ translate("zipLabel") }}
           </form-label>
           <input
             id="inquiry-form.postal-code"
@@ -119,7 +119,7 @@
       <div class="col-12">
         <div class="form-group">
           <form-label id="inquiry-form.comments">
-            {{ translate('commentsLabel') }}
+            {{ translate("commentsLabel") }}
           </form-label>
           <textarea
             id="inquiry-form.comments"
@@ -140,7 +140,7 @@
       @expired="onExpired"
     />
     <button type="submit" class="btn btn-primary" :disabled="loading">
-      {{ translate('submitLabel') }}
+      {{ translate("submitLabel") }}
     </button>
   </form>
   <div v-else>
