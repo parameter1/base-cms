@@ -730,6 +730,69 @@ module.exports = {
     /**
      *
      */
+    allPublishedContentDates: async (_, { input }, { basedb, site }) => {
+      const {
+        after,
+        before,
+        withSite,
+        format,
+      } = input;
+
+      const siteId = input.siteId || site.id();
+
+      const pipeline = [
+        {
+          $match: {
+            ...(withSite && siteId && { siteId }),
+            ...((before || after) && {
+              date: {
+                ...(before && { $lte: before }),
+                ...(after && { $gte: after }),
+              },
+            }),
+          },
+        },
+        {
+          $group: {
+            _id: {
+              year: '$year',
+              ...((format === 'months' || format === 'days') && {
+                month: '$month',
+              }),
+              ...(format === 'days' && {
+                day: '$day',
+              }),
+            },
+            count: { $sum: '$count' },
+          },
+        },
+        {
+          $project: {
+            year: '$_id.year',
+            month: '$_id.month',
+            day: '$_id.day',
+            count: 1,
+          },
+        },
+        {
+          $sort: {
+            year: 1,
+            month: 1,
+            day: 1,
+          },
+        },
+      ];
+      const cursor = await basedb.aggregate('platform.content-published-dates', pipeline);
+      const results = await cursor.toArray();
+      return results.map((r) => {
+        const id = [r.year, r.month, r.day].filter(v => v).join('-');
+        return { ...r, id };
+      });
+    },
+
+    /**
+     *
+     */
     publishedContentCounts: async (_, { input }, { basedb, site }) => {
       const {
         since,
