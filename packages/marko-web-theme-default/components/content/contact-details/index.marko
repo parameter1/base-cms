@@ -1,6 +1,6 @@
 import { getAsArray, getAsObject } from "@parameter1/base-cms-object-path";
 
-import i18n from '../../../i18n'
+import i18n from "../../../i18n"
 
 $ const content = getAsObject(input, "obj");
 $ const showEmail = input.showEmail != null ? input.showEmail : true;
@@ -21,7 +21,7 @@ $ const showFields = fields.some(k => content[k]);
 $ const websiteLinkAttrs = getAsObject(input, "websiteLinkAttrs");
 $ const socialLinkAttrs = getAsObject(input, "socialLinkAttrs");
 
-$ const lang = input.lang || 'en'
+$ const lang = input.lang || "en"
 
 <default-theme-page-contact-details|{ blockName }|
   tag=input.tag
