@@ -13,8 +13,6 @@ query ContentSitemapUrls($input: ContentSitemapUrlsQueryInput) {
     id
     loc
     lastmod
-    changefreq
-    priority
     images {
       id
       loc
