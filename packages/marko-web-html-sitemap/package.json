@@ -15,6 +15,7 @@
   },
   "peerDependencies": {
     "@parameter1/base-cms-marko-core": "^2.0.0",
-    "@parameter1/base-cms-marko-web": "^2.0.0"
+    "@parameter1/base-cms-marko-web": "^2.0.0",
+    "@parameter1/base-cms-utils": "^2.4.2"
   }
 }
