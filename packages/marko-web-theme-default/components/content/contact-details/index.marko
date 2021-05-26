@@ -68,25 +68,25 @@ $ const lang = input.lang || 'en'
     <default-theme-content-contact-details-section block-name=blockName>
       <if(content.phone)>
         <div class=`${blockName}__field`>
-          <span class=`${blockName}__label`>${i18n(lang, 'phoneLabel')}:</span>
+          <span class=`${blockName}__label`>${i18n(lang, "phoneLabel")}:</span>
           <marko-web-content-phone block-name=blockName obj=content />
         </div>
       </if>
       <if(content.mobile)>
         <div class=`${blockName}__field`>
-          <span class=`${blockName}__label`>${i18n(lang, 'mobileLabel')}:</span>
+          <span class=`${blockName}__label`>${i18n(lang, "mobileLabel")}:</span>
           <marko-web-content-mobile block-name=blockName obj=content />
         </div>
       </if>
       <if(content.tollfree)>
         <div class=`${blockName}__field`>
-          <span class=`${blockName}__label`>${i18n(lang, 'tollFreeLabel')}:</span>
+          <span class=`${blockName}__label`>${i18n(lang, "tollFreeLabel")}:</span>
           <marko-web-content-tollfree block-name=blockName obj=content />
         </div>
       </if>
       <if(content.fax)>
         <div class=`${blockName}__field`>
-          <span class=`${blockName}__label`>${i18n(lang, 'faxLabel')}:</span>
+          <span class=`${blockName}__label`>${i18n(lang, "faxLabel")}:</span>
           <marko-web-content-fax block-name=blockName obj=content />
         </div>
       </if>
