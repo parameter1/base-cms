@@ -6,7 +6,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <form-label id="inquiry-form.first-name" :required="true">
-            First Name
+            {{ translate("firstNameLabel") }}
           </form-label>
           <input
             id="inquiry-form.first-name"
@@ -21,7 +21,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <form-label id="inquiry-form.last-name" :required="true">
-            Last Name
+            {{ translate("surnameLabel") }}
           </form-label>
           <input
             id="inquiry-form.last-name"
@@ -38,7 +38,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <form-label id="inquiry-form.email" :required="true">
-            Email Address
+            {{ translate("emailLabel") }}
           </form-label>
           <input
             id="inquiry-form.email"
@@ -53,7 +53,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <form-label id="inquiry-form.phone">
-            Phone Number
+            {{ translate("phoneLabel") }}
           </form-label>
           <input
             id="inquiry-form.phone"
@@ -69,7 +69,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <form-label id="inquiry-form.company">
-            Company Name
+            {{ translate("companyLabel") }}
           </form-label>
           <input
             id="inquiry-form.company"
@@ -83,7 +83,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <form-label id="inquiry-form.job-title" :required="true">
-            Job Title
+            {{ translate("jobTitleLabel") }}
           </form-label>
           <input
             id="inquiry-form.job-title"
@@ -98,12 +98,12 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <country-field v-model="country" :required="true" />
+        <country-field v-model="country" :required="true" :lang="lang" />
       </div>
       <div class="col-md-6">
         <div class="form-group">
           <form-label id="inquiry-form.postal-code">
-            ZIP/Postal Code
+            {{ translate("zipLabel") }}
           </form-label>
           <input
             id="inquiry-form.postal-code"
@@ -119,7 +119,7 @@
       <div class="col-12">
         <div class="form-group">
           <form-label id="inquiry-form.comments">
-            Comments
+            {{ translate("commentsLabel") }}
           </form-label>
           <textarea
             id="inquiry-form.comments"
@@ -140,7 +140,7 @@
       @expired="onExpired"
     />
     <button type="submit" class="btn btn-primary" :disabled="loading">
-      Submit
+      {{ translate("submitLabel") }}
     </button>
   </form>
   <div v-else>
@@ -153,6 +153,7 @@ import VueRecaptcha from 'vue-recaptcha';
 import FormMixin from './form-mixin';
 import CountryField from './fields/country.vue';
 import FormLabel from './elements/label.vue';
+import i18n from '../i18n';
 
 export default {
   components: { VueRecaptcha, CountryField, FormLabel },
@@ -169,6 +170,10 @@ export default {
       type: String,
       required: true,
     },
+    lang: {
+      type: String,
+      default: 'en',
+    },
   },
   data: () => ({
     firstName: '',
@@ -182,6 +187,9 @@ export default {
     comments: '',
   }),
   methods: {
+    translate(key) {
+      return i18n(this.lang, key);
+    },
     onSubmit() {
       this.$refs.invisibleRecaptcha.execute();
     },

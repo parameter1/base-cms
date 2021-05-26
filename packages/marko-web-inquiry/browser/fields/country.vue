@@ -1,7 +1,7 @@
 <template>
   <div class="form-group">
     <form-label id="inquiry-form.country" :required="required">
-      Country
+      {{ translate("countryLabel") }}
     </form-label>
     <select
       id="inquiry-form.country"
@@ -13,7 +13,7 @@
       @change="$emit('input', $event.target.value)"
     >
       <option disabled="disabled" value="">
-        Select country...
+        {{ translate("countryPlaceholder") }}
       </option>
       <option value="US">
         United States of America 🇺🇸
@@ -771,6 +771,7 @@
 
 <script>
 import FormLabel from '../elements/label.vue';
+import i18n from '../../i18n';
 
 export default {
   components: { FormLabel },
@@ -783,6 +784,15 @@ export default {
     required: {
       type: Boolean,
       default: false,
+    },
+    lang: {
+      type: String,
+      default: 'en',
+    },
+  },
+  methods: {
+    translate(key) {
+      return i18n(this.lang, key);
     },
   },
 };
