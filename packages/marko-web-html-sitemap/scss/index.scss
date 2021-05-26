@@ -1,0 +1,38 @@
+$primary: #000;
+.sitemap {
+  .page-wrapper {
+    &__title {
+      padding-top: 1.5rem;
+    }
+    &__description {
+      border-top: solid 2px $primary;
+      padding-top: .75rem;
+    }
+  }
+  .col {
+    &__date {
+      text-align: center;
+      padding: 1.5rem;
+      &--year {
+        @include make-col-ready();
+        @include media-breakpoint-up(md) {
+          @include make-col(3);
+        }
+      }
+
+      &--month {
+        @include make-col-ready();
+        @include media-breakpoint-up(md) {
+          @include make-col(3);
+        }
+      }
+
+      &--day {
+        @include make-col-ready();
+        @include media-breakpoint-up(md) {
+          @include make-col(2);
+        }
+      }
+    }
+  }
+}
