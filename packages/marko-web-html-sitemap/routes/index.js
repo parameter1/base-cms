@@ -32,10 +32,8 @@ const ALL_PUBLISHED_CONTENT_DATES = gql`
   }
 `;
 
-const ROOT_ALIAS = '/html-sitemap';
-
-module.exports = (app) => {
-  app.get(`${ROOT_ALIAS}/:year(\\d{4})/:month(\\d{2})/:day(\\d{2})`, asyncRoute(async (req, res) => {
+module.exports = (app, { mountPoint = 'html-sitemap' }) => {
+  app.get(`${mountPoint}/:year(\\d{4})/:month(\\d{2})/:day(\\d{2})`, asyncRoute(async (req, res) => {
     const { year, month, day } = req.params;
 
     // Validate date
@@ -61,7 +59,7 @@ module.exports = (app) => {
     );
   }));
 
-  app.get(`${ROOT_ALIAS}/:year(\\d{4})/:month(\\d{2})`, asyncRoute(async (req, res) => {
+  app.get(`${mountPoint}/:year(\\d{4})/:month(\\d{2})`, asyncRoute(async (req, res) => {
     const { year, month } = req.params;
     const startOfMonth = moment(`${year}-${month}-01`, FORMAT);
     if (!startOfMonth.isValid()) throw invalidDate();
@@ -77,7 +75,7 @@ module.exports = (app) => {
     };
     const variables = { input };
     const { data } = await req.apollo.query({ query: ALL_PUBLISHED_CONTENT_DATES, variables });
-    const alias = `${ROOT_ALIAS}/${year}/${getTwoCharNum(month)}`;
+    const alias = `${mountPoint}/${year}/${getTwoCharNum(month)}`;
     const nodes = getAsArray(data, 'allPublishedContentDates').map(node => ({
       ...node,
       alias: `${alias}/${getTwoCharNum(node.day)}`,
@@ -93,7 +91,7 @@ module.exports = (app) => {
     );
   }));
 
-  app.get(`${ROOT_ALIAS}/:year(\\d{4})`, asyncRoute(async (req, res) => {
+  app.get(`${mountPoint}/:year(\\d{4})`, asyncRoute(async (req, res) => {
     const { year } = req.params;
     const now = moment().endOf('day');
     if (year > now.format('year')) throw dateNotFound();
@@ -108,7 +106,7 @@ module.exports = (app) => {
     };
     const variables = { input };
     const { data } = await req.apollo.query({ query: ALL_PUBLISHED_CONTENT_DATES, variables });
-    const alias = `${ROOT_ALIAS}/${year}`;
+    const alias = `${mountPoint}/${year}`;
     const nodes = getAsArray(data, 'allPublishedContentDates').map(node => ({
       ...node,
       alias: `${alias}/${getTwoCharNum(node.month)}`,
@@ -123,7 +121,7 @@ module.exports = (app) => {
     );
   }));
 
-  app.get(`${ROOT_ALIAS}`, asyncRoute(async (req, res) => {
+  app.get(`${mountPoint}`, asyncRoute(async (req, res) => {
     const now = moment().endOf('day');
     const year = moment().format('YYYY');
     const nowFormatted = now.format(FORMAT);
@@ -137,7 +135,7 @@ module.exports = (app) => {
     const { data } = await req.apollo.query({ query: ALL_PUBLISHED_CONTENT_DATES, variables });
     const nodes = getAsArray(data, 'allPublishedContentDates').map(node => ({
       ...node,
-      alias: `${ROOT_ALIAS}/${node.year}`,
+      alias: `${mountPoint}/${node.year}`,
     }));
     return res.marko(
       dateListTemplate,
