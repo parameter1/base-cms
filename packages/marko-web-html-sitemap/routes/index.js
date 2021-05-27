@@ -1,4 +1,5 @@
 
+const { getAsArray } = require('@parameter1/base-cms-object-path');
 const moment = require('moment');
 const gql = require('graphql-tag');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
@@ -16,6 +17,8 @@ const invalidDate = () => {
   error.statusCode = 400;
   return error;
 };
+
+const getTwoCharNum = number => number.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false });
 
 const ALL_PUBLISHED_CONTENT_DATES = gql`
   query AllPublishedContentDates($input: AllPublishedContentDatesQueryInput = {}) {
@@ -74,12 +77,11 @@ module.exports = (app) => {
     };
     const variables = { input };
     const { data } = await req.apollo.query({ query: ALL_PUBLISHED_CONTENT_DATES, variables });
-    const nodes = data.allPublishedContentDates.map((node) => {
-      const alias = `${ROOT_ALIAS}/${year}/${month.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}`;
-      const publishedContentNode = node;
-      publishedContentNode.alias = `${alias}/${node.day.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}`;
-      return publishedContentNode;
-    });
+    const alias = `${ROOT_ALIAS}/${year}/${getTwoCharNum(month)}`;
+    const nodes = getAsArray(data, 'allPublishedContentDates').map(node => ({
+      ...node,
+      alias: `${alias}/${getTwoCharNum(node.day)}`,
+    }));
     return res.marko(
       dateListTemplate,
       {
@@ -106,12 +108,11 @@ module.exports = (app) => {
     };
     const variables = { input };
     const { data } = await req.apollo.query({ query: ALL_PUBLISHED_CONTENT_DATES, variables });
-    const nodes = data.allPublishedContentDates.map((node) => {
-      const alias = `${ROOT_ALIAS}/${year}`;
-      const publishedContentNode = node;
-      publishedContentNode.alias = `${alias}/${node.month.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}`;
-      return publishedContentNode;
-    });
+    const alias = `${ROOT_ALIAS}/${year}`;
+    const nodes = getAsArray(data, 'allPublishedContentDates').map(node => ({
+      ...node,
+      alias: `${alias}/${getTwoCharNum(node.month)}`,
+    }));
     return res.marko(
       dateListTemplate,
       {
@@ -134,11 +135,10 @@ module.exports = (app) => {
     };
     const variables = { input };
     const { data } = await req.apollo.query({ query: ALL_PUBLISHED_CONTENT_DATES, variables });
-    const nodes = data.allPublishedContentDates.map((node) => {
-      const publishedContentNode = node;
-      publishedContentNode.alias = `${ROOT_ALIAS}/${node.year}`;
-      return publishedContentNode;
-    });
+    const nodes = getAsArray(data, 'allPublishedContentDates').map(node => ({
+      ...node,
+      alias: `${ROOT_ALIAS}/${node.year}`,
+    }));
     return res.marko(
       dateListTemplate,
       {
