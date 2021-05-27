@@ -33,7 +33,12 @@
           />
         </template>
         <template #dropdown="{ item, isActive }">
-          <card :company="item" :is-active="isActive" @action="emitAction" />
+          <card
+            :company="item"
+            :is-active="isActive"
+            :featured="featured"
+            @action="emitAction"
+          />
         </template>
       </list>
     </div>
@@ -98,6 +103,10 @@ export default {
     videoLimit: {
       type: Number,
       default: 3,
+    },
+    featured: {
+      type: String,
+      default: 'Featured Products',
     },
   },
 

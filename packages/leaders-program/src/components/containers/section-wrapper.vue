@@ -26,6 +26,7 @@
             :offset-bottom="offsetBottom"
             :promotion-limit="promotionLimit"
             :video-limit="videoLimit"
+            :featured="featured"
             @action="emitAction"
           />
         </leaders-columns>
@@ -104,6 +105,10 @@ export default {
     videoLimit: {
       type: Number,
       default: 3,
+    },
+    featured: {
+      type: String,
+      default: 'Featured Products',
     },
   },
 
