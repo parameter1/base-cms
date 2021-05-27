@@ -36,7 +36,7 @@
           <card
             :company="item"
             :is-active="isActive"
-            :featured="featured"
+            :featuredProductLabel="featuredProductLabel"
             @action="emitAction"
           />
         </template>
@@ -104,7 +104,7 @@ export default {
       type: Number,
       default: 3,
     },
-    featured: {
+    featuredProductLabel: {
       type: String,
       default: 'Featured Products',
     },

@@ -27,7 +27,7 @@
         :offset-bottom="getResponsiveValue('offsetBottom')"
         :promotion-limit="promotionLimit"
         :video-limit="videoLimit"
-        :featured="featured"
+        :featuredProductLabel="featuredProductLabel"
         @action="emitAction"
       />
     </div>
@@ -152,7 +152,7 @@ export default {
       type: Boolean,
       default: true,
     },
-    featured: {
+    featuredProductLabel: {
       type: String,
       default: 'Featured Products',
     },

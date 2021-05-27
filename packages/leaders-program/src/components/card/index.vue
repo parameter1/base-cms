@@ -33,7 +33,7 @@
     <div v-if="displayBody" class="leaders-card__body">
       <content-deck :value="promotions" :limit="4" :item-modifiers="['promo']">
         <template #header-left>
-          {{ featured }}
+          {{ featuredProductLabel }}
         </template>
         <template #header-right>
           <view-more
@@ -113,7 +113,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    featured: {
+    featuredProductLabel: {
       type: String,
       default: 'Featured Products',
     },
