@@ -1,10 +1,40 @@
+$ const clean = (js) => js.split('\n').map((line) => line.trim()).join(' ');
+
 <marko-web-deferred-script-loader-register
   name="olytics"
   src="https://olytics.omeda.com/olytics/js/v3/p/olytics.min.js"
   on=input.on
   request-frame=input.requestFrame
   target-tag=input.targetTag
-  init=`if (!window.olytics) { window.olytics = []; window.olytics.oid = '${input.oid}'; window.olytics.factory = function(i) { return function() { var t = Array.prototype.slice.call(arguments); return t.unshift(i), window.olytics.push(t), window.olytics } }; window.olytics.fire = window.olytics.factory('fire'); window.olytics.confirm = window.olytics.factory('confirm'); }`
-  on-script-build="script.id = 'olyticsImport'; script.setAttribute('data-oid', window.olytics.oid);"
-  on-script-loaded="for (olytics.initialize({ Olytics: { oid: window.olytics.oid } }); window.olytics.length > 0;) { var o = window.olytics.shift(), s = o.shift(); olytics[s] && olytics[s].apply(olytics, o); }"
+  init=clean(`
+    window.olytics || (window.olytics = []), window.olytics.methods = ['fire', 'confirm'], window.olytics.factory = function(i) {
+      return function() {
+        var t = Array.prototype.slice.call(arguments);
+        return t.unshift(i), window.olytics.push(t), window.olytics
+      }
+    };
+    for (var i = 0; i < window.olytics.methods.length; i++) {
+      var method = window.olytics.methods[i];
+      window.olytics[method] = window.olytics.factory(method)
+    }
+  `)
+  on-script-build=clean(`
+    olytics.load = function(i) {
+      if (!document.getElementById('olyticsImport')) {
+        window.a = window.olytics;
+        script.id = 'olyticsImport';
+        var o = '';
+        void 0 !== i && void 0 !== i.oid && (o = i.oid), script.setAttribute('data-oid', o), script.addEventListener('load', function(t) {
+          for (olytics.initialize({
+              Olytics: i
+            }); window.a.length > 0;) {
+            var o = window.a.shift(),
+              s = o.shift();
+            olytics[s] && olytics[s].apply(olytics, o)
+          }
+        }, !1);
+      }
+    };
+    olytics.load({ oid: '${input.oid}' });
+  `)
 />
