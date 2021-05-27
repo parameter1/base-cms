@@ -9,7 +9,8 @@
   "scripts": {
     "serve": "vue-cli-service serve src/dev.js",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test": "yarn lint"
   },
   "dependencies": {
     "core-js": "^3.8.2",
@@ -17,7 +18,8 @@
     "graphql-tag": "^2.11.0",
     "object-path": "^0.11.5",
     "portal-vue": "^2.1.7",
-    "vue": "^2.6.12"
+    "vue": "^2.6.12",
+    "vue-apollo": "^3.0.5"
   },
   "devDependencies": {
     "@parameter1/base-cms-graphql-fragment-types": "^2.0.0",
@@ -36,7 +38,6 @@
     "sass-loader": "^8.0.2",
     "stylelint": "^10.1.0",
     "stylelint-config-twbs-bootstrap": "0.4.0",
-    "vue-apollo": "^3.0.5",
     "vue-template-compiler": "^2.6.12"
   },
   "publishConfig": {
