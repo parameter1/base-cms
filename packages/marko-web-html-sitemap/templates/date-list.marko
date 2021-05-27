@@ -14,13 +14,13 @@ $ const pageNode = {
 };
 $ switch (displayType) {
   case "day":
-    pageNode.description = `All ${config.siteName()} stories pulished by days in ${month} ${year}`;
+    pageNode.description = `All ${config.siteName()} stories published by days in ${month} ${year}`;
     break;
   case "month":
-    pageNode.description = `All ${config.siteName()} stories pulished by month in ${year}`;
+    pageNode.description = `All ${config.siteName()} stories published by month in ${year}`;
     break;
   default:
-    pageNode.description = `All ${config.siteName()} stories pulished by years`;
+    pageNode.description = `All ${config.siteName()} stories published by years`;
 };
 <marko-web-default-page-layout type=type title=pageNode.title description=pageNode.description>
   <@page>
