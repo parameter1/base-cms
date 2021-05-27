@@ -9,7 +9,8 @@
   "scripts": {
     "serve": "vue-cli-service serve src/dev.js",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test": "yarn lint"
   },
   "dependencies": {
     "core-js": "^3.8.2",
