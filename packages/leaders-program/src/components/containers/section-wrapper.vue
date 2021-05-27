@@ -26,6 +26,7 @@
             :offset-bottom="offsetBottom"
             :promotion-limit="promotionLimit"
             :video-limit="videoLimit"
+            :featuredProductLabel="featuredProductLabel"
             @action="emitAction"
           />
         </leaders-columns>
@@ -104,6 +105,10 @@ export default {
     videoLimit: {
       type: Number,
       default: 3,
+    },
+    featuredProductLabel: {
+      type: String,
+      default: 'Featured Products',
     },
   },
 
