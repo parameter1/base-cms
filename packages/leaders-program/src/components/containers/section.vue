@@ -36,7 +36,7 @@
           <card
             :company="item"
             :is-active="isActive"
-            :featuredProductLabel="featuredProductLabel"
+            :featured-product-label="featuredProductLabel"
             @action="emitAction"
           />
         </template>
