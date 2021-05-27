@@ -1,11 +1,17 @@
 import queryFragment from "../graphql/fragments/sitemap-published-content";
 
-$ const { config, GAM } = out.global;
-$ const { ending, after, year, month, day } = input;
+$ const { config } = out.global;
+$ const {
+  ending,
+  after,
+  year,
+  month,
+  day,
+} = input;
 
 $ const type = "sitemap";
 $ const date = `${month} ${day}, ${year}`;
-$ const title = 'Sitemap';
+$ const title = "Sitemap";
 $ const description = `All published content for ${date}`;
 <marko-web-default-page-layout type=type title=title description=description>
   <@page>
@@ -21,7 +27,7 @@ $ const description = `All published content for ${date}`;
             publishedAfter: new Date(after.toISOString()),
             since: new Date(ending.toISOString()),
             limit: 1000,
-            queryFragment
+            queryFragment,
           }
         >
           <marko-web-node-list

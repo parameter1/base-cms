@@ -1,17 +1,23 @@
-$ const { config, GAM } = out.global;
-$ const { nodes, displayType, month, year, alias } = input;
+$ const { config } = out.global;
+$ const {
+  nodes,
+  displayType,
+  month,
+  year,
+  alias
+} = input;
 
 $ const type = "sitemap";
 $ const pageNode = {
-  title: 'Sitemap',
+  title: "Sitemap",
 };
 $ switch (displayType) {
   case "day":
-      pageNode.description = `Select from the list of days in ${month} ${year}`;
-      break
+    pageNode.description = `Select from the list of days in ${month} ${year}`;
+    break;
   case "month":
-      pageNode.description = `Select from the list of months in ${year}`;
-      break
+    pageNode.description = `Select from the list of months in ${year}`;
+    break;
   default:
     pageNode.description = `Select from the list of years`;
 };
