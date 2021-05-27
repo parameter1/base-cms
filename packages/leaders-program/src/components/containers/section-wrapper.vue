@@ -26,7 +26,7 @@
             :offset-bottom="offsetBottom"
             :promotion-limit="promotionLimit"
             :video-limit="videoLimit"
-            :featuredProductLabel="featuredProductLabel"
+            :featured-product-label="featuredProductLabel"
             @action="emitAction"
           />
         </leaders-columns>
