@@ -32,6 +32,9 @@ extend type Query {
     queryBuilder: "allContent",
     withSite: false, # allow content to always load, regardless of site context.
   )
+  """
+  Returns all published content items matching the supplied criteria.
+  """
   allPublishedContent(input: AllPublishedContentQueryInput = {}): ContentConnection!
   publishedContentCounts(input: PublishedContentCountsQueryInput = {}): [PublishedContentCount!]!
   contentSitemapUrls(input: ContentSitemapUrlsQueryInput = {}): [ContentSitemapUrl!]!
@@ -284,23 +287,71 @@ input ContentSitemapNewsUrlsQueryInput {
 }
 
 input AllPublishedContentQueryInput {
+  """
+  Limits results to content with a primary site matching the current site context
+  """
   withSite: Boolean = true
+  """
+  A websiteSite identifier. If present, overrides the current site context.
+  """
   siteId: ObjectID
+  """
+  Limit results to items published after this date.
+  """
   after: Date
+  """
+  Limit results to items published before this date.
+  """
   since: Date
+  """
+  Limit results to items with this primary section id.
+  """
   sectionId: Int
-  # @deprecated. Use \`AllPublishedContentQueryInput.includeContentTypes\` instead.
+  """
+  Deprecated. Use includeContentTypes instead.
+  """
   contentTypes: [ContentType!] = []
+  """
+  Limit results to items matching at least one of these types.
+  """
   includeContentTypes: [ContentType!] = []
+  """
+  Limit results to items matching none of these types.
+  """
   excludeContentTypes: [ContentType!] = []
+  """
+  Limit results to items matching none of these ids.
+  """
   excludeContentIds: [Int!] = []
+  """
+  Limit results to items matching at least one of these ids.
+  """
   includeTaxonomyIds: [Int!] = []
+  """
+  Limit results to items matching at least one of these labels.
+  """
   includeLabels: [String!] = []
+  """
+  Limit results to items that have a primary image.
+  """
   requiresImage: Boolean = false
+  """
+  Include child sections when limiting by primary section id.
+  """
   sectionBubbling: Boolean = true
+  """
+  """
   sort: ContentSortInput = { field: published, order: desc }
+  """
+  """
   pagination: PaginationInput = {}
+  """
+  For types with a startDate field: Limit results to items with a startDate matching the criteria.
+  """
   beginning: ContentBeginningInput = {}
+  """
+  For types with a endDate field: Limit results to items with a endDate matching the criteria.
+  """
   ending: ContentEndingInput = {}
 }
 
