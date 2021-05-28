@@ -1,6 +1,6 @@
 import queryFragment from "../graphql/fragments/sitemap-published-content";
 
-$ const { config } = out.global;
+$ const { config, htmlSitemapPagination: p, req } = out.global;
 $ const {
   ending,
   after,
@@ -10,6 +10,7 @@ $ const {
   mountPoint,
 } = input;
 
+$ const perPage = 1000;
 $ const type = "sitemap";
 $ const date = `${month} ${day}, ${year}`;
 $ const pageNode = {
@@ -31,7 +32,8 @@ $ const pageNode = {
           params={
             publishedAfter: new Date(after.toISOString()),
             since: new Date(ending.toISOString()),
-            limit: 1000,
+            limit: perPage,
+            skip: p.skip({ perPage }),
             queryFragment,
           }
         >
@@ -48,6 +50,19 @@ $ const pageNode = {
             </@nodes>
           </marko-web-node-list>
         </marko-web-query>
+        <marko-web-html-sitemap-query-total-count|{ totalCount }|
+          name="all-published-content"
+          params={
+            after: after.toDate().getTime(),
+            since: ending.toDate().getTime(),
+          }
+        >
+          <marko-web-html-sitemap-pagination-controls
+            per-page=perPage
+            total-count=totalCount
+            path=req.path;
+          />
+        </marko-web-html-sitemap-query-total-count>
       </@section>
     </marko-web-page-wrapper>
   </@page>
