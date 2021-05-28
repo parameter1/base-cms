@@ -1,0 +1,27 @@
+import gql from "graphql-tag";
+import { getAsObject } from "@parameter1/base-cms-object-path";
+
+$ const { apollo } = out.global;
+
+$ const params = { ...getAsObject(input, "params") };
+$ delete params.queryFragment;
+
+$ const optionsMap = {
+  "all-published-content": {
+    query: gql`
+      query AllPublishedContentCount($input: AllPublishedContentQueryInput!) {
+        result: allPublishedContent(input: $input) {
+          totalCount
+        }
+      }
+    `,
+    variables: { input: params },
+  }
+};
+$ const options = optionsMap[input.name];
+$ if (!options) throw new Error(`No query options have been defined for ${input.name}`);
+
+<marko-web-resolve|{ resolved }| promise=apollo.query(options)>
+  $ const { data } = resolved;
+  <${input.renderBody} total-count=data.result.totalCount />
+</marko-web-resolve>
