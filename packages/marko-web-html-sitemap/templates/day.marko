@@ -53,8 +53,8 @@ $ const pageNode = {
         <marko-web-html-sitemap-query-total-count|{ totalCount }|
           name="all-published-content"
           params={
-            after: new Date(after.toISOString()).getTime(),
-            since: new Date(ending.toISOString()).getTime(),
+            after: after.toDate().getTime(),
+            since: ending.toDate().getTime(),
           }
         >
           <marko-web-html-sitemap-pagination-controls
