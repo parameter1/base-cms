@@ -29,9 +29,14 @@ $ switch (displayType) {
       <@section>
 
         <h1 class="page-wrapper__title">
-          <marko-web-link href=`${mountPoint}/`>
+          <if(year)>
+            <marko-web-link href=`${mountPoint}/`>
+              ${pageNode.title}
+            </marko-web-link>
+          </if>
+          <else>
             ${pageNode.title}
-          </marko-web-link>
+          </else>
         </h1>
         <marko-web-html-sitemap-breadcrumb ...input page-node=pageNode />
         <!-- <div class="page-wrapper__description">${pageNode.description}</div> -->
