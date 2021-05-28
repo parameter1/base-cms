@@ -34,6 +34,7 @@ extend type Query {
   )
   "Returns all published content items matching the supplied criteria."
   allPublishedContent(input: AllPublishedContentQueryInput = {}): ContentConnection!
+  allPublishedContentDates(input: AllPublishedContentDatesQueryInput = {}): [PublishedContentDate!]!
   publishedContentCounts(input: PublishedContentCountsQueryInput = {}): [PublishedContentCount!]!
   contentSitemapUrls(input: ContentSitemapUrlsQueryInput = {}): [ContentSitemapUrl!]!
   contentSitemapNewsUrls(input: ContentSitemapNewsUrlsQueryInput = {}): [ContentSitemapNewsUrl!]!
@@ -103,6 +104,12 @@ enum ContentTypeFormat {
   dasherize
   underscore
   titleize
+}
+
+enum PublishedContentDateFormatEnum {
+  years
+  months
+  days
 }
 
 # NOTE: these fields must be properly indexed (with the correct collation)
@@ -205,6 +212,14 @@ type ContentWebsiteSchedule {
 type PublishedContentCount {
   id: String! @value(localField: "_id")
   type(input: ContentTypeInput = {}): String!
+  count: Int!
+}
+
+type PublishedContentDate {
+  id: String!
+  year: Int!
+  month: Int
+  day: Int
   count: Int!
 }
 
@@ -319,6 +334,14 @@ input AllPublishedContentQueryInput {
   beginning: ContentBeginningInput = {}
   "For types with a endDate field: Limit results to items with a endDate matching the criteria."
   ending: ContentEndingInput = {}
+}
+
+input AllPublishedContentDatesQueryInput {
+  withSite: Boolean = true
+  siteId: ObjectID
+  after: String
+  before: String
+  format: PublishedContentDateFormatEnum = years
 }
 
 input PublishedContentCountsQueryInput {

@@ -1,0 +1,5 @@
+{
+  "<marko-web-html-sitemap-breadcrumb>": {
+    "template": "./breadcrumb.marko"
+  }
+}
