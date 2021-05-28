@@ -7,20 +7,25 @@ $ const {
   year,
   month,
   day,
+  mountPoint,
 } = input;
 
 $ const type = "sitemap";
 $ const date = `${month} ${day}, ${year}`;
-$ const title = "Sitemap";
-$ const description = `All ${config.siteName()} stories published on ${date}`;
-<marko-web-default-page-layout type=type title=title description=description>
+$ const pageNode = {
+  title: "Sitemap",
+  description: `All ${config.siteName()} stories published on ${date}`,
+};
+<marko-web-default-page-layout type=type title=pageNode.title description=pageNode.description>
   <@page>
     <marko-web-page-wrapper class="sitemap">
       <@section>
-        <h1 class="page-wrapper__title">${title}</h1>
-        <div class="page-wrapper__description">${description}</div>
-      </@section>
-      <@section>
+        <h1 class="page-wrapper__title">
+          <marko-web-link href=`${mountPoint}/`>
+            ${pageNode.title}
+          </marko-web-link>
+        </h1>
+        <marko-web-html-sitemap-breadcrumb ...input page-node=pageNode />
         <marko-web-query|{ nodes }|
           name="all-published-content"
           params={

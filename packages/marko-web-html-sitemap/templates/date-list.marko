@@ -5,7 +5,8 @@ $ const {
   displayType,
   month,
   year,
-  alias
+  mountPoint,
+  alias,
 } = input;
 
 $ const type = "sitemap";
@@ -26,12 +27,16 @@ $ switch (displayType) {
   <@page>
     <marko-web-page-wrapper class="sitemap">
       <@section>
-        <h1 class="page-wrapper__title">${pageNode.title}</h1>
-        <div class="page-wrapper__description">${pageNode.description}</div>
-      </@section>
-      <@section>
+
+        <h1 class="page-wrapper__title">
+          <marko-web-link href=`${mountPoint}/`>
+            ${pageNode.title}
+          </marko-web-link>
+        </h1>
+        <marko-web-html-sitemap-breadcrumb ...input page-node=pageNode />
+        <!-- <div class="page-wrapper__description">${pageNode.description}</div> -->
         <if(nodes)>
-          <div class="row">
+          <div class="row row__dates">
             <for|node| of=nodes>
               <div class=`col__date col__date--${displayType}`>
                 <marko-web-link href=`${node.alias}` >
