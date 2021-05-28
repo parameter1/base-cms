@@ -55,6 +55,7 @@ module.exports = (app, { mountPoint } = { mountPoint: '/html-sitemap' }) => {
         year,
         month: displayMonth,
         day,
+        mountPoint,
       },
     );
   }));
@@ -87,6 +88,7 @@ module.exports = (app, { mountPoint } = { mountPoint: '/html-sitemap' }) => {
         year,
         month: startOfMonth.format('MMMM'),
         displayType: 'day',
+        mountPoint,
       },
     );
   }));
@@ -117,6 +119,7 @@ module.exports = (app, { mountPoint } = { mountPoint: '/html-sitemap' }) => {
         nodes,
         year,
         displayType: 'month',
+        mountPoint,
       },
     );
   }));
@@ -142,6 +145,7 @@ module.exports = (app, { mountPoint } = { mountPoint: '/html-sitemap' }) => {
       {
         nodes,
         displayType: 'year',
+        mountPoint,
       },
     );
   }));
