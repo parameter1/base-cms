@@ -1,0 +1,46 @@
+import moment from "moment";
+
+$ const {
+  pageNode,
+  mountPoint,
+  year,
+  month,
+  day,
+} = input;
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <if(mountPoint)>
+      <if(year)>
+        <if(month)>
+          <li class="breadcrumb-item">
+            <marko-web-link href=`${mountPoint}/${year}`>
+              ${year}
+            </marko-web-link>
+          </li>
+          <if(day)>
+            <li class="breadcrumb-item">
+              $ const d = new Date(`${year}/${month}`)
+              <marko-web-link href=`${mountPoint}/${year}/${moment(d).format("MM")}`>
+                ${month}
+              </marko-web-link>
+            </li>
+            <li class="breadcrumb-item">
+                ${day}
+            </li>
+          </if>
+          <else>
+            <li class="breadcrumb-item">
+              ${month}
+            </li>
+          </else>
+        </if>
+        <else>
+          <li class="breadcrumb-item">
+            ${year}
+          </li>
+        </else>
+      </if>
+    </if>
+  </ol>
+</nav>
