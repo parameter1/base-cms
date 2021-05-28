@@ -4,7 +4,7 @@ import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 
 $ const { perPage, totalCount, path } = input;
 $ const asRels = defaultValue(input.asRels, false);
-$ const { pagination: p } = out.global;
+$ const { htmlSitemapPagination: p } = out.global;
 
 $ const totalPages = p.totalPages({ perPage, totalCount });
 $ const nextPage = p.nextPage({ perPage, totalCount });
