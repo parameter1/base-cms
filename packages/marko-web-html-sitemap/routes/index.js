@@ -32,7 +32,7 @@ const ALL_PUBLISHED_CONTENT_DATES = gql`
   }
 `;
 
-module.exports = (app, { mountPoint } = { mountPoint: '/html-sitemap' }) => {
+module.exports = (app, { mountPoint } = { mountPoint: '/site-map' }) => {
   app.get(`${mountPoint}/:year(\\d{4})/:month(\\d{2})/:day(\\d{2})`, asyncRoute(async (req, res) => {
     const { year, month, day } = req.params;
 
