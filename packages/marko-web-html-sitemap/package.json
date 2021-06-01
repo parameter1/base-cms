@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-html-sitemap",
-  "version": "2.22.0",
+  "version": "2.22.1",
   "author": "Brian Miller <brian@parameter1.com>",
   "license": "MIT",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-html-sitemap",
