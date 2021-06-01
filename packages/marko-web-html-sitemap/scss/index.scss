@@ -22,19 +22,21 @@ $primary: #000 !default;
   }
   .row {
     &__dates {
-      overflow:hidden;
       padding-right: .5rem;
       padding-left: .5rem;
       margin-bottom: 1.5rem;
+      overflow: hidden;
     }
   }
   .col {
     &__date {
-      border-bottom: 1px solid #ccc;
-      margin-bottom:-1px;
-      margin-top:1px;
-      text-align: center;
       padding: .75rem .5rem;
+      margin-top: 1px;
+      margin-bottom: -1px;
+      font-size: 1.1rem;
+      text-align: center;
+      border-bottom: 1px solid #ccc;
+
       &--year,
       &--day {
         @include media-breakpoint-down(sm) {
