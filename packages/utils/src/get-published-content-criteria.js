@@ -10,7 +10,8 @@ module.exports = ({
   after,
   primarySite,
 } = {}) => {
-  const date = since || new Date();
+  const now = new Date();
+  const date = since || now;
   const types = isArray(contentTypes) && contentTypes.length
     ? contentTypes : getDefaultContentTypes();
 
@@ -30,7 +31,7 @@ module.exports = ({
     $and: [
       {
         $or: [
-          { unpublished: { $gt: date } },
+          { unpublished: { $gt: now } },
           { unpublished: { $exists: false } },
         ],
       },
