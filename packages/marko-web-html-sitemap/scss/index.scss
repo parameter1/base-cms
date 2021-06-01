@@ -1,8 +1,8 @@
 $primary: #000 !default;
 .sitemap {
   .breadcrumb {
+    font-size: 1.5rem;
     background: transparent;
-
   }
   .page-wrapper {
     &__title {
@@ -16,9 +16,13 @@ $primary: #000 !default;
     }
   }
   .node-list {
-    &--published-content-list {
-      margin-bottom: 1.5rem;
+    &__node {
+      font-size: 1.1rem;
     }
+  }
+  .pagination-controls {
+    padding-top: 1.2rem;
+    margin-bottom: 1.5rem;
   }
   .row {
     &__dates {
