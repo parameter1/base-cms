@@ -16,6 +16,7 @@ type ContentProduct implements Content & PrimaryCategory & Inquirable @applyInte
   website: String @projection
   url360: String @projection
   contentStatus: String @projection
+  modelNumber: String @projection
 
   # fields directly on platform.model::Content\Product mutations
   headline: String @projection(localField: "mutations.Magazine.headline") @value(localField: "mutations.Magazine.headline")
