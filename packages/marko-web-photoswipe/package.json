@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-photoswipe",
-  "version": "2.8.1",
+  "version": "2.22.2",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-photoswipe",
   "license": "MIT",
@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@parameter1/base-cms-image": "^2.8.1",
-    "@parameter1/base-cms-object-path": "^2.5.0",
+    "@parameter1/base-cms-object-path": "^2.22.2",
     "photoswipe": "^4.1.3"
   },
   "peerDependencies": {

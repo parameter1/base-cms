@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-omeda",
-  "version": "2.21.1",
+  "version": "2.22.2",
   "description": "Omeda Marko components for BaseCMS websites",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
@@ -11,7 +11,7 @@
     "test": "yarn compile && yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-marko-web-deferred-script-loader": "^2.18.0"
+    "@parameter1/base-cms-marko-web-deferred-script-loader": "^2.22.2"
   },
   "peerDependencies": {
     "@parameter1/base-cms-marko-web": "^2.0.0"

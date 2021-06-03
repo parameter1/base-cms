@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-gam",
-  "version": "2.20.0",
+  "version": "2.22.2",
   "description": "Google Ad Manager (GAM) Marko components for BaseCMS websites",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
@@ -13,9 +13,9 @@
     "test": "yarn compile && yarn lint && mocha --reporter spec"
   },
   "dependencies": {
-    "@parameter1/base-cms-marko-web-deferred-script-loader": "^2.18.0",
-    "@parameter1/base-cms-object-path": "^2.5.0",
-    "@parameter1/base-cms-utils": "^2.4.2",
+    "@parameter1/base-cms-marko-web-deferred-script-loader": "^2.22.2",
+    "@parameter1/base-cms-object-path": "^2.22.2",
+    "@parameter1/base-cms-utils": "^2.22.2",
     "scrollmagic": "^2.0.8"
   },
   "peerDependencies": {
