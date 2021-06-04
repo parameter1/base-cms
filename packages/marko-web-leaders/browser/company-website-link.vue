@@ -7,11 +7,13 @@
     rel="nofollow"
     @click="emitAction"
   >
-    Visit Site
+    {{ translate("visitSiteLabel") }}
   </a>
 </template>
 
 <script>
+import i18n from '../i18n';
+
 export default {
   props: {
     companyId: {
@@ -26,8 +28,15 @@ export default {
       type: String,
       required: true,
     },
+    lang: {
+      type: String,
+      default: 'en',
+    },
   },
   methods: {
+    translate(key) {
+      return i18n(this.lang, key);
+    },
     emitAction() {
       const payload = {
         category: 'Leaders Company Profile',
