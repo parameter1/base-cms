@@ -1,4 +1,4 @@
-import translations from './translations';
+import translations from './translations-vue';
 
 export default (lang, fieldLabelKey) => {
   if (!translations[lang]) {
