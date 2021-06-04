@@ -3,6 +3,6 @@ module.exports = {
     fillOutLabel: 'Fill out the form below to request more information about ',
   },
   es: {
-    fillOutLabel: 'TEST TEST TEST TEST ',
+    fillOutLabel: 'Diligencie el formulario de abajo para solicitar más información sobre ',
   },
 };

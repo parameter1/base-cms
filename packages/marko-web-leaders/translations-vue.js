@@ -3,6 +3,6 @@ export default {
     visitSiteLabel: 'Visit Site',
   },
   es: {
-    visitSiteLabel: 'Visita sitio de web',
+    visitSiteLabel: 'Visite el sitio',
   },
 };
