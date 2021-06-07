@@ -860,15 +860,25 @@ module.exports = {
       const {
         includeContentTypes,
         excludeContentTypes,
+        days,
         taxonomyIds,
+        includeLabels,
+        excludeLabels,
       } = input;
       const query = getPublishedCriteria({
         contentTypes: includeContentTypes,
         excludeContentTypes,
       });
 
-      query.$and.push({ published: { $gte: moment().subtract(2, 'days').toDate() } });
+      query.$and.push({ published: { $gte: moment().subtract(days, 'days').toDate() } });
       if (taxonomyIds.length) query['taxonomy.$id'] = { $in: taxonomyIds };
+
+      if (includeLabels.length && excludeLabels.length) {
+        query.labels = { $in: includeLabels, $nin: excludeLabels };
+      } else {
+        if (includeLabels.length) query.labels = { $in: includeLabels };
+        if (excludeLabels.length) query.labels = { $nin: excludeLabels };
+      }
 
       const siteId = input.siteId || site.id();
       if (siteId) query['mutations.Website.primarySite'] = siteId;
