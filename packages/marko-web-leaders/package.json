@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-leaders",
-  "version": "2.22.2",
+  "version": "2.22.3",
   "description": "Marko Wrapper for the Leaders Program",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-leaders",
   "author": "Jacob Bare <jacob@parameter1.com>",
