@@ -8,7 +8,8 @@
     "@title": "string",
     "@rel": "string",
     "@class": "string",
-    "@attrs": "object"
+    "@attrs": "object",
+    "@alt": "string"
   },
   "<marko-core-img>": {
     "template": "./img.marko",
