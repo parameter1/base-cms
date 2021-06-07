@@ -2,7 +2,8 @@ import { get, getAsObject } from "@parameter1/base-cms-object-path";
 
 $ const { id, name } = getAsObject(input, "company");
 $ const href = get(input, "company.website");
-$ const props = { companyId: id, companyName: name, href };
+$ const lang = input.lang;
+$ const props = { companyId: id, companyName: name, href, lang };
 
 <if(href)>
   <marko-web-browser-component name="LeadersCompanyWebsiteLink" props=props />

@@ -1,5 +1,6 @@
 import { getAsObject } from "@parameter1/base-cms-object-path";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import i18n from '../i18n-marko'
 
 $ const { site } = out.global;
 $ const inquiry = site.getAsObject("inquiry");
@@ -30,7 +31,7 @@ $ const lang = input.lang;
           <${input.description} inquiry=inquiry />
         </if>
         <else>
-          Fill out the form below to request more information about <marko-web-content-name tag="span" block-name=blockName obj=content />
+          ${i18n(lang, "fillOutLabel")}<marko-web-content-name tag="span" block-name=blockName obj=content />
         </else>
       </marko-web-element>
     </if>
