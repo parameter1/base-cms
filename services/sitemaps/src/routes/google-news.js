@@ -65,8 +65,7 @@ const createUrl = (website, {
 
 module.exports = asyncRoute(async (req, res) => {
   const input = parseJson(req.get('x-google-news-input') || '{}');
-  const { publicationName } = input;
-  delete input.publicationName;
+  const publicationName = req.get('x-google-news-publication-name');
   const variables = input ? { input } : undefined;
 
   const { apollo, websiteContext: website } = res.locals;
