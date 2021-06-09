@@ -53,7 +53,7 @@ const createUrl = (website, url, publicationName) => {
   } = url;
   const name = publicationName || publication.name;
   // News requires a publication, a published date and a title.
-  if ((!publication && !publicationName) || !published || !title) return null;
+  if (!name || !published || !title) return null;
   const parts = [
     createPublication(name, website.language.primaryCode),
     `<news:publication_date>${moment(published).toISOString()}</news:publication_date>`,
