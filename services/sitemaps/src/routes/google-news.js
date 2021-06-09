@@ -43,16 +43,17 @@ const createPublication = (name, language) => {
   return `<news:publication>${parts.join('')}</news:publication>`;
 };
 
-const createUrl = (website, {
-  loc,
-  title,
-  published,
-  publication,
-  images,
-}, publicationName) => {
+const createUrl = (website, url, publicationName) => {
+  const {
+    loc,
+    title,
+    published,
+    publication,
+    images,
+  } = url;
+  const name = publicationName || publication.name;
   // News requires a publication, a published date and a title.
   if ((!publication && !publicationName) || !published || !title) return null;
-  const name = (publicationName) || publication.name;
   const parts = [
     createPublication(name, website.language.primaryCode),
     `<news:publication_date>${moment(published).toISOString()}</news:publication_date>`,
