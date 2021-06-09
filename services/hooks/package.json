@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-hooks",
-  "version": "2.22.2",
+  "version": "2.24.0",
   "description": "The BaseCMS hooks server using Express.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
