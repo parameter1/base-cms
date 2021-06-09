@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 import { get } from "@parameter1/base-cms-object-path";
 import { warn } from "@parameter1/base-cms-utils";
+import googleStructuredData from "./google-structured-data";
 
 <!-- @todo This data should generated and saved to the content object as flat data, so no relationships are required. -->
 
@@ -83,6 +84,13 @@ fragment ContentPageMetadataFragment on Content {
         <meta property="article:expiration_time" content=expiresDate />
       </if>
     </else>
+
+    $ const structuredData = googleStructuredData(node);
+    <if(structuredData)>
+      <script type="application/ld+json">
+        ${structuredData}
+      </script>
+    </if>
 
     <@when-empty>
       $ warn(`Unable to create content metadata: no content found for ${id}.`);
