@@ -48,11 +48,12 @@ const createUrl = (website, {
   published,
   publication,
   images,
-}) => {
+}, publicationName) => {
   // News requires a publication, a published date and a title.
-  if (!publication || !published || !title) return null;
+  if ((!publication && !publicationName) || !published || !title) return null;
+  const name = (publicationName) || publication.name;
   const parts = [
-    createPublication(publication.name, website.language.primaryCode),
+    createPublication(name, website.language.primaryCode),
     `<news:publication_date>${moment(published).toISOString()}</news:publication_date>`,
     `<news:title>${title}</news:title>`,
   ];
@@ -63,6 +64,8 @@ const createUrl = (website, {
 
 module.exports = asyncRoute(async (req, res) => {
   const input = parseJson(req.get('x-google-news-input') || '{}');
+  const { publicationName } = input;
+  delete input.publicationName;
   const variables = input ? { input } : undefined;
 
   const { apollo, websiteContext: website } = res.locals;
@@ -76,7 +79,7 @@ module.exports = asyncRoute(async (req, res) => {
     .setAttr('xmlns:image', 'http://www.google.com/schemas/sitemap-image/1.1')
     .setAttr('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance')
     .setAttr('xsi:schemaLocation', 'http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-news/0.9 http://www.google.com/schemas/sitemap-news/0.9/sitemap-news.xsd')
-    .setUrls(contentSitemapNewsUrls.map(url => createUrl(website, url)));
+    .setUrls(contentSitemapNewsUrls.map(url => createUrl(website, url, publicationName)));
 
   res.end(urlset.build());
 });
