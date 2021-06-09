@@ -21,7 +21,7 @@ fragment ContentPageMetadataFragment on Content {
     expiresDate
     image {
       id
-      src(input: { options: { auto: "format", w: "1200", fit: "max" } })
+      src(input: { options: { auto: "format,compress", w: "1200", fit: "max", q: 70 } })
     }
   }
 }
