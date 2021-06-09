@@ -47,7 +47,7 @@ module.exports = (node) => {
       '@type': 'NewsArticle',
       mainEntityOfPage: {
         '@type': 'WebPage',
-        '@id': getSD(node, 'siteContext.canonicalUrl')
+        '@id': getSD(node, 'siteContext.canonicalUrl'),
       },
       headline: getSD(node, 'metadata.title'),
       image: getImages(node),
