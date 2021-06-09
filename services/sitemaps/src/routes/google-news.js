@@ -1,4 +1,5 @@
 const { asyncRoute } = require('@parameter1/base-cms-utils');
+const { xmlEntities: xml } = require('@parameter1/base-cms-html');
 const gql = require('graphql-tag');
 const moment = require('moment');
 const createImage = require('../utils/create-image');
@@ -55,7 +56,7 @@ const createUrl = (website, {
   const parts = [
     createPublication(name, website.language.primaryCode),
     `<news:publication_date>${moment(published).toISOString()}</news:publication_date>`,
-    `<news:title>${title}</news:title>`,
+    `<news:title>${xml.encode(title)}</news:title>`,
   ];
   const imageParts = [];
   if (images && images.length) imageParts.push(...images.map(image => createImage(image)));

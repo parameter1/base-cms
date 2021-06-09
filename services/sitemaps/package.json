@@ -16,6 +16,7 @@
     "@parameter1/base-cms-env": "^2.0.0",
     "@parameter1/base-cms-express-apollo": "^2.3.0",
     "@parameter1/base-cms-tenant-context": "^2.0.0",
+    "@parameter1/base-cms-html": "^2.0.0",
     "@parameter1/base-cms-utils": "^2.22.2",
     "@parameter1/base-cms-web-common": "^2.22.2",
     "express": "^4.17.1",
