@@ -26,6 +26,9 @@ fragment ContentPageMetadataFragment on Content {
       src(input: { options: { auto: "format,compress", w: "1200", fit: "max", q: 70 } })
     }
   }
+  ... on ContentVideo {
+    embedSrc
+  }
   ... on Authorable {
     authors {
       edges {
