@@ -9,6 +9,7 @@ const { createSrcFor, createCaptionFor } = require('@parameter1/base-cms-image')
 const { getAsArray } = require('@parameter1/base-cms-object-path');
 const moment = require('moment');
 const momentTZ = require('moment-timezone');
+const cheerio = require('cheerio');
 
 const defaults = require('../../defaults');
 const validateRest = require('../../utils/validate-rest');
@@ -593,6 +594,39 @@ module.exports = {
         ...(pageToken && { pageToken }),
       };
       return googleDataApiClient.request('youtube.playlistItems', payload);
+    },
+  },
+
+  /**
+   *
+   */
+  ContentVideo: {
+    embedSrc: ({ embedCode }) => {
+      if (!embedCode) return null;
+      const $ = cheerio.load(`${embedCode}`);
+
+      const loadFromIframe = () => {
+        const $iframe = $('iframe:first-of-type');
+        if (!$iframe) return null;
+        return $iframe.attr('src') || null;
+      };
+
+      const loadFromBrightcove = () => {
+        const $video = $('video:first-of-type');
+        if (!$video) return null;
+        const data = $video.data();
+        if (!data) return null;
+        if (!['videoId', 'account', 'player', 'embed'].every(key => data[key])) return null;
+        return `https://players.brightcove.net/${data.account}/${data.player}_${data.embed}/index.html?videoId=${data.videoId}`;
+      };
+
+      const iframeSrc = loadFromIframe();
+      if (iframeSrc) return iframeSrc;
+
+      const brightcoveSrc = loadFromBrightcove();
+      if (brightcoveSrc) return brightcoveSrc;
+
+      return null;
     },
   },
 
