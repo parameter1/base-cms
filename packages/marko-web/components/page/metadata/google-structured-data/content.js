@@ -1,18 +1,19 @@
 const objectPath = require('@parameter1/base-cms-object-path');
 
+const { getAsArray } = objectPath;
+
 const get = (o, path) => {
   const v = objectPath.get(o, path);
   return v == null ? undefined : v;
 };
 
 const getAuthor = (node) => {
-  const authors = objectPath.getAsArray(node, 'authors.edges').map(e => get(e, 'node.name'));
-  if (!authors.length) return undefined;
-  return { '@type': 'Person', name: authors.join(', ') };
+  const authors = getAsArray(node, 'authors.edges').map(e => get(e, 'node.name'));
+  return authors.length ? { '@type': 'Person', name: authors.join(', ') } : undefined;
 };
 
 const getImages = (node) => {
-  const images = objectPath.getAsArray(node, 'images.edges').map(e => get(e, 'node.src'));
+  const images = getAsArray(node, 'images.edges').map(e => get(e, 'node.src'));
   return images.length ? images : undefined;
 };
 
