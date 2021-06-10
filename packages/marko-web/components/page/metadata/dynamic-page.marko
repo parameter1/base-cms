@@ -11,6 +11,7 @@ fragment DynamicPageMetadataFragment on ContentPage {
   siteContext {
     path
     canonicalUrl
+    noIndex
   }
   metadata {
     title
@@ -25,6 +26,7 @@ fragment DynamicPageMetadataFragment on ContentPage {
       title: get(node, "metadata.title"),
       description: get(node, "metadata.description"),
       canonicalPath: get(node, "siteContext.path"),
+      noIndex: get(node, "siteContext.noIndex"),
     };
     <common ...metadata />
     <meta property="og:type" content="website" />

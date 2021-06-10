@@ -5,6 +5,7 @@ $ const {
   canonicalUrl,
   imageSrc,
   description,
+  noIndex,
 } = input;
 $ const fallbackImage = config.fallbackImage();
 $ const image = imageSrc || fallbackImage;
@@ -13,6 +14,11 @@ $ const image = imageSrc || fallbackImage;
 <marko-web-page-title value=title />
 <marko-web-page-description value=description />
 <marko-web-page-rel-canonical path=canonicalPath url=canonicalUrl />
+
+<!-- No Index Directive -->
+<if(noIndex)>
+  <meta name="robots" content="noindex">
+</if>
 
 <!-- Name/Title (OpenGrah, and Schema.org respectively) -->
 <if(title)>
