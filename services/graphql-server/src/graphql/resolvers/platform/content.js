@@ -675,6 +675,13 @@ module.exports = {
     images: (content, _, { basedb }) => loadSitemapImages({ content, basedb }),
   },
 
+  /**
+   *
+   */
+  ContentSitemapNewsPublication: {
+    name: ({ name, googleNewsPublicationName }) => googleNewsPublicationName || name,
+  },
+
   ContentSitemapImage: {
     loc: (image, _, { site }) => {
       // Use site image host otherwise fallback to global default.
