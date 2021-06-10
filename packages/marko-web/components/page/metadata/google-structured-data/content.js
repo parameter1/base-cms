@@ -1,25 +1,19 @@
-const { get, getAsArray } = require('@parameter1/base-cms-object-path');
+const objectPath = require('@parameter1/base-cms-object-path');
 
-const getSD = (o, path) => {
-  const v = get(o, path);
-  return (v == null) ? undefined : v;
+const get = (o, path) => {
+  const v = objectPath.get(o, path);
+  return v == null ? undefined : v;
 };
 
 const getAuthor = (node) => {
-  const authors = getAsArray(node, 'authors.edges').map(e => get(e, 'node.name'));
-  if (authors.length > 0) {
-    const author = {
-      '@type': 'Person',
-      name: authors.join(', '),
-    };
-    return author;
-  }
-  return undefined;
+  const authors = objectPath.getAsArray(node, 'authors.edges').map(e => get(e, 'node.name'));
+  if (!authors.length) return undefined;
+  return { '@type': 'Person', name: authors.join(', ') };
 };
 
 const getImages = (node) => {
-  const images = getAsArray(node, 'images.edges').map(e => get(e, 'node.src'));
-  return (images.length > 0) ? images : undefined;
+  const images = objectPath.getAsArray(node, 'images.edges').map(e => get(e, 'node.src'));
+  return images.length ? images : undefined;
 };
 
 module.exports = (node) => {
@@ -29,13 +23,13 @@ module.exports = (node) => {
     const structuredData = JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'VideoObject',
-      name: getSD(node, 'metadata.title'),
-      description: getSD(node, 'metadata.description'),
-      thumbnailUrl: getSD(node, 'metadata.image.src'),
+      name: get(node, 'metadata.title'),
+      description: get(node, 'metadata.description'),
+      thumbnailUrl: get(node, 'metadata.image.src'),
       uploadDate: publishedISOString,
-      contentUrl: getSD(node, 'siteContext.canonicalUrl'),
+      contentUrl: get(node, 'siteContext.canonicalUrl'),
       author: getAuthor(node),
-      embedUrl: getSD(node, 'embedSrc'),
+      embedUrl: get(node, 'embedSrc'),
     });
     return structuredData;
   }
@@ -47,14 +41,14 @@ module.exports = (node) => {
       '@type': 'NewsArticle',
       mainEntityOfPage: {
         '@type': 'WebPage',
-        '@id': getSD(node, 'siteContext.canonicalUrl'),
+        '@id': get(node, 'siteContext.canonicalUrl'),
       },
-      headline: getSD(node, 'metadata.title'),
+      headline: get(node, 'metadata.title'),
       image: getImages(node),
       datePublished: publishedISOString,
       dateModified: updatedISOString,
       author: getAuthor(node),
-      description: getSD(node, 'metadata.description'),
+      description: get(node, 'metadata.description'),
     });
     return structuredData;
   }

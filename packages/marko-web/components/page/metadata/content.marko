@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 import { get } from "@parameter1/base-cms-object-path";
 import { warn } from "@parameter1/base-cms-utils";
-import googleStructuredData from "./google-structured-data";
+import buildStructuredData from "./google-structured-data/content";
 
 <!-- @todo This data should generated and saved to the content object as flat data, so no relationships are required. -->
 
@@ -85,7 +85,7 @@ fragment ContentPageMetadataFragment on Content {
       </if>
     </else>
 
-    $ const structuredData = googleStructuredData(node);
+    $ const structuredData = buildStructuredData(node);
     <if(structuredData)>
       <script type="application/ld+json">
         ${structuredData}
