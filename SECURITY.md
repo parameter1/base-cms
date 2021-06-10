@@ -7,14 +7,14 @@ currently being supported with security updates.
 
 | Version   | Supported          | Until |
 | --------  | ------------------ | ----- |
-| `v2.x`    | :white_check_mark: 
-| `v1.x`    | :white_check_mark: | 2021-03-01 |
+| `v2.x`    | :white_check_mark:
+| `v1.x`    | :x:                | 2021-03-01 |
 | `v0.10.x` | :x:                | 2020-03-01 |
 | `< v0.10` | :x:                | 2019-12-31 |
 
 ## Reporting a Vulnerability
 
-To report a vulnerability please send the details to security@parameter1.com. 
+To report a vulnerability please send the details to security@parameter1.com.
 
 Your report will be acknowledged within 24 hours, and you’ll receive a more detailed response to your report within 48 hours indicating the next steps in handling your submission.
 
