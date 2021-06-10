@@ -11,7 +11,7 @@ $ const withDescription = defaultValue(input.withDescription, true);
 
 $ const blockName = "inquiry-form";
 $ const { RECAPTCHA_SITE_KEY } = require('../env');
-$ const lang = defaultValue(input.lang, "en")
+$ const lang = defaultValue(input.lang, "en");
 
 <if(inquiry.enabled)>
   <marko-web-block name=blockName modifiers=input.modifiers>
