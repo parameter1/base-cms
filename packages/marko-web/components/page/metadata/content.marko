@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 import { get } from "@parameter1/base-cms-object-path";
 import { warn } from "@parameter1/base-cms-utils";
+import buildStructuredData from "./google-structured-data/content";
 
 <!-- @todo This data should generated and saved to the content object as flat data, so no relationships are required. -->
 
@@ -13,6 +14,8 @@ fragment ContentPageMetadataFragment on Content {
     path
     canonicalUrl
   }
+  published
+  updated
   metadata {
     title
     description
@@ -21,7 +24,28 @@ fragment ContentPageMetadataFragment on Content {
     expiresDate
     image {
       id
-      src(input: { options: { auto: "format", w: "1200", fit: "max" } })
+      src(input: { options: { auto: "format,compress", w: "1200", fit: "max", q: 70 } })
+    }
+  }
+  ... on ContentVideo {
+    embedSrc
+  }
+  ... on Authorable {
+    authors {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+  }
+  images(input:{ pagination: { limit: 0 }, sort: { order: values } }) {
+    edges {
+      node {
+        id
+        src(input: { options: { auto: "format,compress", w: "1200", fit: "max", q: 70 } })
+      }
     }
   }
 }
@@ -60,6 +84,13 @@ fragment ContentPageMetadataFragment on Content {
         <meta property="article:expiration_time" content=expiresDate />
       </if>
     </else>
+
+    $ const structuredData = buildStructuredData(node);
+    <if(structuredData)>
+      <script type="application/ld+json">
+        ${structuredData}
+      </script>
+    </if>
 
     <@when-empty>
       $ warn(`Unable to create content metadata: no content found for ${id}.`);
