@@ -471,6 +471,8 @@ module.exports = {
 
     redirectTo: (content) => {
       const { type, linkUrl } = content;
+      const redirectTo = get(content, 'mutations.Website.redirectTo');
+      if (redirectTo) return redirectTo;
 
       const types = ['Promotion', 'TextAd'];
       if (!types.includes(type)) return null;
