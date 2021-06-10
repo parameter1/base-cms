@@ -296,6 +296,7 @@ module.exports = {
           const origin = `https://${owningSite.host}`;
           return `${origin}/${cleanPath(canonicalPath)}`;
         },
+        noIndex: () => Boolean(get(content, 'mutations.Website.noIndex')),
       };
     },
 

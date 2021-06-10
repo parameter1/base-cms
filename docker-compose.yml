@@ -136,6 +136,7 @@ services:
       EXPOSED_PORT: 10101
     depends_on:
       - mongodb
+      - redis
       - google-data-api
     ports:
       - "10101:80"
@@ -160,6 +161,7 @@ services:
       EXPOSED_PORT: 10102
     depends_on:
       - mongodb
+      - redis
       - google-data-api
     ports:
       - "10102:80"

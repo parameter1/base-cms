@@ -193,6 +193,7 @@ type ContentSiteContext {
   url: String!
   canonicalUrl: String!
   path: String!
+  noIndex: Boolean!
 }
 
 type ContentStubLocation {
