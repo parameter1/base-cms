@@ -32,6 +32,7 @@ module.exports = async ({
       imageHost: 1,
       assetHost: 1,
       date: 1,
+      googleNewsPublicationName: 1,
     };
     site = await basedb.findOne('platform.Product', {
       status: 1,
