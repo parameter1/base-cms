@@ -85,6 +85,9 @@ interface Content @requiresProject(fields: ["type"]) {
 
   # Allows custom field values to be returned from the \`customAttributes\` model field. Currently all values are cast as strings.
   customAttribute(input: ContentCustomAttributeInput!): String @projection(localField: "customAttributes")
+
+  # Allows accessing the content's taxonomy IDs without querying the related models.
+  taxonomyIds: [Int!]! @projection(localField: "taxonomy")
 }
 
 `;
