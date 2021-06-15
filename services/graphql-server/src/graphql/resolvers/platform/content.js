@@ -400,6 +400,8 @@ module.exports = {
       return contentTeaser.generateTeaser(teaser, teaserFallback, input) || null;
     },
 
+    taxonomyIds: content => getAsArray(content, 'taxonomy').map(t => parseInt(t.oid, 10)).filter(id => id),
+
     body: async (content, { input }, { site, basedb }) => {
       const { mutation } = input;
       const { body } = content;
