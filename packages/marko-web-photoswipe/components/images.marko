@@ -36,7 +36,8 @@ $ const items = images.map((image) => {
   const defaultOptions = {
     w: maxSize,
     h: round(maxSize / (16 / 9)), // default 16:9 height
-    fit: "crop",
+    fit: "fill",
+    fill: "solid",
   };
 
   const imageOptions = {
