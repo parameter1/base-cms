@@ -1,6 +1,7 @@
 const brevityCollectionIssues = require('./brevity-collection-issues');
 const emailNewsletterCampaigns = require('./email-newsletter-campaigns');
 const websiteSiteSections = require('./website-site-sections');
+const contentAssetImages = require('./content-asset-images');
 
 /**
  * Each function will receive the following args:
@@ -18,6 +19,7 @@ const builders = {
   brevityCollectionIssues,
   emailNewsletterCampaigns,
   websiteSiteSections,
+  contentAssetImages,
 };
 
 module.exports = async (key, {
