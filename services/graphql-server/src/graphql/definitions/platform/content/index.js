@@ -517,6 +517,8 @@ input ContentCompanyInput {
 }
 
 input ContentImagesInput {
+  approvedForWeb: Boolean = true
+  approvedForPrint: Boolean
   sort: AssetImageSortInput = { order: values }
   pagination: PaginationInput = {}
 }

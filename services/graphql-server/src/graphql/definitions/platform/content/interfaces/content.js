@@ -42,7 +42,7 @@ interface Content @requiresProject(fields: ["type"]) {
 
   # fields from platform.trait::MediaRelatable
   primaryImage: AssetImage @projection @refOne(loader: "platformAsset", criteria: "assetImage")
-  images(input: ContentImagesInput = {}): AssetImageConnection! @projection @refMany(model: "platform.Asset", criteria: "assetImage")
+  images(input: ContentImagesInput = {}): AssetImageConnection! @projection @refMany(model: "platform.Asset", criteria: "assetImage", refQueryBuilder: "contentAssetImages")
 
   # fields from platform.model::Content mutations
   # schedules: PlatformContentSchedules! @passThru
