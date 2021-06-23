@@ -40,6 +40,9 @@ module.exports = (config = {}) => {
   app.locals.fragments = loadObject(config.fragments);
   app.locals.document = loadDocument(config.document);
 
+  // Register compiled Vue components for use with SSR rendering
+  app.locals.compiledVueComponents = require(path.join(distDir, 'ssr.js')); // eslint-disable-line
+
   // Add cookie parsing
   app.use(cookieParser());
 

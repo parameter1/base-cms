@@ -16,6 +16,7 @@
       "required": true
     },
     "@hydrate": "boolean",
+    "@ssr": "boolean",
     "@tag": "string",
     "@class": "string",
     "@attrs": "object",

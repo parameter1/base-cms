@@ -1,19 +1,30 @@
-<marko-web-browser-component
-  name="DefaultThemeMenuToggleButton"
-  props={
-    className: input.className,
-    targets: input.targets,
-    toggleClass: input.toggleClass,
-    iconModifiers: input.iconModifiers,
-    iconName: input.iconName,
-    expandedIconName: input.expandedIconName,
-    initiallyExpanded: input.initiallyExpanded,
-    buttonLabel: input.buttonLabel,
-  }
-  tag=input.tag
-  class=input.className
-  attrs={ type: "button", "aria-label": "Toggle Menu" }
-  hydrate=true
->
-  <marko-web-icon name=input.iconName modifiers=input.iconModifiers />
-</marko-web-browser-component>
+$ const props = {
+  className: input.className,
+  targets: input.targets,
+  toggleClass: input.toggleClass,
+  iconModifiers: input.iconModifiers,
+  iconName: input.iconName,
+  expandedIconName: input.expandedIconName,
+  initiallyExpanded: input.initiallyExpanded,
+  buttonLabel: input.buttonLabel,
+};
+
+<if(input.ssr)>
+  <marko-web-browser-component
+    name="DefaultThemeMenuToggleButton"
+    props=props
+    ssr=true
+  />
+</if>
+<else>
+  <marko-web-browser-component
+    name="DefaultThemeMenuToggleButton"
+    props=props
+    tag=input.tag
+    class=input.className
+    attrs={ type: "button", "aria-label": "Toggle Menu" }
+    hydrate=true
+  >
+    <marko-web-icon name=input.iconName modifiers=input.iconModifiers />
+  </marko-web-browser-component>
+</else>
