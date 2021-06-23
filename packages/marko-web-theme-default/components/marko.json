@@ -44,6 +44,7 @@
       "default-value": "Toggle Menu"
     },
     "@expanded-icon-name": "string",
-    "@tag": "string"
+    "@tag": "string",
+    "@ssr": "boolean"
   }
 }
