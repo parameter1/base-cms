@@ -40,6 +40,7 @@
     "<page>": {},
     "<above-page>": {},
     "<below-page>": {},
+    "@custom-metadata": {},
     "@id": "number",
     "@type": "string",
     "@attrs": "object"
