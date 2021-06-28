@@ -54,5 +54,24 @@ module.exports = (node) => {
     return structuredData;
   }
 
+  const standardArticleTypes = ['product', 'blog'];
+  if (standardArticleTypes.includes(node.type)) {
+    const structuredData = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': get(node, 'siteContext.canonicalUrl'),
+      },
+      headline: get(node, 'metadata.title'),
+      image: getImages(node),
+      datePublished: publishedISOString,
+      dateModified: updatedISOString,
+      author: getAuthor(node),
+      description: get(node, 'metadata.description'),
+    });
+    return structuredData;
+  }
+
   return undefined;
 };
