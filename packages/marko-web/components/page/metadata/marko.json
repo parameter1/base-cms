@@ -8,7 +8,8 @@
   },
   "<marko-web-content-page-metadata>": {
     "template": "./content.marko",
-    "@id": "number"
+    "@id": "number",
+    "@custom-metadata": {}
   },
   "<marko-web-website-section-page-metadata>": {
     "template": "./website-section.marko",

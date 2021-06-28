@@ -5,7 +5,7 @@ import buildStructuredData from "./google-structured-data/content";
 
 <!-- @todo This data should generated and saved to the content object as flat data, so no relationships are required. -->
 
-$ const { id } = input;
+$ const { customMetadata, id } = input;
 $ const queryFragment = gql`
 fragment ContentPageMetadataFragment on Content {
   id
@@ -87,7 +87,7 @@ fragment ContentPageMetadataFragment on Content {
       </if>
     </else>
 
-    $ const structuredData = buildStructuredData(node);
+    $ const structuredData = buildStructuredData(node, customMetadata);
     <if(structuredData)>
       <script type="application/ld+json">
         ${structuredData}
