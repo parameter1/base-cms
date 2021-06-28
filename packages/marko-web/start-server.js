@@ -1,5 +1,6 @@
 require('marko/node-require');
 const http = require('http');
+const https = require('https');
 const path = require('path');
 const { createTerminus } = require('@godaddy/terminus');
 const { isFunction: isFn, parseBooleanHeader } = require('@parameter1/base-cms-utils');
@@ -24,6 +25,10 @@ module.exports = async ({
   port = env.PORT || 4008,
   exposedPort = env.EXPOSED_PORT || env.PORT || 4008,
   exposedHost = env.EXPOSED_HOST,
+  portHttps = env.PORT_HTTPS || 4338,
+  exposedPortHttps = env.EXPOSED_PORT_HTTPS || env.PORT_HTTPS || 4338,
+  sslKey,
+  sslCert,
   routes,
   graphqlUri = env.GRAPHQL_URI,
   tenantKey = env.TENANT_KEY,
@@ -140,5 +145,24 @@ module.exports = async ({
         }
       }
     });
+    if (portHttps && sslKey && sslCert) {
+      const secureServer = https.createServer({ key: sslKey, cert: sslCert }, app);
+      secureServer.listen(portHttps, function listen(err) {
+        if (err) {
+          rej(err);
+        } else {
+          res(this);
+          if (process.send) {
+            process.send({
+              event: 'ready',
+              name: sitePackage.name,
+              siteId,
+              graphqlUri,
+              location: `https://${exposedHost}:${exposedPortHttps}`,
+            });
+          }
+        }
+      });
+    }
   }).catch(e => setImmediate(() => { throw e; }));
 };
