@@ -17,7 +17,7 @@ const getImages = (node) => {
   return images.length ? images : undefined;
 };
 
-module.exports = (node) => {
+module.exports = (node, customMetadata = {}) => {
   const publishedISOString = node.published ? (new Date(node.published)).toISOString() : undefined;
   const updatedISOString = node.updated ? (new Date(node.updated)).toISOString() : undefined;
   if (node.type === 'video') {
@@ -31,6 +31,7 @@ module.exports = (node) => {
       contentUrl: get(node, 'siteContext.canonicalUrl'),
       author: getAuthor(node),
       embedUrl: get(node, 'embedSrc'),
+      ...customMetadata,
     });
     return structuredData;
   }
@@ -50,6 +51,7 @@ module.exports = (node) => {
       dateModified: updatedISOString,
       author: getAuthor(node),
       description: get(node, 'metadata.description'),
+      ...customMetadata,
     });
     return structuredData;
   }
