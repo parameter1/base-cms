@@ -71,6 +71,7 @@ module.exports = (node, customMetadata = {}) => {
       dateModified: updatedISOString,
       author: getAuthor(node),
       description: get(node, 'metadata.description'),
+      ...customMetadata,
     });
     return structuredData;
   }
