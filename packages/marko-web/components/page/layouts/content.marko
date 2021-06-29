@@ -1,4 +1,4 @@
-$ const { customMetadata, id, type } = input;
+$ const { structuredDataQueryFragment, buildStructuredData, id, type } = input;
 $ const { document } = out.global;
 
 <${document}
@@ -7,7 +7,7 @@ $ const { document } = out.global;
   foot=input.foot
 >
   <@head>
-    <marko-web-content-page-metadata id=id custom-metadata=customMetadata/>
+    <marko-web-content-page-metadata id=id structured-data-query-fragment=structuredDataQueryFragment build-structured-data=buildStructuredData />
     <${input.head} />
   </@head>
   <!-- Note: camelcased vars due to nest input of dynamic document. perhaps a marko bug -->

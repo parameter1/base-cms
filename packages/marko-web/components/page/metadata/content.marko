@@ -1,12 +1,12 @@
 import gql from "graphql-tag";
 import { get } from "@parameter1/base-cms-object-path";
 import { warn } from "@parameter1/base-cms-utils";
-import buildStructuredData from "./google-structured-data/content";
+import defaultBuildStructuredData from "./google-structured-data/content";
 
 <!-- @todo This data should generated and saved to the content object as flat data, so no relationships are required. -->
 
-$ const { customMetadata, id } = input;
-$ const queryFragment = gql`
+$ const { id } = input;
+$ const defaultQueryFragment = gql`
 fragment ContentPageMetadataFragment on Content {
   id
   type
@@ -52,6 +52,9 @@ fragment ContentPageMetadataFragment on Content {
 }
 `;
 
+$ const queryFragment = input.structuredDataQueryFragment || defaultQueryFragment;
+$ const buildStructuredData = input.buildStructuredData || defaultBuildStructuredData;
+
 <if(id)>
   <marko-web-query|{ node }| name="content" params={ id, queryFragment }>
     $ const metadata = {
@@ -87,7 +90,7 @@ fragment ContentPageMetadataFragment on Content {
       </if>
     </else>
 
-    $ const structuredData = buildStructuredData(node, customMetadata);
+    $ const structuredData = buildStructuredData(node);
     <if(structuredData)>
       <script type="application/ld+json">
         ${structuredData}
