@@ -9,7 +9,8 @@
   "<marko-web-content-page-metadata>": {
     "template": "./content.marko",
     "@id": "number",
-    "@custom-metadata": {}
+    "@structured-data-query-fragment": "string",
+    "@build-structured-data": "string"
   },
   "<marko-web-website-section-page-metadata>": {
     "template": "./website-section.marko",

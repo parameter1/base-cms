@@ -40,7 +40,8 @@
     "<page>": {},
     "<above-page>": {},
     "<below-page>": {},
-    "@custom-metadata": {},
+    "@structured-data-query-fragment": "string",
+    "@build-structured-data": "string",
     "@id": "number",
     "@type": "string",
     "@attrs": "object"
