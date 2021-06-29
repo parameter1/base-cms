@@ -1,12 +1,14 @@
 import gql from "graphql-tag";
 import { get } from "@parameter1/base-cms-object-path";
 import { warn } from "@parameter1/base-cms-utils";
+import { extractFragmentData } from "@parameter1/base-cms-web-common/src/utils";
 import defaultBuildStructuredData from "./google-structured-data/content";
 
 <!-- @todo This data should generated and saved to the content object as flat data, so no relationships are required. -->
 
-$ const { id } = input;
-$ const defaultQueryFragment = gql`
+$ const { id, structuredDataQueryFragment } = input;
+$ const { spreadFragmentName, processedFragment } = extractFragmentData(structuredDataQueryFragment);
+$ const queryFragment = gql`
 fragment ContentPageMetadataFragment on Content {
   id
   type
@@ -74,10 +76,11 @@ fragment ContentPageMetadataFragment on Content {
       }
     }
   }
+  ${spreadFragmentName}
 }
+${processedFragment}
 `;
 
-$ const queryFragment = input.structuredDataQueryFragment || defaultQueryFragment;
 $ const buildStructuredData = input.buildStructuredData || defaultBuildStructuredData;
 
 <if(id)>
