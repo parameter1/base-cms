@@ -81,7 +81,7 @@ fragment ContentPageMetadataFragment on Content {
 ${processedFragment}
 `;
 
-$ const buildStructuredData = input.buildStructuredData || defaultBuildStructuredData;
+$ const buildStructuredData = isFunction(input.buildStructuredData) ? input.buildStructuredData : defaultBuildStructuredData;
 
 <if(id)>
   <marko-web-query|{ node }| name="content" params={ id, queryFragment }>
