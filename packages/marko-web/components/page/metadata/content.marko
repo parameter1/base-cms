@@ -11,6 +11,7 @@ fragment ContentPageMetadataFragment on Content {
   id
   type
   siteContext {
+    url
     path
     canonicalUrl
     noIndex
@@ -31,6 +32,10 @@ fragment ContentPageMetadataFragment on Content {
   ... on ContentVideo {
     embedSrc
   }
+  ... on ContentPodcast {
+    fileSrc
+    fileName
+  }
   ... on Authorable {
     authors {
       edges {
@@ -40,6 +45,26 @@ fragment ContentPageMetadataFragment on Content {
         }
       }
     }
+  }
+  ... on Addressable {
+    address1
+    address2
+    city
+    state
+    zip
+    country
+  }
+  ... on Contactable {
+    phone
+    tollfree
+    fax
+    website
+    title
+    mobile
+    publicEmail
+  }
+  ... on ContentCompany {
+    email
   }
   images(input:{ pagination: { limit: 0 }, sort: { order: values } }) {
     edges {
