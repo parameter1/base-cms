@@ -21,7 +21,7 @@ const buildQuery = (doc, siteId, { input }) => {
   const criteria = getPublishedCriteria({
     excludeContentIds: [doc._id],
     contentTypes: includeContentTypes,
-    ...(siteId && { primarySite: siteId }),
+    ...(siteId),
   });
 
   // Apply additional criteria based on input values.
