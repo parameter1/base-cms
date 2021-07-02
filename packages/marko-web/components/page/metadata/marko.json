@@ -10,7 +10,7 @@
     "template": "./content.marko",
     "@id": "number",
     "@structured-data-query-fragment": "string",
-    "@build-structured-data": "string"
+    "@build-structured-data": "function"
   },
   "<marko-web-website-section-page-metadata>": {
     "template": "./website-section.marko",
