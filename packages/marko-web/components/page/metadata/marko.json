@@ -8,7 +8,9 @@
   },
   "<marko-web-content-page-metadata>": {
     "template": "./content.marko",
-    "@id": "number"
+    "@id": "number",
+    "@structured-data-query-fragment": "string",
+    "@build-structured-data": "function"
   },
   "<marko-web-website-section-page-metadata>": {
     "template": "./website-section.marko",
