@@ -45,11 +45,18 @@ enum WebsiteRedirectSortField {
   from
 }
 
+enum WebsiteRedirectSiteQueryOperatorEnum {
+  equal
+  notEqual
+}
+
 input WebsiteRedirectQueryInput {
   id: ObjectID
   siteId: ObjectID
   from: String
   params: JSON
+  "Determines whether to check for a redirect on the _current_ site or from a site _other_ than the current site."
+  siteQueryOperator: WebsiteRedirectSiteQueryOperatorEnum = equal
 }
 
 input WebsiteRedirectsQueryInput {

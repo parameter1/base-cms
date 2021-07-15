@@ -37,17 +37,20 @@ module.exports = {
      *
      */
     websiteRedirect: async (_, { input }, { basedb, site }) => {
-      const { from, params } = input;
+      const { from, params, siteQueryOperator } = input;
       if (input.id) return basedb.findOne('website.Redirects', { _id: input.id });
       if (!from) throw new UserInputError('An id or from must be provided via input.');
       const siteId = input.siteId || site.id();
       if (!siteId) throw new UserInputError('A siteId must be provided via input or context.');
 
       const queryParams = new URLSearchParams(asObject(params));
+
+      const siteOps = { equal: '$eq', notEqual: '$ne' };
+      const siteOp = siteOps[siteQueryOperator];
       const query = {
         $or: [
-          { siteId, from },
-          { siteId, from: from.toLowerCase() },
+          { siteId: { [siteOp]: siteId }, from },
+          { siteId: { [siteOp]: siteId }, from: from.toLowerCase() },
         ],
       };
       const redirect = await basedb.findOne('website.Redirects', query);
