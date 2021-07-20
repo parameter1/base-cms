@@ -1439,6 +1439,25 @@ module.exports = {
     /**
      *
      */
+    createContent: async (_, { input }, { base4rest, basedb }, info) => {
+      validateRest(base4rest);
+      const { primarySectionId, type, name } = input;
+      const model = `platform/content/${dasherize(type)}`;
+      const section = await basedb.strictFindById('website.Section', primarySectionId, { projection: { site: 1 } });
+      const primarySiteId = BaseDB.extractRefId(section.site);
+      await basedb.strictFindById('platform.Product', primarySiteId, { projection: { _id: 1 } });
+      const body = new Base4RestPayload({ type: model });
+      body.setLink('primarySiteWebsite', { id: primarySiteId, type: 'website/product/site' });
+      body.setLink('primarySectionWebsite', { id: primarySectionId, type: 'website/section' });
+      body.set('name', name);
+      const { data } = await base4rest.insertOne({ model, body });
+      const projection = buildProjection({ info, type: 'Content' });
+      return basedb.findOne('platform.Content', { _id: data.id }, { projection });
+    },
+
+    /**
+     *
+     */
     createContentContact: async (_, { input }, { base4rest, basedb }, info) => {
       validateRest(base4rest);
       const type = 'platform/content/contact';
