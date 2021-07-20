@@ -1351,7 +1351,31 @@ module.exports = {
    *
    */
   Mutation: {
-
+    /**
+     *
+     */
+    contentAddressFields: async (_, { input }, { base4rest, basedb }, info) => {
+      validateRest(base4rest);
+      const { id, ...payload } = input;
+      const fields = {
+        address1: 1,
+        address2: 1,
+        city: 1,
+        country: 1,
+        state: 1,
+        zip: 1,
+        type: 1,
+      };
+      const doc = await basedb.strictFindById('platform.Content', id, { projection: fields });
+      const type = `platform/content/${dasherize(doc.type)}`;
+      const keys = Object.keys(payload);
+      const body = new Base4RestPayload({ type });
+      keys.forEach(k => body.set(k, payload[k]));
+      body.set('id', id);
+      await base4rest.updateOne({ model: type, id, body });
+      const projection = buildProjection({ info, type: 'Content' });
+      return basedb.findOne('platform.Content', { _id: parseInt(id, 10) }, { projection });
+    },
     /**
      *
      */

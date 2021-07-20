@@ -48,7 +48,8 @@ extend type Query {
 }
 
 extend type Mutation {
-  createContent(input: CreateContentMutationInput!): Content @requiresAuth
+  createContent(input: CreateContentMutationInput!): Content! @requiresAuth
+  contentAddressFields(input: ContentAddressFieldsMutationInput!): Content! @requiresAuth
 }
 
 enum GateableUserRole {
@@ -311,6 +312,16 @@ input CreateContentMutationInput {
   type: ContentType!
   name: String!
   primarySectionId: Int!
+}
+
+input ContentAddressFieldsMutationInput {
+  id: ID!
+  address1: String
+  address2: String
+  city: String
+  state: String
+  zip: String
+  country: String
 }
 
 input AllPublishedContentQueryInput {
