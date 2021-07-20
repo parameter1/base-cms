@@ -47,6 +47,10 @@ extend type Query {
   websiteExpiringContent(input: WebsiteExpiringContentQueryInput = {}): ContentConnection!
 }
 
+extend type Mutation {
+  createContent(input: CreateContentMutationInput!): Content @requiresAuth
+}
+
 enum GateableUserRole {
   ROLE_REGISTERED
 }
@@ -301,6 +305,12 @@ input ContentSitemapNewsUrlsQueryInput {
   taxonomyIds: [Int!] = []
   includeLabels: [String!] = []
   excludeLabels: [String!] = []
+}
+
+input CreateContentMutationInput {
+  type: ContentType!
+  name: String!
+  primarySectionId: Int!
 }
 
 input AllPublishedContentQueryInput {
