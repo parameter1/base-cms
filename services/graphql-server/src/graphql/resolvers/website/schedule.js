@@ -128,5 +128,46 @@ module.exports = {
       const projection = getProjection(schema, schema.getType('WebsiteSchedule'), fieldNodes[0].selectionSet, fragments);
       return basedb.find('website.Schedule', { _id: { $in: ids } }, { projection });
     },
+
+    /**
+     *
+     */
+    createWebsiteSchedule: async (_, { input }, { basedb, base4rest, load }, info) => {
+      validateRest(base4rest);
+
+      const { contentId, sectionId } = input;
+      const [content, section] = await Promise.all([
+        load('platformContent', contentId, { status: 1, published: 1, type: 1 }),
+        basedb.strictFindOne('website.Section', { _id: sectionId }, { projection: { site: 1 } }),
+      ]);
+      if (content.status !== 1) throw new UserInputError('The content status must be published.');
+
+      const startDate = input.startDate || content.published || new Date();
+      const siteId = BaseDB.extractRefId(section.site);
+      if (!siteId) throw new Error(`Unable to extract a site ID for section ${section._id}.`);
+
+      let { optionId } = input;
+      if (!optionId) {
+        const option = await basedb.strictFindOne('website.Option', { name: 'Standard', status: 1, 'site.$id': siteId }, { projection: { _id: 1 } });
+        optionId = option._id;
+      }
+
+      const body = new Base4RestPayload({ type: 'website/schedule' });
+      body
+        .set('startDate', startDate)
+        .set('status', 1)
+        .setLink('product', { id: siteId, type: 'website/product/site' })
+        .setLink('section', { id: sectionId, type: 'website/section' })
+        .setLink('option', { id: optionId, type: 'website/option' })
+        .setLink('content', { id: content._id, type: `platform/content/${dasherize(content.type)}` });
+      if (input.endDate) body.set('endDate', input.endDate);
+
+      const response = await base4rest.insertOne({ model: 'website/schedule', body });
+      const id = BaseDB.coerceID(response.data.id);
+
+      const { fieldNodes, schema, fragments } = info;
+      const projection = getProjection(schema, schema.getType('WebsiteSchedule'), fieldNodes[0].selectionSet, fragments);
+      return basedb.findOne('website.Schedule', { _id: id }, { projection });
+    },
   },
 };
