@@ -58,6 +58,8 @@ extend type Mutation {
   contentPublishing(input: ContentPublishingMutationInput!): Content! @requiresAuth
   "Sets the Content body"
   contentBody(input: ContentBodyMutationInput!): Content! @requiresAuth
+  "Sets the Content teaser"
+  contentTeaser(input: ContentTeaserMutationInput!): Content! @requiresAuth
 }
 
 enum GateableUserRole {
@@ -385,6 +387,13 @@ input ContentBodyMutationInput {
   id: Int!
   "The body text for the content"
   body: String
+}
+
+input ContentTeaserMutationInput {
+  "The content ID"
+  id: Int!
+  "The teaser/intro text for the content"
+  teaser: String
 }
 
 input AllPublishedContentQueryInput {

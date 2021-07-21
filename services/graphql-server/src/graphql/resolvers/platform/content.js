@@ -1372,6 +1372,11 @@ module.exports = {
     /**
      *
      */
+    contentTeaser: updateContentMutationHandler,
+
+    /**
+     *
+     */
     contentAddressFields: updateContentMutationHandler,
 
     /**
