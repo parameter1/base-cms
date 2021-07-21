@@ -48,7 +48,9 @@ extend type Query {
 }
 
 extend type Mutation {
-  createContent(input: CreateContentMutationInput!): Content @requiresAuth
+  createContent(input: CreateContentMutationInput!): Content! @requiresAuth
+  "Updates address fields on Content items"
+  contentAddressFields(input: ContentAddressFieldsMutationInput!): Content! @requiresAuth
 }
 
 enum GateableUserRole {
@@ -311,6 +313,24 @@ input CreateContentMutationInput {
   type: ContentType!
   name: String!
   primarySectionId: Int!
+}
+
+"Addressable fields to update on content items"
+input ContentAddressFieldsMutationInput {
+  "The content ID"
+  id: Int!
+  "The primary address field (number, street, direction)"
+  address1: String
+  "The secondary address field (suite number, etc)"
+  address2: String
+  "The city"
+  city: String
+  "The state or region"
+  state: String
+  "The ZIP or postal code"
+  zip: String
+  "The country name"
+  country: String
 }
 
 input AllPublishedContentQueryInput {
