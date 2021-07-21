@@ -1,10 +1,16 @@
 const buildQuery = require('../gql/query-factories/block-website-scheduled-content');
 
+const date = v => (v instanceof Date ? v.valueOf() : v);
+
 /**
  * @param {ApolloClient} apolloClient The Apollo GraphQL client that will perform the query.
  * @param {object} params
  * @param {number} [params.sectionId] The section ID.
  * @param {number} [params.sectionAlias] The section alias.
+ * @param {date} params.beginningAfter The date to include content by
+ * @param {date} params.beginningBefore The date to include content by
+ * @param {date} params.endingAfter The date to include content by
+ * @param {date} params.endingBefore The date to include content by
  * @param {number} [params.limit] The number of results to return.
  * @param {string} [params.after] The cursor to start returning results from.
  * @param {object} [params.sort] The sort parameters (field and order) to apply to the query.
@@ -30,6 +36,10 @@ module.exports = async (apolloClient, {
   sectionAlias,
   optionId,
   optionName,
+  beginningAfter,
+  beginningBefore,
+  endingAfter,
+  endingBefore,
 
   excludeContentIds,
   excludeContentTypes,
@@ -54,6 +64,8 @@ module.exports = async (apolloClient, {
     sectionId,
     optionId,
     optionName,
+    beginning: { after: date(beginningAfter), before: date(beginningBefore) },
+    ending: { after: date(endingAfter), before: date(endingBefore) },
     ...(sort && { sort }),
   };
   const query = buildQuery({ queryFragment, queryName, sectionFragment });

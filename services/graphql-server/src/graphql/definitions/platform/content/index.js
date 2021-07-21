@@ -564,6 +564,10 @@ input WebsiteScheduledContentQueryInput {
   sort: ContentSortInput = { field: null }
   after: Date
   since: Date
+  "For types with a startDate field: Limit results to items with a startDate matching the criteria."
+  beginning: ContentBeginningInput = {}
+  "For types with a endDate field: Limit results to items with a endDate matching the criteria."
+  ending: ContentEndingInput = {}
 }
 
 input RelatedPublishedContentQueryInput {
