@@ -157,17 +157,29 @@ const loadSitemapImages = ({ content, basedb }) => {
   return basedb.find('platform.Asset', query, { projection });
 };
 
-const updateContentMutationHandler = async (_, { input }, { basedb, base4rest }, info) => {
+const updateContentMutationHandler = ({
+  allowedContentTypes = [],
+  payloader = (input) => {
+    const { id, ...payload } = input;
+    return {
+      ...(Object.keys(payload).reduce((obj, key) => ({ ...obj, [key]: payload[key] }), {})),
+    };
+  },
+} = {}) => async (_, { input }, { basedb, base4rest }, info) => {
   validateRest(base4rest);
-  const { id, ...payload } = input;
+  const { id } = input;
   const doc = await basedb.strictFindById('platform.Content', id, { projection: { type: 1 } });
+  if (allowedContentTypes.length && !allowedContentTypes.includes(doc.type)) {
+    throw new UserInputError(`This operation only supports the following content types: ${allowedContentTypes.join(', ')}`);
+  }
   const type = `platform/content/${dasherize(doc.type)}`;
   const body = new Base4RestPayload({ type });
+  const payload = payloader(input);
   Object.keys(payload).forEach(k => body.set(k, payload[k]));
   body.set('id', id);
   await base4rest.updateOne({ model: type, id, body });
-  const projection = buildProjection({ info, type: 'Content' });
-  return basedb.findById('platform.Content', id, { projection });
+  const projection = buildProjection({ info, type: `Content${doc.type}` });
+  return basedb.findById('platform.Content', id, { projection: { ...projection, type: 1 } });
 };
 
 module.exports = {
@@ -1394,22 +1406,61 @@ module.exports = {
     /**
      *
      */
-    contentBody: updateContentMutationHandler,
+    contentEventDates: updateContentMutationHandler({ allowedContentTypes: ['Event'] }),
 
     /**
      *
      */
-    contentTeaser: updateContentMutationHandler,
+    contentBody: updateContentMutationHandler({
+      payloader: input => ({
+        ...(input.mutation ? { [`body${input.mutation}`]: input.value } : { body: input.value }),
+      }),
+    }),
 
     /**
      *
      */
-    contentAddressFields: updateContentMutationHandler,
+    contentName: updateContentMutationHandler({
+      payloader: input => ({
+        ...(input.mutation ? { [`name${input.mutation}`]: input.value } : { name: input.value }),
+      }),
+    }),
 
     /**
      *
      */
-    contentContactFields: updateContentMutationHandler,
+    contentTeaser: updateContentMutationHandler({
+      payloader: input => ({
+        ...(input.mutation ? { [`teaser${input.mutation}`]: input.value } : { teaser: input.value }),
+      }),
+    }),
+
+    /**
+     *
+     */
+    contentAddressFields: updateContentMutationHandler({
+      allowedContentTypes: [
+        'Company',
+        'Contact',
+        'Event',
+        'Supplier',
+        'Top100',
+        'Venue',
+      ],
+    }),
+
+    /**
+     *
+     */
+    contentContactFields: updateContentMutationHandler({
+      allowedContentTypes: [
+        'Company',
+        'Contact',
+        'Event',
+        'Supplier',
+        'Venue',
+      ],
+    }),
 
     /**
      *

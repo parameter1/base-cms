@@ -62,6 +62,10 @@ extend type Mutation {
   contentTeaser(input: ContentTeaserMutationInput!): Content! @requiresAuth
   "Sets a Content custom attribute"
   contentCustomAttribute(input: ContentCustomAttributeMutationInput!): Content! @requiresAuth
+  "Sets the dates for a ContentEvent item"
+  contentEventDates(input: ContentEventDatesMutationInput!): ContentEvent! @requiresAuth
+  "Sets the Content name"
+  contentName(input: ContentNameMutationInput!): Content! @requiresAuth
 }
 
 enum GateableUserRole {
@@ -384,18 +388,31 @@ input ContentPublishingMutationInput {
   unpublished: Date
 }
 
+input ContentNameMutationInput {
+  "The content ID"
+  id: Int!
+  "The name of the content"
+  value: String
+  "The mutation to target"
+  mutation: ContentMutation
+}
+
 input ContentBodyMutationInput {
   "The content ID"
   id: Int!
   "The body text for the content"
-  body: String
+  value: String
+  "The mutation to target"
+  mutation: ContentMutation
 }
 
 input ContentTeaserMutationInput {
   "The content ID"
   id: Int!
   "The teaser/intro text for the content"
-  teaser: String
+  value: String
+  "The mutation to target"
+  mutation: ContentMutation
 }
 
 input ContentCustomAttributeMutationInput {
@@ -405,6 +422,17 @@ input ContentCustomAttributeMutationInput {
   path: String!
   "The value to set to the custom attribute. To remove a value, pass an empty string"
   value: String!
+}
+
+input ContentEventDatesMutationInput {
+  "The content ID"
+  id: Int!
+  "The date the event starts"
+  startDate: Date
+  "The date the event ends"
+  endDate: Date
+  "If true, the times are ignored from startDate and endDate."
+  allDay: Boolean = false
 }
 
 input AllPublishedContentQueryInput {
