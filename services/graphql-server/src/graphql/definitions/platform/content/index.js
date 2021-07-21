@@ -56,6 +56,8 @@ extend type Mutation {
   contentContactFields(input: ContentContactFieldsMutationInput!): Content! @requiresAuth
   "Changes the publishing state of a Content item"
   contentPublishing(input: ContentPublishingMutationInput!): Content! @requiresAuth
+  "Sets the Content body"
+  contentBody(input: ContentBodyMutationInput!): Content! @requiresAuth
 }
 
 enum GateableUserRole {
@@ -376,6 +378,13 @@ input ContentPublishingMutationInput {
   published: Date
   "The date the content should become unavailable"
   unpublished: Date
+}
+
+input ContentBodyMutationInput {
+  "The content ID"
+  id: Int!
+  "The body text for the content"
+  body: String
 }
 
 input AllPublishedContentQueryInput {

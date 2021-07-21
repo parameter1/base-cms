@@ -1367,6 +1367,11 @@ module.exports = {
     /**
      *
      */
+    contentBody: updateContentMutationHandler,
+
+    /**
+     *
+     */
     contentAddressFields: updateContentMutationHandler,
 
     /**
