@@ -5,6 +5,7 @@ const { UserInputError } = require('apollo-server-express');
 
 const validateRest = require('../../utils/validate-rest');
 const getProjection = require('../../utils/get-projection');
+const buildProjection = require('../../utils/build-projection');
 
 const { ObjectID } = MongoDB;
 
@@ -163,11 +164,9 @@ module.exports = {
       if (input.endDate) body.set('endDate', input.endDate);
 
       const response = await base4rest.insertOne({ model: 'website/schedule', body });
-      const id = BaseDB.coerceID(response.data.id);
-
-      const { fieldNodes, schema, fragments } = info;
-      const projection = getProjection(schema, schema.getType('WebsiteSchedule'), fieldNodes[0].selectionSet, fragments);
-      return basedb.findOne('website.Schedule', { _id: id }, { projection });
+      const { id } = response.data;
+      const projection = buildProjection({ info, type: 'WebsiteSchedule' });
+      return basedb.findById('website.Schedule', id, { projection });
     },
   },
 };
