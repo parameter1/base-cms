@@ -3,7 +3,7 @@ const { UserInputError } = require('apollo-server-express');
 const { Base4RestPayload } = require('@parameter1/base-cms-base4-rest-api');
 const { cleanPath, asObject } = require('@parameter1/base-cms-utils');
 const { content: canonicalPathFor } = require('@parameter1/base-cms-canonical-path');
-const { get } = require('@parameter1/base-cms-object-path');
+const { get, getAsObject } = require('@parameter1/base-cms-object-path');
 const { underscore, dasherize, titleize } = require('@parameter1/base-cms-inflector');
 const { createSrcFor, createCaptionFor } = require('@parameter1/base-cms-image');
 const { getAsArray } = require('@parameter1/base-cms-object-path');
@@ -1370,10 +1370,12 @@ module.exports = {
     contentCustomAttribute: async (_, { input }, { basedb, base4rest }, info) => {
       validateRest(base4rest);
       const { id, path, value } = input;
-      const doc = await basedb.strictFindById('platform.Content', id, { projection: { type: 1 } });
+      const doc = await basedb.strictFindById('platform.Content', id, { projection: { type: 1, customAttributes: 1 } });
+      const attrs = getAsObject(doc, 'customAttributes');
+      attrs[path] = value;
       const type = `platform/content/${dasherize(doc.type)}`;
       const body = new Base4RestPayload({ type });
-      body.set(`customAttributes.${path}`, value);
+      body.set('customAttributes', attrs);
       body.set('id', id);
       await base4rest.updateOne({ model: type, id, body });
       const projection = buildProjection({ info, type: 'Content' });
