@@ -64,6 +64,8 @@ extend type Mutation {
   contentCustomAttribute(input: ContentCustomAttributeMutationInput!): Content! @requiresAuth
   "Sets the dates for a ContentEvent item"
   contentEventDates(input: ContentEventDatesMutationInput!): ContentEvent! @requiresAuth
+  "Sets the Content name"
+  contentName(input: ContentNameMutationInput!): Content! @requiresAuth
 }
 
 enum GateableUserRole {
@@ -386,18 +388,31 @@ input ContentPublishingMutationInput {
   unpublished: Date
 }
 
+input ContentNameMutationInput {
+  "The content ID"
+  id: Int!
+  "The name of the content"
+  value: String
+  "The mutation to target"
+  mutation: ContentMutation
+}
+
 input ContentBodyMutationInput {
   "The content ID"
   id: Int!
   "The body text for the content"
-  body: String
+  value: String
+  "The mutation to target"
+  mutation: ContentMutation
 }
 
 input ContentTeaserMutationInput {
   "The content ID"
   id: Int!
   "The teaser/intro text for the content"
-  teaser: String
+  value: String
+  "The mutation to target"
+  mutation: ContentMutation
 }
 
 input ContentCustomAttributeMutationInput {

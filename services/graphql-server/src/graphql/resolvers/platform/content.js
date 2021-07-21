@@ -159,15 +159,22 @@ const loadSitemapImages = ({ content, basedb }) => {
 
 const updateContentMutationHandler = ({
   allowedContentTypes = [],
+  payloader = (input) => {
+    const { id, ...payload } = input;
+    return {
+      ...(Object.keys(payload).reduce((obj, key) => ({ ...obj, [key]: payload[key] }), {})),
+    };
+  },
 } = {}) => async (_, { input }, { basedb, base4rest }, info) => {
   validateRest(base4rest);
-  const { id, ...payload } = input;
+  const { id } = input;
   const doc = await basedb.strictFindById('platform.Content', id, { projection: { type: 1 } });
   if (allowedContentTypes.length && !allowedContentTypes.includes(doc.type)) {
     throw new UserInputError(`This operation only supports the following content types: ${allowedContentTypes.join(', ')}`);
   }
   const type = `platform/content/${dasherize(doc.type)}`;
   const body = new Base4RestPayload({ type });
+  const payload = payloader(input);
   Object.keys(payload).forEach(k => body.set(k, payload[k]));
   body.set('id', id);
   await base4rest.updateOne({ model: type, id, body });
@@ -1397,12 +1404,29 @@ module.exports = {
     /**
      *
      */
-    contentBody: updateContentMutationHandler(),
+    contentBody: updateContentMutationHandler({
+      payloader: input => ({
+        ...(input.mutation ? { [`body${input.mutation}`]: input.value } : { body: input.value }),
+      }),
+    }),
 
     /**
      *
      */
-    contentTeaser: updateContentMutationHandler(),
+    contentName: updateContentMutationHandler({
+      payloader: input => ({
+        ...(input.mutation ? { [`name${input.mutation}`]: input.value } : { name: input.value }),
+      }),
+    }),
+
+    /**
+     *
+     */
+    contentTeaser: updateContentMutationHandler({
+      payloader: input => ({
+        ...(input.mutation ? { [`teaser${input.mutation}`]: input.value } : { teaser: input.value }),
+      }),
+    }),
 
     /**
      *
