@@ -51,6 +51,7 @@ extend type Mutation {
   createContent(input: CreateContentMutationInput!): Content! @requiresAuth
   "Updates address fields on Content items"
   contentAddressFields(input: ContentAddressFieldsMutationInput!): Content! @requiresAuth
+  contentContactFields(input: ContentContactFieldsMutationInput!): Content! @requiresAuth
 }
 
 enum GateableUserRole {
@@ -331,6 +332,20 @@ input ContentAddressFieldsMutationInput {
   zip: String
   "The country name"
   country: String
+}
+
+input ContentContactFieldsMutationInput {
+  id: Int!
+  phone: String
+  tollfree: String
+  fax: String
+  website: String
+  email: String
+  firstName: String
+  lastName: String
+  title: String
+  mobile: String
+  publicEmail: String
 }
 
 input AllPublishedContentQueryInput {
