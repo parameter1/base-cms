@@ -53,6 +53,7 @@ extend type Mutation {
   contentAddressFields(input: ContentAddressFieldsMutationInput!): Content! @requiresAuth
   "Updates contact fields on Content items"
   contentContactFields(input: ContentContactFieldsMutationInput!): Content! @requiresAuth
+  contentPublishing(input: ContentPublishingMutationInput!): Content! @requiresAuth
 }
 
 enum GateableUserRole {
@@ -359,6 +360,13 @@ input ContentContactFieldsMutationInput {
   title: String
   "The public email address"
   publicEmail: String
+}
+
+input ContentPublishingMutationInput {
+  id: Int!
+  status: ModelStatus
+  published: Date
+  unpublished: Date
 }
 
 input AllPublishedContentQueryInput {
