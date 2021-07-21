@@ -48,11 +48,14 @@ extend type Query {
 }
 
 extend type Mutation {
+  "Creates a new Content item"
   createContent(input: CreateContentMutationInput!): Content! @requiresAuth
-  "Updates address fields on Content items"
+  "Updates address fields on a Content item"
   contentAddressFields(input: ContentAddressFieldsMutationInput!): Content! @requiresAuth
-  "Updates contact fields on Content items"
+  "Updates contact fields on a Content item"
   contentContactFields(input: ContentContactFieldsMutationInput!): Content! @requiresAuth
+  "Changes the publishing state of a Content item"
+  contentPublishing(input: ContentPublishingMutationInput!): Content! @requiresAuth
 }
 
 enum GateableUserRole {
@@ -312,8 +315,11 @@ input ContentSitemapNewsUrlsQueryInput {
 }
 
 input CreateContentMutationInput {
+  "The type of content to create"
   type: ContentType!
+  "The name of the content"
   name: String!
+  "The primary section of this content item"
   primarySectionId: Int!
 }
 
@@ -359,6 +365,17 @@ input ContentContactFieldsMutationInput {
   title: String
   "The public email address"
   publicEmail: String
+}
+
+input ContentPublishingMutationInput {
+  "The content ID"
+  id: Int!
+  "The status to change the content to"
+  status: ModelStatus!
+  "The date the content should become available"
+  published: Date
+  "The date the content should become unavailable"
+  unpublished: Date
 }
 
 input AllPublishedContentQueryInput {

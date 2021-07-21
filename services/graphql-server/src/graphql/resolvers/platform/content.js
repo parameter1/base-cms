@@ -1381,6 +1381,51 @@ module.exports = {
       const projection = buildProjection({ info, type: 'Content' });
       return basedb.findById('platform.Content', id, { projection });
     },
+    contentPublishing: async (_, { input }, { base4rest, basedb }, info) => {
+      validateRest(base4rest);
+      const { id, ...payload } = input;
+      const fields = { published: 1, unpublished: 1, type: 1 };
+      const doc = await basedb.strictFindById('platform.Content', id, { projection: fields });
+      const type = `platform/content/${dasherize(doc.type)}`;
+      const now = new Date();
+      const body = new Base4RestPayload({ type });
+      switch (payload.status) {
+        case 'active':
+          body.set('status', 1);
+          if (doc.published && doc.published > now) {
+            // The content is already scheduled, set to the new date.
+            body.set('published', payload.published || now);
+          } else {
+            // Use the payload date, the content date, or the current date.
+            body.set('published', payload.published || doc.published || now);
+          }
+          if (doc.unpublished && doc.unpublished < now) {
+            // The content is already expired, set or remove the unpublished date.
+            body.set('unpublished', payload.unpublished || null);
+          } else if (typeof payload.unpublished !== 'undefined') {
+            // Set the unpublished date, if specified.
+            body.set('unpublished', payload.unpublished);
+          }
+          break;
+
+        case 'draft':
+          body.set('status', 2);
+          body.set('published', null);
+          body.set('unpublished', null);
+          break;
+        case 'deleted':
+          body.set('status', 0);
+          body.set('published', null);
+          body.set('unpublished', null);
+          break;
+        default:
+          throw new UserInputError(`The ModelStatus value '${payload.status}' is not valid for publishing.`);
+      }
+      body.set('id', id);
+      await base4rest.updateOne({ model: type, id, body });
+      const projection = buildProjection({ info, type: 'Content' });
+      return basedb.findOne('platform.Content', { _id: parseInt(id, 10) }, { projection });
+    },
     /**
      *
      */
