@@ -1359,9 +1359,8 @@ module.exports = {
       const { id, ...payload } = input;
       const doc = await basedb.strictFindById('platform.Content', id, { projection: { type: 1 } });
       const type = `platform/content/${dasherize(doc.type)}`;
-      const keys = Object.keys(payload);
       const body = new Base4RestPayload({ type });
-      keys.forEach(k => body.set(k, payload[k]));
+      Object.keys(payload).forEach(k => body.set(k, payload[k]));
       body.set('id', id);
       await base4rest.updateOne({ model: type, id, body });
       const projection = buildProjection({ info, type: 'Content' });
