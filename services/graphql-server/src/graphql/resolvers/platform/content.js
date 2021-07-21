@@ -1365,7 +1365,7 @@ module.exports = {
       body.set('id', id);
       await base4rest.updateOne({ model: type, id, body });
       const projection = buildProjection({ info, type: 'Content' });
-      return basedb.findOne('platform.Content', { _id: parseInt(id, 10) }, { projection });
+      return basedb.findOne('platform.Content', { _id: id }, { projection });
     },
     /**
      *
