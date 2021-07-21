@@ -1367,6 +1367,22 @@ module.exports = {
     /**
      *
      */
+    contentCustomAttribute: async (_, { input }, { basedb, base4rest }, info) => {
+      validateRest(base4rest);
+      const { id, path, value } = input;
+      const doc = await basedb.strictFindById('platform.Content', id, { projection: { type: 1 } });
+      const type = `platform/content/${dasherize(doc.type)}`;
+      const body = new Base4RestPayload({ type });
+      body.set(`customAttributes.${path}`, value);
+      body.set('id', id);
+      await base4rest.updateOne({ model: type, id, body });
+      const projection = buildProjection({ info, type: 'Content' });
+      return basedb.findById('platform.Content', id, { projection });
+    },
+
+    /**
+     *
+     */
     contentBody: updateContentMutationHandler,
 
     /**
