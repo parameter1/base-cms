@@ -315,7 +315,7 @@ input CreateContentMutationInput {
 }
 
 input ContentAddressFieldsMutationInput {
-  id: ID!
+  id: Int!
   address1: String
   address2: String
   city: String
