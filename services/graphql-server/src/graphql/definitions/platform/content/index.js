@@ -51,6 +51,7 @@ extend type Mutation {
   createContent(input: CreateContentMutationInput!): Content! @requiresAuth
   "Updates address fields on Content items"
   contentAddressFields(input: ContentAddressFieldsMutationInput!): Content! @requiresAuth
+  "Updates contact fields on Content items"
   contentContactFields(input: ContentContactFieldsMutationInput!): Content! @requiresAuth
 }
 
@@ -334,17 +335,29 @@ input ContentAddressFieldsMutationInput {
   country: String
 }
 
+"Contactable fields to update on content items"
 input ContentContactFieldsMutationInput {
+  "The content ID"
   id: Int!
+  "The primary telephone number"
   phone: String
+  "The toll-free telephone number"
   tollfree: String
+  "The fax telephone number"
   fax: String
-  website: String
-  email: String
-  firstName: String
-  lastName: String
-  title: String
+  "The mobile telephone number"
   mobile: String
+  "The website"
+  website: String
+  "The email address"
+  email: String
+  "The first name of the Contact"
+  firstName: String
+  "The last name of the Contact"
+  lastName: String
+  "The title of the Contact"
+  title: String
+  "The public email address"
   publicEmail: String
 }
 
