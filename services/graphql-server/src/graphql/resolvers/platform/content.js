@@ -1402,7 +1402,7 @@ module.exports = {
           if (doc.unpublished && doc.unpublished < now) {
             // The content is already expired, set or remove the unpublished date.
             body.set('unpublished', payload.unpublished || null);
-          } else if (Object.hasOwnProperty.call(payload, 'unpublished')) {
+          } else if (typeof payload.unpublished !== 'undefined') {
             // Set the unpublished date, if specified.
             body.set('unpublished', payload.unpublished);
           }
