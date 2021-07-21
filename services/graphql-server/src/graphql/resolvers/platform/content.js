@@ -1369,11 +1369,12 @@ module.exports = {
      */
     contentCustomAttribute: async (_, { input }, { basedb, base4rest }, info) => {
       validateRest(base4rest);
-      const { id, path, value } = input;
-      const text = `${value}`.trim();
+      const { id, path } = input;
+      const value = input.value.trim();
       const doc = await basedb.strictFindById('platform.Content', id, { projection: { type: 1, customAttributes: 1 } });
       const attrs = getAsObject(doc, 'customAttributes');
-      attrs[path] = text || null;
+      attrs[path] = value;
+      if (!value) delete attrs[path];
       const type = `platform/content/${dasherize(doc.type)}`;
       const body = new Base4RestPayload({ type });
       body.set('customAttributes', attrs);
