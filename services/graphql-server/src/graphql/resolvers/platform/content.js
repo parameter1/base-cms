@@ -1180,6 +1180,8 @@ module.exports = {
         pagination,
         since,
         after,
+        beginning,
+        ending,
       } = input;
 
       if (sectionId && sectionAlias) throw new UserInputError('You cannot provide both sectionId and sectionAlias as input.');
@@ -1250,6 +1252,11 @@ module.exports = {
       if (excludeContentIds.length) {
         query._id = { $nin: excludeContentIds };
       }
+
+      if (beginning.before) query.$and.push({ startDate: { $lte: beginning.before } });
+      if (beginning.after) query.$and.push({ startDate: { $gte: beginning.after } });
+      if (ending.before) query.$and.push({ endDate: { $lte: ending.before } });
+      if (ending.after) query.$and.push({ endDate: { $gte: ending.after } });
 
       const projection = connectionProjection(info);
       const sort = input.sort.field ? input.sort : { field: 'sectionQuery.0.start', order: 'desc' };
