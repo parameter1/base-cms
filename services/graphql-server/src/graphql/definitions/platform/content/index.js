@@ -403,8 +403,8 @@ input ContentCustomAttributeMutationInput {
   id: Int!
   "The path (key) of the custom attribute to modify"
   path: String!
-  "The value to set to the custom attribute"
-  value: String
+  "The value to set to the custom attribute. To remove a value, pass an empty string"
+  value: String!
 }
 
 input AllPublishedContentQueryInput {
