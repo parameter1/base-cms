@@ -1389,42 +1389,37 @@ module.exports = {
       const type = `platform/content/${dasherize(doc.type)}`;
       const now = new Date();
       const body = new Base4RestPayload({ type });
+      switch (payload.status) {
+        case 'active':
+          body.set('status', 1);
+          if (doc.published && doc.published > now) {
+            // The content is already scheduled, set to the new date.
+            body.set('published', payload.published || now);
+          } else {
+            // Use the payload date, the content date, or the current date.
+            body.set('published', payload.published || doc.published || now);
+          }
+          if (doc.unpublished && doc.unpublished < now) {
+            // The content is already expired, set or remove the unpublished date.
+            body.set('unpublished', payload.unpublished || null);
+          } else if (Object.hasOwnProperty.call(payload, 'unpublished')) {
+            // Set the unpublished date, if specified.
+            body.set('unpublished', payload.unpublished);
+          }
+          break;
 
-      if (!payload.status && !payload.published) {
-        throw new UserInputError('You must provide a status or published input.');
-      }
-
-      // We're publishing, set the status, published date, and unpublished as needed.
-      if (payload.status === 'active' || payload.published) {
-        body.set('status', 1);
-        if (doc.published && doc.published > now) {
-          // The content is already scheduled, set to the new date.
-          body.set('published', payload.published || now);
-        } else {
-          // Use the payload date, the content date, or the current date.
-          body.set('published', payload.published || doc.published || now);
-        }
-        if (doc.unpublished && doc.unpublished < now) {
-          // The content is already expired, set or remove the unpublished date.
-          body.set('unpublished', payload.unpublished || null);
-        } else if (payload.unpublished) {
-          body.set('unpublished', payload.unpublished);
-        }
-      } else {
-        switch (payload.status) {
-          case 'draft':
-            body.set('status', 2);
-            body.set('published', null);
-            body.set('unpublished', null);
-            break;
-          case 'deleted':
-            body.set('status', 0);
-            body.set('published', null);
-            body.set('unpublished', null);
-            break;
-          default:
-            throw new UserInputError(`The ModelStatus value '${payload.status}' is not valid for publishing.`);
-        }
+        case 'draft':
+          body.set('status', 2);
+          body.set('published', null);
+          body.set('unpublished', null);
+          break;
+        case 'deleted':
+          body.set('status', 0);
+          body.set('published', null);
+          body.set('unpublished', null);
+          break;
+        default:
+          throw new UserInputError(`The ModelStatus value '${payload.status}' is not valid for publishing.`);
       }
       body.set('id', id);
       await base4rest.updateOne({ model: type, id, body });

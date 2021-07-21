@@ -364,7 +364,7 @@ input ContentContactFieldsMutationInput {
 
 input ContentPublishingMutationInput {
   id: Int!
-  status: ModelStatus
+  status: ModelStatus!
   published: Date
   unpublished: Date
 }
