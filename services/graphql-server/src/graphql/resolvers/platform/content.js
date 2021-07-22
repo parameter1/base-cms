@@ -1394,6 +1394,11 @@ module.exports = {
     /**
      *
      */
+    contentEventDates: updateContentMutationHandler,
+
+    /**
+     *
+     */
     contentBody: updateContentMutationHandler,
 
     /**
