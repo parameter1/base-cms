@@ -400,8 +400,8 @@ input ContentNameMutationInput {
 input ContentBodyMutationInput {
   "The content ID"
   id: Int!
-  "The body text for the content"
-  value: String
+  "The body text for the content. To remove, pass an empty string."
+  value: String!
   "The mutation to target. The default/non-mutated value will be used when this is null or unset."
   mutation: ContentMutation
 }
@@ -409,8 +409,8 @@ input ContentBodyMutationInput {
 input ContentTeaserMutationInput {
   "The content ID"
   id: Int!
-  "The teaser/intro text for the content"
-  value: String
+  "The teaser/intro text for the content. To remove, pass an empty string."
+  value: String!
   "The mutation to target. The default/non-mutated value will be used when this is null or unset."
   mutation: ContentMutation
 }

@@ -1410,9 +1410,11 @@ module.exports = {
      *
      */
     contentBody: updateContentMutationHandler({
-      buildPayload: input => ({
-        ...(input.mutation ? { [`body${input.mutation}`]: input.value } : { body: input.value }),
-      }),
+      buildPayload: (input) => {
+        const value = input.value.trim();
+        const field = input.mutation ? `body${input.mutation}` : 'body';
+        return { body: { [field]: value || null } };
+      },
     }),
 
     /**
@@ -1428,9 +1430,11 @@ module.exports = {
      *
      */
     contentTeaser: updateContentMutationHandler({
-      buildPayload: input => ({
-        ...(input.mutation ? { [`teaser${input.mutation}`]: input.value } : { teaser: input.value }),
-      }),
+      buildPayload: (input) => {
+        const value = input.value.trim();
+        const field = input.mutation ? `teaser${input.mutation}` : 'teaser';
+        return { body: { [field]: value || null } };
+      },
     }),
 
     /**
