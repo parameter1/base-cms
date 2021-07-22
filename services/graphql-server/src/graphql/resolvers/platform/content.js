@@ -1421,9 +1421,12 @@ module.exports = {
      *
      */
     contentName: updateContentMutationHandler({
-      buildPayload: input => ({
-        ...(input.mutation ? { [`name${input.mutation}`]: input.value } : { name: input.value }),
-      }),
+      buildPayload: (input) => {
+        const value = input.value.trim();
+        if (!value) throw new UserInputError('The content name value cannot be empty.');
+        const field = input.mutation ? `name${input.mutation}` : 'name';
+        return { body: { [field]: value } };
+      },
     }),
 
     /**
