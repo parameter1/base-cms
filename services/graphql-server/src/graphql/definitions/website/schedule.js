@@ -18,6 +18,7 @@ extend type Query {
 }
 
 extend type Mutation {
+  createWebsiteSchedule(input: CreateWebsiteScheduleMutationInput!): WebsiteSchedule! @requiresAuth
   quickCreateWebsiteSchedules(input: QuickCreateWebsiteSchedulesMutationInput!): [WebsiteSchedule!]!
   updateWebsiteSchedule(input: UpdateWebsiteScheduleMutationInput!): WebsiteSchedule!
   deleteWebsiteSchedule(input: DeleteWebsiteScheduleMutationInput!): String!
@@ -96,6 +97,14 @@ input WebsiteScheduleSectionInput {
 
 input WebsiteScheduleOptionInput {
   status: ModelStatus = active
+}
+
+input CreateWebsiteScheduleMutationInput {
+  contentId: Int!
+  sectionId: Int!
+  optionId: Int
+  startDate: Date
+  endDate: Date
 }
 
 input QuickCreateWebsiteSchedulesMutationInput {
