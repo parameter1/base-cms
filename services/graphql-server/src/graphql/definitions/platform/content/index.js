@@ -393,7 +393,7 @@ input ContentNameMutationInput {
   id: Int!
   "The name of the content"
   value: String
-  "The mutation to target"
+  "The mutation to target. The default/non-mutated value will be used when this is null or unset."
   mutation: ContentMutation
 }
 
@@ -402,7 +402,7 @@ input ContentBodyMutationInput {
   id: Int!
   "The body text for the content"
   value: String
-  "The mutation to target"
+  "The mutation to target. The default/non-mutated value will be used when this is null or unset."
   mutation: ContentMutation
 }
 
@@ -411,7 +411,7 @@ input ContentTeaserMutationInput {
   id: Int!
   "The teaser/intro text for the content"
   value: String
-  "The mutation to target"
+  "The mutation to target. The default/non-mutated value will be used when this is null or unset."
   mutation: ContentMutation
 }
 
