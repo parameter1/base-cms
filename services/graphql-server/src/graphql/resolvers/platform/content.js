@@ -159,7 +159,7 @@ const loadSitemapImages = ({ content, basedb }) => {
 
 const updateContentMutationHandler = ({
   allowedContentTypes = [],
-  payloader = (input) => {
+  buildPayload = (input) => {
     const { id, ...payload } = input;
     return {
       ...(Object.keys(payload).reduce((obj, key) => ({ ...obj, [key]: payload[key] }), {})),
@@ -174,7 +174,7 @@ const updateContentMutationHandler = ({
   }
   const type = `platform/content/${dasherize(doc.type)}`;
   const body = new Base4RestPayload({ type });
-  const payload = payloader(input);
+  const payload = buildPayload(input);
   Object.keys(payload).forEach(k => body.set(k, payload[k]));
   body.set('id', id);
   await base4rest.updateOne({ model: type, id, body });
@@ -1412,7 +1412,7 @@ module.exports = {
      *
      */
     contentBody: updateContentMutationHandler({
-      payloader: input => ({
+      buildPayload: input => ({
         ...(input.mutation ? { [`body${input.mutation}`]: input.value } : { body: input.value }),
       }),
     }),
@@ -1421,7 +1421,7 @@ module.exports = {
      *
      */
     contentName: updateContentMutationHandler({
-      payloader: input => ({
+      buildPayload: input => ({
         ...(input.mutation ? { [`name${input.mutation}`]: input.value } : { name: input.value }),
       }),
     }),
@@ -1430,7 +1430,7 @@ module.exports = {
      *
      */
     contentTeaser: updateContentMutationHandler({
-      payloader: input => ({
+      buildPayload: input => ({
         ...(input.mutation ? { [`teaser${input.mutation}`]: input.value } : { teaser: input.value }),
       }),
     }),
