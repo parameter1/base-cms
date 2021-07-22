@@ -391,7 +391,7 @@ input ContentPublishingMutationInput {
 input ContentNameMutationInput {
   "The content ID"
   id: Int!
-  "The name of the content. This is required and cannot be an empty string."
+  "The name of the content. This is required and only mutated values can be removed with an empty string."
   value: String!
   "The mutation to target. The default/non-mutated value will be used when this is null or unset."
   mutation: ContentMutation
