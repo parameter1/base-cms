@@ -161,9 +161,7 @@ const updateContentMutationHandler = ({
   allowedContentTypes = [],
   buildPayload = (input) => {
     const { id, ...payload } = input;
-    return {
-      ...(Object.keys(payload).reduce((obj, key) => ({ ...obj, [key]: payload[key] }), {})),
-    };
+    return Object.keys(payload).reduce((obj, key) => ({ ...obj, [key]: payload[key] }), {});
   },
 } = {}) => async (_, { input }, { basedb, base4rest }, info) => {
   validateRest(base4rest);
