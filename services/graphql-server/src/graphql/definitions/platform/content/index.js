@@ -60,6 +60,8 @@ extend type Mutation {
   contentBody(input: ContentBodyMutationInput!): Content! @requiresAuth
   "Sets the Content teaser"
   contentTeaser(input: ContentTeaserMutationInput!): Content! @requiresAuth
+  "Sets a Content custom attribute"
+  contentCustomAttribute(input: ContentCustomAttributeMutationInput!): Content! @requiresAuth
 }
 
 enum GateableUserRole {
@@ -394,6 +396,15 @@ input ContentTeaserMutationInput {
   id: Int!
   "The teaser/intro text for the content"
   teaser: String
+}
+
+input ContentCustomAttributeMutationInput {
+  "The content ID"
+  id: Int!
+  "The path (key) of the custom attribute to modify"
+  path: String!
+  "The value to set to the custom attribute. To remove a value, pass an empty string"
+  value: String!
 }
 
 input AllPublishedContentQueryInput {
