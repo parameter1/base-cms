@@ -159,15 +159,20 @@ const loadSitemapImages = ({ content, basedb }) => {
 
 const updateContentMutationHandler = ({
   allowedContentTypes = [],
+  buildPayload = (input) => {
+    const { id, ...payload } = input;
+    return Object.keys(payload).reduce((obj, key) => ({ ...obj, [key]: payload[key] }), {});
+  },
 } = {}) => async (_, { input }, { basedb, base4rest }, info) => {
   validateRest(base4rest);
-  const { id, ...payload } = input;
+  const { id } = input;
   const doc = await basedb.strictFindById('platform.Content', id, { projection: { type: 1 } });
   if (allowedContentTypes.length && !allowedContentTypes.includes(doc.type)) {
     throw new UserInputError(`This operation only supports the following content types: ${allowedContentTypes.join(', ')}`);
   }
   const type = `platform/content/${dasherize(doc.type)}`;
   const body = new Base4RestPayload({ type });
+  const payload = buildPayload(input);
   Object.keys(payload).forEach(k => body.set(k, payload[k]));
   body.set('id', id);
   await base4rest.updateOne({ model: type, id, body });
@@ -1404,12 +1409,36 @@ module.exports = {
     /**
      *
      */
-    contentBody: updateContentMutationHandler(),
+    contentBody: updateContentMutationHandler({
+      buildPayload: (input) => {
+        const value = input.value.trim();
+        const field = input.mutation ? `body${input.mutation}` : 'body';
+        return { [field]: value || null };
+      },
+    }),
 
     /**
      *
      */
-    contentTeaser: updateContentMutationHandler(),
+    contentName: updateContentMutationHandler({
+      buildPayload: (input) => {
+        const value = input.value.trim();
+        if (!value && !input.mutation) throw new UserInputError('The default mutation of the content name cannot be empty.');
+        const field = input.mutation ? `name${input.mutation}` : 'name';
+        return { [field]: value || null };
+      },
+    }),
+
+    /**
+     *
+     */
+    contentTeaser: updateContentMutationHandler({
+      buildPayload: (input) => {
+        const value = input.value.trim();
+        const field = input.mutation ? `teaser${input.mutation}` : 'teaser';
+        return { [field]: value || null };
+      },
+    }),
 
     /**
      *

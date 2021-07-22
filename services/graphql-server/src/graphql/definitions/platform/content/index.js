@@ -64,6 +64,8 @@ extend type Mutation {
   contentCustomAttribute(input: ContentCustomAttributeMutationInput!): Content! @requiresAuth
   "Sets the dates for a ContentEvent item"
   contentEventDates(input: ContentEventDatesMutationInput!): ContentEvent! @requiresAuth
+  "Sets the Content name"
+  contentName(input: ContentNameMutationInput!): Content! @requiresAuth
 }
 
 enum GateableUserRole {
@@ -386,18 +388,31 @@ input ContentPublishingMutationInput {
   unpublished: Date
 }
 
+input ContentNameMutationInput {
+  "The content ID"
+  id: Int!
+  "The name of the content. This is required and only mutated values can be removed with an empty string."
+  value: String!
+  "The mutation to target. The default/non-mutated value will be used when this is null or unset."
+  mutation: ContentMutation
+}
+
 input ContentBodyMutationInput {
   "The content ID"
   id: Int!
-  "The body text for the content"
-  body: String
+  "The body text for the content. To remove, pass an empty string."
+  value: String!
+  "The mutation to target. The default/non-mutated value will be used when this is null or unset."
+  mutation: ContentMutation
 }
 
 input ContentTeaserMutationInput {
   "The content ID"
   id: Int!
-  "The teaser/intro text for the content"
-  teaser: String
+  "The teaser/intro text for the content. To remove, pass an empty string."
+  value: String!
+  "The mutation to target. The default/non-mutated value will be used when this is null or unset."
+  mutation: ContentMutation
 }
 
 input ContentCustomAttributeMutationInput {
