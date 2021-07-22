@@ -1413,7 +1413,7 @@ module.exports = {
       buildPayload: (input) => {
         const value = input.value.trim();
         const field = input.mutation ? `body${input.mutation}` : 'body';
-        return { body: { [field]: value || null } };
+        return { [field]: value || null };
       },
     }),
 
@@ -1425,7 +1425,7 @@ module.exports = {
         const value = input.value.trim();
         if (!value) throw new UserInputError('The content name value cannot be empty.');
         const field = input.mutation ? `name${input.mutation}` : 'name';
-        return { body: { [field]: value } };
+        return { [field]: value };
       },
     }),
 
@@ -1436,7 +1436,7 @@ module.exports = {
       buildPayload: (input) => {
         const value = input.value.trim();
         const field = input.mutation ? `teaser${input.mutation}` : 'teaser';
-        return { body: { [field]: value || null } };
+        return { [field]: value || null };
       },
     }),
 
