@@ -63,7 +63,7 @@ extend type Mutation {
   "Sets a Content custom attribute"
   contentCustomAttribute(input: ContentCustomAttributeMutationInput!): Content! @requiresAuth
   "Sets the dates for a ContentEvent item"
-  contentEventDates(input: ContentEventDatesMutationInput!): Content! @requiresAuth
+  contentEventDates(input: ContentEventDatesMutationInput!): ContentEvent! @requiresAuth
 }
 
 enum GateableUserRole {

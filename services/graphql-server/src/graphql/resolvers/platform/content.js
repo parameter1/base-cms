@@ -157,17 +157,22 @@ const loadSitemapImages = ({ content, basedb }) => {
   return basedb.find('platform.Asset', query, { projection });
 };
 
-const updateContentMutationHandler = async (_, { input }, { basedb, base4rest }, info) => {
+const updateContentMutationHandler = ({
+  allowedContentTypes = [],
+} = {}) => async (_, { input }, { basedb, base4rest }, info) => {
   validateRest(base4rest);
   const { id, ...payload } = input;
   const doc = await basedb.strictFindById('platform.Content', id, { projection: { type: 1 } });
+  if (allowedContentTypes.length && !allowedContentTypes.includes(doc.type)) {
+    throw new UserInputError(`This operation only supports the following content types: ${allowedContentTypes.join(', ')}`);
+  }
   const type = `platform/content/${dasherize(doc.type)}`;
   const body = new Base4RestPayload({ type });
   Object.keys(payload).forEach(k => body.set(k, payload[k]));
   body.set('id', id);
   await base4rest.updateOne({ model: type, id, body });
-  const projection = buildProjection({ info, type: 'Content' });
-  return basedb.findById('platform.Content', id, { projection });
+  const projection = buildProjection({ info, type: `Content${doc.type}` });
+  return basedb.findById('platform.Content', id, { projection: { ...projection, type: 1 } });
 };
 
 module.exports = {
@@ -1394,27 +1399,44 @@ module.exports = {
     /**
      *
      */
-    contentEventDates: updateContentMutationHandler,
+    contentEventDates: updateContentMutationHandler({ allowedContentTypes: ['Event'] }),
 
     /**
      *
      */
-    contentBody: updateContentMutationHandler,
+    contentBody: updateContentMutationHandler(),
 
     /**
      *
      */
-    contentTeaser: updateContentMutationHandler,
+    contentTeaser: updateContentMutationHandler(),
 
     /**
      *
      */
-    contentAddressFields: updateContentMutationHandler,
+    contentAddressFields: updateContentMutationHandler({
+      allowedContentTypes: [
+        'Company',
+        'Contact',
+        'Event',
+        'Supplier',
+        'Top100',
+        'Venue',
+      ],
+    }),
 
     /**
      *
      */
-    contentContactFields: updateContentMutationHandler,
+    contentContactFields: updateContentMutationHandler({
+      allowedContentTypes: [
+        'Company',
+        'Contact',
+        'Event',
+        'Supplier',
+        'Venue',
+      ],
+    }),
 
     /**
      *
