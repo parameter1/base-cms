@@ -138,10 +138,9 @@ module.exports = {
 
       const { contentId, sectionId } = input;
       const [content, section] = await Promise.all([
-        load('platformContent', contentId, { status: 1, published: 1, type: 1 }),
+        load('platformContent', contentId, { published: 1, type: 1 }),
         basedb.strictFindOne('website.Section', { _id: sectionId }, { projection: { site: 1 } }),
       ]);
-      if (content.status !== 1) throw new UserInputError('The content status must be published.');
 
       const startDate = input.startDate || content.published || new Date();
       const siteId = BaseDB.extractRefId(section.site);
