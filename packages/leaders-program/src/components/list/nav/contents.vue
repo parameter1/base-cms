@@ -29,13 +29,17 @@ export default {
       type: Object,
       default: null,
     },
+    hasVideos: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   computed: {
     showVideoIcon() {
       const { youtube } = this;
       if (!youtube) return false;
-      return Boolean(youtube.username || youtube.channelId);
+      return Boolean(youtube.username || youtube.channelId || this.hasVideos);
     },
     iconModifiers() {
       const mods = [];
