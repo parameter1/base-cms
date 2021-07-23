@@ -38,6 +38,9 @@ module.exports = async ({
   redirectHandler,
   sitemapsHeaders,
 
+  // Base browse (optional)
+  baseBrowseGraphqlUri = env.BASE_BROWSE_GRAPHQL_URI,
+
   // Cache settings.
   gqlCacheResponses = parseBooleanHeader(env.CACHE_GQL_RESPONSES),
   gqlCacheSiteContext = parseBooleanHeader(env.CACHE_GQL_SITE_CONTEXT),
@@ -78,6 +81,7 @@ module.exports = async ({
     sitemapsHeaders,
     gqlCacheResponses,
     gqlCacheSiteContext,
+    baseBrowseGraphqlUri,
   });
 
   // Await required services here...
@@ -135,6 +139,7 @@ module.exports = async ({
             name: sitePackage.name,
             siteId,
             graphqlUri,
+            baseBrowseGraphqlUri,
             location: `http://${exposedHost}:${exposedPort}`,
           });
         }

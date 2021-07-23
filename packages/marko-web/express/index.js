@@ -1,4 +1,5 @@
 const { buildRequestHeaders } = require('@parameter1/base-cms-tenant-context');
+const createApolloClient = require('@parameter1/base-cms-apollo-ssr');
 const cookieParser = require('cookie-parser');
 const express = require('express');
 const marko = require('marko/express');
@@ -25,6 +26,7 @@ module.exports = (config = {}) => {
     siteId,
     sitePackage,
     graphqlUri,
+    baseBrowseGraphqlUri,
     gqlCacheResponses,
     gqlCacheSiteContext,
   } = config;
@@ -90,6 +92,20 @@ module.exports = (config = {}) => {
     link: { headers },
   });
   graphqlProxy(app, { graphqlUri, headers });
+
+  // Base browse middleware
+  if (baseBrowseGraphqlUri) {
+    app.use((req, res, next) => {
+      const client = createApolloClient({
+        uri: baseBrowseGraphqlUri,
+        headers: { 'x-tenant-key': tenantKey },
+        config: { name: sitePackage.name, version: sitePackage.version },
+      });
+      req.$baseBrowse = client;
+      res.locals.$baseBrowse = client;
+      next();
+    });
+  }
 
   // Set website context.
   app.use(websiteContext(app.locals.config));
