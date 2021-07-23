@@ -15,7 +15,10 @@ module.exports = (file) => {
     node = await spawn('node', [file], { stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
     node.on('message', (msg) => {
       if (msg.event === 'ready') {
-        log(`${magenta(msg.name)} website ${green('ready')} on ${yellow(msg.location)} (Site ID: ${gray(msg.siteId)}) (API: ${gray(msg.graphqlUri)})`);
+        const { baseBrowseGraphqlUri } = msg;
+        let message = `${magenta(msg.name)} website ${green('ready')} on ${yellow(msg.location)} (Site ID: ${gray(msg.siteId)}) (API: ${gray(msg.graphqlUri)})`;
+        if (baseBrowseGraphqlUri) message = `${message} (Base Browse API: ${gray(baseBrowseGraphqlUri)})`;
+        log(message);
         livereload.changed('/');
       }
     });
