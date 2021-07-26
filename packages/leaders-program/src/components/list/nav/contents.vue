@@ -39,7 +39,7 @@ export default {
     showVideoIcon() {
       const { youtube } = this;
       if (!youtube) return false;
-      return Boolean(youtube.username || youtube.channelId || this.hasVideos);
+      return Boolean(this.hasVideos);
     },
     iconModifiers() {
       const mods = [];
