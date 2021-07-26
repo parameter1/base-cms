@@ -3,7 +3,7 @@
     <filter-none-icon :modifiers="iconModifiers" />
     <span class="leaders-nav-link-contents__container">
       <span class="leaders-nav-link-contents__title">{{ title }}</span>
-      <videocam-icon v-if="showVideoIcon" :modifiers="iconModifiers" />
+      <videocam-icon v-if="hasVideos" :modifiers="iconModifiers" />
     </span>
   </span>
 </template>
@@ -25,18 +25,13 @@ export default {
       type: Boolean,
       default: false,
     },
-    youtube: {
-      type: Object,
-      default: null,
+    hasVideos: {
+      type: Boolean,
+      default: false,
     },
   },
 
   computed: {
-    showVideoIcon() {
-      const { youtube } = this;
-      if (!youtube) return false;
-      return Boolean(youtube.username || youtube.channelId);
-    },
     iconModifiers() {
       const mods = [];
       if (this.isActive) mods.push('active');
