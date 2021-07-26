@@ -29,7 +29,6 @@
           <link-contents
             :title="item.name"
             :is-active="isActive"
-            :youtube="item.youtube"
             :has-videos="item.videos.edges.length > 0"
           />
         </template>
