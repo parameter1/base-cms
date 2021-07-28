@@ -71,6 +71,10 @@ module.exports = async ({ apolloBaseCMS, apolloBaseBrowse } = {}, {
       },
     }),
     pagination: { limit, skip },
+    sort: {
+      field: searchQuery ? 'SCORE' : 'PUBLISHED',
+      order: 'DESC',
+    },
   };
 
   const { data: baseBrowseData } = await apolloBaseBrowse.query({
