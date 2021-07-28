@@ -31,6 +31,34 @@ class MarkoWebSearch {
     const definition = this.config.queryParams.getDefinition(name);
     return definition.toInputValue(query[name], this);
   }
+
+  page() {
+    return this.getInputValueFor('page');
+  }
+
+  limit() {
+    return this.getInputValueFor('limit');
+  }
+
+  skip() {
+    return this.limit() * (this.page() - 1);
+  }
+
+  totalPages(totalCount = 0) {
+    const count = totalCount > 10000 ? 10000 : totalCount;
+    return Math.ceil(count / this.limit());
+  }
+
+  nextPage(totalCount = 0) {
+    const page = this.page();
+    const total = this.totalPages(totalCount);
+    return page < total ? page + 1 : null;
+  }
+
+  prevPage() {
+    const page = this.page();
+    return page > 1 ? page - 1 : null;
+  }
 }
 
 module.exports = MarkoWebSearch;
