@@ -3,9 +3,9 @@
     "template": "./link.marko"
   },
   "<marko-web-search-next-page-link>": {
-    "template": "./next-page-link.marko"
+    "template": "./next-page.marko"
   },
   "<marko-web-search-previous-page-link>": {
-    "template": "./previous-page-link.marko"
+    "template": "./previous-page.marko"
   }
 }
