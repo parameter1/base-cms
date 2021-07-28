@@ -1,3 +1,5 @@
+const MarkoWebSearchQueryParam = require('./param');
+
 const { isArray } = Array;
 
 const resetPage = ({ query } = {}) => {
@@ -44,15 +46,13 @@ class MarkoWebSearchQueryParamConfig {
 
     this
       .add('limit', {
-        type: Number,
-        default: resultsPerPage.default,
+        defaultValue: resultsPerPage.default,
         validator: v => (v >= resultsPerPage.min && v <= resultsPerPage.max),
         toInput: v => parseInt(v, 10),
         onParamUpdate: resetPage,
       })
       .add('page', {
-        type: Number,
-        default: 1,
+        defaultValue: 1,
         validator: (v, search) => {
           if (v < 1) return false;
           const limit = search.getInputValueFor('limit');
@@ -61,14 +61,11 @@ class MarkoWebSearchQueryParamConfig {
         toInput: v => parseInt(v, 10),
       })
       .add('searchQuery', {
-        type: String,
-        default: '',
+        defaultValue: '',
         onParamUpdate: resetPage,
       })
       .add('contentTypes', {
-        isFilter: true,
-        type: Array,
-        default: () => [],
+        defaultValue: () => [],
         filter: types => types.filter(type => contentTypeIdMap.has(type)),
         validator: types => types.every(type => contentTypeIdMap.has(type)),
         onParamUpdate: resetPage,
@@ -76,9 +73,7 @@ class MarkoWebSearchQueryParamConfig {
         fromInput: fromArrayInput,
       })
       .add('assignedToWebsiteSectionIds', {
-        isFilter: true,
-        type: Array,
-        default: () => [],
+        defaultValue: () => [],
         filter: ids => ids.filter(id => assignedToWebsiteSectionIdMap.has(id)),
         validator: ids => ids.every(id => assignedToWebsiteSectionIdMap.has(id)),
         onParamUpdate: resetPage,
@@ -88,7 +83,7 @@ class MarkoWebSearchQueryParamConfig {
   }
 
   add(name, param) {
-    this.params.set(name, { ...param, name });
+    this.params.set(name, new MarkoWebSearchQueryParam({ ...param, name }));
     return this;
   }
 

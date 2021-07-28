@@ -1,5 +1,3 @@
-const { isFunction: isFn } = require('@parameter1/base-cms-utils');
-
 class MarkoWebSearch {
   constructor({ config, query = {} } = {}) {
     this.config = config;
@@ -30,16 +28,8 @@ class MarkoWebSearch {
    */
   getInputValueFor(name) {
     const { query } = this;
-    const def = this.config.queryParams.getDefinition(name);
-    const { toInput, validator, filter } = def;
-
-    let value = isFn(toInput) ? toInput(query[name]) : query[name];
-    const defaultValue = isFn(def.default) ? def.default() : def.default;
-    if (value == null) value = defaultValue;
-    if (isFn(filter)) value = filter(value, this);
-    const isValid = isFn(validator) ? validator(value, this) : true;
-    if (isValid) return value;
-    return isFn(def.default) ? def.default() : def.default;
+    const definition = this.config.queryParams.getDefinition(name);
+    return definition.toInputValue(query[name], this);
   }
 }
 
