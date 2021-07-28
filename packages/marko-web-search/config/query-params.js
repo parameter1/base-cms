@@ -65,7 +65,7 @@ class MarkoWebSearchQueryParamConfig {
         onParamUpdate: resetPage,
       })
       .add('contentTypes', {
-        defaultValue: () => [],
+        defaultValue: () => contentTypeIds.slice(),
         filter: types => types.filter(type => contentTypeIdMap.has(type)),
         validator: types => types.every(type => contentTypeIdMap.has(type)),
         onParamUpdate: resetPage,
