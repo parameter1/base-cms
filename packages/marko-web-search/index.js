@@ -34,7 +34,8 @@ class MarkoWebSearch {
     const { toInput, validator } = def;
     const value = isFn(toInput) ? toInput(query[name]) : query[name];
     const isValid = isFn(validator) ? validator(value, this) : true;
-    if (isValid) return value;
+    const defaultValue = isFn(def.default) ? def.default() : def.default;
+    if (isValid) return value == null ? defaultValue : value;
     return isFn(def.default) ? def.default() : def.default;
   }
 }

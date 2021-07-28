@@ -36,7 +36,7 @@ class MarkoWebSearchConfig {
         min: Joi.number().integer().default(1),
         max: Joi.number().integer().default(100),
         default: Joi.number().integer().default(20),
-      }).default({}),
+      }).default(),
 
       contentTypes: Joi.array().items(
         Joi.string().trim().allow(...defaultContentTypes),
@@ -44,11 +44,11 @@ class MarkoWebSearchConfig {
 
       assignedToWebsiteSections: Joi.array().items(
         Joi.object({
-          id: Joi.number().integer().min(1),
+          id: Joi.number().integer().min(1).required(),
           label: Joi.string().trim().required(),
         }),
       ).default([]),
-    }).default({}), params);
+    }).default(), params);
 
     this.contentTypeObjects = contentTypes.map(type => ({
       id: underscore(type).toUpperCase(),
