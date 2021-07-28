@@ -46,15 +46,23 @@ class MarkoWebSearchQueryParam {
 
   isDefaultValue(input) {
     const defaultValue = this.getDefaultValue();
-    if (this.type === Array) {
-      return input.sort().join('') === defaultValue.sort().join('');
+    return this.areInputsEqual(input, defaultValue);
+  }
+
+  areInputsEqual(input1, input2) {
+    if (this.isArray()) {
+      return input1.sort().join('') === input2.sort().join('');
     }
-    return defaultValue === input;
+    return input1 === input2;
   }
 
   getDefaultValue() {
     const { defaultValue } = this;
     return (isFn(defaultValue)) ? defaultValue() : defaultValue;
+  }
+
+  isArray() {
+    return this.type === Array;
   }
 }
 

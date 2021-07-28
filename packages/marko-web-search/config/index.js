@@ -50,17 +50,21 @@ class MarkoWebSearchConfig {
       ).default([]),
     }).default(), params);
 
-    this.contentTypeObjects = contentTypes.map(type => ({
+    this.contentTypeObjects = contentTypes.sort().map(type => ({
       id: underscore(type).toUpperCase(),
       label: titleize(type),
     }));
 
-    this.assignedToWebsiteSections = assignedToWebsiteSections;
+    this.assignedToWebsiteSections = assignedToWebsiteSections.sort((a, b) => {
+      if (a.label > b.label) return 1;
+      if (a.label < b.label) return -1;
+      return 0;
+    });
 
     this.queryParams = new MarkoWebSearchQueryParamConfig({
       resultsPerPage,
       contentTypeIds: this.contentTypeObjects.map(({ id }) => id),
-      assignedToWebsiteSectionIds: assignedToWebsiteSections.map(section => section.id),
+      assignedToWebsiteSectionIds: this.assignedToWebsiteSections.map(section => section.id),
     });
   }
 }

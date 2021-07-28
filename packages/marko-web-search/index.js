@@ -47,6 +47,23 @@ class MarkoWebSearch {
     return definition.toInputValue(this.query[name], this);
   }
 
+  isInputValueSelectedFor(name, incomingInput) {
+    const definition = this.config.queryParams.getDefinition(name);
+    const currentInput = this.getInputValueFor(name);
+    return definition.areInputsEqual(currentInput, incomingInput);
+  }
+
+  isDefaultInputValueFor(name) {
+    const definition = this.config.queryParams.getDefinition(name);
+    const input = this.getInputValueFor(name);
+    return definition.isDefaultValue(input);
+  }
+
+  isArrayParam(name) {
+    const definition = this.config.queryParams.getDefinition(name);
+    return definition.isArray();
+  }
+
   /**
    *
    * @param {string} name The query parameter name
