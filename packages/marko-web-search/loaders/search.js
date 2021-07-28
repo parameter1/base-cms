@@ -52,8 +52,8 @@ module.exports = async ({ apolloBaseCMS, apolloBaseBrowse } = {}, {
 
   searchQuery,
   contentTypes = [],
-  siteIds = [],
-  sectionIds = [],
+  assignedToWebsitesSiteIds = [],
+  assignedToWebsitesSectionIds = [],
 
   queryFragment,
   opSuffix,
@@ -64,10 +64,10 @@ module.exports = async ({ apolloBaseCMS, apolloBaseBrowse } = {}, {
     statuses: ['PUBLISHED'],
     contentTypes,
     ...(searchQuery && { search: { query: searchQuery } }),
-    ...((siteIds.length || sectionIds.length) && {
+    ...((assignedToWebsitesSiteIds.length || assignedToWebsitesSectionIds.length) && {
       assignedToWebsites: {
-        ...(siteIds.length && { siteIds }),
-        ...(sectionIds.length && { sectionIds }),
+        ...(assignedToWebsitesSiteIds.length && { siteIds: assignedToWebsitesSiteIds }),
+        ...(assignedToWebsitesSectionIds.length && { sectionIds: assignedToWebsitesSectionIds }),
       },
     }),
     pagination: { limit, skip },
