@@ -40,8 +40,8 @@ const baseBrowseQuery = gql`
  * @param {number} [params.skip]
  * @param {string} [params.searchQuery]
  * @param {string[]} [params.contentTypes]
- * @param {string[]} [params.siteIds]
- * @param {number[]} [params.sectionIds]
+ * @param {string[]} [params.assignedToWebsiteSiteIds]
+ * @param {number[]} [params.assignedToWebsiteSectionIds]
  * @param {string} [params.queryFragment] The `graphql-tag` fragment
  *                                        to apply to the `allContent` query.
  * @param {string} [params.opSuffix] A suffix to add to the GraphQL operation name.
@@ -52,8 +52,8 @@ module.exports = async ({ apolloBaseCMS, apolloBaseBrowse } = {}, {
 
   searchQuery,
   contentTypes = [],
-  assignedToWebsitesSiteIds = [],
-  assignedToWebsitesSectionIds = [],
+  assignedToWebsiteSiteIds = [],
+  assignedToWebsiteSectionIds = [],
 
   queryFragment,
   opSuffix,
@@ -64,10 +64,10 @@ module.exports = async ({ apolloBaseCMS, apolloBaseBrowse } = {}, {
     statuses: ['PUBLISHED'],
     contentTypes,
     ...(searchQuery && { search: { query: searchQuery } }),
-    ...((assignedToWebsitesSiteIds.length || assignedToWebsitesSectionIds.length) && {
+    ...((assignedToWebsiteSiteIds.length || assignedToWebsiteSectionIds.length) && {
       assignedToWebsites: {
-        ...(assignedToWebsitesSiteIds.length && { siteIds: assignedToWebsitesSiteIds }),
-        ...(assignedToWebsitesSectionIds.length && { sectionIds: assignedToWebsitesSectionIds }),
+        ...(assignedToWebsiteSiteIds.length && { siteIds: assignedToWebsiteSiteIds }),
+        ...(assignedToWebsiteSectionIds.length && { sectionIds: assignedToWebsiteSectionIds }),
       },
     }),
     pagination: { limit, skip },
