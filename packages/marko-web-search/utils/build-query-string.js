@@ -16,8 +16,10 @@ const unset = (key, opts) => {
 };
 
 const setPage = (value, opts) => {
-  if (value && value > 1) return set('page', value, opts);
-  return unset('page', opts);
+  if (!value) return unset('page', opts);
+  const parsed = parseInt(value, 10);
+  if (!parsed || parsed < 1) return unset('page', opts);
+  return set('page', value, opts);
 };
 
 const setQuery = (value, opts) => {
