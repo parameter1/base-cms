@@ -1,9 +1,9 @@
 const MarkoWebSearch = require('./index');
 
 module.exports = ({ config, template } = {}) => (req, res) => {
-  const $search = new MarkoWebSearch({
+  res.locals.$markoWebSearch = new MarkoWebSearch({
     config,
     query: req.query,
   });
-  return res.marko(template, { $search });
+  return res.marko(template);
 };
