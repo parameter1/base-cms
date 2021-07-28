@@ -31,11 +31,14 @@ class MarkoWebSearch {
   getInputValueFor(name) {
     const { query } = this;
     const def = this.config.queryParams.getDefinition(name);
-    const { toInput, validator } = def;
-    const value = isFn(toInput) ? toInput(query[name]) : query[name];
-    const isValid = isFn(validator) ? validator(value, this) : true;
+    const { toInput, validator, filter } = def;
+
+    let value = isFn(toInput) ? toInput(query[name]) : query[name];
     const defaultValue = isFn(def.default) ? def.default() : def.default;
-    if (isValid) return value == null ? defaultValue : value;
+    if (value == null) value = defaultValue;
+    if (isFn(filter)) value = filter(value, this);
+    const isValid = isFn(validator) ? validator(value, this) : true;
+    if (isValid) return value;
     return isFn(def.default) ? def.default() : def.default;
   }
 }
