@@ -5,14 +5,17 @@ $ const {
   $baseBrowse: apolloBaseBrowse,
   config,
 } = out.global;
-$ const { sectionIds } = input;
+$ const { assignedToWebsiteSectionIds } = input;
 
 $ const params = {
   limit: input.limit,
   skip: input.skip,
   searchQuery: input.searchQuery,
   contentTypes: input.contentTypes,
-  ...(sectionIds && sectionIds.length ? { sectionIds }, { siteIds: [config.website("id")] }),
+  ...(assignedToWebsiteSectionIds && assignedToWebsiteSectionIds.length
+    ? { assignedToWebsiteSectionIds }
+    : { assignedToWebsiteSiteIds: [config.website("id")] }
+  ),
   queryFragment: input.queryFragment,
   opSuffix: input.opSuffix,
 };
