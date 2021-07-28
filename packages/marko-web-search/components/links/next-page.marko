@@ -1,0 +1,14 @@
+$ const { getNextPage } = input.$search;
+$ const nextPage = getNextPage({ totalCount: input.totalCount });
+
+<if(nextPage)>
+  <marko-search-link
+    class=input.class
+    target=input.target
+    rel=input.rel
+    attrs=input.attrs
+  >
+    <@update param="page" with=nextPage />
+    <${input.renderBody} />
+  </marko-search-link>
+</if>

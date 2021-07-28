@@ -1,5 +1,11 @@
 {
   "<marko-web-search-link>": {
     "template": "./link.marko"
+  },
+  "<marko-web-search-next-page-link>": {
+    "template": "./next-page-link.marko"
+  },
+  "<marko-web-search-previous-page-link>": {
+    "template": "./previous-page-link.marko"
   }
 }
