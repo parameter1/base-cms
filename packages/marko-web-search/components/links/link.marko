@@ -4,11 +4,11 @@ import buildQueryString from "../utils/build-query-string"
 
 $ const { req } = out.global;
 $ const path = defaultValue(input.path, req.path);
-$ const push = getAsObject(input, "push");
+$ const update = getAsObject(input, "push");
 $ const queryString = buildQueryString({
   $search: input.$search,
-  key: push.key,
-  value: push.value,
+  key: update.param,
+  value: update.with,
 });
 $ const href = `${path}${queryString}`;
 
