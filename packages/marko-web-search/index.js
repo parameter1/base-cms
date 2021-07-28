@@ -23,7 +23,6 @@ class MarkoWebSearch {
    * Gets all component (internal) input values from the current Express request query.
    *
    * Invalid values are reset to the definition's default value.
-   * @param {object} query The Express request query object.
    * @returns {object}
    */
   getAllInputValues() {
@@ -40,6 +39,7 @@ class MarkoWebSearch {
    * Invalid values are reset to the definition's default value.
    *
    * @param {string} name The query parameter name.
+   * @param {object} query The Express request query object.
    * @returns {*}
    */
   getInputValueFor(name) {
@@ -63,31 +63,31 @@ class MarkoWebSearch {
     return this.config.queryParams.names();
   }
 
-  page() {
+  getCurrentPage() {
     return this.getInputValueFor('page');
   }
 
-  limit() {
+  getLimit() {
     return this.getInputValueFor('limit');
   }
 
-  skip() {
-    return this.limit() * (this.page() - 1);
+  getSkip() {
+    return this.getLimit() * (this.getCurrentPage() - 1);
   }
 
-  totalPages(totalCount = 0) {
+  getTotalPages(totalCount = 0) {
     const count = totalCount > 10000 ? 10000 : totalCount;
-    return Math.ceil(count / this.limit());
+    return Math.ceil(count / this.getLimit());
   }
 
-  nextPage(totalCount = 0) {
-    const page = this.page();
-    const total = this.totalPages(totalCount);
+  getNextPage(totalCount = 0) {
+    const page = this.getCurrentPage();
+    const total = this.getTotalPages(totalCount);
     return page < total ? page + 1 : null;
   }
 
-  prevPage() {
-    const page = this.page();
+  getPrevPage() {
+    const page = this.getCurrentPage();
     return page > 1 ? page - 1 : null;
   }
 }
