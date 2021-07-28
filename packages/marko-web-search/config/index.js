@@ -14,7 +14,7 @@ class MarkoWebSearchConfig {
    * @param {object} [params.resultsPerPage=10] The results per page setting.
    * @param {number} [params.resultsPerPage.min=1]
    * @param {number} [params.resultsPerPage.max=100]
-   * @param {number} [params.resultsPerPage.defaukt=20]
+   * @param {number} [params.resultsPerPage.default=20]
    *
    * @param {string[]} [params.contentTypes] The allowed content type filters. Defaults to all.
    *                                         Should be provided as an array of classified content
