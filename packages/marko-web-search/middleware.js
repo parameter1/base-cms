@@ -33,14 +33,19 @@ module.exports = ({ config, template } = {}) => (req, res) => {
   const { query } = req;
   const page = parseInt(query.page, 10) || 1;
 
-  const getTotalPages = ({ totalCount }) => Math.ceil(totalCount / pageLimit);
+  const skip = page < 1 ? 0 : pageLimit * (page - 1);
+  const getTotalPages = ({ totalCount }) => {
+    const maxCount = 10000;
+    const count = totalCount > maxCount ? maxCount : totalCount;
+    Math.ceil(count / pageLimit);
+  };
 
   const $search = {
     config,
     query: getSearchQueryFilter({ query }),
     page: page >= 1 ? page : 1,
     limit: pageLimit,
-    skip: page < 1 ? 0 : pageLimit * (page - 1),
+    skip,
     selectedFilters: {
       contentTypes: getContentTypeFilters({ query, filters }),
       sectionIds: getSectionIdFilters({ query, filters }),
