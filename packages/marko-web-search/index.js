@@ -33,7 +33,7 @@ class MarkoWebSearch {
     const def = this.config.queryParams.getDefinition(name);
     const { toInput, validator } = def;
     const value = isFn(toInput) ? toInput(query[name]) : query[name];
-    const isValid = isFn(validator) ? validator(value, query) : true;
+    const isValid = isFn(validator) ? validator(value, this) : true;
     if (isValid) return value;
     return isFn(def.default) ? def.default() : def.default;
   }
