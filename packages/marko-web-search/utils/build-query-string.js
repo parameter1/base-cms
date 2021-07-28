@@ -39,8 +39,10 @@ const setContentType = (current, value, opts) => {
 };
 
 const setSectionId = (current, value, opts) => {
-  if (!value || value < 1) return build(opts);
-  const values = new Set(current);
+  if (!value) return build(opts);
+  const parsed = parseInt(value, 10);
+  if (!parsed || parsed < 1) return build(opts);
+  const values = new Set(parsed);
   values.add(value);
   return buildSet('sectionIds', values, opts);
 };
