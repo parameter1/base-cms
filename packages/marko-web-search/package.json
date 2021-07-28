@@ -10,7 +10,10 @@
     "test": "yarn compile && yarn lint"
   },
   "dependencies": {
+    "@parameter1/base-cms-inflector": "^2.0.0",
+    "@parameter1/base-cms-utils": "^2.22.2",
     "@parameter1/base-cms-web-common": "^2.32.0",
+    "@parameter1/joi": "^1.2.8",
     "graphql": "^14.7.0",
     "graphql-tag": "^2.11.0"
   },
