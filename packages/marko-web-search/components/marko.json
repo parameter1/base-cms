@@ -2,6 +2,9 @@
   "taglib-imports": [
     "./links/marko.json"
   ],
+  "<marko-web-search-build-href>": {
+    "template": "./build-href.marko"
+  },
   "<marko-web-search-query>": {
     "template": "./query.marko"
   }
