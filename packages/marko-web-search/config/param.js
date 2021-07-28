@@ -3,6 +3,7 @@ const { isFunction: isFn } = require('@parameter1/base-cms-utils');
 class MarkoWebSearchQueryParam {
   constructor({
     name,
+    type,
     defaultValue,
     validator,
     filter,
@@ -11,6 +12,7 @@ class MarkoWebSearchQueryParam {
     onParamUpdate,
   } = {}) {
     this.name = name;
+    this.type = type;
     this.defaultValue = defaultValue;
     this.validator = validator;
     this.filter = filter;
@@ -28,6 +30,22 @@ class MarkoWebSearchQueryParam {
     if (isFn(filter)) input = filter(input);
     const isValid = isFn(validator) ? validator(input, $markoWebSearch) : true;
     return isValid ? input : defaultValue;
+  }
+
+  toQueryValue(value, $markoWebSearch) {
+    const { fromInput } = this;
+    let v = this.toInputValue(value, $markoWebSearch);
+    if (this.isDefaultValue(v)) return null;
+    if (isFn(fromInput)) v = fromInput(v);
+    return v;
+  }
+
+  isDefaultValue(input) {
+    const defaultValue = this.getDefaultValue();
+    if (this.type === Array) {
+      return input.sort().join('') === defaultValue.sort().join('');
+    }
+    return defaultValue === input;
   }
 
   getDefaultValue() {

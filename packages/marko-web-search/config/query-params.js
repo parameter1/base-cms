@@ -46,12 +46,14 @@ class MarkoWebSearchQueryParamConfig {
 
     this
       .add('limit', {
+        type: Number,
         defaultValue: resultsPerPage.default,
         validator: v => (v >= resultsPerPage.min && v <= resultsPerPage.max),
         toInput: v => parseInt(v, 10),
         onParamUpdate: resetPage,
       })
       .add('page', {
+        type: Number,
         defaultValue: 1,
         validator: (v, search) => {
           if (v < 1) return false;
@@ -61,10 +63,12 @@ class MarkoWebSearchQueryParamConfig {
         toInput: v => parseInt(v, 10),
       })
       .add('searchQuery', {
+        type: String,
         defaultValue: '',
         onParamUpdate: resetPage,
       })
       .add('contentTypes', {
+        type: Array,
         defaultValue: () => contentTypeIds.slice(),
         filter: types => types.filter(type => contentTypeIdMap.has(type)),
         validator: types => types.every(type => contentTypeIdMap.has(type)),
@@ -73,6 +77,7 @@ class MarkoWebSearchQueryParamConfig {
         fromInput: fromArrayInput,
       })
       .add('assignedToWebsiteSectionIds', {
+        type: Array,
         defaultValue: () => [],
         filter: ids => ids.filter(id => assignedToWebsiteSectionIdMap.has(id)),
         validator: ids => ids.every(id => assignedToWebsiteSectionIdMap.has(id)),
@@ -88,7 +93,7 @@ class MarkoWebSearchQueryParamConfig {
   }
 
   names() {
-    return [...this.params.keys()];
+    return [...this.params.keys()].sort();
   }
 
   getDefinition(name) {

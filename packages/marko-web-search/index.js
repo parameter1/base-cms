@@ -4,6 +4,20 @@ class MarkoWebSearch {
     this.query = query;
   }
 
+  buildURLSearchParams(newValues = {}) {
+    return new URLSearchParams(this.queryParamNames.reduce((o, name) => {
+      const value = this.getQueryStringValueFor(name, newValues[name]);
+      if (value == null) return o;
+      return { ...o, [name]: value };
+    }, {}));
+  }
+
+  buildQueryString(newValues = {}) {
+    const params = this.buildURLSearchParams(newValues);
+    const str = `${params}`;
+    return str ? `?${str}` : '';
+  }
+
   /**
    * Gets all component (internal) input values from the current Express request query.
    *
@@ -11,7 +25,7 @@ class MarkoWebSearch {
    * @returns {object}
    */
   getAllInputValues() {
-    return this.config.queryParams.names().reduce((o, name) => {
+    return this.queryParamNames.reduce((o, name) => {
       const value = this.getInputValueFor(name);
       return { ...o, [name]: value };
     }, {});
@@ -30,6 +44,23 @@ class MarkoWebSearch {
     const { query } = this;
     const definition = this.config.queryParams.getDefinition(name);
     return definition.toInputValue(query[name], this);
+  }
+
+  /**
+   *
+   * @param {string} name The query parameter name
+   * @param {*} [newValue] The optional new value to replace
+   * @returns {string?}
+   */
+  getQueryStringValueFor(name, newValue) {
+    const { query } = this;
+    const definition = this.config.queryParams.getDefinition(name);
+    const value = typeof newValue === 'undefined' ? query[name] : newValue;
+    return definition.toQueryValue(value, this);
+  }
+
+  get queryParamNames() {
+    return this.config.queryParams.names();
   }
 
   page() {
