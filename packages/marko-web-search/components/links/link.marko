@@ -1,0 +1,23 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/defualt-value";
+import { getAsObject } from "@parameter1/base-cms-object-path";
+import buildQueryString from "../utils/build-query-string"
+
+$ const { req } = out.global;
+$ const path = defaultValue(input.path, req.path);
+$ const push = getAsObject(input, "push");
+$ const queryString = buildQueryString({
+  $search: input.$search,
+  key: push.key,
+  value: push.value,
+});
+$ const href = `${path}${queryString}`;
+
+<marko-web-link
+  class=input.class
+  href=input.href
+  target=input.target
+  rel=input.rel
+  attrs=input.attrs
+>
+  <${input.renderBody} />
+</marko-web-link>

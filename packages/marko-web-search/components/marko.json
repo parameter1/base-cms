@@ -1,4 +1,7 @@
 {
+  "taglib-imports": [
+    "./links/marko.json"
+  ],
   "<marko-web-search-query>": {
     "template": "./query.marko"
   }
