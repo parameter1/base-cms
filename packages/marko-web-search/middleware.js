@@ -11,15 +11,16 @@ const parseJSON = (value) => {
 const getContentTypeFilters = ({ query, filters }) => {
   const { contentTypeMap } = filters;
   const contentTypes = asArray(parseJSON(query.contentTypes));
-  return contentTypes.filter(type => contentTypeMap.has(type));
+  return [...new Set(contentTypes.filter(type => contentTypeMap.has(type)).sort())];
 };
 
 const getSectionIdFilters = ({ query, filters }) => {
   const { sectionIdMap } = filters;
   const sectionIds = asArray(parseJSON(query.sectionIds))
     .map(v => parseInt(v, 10))
-    .filter(id => sectionIdMap.has(id));
-  return sectionIds;
+    .filter(id => sectionIdMap.has(id))
+    .sort();
+  return [...new Set(sectionIds)];
 };
 
 const getSearchQueryFilter = ({ query }) => {
@@ -36,8 +37,8 @@ module.exports = ({ config, template } = {}) => (req, res) => {
 
   const $search = {
     config,
-    searchQuery: getSearchQueryFilter({ query }),
-    page,
+    query: getSearchQueryFilter({ query }),
+    page: page >= 1 ? page : 1,
     limit: pageLimit,
     skip: page < 1 ? 0 : pageLimit * (page - 1),
     selectedFilters: {
