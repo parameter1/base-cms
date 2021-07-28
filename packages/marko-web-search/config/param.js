@@ -9,7 +9,6 @@ class MarkoWebSearchQueryParam {
     filter,
     toInput,
     fromInput,
-    onParamUpdate,
   } = {}) {
     this.name = name;
     this.type = type;
@@ -18,7 +17,6 @@ class MarkoWebSearchQueryParam {
     this.filter = filter;
     this.toInput = toInput;
     this.fromInput = fromInput;
-    this.onParamUpdate = onParamUpdate;
   }
 
   toInputValue(value, $markoWebSearch) {
@@ -32,9 +30,15 @@ class MarkoWebSearchQueryParam {
     return isValid ? input : defaultValue;
   }
 
-  toQueryValue(value, $markoWebSearch) {
-    const { fromInput } = this;
-    let v = this.toInputValue(value, $markoWebSearch);
+  toQueryValue(input, $markoWebSearch) {
+    const { fromInput, filter, validator } = this;
+    const defaultValue = this.getDefaultValue();
+
+    let v = input;
+    if (v == null) v = defaultValue;
+    if (isFn(filter)) v = filter(v);
+    const isValid = isFn(validator) ? validator(v, $markoWebSearch) : true;
+    if (!isValid) v = defaultValue;
     if (this.isDefaultValue(v)) return null;
     if (isFn(fromInput)) v = fromInput(v);
     return v;

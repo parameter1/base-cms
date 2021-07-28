@@ -2,6 +2,7 @@ class MarkoWebSearch {
   constructor({ config, query = {} } = {}) {
     this.config = config;
     this.query = query;
+    this.input = this.getAllInputValues();
   }
 
   buildURLSearchParams(newValues = {}) {
@@ -22,6 +23,7 @@ class MarkoWebSearch {
    * Gets all component (internal) input values from the current Express request query.
    *
    * Invalid values are reset to the definition's default value.
+   * @param {object} query The Express request query object.
    * @returns {object}
    */
   getAllInputValues() {
@@ -37,13 +39,12 @@ class MarkoWebSearch {
    *
    * Invalid values are reset to the definition's default value.
    *
-   * @param {string} name The query parameter name
+   * @param {string} name The query parameter name.
    * @returns {*}
    */
   getInputValueFor(name) {
-    const { query } = this;
     const definition = this.config.queryParams.getDefinition(name);
-    return definition.toInputValue(query[name], this);
+    return definition.toInputValue(this.query[name], this);
   }
 
   /**
@@ -53,9 +54,8 @@ class MarkoWebSearch {
    * @returns {string?}
    */
   getQueryStringValueFor(name, newValue) {
-    const { query } = this;
     const definition = this.config.queryParams.getDefinition(name);
-    const value = typeof newValue === 'undefined' ? query[name] : newValue;
+    const value = typeof newValue === 'undefined' ? this.input[name] : newValue;
     return definition.toQueryValue(value, this);
   }
 
