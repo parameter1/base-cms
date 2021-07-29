@@ -5,16 +5,17 @@ class MarkoWebSearch {
     this.input = this.getAllInputValues();
   }
 
-  buildURLSearchParams(newValues = {}) {
+  buildURLSearchParams(newValues = {}, omit = {}) {
     return new URLSearchParams(this.queryParamNames.reduce((o, name) => {
+      if (omit[name]) return o;
       const value = this.getQueryStringValueFor(name, newValues[name]);
       if (value == null) return o;
       return { ...o, [name]: value };
     }, {}));
   }
 
-  buildQueryString(newValues = {}) {
-    const params = this.buildURLSearchParams(newValues);
+  buildQueryString(newValues = {}, omit = {}) {
+    const params = this.buildURLSearchParams(newValues, omit);
     const str = `${params}`;
     return str ? `?${str}` : '';
   }
