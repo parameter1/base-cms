@@ -15,7 +15,9 @@ $ const queryValues = {
 $ const isSelected = search.isInputValueSelectedFor(name, v);
 
 <if(isSelected)>
-  <${input.renderBody} is-selected=true />
+  <span>
+    <${input.renderBody} is-selected=true />
+  </span>
 </if>
 <else>
   <marko-web-search-link
