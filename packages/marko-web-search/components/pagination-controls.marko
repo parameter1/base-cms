@@ -1,0 +1,36 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import { get } from "@parameter1/base-cms-object-path";
+
+$ const { $markoWebSearch: search } = out.global;
+$ const totalCount = defaultValue(input.totalCount, 0);
+$ const linkClasses = get(input.link, "class");
+
+$ const blockName = "marko-web-search-pagination-controls";
+
+<if(totalCount)>
+  <marko-web-block ...input.block name=blockName>
+    <marko-web-search-previous-page-link
+      ...input.link
+      class=`${linkClasses} ${blockName}__prev`
+    />
+
+    <marko-web-element block-name=blockName name="pages">
+      $ const currentPage = search.getCurrentPage();
+      $ const totalPages = search.getTotalPages(totalCount);
+      <if(input.renderBody)>
+        <!-- custom rendering -->
+        <${input.renderBody} current-page=currentPage total-pages=totalPages />
+      </if>
+      <else>
+        <!-- default rendering -->
+        Page ${currentPage} of ${totalPages}
+      </else>
+    </marko-web-element>
+
+    <marko-web-search-next-page-link
+      ...input.link
+      class=`${linkClasses} ${blockName}__next`
+      total-count=totalCount
+    />
+  </marko-web-block>
+</if>

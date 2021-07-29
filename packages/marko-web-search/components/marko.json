@@ -9,6 +9,12 @@
   "<marko-web-search-query>": {
     "template": "./query.marko"
   },
+  "<marko-web-search-pagination-controls>": {
+    "template": "./pagination-controls.marko",
+    "<block>": {},
+    "<link>": {},
+    "@total-count": "number"
+  },
   "<marko-web-search-query-child-sections>": {
     "template": "./query-child-sections.marko"
   }
