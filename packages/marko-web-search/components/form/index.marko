@@ -1,0 +1,23 @@
+import { getAsObject } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import { cleanPath } from "@parameter1/base-cms-utils";
+
+$ const blockName = "marko-web-search-form";
+$ const { req, $markoWebSearch: search } = out.global;
+$ const path = defaultValue(input.path, req.path);
+$ const params = search.buildURLSearchParams({ page: 1 }, { searchQuery: true });
+
+<marko-web-block ...input.block tag="form" name=blockName>
+  <@attrs
+    ...getAsObject(input.block, "attrs")
+    method="GET"
+    action=`/${cleanPath(path)}`
+  />
+  <for|name| of=params.keys()>
+    $ const value = params.get(name);
+    <if(value)>
+      <input type="hidden" name=name value=params.get(name)>
+    </if>
+  </for>
+  <${input.renderBody} block-name=blockName />
+</marko-web-block>

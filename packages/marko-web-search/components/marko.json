@@ -1,10 +1,13 @@
 {
   "taglib-imports": [
     "./filters/marko.json",
+    "./form/marko.json",
     "./links/marko.json"
   ],
   "<marko-web-search-build-href>": {
-    "template": "./build-href.marko"
+    "template": "./build-href.marko",
+    "@path": "string",
+    "@query-values": "object"
   },
   "<marko-web-search-query>": {
     "template": "./query.marko"

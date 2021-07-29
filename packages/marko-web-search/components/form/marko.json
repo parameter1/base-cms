@@ -1,0 +1,10 @@
+{
+  "<marko-web-search-form>": {
+    "template": "./index.marko",
+    "<block>": {},
+    "@path": "string"
+  },
+  "<marko-web-search-input>": {
+    "template": "./input.marko"
+  }
+}
