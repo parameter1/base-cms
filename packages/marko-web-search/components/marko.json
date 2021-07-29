@@ -1,5 +1,6 @@
 {
   "taglib-imports": [
+    "./filters/marko.json",
     "./links/marko.json"
   ],
   "<marko-web-search-build-href>": {
@@ -7,5 +8,8 @@
   },
   "<marko-web-search-query>": {
     "template": "./query.marko"
+  },
+  "<marko-web-search-query-child-sections>": {
+    "template": "./query-child-sections.marko"
   }
 }

@@ -1,0 +1,45 @@
+import { get, getAsArray, getAsObject } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const blockName = "marko-web-search-filter";
+$ const items = getAsArray(input.items);
+$ const { filterKey } = input;
+$ const item = getAsObject(input.item);
+$ const itemIdPath = defaultValue(item.idPath, "id");
+$ const itemLabelPath = defaultValue(item.labelPath, "label");
+
+<if(items.length)>
+  <marko-web-block name=blockName modifiers=input.modifiers>
+    <if(input.title)>
+      <marko-web-element block-name=blockName name="title">
+        <${input.title} block-name=blockName />
+        <marko-web-search-reset-filter-link name=filterKey class=`${blockName}__reset`>
+          Reset
+        </marko-web-search-reset-filter-link>
+      </marko-web-element>
+    </if>
+    <marko-web-element tag="ul" block-name=blockName name="items">
+      <for|node| of=items>
+        $ const id = get(node, itemIdPath);
+        $ const label = get(node, itemLabelPath);
+        <marko-web-element ...item.element tag="li" block-name=blockName name="item">
+          <if(item.renderBody)>
+            <!-- custom filter item rendering -->
+            <${item.renderBody}
+              node=node
+              block-name=blockName
+              id=id
+              label=label
+            />
+          </if>
+          <else>
+            <!-- default item rendering -->
+            <marko-web-search-set-filter-value-link name=filterKey value=id>
+              ${label}
+            </marko-web-search-set-filter-value-link>
+          </else>
+        </marko-web-element>
+      </for>
+    </marko-web-element>
+  </marko-web-block>
+</if>

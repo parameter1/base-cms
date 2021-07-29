@@ -1,0 +1,20 @@
+{
+  "<marko-web-search-content-types-filter>": {
+    "template": "./content-types.marko"
+  },
+  "<marko-web-search-filter-block>": {
+    "template": "./filter-block.marko",
+    "<title>": {},
+    "<item>": {
+      "<element>": {},
+      "@id-path": "string",
+      "@label-path": "string"
+    },
+    "@filter-key": "string",
+    "@items": "array",
+    "@modifiers": "array"
+  },
+  "<marko-web-search-website-sections-filter>": {
+    "template": "./website-sections.marko"
+  }
+}
