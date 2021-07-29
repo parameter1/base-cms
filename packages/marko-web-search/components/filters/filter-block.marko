@@ -1,6 +1,8 @@
 import { get, getAsArray, getAsObject } from "@parameter1/base-cms-object-path";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 
+$ const { $markoWebSearch: search } = out.global;
+
 $ const blockName = "marko-web-search-filter";
 $ const items = getAsArray(input.items);
 $ const { filterKey } = input;
@@ -22,7 +24,10 @@ $ const itemLabelPath = defaultValue(item.labelPath, "label");
       <for|node| of=items>
         $ const id = get(node, itemIdPath);
         $ const label = get(node, itemLabelPath);
-        <marko-web-element ...item.element tag="li" block-name=blockName name="item">
+        $ const value = search.isArrayParam(filterKey) ? [id] : id;
+        $ const isSelected = search.isInputValueSelectedFor(filterKey, value);
+        $ const modifiers = isSelected ? ["selected"] : [];
+        <marko-web-element ...item.element tag="li" block-name=blockName name="item" modifiers=modifiers>
           <if(item.renderBody)>
             <!-- custom filter item rendering -->
             <${item.renderBody}
@@ -30,6 +35,7 @@ $ const itemLabelPath = defaultValue(item.labelPath, "label");
               block-name=blockName
               id=id
               label=label
+              is-selected=isSelected
             />
           </if>
           <else>
