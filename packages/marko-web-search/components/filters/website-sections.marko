@@ -10,7 +10,7 @@ $ const filterKey = "assignedToWebsiteSectionIds";
 })>
   $ const { selectedSection, configuredSections } = resolved;
   <marko-web-search-filter-block filter-key=filterKey items=configuredSections>
-    <@title>Sections</@title>
+    <@title>Website Sections</@title>
     <@item|{ node, blockName }|>
       <if(selectedSection && selectedSection.hierarchyMap.has(node.id))>
         <!-- loop through hierarchy to create "breadcrumb" links -->
