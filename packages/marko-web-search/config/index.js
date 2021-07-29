@@ -20,17 +20,16 @@ class MarkoWebSearchConfig {
    *                                         Should be provided as an array of classified content
    *                                         type strings, e.g. ['Article', 'MediaGallery'] etc.
    *
-   * @param {object[]} [params.assignedToWebsiteSections] The allowed website section filters.
+   * @param {object[]} [params.assignedToWebsiteSectionIds] The allowed website section filters.
    *                                                      Defaults to none. Should be an array of
-   *                                                      section objects, e.g.
-   *                                                      [{ id: 123 label: 'Foo', }]
+   *                                                      section IDs, e.g. [123, 321]
    *
    */
   constructor(params = {}) {
     const {
       resultsPerPage,
       contentTypes,
-      assignedToWebsiteSections,
+      assignedToWebsiteSectionIds,
     } = validate(Joi.object({
       resultsPerPage: Joi.object({
         min: Joi.number().integer().default(1),
@@ -42,11 +41,8 @@ class MarkoWebSearchConfig {
         Joi.string().trim().allow(...defaultContentTypes),
       ).default(defaultContentTypes),
 
-      assignedToWebsiteSections: Joi.array().items(
-        Joi.object({
-          id: Joi.number().integer().min(1).required(),
-          label: Joi.string().trim().required(),
-        }),
+      assignedToWebsiteSectionIds: Joi.array().items(
+        Joi.number().integer().min(1).required(),
       ).default([]),
     }).default(), params);
 
@@ -55,16 +51,11 @@ class MarkoWebSearchConfig {
       label: titleize(type),
     }));
 
-    this.assignedToWebsiteSections = assignedToWebsiteSections.sort((a, b) => {
-      if (a.label > b.label) return 1;
-      if (a.label < b.label) return -1;
-      return 0;
-    });
+    this.assignedToWebsiteSectionIds = assignedToWebsiteSectionIds;
 
     this.queryParams = new MarkoWebSearchQueryParamConfig({
       resultsPerPage,
       contentTypeIds: this.contentTypeObjects.map(({ id }) => id),
-      assignedToWebsiteSectionIds: this.assignedToWebsiteSections.map(section => section.id),
     });
   }
 }

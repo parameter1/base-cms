@@ -2,12 +2,6 @@ const MarkoWebSearchQueryParam = require('./param');
 
 const { isArray } = Array;
 
-const resetPage = ({ query } = {}) => {
-  const q = { ...query };
-  delete q.page;
-  return q;
-};
-
 const unqArray = array => [...new Set(array)];
 
 const toArrayInput = (str, mapFunc) => {
@@ -30,16 +24,10 @@ class MarkoWebSearchQueryParamConfig {
   constructor({
     resultsPerPage = {},
     contentTypeIds = [],
-    assignedToWebsiteSectionIds = [],
   } = {}) {
     this.params = new Map();
 
     const contentTypeIdMap = contentTypeIds.reduce((m, id) => {
-      m.set(id, true);
-      return m;
-    }, new Map());
-
-    const assignedToWebsiteSectionIdMap = assignedToWebsiteSectionIds.reduce((m, id) => {
       m.set(id, true);
       return m;
     }, new Map());
@@ -50,7 +38,6 @@ class MarkoWebSearchQueryParamConfig {
         defaultValue: resultsPerPage.default,
         validator: v => (v >= resultsPerPage.min && v <= resultsPerPage.max),
         toInput: v => parseInt(v, 10),
-        onParamUpdate: resetPage,
       })
       .add('page', {
         type: Number,
@@ -65,23 +52,18 @@ class MarkoWebSearchQueryParamConfig {
       .add('searchQuery', {
         type: String,
         defaultValue: '',
-        onParamUpdate: resetPage,
       })
       .add('contentTypes', {
         type: Array,
         defaultValue: () => contentTypeIds.slice(),
         filter: types => types.filter(type => contentTypeIdMap.has(type)),
         validator: types => types.every(type => contentTypeIdMap.has(type)),
-        onParamUpdate: resetPage,
         toInput: toStringArrayInput,
         fromInput: fromArrayInput,
       })
       .add('assignedToWebsiteSectionIds', {
         type: Array,
         defaultValue: () => [],
-        filter: ids => ids.filter(id => assignedToWebsiteSectionIdMap.has(id)),
-        validator: ids => ids.every(id => assignedToWebsiteSectionIdMap.has(id)),
-        onParamUpdate: resetPage,
         toInput: toIntArrayInput,
         fromInput: fromArrayInput,
       });
