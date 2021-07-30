@@ -1,4 +1,7 @@
 {
+  "taglib-imports": [
+    "./selected/marko.json"
+  ],
   "<marko-web-search-content-types-filter>": {
     "template": "./content-types.marko"
   },

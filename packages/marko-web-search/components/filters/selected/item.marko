@@ -1,0 +1,16 @@
+$ const blockName = "marko-web-search-selected-filter";
+$ const { prefix } = input;
+
+<marko-web-block name=blockName>
+  <marko-web-element block-name=blockName name="label">
+    <if(prefix)>
+      ${input.prefix}: ${input.label}
+    </if>
+    <else>
+      ${input.label}
+    </else>
+  </marko-web-element>
+  <marko-web-search-reset-filter-link name=input.filterKey class=`${blockName}__reset`>
+    <marko-web-icon name="x" modifiers=[blockName] />
+  </marko-web-search-reset-filter-link>
+</marko-web-block>
