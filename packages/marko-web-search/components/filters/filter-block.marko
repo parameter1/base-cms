@@ -1,31 +1,40 @@
 import { get, getAsArray, getAsObject } from "@parameter1/base-cms-object-path";
+import { dasherize } from "@parameter1/base-cms-inflector";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 
 $ const { $markoWebSearch: search } = out.global;
 
 $ const blockName = "marko-web-search-filter";
 $ const items = getAsArray(input.items);
-$ const { filterKey } = input;
+$ const { title, filterKey } = input;
 $ const item = getAsObject(input.item);
 $ const itemIdPath = defaultValue(item.idPath, "id");
 $ const itemLabelPath = defaultValue(item.labelPath, "label");
-$ const reset = getAsObject(input, "reset");
-$ const showReset = defaultValue(reset.show, false);
-$ const showLabel = defaultValue(reset.label, "Clear");
+$ const titleModifier = dasherize(filterKey);
 
 <if(items.length)>
   <marko-web-block name=blockName modifiers=input.modifiers>
-    <if(input.title)>
-      <marko-web-element block-name=blockName name="title">
-        <${input.title} block-name=blockName />
-        <if(showReset)>
-          <marko-web-search-reset-filter-link name=filterKey class=`${blockName}__reset`>
-            ${showLabel}
-          </marko-web-search-reset-filter-link>
-        </if>
-      </marko-web-element>
+    <if(title)>
+      <if(title.renderBlock)>
+        <${title.renderBlock} />
+      </if>
+      <else>
+        <marko-web-browser-component
+          name="MarkoWebSearchToggleFilter"
+          props={
+            label: title.value,
+            target: `.${blockName}__items--${titleModifier}`,
+            toggleClass: `${blockName}__items--open`,
+          }
+        />
+      </else>
     </if>
-    <marko-web-element tag="ul" block-name=blockName name="items">
+    <marko-web-element
+      tag="ul"
+      block-name=blockName
+      name="items"
+      modifiers=["open", titleModifier]
+    >
       <for|node| of=items>
         $ const id = get(node, itemIdPath);
         $ const label = get(node, itemLabelPath);

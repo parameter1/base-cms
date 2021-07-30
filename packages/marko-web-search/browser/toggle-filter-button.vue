@@ -22,11 +22,7 @@ export default {
   props: {
     className: {
       type: String,
-      default: 'marko-web-search-toggle-filter-container',
-    },
-    openMediaQuery: {
-      type: String,
-      default: '(min-width: 992px)',
+      default: 'marko-web-search-toggle-filter',
     },
     target: {
       type: String,
@@ -38,20 +34,19 @@ export default {
     },
     label: {
       type: String,
-      default: 'Filters',
-    },
-    buttonLabel: {
-      type: String,
-      default: 'Toggle Filters',
+      required: true,
     },
   },
   data: () => ({
-    expanded: false,
+    expanded: true,
     iconName: 'chevron-up',
     expandedIconName: 'chevron-down',
   }),
 
   computed: {
+    buttonLabel() {
+      return `Toggle ${this.label} Filter`;
+    },
     icon() {
       if (this.expanded) return `icon-${this.expandedIconName}`;
       return `icon-${this.iconName}`;
@@ -65,21 +60,8 @@ export default {
     },
   },
 
-  mounted() {
-    const mql = window.matchMedia(this.openMediaQuery);
-    this.handleMediaQueryState(mql.matches);
-    mql.addEventListener('change', ({ matches }) => {
-      this.handleMediaQueryState(matches);
-    });
-  },
-
   methods: {
-    handleMediaQueryState(matches) {
-      this.expanded = matches;
-    },
-
     toggle() {
-      this.hasUserInteraction = true;
       this.expanded = !this.expanded;
     },
   },
