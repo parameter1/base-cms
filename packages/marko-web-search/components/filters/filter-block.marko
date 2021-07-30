@@ -9,15 +9,20 @@ $ const { filterKey } = input;
 $ const item = getAsObject(input.item);
 $ const itemIdPath = defaultValue(item.idPath, "id");
 $ const itemLabelPath = defaultValue(item.labelPath, "label");
+$ const reset = getAsObject(input, "reset");
+$ const showReset = defaultValue(reset.show, false);
+$ const showLabel = defaultValue(reset.label, "Clear");
 
 <if(items.length)>
   <marko-web-block name=blockName modifiers=input.modifiers>
     <if(input.title)>
       <marko-web-element block-name=blockName name="title">
         <${input.title} block-name=blockName />
-        <marko-web-search-reset-filter-link name=filterKey class=`${blockName}__reset`>
-          Clear
-        </marko-web-search-reset-filter-link>
+        <if(showReset)>
+          <marko-web-search-reset-filter-link name=filterKey class=`${blockName}__reset`>
+            ${showLabel}
+          </marko-web-search-reset-filter-link>
+        </if>
       </marko-web-element>
     </if>
     <marko-web-element tag="ul" block-name=blockName name="items">
@@ -40,7 +45,7 @@ $ const itemLabelPath = defaultValue(item.labelPath, "label");
           </if>
           <else>
             <!-- default item rendering -->
-            <marko-web-search-set-filter-value-link name=filterKey value=id>
+            <marko-web-search-set-filter-value-link name=filterKey value=id reset-class=`${blockName}__clear-item`>
               ${label}
             </marko-web-search-set-filter-value-link>
           </else>

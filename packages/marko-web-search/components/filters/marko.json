@@ -13,6 +13,10 @@
       "@id-path": "string",
       "@label-path": "string"
     },
+    "<reset>": {
+      "@show": "boolean",
+      "@label": "string"
+    },
     "@filter-key": "string",
     "@items": "array",
     "@modifiers": "array"

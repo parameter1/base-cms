@@ -17,7 +17,7 @@ $ const filterKey = "assignedToWebsiteSectionIds";
         $ const { hierarchy } = selectedSection;
         <marko-web-element block-name=blockName name="item" modifiers=["breadcrumbs"]>
           <for|section| of=hierarchy>
-            <marko-web-search-set-filter-value-link name=filterKey value=section.id>
+            <marko-web-search-set-filter-value-link name=filterKey value=section.id reset-class=`${blockName}__clear-item`>
               ${section.name}
             </marko-web-search-set-filter-value-link>
           </for>
