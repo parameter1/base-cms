@@ -1,0 +1,17 @@
+{
+  "<marko-web-search-link>": {
+    "template": "./link.marko"
+  },
+  "<marko-web-search-next-page-link>": {
+    "template": "./next-page.marko"
+  },
+  "<marko-web-search-previous-page-link>": {
+    "template": "./previous-page.marko"
+  },
+  "<marko-web-search-reset-filter-link>": {
+    "template": "./reset-filter.marko"
+  },
+  "<marko-web-search-set-filter-value-link>": {
+    "template": "./set-filter-value.marko"
+  }
+}

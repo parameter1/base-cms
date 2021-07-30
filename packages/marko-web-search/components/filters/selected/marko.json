@@ -1,0 +1,8 @@
+{
+  "<marko-web-search-selected-filters>": {
+    "template": "./index.marko"
+  },
+  "<marko-web-search-selected-filter>": {
+    "template": "./item.marko"
+  }
+}

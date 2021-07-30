@@ -1,0 +1,21 @@
+$ const { $markoWebSearch: search } = out.global;
+
+$ const previousPage = search.getPrevPage();
+
+<if(previousPage)>
+  <marko-web-search-link
+    path=input.path
+    query-values={ page: previousPage }
+    class=input.class
+    target=input.target
+    rel=input.rel
+    attrs=input.attrs
+  >
+    <if(input.renderBody)>
+      <${input.renderBody} />
+    </if>
+    <else>
+      Previous Page
+    </else>
+  </marko-web-search-link>
+</if>

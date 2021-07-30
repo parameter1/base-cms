@@ -1,0 +1,24 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { $markoWebSearch: search } = out.global;
+$ const resetPage = defaultValue(input.resetPage, true);
+$ const { name } = input;
+
+$ const isDefaultValue = search.isDefaultInputValueFor(name);
+$ const queryValues = {
+  [name]: null,
+  ...(resetPage && { page: 1 }),
+};
+
+<if(!isDefaultValue)>
+  <marko-web-search-link
+    path=input.path
+    query-values=queryValues
+    class=input.class
+    target=input.target
+    rel=input.rel
+    attrs=input.attrs
+  >
+    <${input.renderBody} />
+  </marko-web-search-link>
+</if>

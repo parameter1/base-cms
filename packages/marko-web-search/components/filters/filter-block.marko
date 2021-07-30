@@ -1,0 +1,65 @@
+import { get, getAsArray, getAsObject } from "@parameter1/base-cms-object-path";
+import { dasherize } from "@parameter1/base-cms-inflector";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { $markoWebSearch: search } = out.global;
+
+$ const blockName = "marko-web-search-filter";
+$ const items = getAsArray(input.items);
+$ const { title, filterKey } = input;
+$ const item = getAsObject(input.item);
+$ const itemIdPath = defaultValue(item.idPath, "id");
+$ const itemLabelPath = defaultValue(item.labelPath, "label");
+$ const titleModifier = dasherize(filterKey);
+
+<if(items.length)>
+  <marko-web-block name=blockName modifiers=input.modifiers>
+    <if(title)>
+      <if(title.renderBlock)>
+        <${title.renderBlock} />
+      </if>
+      <else>
+        <marko-web-browser-component
+          name="MarkoWebSearchToggleFilter"
+          props={
+            label: title.value,
+            target: `.${blockName}__items--${titleModifier}`,
+            toggleClass: `${blockName}__items--open`,
+          }
+        />
+      </else>
+    </if>
+    <marko-web-element
+      tag="ul"
+      block-name=blockName
+      name="items"
+      modifiers=["open", titleModifier]
+    >
+      <for|node| of=items>
+        $ const id = get(node, itemIdPath);
+        $ const label = get(node, itemLabelPath);
+        $ const value = search.isArrayParam(filterKey) ? [id] : id;
+        $ const isSelected = search.isInputValueSelectedFor(filterKey, value);
+        $ const modifiers = isSelected ? ["selected"] : [];
+        <marko-web-element ...item.element tag="li" block-name=blockName name="item" modifiers=modifiers>
+          <if(item.renderBody)>
+            <!-- custom filter item rendering -->
+            <${item.renderBody}
+              node=node
+              block-name=blockName
+              id=id
+              label=label
+              is-selected=isSelected
+            />
+          </if>
+          <else>
+            <!-- default item rendering -->
+            <marko-web-search-set-filter-value-link name=filterKey value=id reset-class=`${blockName}__clear-item`>
+              ${label}
+            </marko-web-search-set-filter-value-link>
+          </else>
+        </marko-web-element>
+      </for>
+    </marko-web-element>
+  </marko-web-block>
+</if>

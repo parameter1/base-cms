@@ -1,0 +1,45 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { isArray } = Array;
+$ const { $markoWebSearch: search } = out.global;
+$ const { name } = input;
+
+$ const { value } = input;
+$ const v = search.isArrayParam(name) && !isArray(value) ? [value] : value;
+$ const resetPage = defaultValue(input.resetPage, true);
+$ const queryValues = {
+  [name]: v,
+  ...(resetPage && { page: 1 }),
+};
+$ const resetValues = {
+  ...queryValues,
+  [name]: null,
+};
+
+$ const isSelected = search.isInputValueSelectedFor(name, v);
+
+<if(isSelected)>
+  <!-- instruct the link to remove the current value -->
+  <marko-web-search-link
+    path=input.path
+    query-values=resetValues
+    class=input.resetClass
+    target=input.target
+    rel=input.rel
+    attrs=input.attrs
+  >
+    <${input.renderBody} is-selected=false />
+  </marko-web-search-link>
+</if>
+<else>
+  <marko-web-search-link
+    path=input.path
+    query-values=queryValues
+    class=input.class
+    target=input.target
+    rel=input.rel
+    attrs=input.attrs
+  >
+    <${input.renderBody} is-selected=false />
+  </marko-web-search-link>
+</else>

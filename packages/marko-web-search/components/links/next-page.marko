@@ -1,0 +1,21 @@
+$ const { $markoWebSearch: search } = out.global;
+
+$ const nextPage = search.getNextPage(input.totalCount);
+
+<if(nextPage)>
+  <marko-web-search-link
+    path=input.path
+    query-values={ page: nextPage }
+    class=input.class
+    target=input.target
+    rel=input.rel
+    attrs=input.attrs
+  >
+    <if(input.renderBody)>
+      <${input.renderBody} />
+    </if>
+    <else>
+      Next Page
+    </else>
+  </marko-web-search-link>
+</if>

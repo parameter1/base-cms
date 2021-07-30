@@ -1,0 +1,25 @@
+import loader from "../loaders/search";
+
+$ const {
+  apollo: apolloBaseCMS,
+  $baseBrowse: apolloBaseBrowse,
+  config,
+} = out.global;
+$ const { assignedToWebsiteSectionIds } = input;
+
+$ const params = {
+  limit: input.limit,
+  skip: input.skip,
+  searchQuery: input.searchQuery,
+  contentTypes: input.contentTypes,
+  ...(assignedToWebsiteSectionIds && assignedToWebsiteSectionIds.length
+    ? { assignedToWebsiteSectionIds }
+    : { assignedToWebsiteSiteIds: [config.website("id")] }
+  ),
+  queryFragment: input.queryFragment,
+  opSuffix: input.opSuffix,
+};
+
+<marko-web-resolve|{ resolved }| promise=loader({ apolloBaseCMS, apolloBaseBrowse }, params)>
+  <${input.renderBody} ...resolved />
+</marko-web-resolve>

@@ -1,0 +1,24 @@
+import gql from "graphql-tag";
+import { getAsArray } from "@parameter1/base-cms-object-path";
+
+$ const queryFragment = gql`
+  fragment MarkoWebSearchChildSectionsFragment on WebsiteSection {
+    id
+    children(input: { pagination: { limit: 100 }, sort: { field: name, order: asc } }) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+
+<marko-web-query-website-sections|{ nodes }|
+  include-ids=input.parentId
+  query-fragment=queryFragment
+>
+  $ const edges = getAsArray(nodes[0], "children.edges");
+  <${input.renderBody} nodes=edges.map(edge => edge.node) />
+</marko-web-query-website-sections>
