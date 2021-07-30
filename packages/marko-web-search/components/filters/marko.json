@@ -21,6 +21,12 @@
     "@items": "array",
     "@modifiers": "array"
   },
+  "<marko-web-search-filter-container>": {
+    "template": "./filter-container.marko",
+    "<title>": {
+      "@value": "string"
+    }
+  },
   "<marko-web-search-website-sections-filter>": {
     "template": "./website-sections.marko"
   }

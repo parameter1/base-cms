@@ -1,0 +1,29 @@
+import { getAsObject } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const blockName = "marko-web-search-filter-container";
+$ const title = getAsObject(input, "title");
+
+<marko-web-block name=blockName modifiers=input.modifiers>
+  <if(input.beforeTitle)>
+    <${input.beforeTitle} block-name=blockName />
+  </if>
+  <marko-web-element block-name=blockName name="title">
+    <if(title.renderBlock)>
+      <${title.renderBlock} />
+    </if>
+    <else>
+      <marko-web-browser-component
+        name="MarkoWebSearchToggleFiltersButton"
+        props={
+          label: title.value,
+          target: `.${blockName}__sections`,
+          toggleClass: `${blockName}__sections--open`,
+        }
+      />
+    </else>
+  </marko-web-element>
+  <marko-web-element block-name=blockName name="sections">
+    <${input.renderBody} />
+  </marko-web-element>
+</marko-web-block>
