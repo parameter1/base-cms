@@ -27,6 +27,7 @@
             :promotion-limit="promotionLimit"
             :video-limit="videoLimit"
             :featured-product-label="featuredProductLabel"
+            :allow-fly-out="allowFlyOut"
             @action="emitAction"
           />
         </leaders-columns>
@@ -109,6 +110,10 @@ export default {
     featuredProductLabel: {
       type: String,
       default: 'Featured Products',
+    },
+    allowFlyOut: {
+      type: Boolean,
+      default: true,
     },
   },
 

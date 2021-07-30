@@ -32,7 +32,7 @@
             :has-videos="item.videos.edges.length > 0"
           />
         </template>
-        <template #dropdown="{ item, isActive }">
+        <template v-if="allowFlyOut" #dropdown="{ item, isActive }">
           <card
             :company="item"
             :is-active="isActive"
@@ -107,6 +107,10 @@ export default {
     featuredProductLabel: {
       type: String,
       default: 'Featured Products',
+    },
+    allowFlyOut: {
+      type: Boolean,
+      default: true,
     },
   },
 
