@@ -50,6 +50,10 @@ class MarkoWebSearchConfig {
       id: underscore(type).toUpperCase(),
       label: titleize(type),
     }));
+    this.contentTypeObjectMap = this.contentTypeObjects.reduce((map, type) => {
+      map.set(type.id, type);
+      return map;
+    }, new Map());
 
     this.assignedToWebsiteSectionIds = assignedToWebsiteSectionIds;
 
