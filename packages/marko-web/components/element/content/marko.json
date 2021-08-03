@@ -135,6 +135,16 @@
     "@modifiers": "string",
     "@attrs": "object"
   },
+  "<marko-web-content-sidebar-stubs>": {
+    "template": "./sidebar-stubs.marko",
+    "<embed-options>": {},
+    "@block-name": "string",
+    "@obj": "object",
+    "@tag": "string",
+    "@class": "string",
+    "@modifiers": "string",
+    "@attrs": "object"
+  },
   "<marko-web-content-images>": {
     "template": "./images.marko",
     "@block-name": "string",
