@@ -208,6 +208,23 @@ module.exports = {
   /**
    *
    */
+  SidebarEnabledInterface: {
+    __resolveType: resolveType,
+    sidebarStubs: (content, { input }) => {
+      const { field, order } = input.sort;
+      const sidebars = getAsArray(content, 'sidebars');
+      return sidebars.sort((a, b) => {
+        const direction = order === 'asc' ? 1 : -1;
+        if (a[field] > b[field]) return direction;
+        if (a[field] < b[field]) return direction * -1;
+        return 0;
+      });
+    },
+  },
+
+  /**
+   *
+   */
   Contactable: {
     __resolveType: resolveType,
     website: ({ website }) => {
@@ -718,6 +735,31 @@ module.exports = {
     },
     caption: image => sitemap.escape(createCaptionFor(image.caption)),
     title: image => sitemap.escape(image.name),
+  },
+
+  ContentStubSidebar: {
+    body: async ({ body }, _, { site, basedb }) => {
+      if (!body) return null;
+      let value = body.trim();
+      if (!value) return null;
+
+      const imageHost = site.get('imageHost', defaults.imageHost);
+      const imageTags = await getEmbeddedImageTags(value, { imageHost, basedb });
+      imageTags.forEach((tag) => {
+        const replacement = tag.isValid() ? tag.build() : '';
+        value = value.replace(tag.getRegExp(), replacement);
+      });
+      return value;
+    },
+    name: ({ name }) => {
+      if (!name) return null;
+      return name.trim() || null;
+    },
+    label: ({ label }) => {
+      if (!label) return null;
+      return label.trim() || null;
+    },
+    sequence: ({ sequence }) => (sequence == null ? 0 : sequence),
   },
 
   /**

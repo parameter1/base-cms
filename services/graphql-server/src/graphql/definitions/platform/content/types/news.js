@@ -6,7 +6,7 @@ extend type Query {
   contentNews(input: ContentNewsQueryInput!): ContentNews @findOne(model: "platform.Content", using: { id: "_id" }, criteria: "contentNews")
 }
 
-type ContentNews implements Content & Authorable @applyInterfaceFields {
+type ContentNews implements Content & Authorable & SidebarEnabledInterface @applyInterfaceFields {
   # fields directly on platform.model::Content\News
   source: String @projection
   byline: String @projection

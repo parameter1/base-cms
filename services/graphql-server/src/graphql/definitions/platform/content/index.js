@@ -171,6 +171,13 @@ enum RelatedContentQueryType {
   company
 }
 
+type ContentStubSidebar {
+  body: String
+  name: String
+  label: String
+  sequence: Int!
+}
+
 type ContentGating {
   requiredRole: GateableUserRole
   surveyType: GateableSurveyProvider
