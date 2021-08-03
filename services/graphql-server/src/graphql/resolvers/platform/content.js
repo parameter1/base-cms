@@ -211,9 +211,13 @@ module.exports = {
   SidebarEnabledInterface: {
     __resolveType: resolveType,
     sidebarStubs: (content, { input }) => {
-      const { field, order } = input.sort;
+      const { labels, sort } = input;
+      const { field, order } = sort;
       const sidebars = getAsArray(content, 'sidebars');
-      return sidebars.sort((a, b) => {
+      return sidebars.filter((sidebar) => {
+        if (!labels.length) return true;
+        return labels.includes(sidebar.label);
+      }).sort((a, b) => {
         const direction = order === 'asc' ? 1 : -1;
         if (a[field] > b[field]) return direction;
         if (a[field] < b[field]) return direction * -1;

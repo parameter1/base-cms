@@ -12,6 +12,8 @@ enum ContentSidebarSortField {
 }
 
 input ContentSidebarStubsInput {
+  "Filters the sidebars by one or more labels. An empty value will return all sidebars"
+  labels: [String!] = []
   sort: ContentSidebarSortInput = {}
 }
 
