@@ -6,9 +6,9 @@ extend type Query {
   contentArticle(input: ContentArticleQueryInput!): ContentArticle @findOne(model: "platform.Content", using: { id: "_id" }, criteria: "contentArticle")
 }
 
-type ContentArticle implements Content & Authorable @applyInterfaceFields {
+type ContentArticle implements Content & Authorable & SidebarEnabledInterface @applyInterfaceFields {
   # fields directly on platform.model::Content\Article
-  sidebars: [String]! @projection
+  sidebars: [String]! @deprecated(reason: "Sidebars now support multiple fields. Use \`ContentArticle.sidebarStubs\` instead.") @projection
 }
 
 type ContentArticleConnection {
