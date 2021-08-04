@@ -10,10 +10,6 @@ app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
 
 app.use(apollo());
 app.use(websiteContext());
-app.use((req, res, next) => {
-  res.setHeader('X-Robots-Tag', 'noindex');
-  next();
-});
 
 routes(app);
 
