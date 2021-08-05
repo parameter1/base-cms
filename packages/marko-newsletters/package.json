@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-newsletters",
-  "version": "2.34.0",
+  "version": "2.37.1",
   "description": "Core Marko+Express components for BaseCMS newsletter templates",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "main": "index.js",
@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@godaddy/terminus": "^4.5.0",
-    "@parameter1/base-cms-express-apollo": "^2.34.0",
+    "@parameter1/base-cms-express-apollo": "^2.37.1",
     "@parameter1/base-cms-image": "^2.8.1",
     "@parameter1/base-cms-object-path": "^2.22.2",
     "@parameter1/base-cms-tenant-context": "^2.0.0",
