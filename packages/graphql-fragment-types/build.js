@@ -39,7 +39,7 @@ fetch(GRAPHQL_URI, {
   );
   // eslint-disable-next-line no-param-reassign
   result.data.__schema.types = filteredData;
-  fs.writeFile(path.join(__dirname, 'types.json'), JSON.stringify(result.data), (err) => {
+  fs.writeFile(path.join(__dirname, 'types.json'), JSON.stringify(result.data, null, 2), (err) => {
     if (err) log('Error writing fragmentTypes file', err);
     log('Fragment types successfully extracted!');
   });
