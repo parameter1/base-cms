@@ -1,0 +1,25 @@
+import { getAsObject } from "@parameter1/base-cms-object-path";
+import { warn } from "@parameter1/base-cms-utils";
+import getOmedaId from "../utils/get-omeda-id";
+
+$ const { site, req } = out.global;
+$ const context = getAsObject(input, "context");
+
+$ const wufooZone = site.get("p1fii.wufooZone", input.wufooZone);
+$ const omedaZone = site.get("p1fii.omedaZone", input.omedaZone);
+
+<if(wufooZone && omedaZone)>
+  <marko-web-browser-component
+    name="P1FIIOmedaWufooForm"
+    props={
+      formHash: input.formHash,
+      wufooZone,
+      omedaZone,
+      encryptedCustomerId: getOmedaId(req),
+      context,
+    }
+  />
+</if>
+<else>
+  $ warn("Unable to load P1 FII Wufoo form: no `p1fii.wufooZone` or `p1fii.omedaZone` values were configured.");
+</else>
