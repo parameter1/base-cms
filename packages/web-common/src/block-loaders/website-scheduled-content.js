@@ -32,6 +32,7 @@ module.exports = async (apolloClient, {
   after,
   sort,
 
+  siteId,
   sectionId,
   sectionAlias,
   optionId,
@@ -61,6 +62,7 @@ module.exports = async (apolloClient, {
     requiresImage,
     sectionAlias,
     sectionBubbling,
+    siteId,
     sectionId,
     optionId,
     optionName,
