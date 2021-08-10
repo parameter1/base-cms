@@ -1,0 +1,12 @@
+{
+  "<marko-web-p1-fii-omeda-wufoo-form>": {
+    "template": "./omeda-wufoo-form.marko",
+    "@form-hash": {
+      "type": "string",
+      "required": true
+    },
+    "@wufoo-zone": "string",
+    "@omeda-zone": "string",
+    "@context": "object"
+  }
+}
