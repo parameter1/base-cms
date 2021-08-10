@@ -1,9 +1,15 @@
 <template>
-  <div class="marko-web-p1-fii-omeda-wufoo-form">
+  <div class="marko-web-p1-fii-omeda-alchemer-form">
     <p v-if="isLoading">
       Loading form...
     </p>
-    <div :id="formId" />
+    <iframe
+      v-show="url"
+      :id="formId"
+      :src="url"
+      frameborder="0"
+      style="width: 1px; min-width: 100%; border: none;"
+    />
     <div v-if="error" class="alert alert-danger">
       {{ error.message }}
     </div>
@@ -13,70 +19,64 @@
 <script>
 export default {
   props: {
-    formHash: { type: String, required: true },
-    wufooZone: { type: String, required: true },
+    surveyId: { type: [Number, String], required: true },
+    alchemerZone: { type: [Number, String], required: true },
     omedaZone: { type: String, required: true },
     encryptedCustomerId: { type: String, default: null },
     context: { type: Object, default: () => ({}) },
     height: { type: Number, default: 1000 },
-    hideHeader: { type: Boolean, default: false },
+    width: { type: Number, default: 500 },
+    debugIframe: { type: Boolean, default: false },
   },
   data: () => ({
     endpoint: '/__p1fii',
     error: null,
     isLoading: false,
+    url: null,
   }),
 
   computed: {
     formId() {
-      return `wufoo-${this.formHash}`;
+      return `alchemer-${this.surveyId}`;
     },
   },
 
   async mounted() {
-    const [queryString] = await Promise.all([
-      this.getFormQueryString(),
-      this.loadWufooLibrary(),
+    const [url] = await Promise.all([
+      this.getFormUrl(),
+      this.loadResizerLibrary(),
     ]);
-
-    const options = {
-      userName: this.wufooZone,
-      formHash: this.formHash,
-      autoResize: true,
-      height: this.height,
-      defaultValues: queryString,
-      ...(this.hideHeader && { header: 'hide' }),
-      async: true,
-      ssl: true,
-    };
-    const instance = new window.WufooForm();
-    instance.initialize(options);
-    instance.display();
+    this.url = url;
+    window.iFrameResize({
+      checkOrigin: ['https://survey.alchemer.com'],
+      heightCalculationMethod: 'taggedElement',
+      log: this.debugIframe,
+    }, `#${this.formId}`);
   },
 
   methods: {
-    async loadWufooLibrary() {
-      if (!window.WufooForm) {
+    async loadResizerLibrary() {
+      if (!window.iFrameResize) {
         await (new Promise((resolve, reject) => {
           const s = document.createElement('script');
-          s.src = 'https://secure.wufoo.com/scripts/embed/form.js';
+          s.src = 'https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.min.js';
           s.async = 1;
-          s.onerror = () => reject(new Error('Unable to load Wufoo form script.'));
+          s.onerror = () => reject(new Error('Unable to load resizer form script.'));
           s.onload = resolve;
           const scr = document.getElementsByTagName('script')[0];
           scr.parentNode.insertBefore(s, scr);
         }));
       }
     },
-    async getFormQueryString() {
+    async getFormUrl() {
       try {
         this.error = null;
         this.isLoading = true;
         const { encryptedCustomerId } = this;
         const params = {
-          for: this.wufooZone,
+          for: `${this.alchemerZone}`,
           using: this.omedaZone,
-          formHash: this.formHash,
+          surveyId: parseInt(this.surveyId, 10),
           ...(encryptedCustomerId && { encryptedCustomerId }),
           context: this.context,
         };
@@ -84,18 +84,18 @@ export default {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
           body: JSON.stringify({
-            action: 'form.wufoo.prepopWithOmeda',
+            action: 'form.alchemer.prepopWithOmeda',
             params,
           }),
         });
         const json = await res.json();
         if (!res.ok) throw new Error(json.message);
-        return json.data.query;
+        return json.data.url;
       } catch (e) {
         const { error } = console;
-        error(e);
         this.error = e;
-        return '';
+        error(e);
+        return null;
       } finally {
         this.isLoading = false;
       }
