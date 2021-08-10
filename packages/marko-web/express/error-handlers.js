@@ -8,6 +8,13 @@ const applyQueryParams = require('../utils/apply-query-params');
 const { isArray } = Array;
 const { error } = console;
 
+const noCache = (res) => {
+  res.setHeader('Surrogate-Control', 'no-store');
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+};
+
 const renderError = (res, { statusCode, err, template }) => {
   res.status(statusCode);
   res.marko(template || errorTemplate, {
@@ -46,6 +53,8 @@ const redirectOrError = ({
   getRedirect(req, redirectHandler, app).then((redirect) => {
     if (redirect) {
       const { code, to } = redirect;
+      // attempt to disable cache on temporary redirects
+      if ([302, 307].includes(code)) noCache(res);
       res.redirect(code, to);
     } else {
       render(res, { statusCode, err, template });
