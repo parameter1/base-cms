@@ -1,4 +1,7 @@
+import { getAsObject } from "@parameter1/base-cms-object-path";
 import extractRender from "../extract-render";
+
+$ const { parseEmbeddedMedia, res } = out.global;
 
 <marko-web-obj-array|{ value }|
   type="content"
@@ -10,10 +13,13 @@ import extractRender from "../extract-render";
   modifiers=input.modifiers
   attrs=input.attrs
 >
+  $ const v = value == null ? "" : `${value}`.trim();
+  $ const embedOptions = getAsObject(input, "embedOptions");
+  $ const obj = { sidebar: parseEmbeddedMedia(v, res, embedOptions) };
   <marko-web-obj-text
     type="content"
     block-name=input.blockName
-    obj={ sidebar: value }
+    obj=obj
     field="sidebar"
     html=true
     ...extractRender(input)
