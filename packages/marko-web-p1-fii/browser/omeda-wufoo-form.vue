@@ -1,5 +1,13 @@
 <template>
-  <div :id="formId" class="marko-web-p1-fii-omeda-wufoo-form" />
+  <div class="marko-web-p1-fii-omeda-wufoo-form">
+    <p v-if="isLoading">
+      Loading form...
+    </p>
+    <div :id="formId" />
+    <div v-if="error" class="alert alert-danger">
+      {{ error.message }}
+    </div>
+  </div>
 </template>
 
 <script>
