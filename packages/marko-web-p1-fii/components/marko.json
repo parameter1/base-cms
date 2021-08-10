@@ -1,4 +1,15 @@
 {
+  "<marko-web-p1-fii-omeda-alchemer-form>": {
+    "template": "./omeda-alchemer-form.marko",
+    "@survey-id": {
+      "type": "number",
+      "required": true
+    },
+    "@alchemer-zone": "string",
+    "@omeda-zone": "string",
+    "@context": "object",
+    "@debug-iframe": "boolean"
+  },
   "<marko-web-p1-fii-omeda-wufoo-form>": {
     "template": "./omeda-wufoo-form.marko",
     "@form-hash": {
