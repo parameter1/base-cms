@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/marko-web-p1-fii",
-  "version": "2.37.1",
+  "version": "2.38.0",
   "description": "Parameter1 form integrations for BaseCMS/Marko websites.",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-pii",
