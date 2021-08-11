@@ -1,7 +1,7 @@
 const proxy = require('express-http-proxy');
 
 module.exports = (app, {
-  url = process.env.P1_FII_API_URL,
+  url = process.env.P1_FII_API_URL || 'https://fii.parameter1.com/',
   orgZone,
   headers,
 }) => {
