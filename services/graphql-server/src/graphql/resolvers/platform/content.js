@@ -634,7 +634,7 @@ module.exports = {
    *
    */
   ContentArticle: {
-    sidebars: async ({ sidebars }, { site, basedb }) => {
+    sidebars: async ({ sidebars }, _, { site, basedb }) => {
       if (!isArray(sidebars)) return [];
       const bodies = await Promise.all(sidebars.map(async ({ body } = {}) => {
         const value = await prepareSidebarBody(body, { site, basedb });
