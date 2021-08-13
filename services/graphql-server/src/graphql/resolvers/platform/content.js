@@ -49,7 +49,10 @@ const retrieveYoutubePlaylistId = async ({ youtube }) => {
     payload.forUsername = forUsername;
   }
   const response = await googleDataApiClient.request('youtube.channelList', payload);
-  return get(response, 'items.0.contentDetails.relatedPlaylists.uploads');
+  if (get(response, 'items.0.contentDetails.relatedPlaylists.uploads')) {
+    return get(response, 'items.0.contentDetails.relatedPlaylists.uploads');
+  }
+  return [];
 };
 
 const { isArray } = Array;
@@ -659,7 +662,11 @@ module.exports = {
         maxResults,
         ...(pageToken && { pageToken }),
       };
-      return googleDataApiClient.request('youtube.playlistItems', payload);
+      const response = await googleDataApiClient.request('youtube.playlistList', { part: 'id', id: playlistId });
+      if (getAsArray(response, 'items').length > 0) {
+        return googleDataApiClient.request('youtube.playlistItems', payload);
+      }
+      return [];
     },
   },
 
