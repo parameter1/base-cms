@@ -21,22 +21,22 @@ input YoutubeThumbnailInput {
 }
 
 type YoutubePlaylistConnection {
-  totalCount: Int!
-  edges: [YoutubePlaylistEdge]!
-  pageInfo: PageInfo!
+  totalCount: Int
+  edges: [YoutubePlaylistEdge]
+  pageInfo: PageInfo
 }
 
 type YoutubePlaylistEdge {
-  node: YoutubeVideo!
-  cursor: String!
+  node: YoutubeVideo
+  cursor: String
 }
 
 type YoutubeVideo {
-  id: String!
-  url: String!
-  published: Date!
-  thumbnail(input: YoutubeThumbnailInput): String!
-  title: String!
+  id: String
+  url: String
+  published: Date
+  thumbnail(input: YoutubeThumbnailInput): String
+  title: String
   description: String
 }
 
