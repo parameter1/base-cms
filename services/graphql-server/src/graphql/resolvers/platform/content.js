@@ -52,7 +52,7 @@ const retrieveYoutubePlaylistId = async ({ youtube }) => {
   if (get(response, 'items.0.contentDetails.relatedPlaylists.uploads')) {
     return get(response, 'items.0.contentDetails.relatedPlaylists.uploads');
   }
-  return [];
+  return '';
 };
 
 const { isArray } = Array;
