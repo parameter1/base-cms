@@ -52,7 +52,7 @@ const retrieveYoutubePlaylistId = async ({ youtube }) => {
   if (get(response, 'items.0.contentDetails.relatedPlaylists.uploads')) {
     return get(response, 'items.0.contentDetails.relatedPlaylists.uploads');
   }
-  return '';
+  return null;
 };
 
 const { isArray } = Array;
@@ -663,10 +663,26 @@ module.exports = {
         ...(pageToken && { pageToken }),
       };
       const response = await googleDataApiClient.request('youtube.playlistItems', payload);
-      if (getAsArray(response, 'items').length > 0) {
-        return response;
+      const find400 = [];
+      if (getAsArray(response, 'errors')) { // If the response contains errors
+        const errors = getAsArray(response, 'errors');
+        errors.forEach((error) => {
+          if (error.extensions.exception.statusCode >= 400) { // If there is a 400 error
+            find400.push(error);
+          }
+        });
       }
-      return [];
+      if (find400.length > 0) {
+        return { pageInfo: {}, items: [] }; // If a 400 error is found return "nothing"
+      }
+      const initialVideoList = getAsArray(response, 'items');
+      const filteredVideoList = [];
+      initialVideoList.forEach((video) => {
+        if (video.status.privacyStatus === 'public') { // Check to make sure each video is public status
+          filteredVideoList.push(video);
+        }
+      });
+      return filteredVideoList;
     },
   },
 
