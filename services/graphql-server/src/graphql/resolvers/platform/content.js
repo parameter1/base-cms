@@ -682,7 +682,7 @@ module.exports = {
           filteredVideoList.push(video);
         }
       });
-      return filteredVideoList;
+      return { pageInfo: getAsObject(response, 'pageInfo'), items: filteredVideoList };
     },
   },
 
