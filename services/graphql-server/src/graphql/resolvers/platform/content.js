@@ -662,9 +662,9 @@ module.exports = {
         maxResults,
         ...(pageToken && { pageToken }),
       };
-      const response = await googleDataApiClient.request('youtube.playlistList', { part: 'id', id: playlistId });
+      const response = await googleDataApiClient.request('youtube.playlistItems', payload);
       if (getAsArray(response, 'items').length > 0) {
-        return googleDataApiClient.request('youtube.playlistItems', payload);
+        return response;
       }
       return [];
     },
