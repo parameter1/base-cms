@@ -6,6 +6,7 @@ query ContentForLeadersSection(
   $sectionId: Int!,
   $promotionLimit: Int = 4,
   $videoLimit: Int = 3,
+  $showPrivate: false,
   $includeContentTypes: [ContentType!] = [Company]
 ) {
   websiteScheduledContent(input: {
@@ -107,7 +108,7 @@ query ContentForLeadersSection(
             channelId
             url
           }
-          videos: youtubeVideos(input: { pagination: { limit: $videoLimit } }) {
+          videos: youtubeVideos(input: { pagination: { limit: $videoLimit }, showPrivate: $showPrivate }) {
             edges {
               node {
                 id

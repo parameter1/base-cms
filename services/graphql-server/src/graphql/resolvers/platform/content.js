@@ -659,27 +659,15 @@ module.exports = {
         maxResults,
         ...(pageToken && { pageToken }),
       };
-      const response = await googleDataApiClient.request('youtube.playlistItems', payload);
-      const find400 = [];
-      if (getAsArray(response, 'errors')) { // If the response contains errors
-        const errors = getAsArray(response, 'errors');
-        errors.forEach((error) => {
-          if (error.extensions.exception.statusCode >= 400) { // If there is a 400 error
-            find400.push(error);
-          }
-        });
+      try {
+        const response = await googleDataApiClient.request('youtube.playlistItems', payload);
+        return {
+          pageInfo: getAsObject(response, 'pageInfo'),
+          items: getAsArray(response, 'items').filter(video => (input.showPrivate ? video : get(video, 'status.privacyStatus') === 'public')),
+        };
+      } catch (e) {
+        return { pageInfo: {}, items: [], errors: e };
       }
-      if (find400.length > 0) {
-        return { pageInfo: {}, items: [] }; // If a 400 error is found return "nothing"
-      }
-      const initialVideoList = getAsArray(response, 'items');
-      const filteredVideoList = [];
-      initialVideoList.forEach((video) => {
-        if (video.status.privacyStatus === 'public') { // Check to make sure each video is public status
-          filteredVideoList.push(video);
-        }
-      });
-      return { pageInfo: getAsObject(response, 'pageInfo'), items: filteredVideoList };
     },
   },
 
