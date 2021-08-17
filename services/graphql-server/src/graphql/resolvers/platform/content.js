@@ -11,6 +11,7 @@ const moment = require('moment');
 const momentTZ = require('moment-timezone');
 const cheerio = require('cheerio');
 
+const newrelic = require('../../../newrelic');
 const defaults = require('../../defaults');
 const validateRest = require('../../utils/validate-rest');
 const mapArray = require('../../utils/map-array');
@@ -34,6 +35,7 @@ const {
 const contentTeaser = require('../../utils/content-teaser');
 const googleDataApiClient = require('../../../google-data-api-client');
 const SiteContext = require('../../../site-context');
+const { validateYoutubePlaylistId, validateYoutubeChannelId, validateYoutubeUsername } = require('../../utils/youtube');
 
 const retrieveYoutubePlaylistId = async ({ youtube }) => {
   const playlistId = get(youtube, 'playlistId');
@@ -48,8 +50,13 @@ const retrieveYoutubePlaylistId = async ({ youtube }) => {
   } else {
     payload.forUsername = forUsername;
   }
-  const response = await googleDataApiClient.request('youtube.channelList', payload);
-  return get(response, 'items.0.contentDetails.relatedPlaylists.uploads');
+  try {
+    const response = await googleDataApiClient.request('youtube.channelList', payload);
+    return get(response, 'items.0.contentDetails.relatedPlaylists.uploads');
+  } catch (e) {
+    if (e.statusCode === 404) return null;
+    throw e;
+  }
 };
 
 const { isArray } = Array;
@@ -653,13 +660,25 @@ module.exports = {
       const maxResults = get(input, 'pagination.limit', 10);
       const pageToken = get(input, 'pagination.after');
       const playlistId = await retrieveYoutubePlaylistId(content, basedb);
-      if (!playlistId) return { pageInfo: {}, items: [] };
+      if (!playlistId) return {};
       const payload = {
         playlistId,
         maxResults,
         ...(pageToken && { pageToken }),
       };
-      return googleDataApiClient.request('youtube.playlistItems', payload);
+      try {
+        const response = await googleDataApiClient.request('youtube.playlistItems', payload);
+        return response;
+      } catch (e) {
+        // playlist not found (or is private) for the provided id. return an empty reponse.
+        if (e.statusCode === 404) {
+          const error = new Error(`Unable to load a YouTube playlist for company ID ${content._id} using playlist ID ${playlistId}`);
+          error.originalError = e;
+          newrelic.noticeError(error);
+          return {};
+        }
+        throw e;
+      }
     },
   },
 
@@ -1644,6 +1663,25 @@ module.exports = {
       const type = 'platform/content/company';
       const { id, payload } = input;
       const { channelId, playlistId, username } = payload;
+
+      const validatedIds = [];
+      const validateId = async (idType, value, validator) => {
+        const isValid = await validator(value);
+        validatedIds.push({ idType, value, isValid });
+      };
+
+      const promises = [];
+      if (channelId) promises.push(validateId('channelId', channelId, validateYoutubeChannelId));
+      if (playlistId) promises.push(validateId('playlistId', playlistId, validateYoutubePlaylistId));
+      if (username) promises.push(validateId('username', username, validateYoutubeUsername));
+      await Promise.all(promises);
+
+      const invalidIds = validatedIds.filter(({ isValid }) => !isValid);
+      if (invalidIds.length) {
+        const invalidMessage = invalidIds.map(({ idType, value }) => `${idType}: ${value}`).join(', ');
+        throw new UserInputError(`The following YouTube IDs are invalid: ${invalidMessage}`);
+      }
+
       const body = new Base4RestPayload({ type });
       body.set('youtube.channelId', channelId);
       body.set('youtube.playlistId', playlistId);

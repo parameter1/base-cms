@@ -1,5 +1,5 @@
 const { get, getAsArray, getAsObject } = require('@parameter1/base-cms-object-path');
-const googleDataApiClient = require('../../../google-data-api-client');
+const { validateYoutubePlaylistId, validateYoutubeChannelId, validateYoutubeUsername } = require('../../utils/youtube');
 
 module.exports = {
   /**
@@ -13,6 +13,7 @@ module.exports = {
     }),
     edges: response => getAsArray(response, 'items'),
   },
+
   /**
    *
    */
@@ -20,6 +21,7 @@ module.exports = {
     node: edge => getAsObject(edge, 'snippet'),
     cursor: edge => get(edge, 'id'),
   },
+
   /**
    *
    */
@@ -27,8 +29,13 @@ module.exports = {
     id: snippet => get(snippet, 'resourceId.videoId'),
     url: snippet => `https://youtu.be/${get(snippet, 'resourceId.videoId')}`,
     published: snippet => new Date(get(snippet, 'publishedAt')),
-    thumbnail: (snippet, { input = {} }) => get(snippet, `thumbnails.${input.size}.url`, get(snippet, 'thumbnails.default.url')),
+    thumbnail: (snippet, { input = {} }) => {
+      const url = get(snippet, `thumbnails.${input.size}.url`, get(snippet, 'thumbnails.default.url'));
+      // private/unlisted videos will not return a thumbnail. return a default icon instead.
+      return url || 'https://i.ytimg.com/vi//hqdefault.jpg';
+    },
   },
+
   /**
    *
    */
@@ -36,20 +43,17 @@ module.exports = {
     /**
      *
      */
-    validateYoutubePlaylistId: async (_, { input }) => {
+    validateYoutubePlaylistId: (_, { input }) => {
       const { playlistId } = input;
-      const response = await googleDataApiClient.request('youtube.playlistList', { part: 'id', id: playlistId });
-      return getAsArray(response, 'items').length > 0;
+      return validateYoutubePlaylistId(playlistId);
     },
-    validateYoutubeChannelId: async (_, { input }) => {
+    validateYoutubeChannelId: (_, { input }) => {
       const { channelId } = input;
-      const response = await googleDataApiClient.request('youtube.channelList', { part: 'id', id: channelId });
-      return getAsArray(response, 'items').length > 0;
+      return validateYoutubeChannelId(channelId);
     },
-    validateYoutubeUsername: async (_, { input }) => {
+    validateYoutubeUsername: (_, { input }) => {
       const { username } = input;
-      const response = await googleDataApiClient.request('youtube.channelList', { part: 'id', forUsername: username });
-      return getAsArray(response, 'items').length > 0;
+      return validateYoutubeUsername(username);
     },
   },
 };

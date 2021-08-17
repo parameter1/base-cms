@@ -9,7 +9,7 @@ const { sortObject, onError, buildYoutubeUrl } = require('../../utils');
  */
 module.exports = async ({
   maxResults = 10,
-  part = 'snippet',
+  part = ['snippet', 'status'],
   playlistId,
   pageToken,
   ttl = 24 * 60 * 60,
