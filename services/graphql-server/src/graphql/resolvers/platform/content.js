@@ -34,6 +34,7 @@ const {
 const contentTeaser = require('../../utils/content-teaser');
 const googleDataApiClient = require('../../../google-data-api-client');
 const SiteContext = require('../../../site-context');
+const { validateYoutubePlaylistId, validateYoutubeChannelId, validateYoutubeUsername } = require('../../utils/youtube');
 
 const retrieveYoutubePlaylistId = async ({ youtube }) => {
   const playlistId = get(youtube, 'playlistId');

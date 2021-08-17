@@ -1,5 +1,5 @@
 const { get, getAsArray, getAsObject } = require('@parameter1/base-cms-object-path');
-const googleDataApiClient = require('../../../google-data-api-client');
+const { validateYoutubePlaylistId, validateYoutubeChannelId, validateYoutubeUsername } = require('../../utils/youtube');
 
 module.exports = {
   /**
@@ -40,20 +40,17 @@ module.exports = {
     /**
      *
      */
-    validateYoutubePlaylistId: async (_, { input }) => {
+    validateYoutubePlaylistId: (_, { input }) => {
       const { playlistId } = input;
-      const response = await googleDataApiClient.request('youtube.playlistList', { part: 'id', id: playlistId });
-      return getAsArray(response, 'items').length > 0;
+      return validateYoutubePlaylistId(playlistId);
     },
-    validateYoutubeChannelId: async (_, { input }) => {
+    validateYoutubeChannelId: (_, { input }) => {
       const { channelId } = input;
-      const response = await googleDataApiClient.request('youtube.channelList', { part: 'id', id: channelId });
-      return getAsArray(response, 'items').length > 0;
+      return validateYoutubeChannelId(channelId);
     },
-    validateYoutubeUsername: async (_, { input }) => {
+    validateYoutubeUsername: (_, { input }) => {
       const { username } = input;
-      const response = await googleDataApiClient.request('youtube.channelList', { part: 'id', forUsername: username });
-      return getAsArray(response, 'items').length > 0;
+      return validateYoutubeUsername(username);
     },
   },
 };
