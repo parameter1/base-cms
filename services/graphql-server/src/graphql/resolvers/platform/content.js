@@ -663,7 +663,7 @@ module.exports = {
         const response = await googleDataApiClient.request('youtube.playlistItems', payload);
         return {
           pageInfo: getAsObject(response, 'pageInfo'),
-          items: getAsArray(response, 'items').filter(video => (input.showPrivate ? video : get(video, 'status.privacyStatus') === 'public')),
+          items: getAsArray(response, 'items').filter(video => (get(video, 'status.privacyStatus') === 'public')),
         };
       } catch (e) {
         return { pageInfo: {}, items: [], errors: e };
