@@ -13,6 +13,7 @@ module.exports = {
     }),
     edges: response => getAsArray(response, 'items'),
   },
+
   /**
    *
    */
@@ -20,6 +21,7 @@ module.exports = {
     node: edge => getAsObject(edge, 'snippet'),
     cursor: edge => get(edge, 'id'),
   },
+
   /**
    *
    */
@@ -33,6 +35,7 @@ module.exports = {
       return url || 'https://i.ytimg.com/vi//hqdefault.jpg';
     },
   },
+
   /**
    *
    */
