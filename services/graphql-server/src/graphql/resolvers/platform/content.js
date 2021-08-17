@@ -11,6 +11,7 @@ const moment = require('moment');
 const momentTZ = require('moment-timezone');
 const cheerio = require('cheerio');
 
+const newrelic = require('../../../newrelic');
 const defaults = require('../../defaults');
 const validateRest = require('../../utils/validate-rest');
 const mapArray = require('../../utils/map-array');
@@ -670,7 +671,12 @@ module.exports = {
         return response;
       } catch (e) {
         // playlist not found (or is private) for the provided id. return an empty reponse.
-        if (e.statusCode === 404) return {};
+        if (e.statusCode === 404) {
+          const error = new Error(`Unable to load a YouTube playlist for company ID ${content._id} using playlist ID ${playlistId}`);
+          error.originalError = e;
+          newrelic.noticeError(error);
+          return {};
+        }
         throw e;
       }
     },
