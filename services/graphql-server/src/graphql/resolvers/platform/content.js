@@ -1644,6 +1644,25 @@ module.exports = {
       const type = 'platform/content/company';
       const { id, payload } = input;
       const { channelId, playlistId, username } = payload;
+
+      const validatedIds = [];
+      const validateId = async (idType, value, validator) => {
+        const isValid = await validator(value);
+        validatedIds.push({ idType, value, isValid });
+      };
+
+      const promises = [];
+      if (channelId) promises.push(validateId('channelId', channelId, validateYoutubeChannelId));
+      if (playlistId) promises.push(validateId('playlistId', playlistId, validateYoutubePlaylistId));
+      if (username) promises.push(validateId('username', username, validateYoutubeUsername));
+      await Promise.all(promises);
+
+      const invalidIds = validatedIds.filter(({ isValid }) => !isValid);
+      if (invalidIds.length) {
+        const invalidMessage = invalidIds.map(({ idType, value }) => `${idType}: ${value}`).join(', ');
+        throw new UserInputError(`The following YouTube IDs are invalid: ${invalidMessage}`);
+      }
+
       const body = new Base4RestPayload({ type });
       body.set('youtube.channelId', channelId);
       body.set('youtube.playlistId', playlistId);
