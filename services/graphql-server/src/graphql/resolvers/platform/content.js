@@ -49,8 +49,13 @@ const retrieveYoutubePlaylistId = async ({ youtube }) => {
   } else {
     payload.forUsername = forUsername;
   }
-  const response = await googleDataApiClient.request('youtube.channelList', payload);
-  return get(response, 'items.0.contentDetails.relatedPlaylists.uploads');
+  try {
+    const response = await googleDataApiClient.request('youtube.channelList', payload);
+    return get(response, 'items.0.contentDetails.relatedPlaylists.uploads');
+  } catch (e) {
+    if (e.statusCode === 404) return null;
+    throw e;
+  }
 };
 
 const { isArray } = Array;
@@ -654,13 +659,20 @@ module.exports = {
       const maxResults = get(input, 'pagination.limit', 10);
       const pageToken = get(input, 'pagination.after');
       const playlistId = await retrieveYoutubePlaylistId(content, basedb);
-      if (!playlistId) return { pageInfo: {}, items: [] };
+      if (!playlistId) return {};
       const payload = {
         playlistId,
         maxResults,
         ...(pageToken && { pageToken }),
       };
-      return googleDataApiClient.request('youtube.playlistItems', payload);
+      try {
+        const response = await googleDataApiClient.request('youtube.playlistItems', payload);
+        return response;
+      } catch (e) {
+        // playlist not found (or is private) for the provided id. return an empty reponse.
+        if (e.statusCode === 404) return {};
+        throw e;
+      }
     },
   },
 
