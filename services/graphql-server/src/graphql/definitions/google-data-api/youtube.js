@@ -35,7 +35,7 @@ type YoutubeVideo {
   id: String!
   url: String!
   published: Date!
-  thumbnail(input: YoutubeThumbnailInput): String!
+  thumbnail(input: YoutubeThumbnailInput = {}): String!
   title: String!
   description: String
 }

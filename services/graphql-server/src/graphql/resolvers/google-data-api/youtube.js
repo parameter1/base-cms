@@ -27,7 +27,11 @@ module.exports = {
     id: snippet => get(snippet, 'resourceId.videoId'),
     url: snippet => `https://youtu.be/${get(snippet, 'resourceId.videoId')}`,
     published: snippet => new Date(get(snippet, 'publishedAt')),
-    thumbnail: (snippet, { input = {} }) => get(snippet, `thumbnails.${input.size}.url`, get(snippet, 'thumbnails.default.url')),
+    thumbnail: (snippet, { input = {} }) => {
+      const url = get(snippet, `thumbnails.${input.size}.url`, get(snippet, 'thumbnails.default.url'));
+      // private/unlisted videos will not return a thumbnail. return a default icon instead.
+      return url || 'https://i.ytimg.com/vi//hqdefault.jpg';
+    },
   },
   /**
    *
