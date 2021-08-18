@@ -18,13 +18,12 @@ export default {
   },
 
   created() {
-    const { p1events } = window;
-    if (!p1events) return;
+    if (!window.p1events) return;
 
     this.EventBus.$on(this.eventName, ({ payload } = {}) => {
       const props = { ...payload };
       delete props.token;
-      p1events('track', {
+      window.p1events('track', {
         category: 'Inquiry',
         action: 'Submit',
         entity: this.entity,
