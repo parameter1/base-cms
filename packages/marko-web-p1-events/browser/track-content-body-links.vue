@@ -28,9 +28,8 @@ export default {
   },
 
   created() {
-    const { p1events } = window;
-    if (!p1events) return;
-    p1events('trackLinks', {
+    if (!window.p1events) return;
+    window.p1events('trackLinks', {
       ancestor: this.selector,
       linkType: this.linkType,
       handler: ({ element }) => {
