@@ -93,7 +93,9 @@ module.exports = async (argv) => {
       await build();
       log('Build complete.');
     } else {
-      log('Image found, skipping build.');
+      log('Image found, skipping build and deployment.');
+      // Do not attempt to deploy if the image is already built.
+      return true;
     }
 
     const { RANCHER_CLUSTERID, RANCHER_TOKEN, RANCHER_URL } = process.env;
