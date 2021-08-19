@@ -16,7 +16,8 @@
     "template": "./form-authenticate.marko"
   },
   "<marko-web-identity-x-form-login>": {
-    "template": "./form-login.marko"
+    "template": "./form-login.marko",
+    "@button-labels": "object"
   },
   "<marko-web-identity-x-form-logout>": {
     "template": "./form-logout.marko"
