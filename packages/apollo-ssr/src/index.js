@@ -24,8 +24,8 @@ module.exports = ({
     return undefined;
   });
   const httpLink = createHttpLink({
-    ...linkConfig,
     fetch,
+    ...linkConfig,
     uri,
     headers: {
       ...headers,
