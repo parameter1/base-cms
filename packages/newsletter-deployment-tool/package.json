@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-newsletter-deployment-tool",
-  "version": "2.0.0",
+  "version": "2.39.3",
   "description": "The deployment tool for use with @parameter1/base-cms-marko-newsletters",
   "main": "src/index.js",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/newsletter-deployment-tool",
