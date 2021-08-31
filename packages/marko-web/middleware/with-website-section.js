@@ -12,6 +12,7 @@ module.exports = ({
   context: contextFn,
 } = {}) => asyncRoute(async (req, res) => {
   const alias = isFn(aliasResolver) ? await aliasResolver(req, res) : req.params.alias;
+  const { noCrawl } = req.params;
   const { apollo, query } = req;
   const cleanedAlias = alias.replace(/\/+$/, '').replace(/^\/+/, '');
 
@@ -20,7 +21,7 @@ module.exports = ({
   if (redirectTo) {
     return res.redirect(301, applyQueryParams({ path: redirectTo, query }));
   }
-  if (redirectOnPathMismatch && canonicalPath !== req.path) {
+  if (redirectOnPathMismatch && canonicalPath !== req.path && !noCrawl) {
     return res.redirect(301, applyQueryParams({ path: canonicalPath, query }));
   }
   const pageNode = new PageNode(apollo, {
@@ -39,5 +40,7 @@ module.exports = ({
       pageNode,
     });
   }
-  return res.marko(template, { ...section, pageNode, context });
+  return res.marko(template, {
+    ...section, pageNode, context, noCrawl,
+  });
 });
