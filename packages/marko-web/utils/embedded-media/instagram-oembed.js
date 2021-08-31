@@ -17,21 +17,21 @@ const buildInstagramElement = ({
   }
   return `
   <iframe class="instagram-media instagram-media-rendered"
-  ${data.join(' ')}
-  allowtransparency="true"
-  frameborder="0"
-  height="700px"
-  scrolling="no"
-  style="
-  background: rgb(255, 255, 255);
-  border: 1px solid rgb(219, 219, 219);
-  margin: 0px 0px 0px; max-width: 700px;
-  width: calc(100% - 2px);
-  border-radius: 4px;
-  box-shadow: none;
-  display: block;
-  padding: 0px;">
-  </iframe>
+    ${data.join(' ')}
+    allowtransparency="true"
+    frameborder="0"
+    height="700px"
+    scrolling="no"
+    style="
+    background: rgb(255, 255, 255);
+    border: 1px solid rgb(219, 219, 219);
+    margin: 0px 0px 0px; max-width: 700px;
+    width: calc(100% - 2px);
+    border-radius: 4px;
+    box-shadow: none;
+    display: block;
+    padding: 0px;">
+    </iframe>
   <script async="" defer="" src="//platform.instagram.com/en_US/embeds.js"></script>`;
 };
 
