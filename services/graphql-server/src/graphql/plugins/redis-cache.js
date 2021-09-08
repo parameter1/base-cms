@@ -1,6 +1,6 @@
 const { createHash } = require('crypto');
-const { parseBooleanHeader } = require('@parameter1/base-cms-utils');
 const redis = require('../../redis');
+const { CACHE_GQL_RESPONSES } = require('../../env');
 
 /**
  *
@@ -134,8 +134,13 @@ class RedisCacheGraphQLPlugin {
     const { request, response } = requestContext;
     const { http } = request;
     if (!http) return false;
-    const cacheEnabled = parseBooleanHeader(http.headers.get('x-cache-responses'));
-    if (!cacheEnabled) return false;
+
+    // allow site to specifically override the ENV value
+    const cacheHeader = http.headers.get('x-cache-responses');
+    if (['false', '0'].includes(cacheHeader)) return false;
+
+    // check global env value for the server
+    if (!CACHE_GQL_RESPONSES) return false;
     const { errors } = response || {};
     return isGraphQLQuery(requestContext) && !isIntrospectionQuery(requestContext) && !errors;
   }
