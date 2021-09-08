@@ -11,6 +11,7 @@ const {
 const { nonemptystr } = custom;
 
 module.exports = cleanEnv(process.env, {
+  CACHE_GQL_RESPONSES: bool({ desc: 'Whether to force-enable caching of all GraphQL responses.', default: true, devDefault: false }),
   MONGO_DSN: nonemptystr({ desc: 'The Base MongoDB connection URL.' }),
   REDIS_CACHE_DSN: nonemptystr({ desc: 'The Redis DSN where cache values should be saved.' }),
   GRAPHQL_ENDPOINT: nonemptystr({ desc: 'The GraphQL endpoint', default: '/' }),
