@@ -38,6 +38,8 @@ const baseBrowseQuery = gql`
  * @param {object} params
  * @param {number} [params.limit]
  * @param {number} [params.skip]
+ * @param {string} [params.sortField=PUBLISHED]
+ * @param {string} [params.sortOrder=DESC]
  * @param {string} [params.searchQuery]
  * @param {string[]} [params.contentTypes]
  * @param {string[]} [params.assignedToWebsiteSiteIds]
@@ -49,6 +51,9 @@ const baseBrowseQuery = gql`
 module.exports = async ({ apolloBaseCMS, apolloBaseBrowse } = {}, {
   limit,
   skip,
+
+  sortField = 'PUBLISHED',
+  sortOrder = 'DESC',
 
   searchQuery,
   contentTypes = [],
@@ -72,8 +77,8 @@ module.exports = async ({ apolloBaseCMS, apolloBaseBrowse } = {}, {
     }),
     pagination: { limit, skip },
     sort: {
-      field: searchQuery ? 'SCORE' : 'PUBLISHED',
-      order: 'DESC',
+      field: searchQuery ? 'SCORE' : sortField,
+      order: searchQuery ? 'DESC' : sortOrder,
     },
   };
 
@@ -92,5 +97,7 @@ module.exports = async ({ apolloBaseCMS, apolloBaseBrowse } = {}, {
   const nodes = data.allContent.edges
     .map(edge => (edge && edge.node ? edge.node : null))
     .filter(c => c);
-  return { nodes, pageInfo, totalCount };
+  const map = nodes.reduce((m, node) => m.set(`${node.id}`, node), new Map());
+  const ordered = ids.map(id => map.get(`${id}`)).filter(node => node);
+  return { nodes: ordered, pageInfo, totalCount };
 };
