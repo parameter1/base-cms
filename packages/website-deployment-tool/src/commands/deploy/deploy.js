@@ -8,6 +8,7 @@ const {
   DOCKER_PASSWORD,
   DOCKER_USERNAME,
   TRAVIS_TAG,
+  FORCE_DEPLOYMENT,
 } = require('./env');
 const failed = require('../notify/failed');
 
@@ -93,7 +94,7 @@ module.exports = async (argv) => {
     } else {
       log('Image found, skipping build and deployment.');
       // Do not attempt to deploy if the image is already built.
-      return true;
+      if (!FORCE_DEPLOYMENT) return true;
     }
 
     const { RANCHER_CLUSTERID, RANCHER_TOKEN, RANCHER_URL } = process.env;

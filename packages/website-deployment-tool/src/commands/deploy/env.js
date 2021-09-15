@@ -1,4 +1,9 @@
-const { cleanEnv, makeValidator, url } = require('envalid');
+const {
+  cleanEnv,
+  makeValidator,
+  url,
+  bool,
+} = require('envalid');
 
 const nonemptystr = makeValidator((v) => {
   const err = new Error('Expected a non-empty string');
@@ -19,4 +24,5 @@ module.exports = cleanEnv(process.env, {
   RANCHER_TOKEN: nonemptystr({ desc: 'The Rancher credentials.' }),
   RANCHER_URL: url({ desc: 'The Rancher URL to deploy to.' }),
   TRAVIS_TAG: nonemptystr({ desc: 'The version to deploy.' }),
+  FORCE_DEPLOYMENT: bool({ desc: 'Force run a deployment when skipping build.', default: false }),
 });
