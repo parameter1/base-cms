@@ -10,7 +10,8 @@
     "<below-page>": {},
     "@type": "string",
     "@title": "string",
-    "@description": "string"
+    "@description": "string",
+    "@attrs": "object"
   },
   "<marko-web-website-section-page-layout>": {
     "template": "./website-section.marko",
@@ -40,7 +41,8 @@
     "<above-page>": {},
     "<below-page>": {},
     "@id": "number",
-    "@type": "string"
+    "@type": "string",
+    "@attrs": "object"
   },
   "<marko-web-dynamic-page-layout>": {
     "template": "./dynamic-page.marko",
@@ -52,7 +54,8 @@
     "<above-page>": {},
     "<below-page>": {},
     "@id": "string",
-    "@alias": "string"
+    "@alias": "string",
+    "@attrs": "object"
   },
   "<marko-web-magazine-issue-page-layout>": {
     "template": "./magazine-issue.marko",
@@ -63,7 +66,8 @@
     "<page>": {},
     "<above-page>": {},
     "<below-page>": {},
-    "@id": "number"
+    "@id": "number",
+    "@attrs": "object"
   },
   "<marko-web-magazine-publication-page-layout>": {
     "template": "./magazine-publication.marko",
@@ -74,6 +78,7 @@
     "<page>": {},
     "<above-page>": {},
     "<below-page>": {},
-    "@id": "number"
+    "@id": "number",
+    "@attrs": "object"
   }
 }

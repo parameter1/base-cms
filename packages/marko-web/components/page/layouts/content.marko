@@ -12,7 +12,7 @@ $ const { document } = out.global;
   </@head>
   <!-- Note: camelcased vars due to nest input of dynamic document. perhaps a marko bug -->
   <@container abovePage=input.abovePage belowPage=input.belowPage>
-    <@page for="content" tag="article" id=id type=type>
+    <@page for="content" tag="article" id=id type=type attrs=input.attrs>
       <${input.page} />
     </@page>
   </@container>
