@@ -27,7 +27,8 @@
     "@with-rss": {
       "type": "boolean",
       "default-value": true
-    }
+    },
+    "@attrs": "object"
   },
   "<marko-web-content-page-layout>": {
     "template": "./content.marko",

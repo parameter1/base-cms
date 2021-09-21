@@ -12,7 +12,8 @@
     "@fragment-name": "string",
     "@page-input": "object",
     "@header": "string",
-    "@trigger-input": "object"
+    "@trigger-input": "object",
+    "@attrs": "object"
   },
   "<marko-web-load-more-trigger>": {
     "template": "./trigger.marko",
