@@ -1087,6 +1087,8 @@ module.exports = {
         companyId,
         includeContentTypes,
         excludeContentTypes,
+        includeLabels,
+        excludeLabels,
         requiresImage,
         sort,
         pagination,
@@ -1105,6 +1107,13 @@ module.exports = {
         { company: companyId },
         { 'relatedTo.$id': companyId },
       ];
+
+      if (includeLabels.length && excludeLabels.length) {
+        query.labels = { $in: includeLabels, $nin: excludeLabels };
+      } else {
+        if (includeLabels.length) query.labels = { $in: includeLabels };
+        if (excludeLabels.length) query.labels = { $nin: excludeLabels };
+      }
 
       if (requiresImage) {
         query.primaryImage = { $exists: true };
