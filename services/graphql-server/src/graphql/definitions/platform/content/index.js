@@ -513,6 +513,8 @@ input AllCompanyContentQueryInput {
   since: Date
   includeContentTypes: [ContentType!] = []
   excludeContentTypes: [ContentType!] = []
+  includeLabels: [String!] = []
+  excludeLabels: [String!] = []
   requiresImage: Boolean = false
   sort: ContentSortInput = { field: published, order: desc }
   pagination: PaginationInput = {}
