@@ -9,6 +9,9 @@ const date = v => (v instanceof Date ? v.valueOf() : v);
  * @param {date} params.since The date to consider content published by
  * @param {number} params.companyId The company (content) ID.
  * @param {string[]} [params.includeContentTypes] An array of content types to include.
+ * @param {string[]} [params.excludeContentTypes] An array of content types to exclude.
+ * @param {string[]} [params.includeLabels] An array of labels to include.
+ * @param {string[]} [params.excludeLabels] An array of labels to exclude.
  * @param {boolean} [params.requiresImage] Whether the content must have an image.
  * @param {boolean} [params.withSite] Whether to limit results to the current site context
  * @param {string} [params.siteId] A website site identifier to limit results by primarySite
@@ -33,6 +36,8 @@ module.exports = async (apolloClient, {
 
   includeContentTypes,
   excludeContentTypes,
+  includeLabels,
+  excludeLabels,
   requiresImage,
   withSite,
   siteId,
@@ -45,6 +50,8 @@ module.exports = async (apolloClient, {
     companyId,
     includeContentTypes,
     excludeContentTypes,
+    includeLabels,
+    excludeLabels,
     pagination,
     requiresImage,
     withSite,
