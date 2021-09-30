@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-sitemaps",
-  "version": "2.39.3",
+  "version": "2.44.0",
   "description": "The BaseCMS Sitemaps service",
   "main": "src/index.js",
   "author": "Josh Worden <josh@parameter1.com>",
@@ -18,7 +18,7 @@
     "@parameter1/base-cms-html": "^2.0.0",
     "@parameter1/base-cms-tenant-context": "^2.0.0",
     "@parameter1/base-cms-utils": "^2.22.2",
-    "@parameter1/base-cms-web-common": "^2.37.2",
+    "@parameter1/base-cms-web-common": "^2.44.0",
     "express": "^4.17.1",
     "graphql": "^14.7.0",
     "graphql-tag": "^2.11.0",

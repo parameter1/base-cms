@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-native-x",
-  "version": "2.37.2",
+  "version": "2.44.0",
   "description": "NativeX Marko components for BaseCMS websites",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
@@ -15,7 +15,7 @@
     "@parameter1/base-cms-marko-web-gtm": "^2.22.2",
     "@parameter1/base-cms-object-path": "^2.22.2",
     "@parameter1/base-cms-utils": "^2.22.2",
-    "@parameter1/base-cms-web-common": "^2.37.2",
+    "@parameter1/base-cms-web-common": "^2.44.0",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
     "apollo-link-http": "^1.5.17",
