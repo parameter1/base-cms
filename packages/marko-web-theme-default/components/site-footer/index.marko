@@ -1,6 +1,9 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
 $ const { config, site } = out.global;
 
 $ const blockName = input.blockName || "site-footer";
+$ const showCopyright = defaultValue(input.showCopyright, true)
 
 <marko-web-block
   name=blockName
@@ -32,9 +35,11 @@ $ const blockName = input.blockName || "site-footer";
       reg-enabled=input.regEnabled
       has-user=input.hasUser
     />
-    <default-theme-site-footer-copyright
-      company=site.get("company")
-      notice=site.get("copyrightNotice")
-    />
+    <if(showCopyright)>
+      <default-theme-site-footer-copyright
+        company=site.get("company")
+        notice=site.get("copyrightNotice")
+      />
+    </if>
   </default-theme-site-footer-container>
 </marko-web-block>
