@@ -1,7 +1,9 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
 $ const { config, site } = out.global;
 
 $ const blockName = input.blockName || "site-footer";
-$ const showCopyright = input.showCopyright !== undefined ? input.showCopyright : true;
+$ const showCopyright = defaultValue(input.showCopyright, true)
 
 <marko-web-block
   name=blockName
