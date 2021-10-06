@@ -15,9 +15,9 @@
     "@parameter1/base-cms-object-path": "^2.22.2",
     "@parameter1/base-cms-utils": "^2.22.2",
     "@parameter1/base-cms-web-common": "^2.44.0",
-    "@parameter1/joi": "^1.2.8",
+    "@parameter1/joi": "^1.2.10",
     "graphql": "^14.7.0",
-    "graphql-tag": "^2.11.0"
+    "graphql-tag": "^2.12.5"
   },
   "peerDependencies": {
     "@parameter1/base-cms-marko-core": "^2.0.0",

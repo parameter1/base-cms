@@ -12,7 +12,7 @@
     "@parameter1/base-cms-object-path": "^2.22.2",
     "@parameter1/base-cms-utils": "^2.22.2",
     "graphql": "^14.5.4",
-    "graphql-tag": "^2.10.1",
+    "graphql-tag": "^2.12.5",
     "moment": "^2.29.1"
   },
   "peerDependencies": {
