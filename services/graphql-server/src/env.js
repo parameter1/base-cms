@@ -34,7 +34,8 @@ module.exports = cleanEnv(process.env, {
   TOKEN_NAMESPACE: nonemptystr({ desc: 'The UUIDv4 namespace' }),
   TERMINUS_TIMEOUT: num({ desc: 'Number of milliseconds before forceful exiting', default: 1000 }),
   TERMINUS_SHUTDOWN_DELAY: num({ desc: 'Number of milliseconds before the HTTP server starts its shutdown', default: 10000 }),
-  CDN_IMAGE_HOSTNAME: nonemptystr({ desc: 'The default CDN hostname for image delivery', default: 'base.imgix.net' }),
-  CDN_ASSET_HOSTNAME: nonemptystr({ desc: 'The default CDN hostname for asset delivery', default: 'cdn.baseplatform.io' }),
+  CDN_IMAGE_HOSTNAME: nonemptystr({ desc: 'The default CDN hostname for image delivery', default: 'p1-cms-assets.imgix.net' }),
+  CDN_ASSET_HOSTNAME: nonemptystr({ desc: 'The default CDN hostname for asset delivery', default: 'cdn.base.parameter1.com' }),
   IMAGE_IMPORT_URL: nonemptystr({ desc: 'The BASE image import URL.', default: 'https://opq20fu9p2.execute-api.us-east-1.amazonaws.com/default/base-media-importer' }),
+  MOST_POPULAR_CONTENT_API_URL: nonemptystr({ desc: 'The most popular content API URL.', default: 'https://most-popular-content.base.parameter1.com' }),
 });
