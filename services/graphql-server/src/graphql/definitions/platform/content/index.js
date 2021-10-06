@@ -45,6 +45,8 @@ extend type Query {
   newsletterScheduledContent(input: NewsletterScheduledContentQueryInput = {}): [Content!]!
   relatedPublishedContent(input: RelatedPublishedContentQueryInput = {}): ContentConnection!
   websiteExpiringContent(input: WebsiteExpiringContentQueryInput = {}): ContentConnection!
+
+  mostPopularContent(input: QueryMostPopularContentInput! = {}): QueryMostPopularContentConnection!
 }
 
 extend type Mutation {
@@ -238,6 +240,13 @@ type ContentWebsiteSchedule {
   endDate(input: FormatDate = {}): String @momentFormat(localField: "end")
 }
 
+type MostPopularContent {
+  id: Int!
+  uniqueUsers: Int!
+  views: Int!
+  content: Content! @refOne(localField: "content._id", loader: "platformContent")
+}
+
 type PublishedContentCount {
   id: String! @value(localField: "_id")
   type(input: ContentTypeInput = {}): String!
@@ -281,6 +290,17 @@ type ContentSitemapImage {
   loc: String!
   caption: String
   title: String
+}
+
+type QueryMostPopularContentConnection {
+  startsAt: Date
+  endsAt: Date
+  updatedAt: Date
+  edges: [QueryMostPopularContentEdge!]!
+}
+
+type QueryMostPopularContentEdge {
+  node: MostPopularContent!
 }
 
 input ContentQueryInput {
@@ -693,6 +713,11 @@ input ContentHasWebsiteScheduleInput {
   optionId: [Int] = []
   optionName: [String] = []
   sectionBubbling: Boolean = true
+}
+
+input QueryMostPopularContentInput {
+  siteId: ObjectID
+  limit: Int! = 10
 }
 
 ${interfaces}

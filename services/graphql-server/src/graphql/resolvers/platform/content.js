@@ -10,6 +10,7 @@ const { getAsArray } = require('@parameter1/base-cms-object-path');
 const moment = require('moment');
 const momentTZ = require('moment-timezone');
 const cheerio = require('cheerio');
+const fetch = require('node-fetch');
 
 const newrelic = require('../../../newrelic');
 const defaults = require('../../defaults');
@@ -36,6 +37,7 @@ const contentTeaser = require('../../utils/content-teaser');
 const googleDataApiClient = require('../../../google-data-api-client');
 const SiteContext = require('../../../site-context');
 const { validateYoutubePlaylistId, validateYoutubeChannelId, validateYoutubeUsername } = require('../../utils/youtube');
+const { MOST_POPULAR_CONTENT_API_URL } = require('../../../env');
 
 const retrieveYoutubePlaylistId = async ({ youtube }) => {
   const playlistId = get(youtube, 'playlistId');
@@ -793,10 +795,36 @@ module.exports = {
     sequence: ({ sequence }) => (sequence == null ? 0 : sequence),
   },
 
+  MostPopularContent: {
+    id: row => row.content._id,
+  },
+
+  QueryMostPopularContentConnection: {
+    startsAt: ({ startsAt }) => (startsAt ? new Date(startsAt) : null),
+    endsAt: ({ endsAt }) => (endsAt ? new Date(endsAt) : null),
+    updatedAt: ({ updatedAt }) => (updatedAt ? new Date(updatedAt) : null),
+    edges: results => results.data.map(node => ({ node })),
+  },
+
   /**
    *
    */
   Query: {
+    /**
+     *
+     */
+    mostPopularContent: async (_, { input }, { site, tenant }) => {
+      const siteId = input.siteId || site.id();
+      if (!siteId) throw new UserInputError('Either a site context or the siteId input must be specified.');
+      const [slug] = tenant.split('_');
+      const url = `${MOST_POPULAR_CONTENT_API_URL}/retrieve?tenant=${slug}&realm=${siteId}&limit=${input.limit}`;
+      const res = await fetch(url, { method: 'GET' });
+      if (!res.ok) throw new Error('Received an invalid response from the most popular content API.');
+      const results = await res.json();
+
+      return results;
+    },
+
     /**
      *
      */
