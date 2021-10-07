@@ -16,9 +16,9 @@
     "@parameter1/base-cms-env": "^2.0.0",
     "@parameter1/base-cms-micro": "^2.22.2",
     "micro": "^9.3.4",
-    "mongodb": "^3.6.3",
+    "mongodb": "^3.7.2",
     "newrelic": "^6.14.0",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.5"
   },
   "devDependencies": {
     "micro-dev": "^3.0.0"

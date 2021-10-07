@@ -1,6 +1,6 @@
 const contentTypes = require('./content');
 const dynamicPages = require('./dynamic-page');
-const index = require('../templates/index');
+const index = require('../templates/index.marko');
 const loadMore = require('./load-more');
 const websiteSections = require('./website-section');
 

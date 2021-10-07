@@ -13,7 +13,7 @@
   "dependencies": {
     "html-entities": "^1.4.0",
     "html2plaintext": "^2.1.2",
-    "striptags": "^3.1.1"
+    "striptags": "^3.2.0"
   },
   "publishConfig": {
     "access": "public"

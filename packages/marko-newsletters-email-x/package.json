@@ -14,7 +14,7 @@
     "@parameter1/base-cms-object-path": "^2.22.2",
     "@parameter1/base-cms-utils": "^2.22.2",
     "moment": "^2.29.1",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.5"
   },
   "peerDependencies": {
     "@parameter1/base-cms-marko-core": "^2.0.0"
