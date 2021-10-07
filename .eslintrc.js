@@ -4,6 +4,7 @@ module.exports = {
     'import'
   ],
   rules: {
-    'no-underscore-dangle': [ 'error', { allow: ['_id'] } ],
+    'import/extensions': ['error', 'ignorePackages', { js: 'never', marko: 'never', json: 'always' }],
+    'no-underscore-dangle': ['error', { allow: ['_id'] }],
   },
 };

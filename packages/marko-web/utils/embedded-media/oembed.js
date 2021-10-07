@@ -1,4 +1,4 @@
-const BrowserComponent = require('../../components/browser-component.marko');
+const BrowserComponent = require('../../components/browser-component');
 const facebook = require('./facebook-oembed');
 const instagram = require('./instagram-oembed');
 

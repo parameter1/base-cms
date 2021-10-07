@@ -1,3 +1,3 @@
-const defaultDocument = require('../components/document/index.marko');
+const defaultDocument = require('../components/document');
 
 module.exports = document => document || defaultDocument;

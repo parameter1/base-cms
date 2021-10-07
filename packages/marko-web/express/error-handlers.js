@@ -1,6 +1,6 @@
 const { STATUS_CODES } = require('http');
 const createError = require('http-errors');
-const errorTemplate = require('../components/document/components/error.marko');
+const errorTemplate = require('../components/document/components/error');
 const getRedirect = require('./get-redirect');
 const findContentAlias = require('./find-content-alias');
 const applyQueryParams = require('../utils/apply-query-params');

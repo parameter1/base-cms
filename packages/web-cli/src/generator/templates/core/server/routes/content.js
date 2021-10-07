@@ -1,6 +1,6 @@
 const gql = require('graphql-tag');
 const { withContent } = require('@parameter1/base-cms-marko-web/middleware');
-const content = require('../templates/content/index.marko');
+const content = require('../templates/content');
 
 module.exports = (app) => {
   app.get('/:prefix(*):id(\\d{8}):suffix(*)', withContent({
