@@ -25,8 +25,6 @@ module.exports = cleanEnv(process.env, {
   GRAPHQL_INTROSPECTION_ENABLED: bool({ desc: 'Whether the GraphQL server should allow introspection', default: true }),
   GRAPHQL_PLAYGROUND_ENABLED: bool({ desc: 'Whether the GraphQL server should allow the playground to be used.', default: false }),
   GRAPHQL_TRACING_ENABLED: bool({ desc: 'Whether the GraphQL server should allow tracing (deprecated)', default: false }),
-  APOLLO_ENGINE_ENABLED: bool({ desc: 'Whether the Apollo Studio engine should be used', default: false }),
-  APOLLO_ENGINE_API_KEY: str({ desc: 'The Apollo Studio Engine API key', default: '' }),
   BASE4_REST_USERNAME: str({ desc: 'The Base4 REST API username.', default: '' }),
   BASE4_REST_PASSWORD: str({ desc: 'The Base4 REST API password.', default: '' }),
   GOOGLE_DATA_API_URI: nonemptystr({ desc: 'The Google Data API URI', default: 'http://google-data-api' }),
