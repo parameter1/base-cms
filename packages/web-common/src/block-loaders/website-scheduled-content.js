@@ -19,6 +19,8 @@ const date = v => (v instanceof Date ? v.valueOf() : v);
  * @param {number[]} [params.excludeContentIds] An array of content IDs to exclude.
  * @param {string[]} [params.excludeContentTypes] An array of content types to exclude.
  * @param {string[]} [params.includeContentTypes] An array of content types to include.
+ * @param {string[]} [params.includeLabels] An array of content labels to include.
+ * @param {string[]} [params.excludeLabels] An array of content labels to exclude.
  * @param {boolean} [params.requiresImage] Whether the content must have an image.
  * @param {boolean} [params.sectionBubbling] Whether automatic section bubbling is applied.
  * @param {string} [params.queryFragment] The `graphql-tag` fragment
@@ -46,6 +48,9 @@ module.exports = async (apolloClient, {
   excludeContentTypes,
   includeContentTypes,
 
+  includeLabels,
+  excludeLabels,
+
   requiresImage,
   sectionBubbling,
 
@@ -59,6 +64,8 @@ module.exports = async (apolloClient, {
     excludeContentIds,
     excludeContentTypes,
     includeContentTypes,
+    includeLabels,
+    excludeLabels,
     requiresImage,
     sectionAlias,
     sectionBubbling,

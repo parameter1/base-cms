@@ -1295,6 +1295,8 @@ module.exports = {
         excludeSectionIds,
         includeContentTypes,
         excludeContentTypes,
+        includeLabels,
+        excludeLabels,
         requiresImage,
         sectionBubbling,
         pagination,
@@ -1354,24 +1356,17 @@ module.exports = {
       if (excludeSectionIds.length) {
         $elemMatch.$and.push({ sectionId: { $nin: excludeSectionIds } });
       }
-      const query = { sectionQuery: { $elemMatch } };
-      if (requiresImage) {
-        query.primaryImage = { $exists: true };
-      }
+      const query = { sectionQuery: { $elemMatch }, $and: [] };
+      if (requiresImage) query.primaryImage = { $exists: true };
       if (includeContentTypes.length) {
-        if (!isArray(query.$and)) query.$and = [];
         query.$and.push({ type: { $in: includeContentTypes } });
       } else {
-        if (!isArray(query.$and)) query.$and = [];
         query.$and.push({ type: { $in: getDefaultContentTypes() } });
       }
-      if (excludeContentTypes.length) {
-        if (!isArray(query.$and)) query.$and = [];
-        query.$and.push({ type: { $nin: excludeContentTypes } });
-      }
-      if (excludeContentIds.length) {
-        query._id = { $nin: excludeContentIds };
-      }
+      if (excludeContentTypes.length) query.$and.push({ type: { $nin: excludeContentTypes } });
+      if (excludeContentIds.length) query._id = { $nin: excludeContentIds };
+      if (includeLabels.length) query.$and.push({ labels: { $in: includeLabels } });
+      if (excludeLabels.length) query.$and.push({ labels: { $nin: excludeLabels } });
 
       if (beginning.before) query.$and.push({ startDate: { $lte: beginning.before } });
       if (beginning.after) query.$and.push({ startDate: { $gte: beginning.after } });
@@ -1381,6 +1376,8 @@ module.exports = {
       const projection = connectionProjection(info);
       const sort = input.sort.field ? input.sort : { field: 'sectionQuery.0.start', order: 'desc' };
       const excludeProjection = input.sort.field ? undefined : ['sectionQuery.start'];
+
+      if (!query.$and.length) delete query.$and;
 
       return basedb.paginate('platform.Content', {
         query,
