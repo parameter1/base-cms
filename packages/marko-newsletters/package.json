@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-newsletters",
-  "version": "2.46.0",
+  "version": "2.46.1",
   "description": "Core Marko+Express components for BaseCMS newsletter templates",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "main": "index.js",

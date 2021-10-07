@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-web-cli",
-  "version": "2.46.0",
+  "version": "2.46.1",
   "description": "Command line interface for BaseCMS+Marko websites",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "main": "src/index.js",
@@ -20,7 +20,7 @@
     "@babel/runtime": "^7.15.4",
     "@parameter1/base-cms-cli-utils": "^2.8.4",
     "@parameter1/base-cms-express-apollo": "^2.45.0",
-    "@parameter1/base-cms-marko-web": "^2.46.0",
+    "@parameter1/base-cms-marko-web": "^2.46.1",
     "autoprefixer": "^10.3.7",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
