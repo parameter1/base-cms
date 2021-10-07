@@ -15,8 +15,6 @@ const schema = require('../graphql/schema');
 const loadSiteContext = require('../site-context/load');
 const {
   GRAPHQL_ENDPOINT,
-  APOLLO_ENGINE_ENABLED,
-  APOLLO_ENGINE_API_KEY,
   NEW_RELIC_ENABLED,
   GRAPHQL_CACHE_CONTROL_ENABLED,
   GRAPHQL_DEBUG_ENABLED,
@@ -35,7 +33,6 @@ const config = {
   extensions: [
     ...(NEW_RELIC_ENABLED ? [() => new ApolloNewrelicExtension()] : []),
   ],
-  engine: APOLLO_ENGINE_ENABLED ? { apiKey: APOLLO_ENGINE_API_KEY } : false,
   introspection: GRAPHQL_INTROSPECTION_ENABLED,
   debug: GRAPHQL_DEBUG_ENABLED,
   playground: GRAPHQL_PLAYGROUND_ENABLED ? { endpoint: GRAPHQL_ENDPOINT } : false,
