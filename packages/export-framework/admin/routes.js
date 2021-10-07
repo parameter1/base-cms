@@ -1,5 +1,5 @@
 const { asyncRoute } = require('@parameter1/base-cms-utils');
-const template = require('./templates/index.marko');
+const template = require('./templates/index');
 
 const getSite = (arr, site) => {
   if (arr.find(({ name }) => name === site)) {
