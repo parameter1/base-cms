@@ -614,6 +614,8 @@ input WebsiteScheduledContentQueryInput {
   excludeSectionIds: [Int!] = []
   excludeContentTypes: [ContentType!] = []
   includeContentTypes: [ContentType!] = []
+  includeLabels: [String!]! = []
+  excludeLabels: [String!]! = []
   requiresImage: Boolean = false
   useOptionFallback: Boolean = false
   sectionBubbling: Boolean = true
