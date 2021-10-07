@@ -1,6 +1,6 @@
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 const mapTemplates = require('../../utils/map-templates');
-const template = require('../templates/index');
+const template = require('../templates/index.marko');
 
 module.exports = (router, { templates }) => {
   router.get('/', asyncRoute(async (req, res) => {

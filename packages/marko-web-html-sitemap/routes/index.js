@@ -3,8 +3,8 @@ const { getAsArray } = require('@parameter1/base-cms-object-path');
 const moment = require('moment');
 const gql = require('graphql-tag');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
-const dateListTemplate = require('../templates/date-list');
-const dayTemplate = require('../templates/day');
+const dateListTemplate = require('../templates/date-list.marko');
+const dayTemplate = require('../templates/day.marko');
 
 const FORMAT = 'YYYY-MM-DD';
 const dateNotFound = () => {

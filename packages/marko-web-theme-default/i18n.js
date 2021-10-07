@@ -1,4 +1,4 @@
-const translations = require('./translations.js');
+const translations = require('./translations');
 
 module.exports = (lang, fieldLabelKey) => {
   if (!translations[lang]) {

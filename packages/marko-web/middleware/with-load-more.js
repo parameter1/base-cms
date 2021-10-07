@@ -1,5 +1,5 @@
 const { asyncRoute } = require('@parameter1/base-cms-utils');
-const LoadMore = require('../components/load-more');
+const LoadMore = require('../components/load-more/index.marko');
 
 module.exports = () => asyncRoute(async (req, res) => {
   const { method, query, body } = req;
