@@ -74,7 +74,6 @@ module.exports = cwd => (cb) => {
                   useBuiltIns: 'usage',
                   corejs: '3.18',
                   debug: false,
-                  modules: 'cjs',
                 },
               ],
             ],
