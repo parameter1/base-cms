@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-web-cli",
-  "version": "2.46.1",
+  "version": "2.46.2",
   "description": "Command line interface for BaseCMS+Marko websites",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "main": "src/index.js",
