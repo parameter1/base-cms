@@ -52,12 +52,22 @@ module.exports = cwd => (cb) => {
     module: {
       rules: [
         {
+          test: /\.m?js/,
+          resolve: {
+            fullySpecified: false,
+          },
+        },
+        {
           test: /\.vue$/,
           loader: require.resolve('vue-loader'),
         },
         {
-          test: /\.m?js$/,
+          test: /\.js$/,
           loader: require.resolve('babel-loader'),
+          exclude: file => (
+            /node_modules\/(?!@parameter1\/base-cms-marko-web.*?\/browser)/.test(file)
+            && !/\.vue\.js/.test(file)
+          ),
           options: {
             presets: [
               [
@@ -74,7 +84,6 @@ module.exports = cwd => (cb) => {
                   useBuiltIns: 'usage',
                   corejs: '3.18',
                   debug: false,
-                  modules: 'cjs',
                 },
               ],
             ],
