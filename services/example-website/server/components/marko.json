@@ -1,1 +1,14 @@
-{}
+{
+  "<site-document>": {
+    "template": "./document.marko",
+    "<head>": {},
+    "<above-container>": {},
+    "<container>": {
+      "<above-page>": {},
+      "<page>": {},
+      "<below-page>": {}
+    },
+    "<below-container>": {},
+    "<foot>": {}
+  }
+}
