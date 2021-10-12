@@ -320,6 +320,32 @@ services:
 
   # EXAMPLES / OTHER
 
+  example-website:
+    <<: *node
+    working_dir: /base-cms/services/example-website
+    entrypoint: ["yarn"]
+    command: ["dev"]
+    environment:
+      <<: *env
+      PORT: 80
+      EXPOSED_PORT: 51269
+      LIVERELOAD_PORT: 61269
+      TENANT_KEY: abmedia_all
+      SITE_ID: 60f6ec3bd28860bc3384e784
+
+      GRAPHQL_URI: ${GRAPHQL_URI-http://graphql-server-virgon}
+      OEMBED_URI: ${OEMBED_URI-https://oembed}
+      RSS_URI: ${RSS_URI-http://rss-virgon}
+      SITEMAPS_URI: ${SITEMAPS_URI-http://sitemaps-virgon}
+    depends_on:
+      - graphql-server-virgon
+      - oembed
+      - rss-virgon
+      - sitemaps-virgon
+    ports:
+      - "51269:80"
+      - "61269:61269"
+
   example-leaders-program:
     << : *node
     working_dir: /base-cms/packages/leaders-program
