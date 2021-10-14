@@ -1,12 +1,24 @@
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 import { getAsObject } from "@parameter1/base-cms-object-path";
+import getRegisterConfig from "../get-register-config";
 
-$ const on = defaultValue(input.on, "ready");
+$ const {
+  on,
+  requestFrame,
+  targetTag,
+} = getRegisterConfig({
+  name: input.name,
+  globalConfig: out.global.$deferScripts,
+  inputConfig: {
+    on: defaultValue(input.on, "ready"),
+    requestFrame: Boolean(input.requestFrame),
+    targetTag: defaultValue(input.targetTag, "body"),
+  },
+});
+
 $ const init = `function() { ${input.init || ''} }`;
 $ const onScriptBuild = `function(script) { ${input.onScriptBuild || ''} }`;
 $ const onScriptLoaded = `function() { ${input.onScriptLoaded || ''} }`;
 $ const attrs = JSON.stringify(getAsObject(input, "attrs"));
-$ const requestFrame = Boolean(input.requestFrame);
-$ const targetTag = defaultValue(input.targetTag, "body");
 
 <script>deferScript('register', { name: '${input.name}', src: '${input.src}', on: '${on}', requestFrame: ${requestFrame}, targetTag: '${targetTag}', init: ${init}, onScriptBuild: ${onScriptBuild}, onScriptLoaded: ${onScriptLoaded}, attrs: ${attrs} });</script>
