@@ -79,6 +79,7 @@ enum GateableSurveyProvider {
   idme
   app_form_com
   idx
+  alchemer
 }
 
 enum ContentMutation {
