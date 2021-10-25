@@ -32,7 +32,7 @@
     "@request-frame": "boolean",
     "@init": "string",
     "@on-script-build": "string",
-    "@on-script-loaded": "string",
+    "@on-script-load": "string",
     "@attrs": "object"
   }
 }
