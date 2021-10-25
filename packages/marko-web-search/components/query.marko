@@ -14,6 +14,7 @@ $ const params = {
   sortField: input.sortField,
   sortOrder: input.sortOrder,
   contentTypes: input.contentTypes,
+  countryCodes: input.countryCodes,
   ...(assignedToWebsiteSectionIds && assignedToWebsiteSectionIds.length
     ? { assignedToWebsiteSectionIds }
     : { assignedToWebsiteSiteIds: [config.website("id")] }
