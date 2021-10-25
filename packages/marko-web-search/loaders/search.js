@@ -42,6 +42,7 @@ const baseBrowseQuery = gql`
  * @param {string} [params.sortOrder=DESC]
  * @param {string} [params.searchQuery]
  * @param {string[]} [params.contentTypes]
+ * @param {string[]} [params.countryCodes]
  * @param {string[]} [params.assignedToWebsiteSiteIds]
  * @param {number[]} [params.assignedToWebsiteSectionIds]
  * @param {string} [params.queryFragment] The `graphql-tag` fragment
@@ -57,6 +58,7 @@ module.exports = async ({ apolloBaseCMS, apolloBaseBrowse } = {}, {
 
   searchQuery,
   contentTypes = [],
+  countryCodes = [],
   assignedToWebsiteSiteIds = [],
   assignedToWebsiteSectionIds = [],
 
@@ -68,6 +70,7 @@ module.exports = async ({ apolloBaseCMS, apolloBaseBrowse } = {}, {
     omitScheduledAndExpiredContent: true,
     statuses: ['PUBLISHED'],
     contentTypes,
+    countryCodes,
     ...(searchQuery && { search: { query: searchQuery } }),
     ...((assignedToWebsiteSiteIds.length || assignedToWebsiteSectionIds.length) && {
       assignedToWebsites: {
