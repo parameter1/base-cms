@@ -130,6 +130,11 @@
         </div>
       </div>
     </div>
+    <div v-if="onSubmitConsentText" class="row">
+      <div class="col-12">
+        <div class="form-group" v-html="onSubmitConsentText" />
+      </div>
+    </div>
     <pre v-if="error" class="alert alert-danger text-danger">An error occurred: {{ error }}</pre>
     <vue-recaptcha
       ref="invisibleRecaptcha"
@@ -173,6 +178,10 @@ export default {
     lang: {
       type: String,
       default: 'en',
+    },
+    onSubmitConsentText: {
+      type: String,
+      default: null,
     },
   },
   data: () => ({
