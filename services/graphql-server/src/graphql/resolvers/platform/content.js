@@ -70,6 +70,7 @@ const loadSection = async ({
   siteId,
   id,
   alias,
+  strict = true,
 }) => {
   if (!id && !alias) return null;
   const sectionQuery = {
@@ -81,7 +82,9 @@ const loadSection = async ({
   } else {
     sectionQuery._id = id;
   }
-  return basedb.strictFindOne('website.Section', sectionQuery, { projection: { _id: 1 } });
+  return strict
+    ? basedb.strictFindOne('website.Section', sectionQuery, { projection: { _id: 1 } })
+    : basedb.findOne('website.Section', sectionQuery, { projection: { _id: 1 } });
 };
 
 const loadOptions = async ({
@@ -607,6 +610,7 @@ module.exports = {
           siteId,
           id: sectionId,
           alias: sectionAlias,
+          strict: false,
         }),
         loadOptions({
           basedb,
@@ -615,6 +619,7 @@ module.exports = {
           names: optionName.length ? optionName : ['Standard'],
         }),
       ]);
+      if (!section) return false;
 
       const descendantIds = sectionBubbling ? await getDescendantIds(section._id, basedb) : [];
 
