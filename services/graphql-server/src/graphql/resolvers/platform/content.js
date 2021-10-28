@@ -70,6 +70,7 @@ const loadSection = async ({
   siteId,
   id,
   alias,
+  strict = true,
 }) => {
   if (!id && !alias) return null;
   const sectionQuery = {
@@ -81,7 +82,9 @@ const loadSection = async ({
   } else {
     sectionQuery._id = id;
   }
-  return basedb.strictFindOne('website.Section', sectionQuery, { projection: { _id: 1 } });
+  return strict
+    ? basedb.strictFindOne('website.Section', sectionQuery, { projection: { _id: 1 } })
+    : basedb.findOne('website.Section', sectionQuery, { projection: { _id: 1 } });
 };
 
 const loadOptions = async ({
@@ -601,45 +604,43 @@ module.exports = {
       if (optionId.length && optionName.length) throw new UserInputError('You cannot provide both optionId and optionName as input.');
 
       const siteId = input.siteId || site.id();
-      try {
-        const [section, options] = await Promise.all([
-          loadSection({
-            basedb,
-            siteId,
-            id: sectionId,
-            alias: sectionAlias,
-          }),
-          loadOptions({
-            basedb,
-            siteId,
-            ids: optionId,
-            names: optionName.length ? optionName : ['Standard'],
-          }),
-        ]);
+      const [section, options] = await Promise.all([
+        loadSection({
+          basedb,
+          siteId,
+          id: sectionId,
+          alias: sectionAlias,
+          strict: false,
+        }),
+        loadOptions({
+          basedb,
+          siteId,
+          ids: optionId,
+          names: optionName.length ? optionName : ['Standard'],
+        }),
+      ]);
+      if (!section) return false;
 
-        const descendantIds = sectionBubbling ? await getDescendantIds(section._id, basedb) : [];
+      const descendantIds = sectionBubbling ? await getDescendantIds(section._id, basedb) : [];
 
-        const now = new Date();
-        const $elemMatch = {
-          sectionId: descendantIds.length ? { $in: descendantIds } : section._id,
-          optionId: { $in: options.map(opt => opt._id) },
-          start: { $lte: now },
-          $and: [
-            {
-              $or: [
-                { end: { $gt: now } },
-                { end: { $exists: false } },
-              ],
-            },
-          ],
-        };
+      const now = new Date();
+      const $elemMatch = {
+        sectionId: descendantIds.length ? { $in: descendantIds } : section._id,
+        optionId: { $in: options.map(opt => opt._id) },
+        start: { $lte: now },
+        $and: [
+          {
+            $or: [
+              { end: { $gt: now } },
+              { end: { $exists: false } },
+            ],
+          },
+        ],
+      };
 
-        const query = { _id: doc._id, sectionQuery: { $elemMatch } };
-        const matched = await basedb.findOne('platform.Content', query, { projection: { _id: 1 } });
-        return Boolean(matched);
-      } catch (e) {
-        return false;
-      }
+      const query = { _id: doc._id, sectionQuery: { $elemMatch } };
+      const matched = await basedb.findOne('platform.Content', query, { projection: { _id: 1 } });
+      return Boolean(matched);
     },
   },
 
