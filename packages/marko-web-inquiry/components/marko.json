@@ -4,6 +4,7 @@
     "<header>": {},
     "<description>": {},
     "@content": "object",
+    "@on-submit-consent-text": "string",
 
     "@with-header": "boolean",
     "@with-description": "boolean",
