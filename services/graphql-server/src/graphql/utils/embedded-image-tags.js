@@ -29,7 +29,7 @@ module.exports = async (body, { imageHost, basedb }) => {
     tag.set('src', createSrcFor(imageHost, image, {
       w: size,
       fit: 'max',
-      auto: 'format',
+      auto: 'format,compress',
     }));
     tag.set('caption', createCaptionFor(image.caption));
     tag.set('credit', image.credit);
