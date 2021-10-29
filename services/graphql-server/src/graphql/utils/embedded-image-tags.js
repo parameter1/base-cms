@@ -1,6 +1,12 @@
 const { extractEmbeddedTags } = require('@parameter1/base-cms-embedded-media');
 const { createAltFor, createSrcFor, createCaptionFor } = require('@parameter1/base-cms-image');
 
+const defaults = {
+  w: '1280',
+  fit: 'max',
+  auto: 'format,compress',
+};
+
 module.exports = async (body, { imageHost, imageAttrs, basedb }) => {
   if (!body) return [];
   const imageTags = extractEmbeddedTags(body).filter(tag => tag.type === 'image');
@@ -23,12 +29,13 @@ module.exports = async (body, { imageHost, imageAttrs, basedb }) => {
 
     tag.set('alt', createAltFor(image));
     tag.set('src', createSrcFor(imageHost, image, {
-      // Set sane defaults
-      w: '1280',
-      fit: 'max',
-      auto: 'format,compress',
-      // Allow new values to be input
+      ...defaults,
       ...imageAttrs,
+    }));
+    tag.set('srcSet', createSrcFor(imageHost, image, {
+      ...defaults,
+      ...imageAttrs,
+      dpr: 2,
     }));
     tag.set('caption', createCaptionFor(image.caption));
     tag.set('credit', image.credit);
