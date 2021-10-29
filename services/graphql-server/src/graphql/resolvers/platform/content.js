@@ -192,12 +192,12 @@ const updateContentMutationHandler = ({
   return basedb.findById('platform.Content', id, { projection: { ...projection, type: 1 } });
 };
 
-const prepareSidebarBody = async (body, { site, basedb }) => {
+const prepareSidebarBody = async (body, { site, imageAttrs, basedb }) => {
   if (!body) return null;
   let value = body.trim();
   if (!value) return null;
   const imageHost = site.get('imageHost', defaults.imageHost);
-  const imageTags = await getEmbeddedImageTags(value, { imageHost, basedb });
+  const imageTags = await getEmbeddedImageTags(value, { imageHost, imageAttrs, basedb });
   imageTags.forEach((tag) => {
     const replacement = tag.isValid() ? tag.build() : '';
     value = value.replace(tag.getRegExp(), replacement);
@@ -648,10 +648,10 @@ module.exports = {
    *
    */
   ContentArticle: {
-    sidebars: async ({ sidebars }, _, { site, basedb }) => {
+    sidebars: async ({ sidebars }, { imageAttrs }, { site, basedb }) => {
       if (!isArray(sidebars)) return [];
       const bodies = await Promise.all(sidebars.map(async ({ body } = {}) => {
-        const value = await prepareSidebarBody(body, { site, basedb });
+        const value = await prepareSidebarBody(body, { site, imageAttrs, basedb });
         return value;
       }));
       return bodies.filter(v => v);
@@ -785,8 +785,8 @@ module.exports = {
   },
 
   ContentStubSidebar: {
-    body: async ({ body }, _, { site, basedb }) => {
-      const value = await prepareSidebarBody(body, { site, basedb });
+    body: async ({ body }, _, { site, imageAttrs, basedb }) => {
+      const value = await prepareSidebarBody(body, { site, imageAttrs, basedb });
       return value;
     },
     name: ({ name }) => {
