@@ -472,7 +472,7 @@ module.exports = {
     taxonomyIds: content => getAsArray(content, 'taxonomy').map(t => parseInt(t.oid, 10)).filter(id => id),
 
     body: async (content, { input }, { site, basedb }) => {
-      const { mutation } = input;
+      const { mutation, imageAttrs } = input;
       const { body } = content;
       const mutated = get(content, `mutations.${mutation}.body`);
 
@@ -482,7 +482,7 @@ module.exports = {
       // Convert image tags to include image attributes (src, alt, caption, credit).
       // Convert document tags to include href and file extension.
       const [imageTags, documentTags] = await Promise.all([
-        getEmbeddedImageTags(value, { imageHost, basedb }),
+        getEmbeddedImageTags(value, { imageHost, imageAttrs, basedb }),
         getEmbeddedDocumentTags(value, { imageHost, basedb }),
       ]);
 

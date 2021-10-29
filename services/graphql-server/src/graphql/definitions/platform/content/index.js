@@ -665,6 +665,20 @@ input ContentTeaserInput {
 
 input ContentBodyInput {
   mutation: ContentMutation = Website
+  imageAttrs: EmbeddedImageAttrsInput = {
+    w: 1280,
+    fit: "max",
+    auto: "format,compress"
+  }
+}
+
+input EmbeddedImageAttrsInput {
+  "The (max) width of the embedded image"
+  w: Int
+  "The Imgix 'fit' parameter"
+  fit: String
+  "The Imgix 'auto' parameter"
+  auto: String
 }
 
 input ContentTaxonomyInput {
