@@ -26,6 +26,10 @@ module.exports = (node) => {
   const defaultStruturedData = {
     '@context': 'https://schema.org',
     '@type': 'Article',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': get(node, 'siteContext.canonicalUrl'),
+    },
     headline: get(node, 'metadata.title'),
     name: get(node, 'metadata.title'),
     ...(get(node, 'metadata.description') && { description: get(node, 'metadata.description') }),
