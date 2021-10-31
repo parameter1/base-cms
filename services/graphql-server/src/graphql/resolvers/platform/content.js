@@ -787,7 +787,6 @@ module.exports = {
   ContentStubSidebar: {
     body: async ({ body }, { input }, { site, basedb }) => {
       const { imageAttrs } = input;
-      console.log('imageAttrs', imageAttrs);
       const value = await prepareSidebarBody(body, { site, imageAttrs, basedb });
       return value;
     },
