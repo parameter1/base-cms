@@ -682,7 +682,7 @@ input ContentBodyInput {
 }
 
 input EmbeddedImageAttrsInput {
-  "The (max) width of the embedded image"
+  "The width of the embedded image"
   w: Int
   "The Imgix 'fit' parameter"
   fit: String
