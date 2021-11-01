@@ -40,6 +40,8 @@
     "<page>": {},
     "<above-page>": {},
     "<below-page>": {},
+    "@structured-data-query-fragment": "string",
+    "@build-structured-data": "function",
     "@id": "number",
     "@type": "string",
     "@attrs": "object"
