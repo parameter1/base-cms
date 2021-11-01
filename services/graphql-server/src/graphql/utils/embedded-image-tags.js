@@ -32,11 +32,6 @@ module.exports = async (body, { imageHost, imageAttrs, basedb }) => {
       ...defaults,
       ...imageAttrs,
     }));
-    tag.set('srcSet', createSrcFor(imageHost, image, {
-      ...defaults,
-      ...imageAttrs,
-      dpr: 2,
-    }));
     tag.set('caption', createCaptionFor(image.caption));
     tag.set('credit', image.credit);
     return tag;
