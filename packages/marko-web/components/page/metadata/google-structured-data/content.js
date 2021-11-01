@@ -108,5 +108,5 @@ module.exports = (node) => {
     });
   }
 
-  return JSON.stringify(defaultStruturedData);
+  return undefined;
 };
