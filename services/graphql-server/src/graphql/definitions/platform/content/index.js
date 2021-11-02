@@ -175,7 +175,7 @@ enum RelatedContentQueryType {
 }
 
 type ContentStubSidebar {
-  body: String
+  body(input: ContentStubSidebarBodyInput = {}): String
   name: String
   label: String
   sequence: Int!
@@ -302,6 +302,15 @@ type QueryMostPopularContentConnection {
 
 type QueryMostPopularContentEdge {
   node: MostPopularContent!
+}
+
+input ContentStubSidebarBodyInput {
+  "Embedded image defaults to apply to inline images"
+  imageAttrs: EmbeddedImageAttrsInput = {
+    w: 1280,
+    fit: "max",
+    auto: "format,compress"
+  }
 }
 
 input ContentQueryInput {
@@ -665,6 +674,20 @@ input ContentTeaserInput {
 
 input ContentBodyInput {
   mutation: ContentMutation = Website
+  imageAttrs: EmbeddedImageAttrsInput = {
+    w: 1280,
+    fit: "max",
+    auto: "format,compress"
+  }
+}
+
+input EmbeddedImageAttrsInput {
+  "The width of the embedded image"
+  w: Int
+  "The Imgix 'fit' parameter"
+  fit: String
+  "The Imgix 'auto' parameter"
+  auto: String
 }
 
 input ContentTaxonomyInput {

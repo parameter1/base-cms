@@ -1,7 +1,13 @@
 const { extractEmbeddedTags } = require('@parameter1/base-cms-embedded-media');
 const { createAltFor, createSrcFor, createCaptionFor } = require('@parameter1/base-cms-image');
 
-module.exports = async (body, { imageHost, basedb }) => {
+const defaults = {
+  w: '1280',
+  fit: 'max',
+  auto: 'format,compress',
+};
+
+module.exports = async (body, { imageHost, imageAttrs, basedb }) => {
   if (!body) return [];
   const imageTags = extractEmbeddedTags(body).filter(tag => tag.type === 'image');
   return Promise.all(imageTags.map(async (tag) => {
@@ -20,16 +26,11 @@ module.exports = async (body, { imageHost, basedb }) => {
       tag.setValid(false);
       return tag;
     }
-    // const defaultSize = ['left', 'right'].includes(tag.get('align')) ? '320' : '640';
-    // const size = tag.get('size', defaultSize).replace('w', '');
-    // @todo Adjust this. Hardcoding for now to allow for crisp images until proper w/h is handled.
-    const size = '1440';
 
     tag.set('alt', createAltFor(image));
     tag.set('src', createSrcFor(imageHost, image, {
-      w: size,
-      fit: 'max',
-      auto: 'format',
+      ...defaults,
+      ...imageAttrs,
     }));
     tag.set('caption', createCaptionFor(image.caption));
     tag.set('credit', image.credit);

@@ -192,12 +192,12 @@ const updateContentMutationHandler = ({
   return basedb.findById('platform.Content', id, { projection: { ...projection, type: 1 } });
 };
 
-const prepareSidebarBody = async (body, { site, basedb }) => {
+const prepareSidebarBody = async (body, { site, imageAttrs, basedb }) => {
   if (!body) return null;
   let value = body.trim();
   if (!value) return null;
   const imageHost = site.get('imageHost', defaults.imageHost);
-  const imageTags = await getEmbeddedImageTags(value, { imageHost, basedb });
+  const imageTags = await getEmbeddedImageTags(value, { imageHost, imageAttrs, basedb });
   imageTags.forEach((tag) => {
     const replacement = tag.isValid() ? tag.build() : '';
     value = value.replace(tag.getRegExp(), replacement);
@@ -472,7 +472,7 @@ module.exports = {
     taxonomyIds: content => getAsArray(content, 'taxonomy').map(t => parseInt(t.oid, 10)).filter(id => id),
 
     body: async (content, { input }, { site, basedb }) => {
-      const { mutation } = input;
+      const { mutation, imageAttrs } = input;
       const { body } = content;
       const mutated = get(content, `mutations.${mutation}.body`);
 
@@ -482,7 +482,7 @@ module.exports = {
       // Convert image tags to include image attributes (src, alt, caption, credit).
       // Convert document tags to include href and file extension.
       const [imageTags, documentTags] = await Promise.all([
-        getEmbeddedImageTags(value, { imageHost, basedb }),
+        getEmbeddedImageTags(value, { imageHost, imageAttrs, basedb }),
         getEmbeddedDocumentTags(value, { imageHost, basedb }),
       ]);
 
@@ -648,10 +648,10 @@ module.exports = {
    *
    */
   ContentArticle: {
-    sidebars: async ({ sidebars }, _, { site, basedb }) => {
+    sidebars: async ({ sidebars }, { imageAttrs }, { site, basedb }) => {
       if (!isArray(sidebars)) return [];
       const bodies = await Promise.all(sidebars.map(async ({ body } = {}) => {
-        const value = await prepareSidebarBody(body, { site, basedb });
+        const value = await prepareSidebarBody(body, { site, imageAttrs, basedb });
         return value;
       }));
       return bodies.filter(v => v);
@@ -785,8 +785,9 @@ module.exports = {
   },
 
   ContentStubSidebar: {
-    body: async ({ body }, _, { site, basedb }) => {
-      const value = await prepareSidebarBody(body, { site, basedb });
+    body: async ({ body }, { input }, { site, basedb }) => {
+      const { imageAttrs } = input;
+      const value = await prepareSidebarBody(body, { site, imageAttrs, basedb });
       return value;
     },
     name: ({ name }) => {
