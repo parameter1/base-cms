@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-example-website",
-  "version": "2.50.0",
+  "version": "2.51.0",
   "description": "Example BaseCMS website.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
@@ -19,7 +19,7 @@
   "dependencies": {
     "@parameter1/base-cms-marko-core": "^2.46.0",
     "@parameter1/base-cms-marko-web": "^2.50.0",
-    "@parameter1/base-cms-marko-web-theme-default": "^2.45.0",
+    "@parameter1/base-cms-marko-web-theme-default": "^2.51.0",
     "@parameter1/base-cms-object-path": "^2.45.0",
     "@parameter1/base-cms-utils": "^2.22.2",
     "@parameter1/base-cms-web-cli": "^2.50.0",
