@@ -50,6 +50,17 @@
         line-height: .8;
       }
     }
+
+    p.footnote {
+      @include theme-apply-fonts(
+        $font-family: $theme-content-heading-h6-font-family,
+        $font-size-sm: $theme-content-heading-h6-font-size-sm,
+        $font-size: $theme-content-heading-h6-font-size,
+        $font-weight: $theme-content-heading-h6-font-weight,
+        $line-height-sm: $theme-content-heading-h6-line-height-sm,
+        $line-height: $theme-content-heading-h6-line-height
+      );
+    }
   }
 
   &__content-sidebar {
