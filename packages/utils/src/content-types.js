@@ -12,6 +12,7 @@ module.exports = [
   'Group',
   'InQuarters',
   'Infographic',
+  'Job',
   'MediaGallery',
   'News',
   'Page',
