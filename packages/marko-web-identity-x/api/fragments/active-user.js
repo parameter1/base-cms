@@ -16,39 +16,28 @@ fragment ActiveUserFragment on AppUser {
   receiveEmail
   externalIds {
     id
-    identifier {
-      value
-      type
-    }
-    namespace {
-      provider
-      tenant
-      type
-    }
+    identifier { value type }
+    namespace { provider tenant type }
   }
-  regionalConsentAnswers {
-    id
-    given
-    date
-  }
+  regionalConsentAnswers { id given date }
   customSelectFieldAnswers(input: {
     onlyActive: true
     sort: { field: label, order: asc }
   }) {
     id
     hasAnswered
-    answers {
-      id
-    }
+    answers { id externalIdentifier }
     field {
       id
       label
       multiple
       required
-      options {
+      externalId {
         id
-        label
+        namespace { provider tenant type }
+        identifier { value type }
       }
+      options { id label }
     }
   }
 }
