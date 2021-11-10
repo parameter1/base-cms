@@ -12,6 +12,7 @@ const event = require('./event');
 const group = require('./group');
 const inQuarters = require('./in-quarters');
 const infographic = require('./infographic');
+const job = require('./job');
 const mediaGallery = require('./media-gallery');
 const news = require('./news');
 const page = require('./page');
@@ -46,6 +47,7 @@ ${event}
 ${group}
 ${inQuarters}
 ${infographic}
+${job}
 ${mediaGallery}
 ${news}
 ${page}

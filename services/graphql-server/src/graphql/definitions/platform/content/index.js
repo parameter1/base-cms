@@ -102,6 +102,7 @@ enum ContentType {
   Group
   InQuarters
   Infographic
+  Job
   MediaGallery
   News
   Page
