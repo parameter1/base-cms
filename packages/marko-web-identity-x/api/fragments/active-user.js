@@ -5,6 +5,7 @@ module.exports = gql`
 fragment ActiveUserFragment on AppUser {
   id
   email
+  verified
   givenName
   familyName
   displayName
@@ -14,6 +15,7 @@ fragment ActiveUserFragment on AppUser {
   regionCode
   postalCode
   receiveEmail
+  mustReVerifyProfile
   externalIds {
     id
     identifier { value type }
