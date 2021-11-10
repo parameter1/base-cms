@@ -1,24 +1,24 @@
 const gql = require('graphql-tag');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 const callHooksFor = require('../utils/call-hooks-for');
+const userFragment = require('../api/fragments/active-user');
 
 const buildQuery = () => gql`
   query LoginCheckAppUser($email: String!) {
     appUser(input: { email: $email }) {
-      id
-      email
-      verified
+      ...ActiveUserFragment
     }
   }
+  ${userFragment}
 `;
 
 const createUser = gql`
   mutation LoginCreateAppUser($email: String!) {
     createAppUser(input: { email: $email }) {
-      id
-      email
+      ...ActiveUserFragment
     }
   }
+  ${userFragment}
 `;
 
 const sendLoginLink = gql`
