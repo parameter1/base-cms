@@ -55,7 +55,10 @@ class IdentityX {
       const { user, application } = await this.loadActiveContext();
 
       access.requiresUserInput = user ? requiredFields.some(key => isEmpty(user[key])) : false;
-      if (!access.requiresUserInput) {
+      if (user && !access.requiresUserInput) {
+        access.requiresUserInput = Boolean(user.mustReVerifyProfile);
+      }
+      if (user && !access.requiresUserInput) {
         // Check if user needs to answer any globally required custom fields.
         access.requiresUserInput = user.customSelectFieldAnswers
           .some(({ hasAnswered, field }) => field.required && !hasAnswered);
