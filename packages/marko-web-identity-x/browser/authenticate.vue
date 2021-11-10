@@ -93,6 +93,7 @@ export default {
     isProfileComplete: true,
     activeUser: null,
     requiresCustomFieldAnswers: false,
+    mustReVerifyProfile: false,
   }),
 
   /**
@@ -109,7 +110,7 @@ export default {
     /**
      *
      */
-    hasRequiredFields() {
+    formHasRequiredFields() {
       return Boolean(this.requiredFields.length);
     },
 
@@ -125,8 +126,9 @@ export default {
      *
      */
     showProfileForm() {
+      if (this.mustReVerifyProfile) return true;
       if (this.requiresCustomFieldAnswers) return true;
-      return !this.hasRequiredFields || (this.isUserRedirect && !this.isProfileComplete);
+      return !this.isProfileComplete;
     },
   },
 
@@ -160,10 +162,8 @@ export default {
         if (!res.ok) throw new AuthenticationError(data.message, res.status);
 
         this.activeUser = data.user;
-        this.isProfileComplete = this.hasRequiredFields
-          ? this.requiredFields.every(key => !isEmpty(this.activeUser[key]))
-          : true;
-
+        this.mustReVerifyProfile = data.user.mustReVerifyProfile;
+        this.isProfileComplete = this.requiredFields.every(key => !isEmpty(this.activeUser[key]));
         this.requiresCustomFieldAnswers = this.activeUser.customSelectFieldAnswers
           .some(({ hasAnswered, field }) => field.required && !hasAnswered);
 
