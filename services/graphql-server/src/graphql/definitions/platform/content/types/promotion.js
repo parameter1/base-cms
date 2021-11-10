@@ -12,7 +12,7 @@ extend type Mutation {
   updateContentPromotionImages(input: UpdateContentPromotionImagesMutationInput!): ContentPromotion! @requiresAuth
 }
 
-type ContentPromotion implements Content @applyInterfaceFields {
+type ContentPromotion implements Content & Contactable & Addressable @applyInterfaceFields {
   # fields directly on platform.model::Content\Promotion
   linkText: String @projection
   linkUrl: String @projection
