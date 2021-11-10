@@ -22,7 +22,7 @@ export default (Browser, {
     on: { action: (...args) => EventBus.$emit('identity-x-authenticate', ...args) },
   });
   Browser.register('IdentityXLogin', LoginComponent, {
-    on: { action: (...args) => EventBus.$emit('identity-x-logout', ...args) },
+    on: { action: (...args) => EventBus.$emit('identity-x-login', ...args) },
   });
   Browser.register('IdentityXLogout', LogoutComponent, {
     on: { action: (...args) => EventBus.$emit('identity-x-logout', ...args) },
