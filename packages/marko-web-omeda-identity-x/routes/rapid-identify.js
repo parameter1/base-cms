@@ -3,7 +3,7 @@ const { getAsObject } = require('@parameter1/base-cms-object-path');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 const jsonErrorHandler = require('@parameter1/base-cms-marko-web/express/json-error-handler');
 const omedaRapidIdentityX = require('../rapid-identify');
-const findOmedaEncryptedId = require('../utils/find-omeda-encrypted-id');
+const findEncryptedId = require('../external-id/find-encrypted-customer-id');
 
 module.exports = ({ brandKey, productId } = {}) => {
   if (!brandKey) throw new Error('An Omeda brand key is required to use this middleware.');
@@ -16,7 +16,7 @@ module.exports = ({ brandKey, productId } = {}) => {
     const user = getAsObject(context, 'user');
     if (!user.id) return res.json(data);
     // determine if an encrypted ID already exists for this user and brand.
-    const encryptedId = findOmedaEncryptedId({ externalIds: user.externalIds, brandKey });
+    const encryptedId = findEncryptedId({ externalIds: user.externalIds, brandKey });
     if (encryptedId) {
       data.encryptedId = encryptedId;
       data.source = 'existing';
