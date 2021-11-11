@@ -23,6 +23,7 @@ const removeFrom = (res) => {
 };
 
 module.exports = {
+  exists: req => Boolean(getFrom(req)),
   setTo,
   getFrom,
   removeFrom,

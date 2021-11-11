@@ -6,7 +6,7 @@ $ const realm = core.website("id");
 $ const { NODE_ENV } = process.env;
 
 $ const { on } = input;
-$ const scriptSrc = defaultValue(input.scriptSrc, "https://cdn.parameter1.com/p1-events/1ed2a30f.js");
+$ const scriptSrc = defaultValue(input.scriptSrc, "https://cdn.parameter1.com/p1-events/9ba4a865.js");
 $ const uri = defaultValue(input.uri, "https://db0y8smio0.execute-api.us-east-2.amazonaws.com/default/p1-website-events-enqueue");
 $ const identityQueryBuilder = `identityQueryBuilder: function(query) { ${input.identityQueryBuilder ? input.identityQueryBuilder.split("\n").map((l) => l.trim()).join(" ") : ""} }`;
 

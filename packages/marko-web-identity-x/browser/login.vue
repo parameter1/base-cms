@@ -18,20 +18,7 @@
     <p>
       Note: please check your spam/junk folders.
       If you do not receive this email, your firewall or ISP has likely blocked it.
-      Please add noreply@identity-x.io to your whitelist and try registering again.
-    </p>
-  </div>
-  <div v-else-if="missingRequiredFields.length">
-    <login-fields
-      :fields="missingRequiredFields"
-      :button-label="buttonLabels.submit"
-      :consent-policy="consentPolicy"
-      :regional-consent-policies="regionalConsentPolicies"
-      :disabled="loading"
-      @submit="handleLoginFields"
-    />
-    <p v-if="error" class="mt-3 text-danger">
-      An error occurred: {{ error.message }}
+      Please add {{ senderEmailAddress }} to your whitelist and try registering again.
     </p>
   </div>
   <div v-else>
@@ -59,7 +46,6 @@
 
 <script>
 import Email from './form/fields/email.vue';
-import LoginFields from './login-fields.vue';
 
 import cleanPath from './utils/clean-path';
 import post from './utils/post';
@@ -73,7 +59,6 @@ export default {
    */
   components: {
     Email,
-    LoginFields,
   },
 
   /**
@@ -108,22 +93,9 @@ export default {
       type: String,
       default: null,
     },
-
-    /**
-     * User fields that are required before allowing a login.
-     * If an _unverified_ user is missing any of these fields, they will be prompted to complete
-     * them before the login link is sent.
-     *
-     * This is an array of user field keys, e.g.
-     * [
-     *   'countryCode',
-     *   'regionCode',
-     * ]
-     *
-     */
-    requiredFields: {
-      type: Array,
-      default: () => [],
+    senderEmailAddress: {
+      type: String,
+      default: 'noreply@identity-x.parameter1.com',
     },
 
     /**
@@ -144,7 +116,6 @@ export default {
     complete: false,
     error: null,
     loading: false,
-    missingRequiredFields: [],
   }),
 
   /**
@@ -201,37 +172,11 @@ export default {
           redirectTo: this.redirectTo,
           authUrl: this.authUrl,
           appContextId: this.appContextId,
-          requiredFields: this.requiredFields,
         });
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
-        if (!data.hasRequiredFields) {
-          this.missingRequiredFields = data.requiredFields;
-        } else if (data.ok) {
-          this.complete = true;
-          this.$emit('submit');
-        }
-      } catch (e) {
-        this.error = e;
-      } finally {
-        this.loading = false;
-      }
-    },
-
-    /**
-     *
-     */
-    async handleLoginFields(values) {
-      try {
-        this.error = null;
-        this.loading = true;
-        const res = await post('/login-fields', {
-          email: this.email,
-          values,
-        });
-        const data = await res.json();
-        if (!res.ok) throw new FormError(data.message, res.status);
-        await this.handleSubmit();
+        this.complete = true;
+        this.$emit('login-link-sent', data);
       } catch (e) {
         this.error = e;
       } finally {
