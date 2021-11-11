@@ -32,6 +32,7 @@ fragment ActiveUserFragment on AppUser {
     field {
       id
       label
+      active
       multiple
       required
       externalId {
