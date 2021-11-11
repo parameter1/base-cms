@@ -1,6 +1,6 @@
 const gql = require('graphql-tag');
 const { get, getAsArray } = require('@parameter1/base-cms-object-path');
-const isOmedaNamespace = require('./external-id/is-omeda-namespace');
+const isOmedaDemographicId = require('./external-id/is-demographic-id');
 
 const ALPHA3_CODE = gql`
   query GetAlpha3Code($alpha2: String!) {
@@ -57,12 +57,8 @@ module.exports = async ({
   const demographics = getAsArray(appUser, 'customSelectFieldAnswers').filter((select) => {
     const { field, hasAnswered } = select;
     if (!field.active || !field.externalId || !hasAnswered) return false;
-    return isOmedaNamespace({
-      externalId: field.externalId,
-      brandKey,
-      type: 'demographic',
-      valueMatcher: id => parseInt(id, 10),
-    }) && select.answers.some(answer => answer.externalIdentifier);
+    return isOmedaDemographicId({ externalId: field.externalId, brandKey })
+      && select.answers.some(answer => answer.externalIdentifier);
   }).map((select) => {
     const { field } = select;
     const { identifier } = field.externalId;

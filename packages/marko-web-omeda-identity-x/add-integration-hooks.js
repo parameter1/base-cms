@@ -2,6 +2,7 @@ const gql = require('graphql-tag');
 const { get, getAsArray } = require('@parameter1/base-cms-object-path');
 const olyticsCookie = require('@parameter1/base-cms-marko-web-omeda/olytics/customer-cookie');
 const findEncryptedId = require('./external-id/find-encrypted-customer-id');
+const isOmedaDemographicId = require('./external-id/is-demographic-id');
 
 const rapidIdentify = require('./rapid-identify');
 
@@ -118,11 +119,7 @@ module.exports = ({
         .map(edge => edge.node)
         .filter((field) => {
           if (!field.active || !field.externalId) return false;
-          const { namespace, identifier } = field.externalId;
-          return namespace.provider === 'omeda'
-            && namespace.tenant === brandKey.toLowerCase()
-            && namespace.type === 'demographic'
-            && parseInt(identifier.value, 10);
+          return isOmedaDemographicId({ externalId: field.externalId, brandKey });
         });
 
       const answeredQuestionMap = user.customSelectFieldAnswers.reduce((map, select) => {
