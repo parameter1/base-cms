@@ -115,24 +115,22 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div
+      v-for="(checkbox) in onSubmitConsentCheckboxes"
+      :key="checkbox.label"
+      class="row"
+    >
       <div class="col-12">
         <div class="form-group">
-          <form-label id="inquiry-form.comments">
-            {{ translate("commentsLabel") }}
+          <input
+            :id="checkbox.label"
+            :required="true"
+            type="checkbox"
+          >
+          <form-label :for="checkbox.label" :required="true">
+            <div class="consent-html" v-html="checkbox.html" />
           </form-label>
-          <textarea
-            id="inquiry-form.comments"
-            v-model="comments"
-            name="comments"
-            class="form-control"
-          />
         </div>
-      </div>
-    </div>
-    <div v-if="onSubmitConsentText" class="row">
-      <div class="col-12">
-        <div class="form-group" v-html="onSubmitConsentText" />
       </div>
     </div>
     <pre v-if="error" class="alert alert-danger text-danger">An error occurred: {{ error }}</pre>
@@ -179,8 +177,8 @@ export default {
       type: String,
       default: 'en',
     },
-    onSubmitConsentText: {
-      type: String,
+    onSubmitConsentCheckboxes: {
+      type: Array,
       default: null,
     },
   },
