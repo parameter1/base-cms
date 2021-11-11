@@ -19,16 +19,24 @@ export default (Browser, {
 
   const { EventBus } = Browser;
   Browser.register('IdentityXAuthenticate', AuthenticateComponent, {
-    on: { action: (...args) => EventBus.$emit('identity-x-authenticate', ...args) },
+    on: {
+      authenticated: (...args) => { EventBus.$emit('identity-x-authenticated', ...args); },
+    },
   });
   Browser.register('IdentityXLogin', LoginComponent, {
-    on: { action: (...args) => EventBus.$emit('identity-x-login', ...args) },
+    on: {
+      'login-link-sent': (...args) => { EventBus.$emit('identity-x-login-link-sent', ...args); },
+    },
   });
   Browser.register('IdentityXLogout', LogoutComponent, {
-    on: { action: (...args) => EventBus.$emit('identity-x-logout', ...args) },
+    on: {
+      logout: (...args) => { EventBus.$emit('identity-x-logout', ...args); },
+    },
   });
   Browser.register('IdentityXProfile', ProfileComponent, {
-    on: { action: (...args) => EventBus.$emit('identity-x-profile', ...args) },
+    on: {
+      submit: (...args) => { EventBus.$emit('identity-x-profile-updated', ...args); },
+    },
   });
   Browser.register('IdentityXCommentStream', CommentStreamComponent);
 };

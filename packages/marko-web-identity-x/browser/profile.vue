@@ -364,7 +364,7 @@ export default {
 
         this.user = data.user;
         this.didSubmit = true;
-        this.$emit('submit');
+        this.$emit('submit', data);
 
         if (this.reloadPageOnSubmit) {
           this.isReloadingPage = true;

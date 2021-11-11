@@ -160,6 +160,7 @@ export default {
         const data = await res.json();
 
         if (!res.ok) throw new AuthenticationError(data.message, res.status);
+        this.$emit('authenticated', data);
 
         this.activeUser = data.user;
         this.mustReVerifyProfile = data.user.mustReVerifyProfile;
@@ -167,7 +168,6 @@ export default {
         this.requiresCustomFieldAnswers = this.activeUser.customSelectFieldAnswers
           .some(({ hasAnswered, field }) => field.required && !hasAnswered);
 
-        this.$emit('authenticate');
         if (!this.showProfileForm) this.redirect();
       } catch (e) {
         if (/no token was found/i.test(e.message)) {

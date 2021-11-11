@@ -20,7 +20,11 @@ export default {
   methods: {
     async rapidIdentify() {
       try {
-        await fetch(this.endpoint, { method: 'GET' });
+        const res = await fetch(this.endpoint, { method: 'GET' });
+        const json = await res.json();
+        const { encryptedId } = json;
+        if (encryptedId) this.$emit('encrypted-id-found', encryptedId);
+        this.$emit('response', json);
       } catch (e) {
         error('IdentityX to Omeda identification failed.', e);
       }
