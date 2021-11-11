@@ -19,6 +19,7 @@ module.exports = ({ brandKey, productId } = {}) => {
       encryptedId: null,
       source: null,
       didResetCookie: false,
+      brandKey: brandKey.toLowerCase(),
     };
     const idxUserExists = tokenCookie.exists(req);
     if (!idxUserExists) return res.json(data);
