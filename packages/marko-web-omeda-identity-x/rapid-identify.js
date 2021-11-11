@@ -1,26 +1,21 @@
 const gql = require('graphql-tag');
 const { get, getAsArray } = require('@parameter1/base-cms-object-path');
 
+const ALPHA3_CODE = gql`
+  query GetAlpha3Code($alpha2: String!) {
+    localeCountry(input: { code: $alpha2 }) { id alpha3 }
+  }
+`;
 
 const RAPID_IDENT = gql`
   mutation RapidIdentityX($input: RapidCustomerIdentificationMutationInput!) {
-    result: rapidCustomerIdentification(input: $input) {
-      id
-      encryptedCustomerId
-    }
+    result: rapidCustomerIdentification(input: $input) { id encryptedCustomerId }
   }
 `;
 
 const getAlpha3CodeFor = async (alpha2, identityX) => {
   const { data } = await identityX.client.query({
-    query: gql`
-      query GetAlpha3Code($alpha2: String!) {
-        localeCountry(input: { code: $alpha2 }) {
-          id
-          alpha3
-        }
-      }
-    `,
+    query: ALPHA3_CODE,
     variables: { alpha2 },
   });
   return get(data, 'localeCountry.alpha3');
