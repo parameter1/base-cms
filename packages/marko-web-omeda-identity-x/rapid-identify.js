@@ -60,7 +60,7 @@ module.exports = async ({
 
   const demographics = getAsArray(appUser, 'customSelectFieldAnswers').filter((select) => {
     const { field, hasAnswered } = select;
-    if (!field.externalId || !hasAnswered) return false;
+    if (!field.active || !field.externalId || !hasAnswered) return false;
     const { namespace, identifier } = field.externalId;
     return namespace.provider === 'omeda'
       && namespace.tenant === brandKey.toLowerCase()
