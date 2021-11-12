@@ -630,7 +630,7 @@ input WebsiteScheduledContentQueryInput {
   useOptionFallback: Boolean = false
   sectionBubbling: Boolean = true
   pagination: PaginationInput = {}
-  sort: ContentSortInput = { field: null }
+  sort: ContentSortInput = {}
   after: Date
   since: Date
   "For types with a startDate field: Limit results to items with a startDate matching the criteria."
