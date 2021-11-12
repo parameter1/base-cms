@@ -10,8 +10,8 @@ module.exports = ({
     const omedaGraphQLClient = req[omedaGraphQLClientProp];
     if (!omedaGraphQLClient) throw new Error(`Unable to find the Omeda GraphQL client on the request using ${omedaGraphQLClientProp}`);
     const handler = async (params = {}) => rapidIdentify(omedaGraphQLClient, {
-      productId,
       ...params,
+      productId,
     });
 
     req[prop] = handler;
