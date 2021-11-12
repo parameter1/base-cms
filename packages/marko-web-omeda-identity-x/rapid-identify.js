@@ -8,12 +8,6 @@ const ALPHA3_CODE = gql`
   }
 `;
 
-const RAPID_IDENT = gql`
-  mutation RapidIdentityX($input: RapidCustomerIdentificationMutationInput!) {
-    result: rapidCustomerIdentification(input: $input) { id encryptedCustomerId }
-  }
-`;
-
 const getAlpha3CodeFor = async (alpha2, identityX) => {
   const { data } = await identityX.client.query({
     query: ALPHA3_CODE,
@@ -29,14 +23,15 @@ const getAlpha3CodeFor = async (alpha2, identityX) => {
  * @param {number} params.productId The Omeda product ID to associate with the identification
  * @param {object} params.appUser The IdentityX user
  * @param {IdentityX} params.identityX The Marko web IdentityX service
- * @param {ApolloClient} params.omedaGraphQL The Omeda GraphQL client
+ * @param {function} params.rapidIdentify The Omeda rapid identifcation action
  */
 module.exports = async ({
   brandKey,
   productId,
   appUser,
+
   identityX,
-  omedaGraphQL,
+  rapidIdentify,
 } = {}) => {
   const {
     givenName,
@@ -68,9 +63,9 @@ module.exports = async ({
     };
   });
 
-  const input = {
-    productId,
+  const { id, encryptedCustomerId } = await rapidIdentify({
     email: appUser.email,
+    productId,
     ...(givenName && { firstName: givenName }),
     ...(familyName && { lastName: familyName }),
     ...(organization && { companyName: organization }),
@@ -79,12 +74,7 @@ module.exports = async ({
     ...(regionCode && { regionCode }),
     ...(postalCode && { postalCode }),
     ...(demographics.length && { demographics }),
-  };
-  const { data } = await omedaGraphQL.mutate({
-    mutation: RAPID_IDENT,
-    variables: { input },
   });
-  const { id, encryptedCustomerId } = data.result;
 
   const namespace = { provider: 'omeda', tenant: brandKey.toLowerCase(), type: 'customer' };
   await Promise.all([
