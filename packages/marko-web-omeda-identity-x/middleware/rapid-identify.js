@@ -1,4 +1,4 @@
-const idxRapidIdentify = require('../rapid-identify');
+const idxOmedaRapidIdentify = require('../rapid-identify');
 
 module.exports = ({
   brandKey,
@@ -11,16 +11,16 @@ module.exports = ({
   if (!omedaRapidIdentifyProp) throw new Error('The Omeda rapid identifcation prop is required.');
 
   return (req, res, next) => {
-    const rapidIdentify = req[omedaRapidIdentifyProp];
-    if (!rapidIdentify) throw new Error(`Unable to find the Omeda rapid identifier on the request using ${omedaRapidIdentifyProp}`);
+    const omedaRapidIdentify = req[omedaRapidIdentifyProp];
+    if (!omedaRapidIdentify) throw new Error(`Unable to find the Omeda rapid identifier on the request using ${omedaRapidIdentifyProp}`);
 
-    const handler = async ({ user } = {}) => idxRapidIdentify({
+    const handler = async ({ user } = {}) => idxOmedaRapidIdentify({
       brandKey,
       productId,
       appUser: user,
 
       identityX: req.identityX,
-      rapidIdentify,
+      omedaRapidIdentify,
     });
 
     req[prop] = handler;

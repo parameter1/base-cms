@@ -23,7 +23,7 @@ const getAlpha3CodeFor = async (alpha2, identityX) => {
  * @param {number} params.productId The Omeda product ID to associate with the identification
  * @param {object} params.appUser The IdentityX user
  * @param {IdentityX} params.identityX The Marko web IdentityX service
- * @param {function} params.rapidIdentify The Omeda rapid identifcation action
+ * @param {function} params.omedaRapidIdentify The Omeda rapid identifcation action
  */
 module.exports = async ({
   brandKey,
@@ -31,7 +31,7 @@ module.exports = async ({
   appUser,
 
   identityX,
-  rapidIdentify,
+  omedaRapidIdentify,
 } = {}) => {
   const {
     givenName,
@@ -63,7 +63,7 @@ module.exports = async ({
     };
   });
 
-  const { id, encryptedCustomerId } = await rapidIdentify({
+  const { id, encryptedCustomerId } = await omedaRapidIdentify({
     email: appUser.email,
     productId,
     ...(givenName && { firstName: givenName }),
