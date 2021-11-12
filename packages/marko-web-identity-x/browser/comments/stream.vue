@@ -34,7 +34,6 @@
           :consent-policy="consentPolicy"
           :app-context-id="appContextId"
           :regional-consent-policies="regionalConsentPolicies"
-          :button-labels="{ submit: 'Continue', logout: 'Logout' }"
         />
       </div>
 
