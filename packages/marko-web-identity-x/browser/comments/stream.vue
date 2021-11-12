@@ -21,24 +21,20 @@
       </div>
       <div v-else :class="element('login-form-wrapper')">
         <p :class="element('login-message')">
-          This site requires you to
-          <a href="#show-login" @click.prevent="showLoginForm">login</a>
-          or <a href="#show-login" @click.prevent="showLoginForm">register</a> to post a comment.
+          You must be signed in to leave a comment.
         </p>
-        <div v-if="isLoginFormDisplayed" :class="element('close-form-wrapper')">
-          <button :class="element('close-form')" @click.prevent="hideLoginForm">
-            &times;
-          </button>
-        </div>
+        <p :class="element('login-message')">
+          To sign in or create an account,
+          enter your email address and we'll send you a one-click sign-in link.
+        </p>
         <login
-          v-if="isLoginFormDisplayed"
           :class="element('login-form')"
           :active-user="activeUser"
           :endpoints="endpoints"
           :consent-policy="consentPolicy"
           :app-context-id="appContextId"
           :regional-consent-policies="regionalConsentPolicies"
-          :required-fields="requiredLoginFields"
+          :button-labels="{ submit: 'Continue', logout: 'Logout' }"
         />
       </div>
 
@@ -74,9 +70,9 @@
         />
       </div>
       <div v-if="hasNextPage" :class="element('post')">
-        <button class="btn btn-primary" :disabled="isLoadingMore" @click.prevent="loadMore">
+        <button :class="loadMoreButtonClass" :disabled="isLoadingMore" @click.prevent="loadMore">
           <span v-if="isLoadingMore">Loading...</span>
-          <span v-else>Load More Comments</span>
+          <span v-else>{{ loadMoreCommentsMessage }}</span>
         </button>
       </div>
     </div>
@@ -125,11 +121,19 @@ export default {
     },
     headerText: {
       type: String,
-      default: 'Voice your opinion!',
+      default: 'Leave a Comment',
     },
     latestCommentsHeader: {
       type: String,
-      default: 'Latest Comments',
+      default: 'Comments',
+    },
+    loadMoreCommentsMessage: {
+      type: String,
+      default: 'Show More Comments',
+    },
+    loadMoreButtonClass: {
+      type: String,
+      default: 'btn btn-primary',
     },
     noCommentsMessage: {
       type: String,
@@ -155,17 +159,12 @@ export default {
       type: Array,
       default: () => [],
     },
-    requiredLoginFields: {
-      type: Array,
-      default: () => [],
-    },
   },
 
   data: () => ({
     blockName: 'idx-comment-stream',
     isLoading: false,
     isLoadingMore: false,
-    isLoginFormDisplayed: false,
     error: null,
     comments: [],
     archived: false,
@@ -209,20 +208,6 @@ export default {
      */
     element(name) {
       return `${this.blockName}__${name}`;
-    },
-
-    /**
-     *
-     */
-    showLoginForm() {
-      this.isLoginFormDisplayed = true;
-    },
-
-    /**
-     *
-     */
-    hideLoginForm() {
-      this.isLoginFormDisplayed = false;
     },
 
     /**
