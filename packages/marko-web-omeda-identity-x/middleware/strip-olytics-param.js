@@ -11,7 +11,7 @@ module.exports = () => (req, res, next) => {
   if (idxUserExists && incomingEncId && incomingEncId !== currentEncId) {
     const params = (new URLSearchParams(q)).toString();
     const redirectTo = `${req.path}${params ? `?${params}` : ''}`;
-    res.redirect(redirectTo, 302);
+    res.redirect(302, redirectTo);
   } else {
     next();
   }
