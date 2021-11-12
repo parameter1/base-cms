@@ -47,6 +47,10 @@ class IdentityXConfiguration {
     return this;
   }
 
+  commentsEnabled() {
+    return this.get('comments.enabled', true);
+  }
+
   getAppId() {
     return this.appId;
   }
