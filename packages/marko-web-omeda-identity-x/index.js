@@ -5,7 +5,7 @@ const stripOlyticsParam = require('./middleware/strip-olytics-param');
 const rapidIdentify = require('./middleware/rapid-identify');
 
 module.exports = (app, {
-  brandKey,
+  brandKey: brand,
   clientKey,
   appId,
   inputId,
@@ -17,6 +17,13 @@ module.exports = (app, {
   idxConfig,
   idxOmedaRapidIdentifyProp = '$idxOmedaRapidIdentify',
 } = {}) => {
+  if (!brand) throw new Error('The Omeda `brandKey` is required.');
+  if (!appId) throw new Error('The Omeda `appId` is required.');
+  if (!rapidIdentProductId) throw new Error('The Omeda `rapidIdentProductId` is required.');
+
+  // consistently pass brand key
+  const brandKey = brand.trim().toLowerCase();
+
   // install omeda middleware
   omeda(app, {
     brandKey,
