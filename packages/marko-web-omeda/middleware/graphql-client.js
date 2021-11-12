@@ -1,7 +1,7 @@
 const createClient = require('@parameter1/omeda-graphql-client');
 
 module.exports = ({
-  uri = 'https://graphql.omeda.parameter1.com/',
+  uri = process.env.OMEDA_GRAPHQL_URI || 'https://graphql.omeda.parameter1.com/',
   brandKey,
   clientKey,
   appId,
