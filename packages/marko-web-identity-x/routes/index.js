@@ -2,6 +2,7 @@ const { Router } = require('express');
 const { json } = require('body-parser');
 const jsonErrorHandler = require('../utils/json-error-handler');
 const authenticate = require('./authenticate');
+const commentCount = require('./comment-count');
 const comments = require('./comments');
 const createComment = require('./create-comment');
 const flagComment = require('./flag-comment');
@@ -25,6 +26,7 @@ router.get('/regions', regions);
 router.get('/comments/:identifier', comments);
 router.post('/comment', createComment);
 router.post('/comment/flag/:id', flagComment);
+router.get('/comment-count/:identifier', commentCount);
 router.use(jsonErrorHandler());
 
 module.exports = router;
