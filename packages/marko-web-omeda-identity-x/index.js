@@ -47,6 +47,12 @@ module.exports = (app, {
     omedaRapidIdentifyProp,
   }));
 
+  // register the rapid identify AJAX route
+  app.use('/__idx/omeda-rapid-ident', rapidIdentify({
+    brandKey,
+    idxOmedaRapidIdentifyProp,
+  }));
+
   // strip `oly_enc_id` when identity-x user is logged-in
   app.use(stripOlyticsParam());
 };
