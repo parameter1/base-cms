@@ -1,6 +1,6 @@
 const omeda = require('@parameter1/base-cms-marko-web-omeda');
 const identityX = require('@parameter1/base-cms-marko-web-identity-x');
-const addOmedaHooksToConfig = require('./add-integration-hooks');
+const addOmedaHooksToIdentityXConfig = require('./add-integration-hooks');
 const stripOlyticsParam = require('./middleware/strip-olytics-param');
 const rapidIdentify = require('./middleware/rapid-identify');
 
@@ -36,7 +36,7 @@ module.exports = (app, {
   });
 
   // add appropiate identity-x to omeda integration hooks
-  addOmedaHooksToConfig({
+  addOmedaHooksToIdentityXConfig({
     idxConfig,
     brandKey,
     productId: rapidIdentProductId,
