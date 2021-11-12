@@ -3,13 +3,13 @@ const rapidIdentify = require('../rapid-identify');
 module.exports = ({
   productId,
   prop = '$omedaRapidIdentify',
-  graphqlProp = '$omedaGraphQLClient',
+  omedaGraphQLClientProp = '$omedaGraphQLClient',
 } = {}) => {
   if (!productId) throw new Error('No Omeda rapid identification product ID was provided.');
   return (req, res, next) => {
-    const omedaGraphQLClient = req[graphqlProp];
-    if (!omedaGraphQLClient) throw new Error(`Unable to find the Omeda GraphQL client on the request using ${graphqlProp}`);
-    const handler = (params = {}) => rapidIdentify(omedaGraphQLClient, {
+    const omedaGraphQLClient = req[omedaGraphQLClientProp];
+    if (!omedaGraphQLClient) throw new Error(`Unable to find the Omeda GraphQL client on the request using ${omedaGraphQLClientProp}`);
+    const handler = async (params = {}) => rapidIdentify(omedaGraphQLClient, {
       productId,
       ...params,
     });
