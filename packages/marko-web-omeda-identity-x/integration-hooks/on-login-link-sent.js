@@ -136,13 +136,13 @@ module.exports = async ({
 }) => {
   const omedaGraphQLClient = req[omedaGraphQLProp];
   if (!omedaGraphQLClient) throw new Error(`Unable to load the Omeda GraphQL API from the request using prop ${omedaGraphQLProp}`);
-  const idxRapidIdentify = req[idxOmedaRapidIdentifyProp];
-  if (!idxRapidIdentify) throw new Error(`Unable to find the IdentityX+Omeda rapid identifier on the request using ${idxOmedaRapidIdentifyProp}`);
+  const idxOmedaRapidIdentify = req[idxOmedaRapidIdentifyProp];
+  if (!idxOmedaRapidIdentify) throw new Error(`Unable to find the IdentityX+Omeda rapid identifier on the request using ${idxOmedaRapidIdentifyProp}`);
 
   // get omeda customer id (via rapid identity) and load omeda custom field data
   const [{ data }, { encryptedCustomerId }] = await Promise.all([
     identityX.client.query({ query: FIELD_QUERY }),
-    idxRapidIdentify({
+    idxOmedaRapidIdentify({
       user: user.verified ? user : { id: user.id, email: user.email },
     }),
   ]);
