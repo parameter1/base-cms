@@ -28,8 +28,6 @@ module.exports = ({
     const idxUserExists = tokenCookie.exists(req);
     if (!idxUserExists) return res.json(data);
 
-
-    // const { identityX } = req;
     const context = await req.identityX.loadActiveContext();
     const user = getAsObject(context, 'user');
     if (!user.id) return res.json(data);
