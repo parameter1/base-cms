@@ -3,6 +3,7 @@ const identityX = require('@parameter1/base-cms-marko-web-identity-x');
 const addOmedaHooksToIdentityXConfig = require('./add-integration-hooks');
 const stripOlyticsParam = require('./middleware/strip-olytics-param');
 const rapidIdentify = require('./middleware/rapid-identify');
+const rapidIdentifyRouter = require('./routes/rapid-identify');
 
 module.exports = (app, {
   brandKey: brand,
@@ -55,7 +56,7 @@ module.exports = (app, {
   }));
 
   // register the rapid identify AJAX route
-  app.use('/__idx/omeda-rapid-ident', rapidIdentify({
+  app.use('/__idx/omeda-rapid-ident', rapidIdentifyRouter({
     brandKey,
     idxOmedaRapidIdentifyProp,
   }));
