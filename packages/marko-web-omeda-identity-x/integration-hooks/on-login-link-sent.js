@@ -1,7 +1,6 @@
 const gql = require('graphql-tag');
 const { get, getAsArray } = require('@parameter1/base-cms-object-path');
 const isOmedaDemographicId = require('../external-id/is-demographic-id');
-const rapidIdentify = require('../rapid-identify');
 
 const FIELD_QUERY = gql`
   query GetCustomFields {
@@ -58,13 +57,13 @@ const SET_OMEDA_DEMOGRAPHIC_DATA = gql`
   }
 `;
 
-const getOmedaCustomerRecord = async (omedaGraphQL, encryptedCustomerId) => {
+const getOmedaCustomerRecord = async (omedaGraphQLClient, encryptedCustomerId) => {
   const variables = { id: encryptedCustomerId };
-  const { data } = await omedaGraphQL.query({ query: CUSTOMER_QUERY, variables });
+  const { data } = await omedaGraphQLClient.query({ query: CUSTOMER_QUERY, variables });
   return data.customerByEncryptedId;
 };
 
-const setOmedaData = async ({ service, user, omedaCustomer }) => {
+const setOmedaData = async ({ identityX, user, omedaCustomer }) => {
   const input = {
     email: user.email,
 
@@ -77,14 +76,14 @@ const setOmedaData = async ({ service, user, omedaCustomer }) => {
     regionCode: get(omedaCustomer, 'primaryPostalAddress.regionCode'),
     postalCode: get(omedaCustomer, 'primaryPostalAddress.postalCode'),
   };
-  return service.client.mutate({
+  return identityX.client.mutate({
     mutation: SET_OMEDA_DATA,
     variables: { input },
   });
 };
 
 const setOmedaDemographics = async ({
-  service,
+  identityX,
   user,
   omedaCustomer,
   omedaLinkedFields,
@@ -118,35 +117,33 @@ const setOmedaDemographics = async ({
     answerMap.forEach((optionIdSet, fieldId) => {
       answers.push({ fieldId, optionIds: [...optionIdSet] });
     });
-    await service.client.mutate({
+    await identityX.client.mutate({
       mutation: SET_OMEDA_DEMOGRAPHIC_DATA,
       variables: { input: { id: user.id, answers } },
-      context: { apiToken: service.config.getApiToken() },
+      context: { apiToken: identityX.config.getApiToken() },
     });
   }
 };
 
 module.exports = async ({
   brandKey,
-  productId,
-  omedaGraphQLProp = '$omeda',
+  omedaGraphQLProp = '$omedaGraphQLClient',
+  idxOmedaRapidIdentifyProp = '$idxOmedaRapidIdentify',
 
   req,
-  service,
+  service: identityX,
   user,
 }) => {
-  const omedaGraphQL = req[omedaGraphQLProp];
-  if (!omedaGraphQL) throw new Error(`Unable to load the Omeda GraphQL API from the request using prop ${omedaGraphQLProp}`);
+  const omedaGraphQLClient = req[omedaGraphQLProp];
+  if (!omedaGraphQLClient) throw new Error(`Unable to load the Omeda GraphQL API from the request using prop ${omedaGraphQLProp}`);
+  const idxOmedaRapidIdentify = req[idxOmedaRapidIdentifyProp];
+  if (!idxOmedaRapidIdentify) throw new Error(`Unable to find the IdentityX+Omeda rapid identifier on the request using ${idxOmedaRapidIdentifyProp}`);
 
   // get omeda customer id (via rapid identity) and load omeda custom field data
   const [{ data }, { encryptedCustomerId }] = await Promise.all([
-    service.client.query({ query: FIELD_QUERY }),
-    rapidIdentify({
-      brandKey,
-      productId,
-      appUser: user.verified ? user : { id: user.id, email: user.email },
-      identityX: service,
-      omedaGraphQL,
+    identityX.client.query({ query: FIELD_QUERY }),
+    idxOmedaRapidIdentify({
+      user: user.verified ? user : { id: user.id, email: user.email },
     }),
   ]);
 
@@ -170,12 +167,12 @@ module.exports = async ({
   }
 
   // find the omeda customer record to "prime" the identity-x user.
-  const omedaCustomer = await getOmedaCustomerRecord(omedaGraphQL, encryptedCustomerId);
+  const omedaCustomer = await getOmedaCustomerRecord(omedaGraphQLClient, encryptedCustomerId);
   const promises = [];
-  if (!user.verified) promises.push(setOmedaData({ service, user, omedaCustomer }));
+  if (!user.verified) promises.push(setOmedaData({ identityX, user, omedaCustomer }));
   if (!hasAnsweredAllOmedaQuestions) {
     promises.push(setOmedaDemographics({
-      service,
+      identityX,
       user,
       omedaCustomer,
       omedaLinkedFields,

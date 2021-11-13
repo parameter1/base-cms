@@ -6,14 +6,18 @@ const jsonErrorHandler = require('@parameter1/base-cms-marko-web/express/json-er
 const tokenCookie = require('@parameter1/base-cms-marko-web-identity-x/utils/token-cookie');
 const olyticsCookie = require('@parameter1/base-cms-marko-web-omeda/olytics/customer-cookie');
 
-const omedaRapidIdentityX = require('../rapid-identify');
 const findEncryptedId = require('../external-id/find-encrypted-customer-id');
 
-module.exports = ({ brandKey, productId } = {}) => {
+module.exports = ({
+  brandKey,
+  idxOmedaRapidIdentifyProp = '$idxOmedaRapidIdentify',
+} = {}) => {
   if (!brandKey) throw new Error('An Omeda brand key is required to use this middleware.');
-  if (!productId) throw new Error('An Omeda rapid identification product ID is required to use this middleware.');
   const router = Router();
   router.get('/', asyncRoute(async (req, res) => {
+    const idxOmedaRapidIdentify = req[idxOmedaRapidIdentifyProp];
+    if (!idxOmedaRapidIdentify) throw new Error(`Unable to find the IdentityX+Omeda rapid identifier on the request using ${idxOmedaRapidIdentifyProp}`);
+
     const data = {
       userId: null,
       encryptedId: null,
@@ -24,9 +28,7 @@ module.exports = ({ brandKey, productId } = {}) => {
     const idxUserExists = tokenCookie.exists(req);
     if (!idxUserExists) return res.json(data);
 
-
-    const { identityX } = req;
-    const context = await identityX.loadActiveContext();
+    const context = await req.identityX.loadActiveContext();
     const user = getAsObject(context, 'user');
     if (!user.id) return res.json(data);
     data.userId = user.id;
@@ -38,13 +40,7 @@ module.exports = ({ brandKey, productId } = {}) => {
       data.source = 'existing';
     } else {
       // no omeda identifier found for this user, rapidly identify.
-      const { encryptedCustomerId } = await omedaRapidIdentityX({
-        brandKey,
-        productId,
-        appUser: user,
-        identityX,
-        omedaGraphQL: req.$omeda,
-      });
+      const { encryptedCustomerId } = await idxOmedaRapidIdentify({ user });
       data.encryptedId = encryptedCustomerId;
       data.source = 'new';
     }

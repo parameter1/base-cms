@@ -14,19 +14,17 @@ const {
 module.exports = ({
   idxConfig,
   brandKey,
-  productId,
-  omedaGraphQLProp = '$omeda',
+  omedaGraphQLProp = '$omedaGraphQLClient',
+  idxOmedaRapidIdentifyProp = '$idxOmedaRapidIdentify',
 } = {}) => {
   if (!idxConfig) throw new Error('The IdentityX configuration instances is required to add Omeda+IdentityX integration hooks.');
-  if (!brandKey) throw new Error('An Omeda brand key is required to add Omeda+IdentityX integration hooks.');
-  if (!productId) throw new Error('An Omeda rapid identification product ID is required to add Omeda+IdentityX integration hooks.');
   idxConfig.addHook({
     name: 'onLoginLinkSent',
     shouldAwait: false,
     fn: async ({ req, service, user }) => onLoginLinkSent({
       brandKey,
-      productId,
       omedaGraphQLProp,
+      idxOmedaRapidIdentifyProp,
 
       req,
       service,
@@ -43,14 +41,10 @@ module.exports = ({
   idxConfig.addHook({
     name: 'onUserProfileUpdate',
     shouldAwait: false,
-    fn: async ({ user, service, req }) => onUserProfileUpdate({
-      brandKey,
-      productId,
-      omedaGraphQLProp,
-
-      user,
-      service,
+    fn: async ({ user, req }) => onUserProfileUpdate({
+      idxOmedaRapidIdentifyProp,
       req,
+      user,
     }),
   });
 

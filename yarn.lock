@@ -3085,6 +3085,17 @@
   dependencies:
     joi "^17.4.2"
 
+"@parameter1/omeda-graphql-client@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@parameter1/omeda-graphql-client/-/omeda-graphql-client-0.7.0.tgz#d2d7e5a640565494680287f1b5e60b495776b547"
+  integrity sha512-1BZUfMyv8LDBZOlD57awctPNX8c0EzsM3Us16+Z5uF/hOg7l+VkyTyIeO/fTgxzGtbr+TkbgbO6CERuF4K92sQ==
+  dependencies:
+    apollo-cache-inmemory "^1.6.6"
+    apollo-client "^2.6.10"
+    apollo-link-http "^1.5.17"
+    graphql "^15.6.1"
+    node-fetch "^2.6.5"
+
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@protobufjs/aspromise/-/aspromise-1.1.2.tgz#9b8b0cc663d669a7d8f6f5d0893a14d348f30fbf"
@@ -10109,6 +10120,11 @@ graphql@^14.5.4, graphql@^14.7.0:
   integrity sha512-l0xWZpoPKpppFzMfvVyFmp9vLN7w/ZZJPefUicMCepfJeQ8sMcztloGYY9DfjVPo6tIUDzU5Hw3MUbIjj9AVVA==
   dependencies:
     iterall "^1.2.2"
+
+graphql@^15.6.1:
+  version "15.7.2"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-15.7.2.tgz#85ab0eeb83722977151b3feb4d631b5f2ab287ef"
+  integrity sha512-AnnKk7hFQFmU/2I9YSQf3xw44ctnSFCfp3zE0N6W174gqe9fWG/2rKaKxROK7CcI3XtERpjEKFqts8o319Kf7A==
 
 growl@1.10.5:
   version "1.10.5"
