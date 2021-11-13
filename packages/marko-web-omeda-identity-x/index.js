@@ -17,6 +17,7 @@ module.exports = (app, {
 
   idxConfig,
   idxOmedaRapidIdentifyProp = '$idxOmedaRapidIdentify',
+  idxRouteTemplates = {},
 } = {}) => {
   if (!brand) throw new Error('The Omeda `brandKey` is required.');
   if (!appId) throw new Error('The Omeda `appId` is required.');
@@ -44,9 +45,6 @@ module.exports = (app, {
     omedaGraphQLProp: omedaGraphQLClientProp,
   });
 
-  // install identity x
-  identityX(app, idxConfig);
-
   // attach the identity-x rapid identification wrapper middleware
   app.use(rapidIdentify({
     brandKey,
@@ -54,6 +52,9 @@ module.exports = (app, {
     prop: idxOmedaRapidIdentifyProp,
     omedaRapidIdentifyProp,
   }));
+
+  // install identity x
+  identityX(app, idxConfig, { templates: idxRouteTemplates });
 
   // register the rapid identify AJAX route
   app.use('/__idx/omeda-rapid-ident', rapidIdentifyRouter({
