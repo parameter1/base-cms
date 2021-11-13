@@ -3,6 +3,7 @@ const identityX = require('@parameter1/base-cms-marko-web-identity-x');
 const addOmedaHooksToIdentityXConfig = require('./add-integration-hooks');
 const stripOlyticsParam = require('./middleware/strip-olytics-param');
 const rapidIdentify = require('./middleware/rapid-identify');
+const rapidIdentifyRouter = require('./routes/rapid-identify');
 
 module.exports = (app, {
   brandKey: brand,
@@ -16,6 +17,7 @@ module.exports = (app, {
 
   idxConfig,
   idxOmedaRapidIdentifyProp = '$idxOmedaRapidIdentify',
+  idxRouteTemplates = {},
 } = {}) => {
   if (!brand) throw new Error('The Omeda `brandKey` is required.');
   if (!appId) throw new Error('The Omeda `appId` is required.');
@@ -43,9 +45,6 @@ module.exports = (app, {
     omedaGraphQLProp: omedaGraphQLClientProp,
   });
 
-  // install identity x
-  identityX(app, idxConfig);
-
   // attach the identity-x rapid identification wrapper middleware
   app.use(rapidIdentify({
     brandKey,
@@ -54,8 +53,11 @@ module.exports = (app, {
     omedaRapidIdentifyProp,
   }));
 
+  // install identity x
+  identityX(app, idxConfig, { templates: idxRouteTemplates });
+
   // register the rapid identify AJAX route
-  app.use('/__idx/omeda-rapid-ident', rapidIdentify({
+  app.use('/__idx/omeda-rapid-ident', rapidIdentifyRouter({
     brandKey,
     idxOmedaRapidIdentifyProp,
   }));
