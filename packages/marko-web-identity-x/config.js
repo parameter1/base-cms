@@ -2,6 +2,7 @@ const { get, getAsArray, getAsObject } = require('@parameter1/base-cms-object-pa
 const { isFunction: isFn } = require('@parameter1/base-cms-utils');
 
 const validHooks = ['onAuthenticationSuccess', 'onUserProfileUpdate', 'onLoginLinkSent', 'onLogout'];
+const { log } = console;
 
 class IdentityXConfiguration {
   /**
@@ -11,12 +12,15 @@ class IdentityXConfiguration {
    * @param {string} [options.apiToken] An API token to use. Only required when doing write ops.
    * @param {string[]} [options.requiredServerFields] Required fields, server enforced.
    * @param {string[]} [options.requiredClientFields] Required fields, client-side only.
+   * @param {function} [options.onHookError]
+   * @param {...object} options.rest
    */
   constructor({
     appId,
     apiToken,
     requiredServerFields = [],
     requiredClientFields = [],
+    onHookError,
     ...rest
   } = {}) {
     if (!appId) throw new Error('Unable to configure IdentityX: no Application ID was provided.');
@@ -25,6 +29,13 @@ class IdentityXConfiguration {
     this.options = {
       requiredServerFields,
       requiredClientFields,
+      onHookError: (e) => {
+        if (process.env.NODE_ENV === 'development') {
+          log('ERROR IN IDENTITY-X HOOK', e);
+          if (e.networkError) log('Network Error', get(e, 'networkError.result.errors.0'));
+        }
+        if (isFn(onHookError)) onHookError(e);
+      },
       ...rest,
     };
 
