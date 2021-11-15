@@ -22,6 +22,8 @@ const getAlpha3CodeFor = async (alpha2, identityX) => {
  * @param {string} params.brandKey The Omeda brand key
  * @param {number} params.productId The Omeda product ID to associate with the identification
  * @param {object} params.appUser The IdentityX user
+ * @param {string} [params.promoCode] An optional code to send to Omeda for tracking the
+ *                                    acquisition source
  * @param {IdentityX} params.identityX The Marko web IdentityX service
  * @param {function} params.omedaRapidIdentify The Omeda rapid identifcation action
  */
@@ -29,6 +31,8 @@ module.exports = async ({
   brandKey,
   productId,
   appUser,
+
+  promoCode,
 
   identityX,
   omedaRapidIdentify,
@@ -74,6 +78,7 @@ module.exports = async ({
     ...(regionCode && { regionCode }),
     ...(postalCode && { postalCode }),
     ...(demographics.length && { demographics }),
+    ...(promoCode && { promoCode }),
   });
 
   const namespace = { provider: 'omeda', tenant: brandKey.toLowerCase(), type: 'customer' };
