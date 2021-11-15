@@ -23,6 +23,8 @@ module.exports = async (omedaGraphQLClient, {
 
   deploymentTypeIds,
   demographics,
+
+  promoCode,
 } = {}) => {
   const input = {
     productId,
@@ -38,6 +40,8 @@ module.exports = async (omedaGraphQLClient, {
 
     ...(isArray(deploymentTypeIds) && deploymentTypeIds.length && { deploymentTypeIds }),
     ...(isArray(demographics) && demographics.length && { demographics }),
+
+    ...(promoCode && { promoCode }),
   };
   const { data } = await omedaGraphQLClient.mutate({
     mutation: RAPID_IDENT,
