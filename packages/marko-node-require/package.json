@@ -1,0 +1,17 @@
+{
+  "name": "@parameter1/base-cms-marko-node-require",
+  "version": "2.56.0",
+  "description": "Custom Node extension resolver/compiler for Marko files.",
+  "author": "Jacob Bare <jacob@parameter1.com>",
+  "main": "index.js",
+  "license": "MIT",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-node-require",
+  "scripts": {
+    "lint": "eslint --ext .js --ext .vue --max-warnings 5 --ignore-path ../../.eslintignore ./",
+    "test": "yarn lint"
+  },
+  "dependencies": {
+    "resolve-from": "^2.0.0",
+    "marko": "~4.20.0"
+  }
+}
