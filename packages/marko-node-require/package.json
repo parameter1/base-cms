@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-node-require",
-  "version": "2.56.0",
+  "version": "2.57.0",
   "description": "Custom Node extension resolver/compiler for Marko files.",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "main": "index.js",
@@ -11,7 +11,7 @@
     "test": "yarn lint"
   },
   "dependencies": {
-    "resolve-from": "^2.0.0",
-    "marko": "~4.20.0"
+    "marko": "~4.20.0",
+    "resolve-from": "^2.0.0"
   }
 }
