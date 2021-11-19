@@ -407,6 +407,15 @@ module.exports = {
     },
 
     /**
+     * Ensures that the website schedules result isn't filtered/adjusted when running
+     * inside a `websiteScheduleContent` query.
+     */
+    websiteSchedules: async (content, _, { load }) => {
+      const { sectionQuery } = await load('platformContent', content._id, { sectionQuery: 1 });
+      return sectionQuery;
+    },
+
+    /**
      * Load primary section of content.
      * If primary section's site matches the current site, return the section.
      * If not, check for alternative site + section (@todo).
@@ -1302,6 +1311,7 @@ module.exports = {
         includeContentTypes,
         excludeContentTypes,
         includeLabels,
+        includeContentIds,
         excludeLabels,
         requiresImage,
         sectionBubbling,
@@ -1370,7 +1380,8 @@ module.exports = {
         query.$and.push({ type: { $in: getDefaultContentTypes() } });
       }
       if (excludeContentTypes.length) query.$and.push({ type: { $nin: excludeContentTypes } });
-      if (excludeContentIds.length) query._id = { $nin: excludeContentIds };
+      if (includeContentIds.length) query.$and.push({ _id: { $in: includeContentIds } });
+      if (excludeContentIds.length) query.$and.push({ _id: { $nin: excludeContentIds } });
       if (includeLabels.length) query.$and.push({ labels: { $in: includeLabels } });
       if (excludeLabels.length) query.$and.push({ labels: { $nin: excludeLabels } });
 

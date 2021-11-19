@@ -623,6 +623,7 @@ input WebsiteScheduledContentQueryInput {
   excludeContentIds: [Int!] = []
   excludeSectionIds: [Int!] = []
   excludeContentTypes: [ContentType!] = []
+  includeContentIds: [Int!] = []
   includeContentTypes: [ContentType!] = []
   includeLabels: [String!]! = []
   excludeLabels: [String!]! = []
