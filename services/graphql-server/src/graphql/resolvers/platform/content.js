@@ -1370,7 +1370,8 @@ module.exports = {
         query.$and.push({ type: { $in: getDefaultContentTypes() } });
       }
       if (excludeContentTypes.length) query.$and.push({ type: { $nin: excludeContentTypes } });
-      if (excludeContentIds.length) query._id = { $nin: excludeContentIds };
+      if (includeContentIds.length) query.$and.push({ _id: { $in: includeContentIds } });
+      if (excludeContentIds.length) query.$and.push({ _id: { $nin: excludeContentIds } });
       if (includeLabels.length) query.$and.push({ labels: { $in: includeLabels } });
       if (excludeLabels.length) query.$and.push({ labels: { $nin: excludeLabels } });
 
