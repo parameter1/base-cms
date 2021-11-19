@@ -79,7 +79,7 @@ interface Content @requiresProject(fields: ["type"]) {
   relatedContent(input: ContentRelatedContentInput = {}): ContentConnection! @projection(localField: "_id", needs: ["relatedTo", "mutations.Website.primarySection"])
   userRegistration: ContentUserRegistration! @projection(localField: "mutations.Website.requiresAccessLevels", needs: ["mutations.Website.requiresRegistration"])
   # Returns the website section query schedules
-  websiteSchedules: [ContentWebsiteSchedule]! @projection(localField: "sectionQuery") @arrayValue(localField: "sectionQuery")
+  websiteSchedules: [ContentWebsiteSchedule]!
 
   hasWebsiteSchedule(input: ContentHasWebsiteScheduleInput!): Boolean! @projection(localField: "sectionQuery")
 
