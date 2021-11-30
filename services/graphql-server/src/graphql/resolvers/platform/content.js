@@ -876,8 +876,7 @@ module.exports = {
       });
 
       customAttributes.forEach(({ key, value }) => {
-        const fullKeyPath = `customAttributes.${key}`;
-        query.$and.push({ [fullKeyPath]: value });
+        query.$and.push({ [`customAttributes.${key}`]: value });
       });
 
       const siteId = input.siteId || site.id();
