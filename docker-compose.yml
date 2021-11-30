@@ -380,8 +380,11 @@ services:
     environment:
       <<: *env
       <<: *env-newrelic
+      REDIS_CACHE_DSN: ${REDIS_CACHE_DSN-redis://redis}
       EMBEDLY_API_KEY: ${EMBEDLY_API_KEY-}
       EXPOSED_PORT: 10402
+    depends_on:
+      - redis
     ports:
       - "10402:80"
 
