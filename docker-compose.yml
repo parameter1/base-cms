@@ -381,6 +381,7 @@ services:
       <<: *env
       <<: *env-newrelic
       EMBEDLY_API_KEY: ${EMBEDLY_API_KEY-}
+      EXPOSED_PORT: 10402
     ports:
       - "10402:80"
 
