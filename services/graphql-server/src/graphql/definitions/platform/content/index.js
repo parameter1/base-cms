@@ -473,6 +473,8 @@ input ContentEventDatesMutationInput {
 }
 
 input AllPublishedContentQueryInput {
+  "Allows for return of the _import.entity field if requested"
+  importEntity: String
   "Limits results to content with a primary site matching the current site context "
   withSite: Boolean = true
   "A websiteSite identifier. If present, overrides the current site context."

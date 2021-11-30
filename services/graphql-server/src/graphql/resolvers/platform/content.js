@@ -861,6 +861,7 @@ module.exports = {
         beginning,
         ending,
         withSite,
+        importEntity,
       } = input;
 
       // @deprecated Prefer includeContentTypes over contentTypes.
@@ -873,6 +874,8 @@ module.exports = {
         excludeContentIds,
         excludeContentTypes,
       });
+
+      if (importEntity) query['_import.entity'] = importEntity;
 
       const siteId = input.siteId || site.id();
       if (withSite && siteId) query['mutations.Website.primarySite'] = siteId;
