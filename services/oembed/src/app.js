@@ -4,6 +4,7 @@ const cors = require('cors');
 const { json } = require('body-parser');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 const embedly = require('./embedly');
+const cache = require('./cache');
 
 const app = express();
 const dev = process.env.NODE_ENV === 'development';
@@ -21,15 +22,28 @@ app.use(CORS);
 app.options('*', CORS);
 
 app.post('/', asyncRoute(async (req, res) => {
-  const { body } = req;
-  const data = await embedly.oembed(body.url, body.params);
+  const { url, ...params } = req.body;
+  const data = await embedly.oembed(url, params);
+  // post will set to cache, but not read from it
+  await cache.setFor({ url, params, data });
   res.json(data);
 }));
 
 app.get('/', asyncRoute(async (req, res) => {
-  const { query } = req;
-  const data = await embedly.oembed(query.url, query);
-  res.json(data);
+  const { url, ...params } = req.query;
+  const cacheControl = req.headers['cache-control'];
+  const noCache = cacheControl && /no-cache/i.test(cacheControl);
+
+  // allow for fresh data retrieval
+  const cached = noCache ? null : await cache.getFor({ url, params });
+  res.set('X-Cache', cached ? 'hit' : 'miss');
+  if (cached) {
+    res.set('Age', cached.age);
+    return res.json(cached.data);
+  }
+  const data = await embedly.oembed(url, params);
+  await cache.setFor({ url, params, data });
+  return res.json(data);
 }));
 
 // eslint-disable-next-line no-unused-vars
