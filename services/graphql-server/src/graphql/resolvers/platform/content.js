@@ -861,7 +861,7 @@ module.exports = {
         beginning,
         ending,
         withSite,
-        importEntity,
+        customAttributes,
       } = input;
 
       // @deprecated Prefer includeContentTypes over contentTypes.
@@ -875,7 +875,10 @@ module.exports = {
         excludeContentTypes,
       });
 
-      if (importEntity) query['_import.entity'] = importEntity;
+      customAttributes.forEach(({ key, value }) => {
+        const fullKeyPath = `customAttributes.${key}`;
+        query.$and.push({ [fullKeyPath]: value });
+      });
 
       const siteId = input.siteId || site.id();
       if (withSite && siteId) query['mutations.Website.primarySite'] = siteId;
