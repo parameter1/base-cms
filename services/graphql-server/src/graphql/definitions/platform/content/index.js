@@ -486,7 +486,7 @@ input AllPublishedContentQueryInput {
   "Deprecated. Use includeContentTypes instead."
   contentTypes: [ContentType!] = []
   "Limit results to items matching specific custom attribute key value pairs"
-  customAttributes: [ContentCustomAttributeQueryInput] = []
+  customAttributes: [ContentCustomAttributeQueryInput!] = []
   "Limit results to items matching at least one of these types."
   includeContentTypes: [ContentType!] = []
   "Limit results to items matching none of these types."
