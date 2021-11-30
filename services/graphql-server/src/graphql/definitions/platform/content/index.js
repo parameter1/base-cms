@@ -485,6 +485,8 @@ input AllPublishedContentQueryInput {
   sectionId: Int
   "Deprecated. Use includeContentTypes instead."
   contentTypes: [ContentType!] = []
+  "Limit results to items matching specific custom attribute key value pairs"
+  customAttributes: [ContentCustomAttributeQueryInput!] = []
   "Limit results to items matching at least one of these types."
   includeContentTypes: [ContentType!] = []
   "Limit results to items matching none of these types."
@@ -564,6 +566,13 @@ input ContentEndingInput {
 input ContentCustomAttributeInput {
   "The custom attribute field path."
   path: String!
+}
+
+input ContentCustomAttributeQueryInput {
+  "The object property key to query against"
+  key: String!
+  "The value of that property key to query against"
+  value: String!
 }
 
 input AllContentQueryInput {

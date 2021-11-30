@@ -861,6 +861,7 @@ module.exports = {
         beginning,
         ending,
         withSite,
+        customAttributes,
       } = input;
 
       // @deprecated Prefer includeContentTypes over contentTypes.
@@ -872,6 +873,10 @@ module.exports = {
         contentTypes,
         excludeContentIds,
         excludeContentTypes,
+      });
+
+      customAttributes.forEach(({ key, value }) => {
+        query.$and.push({ [`customAttributes.${key}`]: value });
       });
 
       const siteId = input.siteId || site.id();
