@@ -5,7 +5,7 @@ const sgMail = require('@sendgrid/mail');
 const fetch = require('node-fetch');
 const { URLSearchParams } = require('url');
 const { SENDGRID_API_KEY, RECAPTCHA_SECRET_KEY } = require('./env');
-const emailTemplate = require('./email');
+const emailTemplate = require('./email.marko');
 
 const { error } = console;
 
