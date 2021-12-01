@@ -20,6 +20,7 @@ export default {
     context: { type: Object, default: () => ({}) },
     height: { type: Number, default: 1000 },
     hideHeader: { type: Boolean, default: false },
+    alwaysAppendContext: { type: Boolean, default: false },
   },
   data: () => ({
     endpoint: '/__p1fii',
@@ -79,6 +80,7 @@ export default {
           formHash: this.formHash,
           ...(encryptedCustomerId && { encryptedCustomerId }),
           context: this.context,
+          alwaysAppendContext: this.alwaysAppendContext,
         };
         const res = await fetch(this.endpoint, {
           method: 'POST',
