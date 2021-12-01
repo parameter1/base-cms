@@ -16,6 +16,7 @@ $ const omedaZone = site.get("p1fii.omedaZone", input.omedaZone);
       wufooZone,
       omedaZone,
       encryptedCustomerId: getOmedaId(req),
+      alwaysAppendContext: input.alwaysAppendContext || false,
       context,
     }
   />
