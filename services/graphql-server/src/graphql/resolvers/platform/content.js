@@ -412,7 +412,7 @@ module.exports = {
      */
     websiteSchedules: async (content, _, { load }) => {
       const { sectionQuery } = await load('platformContent', content._id, { sectionQuery: 1 });
-      return sectionQuery;
+      return isArray(sectionQuery) ? sectionQuery : [];
     },
 
     /**
