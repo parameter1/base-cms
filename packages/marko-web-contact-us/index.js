@@ -20,7 +20,7 @@ const exception = (message, code = 400) => {
 };
 
 const send = async (res, domain, payload) => {
-  const config = res.app.locals.site.get(`contactUs.${payload.configName}`);
+  const config = res.app.locals.site.getAsObject(`contactUs.${payload.configName}`);
   const subject = defaultValue(config.subject, 'A new contact submission was received.');
   const to = defaultValue(config.to, 'support@parameter1.com');
   const input = {
