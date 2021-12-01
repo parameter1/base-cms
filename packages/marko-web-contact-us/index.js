@@ -9,8 +9,6 @@ const emailTemplate = require('./email.marko');
 
 const { error } = console;
 
-// @todo This entire service should be deleted once contact us is moved to core.
-
 sgMail.setApiKey(SENDGRID_API_KEY);
 
 const exception = (message, code = 400) => {

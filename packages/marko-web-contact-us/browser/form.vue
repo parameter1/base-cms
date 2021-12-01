@@ -115,7 +115,6 @@ import VueRecaptcha from 'vue-recaptcha';
 
 const block = 'contact-us-form';
 
-// @todo this should be removed once contact us is moved to core.
 export default {
   components: { VueRecaptcha },
   props: {
