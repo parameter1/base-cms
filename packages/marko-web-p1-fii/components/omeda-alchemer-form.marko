@@ -1,4 +1,3 @@
-import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 import { getAsObject } from "@parameter1/base-cms-object-path";
 import { warn } from "@parameter1/base-cms-utils";
 import getOmedaId from "../utils/get-omeda-id";
@@ -17,8 +16,9 @@ $ const omedaZone = site.get("p1fii.omedaZone", input.omedaZone);
       alchemerZone,
       omedaZone,
       encryptedCustomerId: getOmedaId(req),
+      alwaysAppendContext: input.alwaysAppendContext || false,
       context,
-      debugIframe: defaultValue(input, "debugIframe"),
+      debugIframe: input.debugIframe || false,
     }
   />
 </if>

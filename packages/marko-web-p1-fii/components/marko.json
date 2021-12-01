@@ -7,6 +7,7 @@
     },
     "@alchemer-zone": "string",
     "@omeda-zone": "string",
+    "@always-append-context": "boolean",
     "@context": "object",
     "@debug-iframe": "boolean"
   },
@@ -18,6 +19,7 @@
     },
     "@wufoo-zone": "string",
     "@omeda-zone": "string",
+    "@always-append-context": "boolean",
     "@context": "object"
   }
 }

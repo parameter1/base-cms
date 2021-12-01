@@ -27,6 +27,7 @@ export default {
     height: { type: Number, default: 1000 },
     width: { type: Number, default: 500 },
     debugIframe: { type: Boolean, default: false },
+    alwaysAppendContext: { type: Boolean, default: false },
   },
   data: () => ({
     endpoint: '/__p1fii',
@@ -79,6 +80,7 @@ export default {
           surveyId: parseInt(this.surveyId, 10),
           ...(encryptedCustomerId && { encryptedCustomerId }),
           context: this.context,
+          alwaysAppendContext: this.alwaysAppendContext,
         };
         const res = await fetch(this.endpoint, {
           method: 'POST',
