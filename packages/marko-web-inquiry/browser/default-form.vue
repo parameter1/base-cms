@@ -116,19 +116,21 @@
       </div>
     </div>
     <div
-      v-for="(checkbox) in onSubmitConsentCheckboxes"
-      :key="checkbox.label"
+      v-for="(consent, name) in consentCheckboxes"
+      :key="'inquiry-' + name"
       class="row"
     >
       <div class="col-12">
         <div class="form-group">
           <input
-            :id="checkbox.label"
+            :id="'inquiry-' + name"
+            :value="name"
+            v-model="checkedConsents"
             :required="true"
             type="checkbox"
           >
-          <form-label :for="checkbox.label" :required="true">
-            <div class="consent-html" v-html="checkbox.html" />
+          <form-label :for="'inquiry-' + name" :required="true">
+            <div class="consent-html" v-html="consentCheckboxes[name]" />
           </form-label>
         </div>
       </div>
@@ -177,8 +179,8 @@ export default {
       type: String,
       default: 'en',
     },
-    onSubmitConsentCheckboxes: {
-      type: Array,
+    consentCheckboxes: {
+      type: Object,
       default: null,
     },
   },
@@ -192,6 +194,7 @@ export default {
     country: '',
     postalCode: '',
     comments: '',
+    checkedConsents: [],
   }),
   methods: {
     translate(key) {
@@ -220,8 +223,8 @@ export default {
         country,
         postalCode,
         comments,
+        checkedConsents,
       } = this;
-
       const payload = {
         firstName,
         lastName,
@@ -233,9 +236,9 @@ export default {
         country,
         postalCode,
         comments,
+        ...(checkedConsents.length && { userConsents: checkedConsents.join(', ') }),
         token,
       };
-
       await this.$submit(payload);
       this.EventBus.$emit('inquiry-form-submit', { contentId, contentType, payload });
     },

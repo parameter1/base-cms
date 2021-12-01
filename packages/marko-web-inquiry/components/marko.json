@@ -4,7 +4,7 @@
     "<header>": {},
     "<description>": {},
     "@content": "object",
-    "@on-submit-consent-checkboxes": "array",
+    "@consent-checkboxes": "object",
 
     "@with-header": "boolean",
     "@with-description": "boolean",
