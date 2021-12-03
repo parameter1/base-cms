@@ -196,7 +196,7 @@ export default {
     },
     consentCheckboxes: {
       type: Array,
-      default: null,
+      default: () => [],
     },
   },
   data: () => ({
