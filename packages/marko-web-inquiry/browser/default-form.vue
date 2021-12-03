@@ -171,6 +171,7 @@ import FormMixin from './form-mixin';
 import CountryField from './fields/country.vue';
 import FormLabel from './elements/label.vue';
 import i18n from '../i18n';
+
 export default {
   components: { VueRecaptcha, CountryField, FormLabel },
   inject: ['EventBus'],
