@@ -115,22 +115,34 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <textarea
+            id="inquiry-form.comments"
+            v-model="comments"
+            name="comments"
+            class="form-control"
+          />
+        </div>
+      </div>
+    </div>
     <div
-      v-for="(consent, name) in consentCheckboxes"
-      :key="'inquiry-' + name"
+      v-for="(consent) in consentCheckboxes"
+      :key="consent.key"
       class="row"
     >
       <div class="col-12">
         <div class="form-group">
           <input
-            :id="'inquiry-' + name"
-            :value="name"
+            :id="consent.key"
+            :value="consent.key"
             v-model="checkedConsents"
-            :required="true"
+            :required="consent.required"
             type="checkbox"
           >
-          <form-label :for="'inquiry-' + name" :required="true">
-            <div class="consent-html" v-html="consentCheckboxes[name]" />
+          <form-label :for="consent.key" :required="true">
+            <div class="consent-html" v-html="consent.html" />
           </form-label>
         </div>
       </div>
@@ -159,7 +171,6 @@ import FormMixin from './form-mixin';
 import CountryField from './fields/country.vue';
 import FormLabel from './elements/label.vue';
 import i18n from '../i18n';
-
 export default {
   components: { VueRecaptcha, CountryField, FormLabel },
   inject: ['EventBus'],
@@ -180,7 +191,7 @@ export default {
       default: 'en',
     },
     consentCheckboxes: {
-      type: Object,
+      type: Array,
       default: null,
     },
   },
@@ -225,6 +236,11 @@ export default {
         comments,
         checkedConsents,
       } = this;
+      const consents = this.consentCheckboxes.reduce((obj, consent) => {
+        const { key, html } = consent;
+        if (checkedConsents.includes(key)) obj[key] = html;
+        return obj;
+      }, {});
       const payload = {
         firstName,
         lastName,
@@ -236,7 +252,7 @@ export default {
         country,
         postalCode,
         comments,
-        ...(checkedConsents.length && { userConsents: checkedConsents.join(', ') }),
+        ...consents,
         token,
       };
       await this.$submit(payload);
