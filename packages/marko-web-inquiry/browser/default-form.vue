@@ -238,7 +238,7 @@ export default {
       } = this;
       const consents = this.consentCheckboxes.reduce((obj, consent) => {
         const { key, html } = consent;
-        if (checkedConsents.includes(key)) obj[key] = html;
+        if (checkedConsents.includes(key)) return { ...obj, [key]: html };
         return obj;
       }, {});
       const payload = {
