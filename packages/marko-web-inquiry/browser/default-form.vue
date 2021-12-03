@@ -144,7 +144,7 @@
             :required="consent.required"
             type="checkbox"
           >
-          <form-label :for="consent.key" :required="true">
+          <form-label :for="consent.key" :required="consent.required">
             <div class="consent-html" v-html="consent.html" />
           </form-label>
         </div>
