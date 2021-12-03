@@ -130,9 +130,24 @@
         </div>
       </div>
     </div>
-    <div v-if="onSubmitConsentText" class="row">
+    <div
+      v-for="(consent) in consentCheckboxes"
+      :key="consent.key"
+      class="row"
+    >
       <div class="col-12">
-        <div class="form-group" v-html="onSubmitConsentText" />
+        <div class="form-group">
+          <input
+            :id="consent.key"
+            :value="consent.key"
+            v-model="checkedConsents"
+            :required="consent.required"
+            type="checkbox"
+          >
+          <form-label :for="consent.key" :required="consent.required">
+            <div class="consent-html" v-html="consent.html" />
+          </form-label>
+        </div>
       </div>
     </div>
     <pre v-if="error" class="alert alert-danger text-danger">An error occurred: {{ error }}</pre>
@@ -179,9 +194,9 @@ export default {
       type: String,
       default: 'en',
     },
-    onSubmitConsentText: {
-      type: String,
-      default: null,
+    consentCheckboxes: {
+      type: Array,
+      default: () => [],
     },
   },
   data: () => ({
@@ -194,6 +209,7 @@ export default {
     country: '',
     postalCode: '',
     comments: '',
+    checkedConsents: [],
   }),
   methods: {
     translate(key) {
@@ -222,8 +238,12 @@ export default {
         country,
         postalCode,
         comments,
+        checkedConsents,
       } = this;
-
+      const consents = this.consentCheckboxes.reduce((obj, consent) => {
+        const { key, html } = consent;
+        return (checkedConsents.includes(key)) ? { ...obj, [key]: html } : obj;
+      }, {});
       const payload = {
         firstName,
         lastName,
@@ -235,9 +255,9 @@ export default {
         country,
         postalCode,
         comments,
+        ...consents,
         token,
       };
-
       await this.$submit(payload);
       this.EventBus.$emit('inquiry-form-submit', { contentId, contentType, payload });
     },
