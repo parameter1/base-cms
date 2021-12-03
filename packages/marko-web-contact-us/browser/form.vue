@@ -167,7 +167,7 @@ export default {
           const s = document.createElement('script');
           s.src = 'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit';
           s.async = 1;
-          s.onerror = () => reject(new Error('Unable to load resizer form script.'));
+          s.onerror = () => reject(new Error('Unable to load google recaptcha script.'));
           s.onload = resolve;
           const scr = document.getElementsByTagName('script')[0];
           scr.parentNode.insertBefore(s, scr);
