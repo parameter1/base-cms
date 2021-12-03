@@ -124,13 +124,11 @@ export default {
     },
     sitekey: {
       type: String,
-      require: true,
-      default: null,
+      required: true,
     },
     configName: {
       type: String,
-      require: true,
-      default: 'submitPodcast',
+      required: true,
     },
     successMessage: {
       type: String,
