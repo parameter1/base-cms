@@ -1,5 +1,5 @@
 {
-  "taglib-id": "@cox-matthews-associates/package-contact-us",
+  "taglib-id": "@parameter1/base-cms-marko-web-contact-us",
   "taglib-imports": [
     "./components/marko.json"
   ]
