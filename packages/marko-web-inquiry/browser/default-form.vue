@@ -118,6 +118,9 @@
     <div class="row">
       <div class="col-12">
         <div class="form-group">
+          <form-label id="inquiry-form.comments">
+            {{ translate("commentsLabel") }}
+          </form-label>
           <textarea
             id="inquiry-form.comments"
             v-model="comments"
