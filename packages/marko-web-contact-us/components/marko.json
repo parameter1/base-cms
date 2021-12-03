@@ -1,0 +1,9 @@
+{
+  "<contact-us-form>": {
+    "template": "./contact-us-form.marko",
+    "@config-name": {
+      "type": "string",
+      "required": true
+    }
+  }
+}
