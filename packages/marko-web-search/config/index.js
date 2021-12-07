@@ -30,7 +30,6 @@ class MarkoWebSearchConfig {
       resultsPerPage,
       contentTypes,
       assignedToWebsiteSectionIds,
-      contentTypeLabelMap,
     } = validate(Joi.object({
       resultsPerPage: Joi.object({
         min: Joi.number().integer().default(1),
@@ -38,26 +37,21 @@ class MarkoWebSearchConfig {
         default: Joi.number().integer().default(20),
       }).default(),
 
-      contentTypes: Joi.array().items(
-        Joi.string().trim().allow(...defaultContentTypes),
-      ).default(defaultContentTypes),
+      contentTypes: Joi.array().items(Joi.alternatives().try(
+        Joi.string().trim().allow(...defaultContentTypes), Joi.object({
+          type: Joi.string().trim().allow(...defaultContentTypes),
+          label: Joi.string().trim(),
+        }),
+      )).default(defaultContentTypes),
 
       assignedToWebsiteSectionIds: Joi.array().items(
         Joi.number().integer().min(1).required(),
       ).default([]),
-
-      contentTypeLabelMap: Joi.array().items(
-        Joi.object({
-          type: Joi.string().trim().allow(...defaultContentTypes),
-          label: Joi.string().trim(),
-        }),
-      ).default([]),
     }).default(), params);
 
-    this.contentTypeObjects = contentTypes.sort().map(type => (contentTypeLabelMap ? ({
-      id: underscore(type).toUpperCase(),
-      label: contentTypeLabelMap.find(pair => pair.type === type)
-        ? titleize(contentTypeLabelMap.find(pair => pair.type === type).label) : titleize(type),
+    this.contentTypeObjects = contentTypes.sort().map(type => (type.label ? ({
+      id: underscore(type.type).toUpperCase(),
+      label: type.label,
     }) : ({
       id: underscore(type).toUpperCase(),
       label: titleize(type),
