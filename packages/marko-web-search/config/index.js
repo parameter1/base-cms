@@ -30,6 +30,7 @@ class MarkoWebSearchConfig {
       resultsPerPage,
       contentTypes,
       assignedToWebsiteSectionIds,
+      contentTypeLabelMap,
     } = validate(Joi.object({
       resultsPerPage: Joi.object({
         min: Joi.number().integer().default(1),
@@ -44,12 +45,24 @@ class MarkoWebSearchConfig {
       assignedToWebsiteSectionIds: Joi.array().items(
         Joi.number().integer().min(1).required(),
       ).default([]),
+
+      contentTypeLabelMap: Joi.array().items(
+        Joi.object({
+          type: Joi.string().trim().allow(...defaultContentTypes),
+          label: Joi.string().trim(),
+        }),
+      ).default([]),
     }).default(), params);
 
-    this.contentTypeObjects = contentTypes.sort().map(type => ({
+    this.contentTypeObjects = contentTypes.sort().map(type => (contentTypeLabelMap ? ({
+      id: underscore(type).toUpperCase(),
+      label: contentTypeLabelMap.find(pair => pair.type === type)
+        ? titleize(contentTypeLabelMap.find(pair => pair.type === type).label) : titleize(type),
+    }) : ({
       id: underscore(type).toUpperCase(),
       label: titleize(type),
-    }));
+    })));
+
     this.contentTypeObjectMap = this.contentTypeObjects.reduce((map, type) => {
       map.set(type.id, type);
       return map;
