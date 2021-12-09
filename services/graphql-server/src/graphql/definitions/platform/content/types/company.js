@@ -13,6 +13,7 @@ extend type Mutation {
   updateContentCompanySocialLinks(input: UpdateContentCompanySocialLinksMutationInput!): ContentCompany @requiresAuth
   updateContentCompanyYoutube(input: UpdateContentCompanyYoutubeMutationInput!): ContentCompany @requiresAuth
   updateContentCompanyPublicContacts(input: UpdateContentCompanyPublicContactsMutationInput!): ContentCompany @requiresAuth
+  updateContentCompanyCustomAttributes(input: UpdateContentCompanyCustomAttributesMutationInput!): ContentCompany! @requiresAuth
 }
 
 type ContentCompany implements Content & PrimaryCategory & Contactable & Addressable & SocialLinkable & Inquirable & OrganizationContactable @applyInterfaceFields {
@@ -133,6 +134,16 @@ input UpdateContentCompanyYoutubePayloadMutationInput {
   channelId: String
   playlistId: String
   username: String
+}
+
+input UpdateContentCompanyCustomAttributesMutationInput {
+  id: Int!
+  payload: [UpdateContentCompanyCustomAttributesMutationPayloadInput] = []
+}
+
+input UpdateContentCompanyCustomAttributesMutationPayloadInput {
+  key: String!
+  value: String
 }
 
 input ContentCompanyExternalLinkInput {

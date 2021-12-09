@@ -1751,6 +1751,24 @@ module.exports = {
     /**
      *
      */
+    updateContentCompanyCustomAttributes: async (_, { input }, { base4rest, basedb }, info) => {
+      validateRest(base4rest);
+      const type = 'platform/content/company';
+      const { id } = input;
+      const attributes = getAsArray(input, 'payload');
+      if (!attributes.length) throw new UserInputError('No custom attributes were provided.');
+
+      const body = new Base4RestPayload({ type });
+      attributes.forEach(attr => body.set(`customAttributes.${attr.key}`, attr.value));
+      body.set('id', id);
+      await base4rest.updateOne({ model: type, id, body });
+      const projection = buildProjection({ info, type: 'ContentCompany' });
+      return basedb.findOne('platform.Content', { _id: id }, { projection });
+    },
+
+    /**
+     *
+     */
     createContent: async (_, { input }, { base4rest, basedb }, info) => {
       validateRest(base4rest);
       const { primarySectionId, type, name } = input;
