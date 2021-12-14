@@ -18,12 +18,12 @@ $ const displayHome = defaultValue(input.displayHome, true);
     <if(section.alias !== homeAlias)>
       <if(displaySelf)>
         <@item>
-          <marko-web-link title=child.name href=`/${child.alias}`>${child.name}</marko-web-link>
+          <marko-web-link title=child.name href=`/${child.alias}`>$!{child.name}</marko-web-link>
         </@item>
       </if>
       <else-if(child.alias !== section.alias)>
         <@item>
-          <marko-web-link title=child.name href=`/${child.alias}`>${child.name}</marko-web-link>
+          <marko-web-link title=child.name href=`/${child.alias}`>$!{child.name}</marko-web-link>
         </@item>
       </else-if>
     </if>
