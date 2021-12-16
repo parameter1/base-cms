@@ -36,10 +36,17 @@ $ const showCopyright = defaultValue(input.showCopyright, true)
       has-user=input.hasUser
     />
     <if(showCopyright)>
-      <default-theme-site-footer-copyright
-        company=site.get("company")
-        notice=site.get("copyrightNotice")
-      />
+      <if(site.get("customCopyright"))>
+        <default-theme-site-footer-copyright>
+          ${site.get("customCopyright")}
+        </default-theme-site-footer-copyright>
+      </if>
+      <else>
+        <default-theme-site-footer-copyright
+          company=site.get("company")
+          notice=site.get("copyrightNotice")
+        />
+      </else>
     </if>
   </default-theme-site-footer-container>
 </marko-web-block>
