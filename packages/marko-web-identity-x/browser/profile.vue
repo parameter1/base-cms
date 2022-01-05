@@ -81,11 +81,10 @@
           >
             <custom-boolean
               :id="fieldAnswer.id"
-
               :message="fieldAnswer.field.label"
               :required="fieldAnswer.field.required"
               :value="fieldAnswer.value"
-              @input="onCustomBooleanChange(fieldAnswer.id, $event)"
+              @input="onCustomBooleanChange()"
             />
           </div>
         </div>
@@ -372,7 +371,7 @@ export default {
       }
     },
 
-    onCustomBooleanChange(fieldId, newValue) {
+    onCustomBooleanChange() {
       this.user.customBooleanFieldAnswers = this.customBooleanFieldAnswers;
     },
 
