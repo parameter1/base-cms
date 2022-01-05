@@ -22,6 +22,24 @@ fragment ActiveUserFragment on AppUser {
     namespace { provider tenant type }
   }
   regionalConsentAnswers { id given date }
+  customBooleanFieldAnswers(input: {
+    onlyActive: true
+    sort: { field: name, order: asc }
+  }) {
+    id
+    field {
+      id
+      label
+      active
+      required
+      externalId {
+        id
+        namespace { provider tenant type }
+        identifier { value type }
+      }
+    }
+    value
+  }
   customSelectFieldAnswers(input: {
     onlyActive: true
     sort: { field: label, order: asc }
