@@ -509,6 +509,8 @@ input AllPublishedContentQueryInput {
   beginning: ContentBeginningInput = {}
   "For types with a endDate field: Limit results to items with a endDate matching the criteria."
   ending: ContentEndingInput = {}
+  "Limit results using the updated (modified) date."
+  updated: ContentUpdatedInput = {}
 }
 
 input AllPublishedContentDatesQueryInput {
@@ -551,6 +553,13 @@ input AllCompanyContentQueryInput {
   sort: ContentSortInput = { field: published, order: desc }
   pagination: PaginationInput = {}
   withSite: Boolean = true
+}
+
+input ContentUpdatedInput {
+  "If specified, include items updated before this date"
+  before: Date
+  "If specified, include items updated after this date"
+  after: Date
 }
 
 input ContentBeginningInput {
