@@ -862,6 +862,7 @@ module.exports = {
         ending,
         withSite,
         customAttributes,
+        updated,
       } = input;
 
       // @deprecated Prefer includeContentTypes over contentTypes.
@@ -886,6 +887,8 @@ module.exports = {
       if (beginning.after) query.$and.push({ startDate: { $gte: beginning.after } });
       if (ending.before) query.$and.push({ endDate: { $lte: ending.before } });
       if (ending.after) query.$and.push({ endDate: { $gte: ending.after } });
+      if (updated.before) query.$and.push({ updated: { $lte: updated.before } });
+      if (updated.after) query.$and.push({ updated: { $gte: updated.after } });
 
       if (requiresImage) {
         query.primaryImage = { $exists: true };
