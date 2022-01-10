@@ -66,6 +66,12 @@ class MarkoWebSearchQueryParamConfig {
         defaultValue: () => [],
         toInput: toIntArrayInput,
         fromInput: fromArrayInput,
+      })
+      .add('sortBy', {
+        type: Array,
+        defaultValue: () => [],
+        toInput: toStringArrayInput,
+        fromInput: fromArrayInput,
       });
   }
 
