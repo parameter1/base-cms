@@ -5,7 +5,7 @@ $ const {
   $baseBrowse: apolloBaseBrowse,
   config,
 } = out.global;
-$ const { assignedToWebsiteSectionIds } = input;
+$ const { assignedToWebsiteSectionIds, withSearchQueryDefault } = input;
 
 $ const params = {
   limit: input.limit,
@@ -21,6 +21,7 @@ $ const params = {
   ),
   queryFragment: input.queryFragment,
   opSuffix: input.opSuffix,
+  withSearchQueryDefault
 };
 
 <marko-web-resolve|{ resolved }| promise=loader({ apolloBaseCMS, apolloBaseBrowse }, params)>
