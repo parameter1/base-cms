@@ -2,21 +2,8 @@ import IdentityX from '@parameter1/base-cms-marko-web-identity-x/browser';
 
 const RapidIdentify = () => import(/* webpackChunkName: "omeda-identity-x-rapid-identify" */ './rapid-identify.vue');
 
-export default (Browser, {
-  CustomLoginComponent,
-  CustomAuthenticateComponent,
-  CustomLogoutComponent,
-  CustomProfileComponent,
-  CustomCommentStreamComponent,
-} = {}) => {
-  const customComponents = {
-    CustomLoginComponent,
-    CustomAuthenticateComponent,
-    CustomLogoutComponent,
-    CustomProfileComponent,
-    CustomCommentStreamComponent,
-  };
-  IdentityX(Browser, customComponents);
+export default (Browser) => {
+  IdentityX(Browser);
 
   const { EventBus } = Browser;
   EventBus.$on('identity-x-authenticated', ({ user = {} } = {}) => {
