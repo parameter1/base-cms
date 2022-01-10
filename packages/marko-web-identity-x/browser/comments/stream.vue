@@ -9,6 +9,11 @@
         v-if="hasActiveUser"
         :class="element('create-post')"
       >
+        <p :class="element('login-message')">
+          <span :class="element(`login-message--cta`)">
+            Post a Comment
+          </span>
+        </p>
         <div v-if="archived" :class="element('archived')">
           This thread is archived and is no longer accepting comments.
         </div>
@@ -20,10 +25,11 @@
         />
       </div>
       <div v-else :class="element('login-form-wrapper')">
-        <p :class="element('login-message')">
+        <p v-if="showLoginMessage" :class="element('login-message')">
+          <span :class="element(`login-message--cta`)">
+            Post a Comment
+          </span>
           You must be signed in to leave a comment.
-        </p>
-        <p :class="element('login-message')">
           To sign in or create an account,
           enter your email address and we'll send you a one-click sign-in link.
         </p>
@@ -34,11 +40,13 @@
           :consent-policy="consentPolicy"
           :app-context-id="appContextId"
           :regional-consent-policies="regionalConsentPolicies"
+          :button-labels="loginButtonLabels"
+          @submit="handleLoginSubmit"
         />
       </div>
 
       <h5 v-if="latestCommentsHeader && comments.length" :class="element('latest-comments')">
-        {{ latestCommentsHeader }}
+        {{ latestCommentsHeader }} ({{ totalCount }})
       </h5>
     </div>
     <div v-if="isLoading" :class="element('loading')">
@@ -75,6 +83,7 @@
         </button>
       </div>
     </div>
+    <div :class="element('bottom')" />
   </div>
 </template>
 
@@ -120,23 +129,30 @@ export default {
     },
     headerText: {
       type: String,
-      default: 'Leave a Comment',
-    },
-    latestCommentsHeader: {
-      type: String,
       default: 'Comments',
-    },
-    loadMoreCommentsMessage: {
-      type: String,
-      default: 'Show More Comments',
     },
     loadMoreButtonClass: {
       type: String,
       default: 'btn btn-primary',
     },
+    loadMoreCommentsMessage: {
+      type: String,
+      default: 'Show More Comments',
+    },
+    latestCommentsHeader: {
+      type: String,
+      default: 'All Comments',
+    },
+    loginButtonLabels: {
+      type: Object,
+      default: () => ({
+        submit: 'Login / Register',
+        logout: 'Logout',
+      }),
+    },
     noCommentsMessage: {
       type: String,
-      default: 'No comments have been added yet. Want to start the conversation?',
+      default: 'This article hasn’t received any comments yet. Want to start the conversation?',
     },
     modifiers: {
       type: Array,
@@ -164,6 +180,7 @@ export default {
     blockName: 'idx-comment-stream',
     isLoading: false,
     isLoadingMore: false,
+    showLoginMessage: true,
     error: null,
     comments: [],
     archived: false,
@@ -180,6 +197,7 @@ export default {
       const { blockName } = this;
       const classNames = [blockName];
       this.modifiers.map(mod => classNames.push(`${blockName}--${mod}`));
+      classNames.push(`${blockName}__counter--${this.comments.length}`);
       return classNames;
     },
 
@@ -202,6 +220,9 @@ export default {
    *
    */
   methods: {
+    handleLoginSubmit() {
+      this.showLoginMessage = false;
+    },
     /**
      *
      */

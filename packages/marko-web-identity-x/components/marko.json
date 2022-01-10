@@ -40,6 +40,7 @@
     "@title": "string",
     "@description": "string",
     "@url": "string",
-    "@load-more-button-class": "string"
+    "@load-more-button-class": "string",
+    "@login-button-labels": "object"
   }
 }

@@ -12,6 +12,7 @@ $ const { identityX } = req;
       description: input.description,
       url: input.url,
       loadMoreButtonClass: input.loadMoreButtonClass,
+      loginButtonLabels: input.loginButtonLabels,
       endpoints: identityX.config.getEndpoints(),
       consentPolicy: get(application, "organization.consentPolicy"),
       regionalConsentPolicies: get(application, "organization.regionalConsentPolicies"),
