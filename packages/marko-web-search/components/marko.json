@@ -2,7 +2,8 @@
   "taglib-imports": [
     "./filters/marko.json",
     "./form/marko.json",
-    "./links/marko.json"
+    "./links/marko.json",
+    "./sort-by/marko.json"
   ],
   "<marko-web-search-build-href>": {
     "template": "./build-href.marko",
