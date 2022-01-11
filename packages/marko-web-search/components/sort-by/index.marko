@@ -1,0 +1,55 @@
+import { get, getAsArray, getAsObject } from "@parameter1/base-cms-object-path";
+import { dasherize } from "@parameter1/base-cms-inflector";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { $markoWebSearch: search } = out.global;
+
+$ const blockName = "marko-web-search-filter";
+$ const title = { value: "Sort By" };
+$ const filterKey = "sortBy";
+$ const items = search.config.sortBy;
+$ const item = getAsObject(input.item);
+$ const itemIdPath = defaultValue(item.idPath, "id");
+$ const itemLabelPath = defaultValue(item.labelPath, "label");
+$ const titleModifier = dasherize(filterKey);
+$ const disableIfNoSearchQuery = ['SCORE_DESC'];
+
+<if(items.length)>
+  <marko-web-block name=blockName modifiers=input.modifiers>
+    <if(title)>
+      <if(title.renderBlock)>
+        <${title.renderBlock} />
+      </if>
+      <else>
+        <marko-web-browser-component
+          name="MarkoWebSearchToggleFilter"
+          props={
+            label: title.value,
+            target: `.${blockName}__items--${titleModifier}`,
+            toggleClass: `${blockName}__items--open`,
+          }
+        />
+      </else>
+    </if>
+    <marko-web-element
+      tag="ul"
+      block-name=blockName
+      name="items"
+      modifiers=["open", titleModifier]
+    >
+      <for|node| of=items>
+        $ const id = get(node, itemIdPath);
+        $ const label = get(node, itemLabelPath);
+        $ const value = search.isArrayParam(filterKey) ? [id] : id;
+        $ const isSelected = search.isInputValueSelectedFor(filterKey, value) || (id === 'PUBLISHED_DESC' && !search.isInputValueSelectedFor(filterKey, value));
+        $ const modifiers = isSelected ? ["selected"] : [];
+        $ const attrs = (disableIfNoSearchQuery.includes(id) && !search.input.searchQuery) ? { style: "pointer-events: none" } : {};
+        <marko-web-element tag="li" block-name=blockName name="item" modifiers=modifiers>
+          <marko-web-search-set-sort-value-link name=filterKey value=id reset-class=`${blockName}__clear-item` selected=isSelected attrs=attrs>
+            ${label}
+          </marko-web-search-set-sort-value-link>
+        </marko-web-element>
+      </for>
+    </marko-web-element>
+  </marko-web-block>
+</if>
