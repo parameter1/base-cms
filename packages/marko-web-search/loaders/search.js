@@ -53,30 +53,19 @@ module.exports = async ({ apolloBaseCMS, apolloBaseBrowse } = {}, {
   limit,
   skip,
 
-  sortField,
-  sortOrder,
+  sortField = 'PUBLISHED',
+  sortOrder = 'DESC',
 
   searchQuery,
   contentTypes = [],
   countryCodes = [],
   assignedToWebsiteSiteIds = [],
   assignedToWebsiteSectionIds = [],
-  withSearchQueryDefault = 'date',
 
   queryFragment,
   opSuffix,
 } = {}) => {
   if (!apolloBaseCMS || !apolloBaseBrowse) throw new Error('Both the BaseCMS and Base Browse Apollo clients must be provided.');
-
-  const sortDefaults = {
-    relevance: { field: 'SCORE', order: 'DESC' },
-    date: { field: 'PUBLISHED', order: 'DESC' },
-  };
-
-  const sort = (sortField && sortOrder)
-    ? { field: sortField, order: sortOrder }
-    : sortDefaults[withSearchQueryDefault];
-
   const input = {
     omitScheduledAndExpiredContent: true,
     statuses: ['PUBLISHED'],
@@ -90,7 +79,10 @@ module.exports = async ({ apolloBaseCMS, apolloBaseBrowse } = {}, {
       },
     }),
     pagination: { limit, skip },
-    sort,
+    sort: {
+      field: sortField,
+      order: sortOrder,
+    },
   };
 
   const { data: baseBrowseData } = await apolloBaseBrowse.query({
