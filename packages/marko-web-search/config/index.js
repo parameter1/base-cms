@@ -79,10 +79,12 @@ class MarkoWebSearchConfig {
       contentTypeIds: this.contentTypeObjects.map(({ id }) => id),
     });
 
-    this.sortBy = sortBy.map(filter => ({
-      id: `${filter.field}_${filter.order}`,
-      label: filter.label ? filter.label : `${titleize(filter.field)} ${titleize(filter.order)}`,
-    }));
+    this.sortBy = [
+      { id: 'PUBLISHED_DESC', label: 'Published (Newest First)' },
+      ...sortBy.map(filter => ({
+        id: `${filter.field}_${filter.order}`,
+        label: filter.label ? filter.label : `${titleize(filter.field)} ${titleize(filter.order)}`,
+      }))];
   }
 }
 
