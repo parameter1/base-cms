@@ -42,13 +42,17 @@ $ const hasFilters = !search.isDefaultInputValueFor("contentTypes") || assignedT
         </for>
       </marko-web-query-website-sections>
     </if>
-    <if(sortResultsBy.length)>
-      <for|filter| of=sortResultsBy>
-        <marko-web-search-selected-filter
-            prefix="Sort By"
-            filter-key="sortBy"
-            label=filter.label
+    <if(sortBy.length)>
+      <for|filter| of=sortBy>
+        $ const foundSort = sortResultsBy.find((sort) => sort.id === filter);
+        <if(foundSort)>
+          $ const { label } = foundSort;
+          <marko-web-search-selected-filter
+              prefix="Sort By"
+              filter-key="sortBy"
+              label=label
           />
+        </if>
       </for>
     </if>
   </marko-web-block>
