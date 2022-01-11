@@ -13,5 +13,8 @@
   },
   "<marko-web-search-set-filter-value-link>": {
     "template": "./set-filter-value.marko"
+  },
+  "<marko-web-search-set-sort-value-link>": {
+    "template": "./set-sort-value.marko"
   }
 }
