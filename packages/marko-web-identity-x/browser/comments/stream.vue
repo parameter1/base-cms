@@ -41,7 +41,7 @@
           :app-context-id="appContextId"
           :regional-consent-policies="regionalConsentPolicies"
           :button-labels="loginButtonLabels"
-          @submit="handleLoginSubmit"
+          @login-link-sent="handleLoginSubmit"
         />
       </div>
 
