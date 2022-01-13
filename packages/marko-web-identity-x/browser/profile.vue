@@ -84,7 +84,7 @@
               :message="fieldAnswer.field.label"
               :required="fieldAnswer.field.required"
               :value="fieldAnswer.value"
-              @input="onCustomBooleanChange()"
+              @input="onCustomBooleanChange(fieldAnswer.id)"
             />
           </div>
         </div>
@@ -371,7 +371,11 @@ export default {
       }
     },
 
-    onCustomBooleanChange() {
+    onCustomBooleanChange(id) {
+      const objIndex = this.customBooleanFieldAnswers.findIndex((obj => obj.id === id));
+      const value = !this.customBooleanFieldAnswers[objIndex].value;
+      this.customBooleanFieldAnswers[objIndex].value = value;
+
       this.user.customBooleanFieldAnswers = this.customBooleanFieldAnswers;
     },
 
