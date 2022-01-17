@@ -21,7 +21,15 @@ const consentAnswers = gql`
   }
 `;
 
-const customFieldsMutation = gql`
+const customBooleanFieldsMutation = gql`
+  mutation SetAppUserCustomBooleanFields($input: UpdateOwnAppUserCustomBooleanAnswersMutationInput!) {
+    updateOwnAppUserCustomBooleanAnswers(input: $input) {
+      id
+    }
+  }
+`;
+
+const customSelectFieldsMutation = gql`
   mutation SetAppUserCustomSelectFields($input: UpdateOwnAppUserCustomSelectAnswersMutationInput!) {
     updateOwnAppUserCustomSelectAnswers(input: $input) {
       id
@@ -41,6 +49,7 @@ module.exports = asyncRoute(async (req, res) => {
     postalCode,
     receiveEmail,
     regionalConsentAnswers,
+    customBooleanFieldAnswers,
     customSelectFieldAnswers,
   } = body;
   const input = {
@@ -61,15 +70,27 @@ module.exports = asyncRoute(async (req, res) => {
     await identityX.client.mutate({ mutation: consentAnswers, variables: { input: { answers } } });
   }
 
+  if (customBooleanFieldAnswers.length) {
+    // only update custom questions when there some :)
+    const customBooleanFieldsInput = customBooleanFieldAnswers.map(fieldAnswer => ({
+      fieldId: fieldAnswer.field.id,
+      value: fieldAnswer.value,
+    }));
+    await identityX.client.mutate({
+      mutation: customBooleanFieldsMutation,
+      variables: { input: { answers: customBooleanFieldsInput } },
+    });
+  }
+
   if (customSelectFieldAnswers.length) {
     // only update custom questions when there some :)
-    const customFieldsInput = customSelectFieldAnswers.map(fieldAnswer => ({
+    const customSelectFieldsInput = customSelectFieldAnswers.map(fieldAnswer => ({
       fieldId: fieldAnswer.field.id,
       optionIds: fieldAnswer.answers.map(({ id }) => id),
     }));
     await identityX.client.mutate({
-      mutation: customFieldsMutation,
-      variables: { input: { answers: customFieldsInput } },
+      mutation: customSelectFieldsMutation,
+      variables: { input: { answers: customSelectFieldsInput } },
     });
   }
 

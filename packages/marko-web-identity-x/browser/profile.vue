@@ -73,6 +73,22 @@
           />
         </div>
 
+        <div v-if="customBooleanFieldAnswers.length" class="row">
+          <div
+            v-for="fieldAnswer in customBooleanFieldAnswers"
+            :key="fieldAnswer.id"
+            class="col-12"
+          >
+            <custom-boolean
+              :id="fieldAnswer.id"
+              :message="fieldAnswer.field.label"
+              :required="fieldAnswer.field.required"
+              :value="fieldAnswer.value"
+              @input="onCustomBooleanChange(fieldAnswer.id)"
+            />
+          </div>
+        </div>
+
         <div v-if="emailConsentRequest" class="row mt-3">
           <div class="col-md-6">
             <receive-email
@@ -133,6 +149,7 @@ import post from './utils/post';
 import cookiesEnabled from './utils/cookies-enabled';
 import regionCountryCodes from './utils/region-country-codes';
 
+import CustomBoolean from './form/fields/custom-boolean.vue';
 import CustomSelect from './form/fields/custom-select.vue';
 import GivenName from './form/fields/given-name.vue';
 import FamilyName from './form/fields/family-name.vue';
@@ -152,6 +169,7 @@ const { isArray } = Array;
 
 export default {
   components: {
+    CustomBoolean,
     CustomSelect,
     GivenName,
     FamilyName,
@@ -287,6 +305,14 @@ export default {
     /**
      *
      */
+    customBooleanFieldAnswers() {
+      const { customBooleanFieldAnswers } = this.user;
+      return isArray(customBooleanFieldAnswers) ? customBooleanFieldAnswers : [];
+    },
+
+    /**
+     *
+     */
     customSelectFieldAnswers() {
       const { customSelectFieldAnswers } = this.user;
       return isArray(customSelectFieldAnswers) ? customSelectFieldAnswers : [];
@@ -343,6 +369,14 @@ export default {
       } else {
         this.user.regionalConsentAnswers.push({ id: policyId, given });
       }
+    },
+
+    onCustomBooleanChange(id) {
+      const objIndex = this.customBooleanFieldAnswers.findIndex((obj => obj.id === id));
+      const value = !this.customBooleanFieldAnswers[objIndex].value;
+      this.customBooleanFieldAnswers[objIndex].value = value;
+
+      this.user.customBooleanFieldAnswers = this.customBooleanFieldAnswers;
     },
 
     onCustomSelectChange(answers, ids) {
