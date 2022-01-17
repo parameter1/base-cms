@@ -80,7 +80,7 @@ class MarkoWebSearchConfig {
     });
 
     this.sortBy = [
-      { id: 'PUBLISHED_DESC', label: 'Published (Newest First)' },
+      { id: 'PUBLISHED_DESC', label: 'Published' },
       ...sortBy.map(filter => ({
         id: `${filter.field}_${filter.order}`,
         label: filter.label ? filter.label : `${titleize(filter.field)} ${titleize(filter.order)}`,
