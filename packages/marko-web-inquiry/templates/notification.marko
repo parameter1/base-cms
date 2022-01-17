@@ -1,5 +1,6 @@
 import { getAsObject } from '@parameter1/base-cms-object-path';
 import isDev from "@parameter1/base-cms-marko-core/utils/is-dev";
+import { titleize } from "@parameter1/base-cms-inflector";
 
 $ const styles = 'table {width: 630px;margin: 0 auto;} .danger { color: red } body{font-family: sans-serif; color: #333; margin: 0;}h1{font-family: monospace; line-height: 58px; text-align:center; margin: 0;}.subject, .footer{text-align:center; border-top: 1px solid #EEE; padding: 1em;}.footer{font-family: monospace; color: #CCC;}';
 $ const { domain, subject, addresses } = input;
@@ -52,7 +53,7 @@ $ const bgColor = site.get('inquiry.bgColor', 'transparent');
             <table>
               <tbody>
                 <tr>
-                  <td nowrap style="padding-right:12px; vertical-align:top;"><b>${content.type}</b></td>
+                  <td nowrap style="padding-right:12px; vertical-align:top;"><b>${titleize(content.type)}</b></td>
                   <td>${content.name}</td>
                 </tr>
                 <if(company.name)>
@@ -62,7 +63,7 @@ $ const bgColor = site.get('inquiry.bgColor', 'transparent');
                   </tr>
                 </if>
                 <tr>
-                  <td nowrap style="padding-right:12px; vertical-align:top;"><b>Url</b></td>
+                  <td nowrap style="padding-right:12px; vertical-align:top;"><b>URL</b></td>
                   <td><a href=url>${url}</a></td>
                 </tr>
                 <tr>
@@ -73,7 +74,7 @@ $ const bgColor = site.get('inquiry.bgColor', 'transparent');
                 <for|key, value| in=payload>
                   <if(key !== 'confirmationEmail')>
                     <tr>
-                      <td nowrap style="padding-right:12px; vertical-align:top;"><b>${key}</b></td>
+                      <td nowrap style="padding-right:12px; vertical-align:top;"><b>${titleize(key)}</b></td>
                       <td>$!{value}</td>
                     </tr>
                   </if>
