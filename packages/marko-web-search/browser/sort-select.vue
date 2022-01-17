@@ -16,7 +16,7 @@ export default {
   props: {
     className: {
       type: String,
-      default: 'marko-web-search-sort-select',
+      default: 'custom-select',
     },
     nodes: {
       type: Array,
