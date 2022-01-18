@@ -1,12 +1,12 @@
 <template>
   <select :class="className" @change="onChange">
     <option
-      v-for="item in nodes"
-      :key="item.id"
-      :selected="item.isSelected"
-      :value="item.id"
+      v-for="option in options"
+      :key="option.id"
+      :selected="option.id === selectedId"
+      :value="option.id"
     >
-      Sort: {{ item.label }}
+      Sort: {{ option.label }}
     </option>
   </select>
 </template>
@@ -18,21 +18,23 @@ export default {
       type: String,
       default: 'custom-select',
     },
-    nodes: {
+    options: {
       type: Array,
       required: true,
     },
+    selectedId: {
+      type: String,
+      default: 'PUBLISHED',
+    },
   },
   methods: {
-    onChange(e) {
-      if (e.target.options.selectedIndex > -1) {
-        const selected = e.target.options[e.target.options.selectedIndex];
-        const urlSearchParams = new URLSearchParams(window.location.search);
-        const params = Object.fromEntries(urlSearchParams.entries());
-        params.sortBy = selected.value;
-        const newUrlSearchParams = new URLSearchParams({ ...params });
-        window.location.href = `${window.location.origin}/search?${newUrlSearchParams.toString()}`;
-      }
+    onChange(event) {
+      const { value } = event.target;
+      const urlSearchParams = new URLSearchParams(window.location.search);
+      const params = Object.fromEntries(urlSearchParams.entries());
+      params.sortField = value;
+      const newUrlSearchParams = new URLSearchParams({ ...params });
+      window.location.href = `${window.location.origin}/search?${newUrlSearchParams.toString()}`;
     },
   },
 };
