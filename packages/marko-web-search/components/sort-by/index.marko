@@ -5,31 +5,17 @@ import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 $ const { $markoWebSearch: search } = out.global;
 
 $ const blockName = "marko-web-search-sort-by";
-$ const items = search.config.sortBy;
+$ const options = [
+  { id: 'PUBLISHED', label: 'Published' },
+  { id: 'SCORE', label: 'Relevancy' },
+];
 
-<if(items.length)>
-  <marko-web-block name=blockName modifiers=input.modifiers>
-    $ const nodes = search.input.sortBy.length ? items.map((item) => {
-      const isSelected = item.id === search.input.sortBy[0] ? true : false;
-      return { ...item, isSelected };
-    }) : items.map((item, index) => {
-      const isSelected = index ? false : true;
-      return { ...item, isSelected }
-    });
-    $ const { searchQuery } = search.input;
-    <if(searchQuery)>
-      <marko-web-browser-component name="MarkoWebSearchSortSelect" props={ nodes, searchQuery } />
-    </if>
-    <else>
-      <script>
-        const urlSearchParams = new URLSearchParams(window.location.search);
-        const params = Object.fromEntries(urlSearchParams.entries())
-        const { sortBy, ...rest } = params;
-        if (sortBy) {
-          const newUrlSearchParams = new URLSearchParams({ ...rest });
-          window.location.href = `${window.location.origin}/search?${newUrlSearchParams.toString()}`;
-        }
-      </script>
-    </else>
-  </marko-web-block>
-</if>
+<marko-web-block name=blockName modifiers=input.modifiers>
+  $ const { searchQuery, sortField } = search.input;
+  <if(searchQuery)>
+    <marko-web-browser-component
+      name="MarkoWebSearchSortSelect"
+      props={ options, selectedId: sortField }
+    />
+  </if>
+</marko-web-block>
