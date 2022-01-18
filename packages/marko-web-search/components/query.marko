@@ -20,7 +20,7 @@ $ const params = {
     : { assignedToWebsiteSiteIds: [config.website("id")] }
   ),
   queryFragment: input.queryFragment,
-  opSuffix: input.opSuffix
+  opSuffix: input.opSuffix,
 };
 
 <marko-web-resolve|{ resolved }| promise=loader({ apolloBaseCMS, apolloBaseBrowse }, params)>
