@@ -330,18 +330,27 @@ services:
       PORT: 80
       EXPOSED_PORT: 51269
       LIVERELOAD_PORT: 61269
-      TENANT_KEY: abmedia_all
-      SITE_ID: 60f6ec3bd28860bc3384e784
+      TENANT_KEY: ${EXAMPLE_TENANT_KEY-allured_all}
+      SITE_ID: ${EXAMPLE_SITE_ID-5ec4407aa7124b22008b4569}
 
-      GRAPHQL_URI: ${GRAPHQL_URI-http://graphql-server-virgon}
+      GRAPHQL_URI: ${GRAPHQL_URI-http://graphql-server-tauron}
       OEMBED_URI: ${OEMBED_URI-https://oembed}
-      RSS_URI: ${RSS_URI-http://rss-virgon}
-      SITEMAPS_URI: ${SITEMAPS_URI-http://sitemaps-virgon}
+      RSS_URI: ${RSS_URI-http://rss-tauron}
+      SITEMAPS_URI: ${SITEMAPS_URI-http://sitemaps-tauron}
+
+      IDENTITYX_GRAPHQL_URI: ${EXAMPLE_IDENTITYX_GRAPHQL_URI-}
+      IDENTITYX_APP_ID: ${EXAMPLE_IDENTITYX_APP_ID-60774dbe3dac5936323ae121}
+      IDENTITYX_API_TOKEN: ${EXAMPLE_IDENTITYX_API_TOKEN-}
+
+      OMEDA_BRAND_KEY: ${EXAMPLE_OMEDA_BRAND_KEY-allucd}
+      OMEDA_APP_ID: ${EXAMPLE_OMEDA_APP_ID}
+      OMEDA_INPUT_ID: ${EXAMPLE_OMEDA_INPUT_ID}
+      OMEDA_RAPID_IDENT_PRODUCT_ID: ${EXAMPLE_OMEDA_RAPID_IDENT_PRODUCT_ID-374}
     depends_on:
-      - graphql-server-virgon
+      - graphql-server-tauron
       - oembed
-      - rss-virgon
-      - sitemaps-virgon
+      - rss-tauron
+      - sitemaps-tauron
     ports:
       - "51269:80"
       - "61269:61269"

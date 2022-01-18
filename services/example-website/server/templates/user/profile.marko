@@ -1,0 +1,16 @@
+$ const { config } = out.global;
+
+$ const type = "profile";
+$ const title = "User profile";
+$ const description = `Complete your ${config.siteName()} user profile`;
+
+<marko-web-default-page-layout type=type title=title description=description>
+  <@page>
+    <marko-web-page-wrapper>
+      <@section>
+        <h1 class="page-wrapper__title">${description}</h1>
+        <marko-web-identity-x-form-profile />
+      </@section>
+    </marko-web-page-wrapper>
+  </@page>
+</marko-web-default-page-layout>

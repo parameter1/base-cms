@@ -1,0 +1,16 @@
+$ const { config } = out.global;
+
+$ const type = "login";
+$ const title = "Log in";
+$ const description = `Log in to ${config.siteName()}`;
+
+<marko-web-default-page-layout type=type title=title description=description>
+  <@page>
+    <marko-web-page-wrapper>
+      <@section>
+        <h1 class="page-wrapper__title">${description}</h1>
+        <marko-web-identity-x-form-login />
+      </@section>
+    </marko-web-page-wrapper>
+  </@page>
+</marko-web-default-page-layout>
