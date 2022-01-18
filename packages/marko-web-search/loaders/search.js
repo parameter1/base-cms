@@ -80,8 +80,8 @@ module.exports = async ({ apolloBaseCMS, apolloBaseBrowse } = {}, {
     }),
     pagination: { limit, skip },
     sort: {
-      field: searchQuery ? 'SCORE' : sortField,
-      order: searchQuery ? 'DESC' : sortOrder,
+      field: sortField,
+      order: sortOrder,
     },
   };
 
