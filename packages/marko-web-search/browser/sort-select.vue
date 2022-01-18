@@ -30,11 +30,11 @@ export default {
   methods: {
     onChange(event) {
       const { value } = event.target;
-      const urlSearchParams = new URLSearchParams(window.location.search);
-      const params = Object.fromEntries(urlSearchParams.entries());
-      params.sortField = value;
-      const newUrlSearchParams = new URLSearchParams({ ...params });
-      window.location.href = `${window.location.origin}/search?${newUrlSearchParams.toString()}`;
+      const url = new URL(window.location);
+      const params = new URLSearchParams(window.location.search);
+      params.set('sortField', value);
+      url.search = `${params}`;
+      window.location.href = `${url}`;
     },
   },
 };
