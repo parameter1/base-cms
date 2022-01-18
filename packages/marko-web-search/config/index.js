@@ -24,15 +24,12 @@ class MarkoWebSearchConfig {
    *                                                      Defaults to none. Should be an array of
    *                                                      section IDs, e.g. [123, 321]
    *
-   * @param {object[]} [params.sortBy] A list of filters for search results,
-   *                                   when a search query is provided, defaults to none.
    */
   constructor(params = {}) {
     const {
       resultsPerPage,
       contentTypes,
       assignedToWebsiteSectionIds,
-      sortBy,
     } = validate(Joi.object({
       resultsPerPage: Joi.object({
         min: Joi.number().integer().default(1),
@@ -50,13 +47,6 @@ class MarkoWebSearchConfig {
       assignedToWebsiteSectionIds: Joi.array().items(
         Joi.number().integer().min(1).required(),
       ).default([]),
-
-      sortBy: Joi.array().items(Joi.object({
-        label: Joi.string(),
-        order: Joi.string(),
-        field: Joi.string(),
-      })).default([]),
-
     }).default(), params);
 
     this.contentTypeObjects = contentTypes.sort().map(type => (type.label ? ({
@@ -78,13 +68,6 @@ class MarkoWebSearchConfig {
       resultsPerPage,
       contentTypeIds: this.contentTypeObjects.map(({ id }) => id),
     });
-
-    this.sortBy = [
-      { id: 'PUBLISHED_DESC', label: 'Published' },
-      ...sortBy.map(filter => ({
-        id: `${filter.field}_${filter.order}`,
-        label: filter.label ? filter.label : `${titleize(filter.field)} ${titleize(filter.order)}`,
-      }))];
   }
 }
 
