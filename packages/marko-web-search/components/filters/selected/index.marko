@@ -4,7 +4,7 @@ import { get, getAsArray, getAsObject } from "@parameter1/base-cms-object-path";
 $ const { $markoWebSearch: search } = out.global;
 $ const blockName = "marko-web-search-selected-filters";
 $ const { contentTypes, assignedToWebsiteSectionIds, sortBy } = search.input;
-$ const { contentTypeObjectMap, sortBy: sortResultsBy } = search.config;
+$ const { contentTypeObjectMap } = search.config;
 
 $ const queryFragment = gql`
   fragment MarkoWebSearchSelectedWebsiteSectionFragment on WebsiteSection {
@@ -13,7 +13,7 @@ $ const queryFragment = gql`
   }
 `;
 
-$ const hasFilters = !search.isDefaultInputValueFor("contentTypes") || assignedToWebsiteSectionIds.length || sortBy.length;
+$ const hasFilters = !search.isDefaultInputValueFor("contentTypes") || assignedToWebsiteSectionIds.length;
 
 <if(hasFilters)>
   <marko-web-block name=blockName>
@@ -41,19 +41,6 @@ $ const hasFilters = !search.isDefaultInputValueFor("contentTypes") || assignedT
           />
         </for>
       </marko-web-query-website-sections>
-    </if>
-    <if(sortBy.length)>
-      <for|filter| of=sortBy>
-        $ const foundSort = sortResultsBy.find((sort) => sort.id === filter);
-        <if(foundSort)>
-          $ const { label } = foundSort;
-          <marko-web-search-selected-filter
-              prefix="Sort By"
-              filter-key="sortBy"
-              label=label
-          />
-        </if>
-      </for>
     </if>
   </marko-web-block>
 </if>
