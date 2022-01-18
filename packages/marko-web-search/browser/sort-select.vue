@@ -1,5 +1,5 @@
 <template>
-  <select :class="className" @change="onChange">
+  <select class="custom-select" @change="onChange">
     <option
       v-for="option in options"
       :key="option.id"
@@ -14,10 +14,6 @@
 <script>
 export default {
   props: {
-    className: {
-      type: String,
-      default: 'custom-select',
-    },
     options: {
       type: Array,
       required: true,
