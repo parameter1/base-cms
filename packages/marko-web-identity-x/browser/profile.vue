@@ -83,7 +83,7 @@
               :id="fieldAnswer.id"
               :message="fieldAnswer.field.label"
               :required="fieldAnswer.field.required"
-              :value="fieldAnswer.value"
+              :value="fieldAnswer.answer"
               @input="onCustomBooleanChange(fieldAnswer.id)"
             />
           </div>
@@ -373,8 +373,8 @@ export default {
 
     onCustomBooleanChange(id) {
       const objIndex = this.customBooleanFieldAnswers.findIndex((obj => obj.id === id));
-      const value = !this.customBooleanFieldAnswers[objIndex].value;
-      this.customBooleanFieldAnswers[objIndex].value = value;
+      const answer = !this.customBooleanFieldAnswers[objIndex].answer;
+      this.customBooleanFieldAnswers[objIndex].answer = answer;
 
       this.user.customBooleanFieldAnswers = this.customBooleanFieldAnswers;
     },

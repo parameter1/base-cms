@@ -23,6 +23,7 @@ module.exports = startServer({
     const omedaConfig = getAsObject(siteConfig, 'omeda');
     const idxConfig = getAsObject(siteConfig, 'identityX');
     omedaIdentityX(app, {
+      clientKey: omedaConfig.clientKey,
       brandKey: omedaConfig.brandKey,
       appId: omedaConfig.appId,
       inputId: omedaConfig.inputId,

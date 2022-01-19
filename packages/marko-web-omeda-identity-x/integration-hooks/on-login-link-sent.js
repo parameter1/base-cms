@@ -1,5 +1,6 @@
 const gql = require('graphql-tag');
 const { get, getAsArray } = require('@parameter1/base-cms-object-path');
+const isOmedaDeploymentTypeId = require('../external-id/is-deployment-type-id');
 const isOmedaDemographicId = require('../external-id/is-demographic-id');
 
 const FIELD_QUERY = gql`
@@ -9,6 +10,7 @@ const FIELD_QUERY = gql`
         node {
           id
           name
+          type
           active
           externalId {
             id
@@ -21,6 +23,11 @@ const FIELD_QUERY = gql`
               id
               externalIdentifier
             }
+          }
+
+          ... on BooleanField {
+            whenTrue { type value }
+            whenFalse { type value }
           }
         }
       }
@@ -41,6 +48,9 @@ const CUSTOMER_QUERY = gql`
         demographic { id description }
         value { id description }
       }
+      primaryEmailAddress {
+        optInStatus { deploymentTypeId status { id } }
+      }
     }
   }
 `;
@@ -51,8 +61,14 @@ const SET_OMEDA_DATA = gql`
   }
 `;
 
-const SET_OMEDA_DEMOGRAPHIC_DATA = gql`
-  mutation SetOmedaDemographicData($input: UpdateAppUserCustomSelectAnswersMutationInput!) {
+const SET_OMEDA_BOOLEAN_FIELD_ANSWERS = gql`
+  mutation SetOmedaBooleanFieldAnswers($input: UpdateAppUserCustomBooleanAnswersMutationInput!) {
+    updateAppUserCustomBooleanAnswers(input: $input) { id }
+  }
+`;
+
+const SET_OMEDA_SELECT_FIELD_ANSWERS = gql`
+  mutation SetOmedaSelectFieldAnswers($input: UpdateAppUserCustomSelectAnswersMutationInput!) {
     updateAppUserCustomSelectAnswers(input: $input) { id }
   }
 `;
@@ -98,31 +114,95 @@ const setOmedaDemographics = async ({
       return map;
     }, new Map());
 
-  const answerMap = new Map();
+  const booleanAnswerMap = new Map();
+  const selectAnswerMap = new Map();
   omedaLinkedFields.forEach((field) => {
     if (answeredQuestionMap.has(field.id)) return;
     const { value: demoId } = field.externalId.identifier;
     const valueIdSet = omedaCustomerDemoValuesMap.get(demoId);
     if (!valueIdSet) return;
-    field.options.forEach((option) => {
-      const { externalIdentifier } = option;
-      if (!externalIdentifier || !valueIdSet.has(externalIdentifier)) return;
-      if (!answerMap.has(field.id)) answerMap.set(field.id, new Set());
-      answerMap.get(field.id).add(option.id);
-    });
+
+    if (field.type === 'select') {
+      field.options.forEach((option) => {
+        const { externalIdentifier } = option;
+        if (!externalIdentifier || !valueIdSet.has(externalIdentifier)) return;
+        if (!selectAnswerMap.has(field.id)) selectAnswerMap.set(field.id, new Set());
+        selectAnswerMap.get(field.id).add(option.id);
+      });
+    }
+
+    if (field.type === 'boolean') {
+      const { whenTrue, whenFalse } = field;
+      if (whenTrue.type === 'INTEGER' && valueIdSet.has(`${whenTrue.value}`)) {
+        booleanAnswerMap.set(field.id, true);
+        return;
+      }
+      if (whenFalse.type === 'INTEGER' && valueIdSet.has(`${whenFalse.value}`)) {
+        booleanAnswerMap.set(field.id, false);
+      }
+    }
   });
 
-  if (answerMap.size) {
-    const answers = [];
-    answerMap.forEach((optionIdSet, fieldId) => {
-      answers.push({ fieldId, optionIds: [...optionIdSet] });
-    });
-    await identityX.client.mutate({
-      mutation: SET_OMEDA_DEMOGRAPHIC_DATA,
-      variables: { input: { id: user.id, answers } },
-      context: { apiToken: identityX.config.getApiToken() },
-    });
-  }
+  await Promise.all([
+    (async () => {
+      if (!selectAnswerMap.size) return;
+      const answers = [];
+      selectAnswerMap.forEach((optionIdSet, fieldId) => {
+        answers.push({ fieldId, optionIds: [...optionIdSet] });
+      });
+      await identityX.client.mutate({
+        mutation: SET_OMEDA_SELECT_FIELD_ANSWERS,
+        variables: { input: { id: user.id, answers } },
+        context: { apiToken: identityX.config.getApiToken() },
+      });
+    })(),
+    (async () => {
+      if (!booleanAnswerMap.size) return;
+      const answers = [];
+      booleanAnswerMap.forEach((value, fieldId) => {
+        answers.push({ fieldId, value });
+      });
+      await identityX.client.mutate({
+        mutation: SET_OMEDA_BOOLEAN_FIELD_ANSWERS,
+        variables: { input: { id: user.id, answers } },
+        context: { apiToken: identityX.config.getApiToken() },
+      });
+    })(),
+  ]);
+};
+
+const setOmedaDeploymentTypes = async ({
+  identityX,
+  user,
+  omedaCustomer,
+  omedaLinkedFields,
+  answeredQuestionMap,
+}) => {
+  const omedaDeploymentOptInMap = getAsArray(omedaCustomer, 'primaryEmailAddress.optInStatus').reduce((map, { deploymentTypeId, status }) => {
+    const optedIn = status.id === 'IN';
+    map.set(`${deploymentTypeId}`, optedIn);
+    return map;
+  }, new Map());
+
+  const answerMap = new Map();
+  omedaLinkedFields.forEach((field) => {
+    if (answeredQuestionMap.has(field.id)) return;
+    const { value: deploymentTypeId } = field.externalId.identifier;
+    const optedIn = omedaDeploymentOptInMap.get(deploymentTypeId);
+    if (optedIn == null) return;
+    answerMap.set(field.id, optedIn);
+  });
+  if (!answerMap.size) return;
+
+  const answers = [];
+  answerMap.forEach((value, fieldId) => {
+    answers.push({ fieldId, value });
+  });
+  await identityX.client.mutate({
+    mutation: SET_OMEDA_BOOLEAN_FIELD_ANSWERS,
+    variables: { input: { id: user.id, answers } },
+    context: { apiToken: identityX.config.getApiToken() },
+  });
 };
 
 module.exports = async ({
@@ -147,21 +227,37 @@ module.exports = async ({
     }),
   ]);
 
-  const omedaLinkedFields = getAsArray(data, 'fields.edges')
-    .map(edge => edge.node)
-    .filter((field) => {
-      if (!field.active || !field.externalId) return false;
-      return isOmedaDemographicId({ externalId: field.externalId, brandKey });
-    });
+  const omedaLinkedFields = {
+    demographic: [],
+    deploymentType: [],
+  };
+  getAsArray(data, 'fields.edges').forEach((edge) => {
+    const { node: field } = edge;
+    const { externalId } = field;
+    if (!field.active || !externalId) return;
+    if (isOmedaDemographicId({ externalId, brandKey })) {
+      omedaLinkedFields.demographic.push(field);
+    }
+    if (field.type === 'boolean' && isOmedaDeploymentTypeId({ externalId, brandKey })) {
+      omedaLinkedFields.deploymentType.push(field);
+    }
+  });
 
-  const answeredQuestionMap = user.customSelectFieldAnswers.reduce((map, select) => {
-    if (!select.hasAnswered) return map;
-    map.set(select.field.id, true);
-    return map;
-  }, new Map());
+  const answeredQuestionMap = new Map();
+  user.customSelectFieldAnswers.forEach((select) => {
+    if (!select.hasAnswered) return;
+    answeredQuestionMap.set(select.field.id, true);
+  });
+  user.customBooleanFieldAnswers.forEach((boolean) => {
+    if (!boolean.hasAnswered) return;
+    answeredQuestionMap.set(boolean.field.id, true);
+  });
 
   const hasAnsweredAllOmedaQuestions = omedaLinkedFields
-    .every(field => answeredQuestionMap.has(field.id));
+    .demographic.every(field => answeredQuestionMap.has(field.id))
+    && omedaLinkedFields
+      .deploymentType.every(field => answeredQuestionMap.has(field.id));
+
   if (user.verified && user.hasAnsweredAllOmedaQuestions) {
     return;
   }
@@ -171,13 +267,22 @@ module.exports = async ({
   const promises = [];
   if (!user.verified) promises.push(setOmedaData({ identityX, user, omedaCustomer }));
   if (!hasAnsweredAllOmedaQuestions) {
-    promises.push(setOmedaDemographics({
-      identityX,
-      user,
-      omedaCustomer,
-      omedaLinkedFields,
-      answeredQuestionMap,
-    }));
+    promises.push((async () => {
+      await setOmedaDemographics({
+        identityX,
+        user,
+        omedaCustomer,
+        omedaLinkedFields: omedaLinkedFields.demographic,
+        answeredQuestionMap,
+      });
+      await setOmedaDeploymentTypes({
+        identityX,
+        user,
+        omedaCustomer,
+        omedaLinkedFields: omedaLinkedFields.deploymentType,
+        answeredQuestionMap,
+      });
+    })());
   }
   await Promise.all(promises);
 };

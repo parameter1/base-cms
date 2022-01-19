@@ -1,6 +1,7 @@
 const gql = require('graphql-tag');
 const { get, getAsArray } = require('@parameter1/base-cms-object-path');
 const isOmedaDemographicId = require('./external-id/is-demographic-id');
+const isDeploymentTypeId = require('./external-id/is-deployment-type-id');
 
 const ALPHA3_CODE = gql`
   query GetAlpha3Code($alpha2: String!) {
@@ -67,6 +68,24 @@ module.exports = async ({
     };
   });
 
+  const deploymentTypes = [];
+  getAsArray(appUser, 'customBooleanFieldAnswers').forEach((boolean) => {
+    const { field, hasAnswered } = boolean;
+    const { externalId } = field;
+    if (!field.active || !externalId || !hasAnswered) return;
+
+    const { identifier } = field.externalId;
+    const id = parseInt(identifier.value, 10);
+
+    if (isOmedaDemographicId({ externalId, brandKey })) {
+      demographics.push({ id, values: [`${boolean.value}`] });
+    }
+
+    if (isDeploymentTypeId({ externalId, brandKey })) {
+      deploymentTypes.push({ id, optedIn: boolean.answer });
+    }
+  });
+
   const { id, encryptedCustomerId } = await omedaRapidIdentify({
     email: appUser.email,
     productId,
@@ -78,6 +97,7 @@ module.exports = async ({
     ...(regionCode && { regionCode }),
     ...(postalCode && { postalCode }),
     ...(demographics.length && { demographics }),
+    ...(deploymentTypes.length && { deploymentTypes }),
     ...(promoCode && { promoCode }),
   });
 
