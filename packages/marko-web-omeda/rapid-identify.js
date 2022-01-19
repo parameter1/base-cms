@@ -27,7 +27,7 @@ module.exports = async (omedaGraphQLClient, {
   promoCode,
 } = {}) => {
   const input = {
-    productId,
+    productId: parseInt(productId, 10),
     email,
     ...(firstName && { firstName }),
     ...(lastName && { lastName }),
