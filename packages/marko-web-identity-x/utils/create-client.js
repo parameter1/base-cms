@@ -1,8 +1,9 @@
 const fetch = require('node-fetch');
 const { ApolloClient } = require('apollo-client');
-const { InMemoryCache } = require('apollo-cache-inmemory');
+const { InMemoryCache, IntrospectionFragmentMatcher } = require('apollo-cache-inmemory');
 const { createHttpLink } = require('apollo-link-http');
 const { setContext } = require('apollo-link-context');
+const introspectionQueryResultData = require('../api/fragment-types.json');
 
 const rootConfig = {
   connectToDevTools: false,
@@ -40,6 +41,8 @@ module.exports = ({
     ...config,
     ...rootConfig,
     link: contextLink.concat(httpLink),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      fragmentMatcher: new IntrospectionFragmentMatcher({ introspectionQueryResultData }),
+    }),
   });
 };
