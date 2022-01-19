@@ -61,14 +61,14 @@ const SET_OMEDA_DATA = gql`
   }
 `;
 
-const SET_OMEDA_BOOLEAN_DEMOGRAPHICS = gql`
-  mutation SetOmedaDemographicBooleanData($input: UpdateAppUserCustomBooleanAnswersMutationInput!) {
+const SET_OMEDA_BOOLEAN_FIELD_ANSWERS = gql`
+  mutation SetOmedaBooleanFieldAnswers($input: UpdateAppUserCustomBooleanAnswersMutationInput!) {
     updateAppUserCustomBooleanAnswers(input: $input) { id }
   }
 `;
 
-const SET_OMEDA_SELECT_DEMOGRAPHICS = gql`
-  mutation SetOmedaDemographicSelectData($input: UpdateAppUserCustomSelectAnswersMutationInput!) {
+const SET_OMEDA_SELECT_FIELD_ANSWERS = gql`
+  mutation SetOmedaSelectFieldAnswers($input: UpdateAppUserCustomSelectAnswersMutationInput!) {
     updateAppUserCustomSelectAnswers(input: $input) { id }
   }
 `;
@@ -151,7 +151,7 @@ const setOmedaDemographics = async ({
         answers.push({ fieldId, optionIds: [...optionIdSet] });
       });
       await identityX.client.mutate({
-        mutation: SET_OMEDA_SELECT_DEMOGRAPHICS,
+        mutation: SET_OMEDA_SELECT_FIELD_ANSWERS,
         variables: { input: { id: user.id, answers } },
         context: { apiToken: identityX.config.getApiToken() },
       });
@@ -163,12 +163,46 @@ const setOmedaDemographics = async ({
         answers.push({ fieldId, value });
       });
       await identityX.client.mutate({
-        mutation: SET_OMEDA_BOOLEAN_DEMOGRAPHICS,
+        mutation: SET_OMEDA_BOOLEAN_FIELD_ANSWERS,
         variables: { input: { id: user.id, answers } },
         context: { apiToken: identityX.config.getApiToken() },
       });
     })(),
   ]);
+};
+
+const setOmedaDeploymentTypes = async ({
+  identityX,
+  user,
+  omedaCustomer,
+  omedaLinkedFields,
+  answeredQuestionMap,
+}) => {
+  const omedaDeploymentOptInMap = getAsArray(omedaCustomer, 'primaryEmailAddress.optInStatus').reduce((map, { deploymentTypeId, status }) => {
+    const optedIn = status.id === 'IN';
+    map.set(`${deploymentTypeId}`, optedIn);
+    return map;
+  }, new Map());
+
+  const answerMap = new Map();
+  omedaLinkedFields.forEach((field) => {
+    if (answeredQuestionMap.has(field.id)) return;
+    const { value: deploymentTypeId } = field.externalId.identifier;
+    const optedIn = omedaDeploymentOptInMap.get(deploymentTypeId);
+    if (optedIn == null) return;
+    answerMap.set(field.id, optedIn);
+  });
+  if (!answerMap.size) return;
+
+  const answers = [];
+  answerMap.forEach((value, fieldId) => {
+    answers.push({ fieldId, value });
+  });
+  await identityX.client.mutate({
+    mutation: SET_OMEDA_BOOLEAN_FIELD_ANSWERS,
+    variables: { input: { id: user.id, answers } },
+    context: { apiToken: identityX.config.getApiToken() },
+  });
 };
 
 module.exports = async ({
@@ -233,13 +267,22 @@ module.exports = async ({
   const promises = [];
   if (!user.verified) promises.push(setOmedaData({ identityX, user, omedaCustomer }));
   if (!hasAnsweredAllOmedaQuestions) {
-    promises.push(setOmedaDemographics({
-      identityX,
-      user,
-      omedaCustomer,
-      omedaLinkedFields: omedaLinkedFields.demographic,
-      answeredQuestionMap,
-    }));
+    promises.push((async () => {
+      await setOmedaDemographics({
+        identityX,
+        user,
+        omedaCustomer,
+        omedaLinkedFields: omedaLinkedFields.demographic,
+        answeredQuestionMap,
+      });
+      await setOmedaDeploymentTypes({
+        identityX,
+        user,
+        omedaCustomer,
+        omedaLinkedFields: omedaLinkedFields.deploymentType,
+        answeredQuestionMap,
+      });
+    })());
   }
   await Promise.all(promises);
 };
