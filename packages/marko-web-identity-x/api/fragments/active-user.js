@@ -27,6 +27,9 @@ fragment ActiveUserFragment on AppUser {
     sort: { field: name, order: asc }
   }) {
     id
+    hasAnswered
+    answer
+    value
     field {
       id
       label
@@ -38,7 +41,6 @@ fragment ActiveUserFragment on AppUser {
         identifier { value type }
       }
     }
-    value
   }
   customSelectFieldAnswers(input: {
     onlyActive: true

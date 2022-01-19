@@ -74,7 +74,9 @@ module.exports = asyncRoute(async (req, res) => {
     // only update custom questions when there some :)
     const customBooleanFieldsInput = customBooleanFieldAnswers.map(fieldAnswer => ({
       fieldId: fieldAnswer.field.id,
-      value: fieldAnswer.value,
+      // can either be true, false or null. convert null to false.
+      // the form submit is effectively answers the question.
+      value: Boolean(fieldAnswer.answer),
     }));
     await identityX.client.mutate({
       mutation: customBooleanFieldsMutation,

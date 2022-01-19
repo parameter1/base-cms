@@ -47,10 +47,10 @@ export default {
   computed: {
     given: {
       get() {
-        return this.value;
+        return Boolean(this.value);
       },
       set(given) {
-        this.$emit('input', given);
+        this.$emit('input', Boolean(given));
       },
     },
   },
