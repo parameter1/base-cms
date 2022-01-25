@@ -18,6 +18,7 @@ const validateRest = require('../../utils/validate-rest');
 const mapArray = require('../../utils/map-array');
 const sitemap = require('../../utils/sitemap');
 const criteriaFor = require('../../utils/criteria-for');
+const applyInput = require('../../utils/apply-input');
 const buildProjection = require('../../utils/build-projection');
 const getProjection = require('../../utils/get-projection');
 const formatStatus = require('../../utils/format-status');
@@ -308,6 +309,26 @@ module.exports = {
   /**
    *
    */
+  ContentUserRegistration: {
+    sites: async ({ siteIds }, _, { load }, info) => {
+      if (!siteIds.length) return [];
+      const {
+        returnType,
+        fieldNodes,
+        schema,
+        fragments,
+      } = info;
+      const query = applyInput({
+        query: { ...criteriaFor('websiteSite'), ...formatStatus('active') },
+      });
+      const projection = getProjection(schema, returnType, fieldNodes[0].selectionSet, fragments);
+      return Promise.all(siteIds.map(id => load('platformProduct', id, projection, query)));
+    },
+  },
+
+  /**
+   *
+   */
   Content: {
     __resolveType: resolveType,
 
@@ -509,14 +530,18 @@ module.exports = {
 
     userRegistration: (content) => {
       const requiresRegistration = get(content, 'mutations.Website.requiresRegistration');
-      const requiresAccessLevels = get(content, 'mutations.Website.requiresAccessLevels');
+      if (!requiresRegistration) return { isRequired: false, siteIds: [], accessLevels: [] };
 
+      const requiresRegistrationOptions = getAsObject(content, 'mutations.Website.requiresRegistrationOptions');
+      const requiresAccessLevels = get(content, 'mutations.Website.requiresAccessLevels');
+      const { startDate, endDate } = requiresRegistrationOptions;
       const userRegistration = {
         isRequired: Boolean(requiresRegistration),
+        startDate,
+        endDate,
+        siteIds: getAsArray(requiresRegistrationOptions, 'siteIds'),
         accessLevels: [],
       };
-
-      if (!requiresRegistration) return userRegistration;
       if (isArray(requiresAccessLevels)) userRegistration.accessLevels = requiresAccessLevels;
       return userRegistration;
     },

@@ -189,6 +189,10 @@ type ContentGating {
 
 type ContentUserRegistration {
   isRequired: Boolean!
+  startDate: Date
+  endDate: Date
+  siteIds: [ObjectID!]!
+  sites: [WebsiteSite!]!
   accessLevels: [String]!
 }
 
