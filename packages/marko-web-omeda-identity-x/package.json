@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-omeda-identity-x",
-  "version": "2.68.0",
+  "version": "2.69.0",
   "description": "Marko Omeda+IdentityX integration tools",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-omeda-identity-x",
   "author": "Josh Worden <josh@parameter1.com>",
