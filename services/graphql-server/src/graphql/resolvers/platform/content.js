@@ -1797,6 +1797,29 @@ module.exports = {
     /**
      *
      */
+    contentUserRegistration: async (_, { input }, { base4rest, basedb }, info) => {
+      validateRest(base4rest);
+      const { id } = input;
+      const doc = await basedb.strictFindById('platform.Content', id, { projection: { type: 1 } });
+      const type = `platform/content/${dasherize(doc.type)}`;
+      const { isRequired, startDate, endDate } = getAsObject(input, 'payload');
+      const body = new Base4RestPayload({ type });
+      body.set('requiresRegistrationOptionsWebsite', {
+        startDate: startDate ? startDate.toISOString() : null,
+        endDate: endDate ? endDate.toISOString() : null,
+      });
+
+      body.set('requiresRegistrationWebsite', isRequired);
+      body.set('id', id);
+      await base4rest.updateOne({ model: type, id, body });
+      const projection = buildProjection({ info, type: 'Content' });
+      const c = await basedb.findOne('platform.Content', { _id: id }, { projection });
+      return c;
+    },
+
+    /**
+     *
+     */
     createContent: async (_, { input }, { base4rest, basedb }, info) => {
       validateRest(base4rest);
       const { primarySectionId, type, name } = input;
