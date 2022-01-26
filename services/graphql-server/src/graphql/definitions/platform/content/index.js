@@ -68,6 +68,8 @@ extend type Mutation {
   contentEventDates(input: ContentEventDatesMutationInput!): ContentEvent! @requiresAuth
   "Sets the Content name"
   contentName(input: ContentNameMutationInput!): Content! @requiresAuth
+  "Sets the Content User Registration"
+  contentUserRegistration(input: ContentUserRegistrationMutationInput!): Content! @requiresAuth
 }
 
 enum GateableUserRole {
@@ -474,6 +476,28 @@ input ContentEventDatesMutationInput {
   endDate: Date
   "If true, the times are ignored from startDate and endDate."
   allDay: Boolean = false
+}
+
+"Content Id to update with UserRegistration payload"
+input ContentUserRegistrationMutationInput {
+  "Content Id"
+  id: Int!
+  "Payload to update"
+  payload: ContentUserRegistrationMutationPayloadInput!
+}
+
+"User Registration fields to update on content by id"
+input ContentUserRegistrationMutationPayloadInput {
+  "Is Registration Required"
+  isRequired: Boolean
+  "Date to start require registration"
+  startDate: Date
+  "Date to end required registration"
+  endDate: Date
+  "List of site ids to enable required registration"
+  siteIds: [ObjectID!]
+  "Which level of access is required"
+  accessLevels: [String]
 }
 
 input AllPublishedContentQueryInput {
