@@ -143,32 +143,31 @@ const setOmedaDemographics = async ({
     }
   });
 
-  await Promise.all([
-    (async () => {
-      if (!selectAnswerMap.size) return;
-      const answers = [];
-      selectAnswerMap.forEach((optionIdSet, fieldId) => {
-        answers.push({ fieldId, optionIds: [...optionIdSet] });
-      });
-      await identityX.client.mutate({
-        mutation: SET_OMEDA_SELECT_FIELD_ANSWERS,
-        variables: { input: { id: user.id, answers } },
-        context: { apiToken: identityX.config.getApiToken() },
-      });
-    })(),
-    (async () => {
-      if (!booleanAnswerMap.size) return;
-      const answers = [];
-      booleanAnswerMap.forEach((value, fieldId) => {
-        answers.push({ fieldId, value });
-      });
-      await identityX.client.mutate({
-        mutation: SET_OMEDA_BOOLEAN_FIELD_ANSWERS,
-        variables: { input: { id: user.id, answers } },
-        context: { apiToken: identityX.config.getApiToken() },
-      });
-    })(),
-  ]);
+  await (async () => {
+    if (!selectAnswerMap.size) return;
+    const answers = [];
+    selectAnswerMap.forEach((optionIdSet, fieldId) => {
+      answers.push({ fieldId, optionIds: [...optionIdSet] });
+    });
+    await identityX.client.mutate({
+      mutation: SET_OMEDA_SELECT_FIELD_ANSWERS,
+      variables: { input: { id: user.id, answers } },
+      context: { apiToken: identityX.config.getApiToken() },
+    });
+  })();
+
+  await (async () => {
+    if (!booleanAnswerMap.size) return;
+    const answers = [];
+    booleanAnswerMap.forEach((value, fieldId) => {
+      answers.push({ fieldId, value });
+    });
+    await identityX.client.mutate({
+      mutation: SET_OMEDA_BOOLEAN_FIELD_ANSWERS,
+      variables: { input: { id: user.id, answers } },
+      context: { apiToken: identityX.config.getApiToken() },
+    });
+  })();
 };
 
 const setOmedaDeploymentTypes = async ({
@@ -264,25 +263,21 @@ module.exports = async ({
 
   // find the omeda customer record to "prime" the identity-x user.
   const omedaCustomer = await getOmedaCustomerRecord(omedaGraphQLClient, encryptedCustomerId);
-  const promises = [];
-  if (!user.verified) promises.push(setOmedaData({ identityX, user, omedaCustomer }));
+  if (!user.verified) await setOmedaData({ identityX, user, omedaCustomer });
   if (!hasAnsweredAllOmedaQuestions) {
-    promises.push((async () => {
-      await setOmedaDemographics({
-        identityX,
-        user,
-        omedaCustomer,
-        omedaLinkedFields: omedaLinkedFields.demographic,
-        answeredQuestionMap,
-      });
-      await setOmedaDeploymentTypes({
-        identityX,
-        user,
-        omedaCustomer,
-        omedaLinkedFields: omedaLinkedFields.deploymentType,
-        answeredQuestionMap,
-      });
-    })());
+    await setOmedaDemographics({
+      identityX,
+      user,
+      omedaCustomer,
+      omedaLinkedFields: omedaLinkedFields.demographic,
+      answeredQuestionMap,
+    });
+    await setOmedaDeploymentTypes({
+      identityX,
+      user,
+      omedaCustomer,
+      omedaLinkedFields: omedaLinkedFields.deploymentType,
+      answeredQuestionMap,
+    });
   }
-  await Promise.all(promises);
 };
