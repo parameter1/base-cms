@@ -483,9 +483,9 @@ input ContentUserRegistrationMutationInput {
   id: Int!
   "Is registration required to view content"
   isRequired: Boolean!
-  "The date at which a user is required to be registered to view content"
+  "Date to start requiring a user be registered to access content"
   startDate: Date
-  "The date at which the usre no longer has to be registered to view content"
+  "Date to end requiring a user be registered to access content"
   endDate: Date
 }
 
