@@ -478,7 +478,6 @@ input ContentEventDatesMutationInput {
   allDay: Boolean = false
 }
 
-"Content Id to update with UserRegistration payload"
 input ContentUserRegistrationMutationInput {
   "Content Id"
   id: Int!
