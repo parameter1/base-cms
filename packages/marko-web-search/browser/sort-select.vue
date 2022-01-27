@@ -34,8 +34,8 @@ export default {
   mounted() {
     const url = new URL(window.location);
     const params = new URLSearchParams(window.location.search);
-    if (!this.searchQuery && params.sortField) {
-      delete params.sortField;
+    if (!this.searchQuery && params.get('sortField')) {
+      params.delete('sortField');
       url.search = `${params}`;
       window.location.href = `${url}`;
     }
