@@ -26,10 +26,6 @@ export default {
       type: Boolean,
       default: true,
     },
-    defaultWithSearchQuery: {
-      type: String,
-      default: 'PUBLISHED',
-    },
   },
   mounted() {
     const url = new URL(window.location);
@@ -45,11 +41,7 @@ export default {
       const { value } = event.target;
       const url = new URL(window.location);
       const params = new URLSearchParams(window.location.search);
-      if ((value !== this.defaultWithSearchQuery)) {
-        params.set('sortField', value);
-      } else {
-        params.delete('sortField');
-      }
+      params.set('sortField', value);
       url.search = `${params}`;
       window.location.href = `${url}`;
     },
