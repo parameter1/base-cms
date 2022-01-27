@@ -68,6 +68,8 @@ extend type Mutation {
   contentEventDates(input: ContentEventDatesMutationInput!): ContentEvent! @requiresAuth
   "Sets the Content name"
   contentName(input: ContentNameMutationInput!): Content! @requiresAuth
+  "Sets the Content User Registration"
+  contentUserRegistration(input: ContentUserRegistrationMutationInput!): Content! @requiresAuth
 }
 
 enum GateableUserRole {
@@ -189,6 +191,10 @@ type ContentGating {
 
 type ContentUserRegistration {
   isRequired: Boolean!
+  startDate: Date
+  endDate: Date
+  siteIds: [ObjectID!]!
+  sites: [WebsiteSite!]!
   accessLevels: [String]!
 }
 
@@ -470,6 +476,17 @@ input ContentEventDatesMutationInput {
   endDate: Date
   "If true, the times are ignored from startDate and endDate."
   allDay: Boolean = false
+}
+
+input ContentUserRegistrationMutationInput {
+  "The content ID"
+  id: Int!
+  "Whether registration is required to access content"
+  isRequired: Boolean!
+  "The date when the registration requirement begins"
+  startDate: Date
+  "The date when the registration requirement ends"
+  endDate: Date
 }
 
 input AllPublishedContentQueryInput {
