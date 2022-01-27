@@ -481,7 +481,7 @@ input ContentEventDatesMutationInput {
 input ContentUserRegistrationMutationInput {
   "Content Id"
   id: Int!
-  "Weather registration is required to view content"
+  "Is registration required to view content"
   isRequired: Boolean!
   "The date at which a user is required to be registered to view content"
   startDate: Date
