@@ -12,10 +12,22 @@ $ const options = [
 
 <marko-web-block name=blockName modifiers=input.modifiers>
   $ const { searchQuery, sortField } = search.input;
+  $ const selectedId = input.sortField || sortField;
+  $ const defaultWithSearchQuery = input.defaultWithSearchQuery || 'PUBLISHED';
   <if(searchQuery)>
     <marko-web-browser-component
       name="MarkoWebSearchSortSelect"
-      props={ options, selectedId: sortField }
+      props={
+        options,
+        selectedId,
+        defaultWithSearchQuery
+      }
     />
   </if>
+  <else>
+    <marko-web-browser-component
+      name="MarkoWebSearchSortSelect"
+      props={ options, searchQuery: Boolean(searchQuery) }
+    />
+  </else>
 </marko-web-block>
