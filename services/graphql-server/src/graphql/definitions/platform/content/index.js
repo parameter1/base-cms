@@ -482,22 +482,12 @@ input ContentEventDatesMutationInput {
 input ContentUserRegistrationMutationInput {
   "Content Id"
   id: Int!
-  "Payload to update"
-  payload: ContentUserRegistrationMutationPayloadInput!
-}
-
-"User Registration fields to update on content by id"
-input ContentUserRegistrationMutationPayloadInput {
-  "Is Registration Required"
-  isRequired: Boolean
-  "Date to start require registration"
+  "Weather registration is required to view content"
+  isRequired: Boolean!
+  "The date at which a user is required to be registered to view content"
   startDate: Date
-  "Date to end required registration"
+  "The date at which the usre no longer has to be registered to view content"
   endDate: Date
-  "List of site ids to enable required registration"
-  siteIds: [ObjectID!]
-  "Which level of access is required"
-  accessLevels: [String]
 }
 
 input AllPublishedContentQueryInput {

@@ -1799,10 +1799,15 @@ module.exports = {
      */
     contentUserRegistration: async (_, { input }, { base4rest, basedb }, info) => {
       validateRest(base4rest);
-      const { id } = input;
+      const {
+        id,
+        isRequired,
+        startDate,
+        endDate,
+      } = input;
+
       const doc = await basedb.strictFindById('platform.Content', id, { projection: { type: 1 } });
       const type = `platform/content/${dasherize(doc.type)}`;
-      const { isRequired, startDate, endDate } = getAsObject(input, 'payload');
       const body = new Base4RestPayload({ type });
       body.set('requiresRegistrationOptionsWebsite', {
         startDate: startDate ? startDate.toISOString() : null,
