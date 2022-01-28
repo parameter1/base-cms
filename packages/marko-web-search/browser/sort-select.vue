@@ -1,5 +1,5 @@
 <template>
-  <select v-if="searchQuery" class="custom-select" @change="onChange">
+  <select class="custom-select" @change="onChange">
     <option
       v-for="option in options"
       :key="option.id"
@@ -21,10 +21,6 @@ export default {
     selectedId: {
       type: String,
       default: 'PUBLISHED',
-    },
-    searchQuery: {
-      type: Boolean,
-      default: true,
     },
   },
   methods: {
