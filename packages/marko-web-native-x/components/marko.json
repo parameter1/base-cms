@@ -7,6 +7,12 @@
     "@target-tag": "string",
     "@request-frame": "boolean"
   },
+  "<marko-web-native-x-query>": {
+    "template": "./query.marko",
+    "@uri": "string",
+    "@id": "string",
+    "@opts": "object"
+  },
   "<marko-web-native-x-retrieve>": {
     "template": "./retrieve.marko",
     "@uri": "string",

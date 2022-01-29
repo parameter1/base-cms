@@ -1,0 +1,15 @@
+import { defaultValue } from "@parameter1/base-cms-marko-web/utils";
+import { warn } from "@parameter1/base-cms-utils";
+
+$ const { uri, id, opts } = input;
+$ const ads = [];
+
+<if(uri && id)>
+  <marko-web-native-x-fetch-elements|{ ads }| uri=uri id=id opts=opts>
+    <${input.renderBody} ads=ads />
+  </marko-web-native-x-fetch-elements>
+</if>
+<else>
+    $ warn('Unable to render NativeX placement: a uri and placement ID are required.');
+    <${input.renderBody} ads=ads />
+</else>
