@@ -1,12 +1,10 @@
 import { getAsArray } from "@parameter1/base-cms-object-path";
 
 $ const { req } = out.global;
+$ const isEnabled = input.enabled || false;
 $ const { identityX } = req;
 
-$ const requiredAccessLevelIds = getAsArray(input.requiredAccessLevelIds);
-$ const params = { isEnabled: input.enabled, requiredAccessLevelIds };
-
-$ const checkContentAccess = async () => (Boolean(req.identityX) ? identityX.checkContentAccess(params) : {
+$ const accessObj = {
   canAccess: true,
   isLoggedIn: false,
   hasRequiredAccessLevel: false,
@@ -14,7 +12,12 @@ $ const checkContentAccess = async () => (Boolean(req.identityX) ? identityX.che
   requiredAccessLevels: [],
   requiresUserInput: false,
   messages: {},
-});
+};
+
+$ const requiredAccessLevelIds = getAsArray(input.requiredAccessLevelIds);
+$ const params = { isEnabled, requiredAccessLevelIds };
+
+$ const checkContentAccess = async () => (isEnabled && Boolean(req.identityX) ? identityX.checkContentAccess(params) : accessObj);
 
 <marko-web-resolve|{ resolved }| promise=checkContentAccess()>
   <${input.renderBody} ...resolved />
