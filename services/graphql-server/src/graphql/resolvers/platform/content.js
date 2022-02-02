@@ -310,6 +310,14 @@ module.exports = {
    *
    */
   ContentUserRegistration: {
+    isCurrentlyRequired: async (root) => {
+      if (!root.isRequired) return false;
+      if (!root.startDate && !root.endDate) return root.isRequired;
+      const now = new Date();
+      if (root.startDate && root.startDate > now) return false;
+      if (root.endDate && root.endDate < now) return false;
+      return root.isRequired;
+    },
     sites: async ({ siteIds }, _, { load }, info) => {
       if (!siteIds.length) return [];
       const {
@@ -533,7 +541,6 @@ module.exports = {
       if (!requiresRegistration) {
         return {
           isRequired: false,
-          isCurrentlyRequired: false,
           siteIds: [],
           accessLevels: [],
         };
@@ -542,12 +549,9 @@ module.exports = {
       const requiresRegistrationOptions = getAsObject(content, 'mutations.Website.requiresRegistrationOptions');
       const requiresAccessLevels = get(content, 'mutations.Website.requiresAccessLevels');
       const { startDate, endDate } = requiresRegistrationOptions;
-      const now = new Date();
-      const isCurrentlyRequired = (!startDate || startDate <= now) && (!endDate || endDate >= now);
 
       const userRegistration = {
         isRequired: Boolean(requiresRegistration),
-        isCurrentlyRequired,
         startDate,
         endDate,
         siteIds: getAsArray(requiresRegistrationOptions, 'siteIds'),
