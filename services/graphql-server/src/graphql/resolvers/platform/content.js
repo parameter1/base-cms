@@ -530,19 +530,24 @@ module.exports = {
 
     userRegistration: (content) => {
       const requiresRegistration = get(content, 'mutations.Website.requiresRegistration');
-      if (!requiresRegistration) return { isRequired: false, siteIds: [], accessLevels: [] };
+      if (!requiresRegistration) {
+        return {
+          isRequired: false,
+          isCurrentlyRequired: false,
+          siteIds: [],
+          accessLevels: [],
+        };
+      }
 
       const requiresRegistrationOptions = getAsObject(content, 'mutations.Website.requiresRegistrationOptions');
       const requiresAccessLevels = get(content, 'mutations.Website.requiresAccessLevels');
       const { startDate, endDate } = requiresRegistrationOptions;
-      if (requiresRegistration && (startDate || endDate)) {
-        const now = new Date();
-        if ((startDate && startDate > now) || (endDate && endDate < now)) {
-          return { isRequired: false, siteIds: [], accessLevels: [] };
-        }
-      }
+      const now = new Date();
+      const isCurrentlyRequired = (!startDate || startDate <= now) && (!endDate || endDate >= now);
+
       const userRegistration = {
         isRequired: Boolean(requiresRegistration),
+        isCurrentlyRequired,
         startDate,
         endDate,
         siteIds: getAsArray(requiresRegistrationOptions, 'siteIds'),
