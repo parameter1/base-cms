@@ -535,6 +535,12 @@ module.exports = {
       const requiresRegistrationOptions = getAsObject(content, 'mutations.Website.requiresRegistrationOptions');
       const requiresAccessLevels = get(content, 'mutations.Website.requiresAccessLevels');
       const { startDate, endDate } = requiresRegistrationOptions;
+      if (requiresRegistration && (startDate || endDate)) {
+        const now = new Date();
+        if ((startDate && startDate > now) || (endDate && endDate < now)) {
+          return { isRequired: false, siteIds: [], accessLevels: [] };
+        }
+      }
       const userRegistration = {
         isRequired: Boolean(requiresRegistration),
         startDate,
