@@ -191,6 +191,7 @@ type ContentGating {
 
 type ContentUserRegistration {
   isRequired: Boolean!
+  isCurrentlyRequired: Boolean!
   startDate: Date
   endDate: Date
   siteIds: [ObjectID!]!
