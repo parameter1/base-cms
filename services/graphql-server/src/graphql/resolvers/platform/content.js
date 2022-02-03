@@ -447,7 +447,7 @@ module.exports = {
     /**
      * Load primary section of content.
      * If primary section's site matches the current site, return the section.
-     * If not, check for alternative site + section.
+     * If not, check for alternative site + section (@todo).
      * Return alternate section (if found), otherwise return home section of current site.
      * If no site is provided, simply return the current section.
      */
@@ -482,15 +482,19 @@ module.exports = {
       if (section) return section;
 
       // Current section does not match site, load alternate.
+      // @todo This should eventually account for secondary sites/sections.
+      // For now load an alternate from schedules.
       const sectionQuery = getAsArray(content, 'sectionQuery');
       if (sectionQuery.length) {
+        if (!siteId) throw new UserInputError('A site id must be set to generate the `Content.primarySection` field.');
         const currentSiteSectionQuery = {
           ...formatStatus(status),
-          ...(siteId && { 'site.$id': siteId }),
+          'site.$id': siteId,
           _id: { $in: sectionQuery.map(schedule => schedule.sectionId) },
+          alias: { $ne: 'home' },
         };
-        const currentSiteSections = await basedb.find('website.Section', currentSiteSectionQuery, { projection });
-        if (currentSiteSections.length) return currentSiteSections[0];
+        const currentSiteSections = await basedb.findOne('website.Section', currentSiteSectionQuery, { projection });
+        if (currentSiteSections.length) return currentSiteSections;
       }
 
       // @todo Should this value be "pure" - meaning, do not override value and simply return?
