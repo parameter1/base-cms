@@ -538,18 +538,11 @@ module.exports = {
 
     userRegistration: (content) => {
       const requiresRegistration = get(content, 'mutations.Website.requiresRegistration');
-      if (!requiresRegistration) {
-        return {
-          isRequired: false,
-          siteIds: [],
-          accessLevels: [],
-        };
-      }
+      if (!requiresRegistration) return { isRequired: false, siteIds: [], accessLevels: [] };
 
       const requiresRegistrationOptions = getAsObject(content, 'mutations.Website.requiresRegistrationOptions');
       const requiresAccessLevels = get(content, 'mutations.Website.requiresAccessLevels');
       const { startDate, endDate } = requiresRegistrationOptions;
-
       const userRegistration = {
         isRequired: Boolean(requiresRegistration),
         startDate,
