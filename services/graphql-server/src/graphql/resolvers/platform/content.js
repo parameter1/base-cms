@@ -482,8 +482,8 @@ module.exports = {
       if (section) return section;
 
       // Current section does not match site, load alternate.
-      const { sectionQuery } = await load('platformContent', content._id, { sectionQuery: 1 });
-      if (sectionQuery) {
+      const sectionQuery = getAsArray(content, 'sectionQuery');
+      if (sectionQuery.length) {
         const currentSiteSectionQuery = {
           ...formatStatus(status),
           ...(siteId && { 'site.$id': siteId }),
