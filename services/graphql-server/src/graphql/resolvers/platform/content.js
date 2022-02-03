@@ -310,13 +310,13 @@ module.exports = {
    *
    */
   ContentUserRegistration: {
-    isCurrentlyRequired: async (root) => {
-      if (!root.isRequired) return false;
-      if (!root.startDate && !root.endDate) return root.isRequired;
+    isCurrentlyRequired: async ({ isRequired, startDate, endDate }) => {
+      if (!isRequired) return false;
+      if (!startDate && !endDate) return isRequired;
       const now = new Date();
-      if (root.startDate && root.startDate > now) return false;
-      if (root.endDate && root.endDate < now) return false;
-      return root.isRequired;
+      if (startDate && startDate > now) return false;
+      if (endDate && endDate < now) return false;
+      return isRequired;
     },
     sites: async ({ siteIds }, _, { load }, info) => {
       if (!siteIds.length) return [];
