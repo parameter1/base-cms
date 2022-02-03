@@ -493,8 +493,8 @@ module.exports = {
           _id: { $in: sectionQuery.map(schedule => schedule.sectionId) },
           alias: { $ne: 'home' },
         };
-        const currentSiteSections = await basedb.findOne('website.Section', currentSiteSectionQuery, { projection });
-        if (currentSiteSections.length) return currentSiteSections;
+        const currentSiteSection = await basedb.findOne('website.Section', currentSiteSectionQuery, { projection });
+        if (currentSiteSection) return currentSiteSection;
       }
 
       // @todo Should this value be "pure" - meaning, do not override value and simply return?
