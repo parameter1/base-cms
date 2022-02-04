@@ -7,10 +7,9 @@ const errorHandlers = require('./express/error-handlers');
 const express = require('./express');
 const loadMore = require('./express/load-more');
 
-if (!process.env.LIVERELOAD_PORT) process.env.LIVERELOAD_PORT = 4010;
-if (!process.env.EXPOSED_HOST) process.env.EXPOSED_HOST = 'localhost';
-
 const { env } = process;
+if (!process.env.LIVERELOAD_PORT) process.env.LIVERELOAD_PORT = 4010;
+if (!process.env.EXPOSED_HOST) process.env.EXPOSED_HOST = env.HOST || 'localhost';
 
 process.on('unhandledRejection', (e) => { throw e; });
 
@@ -21,6 +20,7 @@ module.exports = async ({
   siteConfig,
   coreConfig,
   helmetConfig,
+  host = env.HOST,
   port = env.PORT || 4008,
   exposedPort = env.EXPOSED_PORT || env.PORT || 4008,
   exposedHost = env.EXPOSED_HOST,
@@ -128,7 +128,7 @@ module.exports = async ({
   });
 
   return new Promise((res, rej) => {
-    server.listen(port, function listen(err) {
+    server.listen(port, host, function listen(err) {
       if (err) {
         rej(err);
       } else {
