@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-example-website",
-  "version": "2.72.0",
+  "version": "2.73.0",
   "description": "Example BaseCMS website.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
@@ -18,14 +18,14 @@
   },
   "dependencies": {
     "@parameter1/base-cms-marko-core": "^2.46.0",
-    "@parameter1/base-cms-marko-web": "^2.62.0",
+    "@parameter1/base-cms-marko-web": "^2.73.0",
     "@parameter1/base-cms-marko-web-identity-x": "^2.72.0",
     "@parameter1/base-cms-marko-web-omeda": "^2.72.0",
     "@parameter1/base-cms-marko-web-omeda-identity-x": "^2.72.0",
     "@parameter1/base-cms-marko-web-theme-default": "^2.63.0",
     "@parameter1/base-cms-object-path": "^2.45.0",
     "@parameter1/base-cms-utils": "^2.22.2",
-    "@parameter1/base-cms-web-cli": "^2.62.0",
+    "@parameter1/base-cms-web-cli": "^2.73.0",
     "graphql": "^14.7.0",
     "graphql-tag": "^2.12.5"
   }
