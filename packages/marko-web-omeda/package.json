@@ -15,7 +15,8 @@
     "@parameter1/base-cms-utils": "^2.22.2",
     "@parameter1/omeda-graphql-client": "^0.7.2",
     "graphql": "^14.7.0",
-    "graphql-tag": "^2.12.5"
+    "graphql-tag": "^2.12.5",
+    "node-fetch": "^2.6.5"
   },
   "peerDependencies": {
     "@parameter1/base-cms-marko-web": "^2.0.0"
