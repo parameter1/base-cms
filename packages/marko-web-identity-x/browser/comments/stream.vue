@@ -147,6 +147,7 @@ export default {
       type: Object,
       default: () => ({
         submit: 'Login / Register',
+        continue: 'Continue',
         logout: 'Logout',
       }),
     },
