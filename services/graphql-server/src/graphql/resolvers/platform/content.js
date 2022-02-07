@@ -487,16 +487,15 @@ module.exports = {
       const sectionQuery = getAsArray(content, 'sectionQuery');
       if (sectionQuery.length) {
         if (!siteId) throw new UserInputError('A site id must be set to generate the `Content.primarySection` field.');
-        const currentSiteSectionQuery = {
-          ...formatStatus(status),
-          'site.$id': siteId,
-          _id: { $in: sectionQuery.map(schedule => schedule.sectionId) },
-          alias: { $ne: 'home' },
-        };
-        const currentSiteSection = await basedb.findOne('website.Section', currentSiteSectionQuery, { projection });
-        if (currentSiteSection) return currentSiteSection;
+        const currentSiteSections = sectionQuery.map((schedule) => {
+          if (schedule.siteId === siteId) return schedule;
+          return null;
+        }).filter(v => v);
+        if (currentSiteSections.length) {
+          const currentSiteSection = await load('websiteSection', currentSiteSections[0].sectionId, projection, query);
+          if (currentSiteSection) return currentSiteSection;
+        }
       }
-
       // @todo Should this value be "pure" - meaning, do not override value and simply return?
       return loadHomeSection({
         basedb,
