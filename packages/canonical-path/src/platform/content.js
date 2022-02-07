@@ -1,5 +1,5 @@
 const { isFunction: isFn, cleanPath } = require('@parameter1/base-cms-utils');
-const { get } = require('@parameter1/base-cms-object-path');
+const { get, getAsArray } = require('@parameter1/base-cms-object-path');
 const { BaseDB } = require('@parameter1/base-cms-db');
 const { dasherize } = require('@parameter1/base-cms-inflector');
 
@@ -19,8 +19,20 @@ const pathResolvers = {
     };
     const section = await load('websiteSection', id, { alias: 1 }, query);
     // @todo This should eventually account for secondary sites/sections.
-    // For now load home when not found.
-    return section ? section.alias : 'home';
+    // For now load an alternate from schedules
+    const sectionQuery = getAsArray(content, 'sectionQuery');
+    if (sectionQuery.length && !section) {
+      const currentSiteSections = sectionQuery.map((schedule) => {
+        if (schedule.siteId === site.id()) return schedule;
+        return null;
+      }).filter(v => v);
+      if (currentSiteSections.length) {
+        const currentSiteSection = await load('websiteSection', currentSiteSections[0].sectionId, { alias: 1 }, query);
+        if (currentSiteSection) return currentSiteSection.alias;
+      }
+    }
+    // If the requested alternate could not be found.
+    return 'home';
   },
   primaryCategoryPath: async (content, { load }) => {
     const ref = BaseDB.get(content, 'mutations.Website.primaryCategory');
