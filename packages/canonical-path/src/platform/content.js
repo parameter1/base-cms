@@ -22,7 +22,7 @@ const pathResolvers = {
     // @todo This should eventually account for secondary sites/sections.
     // For now load an alternate from schedules
     const sectionQuery = getAsArray(content, 'sectionQuery');
-    if (sectionQuery.length && !section) {
+    if (sectionQuery.length) {
       const currentSiteSections = sectionQuery.map((schedule) => {
         if (schedule.siteId === site.id()) return schedule;
         return null;
