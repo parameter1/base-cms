@@ -18,6 +18,7 @@ const pathResolvers = {
       'site.$id': site.id(),
     };
     const section = await load('websiteSection', id, { alias: 1 }, query);
+    if (section) return section;
     // @todo This should eventually account for secondary sites/sections.
     // For now load an alternate from schedules
     const sectionQuery = getAsArray(content, 'sectionQuery');
