@@ -32,6 +32,7 @@ type AssetImage {
   caption: String @projection
   credit: String @projection
   cropDimensions: AssetImageCrop @projection
+  inCarousel: Boolean @projection
   isLogo: Boolean @projection
   body: String @projection
 
@@ -102,6 +103,7 @@ input UpdateAssetImageMutationPayloadInput {
   name: String
   filePath: String
   fileName: String
+  isCarousel: Boolean
   isLogo: Boolean
 }
 
