@@ -1,8 +1,7 @@
-const { isFunction: isFn, cleanPath } = require('@parameter1/base-cms-utils');
+const { isFunction: isFn, cleanPath, getSectionFromSchedules } = require('@parameter1/base-cms-utils');
 const { get } = require('@parameter1/base-cms-object-path');
 const { BaseDB } = require('@parameter1/base-cms-db');
 const { dasherize } = require('@parameter1/base-cms-inflector');
-const getSectionFromSchedules = require('../../../utils/src/get-section-from-schedules');
 
 const pathResolvers = {
   id: content => content._id,

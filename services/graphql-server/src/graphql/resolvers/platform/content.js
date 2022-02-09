@@ -1,7 +1,7 @@
 const { BaseDB } = require('@parameter1/base-cms-db');
 const { UserInputError } = require('apollo-server-express');
 const { Base4RestPayload } = require('@parameter1/base-cms-base4-rest-api');
-const { cleanPath, asObject } = require('@parameter1/base-cms-utils');
+const { cleanPath, asObject, getSectionFromSchedules } = require('@parameter1/base-cms-utils');
 const { content: canonicalPathFor } = require('@parameter1/base-cms-canonical-path');
 const { get, getAsObject } = require('@parameter1/base-cms-object-path');
 const { underscore, dasherize, titleize } = require('@parameter1/base-cms-inflector');
@@ -28,7 +28,7 @@ const relatedContent = require('../../utils/related-content');
 const inquiryEmails = require('../../utils/inquiry-emails');
 const connectionProjection = require('../../utils/connection-projection');
 const getDescendantIds = require('../../utils/website-section-child-ids');
-const getSectionFromSchedules = require('../../../../../../packages/utils/src/get-section-from-schedules');
+
 const {
   createTitle,
   createDescription,
