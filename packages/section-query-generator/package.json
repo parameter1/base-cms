@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-section-query-generator",
-  "version": "2.71.0",
+  "version": "2.74.0",
   "description": "Utility function for generating section query data for base-cms content",
   "main": "src/index.js",
   "author": "Josh Worden <josh@parameter1.com>",
