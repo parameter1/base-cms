@@ -9,6 +9,7 @@ const compareNumbers = require('./compare-numbers');
 const getDefaultTaxonomyTypes = require('./get-default-taxonomy-types');
 const getDefaultContentTypes = require('./get-default-content-types');
 const getPublishedContentCriteria = require('./get-published-content-criteria');
+const getSectionFromSchedules = require('./get-section-from-schedules');
 const isDev = require('./is-dev');
 const isFunction = require('./is-function');
 const isObject = require('./is-object');
@@ -30,6 +31,7 @@ module.exports = {
   getDefaultTaxonomyTypes,
   getDefaultContentTypes,
   getPublishedContentCriteria,
+  getSectionFromSchedules,
   isDev,
   isFunction,
   isObject,
