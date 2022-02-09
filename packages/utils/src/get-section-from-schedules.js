@@ -5,10 +5,7 @@ module.exports = async ({ content, siteId, load }) => {
     'site.$id': siteId,
   };
   if (sectionQuery.length) {
-    const sectionsFromScheds = sectionQuery.map((schedule) => {
-      if (schedule.siteId === siteId) return schedule;
-      return null;
-    }).filter(v => v);
+    const sectionsFromScheds = sectionQuery.filter(schedule => schedule.siteId === siteId);
     const foundSections = await Promise.all([sectionsFromScheds.map(section => load('websiteSection', section.sectionId, {}, query))]);
     const currentSiteSection = foundSections.find(({ alias }) => alias !== 'home');
     if (currentSiteSection) return currentSiteSection;
