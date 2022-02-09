@@ -33,6 +33,7 @@ module.exports = async ({
         status: 1,
         contentStatus: 1,
         published: { $exists: true },
+        product: { $exists: true },
         section: { $exists: true },
         option: { $exists: true },
         'content.$id': { $exists: true },
