@@ -28,7 +28,6 @@ const relatedContent = require('../../utils/related-content');
 const inquiryEmails = require('../../utils/inquiry-emails');
 const connectionProjection = require('../../utils/connection-projection');
 const getDescendantIds = require('../../utils/website-section-child-ids');
-
 const {
   createTitle,
   createDescription,
