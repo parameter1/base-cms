@@ -5,22 +5,24 @@ const { log } = console;
 /**
  * (Re-)Generates sectionQuery data for the provided tenant
  *
- * @param Object client A MongoDB client
  * @param String tenantKey The BaseCMS tenant key
+ * @param Object client A MongoDB client
  * @param Function logger A logging function
+ * @param Object context Additional context for the BaseDB instance
  * @param Date maxDate The maximum date to use for the query
  * @param Boolean createIndexes Whether to create indexes on the collection
  *
  * @returns Promise
  */
 module.exports = async ({
-  client,
   tenant,
+  client,
+  context = {},
   logger = log,
   maxDate = new Date('2038-01-01'),
   createIndexes = false,
 }) => {
-  const basedb = createBaseDB({ tenant, client });
+  const basedb = createBaseDB({ tenant, client, context });
   const [scheduleColl, contentColl] = await Promise.all([
     basedb.collection('website', 'Schedule'),
     basedb.collection('platform', 'Content'),
