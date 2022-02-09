@@ -1,0 +1,19 @@
+{
+  "name": "@parameter1/base-cms-section-query-generator",
+  "version": "2.71.0",
+  "description": "Utility function for generating section query data for base-cms content",
+  "main": "src/index.js",
+  "author": "Josh Worden <josh@parameter1.com>",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/section-query-generator",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint --ext .js --max-warnings 5 ./",
+    "test": "yarn lint"
+  },
+  "dependencies": {
+    "@parameter1/base-cms-db": "^2.45.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
