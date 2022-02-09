@@ -28,6 +28,7 @@ const relatedContent = require('../../utils/related-content');
 const inquiryEmails = require('../../utils/inquiry-emails');
 const connectionProjection = require('../../utils/connection-projection');
 const getDescendantIds = require('../../utils/website-section-child-ids');
+const getSectionFromSchedules = require('../../../../../../packages/utils/src/get-section-from-schedules');
 const {
   createTitle,
   createDescription,
@@ -484,18 +485,8 @@ module.exports = {
       // Current section does not match site, load alternate.
       // @todo This should eventually account for secondary sites/sections.
       // For now load an alternate from schedules.
-      const sectionQuery = getAsArray(content, 'sectionQuery');
-      if (sectionQuery.length) {
-        if (!siteId) throw new UserInputError('A site id must be set to generate the `Content.primarySection` field.');
-        const currentSiteSections = sectionQuery.map((schedule) => {
-          if (schedule.siteId === siteId) return schedule;
-          return null;
-        }).filter(v => v);
-        if (currentSiteSections.length) {
-          const currentSiteSection = await load('websiteSection', currentSiteSections[0].sectionId, projection, query);
-          if (currentSiteSection) return currentSiteSection;
-        }
-      }
+      const sectionFromSched = await getSectionFromSchedules({ content, siteId, load });
+      if (sectionFromSched) return sectionFromSched;
       // @todo Should this value be "pure" - meaning, do not override value and simply return?
       return loadHomeSection({
         basedb,

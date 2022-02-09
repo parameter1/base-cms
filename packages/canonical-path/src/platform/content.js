@@ -1,7 +1,8 @@
 const { isFunction: isFn, cleanPath } = require('@parameter1/base-cms-utils');
-const { get, getAsArray } = require('@parameter1/base-cms-object-path');
+const { get } = require('@parameter1/base-cms-object-path');
 const { BaseDB } = require('@parameter1/base-cms-db');
 const { dasherize } = require('@parameter1/base-cms-inflector');
+const getSectionFromSchedules = require('../../../utils/src/get-section-from-schedules');
 
 const pathResolvers = {
   id: content => content._id,
@@ -21,17 +22,8 @@ const pathResolvers = {
     if (section) return section.alias;
     // @todo This should eventually account for secondary sites/sections.
     // For now load an alternate from schedules
-    const sectionQuery = getAsArray(content, 'sectionQuery');
-    if (sectionQuery.length) {
-      const currentSiteSections = sectionQuery.map((schedule) => {
-        if (schedule.siteId === site.id()) return schedule;
-        return null;
-      }).filter(v => v);
-      if (currentSiteSections.length) {
-        const currentSiteSection = await load('websiteSection', currentSiteSections[0].sectionId, { alias: 1 }, query);
-        if (currentSiteSection) return currentSiteSection.alias;
-      }
-    }
+    const sectionFromSched = await getSectionFromSchedules({ content, siteId: site.id(), load });
+    if (sectionFromSched) return sectionFromSched.alias;
     // If the requested alternate could not be found.
     return 'home';
   },
