@@ -8,7 +8,7 @@ module.exports = async ({ content, siteId, load }) => {
   if (sectionQuery.length) {
     const sectionsFromScheds = sectionQuery.filter(schedule => schedule.siteId === siteId);
     const foundSections = await Promise.all(sectionsFromScheds.map(section => load('websiteSection', section.sectionId, {}, query)));
-    if (foundSections) return foundSections[0];
+    if (foundSections.length) return foundSections[0];
     return null;
   }
   return null;
