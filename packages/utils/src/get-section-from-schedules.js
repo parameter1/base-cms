@@ -7,7 +7,7 @@ module.exports = async ({ content, siteId, load }) => {
   if (sectionQuery.length) {
     const sectionFromSched = sectionQuery.find(({ siteId: schedSiteId }) => siteId === schedSiteId);
     if (sectionFromSched) {
-      const currentSiteSection = await load('websiteSection', sectionFromSched.sectionId, { alias: 1 }, query);
+      const currentSiteSection = await load('websiteSection', sectionFromSched.sectionId, {}, query);
       if (currentSiteSection) return currentSiteSection;
     }
     return null;
