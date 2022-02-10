@@ -52,7 +52,7 @@
     "handlebars": "^4.7.7",
     "ignore": "^5.1.8",
     "inquirer": "^6.5.2",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "postcss": "^8.3.9",
     "pump": "^3.0.0",
     "recursive-readdir": "^2.2.2",
