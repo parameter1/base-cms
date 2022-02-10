@@ -22,7 +22,6 @@ export default {
     surveyId: { type: [Number, String], required: true },
     alchemerZone: { type: [Number, String], required: true },
     omedaZone: { type: String, required: true },
-    encryptedCustomerId: { type: String, default: null },
     context: { type: Object, default: () => ({}) },
     height: { type: Number, default: 1000 },
     width: { type: Number, default: 500 },
@@ -73,12 +72,10 @@ export default {
       try {
         this.error = null;
         this.isLoading = true;
-        const { encryptedCustomerId } = this;
         const params = {
           for: `${this.alchemerZone}`,
           using: this.omedaZone,
           surveyId: parseInt(this.surveyId, 10),
-          ...(encryptedCustomerId && { encryptedCustomerId }),
           context: this.context,
           alwaysAppendContext: this.alwaysAppendContext,
         };
