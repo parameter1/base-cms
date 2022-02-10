@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-object-path",
-  "version": "2.75.0",
+  "version": "2.75.1",
   "description": "Utility functions for accessing JavaScript objects by path.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
@@ -11,7 +11,7 @@
     "test": "yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-utils": "^2.75.0",
+    "@parameter1/base-cms-utils": "^2.75.1",
     "object-path": "^0.11.8"
   },
   "publishConfig": {

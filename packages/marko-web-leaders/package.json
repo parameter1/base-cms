@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-leaders",
-  "version": "2.75.0",
+  "version": "2.75.1",
   "description": "Marko Wrapper for the Leaders Program",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-leaders",
   "author": "Jacob Bare <jacob@parameter1.com>",
@@ -15,7 +15,7 @@
   "dependencies": {
     "@parameter1/base-cms-leaders-program": "^2.45.0",
     "@parameter1/base-cms-marko-web-icons": "^2.46.3",
-    "@parameter1/base-cms-object-path": "^2.75.0",
+    "@parameter1/base-cms-object-path": "^2.75.1",
     "graphql": "^14.7.0",
     "graphql-tag": "^2.12.5",
     "object-path": "^0.11.8"
