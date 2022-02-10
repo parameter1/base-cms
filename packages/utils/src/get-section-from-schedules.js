@@ -13,6 +13,6 @@ module.exports = async ({
   };
   const sectionsFromScheds = sectionQuery.filter(schedule => `${schedule.siteId}` === `${siteId}`);
   const foundSections = await Promise.all(sectionsFromScheds.map(section => load('websiteSection', section.sectionId, projection, query)));
-  if (foundSections.length) return foundSections.filter(v => v._id)[0];
+  if (foundSections.length) return foundSections.filter(v => v)[0];
   return null;
 };
