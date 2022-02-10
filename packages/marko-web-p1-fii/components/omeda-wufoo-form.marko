@@ -1,6 +1,5 @@
 import { getAsObject } from "@parameter1/base-cms-object-path";
 import { warn } from "@parameter1/base-cms-utils";
-import getOmedaId from "../utils/get-omeda-id";
 
 $ const { site, req } = out.global;
 $ const context = getAsObject(input, "context");
@@ -15,7 +14,6 @@ $ const omedaZone = site.get("p1fii.omedaZone", input.omedaZone);
       formHash: input.formHash,
       wufooZone,
       omedaZone,
-      encryptedCustomerId: getOmedaId(req),
       alwaysAppendContext: input.alwaysAppendContext || false,
       context,
     }

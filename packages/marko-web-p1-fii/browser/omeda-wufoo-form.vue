@@ -16,7 +16,6 @@ export default {
     formHash: { type: String, required: true },
     wufooZone: { type: String, required: true },
     omedaZone: { type: String, required: true },
-    encryptedCustomerId: { type: String, default: null },
     context: { type: Object, default: () => ({}) },
     height: { type: Number, default: 1000 },
     hideHeader: { type: Boolean, default: false },
@@ -73,12 +72,10 @@ export default {
       try {
         this.error = null;
         this.isLoading = true;
-        const { encryptedCustomerId } = this;
         const params = {
           for: this.wufooZone,
           using: this.omedaZone,
           formHash: this.formHash,
-          ...(encryptedCustomerId && { encryptedCustomerId }),
           context: this.context,
           alwaysAppendContext: this.alwaysAppendContext,
         };

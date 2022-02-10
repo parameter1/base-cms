@@ -3,6 +3,8 @@ const getActiveContext = require('./api/queries/get-active-context');
 const checkContentAccess = require('./api/queries/check-content-access');
 const addExternalUserId = require('./api/mutations/add-external-user-id');
 const tokenCookie = require('./utils/token-cookie');
+const callHooksFor = require('./utils/call-hooks-for');
+
 
 const isEmpty = v => v == null || v === '';
 
@@ -34,7 +36,13 @@ class IdentityX {
       this.activeContextQuery = this.client.query({ query: getActiveContext });
     }
     const { data = {} } = await this.activeContextQuery;
-    return data.activeAppContext || {};
+    const activeContext = data.activeAppContext || {};
+    await callHooksFor(this, 'onLoadActiveContext', {
+      req: this.req,
+      res: this.res,
+      activeContext,
+    });
+    return activeContext;
   }
 
   /**
