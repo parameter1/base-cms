@@ -21,8 +21,13 @@ const pathResolvers = {
     if (section) return section.alias;
     // @todo This should eventually account for secondary sites/sections.
     // For now load an alternate from schedules
-    const sectionFromSched = await getSectionFromSchedules({ content, siteId: site.id(), load });
-    if (sectionFromSched) return sectionFromSched.alias;
+    const sectionFromSchedule = await getSectionFromSchedules({
+      content,
+      siteId: site.id(),
+      projection: { alias: 1 },
+      load,
+    });
+    if (sectionFromSchedule) return sectionFromSchedule.alias;
     // If the requested alternate could not be found.
     return 'home';
   },

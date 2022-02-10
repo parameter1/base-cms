@@ -484,8 +484,13 @@ module.exports = {
       // Current section does not match site, load alternate.
       // @todo This should eventually account for secondary sites/sections.
       // For now load an alternate from schedules.
-      const sectionFromSched = await getSectionFromSchedules({ content, siteId, load });
-      if (sectionFromSched) return sectionFromSched;
+      const sectionFromSchedule = await getSectionFromSchedules({
+        content,
+        siteId,
+        projection,
+        load,
+      });
+      if (sectionFromSchedule) return sectionFromSchedule;
       // @todo Should this value be "pure" - meaning, do not override value and simply return?
       return loadHomeSection({
         basedb,
