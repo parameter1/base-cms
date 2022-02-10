@@ -103,7 +103,7 @@ input UpdateAssetImageMutationPayloadInput {
   name: String
   filePath: String
   fileName: String
-  isCarousel: Boolean
+  inCarousel: Boolean
   isLogo: Boolean
 }
 
