@@ -24,7 +24,7 @@ fragment ActiveUserFragment on AppUser {
   regionalConsentAnswers { id given date }
   customBooleanFieldAnswers(input: {
     onlyActive: true
-    sort: { field: name, order: asc }
+    sort: { field: createdAt, order: asc }
   }) {
     id
     hasAnswered
