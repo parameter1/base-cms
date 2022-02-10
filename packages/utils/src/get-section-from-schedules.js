@@ -12,7 +12,7 @@ module.exports = async ({
     alias: { $ne: 'home' },
   };
   const sectionsFromScheds = sectionQuery.filter(schedule => `${schedule.siteId}` === `${siteId}`);
-  const foundSections = await Promise.all(sectionsFromScheds.map(section => load('websiteSection', section.sectionId, projection, query)));
+  const foundSections = await load('websiteSection', sectionsFromScheds.map(schedule => schedule.sectionId), projection, query);
   if (foundSections.length) return foundSections.filter(v => v._id)[0];
   return null;
 };
