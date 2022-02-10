@@ -1,7 +1,7 @@
 const { BaseDB } = require('@parameter1/base-cms-db');
 const { UserInputError } = require('apollo-server-express');
 const { Base4RestPayload } = require('@parameter1/base-cms-base4-rest-api');
-const { cleanPath, asObject } = require('@parameter1/base-cms-utils');
+const { cleanPath, asObject, getSectionFromSchedules } = require('@parameter1/base-cms-utils');
 const { content: canonicalPathFor } = require('@parameter1/base-cms-canonical-path');
 const { get, getAsObject } = require('@parameter1/base-cms-object-path');
 const { underscore, dasherize, titleize } = require('@parameter1/base-cms-inflector');
@@ -482,7 +482,15 @@ module.exports = {
       if (section) return section;
 
       // Current section does not match site, load alternate.
-      // @todo This should eventually account for secondary sites/sections. For now, load home.
+      // @todo This should eventually account for secondary sites/sections.
+      // For now load an alternate from schedules.
+      const sectionFromSchedule = await getSectionFromSchedules({
+        content,
+        siteId,
+        projection,
+        load,
+      });
+      if (sectionFromSchedule) return sectionFromSchedule;
       // @todo Should this value be "pure" - meaning, do not override value and simply return?
       return loadHomeSection({
         basedb,
