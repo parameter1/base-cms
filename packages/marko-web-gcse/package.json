@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-gcse",
-  "version": "2.45.0",
+  "version": "2.75.0",
   "description": "Google Custom Search (GCSE) Marko/Vue components for BaseCMS websites",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
@@ -11,8 +11,8 @@
     "test": "yarn compile && yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-object-path": "^2.45.0",
-    "@parameter1/base-cms-utils": "^2.22.2"
+    "@parameter1/base-cms-object-path": "^2.75.0",
+    "@parameter1/base-cms-utils": "^2.75.0"
   },
   "peerDependencies": {
     "@parameter1/base-cms-marko-web": "^2.0.0"

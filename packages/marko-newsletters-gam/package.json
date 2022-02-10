@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-newsletters-gam",
-  "version": "2.45.0",
+  "version": "2.75.0",
   "description": "GAM/DFP Marko components for BaseCMS newsletters.",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
@@ -11,8 +11,8 @@
     "test": "yarn compile && yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-object-path": "^2.45.0",
-    "@parameter1/base-cms-utils": "^2.22.2",
+    "@parameter1/base-cms-object-path": "^2.75.0",
+    "@parameter1/base-cms-utils": "^2.75.0",
     "moment": "^2.29.1"
   },
   "peerDependencies": {

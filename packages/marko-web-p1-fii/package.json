@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-p1-fii",
-  "version": "2.60.0",
+  "version": "2.75.0",
   "description": "Parameter1 form integrations for BaseCMS/Marko websites.",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-pii",
@@ -11,8 +11,8 @@
     "test": "yarn compile && yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-object-path": "^2.45.0",
-    "@parameter1/base-cms-utils": "^2.22.2",
+    "@parameter1/base-cms-object-path": "^2.75.0",
+    "@parameter1/base-cms-utils": "^2.75.0",
     "express-http-proxy": "^1.6.2"
   },
   "peerDependencies": {

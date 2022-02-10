@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-oembed",
-  "version": "2.58.0",
+  "version": "2.75.0",
   "description": "The BaseCMS oEmbed service",
   "main": "src/index.js",
   "author": "Josh Worden <josh@parameter1.com>",
@@ -15,7 +15,7 @@
     "@godaddy/terminus": "^4.9.0",
     "@parameter1/base-cms-embedly": "^2.45.0",
     "@parameter1/base-cms-tooling": "^2.45.0",
-    "@parameter1/base-cms-utils": "^2.22.2",
+    "@parameter1/base-cms-utils": "^2.75.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
