@@ -11,7 +11,7 @@ module.exports = () => (req, res, next) => {
   // No IdentityX context, set the cookie and move on
   if (!idxUserExists && incomingEncId && incomingEncId !== currentEncId) {
     olyticsCookie.setTo(res, incomingEncId);
-    const params = (new URLSearchParams(req.query)).toString();
+    const params = (new URLSearchParams(q)).toString();
     const redirectTo = `${req.path}${params ? `?${params}` : ''}`;
     res.redirect(302, redirectTo);
   }
