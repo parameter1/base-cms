@@ -8,6 +8,15 @@ module.exports = () => (req, res, next) => {
   const { oly_enc_id: id, ...q } = req.query;
   const incomingEncId = olyticsCookie.clean(id);
 
+  // No IdentityX context, set the cookie and move on
+  if (!idxUserExists && incomingEncId && incomingEncId !== currentEncId) {
+    olyticsCookie.setTo(res, incomingEncId);
+    const params = (new URLSearchParams(q)).toString();
+    const redirectTo = `${req.path}${params ? `?${params}` : ''}`;
+    res.redirect(302, redirectTo);
+  }
+
+  // Incoming id conflicts!
   if (idxUserExists && incomingEncId && incomingEncId !== currentEncId) {
     const params = (new URLSearchParams(q)).toString();
     const redirectTo = `${req.path}${params ? `?${params}` : ''}`;
