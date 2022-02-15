@@ -40,9 +40,6 @@
               :required="isFieldRequired('countryCode')"
             />
           </div>
-        </div>
-
-        <div v-if="displayRegionField || displayPostalCodeField" class="row">
           <div v-if="displayRegionField" class="col-md-6">
             <region
               v-model="user.regionCode"
@@ -50,10 +47,34 @@
               :required="isFieldRequired('regionCode')"
             />
           </div>
+        </div>
+
+        <div v-if="isFieldVisible('city') || displayPostalCodeField" class="row">
+          <div v-if="isFieldVisible('city')" class="col-md-6">
+            <city
+              v-model="user.city"
+              :required="isFieldRequired('city')"
+            />
+          </div>
           <div v-if="displayPostalCodeField" class="col-md-6">
             <postal-code
               v-model="user.postalCode"
               :required="isFieldRequired('postalCode')"
+            />
+          </div>
+        </div>
+
+        <div v-if="isFieldVisible('street') || isFieldVisible('addressExtra')" class="row">
+          <div v-if="isFieldVisible('street')" class="col-md-6">
+            <street
+              v-model="user.street"
+              :required="isFieldRequired('street')"
+            />
+          </div>
+          <div v-if="isFieldVisible('addressExtra')" class="col-md-6">
+            <address-extra
+              v-model="user.addressExtra"
+              :required="isFieldRequired('addressExtra')"
             />
           </div>
         </div>
@@ -149,6 +170,7 @@ import post from './utils/post';
 import cookiesEnabled from './utils/cookies-enabled';
 import regionCountryCodes from './utils/region-country-codes';
 
+import City from './form/fields/city.vue';
 import CustomBoolean from './form/fields/custom-boolean.vue';
 import CustomSelect from './form/fields/custom-select.vue';
 import GivenName from './form/fields/given-name.vue';
@@ -160,6 +182,8 @@ import Region from './form/fields/region.vue';
 import PostalCode from './form/fields/postal-code.vue';
 import ReceiveEmail from './form/fields/receive-email.vue';
 import RegionalPolicy from './form/fields/regional-policy.vue';
+import Street from './form/fields/street.vue';
+import AddressExtra from './form/fields/address-extra.vue';
 import Login from './login.vue';
 
 import FeatureError from './errors/feature';
@@ -169,6 +193,7 @@ const { isArray } = Array;
 
 export default {
   components: {
+    City,
     CustomBoolean,
     CustomSelect,
     GivenName,
@@ -180,6 +205,8 @@ export default {
     PostalCode,
     ReceiveEmail,
     RegionalPolicy,
+    Street,
+    AddressExtra,
     Login,
   },
 
@@ -204,6 +231,10 @@ export default {
       default: () => [],
     },
     requiredClientFields: {
+      type: Array,
+      default: () => [],
+    },
+    hiddenFields: {
       type: Array,
       default: () => [],
     },
@@ -350,6 +381,16 @@ export default {
      */
     isFieldRequired(name) {
       return this.requiredFields.includes(name);
+    },
+    /**
+     *
+     */
+    isFieldHidden(name) {
+      return this.hiddenFields.includes(name);
+    },
+
+    isFieldVisible(name) {
+      return !this.isFieldHidden(name);
     },
 
     getRegionalPolicyAnswer(policyId) {
