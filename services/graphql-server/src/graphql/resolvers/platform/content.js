@@ -445,6 +445,26 @@ module.exports = {
     },
 
     /**
+     * Return the oldest start date for the current section
+     */
+    sectionStartDate: async (content, { input }, { basedb }) => {
+      const { sectionQuery } = content;
+      const { sectionId } = input;
+      const descendantIds = await getDescendantIds(sectionId, basedb);
+      const sectionSchedules = sectionQuery.filter(section => section.sectionId === sectionId);
+      const descendantSectionSchedules = sectionQuery
+        .filter(section => descendantIds.includes(section.sectionId))
+        .map(section => section.start);
+      const sectionDates = [
+        ...new Set([
+          ...sectionSchedules.map(section => section.start),
+          ...descendantSectionSchedules,
+        ]),
+      ];
+      return sectionDates[0];
+    },
+
+    /**
      * Load primary section of content.
      * If primary section's site matches the current site, return the section.
      * If not, check for alternative site + section (@todo).
