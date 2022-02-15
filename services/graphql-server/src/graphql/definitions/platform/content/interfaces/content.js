@@ -89,6 +89,7 @@ interface Content @requiresProject(fields: ["type"]) {
   # Allows accessing the content's taxonomy IDs without querying the related models.
   taxonomyIds: [Int!]! @projection(localField: "taxonomy")
 
+ # Access the current section (and potentially descedents) schedules to get oldest start date
   sectionStartDate(input: SectionStartDateInput): Date @projection(localField: "sectionQuery")
 }
 
