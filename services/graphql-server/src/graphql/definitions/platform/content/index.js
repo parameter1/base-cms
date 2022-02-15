@@ -778,6 +778,10 @@ input ContentHasWebsiteScheduleInput {
   sectionBubbling: Boolean = true
 }
 
+input SectionStartDateInput {
+  sectionId: Int
+}
+
 input QueryMostPopularContentInput {
   siteId: ObjectID
   limit: Int! = 10
