@@ -449,19 +449,10 @@ module.exports = {
      */
     sectionStartDate: async (content, { input }, { basedb }) => {
       const { sectionQuery } = content;
-      const { sectionId } = input;
-      const descendantIds = await getDescendantIds(sectionId, basedb);
-      const sectionSchedules = sectionQuery.filter(section => section.sectionId === sectionId);
-      const descendantSectionSchedules = sectionQuery
-        .filter(section => descendantIds.includes(section.sectionId))
-        .map(section => section.start);
-      const sectionDates = [
-        ...new Set([
-          ...sectionSchedules.map(section => section.start),
-          ...descendantSectionSchedules,
-        ]),
-      ];
-      return sectionDates[0];
+      const { sectionId, sectionBubbling } = input;
+      const ids = sectionBubbling ? await getDescendantIds(sectionId, basedb) : [sectionId];
+      const schedules = sectionQuery.filter(section => ids.includes(section.sectionId));
+      return schedules.length ? schedules[0].start : null;
     },
 
     /**
