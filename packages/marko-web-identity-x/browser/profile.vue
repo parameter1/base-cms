@@ -45,7 +45,8 @@
         <address-block
           v-if="countryCode"
           :user="user"
-          :hidden-fields="hiddenFields"
+          :is-field-required="isFieldRequired"
+          :is-field-visible="isFieldVisible"
         />
 
         <div v-if="customSelectFieldAnswers.length" class="row">
@@ -138,6 +139,7 @@
 import post from './utils/post';
 import cookiesEnabled from './utils/cookies-enabled';
 
+import AddressBlock from './form/address-block.vue';
 import CustomBoolean from './form/fields/custom-boolean.vue';
 import CustomSelect from './form/fields/custom-select.vue';
 import GivenName from './form/fields/given-name.vue';
@@ -156,6 +158,7 @@ const { isArray } = Array;
 
 export default {
   components: {
+    AddressBlock,
     CustomBoolean,
     CustomSelect,
     GivenName,
@@ -325,6 +328,14 @@ export default {
      */
     isFieldRequired(name) {
       return this.requiredFields.includes(name);
+    },
+
+    isFieldHidden(name) {
+      return this.hiddenFields.includes(name);
+    },
+
+    isFieldVisible(name) {
+      return !this.isFieldHidden(name);
     },
 
     getRegionalPolicyAnswer(policyId) {
