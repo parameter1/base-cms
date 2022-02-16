@@ -1,19 +1,21 @@
 <template>
-  <form-group>
-    <form-label :for="id" :required="required">
-      {{ label }}
-    </form-label>
-    <input
-      :id="id"
-      v-model="street"
-      class="form-control"
-      type="text"
-      :required="required"
-      :disabled="disabled"
-      :placeholder="placeholder"
-      autocomplete="street"
-    >
-  </form-group>
+  <div :class="classNames">
+    <form-group>
+      <form-label :for="id" :required="required">
+        {{ label }}
+      </form-label>
+      <input
+        :id="id"
+        v-model="street"
+        class="form-control"
+        type="text"
+        :required="required"
+        :disabled="disabled"
+        :placeholder="placeholder"
+        autocomplete="street"
+      >
+    </form-group>
+  </div>
 </template>
 
 <script>
@@ -46,11 +48,19 @@ export default {
       type: String,
       default: '',
     },
+    fullWidth: {
+      type: Boolean,
+      default: true,
+    },
   },
   data: () => ({
     id: 'sign-on-street',
   }),
   computed: {
+    classNames() {
+      const { fullWidth } = this;
+      return fullWidth ? 'col-md-12' : 'col-md-9';
+    },
     street: {
       get() {
         return this.value || '';

@@ -4,6 +4,19 @@
       Address
     </legend>
 
+    <div v-if="isFieldVisible('street')" class="row">
+      <street
+        v-model="user.street"
+        :required="isFieldRequired('street')"
+        :full-width="!isFieldVisible('addressExtra')"
+      />
+      <address-extra
+        v-if="isFieldVisible('addressExtra')"
+        v-model="user.addressExtra"
+        :required="isFieldRequired('addressExtra')"
+      />
+    </div>
+
     <div class="row">
       <div v-if="displayRegionField" class="col-md-6">
         <region
@@ -28,22 +41,6 @@
         />
       </div>
     </div>
-
-    <div v-if="isFieldVisible('street') || isFieldVisible('addressExtra')" class="row">
-      <div v-if="isFieldVisible('street')" class="col-md-6">
-        <street
-          v-model="user.street"
-          :required="isFieldRequired('street')"
-        />
-      </div>
-      <div v-if="isFieldVisible('addressExtra')" class="col-md-6">
-        <address-extra
-          v-model="user.addressExtra"
-          :required="isFieldRequired('addressExtra')"
-        />
-      </div>
-    </div>
-  </div>
   </fieldset>
 </template>
 
