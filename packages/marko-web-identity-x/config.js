@@ -12,7 +12,7 @@ class IdentityXConfiguration {
    * @param {string} [options.apiToken] An API token to use. Only required when doing write ops.
    * @param {string[]} [options.requiredServerFields] Required fields, server enforced.
    * @param {string[]} [options.requiredClientFields] Required fields, client-side only.
-   * @param {string[]} [options.hiddenFields] The fields to include in the profile.
+   * @param {string[]} [options.hiddenFields] The fields to hide from the profile.
    * @param {function} [options.onHookError]
    * @param {...object} options.rest
    */

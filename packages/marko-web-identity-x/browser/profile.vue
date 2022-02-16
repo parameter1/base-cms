@@ -137,9 +137,9 @@
 </template>
 
 <script>
-import regionCountryCodes from './utils/region-country-codes';
 import post from './utils/post';
 import cookiesEnabled from './utils/cookies-enabled';
+import regionCountryCodes from './utils/region-country-codes';
 
 import AddressBlock from './form/address-block.vue';
 import CustomBoolean from './form/fields/custom-boolean.vue';
@@ -267,6 +267,13 @@ export default {
       return user.countryCode;
     },
 
+    /**
+     *
+     */
+    displayRegionField() {
+      return regionCountryCodes.includes(this.countryCode);
+    },
+
     submitMessage() {
       const message = 'Profile updated.';
       if (this.isReloadingPage) return `${message} Reloading page...`;
@@ -296,10 +303,6 @@ export default {
     customSelectFieldAnswers() {
       const { customSelectFieldAnswers } = this.user;
       return isArray(customSelectFieldAnswers) ? customSelectFieldAnswers : [];
-    },
-
-    displayRegionField() {
-      return regionCountryCodes.includes(this.countryCode);
     },
 
     showAddressBlock() {
@@ -347,12 +350,8 @@ export default {
       return this.requiredFields.includes(name);
     },
 
-    isFieldHidden(name) {
-      return this.hiddenFields.includes(name);
-    },
-
     isFieldVisible(name) {
-      return !this.isFieldHidden(name);
+      return !this.hiddenFields.includes(name);
     },
 
     getRegionalPolicyAnswer(policyId) {
