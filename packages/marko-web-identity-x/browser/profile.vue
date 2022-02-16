@@ -269,13 +269,6 @@ export default {
       return user.countryCode;
     },
 
-    /**
-     * @todo remove, should merge into regionCodeSettings prop.
-     */
-    displayRegionField() {
-      return regionCountryCodes.includes(this.countryCode);
-    },
-
     submitMessage() {
       const message = 'Profile updated.';
       if (this.isReloadingPage) return `${message} Reloading page...`;
@@ -312,11 +305,11 @@ export default {
       if (!this.countryCode) return false;
 
       // Only show if a subfield is visible
-      if (this.isFieldVisible('city')) return true;
-      if (this.isFieldVisible('street')) return true;
-
-      // @todo update
-      return this.displayRegionField;
+      if (this.citySettings.visible) return true;
+      if (this.streetSettings.visible) return true;
+      if (this.regionCodeSettings.visible) return true;
+      if (this.postalCodeSettings.visible) return true;
+      return false;
     },
 
     /**
@@ -371,15 +364,17 @@ export default {
       };
     },
     regionCodeSettings() {
+      const canRequire = regionCountryCodes.includes(this.countryCode);
       return {
-        required: this.isFieldRequired('regionCode'),
-        visible: this.isFieldVisible('regionCode'),
+        required: canRequire && this.isFieldRequired('regionCode'),
+        visible: canRequire && this.isFieldVisible('regionCode'),
       };
     },
     postalCodeSettings() {
+      const canRequire = regionCountryCodes.includes(this.countryCode);
       return {
-        required: this.isFieldRequired('postalCode'),
-        visible: this.isFieldVisible('postalCode'),
+        required: canRequire && this.isFieldRequired('postalCode'),
+        visible: canRequire && this.isFieldVisible('postalCode'),
       };
     },
   },
@@ -389,10 +384,11 @@ export default {
    */
   watch: {
     /**
-     * Clear region code on country code change.
+     * Clear region and postal codes on country code change.
      */
     countryCode() {
       this.user.regionCode = null;
+      this.user.postalCode = null;
     },
   },
 
