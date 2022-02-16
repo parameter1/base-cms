@@ -8,7 +8,7 @@
       <street
         v-model="user.street"
         :required="isFieldRequired('street')"
-        :full-width="!isFieldVisible('addressExtra')"
+        :class-name="isFieldVisible('addressExtra') ? 'col-md-8' : 'col-md-12'"
       />
       <address-extra
         v-if="isFieldVisible('addressExtra')"
@@ -22,20 +22,20 @@
         v-if="isFieldVisible('city')"
         v-model="user.city"
         :required="isFieldRequired('city')"
-        :half-width="!displayRegionField"
+        :class-name="displayRegionField ? 'col-md-4' : 'col-md-6'"
       />
       <region
         v-if="displayRegionField"
         v-model="user.regionCode"
         :country-code="user.countryCode"
         :required="isFieldRequired('regionCode')"
-        :half-width="!isFieldVisible('city')"
+        :class-name="isFieldVisible('city') ? 'col-md-4' : 'col-md-6'"
       />
       <postal-code
         v-if="displayRegionField"
         v-model="user.postalCode"
         :required="isFieldRequired('postalCode')"
-        :half-width="!isFieldVisible('city')"
+        :class-name="isFieldVisible('city') ? 'col-md-4' : 'col-md-6'"
       />
     </div>
   </fieldset>

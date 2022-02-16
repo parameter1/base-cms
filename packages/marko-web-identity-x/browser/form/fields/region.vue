@@ -1,5 +1,5 @@
 <template>
-  <form-group :class-name="classNames">
+  <form-group :class-name="className">
     <form-label :for="id" :required="required">
       {{ label }}
     </form-label>
@@ -57,9 +57,9 @@ export default {
       type: String,
       default: '',
     },
-    halfWidth: {
-      type: Boolean,
-      default: false,
+    className: {
+      type: String,
+      default: 'col-md-6',
     },
   },
   data: () => ({
@@ -69,10 +69,6 @@ export default {
     regions: [],
   }),
   computed: {
-    classNames() {
-      const { halfWidth } = this;
-      return halfWidth ? 'col-md-6' : 'col-md-4';
-    },
     regionCode: {
       get() {
         return this.value || '';

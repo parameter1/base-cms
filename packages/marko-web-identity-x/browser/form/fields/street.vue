@@ -1,5 +1,5 @@
 <template>
-  <form-group :class-name="classNames">
+  <form-group :class-name="className">
     <form-label :for="id" :required="required">
       {{ label }}
     </form-label>
@@ -46,19 +46,15 @@ export default {
       type: String,
       default: '',
     },
-    fullWidth: {
-      type: Boolean,
-      default: true,
+    className: {
+      type: String,
+      default: 'col-md-12',
     },
   },
   data: () => ({
     id: 'sign-on-street',
   }),
   computed: {
-    classNames() {
-      const { fullWidth } = this;
-      return fullWidth ? 'col-md-12' : 'col-md-8';
-    },
     street: {
       get() {
         return this.value || '';
