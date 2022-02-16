@@ -93,7 +93,7 @@ class IdentityXConfiguration {
   }
 
   getHiddenFields() {
-    return this.getAsArray('requiredClientFields');
+    return this.getAsArray('hiddenFields');
   }
 
   get(path, def) {
