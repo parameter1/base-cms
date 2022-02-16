@@ -57,7 +57,7 @@ export default {
   computed: {
     classNames() {
       const { fullWidth } = this;
-      return fullWidth ? 'col-md-12' : 'col-lg-9 col-md-8';
+      return fullWidth ? 'col-md-12' : 'col-md-8';
     },
     street: {
       get() {

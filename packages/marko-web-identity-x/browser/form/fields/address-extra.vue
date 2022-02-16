@@ -1,5 +1,5 @@
 <template>
-  <form-group class-name="col-lg-3 col-md-4">
+  <form-group class-name="col-md-4">
     <form-label :for="id" :required="required">
       {{ label }}
     </form-label>
