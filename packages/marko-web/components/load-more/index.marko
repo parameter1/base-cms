@@ -5,10 +5,12 @@ $ const { components, fragments } = out.global;
 $ const Component = components.get(input.componentName);
 $ const pageNumber = input.pageNumber || 1;
 
+$ const resolveQueryFragment = (typeof fragments.get(input.fragmentName) === 'function' && input.fragmentInput) ? fragments.get(input.fragmentName)(input.fragmentInput) : fragments.get(input.fragmentName);
+
 $ const queryParams = {
   ...getAsObject(input, "queryParams"),
   queryName: "LoadMore",
-  queryFragment: fragments.get(input.fragmentName),
+  queryFragment: resolveQueryFragment,
 };
 
 <if(Component)>
