@@ -1,5 +1,5 @@
 <template>
-  <fieldset class="px-3 border mb-2">
+  <fieldset class="px-3 border mb-3">
     <legend class="h5 w-auto">
       Address
     </legend>
