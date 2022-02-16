@@ -1,21 +1,19 @@
 <template>
-  <div :class="classNames">
-    <form-group>
-      <form-label :for="id" :required="required">
-        {{ label }}
-      </form-label>
-      <input
-        :id="id"
-        v-model="street"
-        class="form-control"
-        type="text"
-        :required="required"
-        :disabled="disabled"
-        :placeholder="placeholder"
-        autocomplete="street"
-      >
-    </form-group>
-  </div>
+  <form-group :class-name="classNames">
+    <form-label :for="id" :required="required">
+      {{ label }}
+    </form-label>
+    <input
+      :id="id"
+      v-model="street"
+      class="form-control"
+      type="text"
+      :required="required"
+      :disabled="disabled"
+      :placeholder="placeholder"
+      autocomplete="street"
+    >
+  </form-group>
 </template>
 
 <script>
@@ -59,7 +57,7 @@ export default {
   computed: {
     classNames() {
       const { fullWidth } = this;
-      return fullWidth ? 'col-md-12' : 'col-md-9';
+      return fullWidth ? 'col-md-12' : 'col-lg-9 col-md-8';
     },
     street: {
       get() {
