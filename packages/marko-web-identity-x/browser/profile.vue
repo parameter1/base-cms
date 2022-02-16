@@ -7,13 +7,13 @@
           <div class="col-md-6">
             <given-name
               v-model="user.givenName"
-              :required="isFieldRequired('givenName')"
+              :required="givenNameSettings.required"
             />
           </div>
           <div class="col-md-6">
             <family-name
               v-model="user.familyName"
-              :required="isFieldRequired('familyName')"
+              :required="familyNameSettings.required"
             />
           </div>
         </div>
@@ -22,13 +22,13 @@
           <div class="col-md-6">
             <organization
               v-model="user.organization"
-              :required="isFieldRequired('organization')"
+              :required="organizationSettings.required"
             />
           </div>
           <div class="col-md-6">
             <organization-title
               v-model="user.organizationTitle"
-              :required="isFieldRequired('organizationTitle')"
+              :required="organizationTitleSettings.required"
             />
           </div>
         </div>
@@ -37,7 +37,7 @@
           <div class="col-md-6">
             <country
               v-model="user.countryCode"
-              :required="isFieldRequired('countryCode')"
+              :required="countryCodeSettings.required"
             />
           </div>
         </div>
@@ -45,9 +45,11 @@
         <address-block
           v-if="showAddressBlock"
           :user="user"
-          :is-field-required="isFieldRequired"
-          :is-field-visible="isFieldVisible"
-          :display-region-field="displayRegionField"
+          :street="streetSettings"
+          :address-extra="addressExtraSettings"
+          :city="citySettings"
+          :region-code="regionCodeSettings"
+          :postal-code="postalCodeSettings"
         />
 
         <div v-if="customSelectFieldAnswers.length" class="row">
@@ -268,7 +270,7 @@ export default {
     },
 
     /**
-     *
+     * @todo remove, should merge into regionCodeSettings prop.
      */
     displayRegionField() {
       return regionCountryCodes.includes(this.countryCode);
@@ -313,7 +315,72 @@ export default {
       if (this.isFieldVisible('city')) return true;
       if (this.isFieldVisible('street')) return true;
 
+      // @todo update
       return this.displayRegionField;
+    },
+
+    /**
+     * Field settings
+     */
+    givenNameSettings() {
+      return {
+        required: this.isFieldRequired('givenName'),
+        visible: this.isFieldVisible('givenName'),
+      };
+    },
+    familyNameSettings() {
+      return {
+        required: this.isFieldRequired('familyName'),
+        visible: this.isFieldVisible('familyName'),
+      };
+    },
+    organizationSettings() {
+      return {
+        required: this.isFieldRequired('organization'),
+        visible: this.isFieldVisible('organization'),
+      };
+    },
+    organizationTitleSettings() {
+      return {
+        required: this.isFieldRequired('organizationTitle'),
+        visible: this.isFieldVisible('organizationTitle'),
+      };
+    },
+    countryCodeSettings() {
+      return {
+        required: this.isFieldRequired('countryCode'),
+        visible: this.isFieldVisible('countryCode'),
+      };
+    },
+    streetSettings() {
+      return {
+        required: this.isFieldRequired('street'),
+        visible: this.isFieldVisible('street'),
+      };
+    },
+    addressExtraSettings() {
+      return {
+        required: this.isFieldRequired('addressExtra'),
+        visible: this.isFieldVisible('addressExtra'),
+      };
+    },
+    citySettings() {
+      return {
+        required: this.isFieldRequired('city'),
+        visible: this.isFieldVisible('city'),
+      };
+    },
+    regionCodeSettings() {
+      return {
+        required: this.isFieldRequired('regionCode'),
+        visible: this.isFieldVisible('regionCode'),
+      };
+    },
+    postalCodeSettings() {
+      return {
+        required: this.isFieldRequired('postalCode'),
+        visible: this.isFieldVisible('postalCode'),
+      };
     },
   },
 

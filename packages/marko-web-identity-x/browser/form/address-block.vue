@@ -4,38 +4,38 @@
       Address
     </legend>
 
-    <div v-if="isFieldVisible('street')" class="row">
+    <div v-if="street.visible" class="row">
       <street
         v-model="user.street"
-        :required="isFieldRequired('street')"
-        :class-name="isFieldVisible('addressExtra') ? 'col-md-8' : 'col-md-12'"
+        :required="street.required"
+        :class-name="addressExtra.visible ? 'col-md-8' : 'col-md-12'"
       />
       <address-extra
-        v-if="isFieldVisible('addressExtra')"
+        v-if="addressExtra.visible"
         v-model="user.addressExtra"
-        :required="isFieldRequired('addressExtra')"
+        :required="addressExtra.required"
       />
     </div>
 
-    <div v-if="isFieldVisible('city') || displayRegionField" class="row">
+    <div v-if="city.visible || regionCode.visible" class="row">
       <city
-        v-if="isFieldVisible('city')"
+        v-if="city.visible"
         v-model="user.city"
-        :required="isFieldRequired('city')"
-        :class-name="displayRegionField ? 'col-md-4' : 'col-md-6'"
+        :required="city.required"
+        :class-name="regionCode.visible ? 'col-md-4' : 'col-md-6'"
       />
       <region
-        v-if="displayRegionField"
+        v-if="regionCode.visible"
         v-model="user.regionCode"
         :country-code="user.countryCode"
-        :required="isFieldRequired('regionCode')"
-        :class-name="isFieldVisible('city') ? 'col-md-4' : 'col-md-6'"
+        :required="regionCode.required"
+        :class-name="city.visible ? 'col-md-4' : 'col-md-6'"
       />
       <postal-code
-        v-if="displayRegionField"
+        v-if="regionCode.visible"
         v-model="user.postalCode"
-        :required="isFieldRequired('postalCode')"
-        :class-name="isFieldVisible('city') ? 'col-md-4' : 'col-md-6'"
+        :required="postalCode.required"
+        :class-name="city.visible ? 'col-md-4' : 'col-md-6'"
       />
     </div>
   </fieldset>
@@ -57,19 +57,27 @@ export default {
     AddressExtra,
   },
   props: {
-    isFieldRequired: {
-      type: Function,
-      required: true,
-    },
-    isFieldVisible: {
-      type: Function,
-      required: true,
-    },
-    displayRegionField: {
-      type: Boolean,
-      default: false,
-    },
     user: {
+      type: Object,
+      required: true,
+    },
+    street: {
+      type: Object,
+      required: true,
+    },
+    addressExtra: {
+      type: Object,
+      required: true,
+    },
+    city: {
+      type: Object,
+      required: true,
+    },
+    regionCode: {
+      type: Object,
+      required: true,
+    },
+    postalCode: {
       type: Object,
       required: true,
     },
