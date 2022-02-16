@@ -1,5 +1,5 @@
 <template>
-  <fieldset class="p-3 border mb-2">
+  <fieldset class="px-3 border mb-2">
     <legend class="h5">
       Address
     </legend>
@@ -17,29 +17,26 @@
       />
     </div>
 
-    <div class="row">
-      <div v-if="displayRegionField" class="col-md-6">
-        <region
-          v-model="user.regionCode"
-          :country-code="user.countryCode"
-          :required="isFieldRequired('regionCode')"
-        />
-      </div>
-    </div>
-
-    <div v-if="isFieldVisible('city') || displayPostalCodeField" class="row">
-      <div v-if="isFieldVisible('city')" class="col-md-6">
-        <city
-          v-model="user.city"
-          :required="isFieldRequired('city')"
-        />
-      </div>
-      <div v-if="displayPostalCodeField" class="col-md-6">
-        <postal-code
-          v-model="user.postalCode"
-          :required="isFieldRequired('postalCode')"
-        />
-      </div>
+    <div v-if="isFieldVisible('city') || displayRegionField" class="row">
+      <city
+        v-if="isFieldVisible('city')"
+        v-model="user.city"
+        :required="isFieldRequired('city')"
+        :half-width="!displayRegionField"
+      />
+      <region
+        v-if="displayRegionField"
+        v-model="user.regionCode"
+        :country-code="user.countryCode"
+        :required="isFieldRequired('regionCode')"
+        :half-width="!isFieldVisible('city')"
+      />
+      <postal-code
+        v-if="displayRegionField"
+        v-model="user.postalCode"
+        :required="isFieldRequired('postalCode')"
+        :half-width="!isFieldVisible('city')"
+      />
     </div>
   </fieldset>
 </template>
@@ -101,9 +98,6 @@ export default {
     },
     displayRegionField() {
       return regionCountryCodes.includes(this.countryCode);
-    },
-    displayPostalCodeField() {
-      return this.displayRegionField;
     },
   },
 };

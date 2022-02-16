@@ -1,5 +1,5 @@
 <template>
-  <form-group>
+  <form-group :class-name="classNames">
     <form-label :for="id" :required="required">
       {{ label }}
     </form-label>
@@ -46,11 +46,19 @@ export default {
       type: String,
       default: '',
     },
+    halfWidth: {
+      type: Boolean,
+      default: false,
+    },
   },
   data: () => ({
     id: 'sign-on-postal-code',
   }),
   computed: {
+    classNames() {
+      const { halfWidth } = this;
+      return halfWidth ? 'col-md-6' : 'col-md-4';
+    },
     postalCode: {
       get() {
         return this.value || '';
