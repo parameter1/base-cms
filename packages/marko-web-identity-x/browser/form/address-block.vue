@@ -42,25 +42,11 @@
 </template>
 
 <script>
-import regionCountryCodes from '../utils/region-country-codes';
-
 import City from './fields/city.vue';
 import Region from './fields/region.vue';
 import PostalCode from './fields/postal-code.vue';
 import Street from './fields/street.vue';
 import AddressExtra from './fields/address-extra.vue';
-
-
-/**
-country (50)
-
-*group fields, border, hr, etc, subhead with address*
-*show block when country is selected*
-
-street longer than extra (66/33) (w/o extra, 100)
-city region postal code (33/33/33) or 50/50
-postal code last even if by itself
- */
 
 export default {
   components: {
@@ -79,6 +65,10 @@ export default {
       type: Function,
       required: true,
     },
+    displayRegionField: {
+      type: Boolean,
+      default: false,
+    },
     user: {
       type: Object,
       required: true,
@@ -95,9 +85,6 @@ export default {
       const { user } = this;
       if (!user) return null;
       return user.countryCode;
-    },
-    displayRegionField() {
-      return regionCountryCodes.includes(this.countryCode);
     },
   },
 };

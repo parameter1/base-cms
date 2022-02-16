@@ -43,10 +43,11 @@
         </div>
 
         <address-block
-          v-if="countryCode"
+          v-if="showAddressBlock"
           :user="user"
           :is-field-required="isFieldRequired"
           :is-field-visible="isFieldVisible"
+          :display-region-field="displayRegionField"
         />
 
         <div v-if="customSelectFieldAnswers.length" class="row">
@@ -136,6 +137,7 @@
 </template>
 
 <script>
+import regionCountryCodes from './utils/region-country-codes';
 import post from './utils/post';
 import cookiesEnabled from './utils/cookies-enabled';
 
@@ -294,6 +296,21 @@ export default {
     customSelectFieldAnswers() {
       const { customSelectFieldAnswers } = this.user;
       return isArray(customSelectFieldAnswers) ? customSelectFieldAnswers : [];
+    },
+
+    displayRegionField() {
+      return regionCountryCodes.includes(this.countryCode);
+    },
+
+    showAddressBlock() {
+      // Don't show at all until country is selected.
+      if (!this.countryCode) return false;
+
+      // Only show if a subfield is visible
+      if (this.isFieldVisible('city')) return true;
+      if (this.isFieldVisible('street')) return true;
+
+      return this.displayRegionField;
     },
   },
 
