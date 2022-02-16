@@ -1,5 +1,9 @@
 <template>
-  <div :class="classNames">
+  <fieldset class="p-3 border mb-2">
+    <legend class="h5">
+      Address
+    </legend>
+
     <div class="row">
       <div v-if="displayRegionField" class="col-md-6">
         <region
@@ -40,6 +44,7 @@
       </div>
     </div>
   </div>
+  </fieldset>
 </template>
 
 <script>
@@ -72,13 +77,17 @@ export default {
     AddressExtra,
   },
   props: {
+    isFieldRequired: {
+      type: Function,
+      required: true,
+    },
+    isFieldVisible: {
+      type: Function,
+      required: true,
+    },
     user: {
       type: Object,
-      default: () => ({}),
-    },
-    hiddenFields: {
-      type: Array,
-      default: () => [],
+      required: true,
     },
   },
   computed: {
@@ -98,14 +107,6 @@ export default {
     },
     displayPostalCodeField() {
       return this.displayRegionField;
-    },
-  },
-  methods: {
-    isFieldHidden(name) {
-      return this.hiddenFields.includes(name);
-    },
-    isFieldVisible(name) {
-      return !this.isFieldHidden(name);
     },
   },
 };
