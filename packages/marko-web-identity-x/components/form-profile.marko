@@ -9,6 +9,7 @@ $ const { identityX } = req;
       activeUser: user,
       requiredServerFields: identityX.config.getRequiredServerFields(),
       requiredClientFields: identityX.config.getRequiredClientFields(),
+      hiddenFields: identityX.config.getHiddenFields(),
       callToAction: input.callToAction,
       reloadPageOnSubmit: input.reloadPageOnSubmit,
       endpoints: identityX.config.getEndpoints(),

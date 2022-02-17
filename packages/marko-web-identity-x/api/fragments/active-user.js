@@ -14,6 +14,9 @@ fragment ActiveUserFragment on AppUser {
   countryCode
   regionCode
   postalCode
+  city
+  street
+  addressExtra
   receiveEmail
   mustReVerifyProfile
   externalIds {

@@ -1,17 +1,17 @@
 <template>
-  <form-group :class-name="className">
+  <form-group class-name="col-md-4">
     <form-label :for="id" :required="required">
       {{ label }}
     </form-label>
     <input
       :id="id"
-      v-model="postalCode"
+      v-model="addressExtra"
       class="form-control"
       type="text"
       :required="required"
       :disabled="disabled"
       :placeholder="placeholder"
-      autocomplete="postal-code"
+      autocomplete="address-extra"
     >
   </form-group>
 </template>
@@ -36,7 +36,7 @@ export default {
     },
     label: {
       type: String,
-      default: 'Postal/ZIP Code',
+      default: 'Extra (Apt, Suite, etc.)',
     },
     placeholder: {
       type: String,
@@ -46,21 +46,17 @@ export default {
       type: String,
       default: '',
     },
-    className: {
-      type: String,
-      default: 'col-md-12',
-    },
   },
   data: () => ({
-    id: 'sign-on-postal-code',
+    id: 'sign-on-address-extra',
   }),
   computed: {
-    postalCode: {
+    addressExtra: {
       get() {
         return this.value || '';
       },
-      set(postalCode) {
-        this.$emit('input', postalCode || null);
+      set(addressExtra) {
+        this.$emit('input', addressExtra || null);
       },
     },
   },

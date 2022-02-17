@@ -5,13 +5,13 @@
     </form-label>
     <input
       :id="id"
-      v-model="postalCode"
+      v-model="street"
       class="form-control"
       type="text"
       :required="required"
       :disabled="disabled"
       :placeholder="placeholder"
-      autocomplete="postal-code"
+      autocomplete="street"
     >
   </form-group>
 </template>
@@ -36,7 +36,7 @@ export default {
     },
     label: {
       type: String,
-      default: 'Postal/ZIP Code',
+      default: 'Street',
     },
     placeholder: {
       type: String,
@@ -52,15 +52,15 @@ export default {
     },
   },
   data: () => ({
-    id: 'sign-on-postal-code',
+    id: 'sign-on-street',
   }),
   computed: {
-    postalCode: {
+    street: {
       get() {
         return this.value || '';
       },
-      set(postalCode) {
-        this.$emit('input', postalCode || null);
+      set(street) {
+        this.$emit('input', street || null);
       },
     },
   },

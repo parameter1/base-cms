@@ -47,6 +47,9 @@ module.exports = asyncRoute(async (req, res) => {
     countryCode,
     regionCode,
     postalCode,
+    city,
+    street,
+    addressExtra,
     receiveEmail,
     regionalConsentAnswers,
     customBooleanFieldAnswers,
@@ -60,6 +63,9 @@ module.exports = asyncRoute(async (req, res) => {
     countryCode,
     regionCode,
     postalCode,
+    city,
+    street,
+    addressExtra,
     receiveEmail,
   };
 

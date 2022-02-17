@@ -7,13 +7,13 @@
           <div class="col-md-6">
             <given-name
               v-model="user.givenName"
-              :required="isFieldRequired('givenName')"
+              :required="givenNameSettings.required"
             />
           </div>
           <div class="col-md-6">
             <family-name
               v-model="user.familyName"
-              :required="isFieldRequired('familyName')"
+              :required="familyNameSettings.required"
             />
           </div>
         </div>
@@ -22,13 +22,13 @@
           <div class="col-md-6">
             <organization
               v-model="user.organization"
-              :required="isFieldRequired('organization')"
+              :required="organizationSettings.required"
             />
           </div>
           <div class="col-md-6">
             <organization-title
               v-model="user.organizationTitle"
-              :required="isFieldRequired('organizationTitle')"
+              :required="organizationTitleSettings.required"
             />
           </div>
         </div>
@@ -37,26 +37,20 @@
           <div class="col-md-6">
             <country
               v-model="user.countryCode"
-              :required="isFieldRequired('countryCode')"
+              :required="countryCodeSettings.required"
             />
           </div>
         </div>
 
-        <div v-if="displayRegionField || displayPostalCodeField" class="row">
-          <div v-if="displayRegionField" class="col-md-6">
-            <region
-              v-model="user.regionCode"
-              :country-code="user.countryCode"
-              :required="isFieldRequired('regionCode')"
-            />
-          </div>
-          <div v-if="displayPostalCodeField" class="col-md-6">
-            <postal-code
-              v-model="user.postalCode"
-              :required="isFieldRequired('postalCode')"
-            />
-          </div>
-        </div>
+        <address-block
+          v-if="showAddressBlock"
+          :user="user"
+          :street="streetSettings"
+          :address-extra="addressExtraSettings"
+          :city="citySettings"
+          :region-code="regionCodeSettings"
+          :postal-code="postalCodeSettings"
+        />
 
         <div v-if="customSelectFieldAnswers.length" class="row">
           <custom-select
@@ -149,6 +143,7 @@ import post from './utils/post';
 import cookiesEnabled from './utils/cookies-enabled';
 import regionCountryCodes from './utils/region-country-codes';
 
+import AddressBlock from './form/address-block.vue';
 import CustomBoolean from './form/fields/custom-boolean.vue';
 import CustomSelect from './form/fields/custom-select.vue';
 import GivenName from './form/fields/given-name.vue';
@@ -156,8 +151,6 @@ import FamilyName from './form/fields/family-name.vue';
 import Organization from './form/fields/organization.vue';
 import OrganizationTitle from './form/fields/organization-title.vue';
 import Country from './form/fields/country.vue';
-import Region from './form/fields/region.vue';
-import PostalCode from './form/fields/postal-code.vue';
 import ReceiveEmail from './form/fields/receive-email.vue';
 import RegionalPolicy from './form/fields/regional-policy.vue';
 import Login from './login.vue';
@@ -169,6 +162,7 @@ const { isArray } = Array;
 
 export default {
   components: {
+    AddressBlock,
     CustomBoolean,
     CustomSelect,
     GivenName,
@@ -176,8 +170,6 @@ export default {
     Organization,
     OrganizationTitle,
     Country,
-    Region,
-    PostalCode,
     ReceiveEmail,
     RegionalPolicy,
     Login,
@@ -204,6 +196,10 @@ export default {
       default: () => [],
     },
     requiredClientFields: {
+      type: Array,
+      default: () => [],
+    },
+    hiddenFields: {
       type: Array,
       default: () => [],
     },
@@ -273,20 +269,6 @@ export default {
       return user.countryCode;
     },
 
-    /**
-     *
-     */
-    displayRegionField() {
-      return regionCountryCodes.includes(this.countryCode);
-    },
-
-    /**
-     *
-     */
-    displayPostalCodeField() {
-      return this.displayRegionField;
-    },
-
     submitMessage() {
       const message = 'Profile updated.';
       if (this.isReloadingPage) return `${message} Reloading page...`;
@@ -317,6 +299,84 @@ export default {
       const { customSelectFieldAnswers } = this.user;
       return isArray(customSelectFieldAnswers) ? customSelectFieldAnswers : [];
     },
+
+    showAddressBlock() {
+      // Don't show at all until country is selected.
+      if (!this.countryCode) return false;
+
+      // Only show if a subfield is visible
+      if (this.citySettings.visible) return true;
+      if (this.streetSettings.visible) return true;
+      if (this.regionCodeSettings.visible) return true;
+      if (this.postalCodeSettings.visible) return true;
+      return false;
+    },
+
+    /**
+     * Field settings
+     */
+    givenNameSettings() {
+      return {
+        required: this.requiredFields.includes('givenName'),
+        visible: !this.hiddenFields.includes('givenName'),
+      };
+    },
+    familyNameSettings() {
+      return {
+        required: this.requiredFields.includes('familyName'),
+        visible: !this.hiddenFields.includes('familyName'),
+      };
+    },
+    organizationSettings() {
+      return {
+        required: this.requiredFields.includes('organization'),
+        visible: !this.hiddenFields.includes('organization'),
+      };
+    },
+    organizationTitleSettings() {
+      return {
+        required: this.requiredFields.includes('organizationTitle'),
+        visible: !this.hiddenFields.includes('organizationTitle'),
+      };
+    },
+    countryCodeSettings() {
+      return {
+        required: this.requiredFields.includes('countryCode'),
+        visible: !this.hiddenFields.includes('countryCode'),
+      };
+    },
+    streetSettings() {
+      return {
+        required: this.requiredFields.includes('street'),
+        visible: !this.hiddenFields.includes('street'),
+      };
+    },
+    addressExtraSettings() {
+      return {
+        required: this.requiredFields.includes('addressExtra'),
+        visible: !this.hiddenFields.includes('addressExtra'),
+      };
+    },
+    citySettings() {
+      return {
+        required: this.requiredFields.includes('city'),
+        visible: !this.hiddenFields.includes('city'),
+      };
+    },
+    regionCodeSettings() {
+      const canRequire = regionCountryCodes.includes(this.countryCode);
+      return {
+        required: canRequire && this.requiredFields.includes('regionCode'),
+        visible: canRequire && !this.hiddenFields.includes('regionCode'),
+      };
+    },
+    postalCodeSettings() {
+      const canRequire = regionCountryCodes.includes(this.countryCode);
+      return {
+        required: canRequire && this.requiredFields.includes('postalCode'),
+        visible: canRequire && !this.hiddenFields.includes('postalCode'),
+      };
+    },
   },
 
   /**
@@ -324,10 +384,11 @@ export default {
    */
   watch: {
     /**
-     * Clear region code on country code change.
+     * Clear region and postal codes on country code change.
      */
     countryCode() {
       this.user.regionCode = null;
+      this.user.postalCode = null;
     },
   },
 
@@ -348,10 +409,6 @@ export default {
     /**
      *
      */
-    isFieldRequired(name) {
-      return this.requiredFields.includes(name);
-    },
-
     getRegionalPolicyAnswer(policyId) {
       return this.user.regionalConsentAnswers.find(a => a.id === policyId);
     },
