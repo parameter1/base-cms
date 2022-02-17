@@ -317,64 +317,64 @@ export default {
      */
     givenNameSettings() {
       return {
-        required: this.isFieldRequired('givenName'),
-        visible: this.isFieldVisible('givenName'),
+        required: this.requiredFields.includes('givenName'),
+        visible: !this.hiddenFields.includes('givenName'),
       };
     },
     familyNameSettings() {
       return {
-        required: this.isFieldRequired('familyName'),
-        visible: this.isFieldVisible('familyName'),
+        required: this.requiredFields.includes('familyName'),
+        visible: !this.hiddenFields.includes('familyName'),
       };
     },
     organizationSettings() {
       return {
-        required: this.isFieldRequired('organization'),
-        visible: this.isFieldVisible('organization'),
+        required: this.requiredFields.includes('organization'),
+        visible: !this.hiddenFields.includes('organization'),
       };
     },
     organizationTitleSettings() {
       return {
-        required: this.isFieldRequired('organizationTitle'),
-        visible: this.isFieldVisible('organizationTitle'),
+        required: this.requiredFields.includes('organizationTitle'),
+        visible: !this.hiddenFields.includes('organizationTitle'),
       };
     },
     countryCodeSettings() {
       return {
-        required: this.isFieldRequired('countryCode'),
-        visible: this.isFieldVisible('countryCode'),
+        required: this.requiredFields.includes('countryCode'),
+        visible: !this.hiddenFields.includes('countryCode'),
       };
     },
     streetSettings() {
       return {
-        required: this.isFieldRequired('street'),
-        visible: this.isFieldVisible('street'),
+        required: this.requiredFields.includes('street'),
+        visible: !this.hiddenFields.includes('street'),
       };
     },
     addressExtraSettings() {
       return {
-        required: this.isFieldRequired('addressExtra'),
-        visible: this.isFieldVisible('addressExtra'),
+        required: this.requiredFields.includes('addressExtra'),
+        visible: !this.hiddenFields.includes('addressExtra'),
       };
     },
     citySettings() {
       return {
-        required: this.isFieldRequired('city'),
-        visible: this.isFieldVisible('city'),
+        required: this.requiredFields.includes('city'),
+        visible: !this.hiddenFields.includes('city'),
       };
     },
     regionCodeSettings() {
       const canRequire = regionCountryCodes.includes(this.countryCode);
       return {
-        required: canRequire && this.isFieldRequired('regionCode'),
-        visible: canRequire && this.isFieldVisible('regionCode'),
+        required: canRequire && this.requiredFields.includes('regionCode'),
+        visible: canRequire && !this.hiddenFields.includes('regionCode'),
       };
     },
     postalCodeSettings() {
       const canRequire = regionCountryCodes.includes(this.countryCode);
       return {
-        required: canRequire && this.isFieldRequired('postalCode'),
-        visible: canRequire && this.isFieldVisible('postalCode'),
+        required: canRequire && this.requiredFields.includes('postalCode'),
+        visible: canRequire && !this.hiddenFields.includes('postalCode'),
       };
     },
   },
@@ -409,14 +409,6 @@ export default {
     /**
      *
      */
-    isFieldRequired(name) {
-      return this.requiredFields.includes(name);
-    },
-
-    isFieldVisible(name) {
-      return !this.hiddenFields.includes(name);
-    },
-
     getRegionalPolicyAnswer(policyId) {
       return this.user.regionalConsentAnswers.find(a => a.id === policyId);
     },
