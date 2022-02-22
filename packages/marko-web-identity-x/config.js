@@ -21,7 +21,7 @@ class IdentityXConfiguration {
     apiToken,
     requiredServerFields = [],
     requiredClientFields = [],
-    hiddenFields = ['city', 'street', 'addressExtra'],
+    hiddenFields = ['city', 'street', 'addressExtra', 'phoneNumber'],
     onHookError,
     ...rest
   } = {}) {
