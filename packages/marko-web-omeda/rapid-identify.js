@@ -24,6 +24,7 @@ module.exports = async (omedaGraphQLClient, {
   street,
   addressExtra,
   city,
+  phoneNumber,
 
   // deprecated, use `deploymentTypes` instead
   deploymentTypeIds,
@@ -48,6 +49,7 @@ module.exports = async (omedaGraphQLClient, {
     ...(street && { streetAddress: street }),
     ...(addressExtra && { extraAddress: addressExtra }),
     ...(city && { city }),
+    ...(phoneNumber && { phoneNumber }),
 
     ...(isArray(deploymentTypeIds) && deploymentTypeIds.length && { deploymentTypeIds }),
     ...(isArray(deploymentTypes) && deploymentTypes.length && { deploymentTypes }),
