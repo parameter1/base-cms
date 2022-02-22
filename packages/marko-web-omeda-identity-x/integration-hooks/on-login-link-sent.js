@@ -51,6 +51,9 @@ const CUSTOMER_QUERY = gql`
         extraAddress
         city
       }
+      primaryPhoneNumber {
+        phoneNumber
+      }
       demographics {
         demographic { id description }
         value { id description }
@@ -101,6 +104,7 @@ const setOmedaData = async ({ identityX, user, omedaCustomer }) => {
     street: get(omedaCustomer, 'primaryPostalAddress.street'),
     addressExtra: get(omedaCustomer, 'primaryPostalAddress.extraAddress'),
     city: get(omedaCustomer, 'primaryPostalAddress.city'),
+    phoneNumber: get(omedaCustomer, 'primaryPhoneNumber.phoneNumber'),
   };
   return identityX.client.mutate({
     mutation: SET_OMEDA_DATA,
