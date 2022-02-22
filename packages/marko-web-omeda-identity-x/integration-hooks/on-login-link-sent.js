@@ -43,7 +43,14 @@ const CUSTOMER_QUERY = gql`
       lastName
       title
       companyName
-      primaryPostalAddress { countryCode regionCode postalCode }
+      primaryPostalAddress {
+        countryCode
+        regionCode
+        postalCode
+        street
+        extraAddress
+        city
+      }
       demographics {
         demographic { id description }
         value { id description }
@@ -91,6 +98,9 @@ const setOmedaData = async ({ identityX, user, omedaCustomer }) => {
     countryCode: get(omedaCustomer, 'primaryPostalAddress.countryCode'),
     regionCode: get(omedaCustomer, 'primaryPostalAddress.regionCode'),
     postalCode: get(omedaCustomer, 'primaryPostalAddress.postalCode'),
+    street: get(omedaCustomer, 'primaryPostalAddress.street'),
+    addressExtra: get(omedaCustomer, 'primaryPostalAddress.extraAddress'),
+    city: get(omedaCustomer, 'primaryPostalAddress.city'),
   };
   return identityX.client.mutate({
     mutation: SET_OMEDA_DATA,
