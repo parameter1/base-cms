@@ -18,6 +18,7 @@
   "<marko-web-identity-x-form-login>": {
     "template": "./form-login.marko",
     "@button-labels": "object",
+    "@login-email-placeholder": "string",
     "@redirect": "string"
   },
   "<marko-web-identity-x-form-logout>": {
