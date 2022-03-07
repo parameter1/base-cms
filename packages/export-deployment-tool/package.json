@@ -1,0 +1,21 @@
+{
+  "name": "@parameter1/base-cms-export-deployment-tool",
+  "version": "2.77.0",
+  "description": "The deployment tool for use with @parameter1/base-cms-marko-exports",
+  "main": "src/index.js",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/export-deployment-tool",
+  "author": "Josh Worden <josh@parameter1.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@endeavorb2b/rancher2cli": "^1.0.5",
+    "envalid": "^6.0.2",
+    "node-fetch": "^2.6.6",
+    "yargs": "^15.4.1"
+  },
+  "bin": {
+    "deploy": "./src/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
