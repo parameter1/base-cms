@@ -45,19 +45,21 @@ module.exports = async (apollo, { templates }) => {
   const variables = { campaignsBefore, campaignsAfter };
   const { data } = await apollo.query({ query, variables });
 
-  const newsletters = getAsArray(data, 'emailNewsletters.edges').map((edge) => {
+  const allNewsletters = getAsArray(data, 'emailNewsletters.edges').map((edge) => {
     const node = { ...edge.node };
     node.templates = templates.filter(t => t.alias === node.alias).map(t => t.key);
     node.campaigns = getAsArray(node, 'campaigns.edges').map(campaignEdge => ({ ...campaignEdge.node }));
     [node.latestCampaign] = node.campaigns;
     return node;
   });
+  const newsletters = allNewsletters.filter(newsletter => newsletter.site);
+  const invalidNewsletters = allNewsletters.filter(newsletter => !newsletter.site);
 
   const aliases = newsletters.map(n => n.alias);
   const staticTemplates = templates.filter(t => !aliases.includes(t.alias)).map(t => t.key);
 
-  newsletters.forEach((newsletter) => {
-    if (!newsletter.site) throw new Error(`No site ID is assigned to ${newsletter.name} (${newsletter.id})`);
+  invalidNewsletters.forEach((newsletter) => {
+    process.emitWarning(`No site ID is assigned to ${newsletter.name} (${newsletter.id})`);
   });
 
   return { newsletters, staticTemplates };
