@@ -24,7 +24,7 @@
   <div v-else>
     <form @submit.prevent="handleSubmit">
       <fieldset :disabled="loading">
-        <email v-model="email" />
+        <email v-model="email" :placeholder="loginEmailPlaceholder" />
         <small
           v-if="consentPolicy"
           class="text-muted mb-3"
@@ -89,6 +89,10 @@ export default {
       default: null,
     },
     appContextId: {
+      type: String,
+      default: null,
+    },
+    loginEmailPlaceholder: {
       type: String,
       default: null,
     },
