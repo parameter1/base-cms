@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-export-deployment-tool",
-  "version": "0.0.0",
+  "version": "2.77.0",
   "description": "The deployment tool for use with @parameter1/base-cms-marko-exports",
   "main": "src/index.js",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/export-deployment-tool",
@@ -14,11 +14,6 @@
   },
   "bin": {
     "deploy": "./src/index.js"
-  },
-  "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.2.0",
-    "eslint-plugin-import": "^2.24.2"
   },
   "publishConfig": {
     "access": "public"
