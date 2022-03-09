@@ -34,6 +34,11 @@
         </div>
 
         <div class="row">
+          <phone-number
+            v-if="phoneNumberSettings.visible"
+            v-model="user.phoneNumber"
+            :required="phoneNumberSettings.required"
+          />
           <div class="col-md-6">
             <country
               v-model="user.countryCode"
@@ -151,6 +156,7 @@ import FamilyName from './form/fields/family-name.vue';
 import Organization from './form/fields/organization.vue';
 import OrganizationTitle from './form/fields/organization-title.vue';
 import Country from './form/fields/country.vue';
+import PhoneNumber from './form/fields/phone-number.vue';
 import ReceiveEmail from './form/fields/receive-email.vue';
 import RegionalPolicy from './form/fields/regional-policy.vue';
 import Login from './login.vue';
@@ -170,6 +176,7 @@ export default {
     Organization,
     OrganizationTitle,
     Country,
+    PhoneNumber,
     ReceiveEmail,
     RegionalPolicy,
     Login,
@@ -355,6 +362,12 @@ export default {
       return {
         required: this.requiredFields.includes('addressExtra'),
         visible: !this.hiddenFields.includes('addressExtra'),
+      };
+    },
+    phoneNumberSettings() {
+      return {
+        required: this.requiredFields.includes('phoneNumber'),
+        visible: !this.hiddenFields.includes('phoneNumber'),
       };
     },
     citySettings() {

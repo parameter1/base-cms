@@ -50,6 +50,7 @@ module.exports = asyncRoute(async (req, res) => {
     city,
     street,
     addressExtra,
+    phoneNumber,
     receiveEmail,
     regionalConsentAnswers,
     customBooleanFieldAnswers,
@@ -66,6 +67,7 @@ module.exports = asyncRoute(async (req, res) => {
     city,
     street,
     addressExtra,
+    phoneNumber,
     receiveEmail,
   };
 
