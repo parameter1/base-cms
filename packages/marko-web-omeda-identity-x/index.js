@@ -1,6 +1,7 @@
 const omeda = require('@parameter1/base-cms-marko-web-omeda');
 const identityX = require('@parameter1/base-cms-marko-web-identity-x');
 const addOmedaHooksToIdentityXConfig = require('./add-integration-hooks');
+const setPromoSourceCookie = require('./middleware/set-promo-source');
 const stripOlyticsParam = require('./middleware/strip-olytics-param');
 const rapidIdentify = require('./middleware/rapid-identify');
 const rapidIdentifyRouter = require('./routes/rapid-identify');
@@ -14,6 +15,9 @@ module.exports = (app, {
   rapidIdentProductId,
   omedaGraphQLClientProp = '$omedaGraphQLClient',
   omedaRapidIdentifyProp = '$omedaRapidIdentify',
+
+  omedaPromoCodeCookieName = 'oly_promo_src',
+  omedaPromoCodeStripQueryParam = true,
 
   idxConfig,
   idxOmedaRapidIdentifyProp = '$idxOmedaRapidIdentify',
@@ -64,4 +68,10 @@ module.exports = (app, {
 
   // strip `oly_enc_id` when identity-x user is logged-in
   app.use(stripOlyticsParam());
+
+  // set `oly_promo_src` when the URL parameter is present
+  app.use(setPromoSourceCookie({
+    omedaPromoCodeCookieName,
+    omedaPromoCodeStripQueryParam,
+  }));
 };
