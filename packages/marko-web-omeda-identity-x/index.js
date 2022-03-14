@@ -18,6 +18,7 @@ module.exports = (app, {
 
   omedaPromoCodeCookieName = 'oly_promo_src',
   omedaPromoCodeStripQueryParam = true,
+  omedaPromoCodeDefault,
 
   idxConfig,
   idxOmedaRapidIdentifyProp = '$idxOmedaRapidIdentify',
@@ -55,6 +56,8 @@ module.exports = (app, {
     productId: rapidIdentProductId,
     prop: idxOmedaRapidIdentifyProp,
     omedaRapidIdentifyProp,
+    omedaPromoCodeCookieName,
+    omedaPromoCodeDefault,
   }));
 
   // install identity x

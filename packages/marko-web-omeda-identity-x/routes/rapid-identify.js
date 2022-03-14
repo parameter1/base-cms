@@ -11,12 +11,15 @@ const findEncryptedId = require('../external-id/find-encrypted-customer-id');
 module.exports = ({
   brandKey,
   idxOmedaRapidIdentifyProp = '$idxOmedaRapidIdentify',
+  omedaPromoCodeCookieName = 'oly_promo_src',
+  defaultOmedaPromoCode,
 } = {}) => {
   if (!brandKey) throw new Error('An Omeda brand key is required to use this middleware.');
   const router = Router();
   router.get('/', asyncRoute(async (req, res) => {
     const idxOmedaRapidIdentify = req[idxOmedaRapidIdentifyProp];
     if (!idxOmedaRapidIdentify) throw new Error(`Unable to find the IdentityX+Omeda rapid identifier on the request using ${idxOmedaRapidIdentifyProp}`);
+    const promoCode = req.cookies[omedaPromoCodeCookieName] || defaultOmedaPromoCode;
 
     const data = {
       userId: null,
@@ -40,7 +43,7 @@ module.exports = ({
       data.source = 'existing';
     } else {
       // no omeda identifier found for this user, rapidly identify.
-      const { encryptedCustomerId } = await idxOmedaRapidIdentify({ user });
+      const { encryptedCustomerId } = await idxOmedaRapidIdentify({ user, promoCode });
       data.encryptedId = encryptedCustomerId;
       data.source = 'new';
     }

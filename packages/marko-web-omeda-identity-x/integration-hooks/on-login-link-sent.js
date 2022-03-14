@@ -222,6 +222,8 @@ module.exports = async ({
   brandKey,
   omedaGraphQLProp = '$omedaGraphQLClient',
   idxOmedaRapidIdentifyProp = '$idxOmedaRapidIdentify',
+  omedaPromoCodeCookieName = 'oly_promo_src',
+  omedaPromoCodeDefault: defaultPromoCode,
 
   req,
   service: identityX,
@@ -232,11 +234,14 @@ module.exports = async ({
   const idxOmedaRapidIdentify = req[idxOmedaRapidIdentifyProp];
   if (!idxOmedaRapidIdentify) throw new Error(`Unable to find the IdentityX+Omeda rapid identifier on the request using ${idxOmedaRapidIdentifyProp}`);
 
+  const promoCode = req.cookies[omedaPromoCodeCookieName] || defaultPromoCode;
+
   // get omeda customer id (via rapid identity) and load omeda custom field data
   const [{ data }, { encryptedCustomerId }] = await Promise.all([
     identityX.client.query({ query: FIELD_QUERY }),
     idxOmedaRapidIdentify({
       user: user.verified ? user : { id: user.id, email: user.email },
+      ...(promoCode && { promoCode }),
     }),
   ]);
 
