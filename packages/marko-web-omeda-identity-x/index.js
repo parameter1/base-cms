@@ -16,7 +16,7 @@ module.exports = (app, {
   omedaGraphQLClientProp = '$omedaGraphQLClient',
   omedaRapidIdentifyProp = '$omedaRapidIdentify',
 
-  omedaPromoCodeCookieName = 'oly_promo_src',
+  omedaPromoCodeCookieName = 'omeda_promo_code',
   omedaPromoCodeStripQueryParam = true,
   omedaPromoCodeDefault,
 
@@ -72,7 +72,7 @@ module.exports = (app, {
   // strip `oly_enc_id` when identity-x user is logged-in
   app.use(stripOlyticsParam());
 
-  // set `oly_promo_src` when the URL parameter is present
+  // set `omeda_promo_code` when the URL parameter is present
   app.use(setPromoSourceCookie({
     omedaPromoCodeCookieName,
     omedaPromoCodeStripQueryParam,

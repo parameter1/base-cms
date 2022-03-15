@@ -222,7 +222,7 @@ module.exports = async ({
   brandKey,
   omedaGraphQLProp = '$omedaGraphQLClient',
   idxOmedaRapidIdentifyProp = '$idxOmedaRapidIdentify',
-  omedaPromoCodeCookieName = 'oly_promo_src',
+  omedaPromoCodeCookieName = 'omeda_promo_code',
   omedaPromoCodeDefault: defaultPromoCode,
 
   req,

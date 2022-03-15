@@ -6,7 +6,7 @@ module.exports = ({
 
   prop = '$idxOmedaRapidIdentify',
   omedaRapidIdentifyProp = '$omedaRapidIdentify',
-  omedaPromoCodeCookieName = 'oly_promo_src',
+  omedaPromoCodeCookieName = 'omeda_promo_code',
   omedaPromoCodeDefault,
 }) => {
   if (!prop) throw new Error('An Omeda + IdentityX rapid identifcation prop is required.');

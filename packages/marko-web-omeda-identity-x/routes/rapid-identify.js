@@ -11,7 +11,7 @@ const findEncryptedId = require('../external-id/find-encrypted-customer-id');
 module.exports = ({
   brandKey,
   idxOmedaRapidIdentifyProp = '$idxOmedaRapidIdentify',
-  omedaPromoCodeCookieName = 'oly_promo_src',
+  omedaPromoCodeCookieName = 'omeda_promo_code',
   defaultOmedaPromoCode,
 } = {}) => {
   if (!brandKey) throw new Error('An Omeda brand key is required to use this middleware.');

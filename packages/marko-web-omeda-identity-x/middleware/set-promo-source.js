@@ -4,14 +4,14 @@ const clean = (value) => {
 };
 
 /**
- * Sets the `oly_promo_src` cookie to identify the customer's original promotion source if the
- * `oly_promo_src` URL parameter is present.
+ * Sets the `omeda_promo_code` cookie to identify the customer's original promotion source if the
+ * `omeda_promo_code` URL parameter is present.
  * '
  * @param {String} omedaPromoCodeCookieName The name of the cookie to interact with
  * @param {Boolean} stripIncomingPromoCode
  */
 module.exports = ({
-  omedaPromoCodeCookieName = 'oly_promo_src',
+  omedaPromoCodeCookieName = 'omeda_promo_code',
   stripIncomingPromoCode = true,
 } = {}) => (req, res, next) => {
   const promoSource = clean(req.cookies[omedaPromoCodeCookieName]);
