@@ -1,4 +1,5 @@
 const idxOmedaRapidIdentify = require('../rapid-identify');
+const extractPromoCode = require('../utils/extract-promo-code');
 
 module.exports = ({
   brandKey,
@@ -16,11 +17,16 @@ module.exports = ({
     const omedaRapidIdentify = req[omedaRapidIdentifyProp];
     if (!omedaRapidIdentify) throw new Error(`Unable to find the Omeda rapid identifier on the request using ${omedaRapidIdentifyProp}`);
 
-    const handler = async ({ user, promoCode: explicitCode } = {}) => idxOmedaRapidIdentify({
+    const handler = async ({ user, promoCode } = {}) => idxOmedaRapidIdentify({
       brandKey,
       productId,
       appUser: user,
-      promoCode: explicitCode || req.cookies[omedaPromoCodeCookieName] || omedaPromoCodeDefault,
+      promoCode: extractPromoCode({
+        promoCode,
+        omedaPromoCodeCookieName,
+        omedaPromoCodeDefault,
+        cookies: req.cookies,
+      }),
 
       identityX: req.identityX,
       omedaRapidIdentify,
