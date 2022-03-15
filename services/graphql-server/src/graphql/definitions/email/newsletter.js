@@ -157,7 +157,7 @@ input EmailNewsletterSortInput {
 input UpdateEmailNewsletterProviderInput {
   id: ObjectID!
   type: String
-  providerId: String
+  providerId: Int
   attributes: JSON
 }
 
