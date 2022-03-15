@@ -17,7 +17,6 @@ module.exports = (app, {
   omedaRapidIdentifyProp = '$omedaRapidIdentify',
 
   omedaPromoCodeCookieName = 'omeda_promo_code',
-  omedaPromoCodeStripQueryParam = true,
   omedaPromoCodeDefault,
 
   idxConfig,
@@ -75,6 +74,5 @@ module.exports = (app, {
   // set `omeda_promo_code` when the URL parameter is present
   app.use(setPromoSourceCookie({
     omedaPromoCodeCookieName,
-    omedaPromoCodeStripQueryParam,
   }));
 };

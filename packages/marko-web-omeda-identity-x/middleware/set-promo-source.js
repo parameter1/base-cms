@@ -8,15 +8,13 @@ const clean = (value) => {
  * `omeda_promo_code` URL parameter is present.
  * '
  * @param {String} omedaPromoCodeCookieName The name of the cookie to interact with
- * @param {Boolean} stripIncomingPromoCode
  */
 module.exports = ({
   omedaPromoCodeCookieName = 'omeda_promo_code',
-  stripIncomingPromoCode = true,
 } = {}) => (req, res, next) => {
   const promoSource = clean(req.cookies[omedaPromoCodeCookieName]);
 
-  const { [omedaPromoCodeCookieName]: promoCode, ...q } = req.query;
+  const { [omedaPromoCodeCookieName]: promoCode } = req.query;
   const incomingPromoCode = clean(promoCode);
 
   // Only set the promo source cookie if it doesn't already exist
@@ -25,12 +23,5 @@ module.exports = ({
     res.cookie(omedaPromoCodeCookieName, `${incomingPromoCode}`, options);
   }
 
-  // If enabled, strip the URL parameter from the query string
-  if (incomingPromoCode && stripIncomingPromoCode) {
-    const params = (new URLSearchParams(q)).toString();
-    const redirectTo = `${req.path}${params ? `?${params}` : ''}`;
-    res.redirect(302, redirectTo);
-  } else {
-    next();
-  }
+  next();
 };

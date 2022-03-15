@@ -25,7 +25,6 @@ All configuration data must be passed to the middleware when loaded (See [Middle
 | `omedaRapidIdentifyProp` | (Optional) Custom path to the Omeda Rapid Identification handler (within app.locals), default value `$omedaRapidIdentify`
 | `idxOmedaRapidIdentifyProp` | (Optional) Custom path to the IdentityX Omeda Rapid Identification handler (within app.locals), default value `$idXOmedaRapidIdentify`
 | `omedaPromoCodeCookieName` | (Optional) The Omeda promocode cookie name to detect, default value `omeda_promo_code`
-| `omedaPromoCodeStripQueryParam` | (Optional) If the promo code param should be stripped from the request, default `true`
 | `omedaPromoCodeDefault` | (Optional) The default promo code to send with rapid identification requests
 
 ## Usage
