@@ -22,7 +22,7 @@ module.exports = {
       body.set('provider.providerId', providerId);
       body.set('provider.attributes', attributes);
       body.set('id', id);
-      console.log(await base4rest.updateOne({ model: type, id, body }));
+      await base4rest.updateOne({ model: type, id, body });
       return basedb.findOne('platform.Product', { _id: id });
     },
   },
