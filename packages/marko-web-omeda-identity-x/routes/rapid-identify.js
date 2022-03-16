@@ -7,16 +7,25 @@ const tokenCookie = require('@parameter1/base-cms-marko-web-identity-x/utils/tok
 const olyticsCookie = require('@parameter1/base-cms-marko-web-omeda/olytics/customer-cookie');
 
 const findEncryptedId = require('../external-id/find-encrypted-customer-id');
+const extractPromoCode = require('../utils/extract-promo-code');
 
 module.exports = ({
   brandKey,
   idxOmedaRapidIdentifyProp = '$idxOmedaRapidIdentify',
+  omedaPromoCodeCookieName = 'omeda_promo_code',
+  omedaPromoCodeDefault,
 } = {}) => {
   if (!brandKey) throw new Error('An Omeda brand key is required to use this middleware.');
   const router = Router();
   router.get('/', asyncRoute(async (req, res) => {
     const idxOmedaRapidIdentify = req[idxOmedaRapidIdentifyProp];
     if (!idxOmedaRapidIdentify) throw new Error(`Unable to find the IdentityX+Omeda rapid identifier on the request using ${idxOmedaRapidIdentifyProp}`);
+
+    const promoCode = extractPromoCode({
+      omedaPromoCodeCookieName,
+      omedaPromoCodeDefault,
+      cookies: req.cookies,
+    });
 
     const data = {
       userId: null,
@@ -40,7 +49,7 @@ module.exports = ({
       data.source = 'existing';
     } else {
       // no omeda identifier found for this user, rapidly identify.
-      const { encryptedCustomerId } = await idxOmedaRapidIdentify({ user });
+      const { encryptedCustomerId } = await idxOmedaRapidIdentify({ user, promoCode });
       data.encryptedId = encryptedCustomerId;
       data.source = 'new';
     }

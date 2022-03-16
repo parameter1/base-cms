@@ -21,9 +21,11 @@ All configuration data must be passed to the middleware when loaded (See [Middle
 | `rapidIdentProductId` | (Required) The Omeda identifier for a Website product (ProductType=7).
 | `idxConfig` | (Required) An instance of the IdentityX configuration class | [marko-web-identity-x#1](../marko-web-identity-x/config.js)
 | `idxRouteTemplates` | (Required) An object containing the Marko templates to use for each IdentityX endpoint. | [marko-web-identity-x#2](../marko-web-identity-x/index.js)
-| `omedaGraphQLClientProp` | (Optional) Custom path to the Omeda GraphQL client (within app.locals)
-| `omedaRapidIdentifyProp` | (Optional) Custom path to the Omeda Rapid Identification handler (within app.locals)
-| `idxOmedaRapidIdentifyProp` | (Optional) Custom path to the IdentityX Omeda Rapid Identification handler (within app.locals)
+| `omedaGraphQLClientProp` | (Optional) Custom path to the Omeda GraphQL client (within app.locals), default value `$omedaGraphQLClient`
+| `omedaRapidIdentifyProp` | (Optional) Custom path to the Omeda Rapid Identification handler (within app.locals), default value `$omedaRapidIdentify`
+| `idxOmedaRapidIdentifyProp` | (Optional) Custom path to the IdentityX Omeda Rapid Identification handler (within app.locals), default value `$idXOmedaRapidIdentify`
+| `omedaPromoCodeCookieName` | (Optional) The Omeda promocode cookie name to detect, default value `omeda_promo_code`
+| `omedaPromoCodeDefault` | (Optional) The default promo code to send with rapid identification requests
 
 ## Usage
 This package:

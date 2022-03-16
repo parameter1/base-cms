@@ -2,6 +2,7 @@ const gql = require('graphql-tag');
 const { get, getAsArray } = require('@parameter1/base-cms-object-path');
 const isOmedaDeploymentTypeId = require('../external-id/is-deployment-type-id');
 const isOmedaDemographicId = require('../external-id/is-demographic-id');
+const extractPromoCode = require('../utils/extract-promo-code');
 
 const FIELD_QUERY = gql`
   query GetCustomFields {
@@ -222,6 +223,8 @@ module.exports = async ({
   brandKey,
   omedaGraphQLProp = '$omedaGraphQLClient',
   idxOmedaRapidIdentifyProp = '$idxOmedaRapidIdentify',
+  omedaPromoCodeCookieName = 'omeda_promo_code',
+  omedaPromoCodeDefault,
 
   req,
   service: identityX,
@@ -232,11 +235,18 @@ module.exports = async ({
   const idxOmedaRapidIdentify = req[idxOmedaRapidIdentifyProp];
   if (!idxOmedaRapidIdentify) throw new Error(`Unable to find the IdentityX+Omeda rapid identifier on the request using ${idxOmedaRapidIdentifyProp}`);
 
+  const promoCode = extractPromoCode({
+    omedaPromoCodeCookieName,
+    omedaPromoCodeDefault,
+    cookies: req.cookies,
+  });
+
   // get omeda customer id (via rapid identity) and load omeda custom field data
   const [{ data }, { encryptedCustomerId }] = await Promise.all([
     identityX.client.query({ query: FIELD_QUERY }),
     idxOmedaRapidIdentify({
       user: user.verified ? user : { id: user.id, email: user.email },
+      ...(promoCode && { promoCode }),
     }),
   ]);
 
