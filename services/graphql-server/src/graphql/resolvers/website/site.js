@@ -1,3 +1,6 @@
+const { Base4RestPayload } = require('@parameter1/base-cms-base4-rest-api');
+
+const validateRest = require('../../utils/validate-rest');
 const defaults = require('../../defaults');
 
 module.exports = {
@@ -46,5 +49,67 @@ module.exports = {
       if (site.exists()) return site.obj();
       return null;
     },
+  },
+  /**
+   *
+   */
+  Mutation: {
+    /**
+     *
+     */
+    updateSiteHost: async (_, { input }, { base4rest, basedb }) => {
+      validateRest(base4rest);
+      const type = 'website/product/site';
+      const { id, host } = input;
+
+      const body = new Base4RestPayload({ type });
+      body.set('host', host);
+      body.set('id', id);
+      await base4rest.updateOne({ model: type, id, body });
+      return basedb.findOne('platform.Product', { _id: id });
+    },
+    /**
+     *
+     */
+    updateSiteURL: async (_, { input }, { base4rest, basedb }) => {
+      validateRest(base4rest);
+      const type = 'website/product/site';
+      const { id, url } = input;
+
+      const body = new Base4RestPayload({ type });
+      body.set('url', url);
+      body.set('id', id);
+      await base4rest.updateOne({ model: type, id, body });
+      return basedb.findOne('platform.Product', { _id: id });
+    },
+    /**
+     *
+     */
+    updateSiteImageHost: async (_, { input }, { base4rest, basedb }) => {
+      validateRest(base4rest);
+      const type = 'website/product/site';
+      const { id, imageHost } = input;
+
+      const body = new Base4RestPayload({ type });
+      body.set('imageHost', imageHost);
+      body.set('id', id);
+      await base4rest.updateOne({ model: type, id, body });
+      return basedb.findOne('platform.Product', { _id: id });
+    },
+    /**
+     *
+     */
+    updateSiteAssetHost: async (_, { input }, { base4rest, basedb }) => {
+      validateRest(base4rest);
+      const type = 'website/product/site';
+      const { id, assetHost } = input;
+
+      const body = new Base4RestPayload({ type });
+      body.set('assetHost', assetHost);
+      body.set('id', id);
+      await base4rest.updateOne({ model: type, id, body });
+      return basedb.findOne('platform.Product', { _id: id });
+    },
+
   },
 };
