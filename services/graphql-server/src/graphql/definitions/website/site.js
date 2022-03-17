@@ -10,10 +10,10 @@ extend type Query {
 }
 
 extend type Mutation {
-  updateWebsiteSiteHost(input: UpdateSiteHostInput!): WebsiteSite! @requiresAuth
-  updateWebsiteSiteURL(input: UpdateSiteURLInput!): WebsiteSite! @requiresAuth
-  updateWebsiteSiteImageHost(input: UpdateSiteImageHostInput!): WebsiteSite! @requiresAuth
-  updateWebsiteSiteAssetHost(input: UpdateSiteAssetHostInput!): WebsiteSite! @requiresAuth
+  updateWebsiteSiteHost(input: UpdateWebsiteSiteHostInput!): WebsiteSite! @requiresAuth
+  updateWebsiteSiteURL(input: UpdateWebsiteSiteURLInput!): WebsiteSite! @requiresAuth
+  updateWebsiteSiteImageHost(input: UpdateWebsiteSiteImageHostInput!): WebsiteSite! @requiresAuth
+  updateWebsiteSiteAssetHost(input: UpdateWebsiteSiteAssetHostInput!): WebsiteSite! @requiresAuth
 }
 
 type WebsiteSite {
