@@ -57,7 +57,7 @@ module.exports = {
     /**
      *
      */
-    updateSiteHost: async (_, { input }, { base4rest, basedb }) => {
+    updateWebsiteSiteHost: async (_, { input }, { base4rest, basedb }) => {
       validateRest(base4rest);
       const type = 'website/product/site';
       const { id, host } = input;
@@ -71,7 +71,7 @@ module.exports = {
     /**
      *
      */
-    updateSiteURL: async (_, { input }, { base4rest, basedb }) => {
+    updateWebsiteSiteURL: async (_, { input }, { base4rest, basedb }) => {
       validateRest(base4rest);
       const type = 'website/product/site';
       const { id, url } = input;
@@ -85,7 +85,7 @@ module.exports = {
     /**
      *
      */
-    updateSiteImageHost: async (_, { input }, { base4rest, basedb }) => {
+    updateWebsiteSiteImageHost: async (_, { input }, { base4rest, basedb }) => {
       validateRest(base4rest);
       const type = 'website/product/site';
       const { id, imageHost } = input;
@@ -99,7 +99,7 @@ module.exports = {
     /**
      *
      */
-    updateSiteAssetHost: async (_, { input }, { base4rest, basedb }) => {
+    updateWebsiteSiteAssetHost: async (_, { input }, { base4rest, basedb }) => {
       validateRest(base4rest);
       const type = 'website/product/site';
       const { id, assetHost } = input;

@@ -10,10 +10,10 @@ extend type Query {
 }
 
 extend type Mutation {
-  updateSiteHost(input: UpdateSiteHostInput!): WebsiteSite! @requiresAuth
-  updateSiteURL(input: UpdateSiteURLInput!): WebsiteSite! @requiresAuth
-  updateSiteImageHost(input: UpdateSiteImageHostInput!): WebsiteSite! @requiresAuth
-  updateSiteAssetHost(input: UpdateSiteAssetHostInput!): WebsiteSite! @requiresAuth
+  updateWebsiteSiteHost(input: UpdateSiteHostInput!): WebsiteSite! @requiresAuth
+  updateWebsiteSiteURL(input: UpdateSiteURLInput!): WebsiteSite! @requiresAuth
+  updateWebsiteSiteImageHost(input: UpdateSiteImageHostInput!): WebsiteSite! @requiresAuth
+  updateWebsiteSiteAssetHost(input: UpdateSiteAssetHostInput!): WebsiteSite! @requiresAuth
 }
 
 type WebsiteSite {
@@ -140,22 +140,22 @@ input WebsiteSiteRootSectionsInput {
   pagination: PaginationInput = {}
 }
 
-input UpdateSiteHostInput {
+input UpdateWebsiteSiteHostInput {
   id: ObjectID!
   host: String
 }
 
-input UpdateSiteURLInput {
+input UpdateWebsiteSiteURLInput {
   id: ObjectID!
   url: String
 }
 
-input UpdateSiteImageHostInput {
+input UpdateWebsiteSiteImageHostInput {
   id: ObjectID!
   imageHost: String
 }
 
-input UpdateSiteAssetHostInput {
+input UpdateWebsiteSiteAssetHostInput {
   id: ObjectID!
   assetHost: String
 }
