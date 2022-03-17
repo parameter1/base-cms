@@ -142,7 +142,7 @@ input WebsiteSiteRootSectionsInput {
 
 input UpdateWebsiteSiteHostInput {
   id: ObjectID!
-  host: String
+  host: String!
 }
 
 input UpdateWebsiteSiteURLInput {
@@ -152,12 +152,12 @@ input UpdateWebsiteSiteURLInput {
 
 input UpdateWebsiteSiteImageHostInput {
   id: ObjectID!
-  imageHost: String
+  imageHost: String!
 }
 
 input UpdateWebsiteSiteAssetHostInput {
   id: ObjectID!
-  assetHost: String
+  assetHost: String!
 }
 
 `;
