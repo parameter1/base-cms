@@ -9,6 +9,13 @@ extend type Query {
   matchWebsiteSites(input: MatchWebsiteSitesQueryInput!): WebsiteSiteConnection! @matchMany(model: "platform.Product", criteria: "websiteSite")
 }
 
+extend type Mutation {
+  updateWebsiteSiteHost(input: UpdateWebsiteSiteHostInput!): WebsiteSite! @requiresAuth
+  updateWebsiteSiteURL(input: UpdateWebsiteSiteURLInput!): WebsiteSite! @requiresAuth
+  updateWebsiteSiteImageHost(input: UpdateWebsiteSiteImageHostInput!): WebsiteSite! @requiresAuth
+  updateWebsiteSiteAssetHost(input: UpdateWebsiteSiteAssetHostInput!): WebsiteSite! @requiresAuth
+}
+
 type WebsiteSite {
   # fields from platform.model::Product
   id: ObjectID! @projection(localField: "_id") @value(localField: "_id")
@@ -131,6 +138,26 @@ input WebsiteSiteRootSectionsInput {
   status: ModelStatus = active
   sort: WebsiteSectionSortInput = {}
   pagination: PaginationInput = {}
+}
+
+input UpdateWebsiteSiteHostInput {
+  id: ObjectID!
+  host: String!
+}
+
+input UpdateWebsiteSiteURLInput {
+  id: ObjectID!
+  url: String
+}
+
+input UpdateWebsiteSiteImageHostInput {
+  id: ObjectID!
+  imageHost: String!
+}
+
+input UpdateWebsiteSiteAssetHostInput {
+  id: ObjectID!
+  assetHost: String!
 }
 
 `;
