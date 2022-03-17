@@ -25,6 +25,10 @@ extend type Query {
   )
 }
 
+extend type Mutation {
+  updateEmailNewsletterProvider(input: UpdateEmailNewsletterProviderInput!): EmailNewsletter! @requiresAuth
+}
+
 type EmailNewsletter {
   # fields from platform.model::Product
   id: ObjectID! @projection(localField: "_id") @value(localField: "_id")
@@ -148,6 +152,13 @@ input EmailNewsletterSiteInput {
 input EmailNewsletterSortInput {
   field: EmailNewsletterSortField = id
   order: SortOrder = desc
+}
+
+input UpdateEmailNewsletterProviderInput {
+  id: ObjectID!
+  type: String
+  providerId: String
+  attributes: JSON
 }
 
 `;
