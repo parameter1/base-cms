@@ -1369,6 +1369,7 @@ module.exports = {
         after,
         beginning,
         ending,
+        updated,
       } = input;
 
       if (sectionId && sectionAlias) throw new UserInputError('You cannot provide both sectionId and sectionAlias as input.');
@@ -1438,6 +1439,8 @@ module.exports = {
       if (beginning.after) query.$and.push({ startDate: { $gte: beginning.after } });
       if (ending.before) query.$and.push({ endDate: { $lte: ending.before } });
       if (ending.after) query.$and.push({ endDate: { $gte: ending.after } });
+      if (updated.before) query.$and.push({ updated: { $lte: updated.before } });
+      if (updated.after) query.$and.push({ updated: { $gte: updated.after } });
 
       const projection = connectionProjection(info);
       const sort = input.sort.field ? input.sort : { field: 'sectionQuery.0.start', order: 'desc' };

@@ -674,6 +674,8 @@ input WebsiteScheduledContentQueryInput {
   beginning: ContentBeginningInput = {}
   "For types with a endDate field: Limit results to items with a endDate matching the criteria."
   ending: ContentEndingInput = {}
+  "Limit results using the updated (modified) date."
+  updated: ContentUpdatedInput = {}
 }
 
 input RelatedPublishedContentQueryInput {
