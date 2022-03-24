@@ -521,6 +521,8 @@ input AllPublishedContentQueryInput {
   sectionBubbling: Boolean = true
   "Adjusts the order items are returned in."
   sort: ContentSortInput = { field: published, order: desc }
+  "Whether or not the content needs to be indexed by a search engine"
+  requiresIndexed: Boolean = false
   "Adjust which subset of results should be returned."
   pagination: PaginationInput = {}
   "For types with a startDate field: Limit results to items with a startDate matching the criteria."
