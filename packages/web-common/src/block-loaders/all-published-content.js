@@ -56,6 +56,8 @@ module.exports = async (apolloClient, {
   requiresImage,
   sectionBubbling,
 
+  requiresIndexed,
+
   queryFragment,
   queryName,
 } = {}) => {
@@ -74,6 +76,7 @@ module.exports = async (apolloClient, {
     since: date(since),
     beginning: { after: date(beginningAfter), before: date(beginningBefore) },
     ending: { after: date(endingAfter), before: date(endingBefore) },
+    requiresIndexed,
     ...(publishedAfter && { after: date(publishedAfter) }),
   };
   if (field || order) input.sort = { field, order };
