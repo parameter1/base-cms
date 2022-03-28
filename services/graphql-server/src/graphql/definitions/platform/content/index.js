@@ -70,6 +70,8 @@ extend type Mutation {
   contentName(input: ContentNameMutationInput!): Content! @requiresAuth
   "Sets the Content User Registration"
   contentUserRegistration(input: ContentUserRegistrationMutationInput!): Content! @requiresAuth
+  "Sets the Content company field"
+  contentCompanyField(input: ContentCompanyFieldMutationInput!): Content! @requiresAuth
 }
 
 enum GateableUserRole {
@@ -783,6 +785,15 @@ input ContentHasWebsiteScheduleInput {
 input QueryMostPopularContentInput {
   siteId: ObjectID
   limit: Int! = 10
+}
+
+input ContentCompanyFieldMutationInput {
+  "The content ID"
+  contentId: Int!
+  "The company ID"
+  companyId: Int!
+  "The mutation to target. The default/non-mutated value will be used when this is null or unset."
+  mutation: ContentMutation
 }
 
 ${interfaces}
