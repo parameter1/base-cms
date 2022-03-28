@@ -792,8 +792,6 @@ input ContentCompanyFieldMutationInput {
   id: Int!
   "The company ID"
   companyId: Int!
-  "The mutation to target. The default/non-mutated value will be used when this is null or unset."
-  mutation: ContentMutation
 }
 
 ${interfaces}
