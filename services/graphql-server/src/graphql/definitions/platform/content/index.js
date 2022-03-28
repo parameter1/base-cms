@@ -790,8 +790,8 @@ input QueryMostPopularContentInput {
 input ContentCompanyFieldMutationInput {
   "The content ID"
   id: Int!
-  "The company ID"
-  companyId: Int!
+  "The company ID, allows for 'nulling out' of company (removing a related company) if set to null or not present"
+  companyId: Int
 }
 
 ${interfaces}
