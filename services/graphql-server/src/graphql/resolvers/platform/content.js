@@ -1844,6 +1844,18 @@ module.exports = {
     /**
      *
      */
+    contentCompanyField: updateContentMutationHandler({
+      buildPayload: (input) => {
+        const value = input.companyId;
+        if (!value && !input.mutation) throw new UserInputError('The default mutation of the content name cannot be empty.');
+        const field = input.mutation ? `company${input.mutation}` : 'company';
+        return { [field]: value || null };
+      },
+    }),
+
+    /**
+     *
+     */
     createContent: async (_, { input }, { base4rest, basedb }, info) => {
       validateRest(base4rest);
       const { primarySectionId, type, name } = input;
