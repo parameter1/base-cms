@@ -1851,11 +1851,9 @@ module.exports = {
       const content = await basedb.strictFindById('platform.Content', id, { projection: { type: 1 } });
       const model = `platform/content/${dasherize(content.type)}`;
       const body = new Base4RestPayload({ type: model });
-      if (companyId) body.setLink('company', { id: companyId, type: company });
-      if (content) {
-        body.set('id', id);
-        await base4rest.updateOne({ model, id, body });
-      }
+      body.setLink('company', { id: companyId, type: company });
+      body.set('id', id);
+      await base4rest.updateOne({ model, id, body });
       const projection = buildProjection({ info, type: 'Content' });
       return basedb.findOne('platform.Content', { _id: id }, { projection });
     },
