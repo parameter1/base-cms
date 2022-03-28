@@ -26,6 +26,10 @@ class Base4RestPayload {
     return this;
   }
 
+  unsetLink(field) {
+    if (field) this.set(`links.${field}.linkage`, null);
+  }
+
   setLinks(field, links) {
     if (isArray(links)) {
       links.forEach(({ id, type } = {}) => Base4RestPayload.validateLink(id, type));
