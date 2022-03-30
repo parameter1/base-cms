@@ -118,7 +118,7 @@ input AssetImageSortInput {
 
 input AssetImageSrcInput {
   options: JSON
-  useCropRectangle: Boolean = false
+  useCropRectangle: Boolean = true
 }
 
 `;
