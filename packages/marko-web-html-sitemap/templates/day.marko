@@ -30,6 +30,7 @@ $ const pageNode = {
         <marko-web-query|{ nodes }|
           name="all-published-content"
           params={
+            requiresIndexed: true,
             publishedAfter: new Date(after.toISOString()),
             since: new Date(ending.toISOString()),
             limit: perPage,
@@ -52,6 +53,7 @@ $ const pageNode = {
         <marko-web-html-sitemap-query-total-count|{ totalCount }|
           name="all-published-content"
           params={
+            requiresIndexed: true,
             after: after.toDate().getTime(),
             since: ending.toDate().getTime(),
           }

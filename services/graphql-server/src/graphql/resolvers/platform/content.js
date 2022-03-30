@@ -904,6 +904,7 @@ module.exports = {
         withSite,
         customAttributes,
         updated,
+        requiresIndexed,
       } = input;
 
       // @deprecated Prefer includeContentTypes over contentTypes.
@@ -950,6 +951,9 @@ module.exports = {
       }
       if (includeLabels.length) {
         query.labels = { $in: includeLabels };
+      }
+      if (requiresIndexed) {
+        query.$and.push({ $or: [{ 'mutations.Website.noIndex': { $exists: false } }, { 'mutations.Website.noIndex': false }] });
       }
 
       const projection = connectionProjection(info);
