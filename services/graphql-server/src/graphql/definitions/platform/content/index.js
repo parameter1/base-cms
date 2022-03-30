@@ -70,6 +70,8 @@ extend type Mutation {
   contentName(input: ContentNameMutationInput!): Content! @requiresAuth
   "Sets the Content User Registration"
   contentUserRegistration(input: ContentUserRegistrationMutationInput!): Content! @requiresAuth
+  "Sets the Content company field"
+  contentCompanyField(input: ContentCompanyFieldMutationInput!): Content! @requiresAuth
 }
 
 enum GateableUserRole {
@@ -783,6 +785,13 @@ input ContentHasWebsiteScheduleInput {
 input QueryMostPopularContentInput {
   siteId: ObjectID
   limit: Int! = 10
+}
+
+input ContentCompanyFieldMutationInput {
+  "The content ID"
+  id: Int!
+  "The company ID, allows for 'nulling out' of company (removing a related company) if set to null or not present"
+  companyId: Int
 }
 
 ${interfaces}
