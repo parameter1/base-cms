@@ -16,9 +16,10 @@ module.exports = ({
 } = {}) => asyncRoute(async (req, res) => {
   const client = createClient(config.getGraphQLUri());
   const { id } = req.params;
+  const preview = Boolean(req.query.preview);
   const result = await client.query({
     query: buildQuery(queryFragment),
-    variables: { input: { id } },
+    variables: { input: { id, preview } },
   });
   const story = getAsObject(result, 'data.publishedStory');
   res.marko(template, { story });
