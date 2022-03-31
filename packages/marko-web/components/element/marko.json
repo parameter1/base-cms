@@ -112,7 +112,8 @@
     "@tag": "string",
     "@class": "string",
     "@attrs": "object",
-    "@modifiers": "array"
+    "@modifiers": "array",
+    "@identifiers": "array"
   },
   "<marko-web-obj-text>": {
     "template": "./obj-text.marko",
