@@ -12,6 +12,7 @@
     value=value
     class=classNames
   >
-    <${input.renderBody} value=v index=index length=length />
+    $ const identifier = input.identifiers ? input.identifiers[index] : null;
+    <${input.renderBody} value=v index=index length=length identifier=identifier />
   </marko-web-array>
 </marko-web-obj>
