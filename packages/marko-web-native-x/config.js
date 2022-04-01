@@ -1,5 +1,6 @@
 const { asArray } = require('@parameter1/base-cms-utils');
 const { set, get, getAsObject } = require('@parameter1/base-cms-object-path');
+const createClient = require('./apollo/create-client');
 
 class NativeXConfiguration {
   /**
@@ -15,6 +16,7 @@ class NativeXConfiguration {
     this.enabled = enabled;
     this.defaultAlias = defaultAlias;
 
+    this.client = createClient(this.getGraphQLUri());
     this.placements = {};
   }
 

@@ -27,8 +27,7 @@ $ const getStories = async ({
   pagination,
   queryFragment = defaultFragment,
 } = {}) => {
-  const client = createClient(config.getGraphQLUri());
-  const { data } = await client.query({
+  const { data } = await config.client.query({
     query: buildQuery(queryFragment),
     variables: {
       input: { advertiserId, publisherId, excludeStoryIds },
