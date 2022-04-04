@@ -2,7 +2,6 @@ import { warn } from "@parameter1/base-cms-utils";
 import createClient from "../../apollo/create-client";
 import defaultFragment from "../../apollo/graphql/fragments/related-stories";
 import buildQuery from "../../apollo/graphql/queries/related-stories";
-import convertStoryToContent from "../../utils/convert-story-to-content";
 
 $ const { req, nativeX } = out.global;
 
@@ -37,7 +36,7 @@ $ const getStories = async ({
   if (!data || !data.advertiserStories) return { nodes: [], pageInfo: {} };
   const { pageInfo } = data.advertiserStories;
   const nodes = data.advertiserStories.edges
-    .map(edge => (edge && edge.node ? convertStoryToContent(edge.node) : null))
+    .map(edge => (edge && edge.node ? edge.node : null))
     .filter(c => c);
   return { nodes, pageInfo };
 };
