@@ -20,7 +20,8 @@
     "@additional-event-data": "object",
     "@button-labels": "object",
     "@login-email-placeholder": "string",
-    "@redirect": "string"
+    "@redirect": "string",
+    "@event-name": "string"
   },
   "<marko-web-identity-x-form-logout>": {
     "template": "./form-logout.marko"

@@ -52,6 +52,7 @@ import post from './utils/post';
 import cookiesEnabled from './utils/cookies-enabled';
 import FormError from './errors/form';
 import FeatureError from './errors/feature';
+import { loginSubmit } from '../utils/gtm-events';
 
 export default {
   /**
@@ -95,6 +96,10 @@ export default {
     loginEmailPlaceholder: {
       type: String,
       default: null,
+    },
+    eventName: {
+      type: String,
+      default: 'login',
     },
     senderEmailAddress: {
       type: String,
@@ -188,6 +193,7 @@ export default {
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
         this.complete = true;
+        loginSubmit({ event: this.eventName, email: this.email });
         this.$emit('login-link-sent', { ...this.additionalEventData, ...data });
       } catch (e) {
         this.error = e;
