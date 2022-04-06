@@ -17,6 +17,7 @@ module.exports = async ({
     filePath,
     fileName,
   } = image;
+  if (!filePath || !fileName) return { width: 0, height: 0 };
   if (width && height) return { width, height };
   const url = `https://${host}/${filePath}/${fileName}?fm=json`;
   try {
