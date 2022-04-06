@@ -32,7 +32,7 @@ class CropRectangle {
  * the crop area.
  */
 module.exports = ({ width, height, cropDimensions }) => {
-  if (!cropDimensions) {
+  if (!cropDimensions || !width || !height) {
     return new CropRectangle({
       x: 0,
       y: 0,
