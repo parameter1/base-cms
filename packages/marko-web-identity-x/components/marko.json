@@ -30,7 +30,8 @@
   "<marko-web-identity-x-form-profile>": {
     "template": "./form-profile.marko",
     "@call-to-action": "string",
-    "@reload-page-on-submit": "boolean"
+    "@reload-page-on-submit": "boolean",
+    "@button-label": "string"
   },
   "<marko-web-identity-x-comment-stream>": {
     "template": "./comment-stream.marko",

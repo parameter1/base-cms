@@ -119,7 +119,7 @@
 
         <div class="d-flex align-items-center">
           <button type="submit" class="btn btn-primary">
-            Submit
+            {{ buttonLabel }}
           </button>
           <span v-if="didSubmit" class="ml-2">
             {{ submitMessage }}
@@ -221,6 +221,10 @@ export default {
     appContextId: {
       type: String,
       default: null,
+    },
+    buttonLabel: {
+      type: String,
+      default: 'Submit',
     },
     emailConsentRequest: {
       type: String,
