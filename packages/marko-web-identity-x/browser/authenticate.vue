@@ -14,6 +14,8 @@
       :consent-policy="consentPolicy"
       :email-consent-request="emailConsentRequest"
       :regional-consent-policies="regionalConsentPolicies"
+      :button-label="buttonLabel"
+      :call-to-action="callToAction"
       @submit="redirect"
     />
   </div>
@@ -80,6 +82,14 @@ export default {
     regionalConsentPolicies: {
       type: Array,
       default: () => [],
+    },
+    callToAction: {
+      type: String,
+      default: null,
+    },
+    buttonLabel: {
+      type: String,
+      default: 'Submit',
     },
   },
 
