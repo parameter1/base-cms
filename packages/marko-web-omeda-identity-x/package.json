@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-omeda-identity-x",
-  "version": "2.79.1",
+  "version": "2.82.0",
   "description": "Marko Omeda+IdentityX integration tools",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-omeda-identity-x",
   "author": "Josh Worden <josh@parameter1.com>",
@@ -11,7 +11,7 @@
     "test": "yarn compile && yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-marko-web-identity-x": "^2.79.1",
+    "@parameter1/base-cms-marko-web-identity-x": "^2.82.0",
     "@parameter1/base-cms-marko-web-omeda": "^2.79.0",
     "@parameter1/base-cms-object-path": "^2.75.1",
     "@parameter1/base-cms-utils": "^2.75.1",
