@@ -10,7 +10,7 @@ const getTeaser = (mutation, content) => {
 };
 
 const truncateTeaser = (value, { maxLength, truncatedSuffix }) => {
-  if (!maxLength) return value;
+  if (!maxLength || stripHtml(value).replace(' ', '').length <= maxLength) return value;
   // @todo This strips HTML from truncated teasers. We could attempt to preserve it?
   const stripped = stripHtml(value);
 
