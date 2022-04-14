@@ -1,5 +1,3 @@
-import { warn } from "@parameter1/base-cms-utils";
-import createClient from "../../apollo/create-client";
 import defaultFragment from "../../apollo/graphql/fragments/related-stories";
 import buildQuery from "../../apollo/graphql/queries/related-stories";
 
@@ -47,5 +45,5 @@ $ const getStories = async ({
   </marko-web-resolve>
 </if>
 <else>
-  $ warn('Unable to fetch elements from NativeX: a uri and placement ID are required.');
+  $ warn('Unable to fetch elements from NativeX: a uri and advertiser ID are required.');
 </else>
