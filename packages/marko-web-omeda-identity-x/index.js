@@ -30,6 +30,14 @@ module.exports = (app, {
   // consistently pass brand key
   const brandKey = brand.trim().toLowerCase();
 
+  // strip `oly_enc_id` when identity-x user is logged-in
+  app.use(stripOlyticsParam());
+
+  // set `omeda_promo_code` when the URL parameter is present
+  app.use(setPromoSourceCookie({
+    omedaPromoCodeCookieName,
+  }));
+
   // install omeda middleware
   omeda(app, {
     brandKey,
@@ -66,13 +74,5 @@ module.exports = (app, {
   app.use('/__idx/omeda-rapid-ident', rapidIdentifyRouter({
     brandKey,
     idxOmedaRapidIdentifyProp,
-  }));
-
-  // strip `oly_enc_id` when identity-x user is logged-in
-  app.use(stripOlyticsParam());
-
-  // set `omeda_promo_code` when the URL parameter is present
-  app.use(setPromoSourceCookie({
-    omedaPromoCodeCookieName,
   }));
 };
