@@ -25,7 +25,10 @@
     "template": "./form-logout.marko"
   },
   "<marko-web-identity-x-form-register>": {
-    "template": "./form-register.marko"
+    "template": "./form-register.marko",
+    "@button-labels": "object",
+    "@login-email-placeholder": "string",
+    "@redirect": "string"
   },
   "<marko-web-identity-x-form-profile>": {
     "template": "./form-profile.marko",
