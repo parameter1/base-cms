@@ -17,6 +17,7 @@
   },
   "<marko-web-identity-x-form-login>": {
     "template": "./form-login.marko",
+    "@additional-event-data": "object",
     "@button-labels": "object",
     "@login-email-placeholder": "string",
     "@redirect": "string"
@@ -26,12 +27,14 @@
   },
   "<marko-web-identity-x-form-register>": {
     "template": "./form-register.marko",
+    "@additional-event-data": "object",
     "@button-labels": "object",
     "@login-email-placeholder": "string",
     "@redirect": "string"
   },
   "<marko-web-identity-x-form-profile>": {
     "template": "./form-profile.marko",
+    "@additional-event-data": "object",
     "@call-to-action": "string",
     "@reload-page-on-submit": "boolean",
     "@button-label": "string"

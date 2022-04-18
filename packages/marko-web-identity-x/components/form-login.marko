@@ -1,7 +1,9 @@
 import { get } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 
 $ const { req } = out.global;
 $ const { identityX } = req;
+$ const additionalEventData = defaultValue(input.additionalEventData, {});
 
 <if(Boolean(identityX))>
   <marko-web-identity-x-context|{ user, isEnabled, application }|>
@@ -14,6 +16,7 @@ $ const { identityX } = req;
       consentPolicy: get(application, "organization.consentPolicy"),
       regionalConsentPolicies: get(application, "organization.regionalConsentPolicies"),
       appContextId: identityX.config.get("appContextId"),
+      additionalEventData: additionalEventData,
     };
     <if(isEnabled)>
       <marko-web-browser-component name="IdentityXLogin" props=props />
