@@ -225,6 +225,7 @@ module.exports = async ({
   idxOmedaRapidIdentifyProp = '$idxOmedaRapidIdentify',
   omedaPromoCodeCookieName = 'omeda_promo_code',
   omedaPromoCodeDefault,
+  promoCode: hookDataPromoCode,
 
   req,
   service: identityX,
@@ -236,6 +237,7 @@ module.exports = async ({
   if (!idxOmedaRapidIdentify) throw new Error(`Unable to find the IdentityX+Omeda rapid identifier on the request using ${idxOmedaRapidIdentifyProp}`);
 
   const promoCode = extractPromoCode({
+    promoCode: hookDataPromoCode,
     omedaPromoCodeCookieName,
     omedaPromoCodeDefault,
     cookies: req.cookies,
