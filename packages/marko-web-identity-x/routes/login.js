@@ -34,6 +34,7 @@ module.exports = asyncRoute(async (req, res) => {
     authUrl,
     redirectTo,
     appContextId,
+    additionalEventData = {},
   } = body;
   const variables = { email };
   const query = buildQuery();
@@ -59,6 +60,10 @@ module.exports = asyncRoute(async (req, res) => {
       },
     },
   });
-  await callHooksFor(identityX, 'onLoginLinkSent', { req, user: appUser });
+  await callHooksFor(identityX, 'onLoginLinkSent', {
+    ...(additionalEventData || {}),
+    req,
+    user: appUser,
+  });
   return res.json({ ok: true });
 });
