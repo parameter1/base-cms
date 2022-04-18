@@ -102,6 +102,14 @@ export default {
     },
 
     /**
+     * Additional data to send along with the emitted event.
+     */
+    additionalEventData: {
+      type: Object,
+      default: () => ({}),
+    },
+
+    /**
      * Regional consent polices to display (if/when a user selects a country on login)
      * if enabled.
      */
@@ -175,11 +183,12 @@ export default {
           redirectTo: this.redirectTo,
           authUrl: this.authUrl,
           appContextId: this.appContextId,
+          additionalEventData: this.additionalEventData,
         });
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
         this.complete = true;
-        this.$emit('login-link-sent', data);
+        this.$emit('login-link-sent', { ...this.additionalEventData, ...data });
       } catch (e) {
         this.error = e;
       } finally {
