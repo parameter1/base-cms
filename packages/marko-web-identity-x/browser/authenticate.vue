@@ -11,6 +11,7 @@
       :active-user="activeUser"
       :required-server-fields="requiredServerFields"
       :required-client-fields="requiredClientFields"
+      :hidden-fields="hiddenFields"
       :consent-policy="consentPolicy"
       :email-consent-request="emailConsentRequest"
       :regional-consent-policies="regionalConsentPolicies"
@@ -62,6 +63,10 @@ export default {
     redirectTo: {
       type: String,
       default: '/',
+    },
+    hiddenFields: {
+      type: Array,
+      default: () => [],
     },
     requiredServerFields: {
       type: Array,
