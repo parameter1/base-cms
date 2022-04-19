@@ -1,5 +1,5 @@
 <template>
-  <fieldset class="px-3 border mb-3">
+  <fieldset v-if="showBlock" class="px-3 border mb-3 address-block">
     <legend class="h6 w-auto">
       Address
     </legend>
@@ -17,25 +17,25 @@
       />
     </div>
 
-    <div v-if="city.visible || regionCode.visible" class="row">
+    <div v-if="city.visible || regionCode.visible || postalCode.visible" class="row">
       <city
         v-if="city.visible"
         v-model="user.city"
         :required="city.required"
-        :class-name="regionCode.visible ? 'col-md-4' : 'col-md-6'"
+        :class-name="addressLineTwoFieldClass"
       />
       <region
         v-if="regionCode.visible"
         v-model="user.regionCode"
         :country-code="user.countryCode"
         :required="regionCode.required"
-        :class-name="city.visible ? 'col-md-4' : 'col-md-6'"
+        :class-name="addressLineTwoFieldClass"
       />
       <postal-code
-        v-if="regionCode.visible"
+        v-if="postalCode.visible"
         v-model="user.postalCode"
         :required="postalCode.required"
-        :class-name="city.visible ? 'col-md-4' : 'col-md-6'"
+        :class-name="addressLineTwoFieldClass"
       />
     </div>
   </fieldset>
@@ -82,7 +82,32 @@ export default {
       required: true,
     },
   },
+  /**
+   *
+   */
   computed: {
+    addressLineTwoFieldClass() {
+      let fields = 0;
+      // eslint-disable-next-line no-plusplus
+      if (this.city.visible) fields++;
+      // eslint-disable-next-line no-plusplus
+      if (this.regionCode.visible) fields++;
+      // eslint-disable-next-line no-plusplus
+      if (this.postalCode.visible) fields++;
+      if (fields === 0 || fields === 1) return 'col-md-12';
+      return `col-md-${12 / fields}`;
+    },
+    showBlock() {
+      if (
+        this.street.visible
+        || this.addressExtra.visible
+        || this.addressExtra.visible
+        || this.city.visible
+        || this.regionCode.visible
+        || this.postalCode.visible
+      ) return true;
+      return false;
+    },
     classNames() {
       const classNames = ['form-group'];
       const { className } = this;
