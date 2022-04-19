@@ -98,7 +98,6 @@ export default {
       if (
         this.street.visible
         || this.addressExtra.visible
-        || this.addressExtra.visible
         || this.city.visible
         || this.regionCode.visible
         || this.postalCode.visible
