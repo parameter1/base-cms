@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
-export const loginSubmit = ({ event = 'login', email }) => {
+export const loginSubmit = ({ event = 'login' }) => {
   const dataLayer = window.dataLayerIdentityX;
-  if (dataLayer) dataLayer.push({ event, email });
+  if (dataLayer) dataLayer.push({ event });
 };
 
 export const profileView = ({ event = 'profile_view' }) => {
