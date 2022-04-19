@@ -95,14 +95,13 @@ export default {
       return `col-md-${12 / fields}`;
     },
     showBlock() {
-      if (
-        this.street.visible
-        || this.addressExtra.visible
-        || this.city.visible
-        || this.regionCode.visible
-        || this.postalCode.visible
-      ) return true;
-      return false;
+      return [
+        this.street,
+        this.addressExtra,
+        this.city,
+        this.regionCode,
+        this.postalCode,
+      ].some(v => v.visible);
     },
     classNames() {
       const classNames = ['form-group'];
