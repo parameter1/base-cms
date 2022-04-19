@@ -9,7 +9,7 @@ export const profileView = ({ event = 'profile_view' }) => {
   if (dataLayer) dataLayer.push({ event });
 };
 
-export const profileSubmit = ({ event = 'profile_submit', email }) => {
+export const profileSubmit = ({ event = 'profile_submit', userId }) => {
   const dataLayer = window.dataLayerIdentityX;
-  if (dataLayer) dataLayer.push({ event, email });
+  if (dataLayer) dataLayer.push({ event, userId });
 };
