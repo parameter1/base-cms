@@ -238,6 +238,13 @@ export default {
       type: Array,
       default: () => [],
     },
+    /**
+     * Additional data to send along with the emitted event.
+     */
+    additionalEventData: {
+      type: Object,
+      default: () => ({}),
+    },
   },
 
   /**
@@ -472,7 +479,7 @@ export default {
 
         this.user = data.user;
         this.didSubmit = true;
-        this.$emit('submit', data);
+        this.$emit('submit', { ...this.additionalEventData, ...data });
 
         if (this.reloadPageOnSubmit) {
           this.isReloadingPage = true;

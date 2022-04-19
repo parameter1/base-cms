@@ -55,6 +55,7 @@ module.exports = asyncRoute(async (req, res) => {
     regionalConsentAnswers,
     customBooleanFieldAnswers,
     customSelectFieldAnswers,
+    additionalEventData = {},
   } = body;
   const input = {
     givenName,
@@ -106,6 +107,10 @@ module.exports = asyncRoute(async (req, res) => {
 
   const { data } = await identityX.client.mutate({ mutation, variables: { input } });
   const { updateOwnAppUser: user } = data;
-  await callHooksFor(identityX, 'onUserProfileUpdate', { req, user });
+  await callHooksFor(identityX, 'onUserProfileUpdate', {
+    ...(additionalEventData || {}),
+    req,
+    user,
+  });
   res.json({ ok: true, user });
 });

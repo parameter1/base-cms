@@ -22,14 +22,15 @@ module.exports = ({
   idxConfig.addHook({
     name: 'onLoginLinkSent',
     shouldAwait: false,
-    fn: async ({ req, service, user }) => onLoginLinkSent({
+    fn: async args => onLoginLinkSent({
+      ...args,
       brandKey,
       omedaGraphQLProp,
       idxOmedaRapidIdentifyProp,
 
-      req,
-      service,
-      user,
+      req: args.req,
+      service: args.service,
+      user: args.user,
     }),
   });
 
@@ -53,10 +54,11 @@ module.exports = ({
   idxConfig.addHook({
     name: 'onUserProfileUpdate',
     shouldAwait: false,
-    fn: async ({ user, req }) => onUserProfileUpdate({
+    fn: async args => onUserProfileUpdate({
+      ...args,
       idxOmedaRapidIdentifyProp,
-      req,
-      user,
+      req: args.req,
+      user: args.user,
     }),
   });
 
