@@ -88,12 +88,9 @@ export default {
   computed: {
     addressLineTwoFieldClass() {
       let fields = 0;
-      // eslint-disable-next-line no-plusplus
-      if (this.city.visible) fields++;
-      // eslint-disable-next-line no-plusplus
-      if (this.regionCode.visible) fields++;
-      // eslint-disable-next-line no-plusplus
-      if (this.postalCode.visible) fields++;
+      if (this.city.visible) fields += 1;
+      if (this.regionCode.visible) fields += 1;
+      if (this.postalCode.visible) fields += 1;
       if (fields === 0 || fields === 1) return 'col-md-12';
       return `col-md-${12 / fields}`;
     },

@@ -4,13 +4,21 @@
     <form @submit.prevent="handleSubmit">
       <fieldset :disabled="isLoading">
         <div class="row">
-          <div class="col-md-6">
+          <div
+            v-if="givenNameSettings.visible"
+            class="col-12"
+            :class="{ 'col-md-6': familyNameSettings.visible }"
+          >
             <given-name
               v-model="user.givenName"
               :required="givenNameSettings.required"
             />
           </div>
-          <div class="col-md-6">
+          <div
+            v-if="familyNameSettings.visible"
+            class="col-12"
+            :class="{ 'col-md-6': givenNameSettings.visible }"
+          >
             <family-name
               v-model="user.familyName"
               :required="familyNameSettings.required"
@@ -19,13 +27,21 @@
         </div>
 
         <div class="row">
-          <div class="col-md-6">
+          <div
+            v-if="organizationSettings.visible"
+            class="col-12"
+            :class="{ 'col-md-6': organizationTitleSettings.visible }"
+          >
             <organization
               v-model="user.organization"
               :required="organizationSettings.required"
             />
           </div>
-          <div class="col-md-6">
+          <div
+            v-if="organizationTitleSettings.visible"
+            class="col-12"
+            :class="{ 'col-md-6': organizationSettings.visible }"
+          >
             <organization-title
               v-model="user.organizationTitle"
               :required="organizationTitleSettings.required"
@@ -34,12 +50,21 @@
         </div>
 
         <div class="row">
-          <phone-number
+          <div
             v-if="phoneNumberSettings.visible"
-            v-model="user.phoneNumber"
-            :required="phoneNumberSettings.required"
-          />
-          <div class="col-md-6">
+            class="col-12"
+            :class="{ 'col-md-6': countryCodeSettings.visible }"
+          >
+            <phone-number
+              v-model="user.phoneNumber"
+              :required="phoneNumberSettings.required"
+            />
+          </div>
+          <div
+            v-if="countryCodeSettings.visible"
+            class="col-12"
+            :class="{ 'col-md-6': phoneNumberSettings.visible }"
+          >
             <country
               v-model="user.countryCode"
               :required="countryCodeSettings.required"
@@ -62,7 +87,8 @@
             v-for="fieldAnswer in customSelectFieldAnswers"
             :id="fieldAnswer.field.id"
             :key="fieldAnswer.id"
-            class="col-md-6"
+            class="col-12"
+            :class="{ 'col-md-6': (customSelectFieldAnswers.length > 1) }"
             :label="fieldAnswer.field.label"
             :required="fieldAnswer.field.required"
             :multiple="fieldAnswer.field.multiple"
