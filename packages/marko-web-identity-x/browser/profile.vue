@@ -289,7 +289,8 @@ export default {
       user: {
         ...this.activeUser,
         ...(
-          this.defaultCountryCode
+          !this.hiddenFields.includes('countryCode')
+          && this.defaultCountryCode
           && !this.activeUser.countryCode
           && { countryCode: this.defaultCountryCode }
         ),
