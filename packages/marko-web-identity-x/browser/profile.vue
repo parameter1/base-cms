@@ -271,6 +271,10 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    defaultCountryCode: {
+      type: String,
+      default: null,
+    },
   },
 
   /**
@@ -282,7 +286,14 @@ export default {
       isLoading: false,
       isReloadingPage: false,
       didSubmit: false,
-      user: { ...this.activeUser },
+      user: {
+        ...this.activeUser,
+        ...(
+          this.defaultCountryCode
+          && !this.activeUser.countryCode
+          && { countryCode: this.defaultCountryCode }
+        ),
+      },
     };
   },
 

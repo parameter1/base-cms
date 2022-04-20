@@ -12,6 +12,7 @@ $ const additionalEventData = defaultValue(input.additionalEventData, {});
       requiredServerFields: identityX.config.getRequiredServerFields(),
       requiredClientFields: identityX.config.getRequiredClientFields(),
       hiddenFields: identityX.config.getHiddenFields(),
+      defaultCountryCode: identityX.config.get('defaultCountryCode'),
       callToAction: input.callToAction,
       reloadPageOnSubmit: input.reloadPageOnSubmit,
       endpoints: identityX.config.getEndpoints(),

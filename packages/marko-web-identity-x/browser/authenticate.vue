@@ -12,6 +12,7 @@
       :required-server-fields="requiredServerFields"
       :required-client-fields="requiredClientFields"
       :hidden-fields="hiddenFields"
+      :default-country-code="defaultCountryCode"
       :consent-policy="consentPolicy"
       :email-consent-request="emailConsentRequest"
       :regional-consent-policies="regionalConsentPolicies"
@@ -95,6 +96,10 @@ export default {
     buttonLabel: {
       type: String,
       default: 'Submit',
+    },
+    defaultCountryCode: {
+      type: String,
+      default: null,
     },
   },
 
