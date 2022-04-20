@@ -62,7 +62,7 @@ export default {
   computed: {
     countryCode: {
       get() {
-        return this.value || '';
+        return this.value || 'US';
       },
       set(countryCode) {
         this.$emit('input', countryCode || null);

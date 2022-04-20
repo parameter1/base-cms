@@ -309,7 +309,7 @@ export default {
      */
     countryCode() {
       const { user } = this;
-      if (!user) return null;
+      if (!user || !user.countryCode) return 'US';
       return user.countryCode;
     },
 
