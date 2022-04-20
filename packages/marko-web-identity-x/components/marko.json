@@ -42,13 +42,6 @@
     "@view-event-name": "string",
     "@submit-event-name": "string"
   },
-  "<marko-web-identity-x-gtm-init>": {
-    "template": "./gtm-init.marko",
-    "@on": "string",
-    "@target-tag": "string",
-    "@request-frame": "boolean",
-    "@container-id": "string"
-  },
   "<marko-web-identity-x-comment-stream>": {
     "template": "./comment-stream.marko",
     "@identifier": {
