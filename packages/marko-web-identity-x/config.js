@@ -22,6 +22,7 @@ class IdentityXConfiguration {
     requiredServerFields = [],
     requiredClientFields = [],
     hiddenFields = ['city', 'street', 'addressExtra', 'phoneNumber'],
+    defaultCountryCode,
     onHookError,
     ...rest
   } = {}) {
@@ -32,6 +33,7 @@ class IdentityXConfiguration {
       requiredServerFields,
       requiredClientFields,
       hiddenFields,
+      defaultCountryCode,
       onHookError: (e) => {
         if (process.env.NODE_ENV === 'development') {
           log('ERROR IN IDENTITY-X HOOK', e);

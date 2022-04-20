@@ -11,6 +11,7 @@ $ const isEnabled = Boolean(req.identityX);
       redirectTo: query.redirectTo,
       requiredServerFields: identityX.config.getRequiredServerFields(),
       requiredClientFields: identityX.config.getRequiredClientFields(),
+      defaultCountryCode: identityX.config.get('defaultCountryCode'),
       hiddenFields: identityX.config.getHiddenFields(),
       endpoints: identityX.config.getEndpoints(),
       callToAction: input.callToAction,
