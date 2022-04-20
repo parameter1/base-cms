@@ -10,6 +10,7 @@ export default (Browser, {
   CustomLogoutComponent,
   CustomProfileComponent,
   CustomCommentStreamComponent,
+  withGTM = true,
 } = {}) => {
   const LoginComponent = CustomLoginComponent || Login;
   const AuthenticateComponent = CustomAuthenticateComponent || Authenticate;
@@ -25,7 +26,9 @@ export default (Browser, {
   });
   Browser.register('IdentityXLogin', LoginComponent, {
     on: {
-      'login-link-sent': (...args) => { EventBus.$emit('identity-x-login-link-sent', ...args); },
+      displayed: (...args) => { EventBus.$emit('identity-x-login-displayed', ...args); },
+      submitted: (...args) => { EventBus.$emit('identity-x-login-link-sent', ...args); },
+      errored: (...args) => { EventBus.$emit('identity-x-login-errored', ...args); },
     },
   });
   Browser.register('IdentityXLogout', LogoutComponent, {
@@ -39,4 +42,22 @@ export default (Browser, {
     },
   });
   Browser.register('IdentityXCommentStream', CommentStreamComponent);
+
+  if (withGTM) {
+    const { dataLayer = [] } = window;
+    [
+      'identity-x-login-displayed',
+      'identity-x-login-link-sent',
+      'identity-x-login-errored',
+    ].forEach((event) => {
+      EventBus.$on(event, args => dataLayer.push({
+        event,
+        'identity-x': {
+          ...(args && args),
+          event,
+          label: args.label,
+        },
+      }));
+    });
+  }
 };

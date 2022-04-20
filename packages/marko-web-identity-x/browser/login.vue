@@ -52,7 +52,6 @@ import post from './utils/post';
 import cookiesEnabled from './utils/cookies-enabled';
 import FormError from './errors/form';
 import FeatureError from './errors/feature';
-import { loginSubmit } from '../utils/gtm-events';
 
 export default {
   /**
@@ -97,7 +96,7 @@ export default {
       type: String,
       default: null,
     },
-    eventName: {
+    eventLabel: {
       type: String,
       default: 'login',
     },
@@ -170,6 +169,7 @@ export default {
     if (!cookiesEnabled()) {
       this.error = new FeatureError('Your browser does not support cookies. Please enable cookies to use this feature.');
     }
+    this.$emit('displayed', { label: this.eventLabel });
   },
 
   /**
@@ -193,10 +193,14 @@ export default {
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
         this.complete = true;
-        loginSubmit({ event: this.eventName, email: this.email });
-        this.$emit('login-link-sent', { ...this.additionalEventData, ...data });
+        this.$emit('submitted', {
+          ...this.additionalEventData,
+          label: this.eventLabel,
+          data,
+        });
       } catch (e) {
         this.error = e;
+        this.$emit('errored', { label: this.eventLabel, message: e.message });
       } finally {
         this.loading = false;
       }
