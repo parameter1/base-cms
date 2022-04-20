@@ -36,6 +36,7 @@ export default {
     } else {
       const error = new FeatureError('Your browser does not support cookies. Please enable cookies to use this feature.');
       this.error = error.message;
+      this.$emit('errored', { label: this.eventLabel, message: this.error });
     }
   },
   methods: {
