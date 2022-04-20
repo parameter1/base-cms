@@ -21,12 +21,17 @@ export default {
       type: String,
       default: null,
     },
+    eventLabel: {
+      type: String,
+      default: 'logout',
+    },
   },
   data: () => ({
     error: null,
   }),
   mounted() {
     if (cookiesEnabled()) {
+      this.$emit('displayed', { label: this.eventLabel });
       this.logout();
     } else {
       const error = new FeatureError('Your browser does not support cookies. Please enable cookies to use this feature.');
@@ -43,10 +48,11 @@ export default {
         const res = await post('/logout');
         const data = await res.json();
         if (!res.ok) throw new LogoutError(data.message, res.status);
-        this.$emit('logout', data);
+        this.$emit('submitted', { label: this.eventLabel, data });
         this.redirect();
       } catch (e) {
         this.error = `Unable to logout: ${e.message}`;
+        this.$emit('errored', { label: this.eventLabel, message: e.message });
       }
     },
 

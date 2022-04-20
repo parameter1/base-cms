@@ -33,7 +33,9 @@ export default (Browser, {
   });
   Browser.register('IdentityXLogout', LogoutComponent, {
     on: {
-      logout: (...args) => { EventBus.$emit('identity-x-logout', ...args); },
+      displayed: (...args) => { EventBus.$emit('identity-x-logout-displayed', ...args); },
+      submitted: (...args) => { EventBus.$emit('identity-x-logout', ...args); },
+      errored: (...args) => { EventBus.$emit('identity-x-logout-errored', ...args); },
     },
   });
   Browser.register('IdentityXProfile', ProfileComponent, {
@@ -49,6 +51,9 @@ export default (Browser, {
       'identity-x-login-displayed',
       'identity-x-login-link-sent',
       'identity-x-login-errored',
+      'identity-x-logout-displayed',
+      'identity-x-logout',
+      'identity-x-logout-errored',
     ].forEach((event) => {
       EventBus.$on(event, args => dataLayer.push({
         event,
