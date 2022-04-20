@@ -25,6 +25,10 @@
       "default-value": "dataLayer"
     }
   },
+  "<marko-web-gtm-noscript>": {
+    "template": "./noscript.marko",
+    "@container-id": "expression"
+  },
   "<marko-web-gtm-push>": {
     "template": "./push.marko",
     "@name": {
