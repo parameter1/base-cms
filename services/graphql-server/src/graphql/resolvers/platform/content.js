@@ -444,6 +444,15 @@ module.exports = {
       return isArray(sectionQuery) ? sectionQuery : [];
     },
 
+
+    magazineSchedules: async (content, _, { basedb }) => {
+      const contentMagazineSchedules = await basedb.find('magazine.Schedule', { 'content.$id': content._id });
+      if (contentMagazineSchedules.length) {
+        return contentMagazineSchedules;
+      }
+      return [];
+    },
+
     /**
      * Load primary section of content.
      * If primary section's site matches the current site, return the section.
