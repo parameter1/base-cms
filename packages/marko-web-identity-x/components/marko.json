@@ -15,7 +15,7 @@
   "<marko-web-identity-x-form-authenticate>": {
     "template": "./form-authenticate.marko",
     "@additional-event-data": "object",
-    "@eventLabel": {
+    "@event-label": {
       "type": "string",
       "default-value": "authenticate"
     },
