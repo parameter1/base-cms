@@ -1,6 +1,5 @@
 <template>
   <div v-if="hasActiveUser">
-    <profile-view :eventName="viewEventName" />
     <p>{{ callToAction }}</p>
     <form @submit.prevent="handleSubmit">
       <fieldset :disabled="isLoading">
@@ -187,11 +186,9 @@ import PhoneNumber from './form/fields/phone-number.vue';
 import ReceiveEmail from './form/fields/receive-email.vue';
 import RegionalPolicy from './form/fields/regional-policy.vue';
 import Login from './login.vue';
-import ProfileView from './gtm-tracker/profile-view.vue';
 
 import FeatureError from './errors/feature';
 import FormError from './errors/form';
-import { profileSubmit } from '../utils/gtm-events';
 
 const { isArray } = Array;
 
@@ -209,7 +206,6 @@ export default {
     ReceiveEmail,
     RegionalPolicy,
     Login,
-    ProfileView,
   },
 
   /**
@@ -279,17 +275,9 @@ export default {
       type: String,
       default: null,
     },
-    eventName: {
+    eventLabel: {
       type: String,
       default: 'profile',
-    },
-    viewEventName: {
-      type: String,
-      default: 'profile_view',
-    },
-    submitEventName: {
-      type: String,
-      default: 'profile_submit',
     },
   },
 
@@ -477,7 +465,9 @@ export default {
     if (!cookiesEnabled()) {
       const error = new FeatureError('Your browser does not support cookies. Please enable cookies to use this feature.');
       this.error = error.message;
+      this.$emit('errored', { label: this.eventLabel, message: this.error.message });
     }
+    this.$emit('displayed', { label: this.eventLabel });
   },
 
   /**
@@ -533,8 +523,8 @@ export default {
 
         this.user = data.user;
         this.didSubmit = true;
-        profileSubmit({ event: this.submitEventName, email: this.user.email });
-        this.$emit('submit', { ...this.additionalEventData, ...data });
+
+        this.$emit('submitted', { ...this.additionalEventData, label: this.eventLabel });
 
         if (this.reloadPageOnSubmit) {
           this.isReloadingPage = true;
@@ -542,6 +532,7 @@ export default {
         }
       } catch (e) {
         this.error = e;
+        this.$emit('errored', { label: this.eventLabel, message: e.message });
       } finally {
         this.isLoading = false;
       }

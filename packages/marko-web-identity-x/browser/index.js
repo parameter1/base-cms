@@ -42,7 +42,9 @@ export default (Browser, {
   });
   Browser.register('IdentityXProfile', ProfileComponent, {
     on: {
-      submit: (...args) => { EventBus.$emit('identity-x-profile-updated', ...args); },
+      displayed: (...args) => { EventBus.$emit('identity-x-profile-displayed', ...args); },
+      submitted: (...args) => { EventBus.$emit('identity-x-profile-updated', ...args); },
+      errored: (...args) => { EventBus.$emit('identity-x-profile-errored', ...args); },
     },
   });
   Browser.register('IdentityXCommentStream', CommentStreamComponent);
@@ -59,6 +61,9 @@ export default (Browser, {
       'identity-x-logout-displayed',
       'identity-x-logout',
       'identity-x-logout-errored',
+      'identity-x-profile-displayed',
+      'identity-x-profile-updated',
+      'identity-x-profile-errored',
     ].forEach((event) => {
       EventBus.$on(event, args => dataLayer.push({
         event,
