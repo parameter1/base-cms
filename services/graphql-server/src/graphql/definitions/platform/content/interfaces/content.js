@@ -80,6 +80,8 @@ interface Content @requiresProject(fields: ["type"]) {
   userRegistration: ContentUserRegistration! @projection(localField: "mutations.Website.requiresAccessLevels", needs: ["mutations.Website.requiresRegistration", "mutations.Website.requiresRegistrationOptions"])
   # Returns the website section query schedules
   websiteSchedules: [ContentWebsiteSchedule]!
+  # Returns the magazine schedules
+  magazineSchedules: [MagazineSchedule]! @projection(localField: "_id")
 
   hasWebsiteSchedule(input: ContentHasWebsiteScheduleInput!): Boolean! @projection(localField: "sectionQuery")
 
