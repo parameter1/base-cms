@@ -166,8 +166,9 @@ data both to the submission (for backend hook handling) and to the emitted event
 | `identity-x-authenticated` | `{ label, ...additionalEventData, mustReVerifyProfile, isProfileComplete, requiresCustomFieldAnswers }` | Fires when a user has completed the login handshake and is now fully authenticated.
 | `identity-x-logout` | `{ label, ...additionalEventData  }` | Fires when a user has logged out successfully.
 | `identity-x-profile-updated` | `{ label, ...additionalEventData }` | Fires when a user has submitted an update to their profile/fields.
-| `identity-x-comment-post-created` | `{ label, ...additionalEventData }` | Fires when a user posts a comment to a comment stream
-| `identity-x-comment-post-reported` | `{ label, ...additionalEventData }` | Fires when a user reports a comment on a comment stream
+| `identity-x-comment-post-submitted` | `{ label, ...additionalEventData }` | Fires when a user posts a comment to a comment stream
+| `identity-x-comment-report-submitted` | `{ label, ...additionalEventData, id }` | Fires when a user reports a comment on a comment stream
+| `identity-x-comment-stream-login-link-sent` | `{ label, ...additionalEventData }` | Fires when a user starts login from a comment stream
 
 ### View events
 
@@ -180,7 +181,8 @@ Each component will emit an event when the component is displayed.
 | `identity-x-logout-displayed` | `{ label, ...additionalEventData  }`
 | `identity-x-profile-displayed` | `{ label, ...additionalEventData }`
 | `identity-x-comment-stream-displayed` | `{ label, ...additionalEventData }`
-| `identity-x-comment-stream-expanded` | `{ label, ...additionalEventData }`
+| `identity-x-comment-stream-loaded` | `{ label, ...additionalEventData }`
+| `identity-x-comment-stream-loaded-more` | `{ label, ...additionalEventData }`
 
 ### Error events
 
@@ -193,3 +195,6 @@ Each component will emit an event when an error is encountered and include the e
 | `identity-x-login-errored` | `{ label, message: '...', ...additionalEventData }`
 | `identity-x-logout-errored` | `{ label, message: '...', ...additionalEventData }`
 | `identity-x-profile-errored` | `{ label, message: '...', ...additionalEventData }`
+| `identity-x-comment-post-errored` | `{ label, message: '...', ...additionalEventData }`
+| `identity-x-comment-report-errored` | `{ label, message: '...', ...additionalEventData }`
+| `identity-x-comment-stream-errored` | `{ label, message: '...', ...additionalEventData }`
