@@ -8,16 +8,16 @@ $ const additionalEventData = defaultValue(input.additionalEventData, {});
 <if(Boolean(identityX))>
   <marko-web-identity-x-context|{ user, isEnabled, application }|>
     $ const props = {
+      additionalEventData: additionalEventData,
+      eventLabel: input.eventLabel,
       activeUser: user,
       endpoints: identityX.config.getEndpoints(),
       buttonLabels: input.buttonLabels,
       redirect: input.redirect,
-      eventName: input.eventName,
       loginEmailPlaceholder: input.loginEmailPlaceholder,
       consentPolicy: get(application, "organization.consentPolicy"),
       regionalConsentPolicies: get(application, "organization.regionalConsentPolicies"),
       appContextId: identityX.config.get("appContextId"),
-      additionalEventData: additionalEventData,
     };
     <if(isEnabled)>
       <marko-web-browser-component name="IdentityXLogin" props=props />

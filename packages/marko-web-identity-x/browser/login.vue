@@ -65,6 +65,14 @@ export default {
    *
    */
   props: {
+    additionalEventData: {
+      type: Object,
+      default: () => ({}),
+    },
+    eventLabel: {
+      type: String,
+      default: 'login',
+    },
     activeUser: {
       type: Object,
       default: () => {},
@@ -96,21 +104,9 @@ export default {
       type: String,
       default: null,
     },
-    eventLabel: {
-      type: String,
-      default: 'login',
-    },
     senderEmailAddress: {
       type: String,
       default: 'noreply@identity-x.parameter1.com',
-    },
-
-    /**
-     * Additional data to send along with the emitted event.
-     */
-    additionalEventData: {
-      type: Object,
-      default: () => ({}),
     },
 
     /**

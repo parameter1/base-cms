@@ -17,13 +17,17 @@ import FeatureError from './errors/feature';
 
 export default {
   props: {
-    redirectTo: {
-      type: String,
-      default: null,
+    additionalEventData: {
+      type: Object,
+      default: () => ({}),
     },
     eventLabel: {
       type: String,
       default: 'logout',
+    },
+    redirectTo: {
+      type: String,
+      default: null,
     },
   },
   data: () => ({

@@ -39,6 +39,14 @@ export default {
    *
    */
   props: {
+    additionalEventData: {
+      type: Object,
+      default: () => ({}),
+    },
+    eventLabel: {
+      type: String,
+      default: 'comment-post',
+    },
     id: {
       type: String,
       required: true,

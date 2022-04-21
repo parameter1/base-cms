@@ -212,6 +212,14 @@ export default {
    *
    */
   props: {
+    additionalEventData: {
+      type: Object,
+      default: () => ({}),
+    },
+    eventLabel: {
+      type: String,
+      default: 'profile',
+    },
     endpoints: {
       type: Object,
       required: true,
@@ -264,20 +272,9 @@ export default {
       type: Array,
       default: () => [],
     },
-    /**
-     * Additional data to send along with the emitted event.
-     */
-    additionalEventData: {
-      type: Object,
-      default: () => ({}),
-    },
     defaultCountryCode: {
       type: String,
       default: null,
-    },
-    eventLabel: {
-      type: String,
-      default: 'profile',
     },
   },
 

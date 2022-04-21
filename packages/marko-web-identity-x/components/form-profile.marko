@@ -8,6 +8,8 @@ $ const additionalEventData = defaultValue(input.additionalEventData, {});
 <if(Boolean(identityX))>
   <marko-web-identity-x-context|{ user, isEnabled, application }|>
     $ const props = {
+      additionalEventData: additionalEventData,
+      eventLabel: input.eventLabel,
       activeUser: user,
       requiredServerFields: identityX.config.getRequiredServerFields(),
       requiredClientFields: identityX.config.getRequiredClientFields(),
@@ -15,14 +17,11 @@ $ const additionalEventData = defaultValue(input.additionalEventData, {});
       defaultCountryCode: identityX.config.get('defaultCountryCode'),
       callToAction: input.callToAction,
       reloadPageOnSubmit: input.reloadPageOnSubmit,
-      viewEventName: input.viewEventName,
-      submitEventName: input.submitEventName,
       endpoints: identityX.config.getEndpoints(),
       consentPolicy: get(application, "organization.consentPolicy"),
       emailConsentRequest: get(application, "organization.emailConsentRequest"),
       appContextId: identityX.config.get("appContextId"),
       regionalConsentPolicies: get(application, "organization.regionalConsentPolicies"),
-      additionalEventData: additionalEventData,
     };
     <if(isEnabled)>
       <marko-web-browser-component name="IdentityXProfile" props=props />
