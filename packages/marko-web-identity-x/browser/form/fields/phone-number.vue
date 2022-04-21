@@ -1,5 +1,5 @@
 <template>
-  <form-group :class-name="className">
+  <form-group>
     <form-label :for="id" :required="required">
       {{ label }}
     </form-label>
@@ -45,10 +45,6 @@ export default {
     value: {
       type: String,
       default: '',
-    },
-    className: {
-      type: String,
-      default: 'col-md-6',
     },
   },
   data: () => ({
