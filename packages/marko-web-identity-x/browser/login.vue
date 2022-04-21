@@ -164,8 +164,9 @@ export default {
   mounted() {
     if (!cookiesEnabled()) {
       this.error = new FeatureError('Your browser does not support cookies. Please enable cookies to use this feature.');
+      this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: this.error.message });
     }
-    this.$emit('displayed', { label: this.eventLabel });
+    this.$emit('displayed', { ...this.additionalEventData, label: this.eventLabel });
   },
 
   /**
@@ -196,7 +197,7 @@ export default {
         });
       } catch (e) {
         this.error = e;
-        this.$emit('errored', { label: this.eventLabel, message: e.message });
+        this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: e.message });
       } finally {
         this.loading = false;
       }

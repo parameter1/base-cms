@@ -47,7 +47,19 @@ export default (Browser, {
       errored: (...args) => { EventBus.$emit('identity-x-profile-errored', ...args); },
     },
   });
-  Browser.register('IdentityXCommentStream', CommentStreamComponent);
+  Browser.register('IdentityXCommentStream', CommentStreamComponent, {
+    on: {
+      'post-errored': (...args) => { EventBus.$emit('identity-x-comment-post-errored', ...args); },
+      'post-submitted': (...args) => { EventBus.$emit('identity-x-comment-post-submitted', ...args); },
+      'report-errored': (...args) => { EventBus.$emit('identity-x-comment-report-errored', ...args); },
+      'report-submitted': (...args) => { EventBus.$emit('identity-x-comment-report-submitted', ...args); },
+      displayed: (...args) => { EventBus.$emit('identity-x-comment-stream-displayed', ...args); },
+      errored: (...args) => { EventBus.$emit('identity-x-stream-errored', ...args); },
+      loaded: (...args) => { EventBus.$emit('identity-x-comment-stream-loaded', ...args); },
+      'loaded-more': (...args) => { EventBus.$emit('identity-x-comment-stream-loaded-more', ...args); },
+      'login-link-sent': (...args) => { EventBus.$emit('identity-x-comment-stream-login-link-sent', ...args); },
+    },
+  });
 
   if (withGTM) {
     const { dataLayer = [] } = window;
@@ -55,6 +67,15 @@ export default (Browser, {
       'identity-x-authenticate-displayed',
       'identity-x-authenticated',
       'identity-x-authenticate-errored',
+      'identity-x-comment-post-errored',
+      'identity-x-comment-post-submitted',
+      'identity-x-comment-report-errored',
+      'identity-x-comment-report-submitted',
+      'identity-x-comment-stream-displayed',
+      'identity-x-comment-stream-errored',
+      'identity-x-comment-stream-loaded',
+      'identity-x-comment-stream-loaded-more',
+      'identity-x-comment-stream-login-link-sent',
       'identity-x-login-displayed',
       'identity-x-login-link-sent',
       'identity-x-login-errored',
