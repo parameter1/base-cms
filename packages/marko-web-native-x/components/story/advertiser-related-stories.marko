@@ -1,0 +1,49 @@
+import defaultFragment from "../../apollo/graphql/fragments/related-stories";
+import buildQuery from "../../apollo/graphql/queries/related-stories";
+
+$ const { req, nativeX } = out.global;
+
+$ const { advertiserId, publisherId, excludeStoryIds } = input;
+$ const args = {
+  config: nativeX,
+  advertiserId,
+  ...(publisherId && { publisherId }),
+  ...(excludeStoryIds && { excludeStoryIds }),
+};
+
+/**
+ * @param NativeXConfiguration The NativeX config
+ * @param object The Marko template to render
+ * @param Document A query fragment to be used with the story query
+ */
+$ const getStories = async ({
+  config,
+  advertiserId,
+  publisherId,
+  excludeStoryIds,
+  pagination,
+  queryFragment = defaultFragment,
+} = {}) => {
+  const { data } = await config.client.query({
+    query: buildQuery(queryFragment),
+    variables: {
+      input: { advertiserId, publisherId, excludeStoryIds },
+      ...(pagination && { pagination }),
+    },
+  });
+  if (!data || !data.advertiserStories) return { nodes: [], pageInfo: {} };
+  const { pageInfo } = data.advertiserStories;
+  const nodes = data.advertiserStories.edges
+    .map(edge => (edge && edge.node ? edge.node : null))
+    .filter(c => c);
+  return { nodes, pageInfo };
+};
+
+<if(nativeX && advertiserId)>
+  <marko-web-resolve|{ resolved }| promise=getStories(args)>
+    <${input.renderBody} nodes=resolved.nodes pageInfo=resolved.pageInfo />
+  </marko-web-resolve>
+</if>
+<else>
+  $ warn('Unable to fetch elements from NativeX: a uri and advertiser ID are required.');
+</else>

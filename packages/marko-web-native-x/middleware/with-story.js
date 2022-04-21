@@ -1,6 +1,5 @@
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 const { getAsObject } = require('@parameter1/base-cms-object-path');
-const createClient = require('../apollo/create-client');
 const defaultFragment = require('../apollo/graphql/fragments/story');
 const buildQuery = require('../apollo/graphql/queries/story');
 
@@ -14,10 +13,9 @@ module.exports = ({
   template,
   queryFragment = defaultFragment,
 } = {}) => asyncRoute(async (req, res) => {
-  const client = createClient(config.getGraphQLUri());
   const { id } = req.params;
   const preview = Boolean(req.query.preview);
-  const result = await client.query({
+  const result = await config.client.query({
     query: buildQuery(queryFragment),
     variables: { input: { id, preview } },
   });
