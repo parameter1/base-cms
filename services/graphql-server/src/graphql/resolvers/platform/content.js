@@ -919,14 +919,17 @@ module.exports = {
       });
 
       customAttributes.forEach(({ key, value, exists }) => {
-        if (!exists) {
-          query.$and.push({
-            $or: [
-              { [`customAttributes.${key}`]: { $exists: false } },
-              { [`customAttributes.${key}`]: { $in: ['', null] } },
-            ],
-          });
+        const valueOrExists = Boolean(value || typeof exists !== 'undefined');
+        if (!valueOrExists) {
+          throw new UserInputError('Either value or exists must be defined');
         } else {
+          query.$and.push({
+            [`customAttributes.${key}`]: {
+              ...(
+                (value && exists !== false) ? { $nin: ['', null], $exists: true } : { $in: ['', null] }
+              ),
+            },
+          });
           query.$and.push({ [`customAttributes.${key}`]: value });
         }
       });
