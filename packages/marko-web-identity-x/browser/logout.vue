@@ -17,6 +17,14 @@ import FeatureError from './errors/feature';
 
 export default {
   props: {
+    additionalEventData: {
+      type: Object,
+      default: () => ({}),
+    },
+    eventLabel: {
+      type: String,
+      default: 'logout',
+    },
     redirectTo: {
       type: String,
       default: null,
@@ -27,10 +35,12 @@ export default {
   }),
   mounted() {
     if (cookiesEnabled()) {
+      this.$emit('displayed', { ...this.additionalEventData, label: this.eventLabel });
       this.logout();
     } else {
       const error = new FeatureError('Your browser does not support cookies. Please enable cookies to use this feature.');
       this.error = error.message;
+      this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: this.error });
     }
   },
   methods: {
@@ -43,10 +53,11 @@ export default {
         const res = await post('/logout');
         const data = await res.json();
         if (!res.ok) throw new LogoutError(data.message, res.status);
-        this.$emit('logout', data);
+        this.$emit('submitted', { ...this.additionalEventData, label: this.eventLabel, data });
         this.redirect();
       } catch (e) {
         this.error = `Unable to logout: ${e.message}`;
+        this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: e.message });
       }
     },
 

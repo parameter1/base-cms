@@ -21,7 +21,8 @@
           v-else
           :display-name="activeUser.displayName"
           :stream="{ identifier, title, description, url }"
-          @complete="load"
+          @submitted="handlePostCreate"
+          @errored="handlePostCreateError"
         />
       </div>
       <div v-else :class="element('login-form-wrapper')">
@@ -35,13 +36,15 @@
         </p>
         <login
           :class="element('login-form')"
+          :additional-event-data="additionalEventData"
+          :event-label="eventLabel"
           :active-user="activeUser"
           :endpoints="endpoints"
           :consent-policy="consentPolicy"
           :app-context-id="appContextId"
           :regional-consent-policies="regionalConsentPolicies"
           :button-labels="loginButtonLabels"
-          @login-link-sent="handleLoginSubmit"
+          @submitted="handleLoginSubmit"
         />
       </div>
 
@@ -73,7 +76,8 @@
           :flagged="comment.flagged"
           :date-format="dateFormat"
           :active-user="activeUser"
-          @reported="load"
+          @reported="handlePostReport"
+          @errored="handlePostReportError"
         />
       </div>
       <div v-if="hasNextPage" :class="element('post')">
@@ -103,6 +107,14 @@ export default {
    *
    */
   props: {
+    additionalEventData: {
+      type: Object,
+      default: () => ({}),
+    },
+    eventLabel: {
+      type: String,
+      default: 'comment-stream',
+    },
     activeUser: {
       type: Object,
       default: () => {},
@@ -220,10 +232,37 @@ export default {
   /**
    *
    */
+  mounted() {
+    this.$emit('displayed', { ...this.additionalEventData, label: this.eventLabel, identifier: this.identifier });
+  },
+
+  /**
+   *
+   */
   methods: {
     handleLoginSubmit() {
+      this.$emit('login-link-sent', { ...this.additionalEventData, label: this.eventLabel });
       this.showLoginMessage = false;
     },
+
+    handlePostCreate(data) {
+      this.$emit('post-submitted', { ...this.additionalEventData, label: this.eventLabel, ...data });
+      this.load();
+    },
+
+    handlePostReport(data) {
+      this.$emit('report-submitted', { ...this.additionalEventData, label: this.eventLabel, ...data });
+      this.load();
+    },
+
+    handlePostCreateError(data) {
+      this.$emit('post-errored', { ...this.additionalEventData, label: this.eventLabel, ...data });
+    },
+
+    handlePostReportError(data) {
+      this.$emit('report-errored', { ...this.additionalEventData, label: this.eventLabel, ...data });
+    },
+
     /**
      *
      */
@@ -246,8 +285,10 @@ export default {
         this.hasNextPage = data.pageInfo.hasNextPage;
         this.endCursor = data.pageInfo.endCursor;
         this.archived = data.stream ? data.stream.archived : false;
+        this.$emit('loaded', { ...this.additionalEventData, label: this.eventLabel, hasNextPage: this.hasNextPage });
       } catch (e) {
         this.error = e;
+        this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: e.message });
       } finally {
         this.isLoading = false;
       }
@@ -268,8 +309,10 @@ export default {
         this.comments.push(...comments);
         this.hasNextPage = data.pageInfo.hasNextPage;
         this.endCursor = data.pageInfo.endCursor;
+        this.$emit('loaded-more', { ...this.additionalEventData, label: this.eventLabel, hasNextPage: this.hasNextPage });
       } catch (e) {
         this.error = e;
+        this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: e.message });
       } finally {
         this.isLoadingMore = false;
       }

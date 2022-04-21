@@ -65,6 +65,14 @@ export default {
    *
    */
   props: {
+    additionalEventData: {
+      type: Object,
+      default: () => ({}),
+    },
+    eventLabel: {
+      type: String,
+      default: 'login',
+    },
     activeUser: {
       type: Object,
       default: () => {},
@@ -99,14 +107,6 @@ export default {
     senderEmailAddress: {
       type: String,
       default: 'noreply@identity-x.parameter1.com',
-    },
-
-    /**
-     * Additional data to send along with the emitted event.
-     */
-    additionalEventData: {
-      type: Object,
-      default: () => ({}),
     },
 
     /**
@@ -164,7 +164,9 @@ export default {
   mounted() {
     if (!cookiesEnabled()) {
       this.error = new FeatureError('Your browser does not support cookies. Please enable cookies to use this feature.');
+      this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: this.error.message });
     }
+    this.$emit('displayed', { ...this.additionalEventData, label: this.eventLabel });
   },
 
   /**
@@ -188,9 +190,14 @@ export default {
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
         this.complete = true;
-        this.$emit('login-link-sent', { ...this.additionalEventData, ...data });
+        this.$emit('submitted', {
+          ...this.additionalEventData,
+          label: this.eventLabel,
+          data,
+        });
       } catch (e) {
         this.error = e;
+        this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: e.message });
       } finally {
         this.loading = false;
       }

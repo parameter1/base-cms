@@ -13,21 +13,41 @@
     "template": "./context.marko"
   },
   "<marko-web-identity-x-form-authenticate>": {
-    "template": "./form-authenticate.marko"
+    "template": "./form-authenticate.marko",
+    "@additional-event-data": "object",
+    "@event-label": {
+      "type": "string",
+      "default-value": "authenticate"
+    },
+    "@callToAction": "string",
+    "@buttonLabel": "string"
   },
   "<marko-web-identity-x-form-login>": {
     "template": "./form-login.marko",
     "@additional-event-data": "object",
+    "@event-label": {
+      "type": "string",
+      "default-value": "login"
+    },
     "@button-labels": "object",
     "@login-email-placeholder": "string",
     "@redirect": "string"
   },
   "<marko-web-identity-x-form-logout>": {
-    "template": "./form-logout.marko"
+    "template": "./form-logout.marko",
+    "@additional-event-data": "object",
+    "@event-label": {
+      "type": "string",
+      "default-value": "logout"
+    }
   },
   "<marko-web-identity-x-form-register>": {
     "template": "./form-register.marko",
     "@additional-event-data": "object",
+    "@event-label": {
+      "type": "string",
+      "default-value": "logout"
+    },
     "@button-labels": "object",
     "@login-email-placeholder": "string",
     "@redirect": "string"
@@ -35,12 +55,21 @@
   "<marko-web-identity-x-form-profile>": {
     "template": "./form-profile.marko",
     "@additional-event-data": "object",
+    "@event-label": {
+      "type": "string",
+      "default-value": "logout"
+    },
     "@call-to-action": "string",
     "@reload-page-on-submit": "boolean",
     "@button-label": "string"
   },
   "<marko-web-identity-x-comment-stream>": {
     "template": "./comment-stream.marko",
+    "@additional-event-data": "object",
+    "@event-label": {
+      "type": "string",
+      "default-value": "logout"
+    },
     "@identifier": {
       "type": "string",
       "required": true

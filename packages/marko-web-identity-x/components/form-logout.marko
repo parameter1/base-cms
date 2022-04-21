@@ -1,1 +1,8 @@
-<marko-web-browser-component name="IdentityXLogout" />
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const additionalEventData = defaultValue(input.additionalEventData, {});
+
+<marko-web-browser-component name="IdentityXLogout" props={
+  additionalEventData: additionalEventData,
+  eventLabel: input.eventLabel,
+} />

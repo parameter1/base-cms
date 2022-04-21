@@ -212,6 +212,14 @@ export default {
    *
    */
   props: {
+    additionalEventData: {
+      type: Object,
+      default: () => ({}),
+    },
+    eventLabel: {
+      type: String,
+      default: 'profile',
+    },
     endpoints: {
       type: Object,
       required: true,
@@ -263,13 +271,6 @@ export default {
     requiredLoginFields: {
       type: Array,
       default: () => [],
-    },
-    /**
-     * Additional data to send along with the emitted event.
-     */
-    additionalEventData: {
-      type: Object,
-      default: () => ({}),
     },
     defaultCountryCode: {
       type: String,
@@ -461,7 +462,9 @@ export default {
     if (!cookiesEnabled()) {
       const error = new FeatureError('Your browser does not support cookies. Please enable cookies to use this feature.');
       this.error = error.message;
+      this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: this.error.message });
     }
+    this.$emit('displayed', { ...this.additionalEventData, label: this.eventLabel });
   },
 
   /**
@@ -517,7 +520,8 @@ export default {
 
         this.user = data.user;
         this.didSubmit = true;
-        this.$emit('submit', { ...this.additionalEventData, ...data });
+
+        this.$emit('submitted', { ...this.additionalEventData, label: this.eventLabel });
 
         if (this.reloadPageOnSubmit) {
           this.isReloadingPage = true;
@@ -525,6 +529,7 @@ export default {
         }
       } catch (e) {
         this.error = e;
+        this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: e.message });
       } finally {
         this.isLoading = false;
       }

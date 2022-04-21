@@ -149,3 +149,52 @@ import IdentityX from '@parameter1/base-cms-marko-web-identity-x/browser';
 +  CustomLoginComponent: MyLoginComponent,
 +});
 ```
+
+## Vue Event emission
+
+This package emits the following events via the EventBus/global Vue root. Each payload will be an
+object and will include a `label` field tied to the `eventLabel` prop of the emitting component.
+Each payload _may_ include additional data, as relevant.
+
+All components support passing an object of `additionalEventData`, which when present will append
+data both to the submission (for backend hook handling) and to the emitted event payload.
+### Submission events
+
+| Event name | Event payload | Details |
+| - | - | - |
+| `identity-x-login-link-sent` | `{ label, ...additionalEventData  }` | Fires when a user submits their email to start the login handshake.
+| `identity-x-authenticated` | `{ label, ...additionalEventData, mustReVerifyProfile, isProfileComplete, requiresCustomFieldAnswers }` | Fires when a user has completed the login handshake and is now fully authenticated.
+| `identity-x-logout` | `{ label, ...additionalEventData  }` | Fires when a user has logged out successfully.
+| `identity-x-profile-updated` | `{ label, ...additionalEventData }` | Fires when a user has submitted an update to their profile/fields.
+| `identity-x-comment-post-submitted` | `{ label, ...additionalEventData }` | Fires when a user posts a comment to a comment stream
+| `identity-x-comment-report-submitted` | `{ label, ...additionalEventData, id }` | Fires when a user reports a comment on a comment stream
+| `identity-x-comment-stream-login-link-sent` | `{ label, ...additionalEventData }` | Fires when a user starts login from a comment stream
+
+### View events
+
+Each component will emit an event when the component is displayed.
+
+| Event name | Event payload | Details |
+| - | - | - |
+| `identity-x-authenticate-displayed` | `{ label, ...additionalEventData  }`
+| `identity-x-login-displayed` | `{ label, ...additionalEventData }`
+| `identity-x-logout-displayed` | `{ label, ...additionalEventData  }`
+| `identity-x-profile-displayed` | `{ label, ...additionalEventData }`
+| `identity-x-comment-stream-displayed` | `{ label, ...additionalEventData }`
+| `identity-x-comment-stream-loaded` | `{ label, ...additionalEventData }`
+| `identity-x-comment-stream-loaded-more` | `{ label, ...additionalEventData }`
+
+### Error events
+
+Each component will emit an event when an error is encountered and include the error message as the
+`message` attribute of the emitted payload.
+
+| Event name | Event payload |
+| - | - |
+| `identity-x-authenticate-errored` | `{ label, message: '...', ...additionalEventData }`
+| `identity-x-login-errored` | `{ label, message: '...', ...additionalEventData }`
+| `identity-x-logout-errored` | `{ label, message: '...', ...additionalEventData }`
+| `identity-x-profile-errored` | `{ label, message: '...', ...additionalEventData }`
+| `identity-x-comment-post-errored` | `{ label, message: '...', ...additionalEventData }`
+| `identity-x-comment-report-errored` | `{ label, message: '...', ...additionalEventData }`
+| `identity-x-comment-stream-errored` | `{ label, message: '...', ...additionalEventData }`

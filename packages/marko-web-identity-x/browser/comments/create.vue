@@ -32,6 +32,14 @@ export default {
    *
    */
   props: {
+    additionalEventData: {
+      type: Object,
+      default: () => ({}),
+    },
+    eventLabel: {
+      type: String,
+      default: 'comment-create',
+    },
     stream: {
       type: Object,
       required: true,
@@ -88,9 +96,10 @@ export default {
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
         this.body = '';
-        this.$emit('complete');
+        this.$emit('submitted', { ...this.additionalEventData, label: this.eventLabel });
       } catch (e) {
         this.error = e;
+        this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: e.message });
       } finally {
         this.isLoading = false;
       }

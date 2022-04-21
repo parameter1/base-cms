@@ -1,11 +1,15 @@
 import { get } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 
 $ const { req } = out.global;
 $ const { identityX } = req;
+$ const additionalEventData = defaultValue(input.additionalEventData, {});
 
 <if(identityX)>
   <marko-web-identity-x-context|{ user, isEnabled, application }|>
     $ const props = {
+      additionalEventData: additionalEventData,
+      eventLabel: input.eventLabel,
       activeUser: user,
       identifier: `${input.identifier}`,
       title: input.title,
