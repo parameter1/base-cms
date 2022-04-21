@@ -5,5 +5,22 @@
 >
   <@page>
     <h1>Hello World!</h1>
+    <style>
+    .idx-comment-stream {
+      max-width: 50%;
+      border: 1px solid #ddd;
+      padding: 1rem;
+      border-radius: 5px;
+    }
+    </style>
+    <marko-web-identity-x-comment-stream
+      identifier="home"
+      title="Hello World!"
+      event-label="CustomComment"
+      additional-event-data={
+        foo: 'bar',
+        action: "CustomComment"
+      }
+    />
   </@page>
 </marko-web-default-page-layout>

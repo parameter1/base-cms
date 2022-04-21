@@ -7,7 +7,13 @@ $ const title = "Authenticate";
   <@page>
     <marko-web-page-wrapper>
       <@section>
-        <marko-web-identity-x-form-authenticate />
+        <marko-web-identity-x-form-authenticate
+          event-label="CustomAuthenticate"
+          additional-event-data={
+            foo: "bar",
+            action: "CustomAuthenticate",
+          }
+        />
       </@section>
     </marko-web-page-wrapper>
   </@page>

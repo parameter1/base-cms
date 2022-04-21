@@ -9,7 +9,13 @@ $ const description = `Log in to ${config.siteName()}`;
     <marko-web-page-wrapper>
       <@section>
         <h1 class="page-wrapper__title">${description}</h1>
-        <marko-web-identity-x-form-login />
+        <marko-web-identity-x-form-login
+          event-label="CustomLogin"
+          additional-event-data={
+            foo: "bar",
+            action: "CustomLogin",
+          }
+        />
       </@section>
     </marko-web-page-wrapper>
   </@page>
