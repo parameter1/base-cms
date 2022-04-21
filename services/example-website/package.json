@@ -19,6 +19,7 @@
   "dependencies": {
     "@parameter1/base-cms-marko-core": "^2.80.0",
     "@parameter1/base-cms-marko-web": "^2.81.0",
+    "@parameter1/base-cms-marko-web-gtm": "^2.77.0",
     "@parameter1/base-cms-marko-web-identity-x": "^2.84.0",
     "@parameter1/base-cms-marko-web-omeda": "^2.79.0",
     "@parameter1/base-cms-marko-web-omeda-identity-x": "^2.84.0",
