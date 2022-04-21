@@ -918,8 +918,17 @@ module.exports = {
         excludeContentTypes,
       });
 
-      customAttributes.forEach(({ key, value, isJSON }) => {
-        query.$and.push({ [`customAttributes.${key}`]: isJSON ? JSON.parse(value) : value });
+      customAttributes.forEach(({ key, value, exists }) => {
+        if (!exists) {
+          query.$and.push({
+            $or: [
+              { [`customAttributes.${key}`]: { $exists: false } },
+              { [`customAttributes.${key}`]: { $in: ['', null] } },
+            ],
+          });
+        } else {
+          query.$and.push({ [`customAttributes.${key}`]: value });
+        }
       });
 
       const siteId = input.siteId || site.id();
