@@ -21,7 +21,9 @@ export default (Browser, {
   const { EventBus } = Browser;
   Browser.register('IdentityXAuthenticate', AuthenticateComponent, {
     on: {
-      authenticated: (...args) => { EventBus.$emit('identity-x-authenticated', ...args); },
+      displayed: (...args) => { EventBus.$emit('identity-x-authenticate-displayed', ...args); },
+      submitted: (...args) => { EventBus.$emit('identity-x-authenticated', ...args); },
+      errored: (...args) => { EventBus.$emit('identity-x-authenticate-errored', ...args); },
     },
   });
   Browser.register('IdentityXLogin', LoginComponent, {
@@ -48,6 +50,9 @@ export default (Browser, {
   if (withGTM) {
     const { dataLayer = [] } = window;
     [
+      'identity-x-authenticate-displayed',
+      'identity-x-authenticated',
+      'identity-x-authenticate-errored',
       'identity-x-login-displayed',
       'identity-x-login-link-sent',
       'identity-x-login-errored',

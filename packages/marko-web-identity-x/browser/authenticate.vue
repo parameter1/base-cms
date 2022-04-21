@@ -101,6 +101,10 @@ export default {
       type: String,
       default: null,
     },
+    eventLabel: {
+      type: String,
+      default: 'authenticate',
+    },
   },
 
   /**
@@ -157,9 +161,11 @@ export default {
    */
   mounted() {
     if (cookiesEnabled()) {
+      this.$emit('displayed', { label: this.eventLabel });
       this.authenticate();
     } else {
       this.error = new FeatureError('Your browser does not support cookies. Please enable cookies to use this feature.');
+      this.$emit('errored', { label: this.eventLabel, message: this.error.message });
     }
   },
 
@@ -180,7 +186,6 @@ export default {
         const data = await res.json();
 
         if (!res.ok) throw new AuthenticationError(data.message, res.status);
-        this.$emit('authenticated', data);
 
         this.activeUser = data.user;
         this.mustReVerifyProfile = data.user.mustReVerifyProfile;
@@ -188,12 +193,20 @@ export default {
         this.requiresCustomFieldAnswers = this.activeUser.customSelectFieldAnswers
           .some(({ hasAnswered, field }) => field.required && !hasAnswered);
 
+        this.$emit('submitted', {
+          label: this.eventLabel,
+          mustReVerifyProfile: this.mustReVerifyProfile,
+          isProfileComplete: this.isProfileComplete,
+          requiresCustomFieldAnswers: this.requiresCustomFieldAnswers,
+        });
+
         if (!this.showProfileForm) this.redirect();
       } catch (e) {
         if (/no token was found/i.test(e.message)) {
           e.message = 'This login link has either expired or was already used.';
         }
         this.error = e;
+        this.$emit('errored', { label: this.eventLabel, message: this.error.message });
       } finally {
         this.isLoading = false;
       }
