@@ -1,5 +1,6 @@
 <template>
   <div v-if="hasActiveUser">
+    <profile-view :eventName="viewEventName" />
     <p>{{ callToAction }}</p>
     <form @submit.prevent="handleSubmit">
       <fieldset :disabled="isLoading">
@@ -186,9 +187,11 @@ import PhoneNumber from './form/fields/phone-number.vue';
 import ReceiveEmail from './form/fields/receive-email.vue';
 import RegionalPolicy from './form/fields/regional-policy.vue';
 import Login from './login.vue';
+import ProfileView from './gtm-tracker/profile-view.vue';
 
 import FeatureError from './errors/feature';
 import FormError from './errors/form';
+import { profileSubmit } from '../utils/gtm-events';
 
 const { isArray } = Array;
 
@@ -206,6 +209,7 @@ export default {
     ReceiveEmail,
     RegionalPolicy,
     Login,
+    ProfileView,
   },
 
   /**
@@ -274,6 +278,18 @@ export default {
     defaultCountryCode: {
       type: String,
       default: null,
+    },
+    eventName: {
+      type: String,
+      default: 'profile',
+    },
+    viewEventName: {
+      type: String,
+      default: 'profile_view',
+    },
+    submitEventName: {
+      type: String,
+      default: 'profile_submit',
     },
   },
 
@@ -517,6 +533,7 @@ export default {
 
         this.user = data.user;
         this.didSubmit = true;
+        profileSubmit({ event: this.submitEventName, email: this.user.email });
         this.$emit('submit', { ...this.additionalEventData, ...data });
 
         if (this.reloadPageOnSubmit) {

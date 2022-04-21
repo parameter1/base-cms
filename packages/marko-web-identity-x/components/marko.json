@@ -38,7 +38,9 @@
     "@additional-event-data": "object",
     "@call-to-action": "string",
     "@reload-page-on-submit": "boolean",
-    "@button-label": "string"
+    "@button-label": "string",
+    "@view-event-name": "string",
+    "@submit-event-name": "string"
   },
   "<marko-web-identity-x-gtm-init>": {
     "template": "./gtm-init.marko",
