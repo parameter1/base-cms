@@ -4,6 +4,8 @@ Google Tag Manager components for BaseCMS/Marko websites.
 ## Installation
 Once you have a GTM container ID, you can enable GTM in your base-cms-marko-web application. To do so, include this package and add the following two tags to your app:
 
+## Usage: Marko
+
 ### `marko-web-gtm-init`
 This component initializes the GTM container(s) specified, and allows a standard set of inputs to be used for projects utilizing this package solo and for projects using the `marko-web-deferred-script-loader` package.
 
@@ -53,3 +55,11 @@ To automatically start your containers, send the `start=true` parameter with you
 ### `marko-web-gtm-track-bus-event`
 ### `marko-web-gtm-track-inview-event`
 ### `marko-web-gtm-track-load-more`
+
+## Usage: Vue/Browser
+
+### `track-bus-event`
+
+### `track-in-view-event`
+
+### `track-load-more`
