@@ -925,9 +925,7 @@ module.exports = {
         } else {
           query.$and.push({
             [`customAttributes.${key}`]: {
-              ...(
-                (value && exists !== false) ? { $nin: ['', null], $exists: true } : { $in: ['', null] }
-              ),
+              ...((value && exists !== false) ? { $nin: ['', null], $exists: true } : { $in: ['', null] }),
             },
           });
           query.$and.push({ [`customAttributes.${key}`]: value });
