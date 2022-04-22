@@ -250,21 +250,6 @@ type ContentWebsiteSchedule {
   endDate(input: FormatDate = {}): String @momentFormat(localField: "end")
 }
 
-type ContentMagazineSchedule {
-  # fields from magazine.model::Schedule
-  id: ObjectID! @projection(localField: "_id") @value(localField: "_id")
-  publication(input: MagazineSchedulePublicationInput = {}): MagazinePublication! @projection(localField: "product") @refOne(
-    loader: "platformProduct",
-    localField: "product"
-    criteria: "magazinePublication",
-  )
-  issue(input: MagazineScheduleIssueInput = {}): MagazineIssue! @projection @refOne(loader: "magazineIssue")
-  section(input: MagazineScheduleSectionInput = {}): MagazineSection! @projection @refOne(loader: "magazineSection")
-
-  # fields from trait.platform::StatusEnabled
-  status: Int @projection
-}
-
 type MostPopularContent {
   id: Int!
   uniqueUsers: Int!

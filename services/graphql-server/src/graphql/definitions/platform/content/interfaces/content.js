@@ -81,7 +81,7 @@ interface Content @requiresProject(fields: ["type"]) {
   # Returns the website section query schedules
   websiteSchedules: [ContentWebsiteSchedule]!
   # Returns the magazine schedules
-  magazineSchedules: [ContentMagazineSchedule]! @projection(localField: "_id")
+  magazineSchedules: [MagazineSchedule]! @projection(localField: "_id")
 
   hasWebsiteSchedule(input: ContentHasWebsiteScheduleInput!): Boolean! @projection(localField: "sectionQuery")
 
