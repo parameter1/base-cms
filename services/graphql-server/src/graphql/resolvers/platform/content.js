@@ -919,17 +919,15 @@ module.exports = {
       });
 
       customAttributes.forEach(({ key, value, exists }) => {
-        const valueOrExists = Boolean(value || typeof exists !== 'undefined');
-        if (!valueOrExists) {
-          throw new UserInputError('Either value or exists must be defined');
-        } else {
-          query.$and.push({
-            [`customAttributes.${key}`]: {
-              ...((value && exists !== false) ? { $nin: ['', null], $exists: true } : { $in: ['', null] }),
-            },
-          });
-          query.$and.push({ [`customAttributes.${key}`]: value });
-        }
+        const valueOrExists = Boolean(value || typeof exists === 'boolean');
+        if (!valueOrExists) throw new UserInputError('Value or exists must be defined');
+        query.$and.push({
+          [`customAttributes.${key}`]: {
+            ...(value && { $eq: value }),
+            ...(exists === false && { $in: ['', null] }),
+            ...(exists === true && { $exists: true, $nin: ['', null] }),
+          },
+        });
       });
 
       const siteId = input.siteId || site.id();
