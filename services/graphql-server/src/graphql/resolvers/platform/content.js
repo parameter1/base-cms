@@ -921,8 +921,16 @@ module.exports = {
         excludeContentTypes,
       });
 
-      customAttributes.forEach(({ key, value }) => {
-        query.$and.push({ [`customAttributes.${key}`]: value });
+      customAttributes.forEach(({ key, value, exists }) => {
+        const valueOrExists = Boolean(value || typeof exists === 'boolean');
+        if (!valueOrExists) throw new UserInputError('Value or exists must be defined');
+        query.$and.push({
+          [`customAttributes.${key}`]: {
+            ...(value && { $eq: value }),
+            ...(exists === false && { $in: ['', null] }),
+            ...(exists === true && { $exists: true, $nin: ['', null] }),
+          },
+        });
       });
 
       const siteId = input.siteId || site.id();

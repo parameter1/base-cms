@@ -604,6 +604,8 @@ input ContentCustomAttributeQueryInput {
   key: String!
   "The value of that property key to query against"
   value: String!
+  "Whether or not value exists"
+  exists: Boolean
 }
 
 input AllContentQueryInput {
