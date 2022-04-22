@@ -445,10 +445,7 @@ module.exports = {
     },
 
 
-    magazineSchedules: async (content, _, { basedb }) => {
-      const contentMagazineSchedules = await basedb.find('magazine.Schedule', { 'content.$id': content._id });
-      return contentMagazineSchedules;
-    },
+    magazineSchedules: async ({ _id }, _, { basedb }) => basedb.find('magazine.Schedule', { 'content.$id': _id }),
 
     /**
      * Load primary section of content.
