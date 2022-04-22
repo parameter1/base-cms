@@ -14,7 +14,7 @@ class IdentityXConfiguration {
    * @param {string[]} [options.requiredClientFields] Required fields, client-side only.
    * @param {string[]} [options.hiddenFields] The fields to hide from the profile.
    * @param {function} [options.onHookError]
-   * @param {...object} options.rest
+   * @param {object} options.rest
    */
   constructor({
     appId,
