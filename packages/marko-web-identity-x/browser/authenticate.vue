@@ -7,6 +7,8 @@
   </div>
   <div v-else-if="showProfileForm">
     <profile-form
+      :additional-event-data="additionalEventData"
+      :event-label="eventLabel"
       :endpoints="endpoints"
       :active-user="activeUser"
       :required-server-fields="requiredServerFields"
@@ -18,7 +20,7 @@
       :regional-consent-policies="regionalConsentPolicies"
       :button-label="buttonLabel"
       :call-to-action="callToAction"
-      @submit="redirect"
+      @submitted="redirect"
     />
   </div>
   <div v-else-if="error" class="alert alert-danger" role="alert">
