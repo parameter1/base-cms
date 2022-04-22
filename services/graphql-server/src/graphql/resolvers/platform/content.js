@@ -444,6 +444,9 @@ module.exports = {
       return isArray(sectionQuery) ? sectionQuery : [];
     },
 
+
+    magazineSchedules: ({ _id }, _, { basedb }) => basedb.find('magazine.Schedule', { 'content.$id': _id }),
+
     /**
      * Load primary section of content.
      * If primary section's site matches the current site, return the section.
