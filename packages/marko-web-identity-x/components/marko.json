@@ -19,8 +19,8 @@
       "type": "string",
       "default-value": "authenticate"
     },
-    "@callToAction": "string",
-    "@buttonLabel": "string"
+    "@call-to-action": "string",
+    "@button-label": "string"
   },
   "<marko-web-identity-x-form-login>": {
     "template": "./form-login.marko",
