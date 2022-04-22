@@ -445,7 +445,7 @@ module.exports = {
     },
 
 
-    magazineSchedules: async ({ _id }, _, { basedb }) => basedb.find('magazine.Schedule', { 'content.$id': _id }),
+    magazineSchedules: ({ _id }, _, { basedb }) => basedb.find('magazine.Schedule', { 'content.$id': _id }),
 
     /**
      * Load primary section of content.
