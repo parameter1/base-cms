@@ -182,6 +182,7 @@ export default {
         this.loading = true;
         const res = await post('/login', {
           email: this.email,
+          eventLabel: this.eventLabel,
           redirectTo: this.redirectTo,
           authUrl: this.authUrl,
           appContextId: this.appContextId,
