@@ -68,7 +68,7 @@
     "@additional-event-data": "object",
     "@event-label": {
       "type": "string",
-      "default-value": "logout"
+      "default-value": "comment-stream"
     },
     "@identifier": {
       "type": "string",
