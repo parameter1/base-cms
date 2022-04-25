@@ -10,7 +10,6 @@ export default (Browser, {
   CustomLogoutComponent,
   CustomProfileComponent,
   CustomCommentStreamComponent,
-  withGTM = true,
 } = {}) => {
   const LoginComponent = CustomLoginComponent || Login;
   const AuthenticateComponent = CustomAuthenticateComponent || Authenticate;
@@ -61,39 +60,4 @@ export default (Browser, {
     },
   });
 
-  if (withGTM) {
-    const { dataLayer = [] } = window;
-    [
-      'identity-x-authenticate-displayed',
-      'identity-x-authenticated',
-      'identity-x-authenticate-errored',
-      'identity-x-comment-post-errored',
-      'identity-x-comment-post-submitted',
-      'identity-x-comment-report-errored',
-      'identity-x-comment-report-submitted',
-      'identity-x-comment-stream-displayed',
-      'identity-x-comment-stream-errored',
-      'identity-x-comment-stream-loaded',
-      'identity-x-comment-stream-loaded-more',
-      'identity-x-comment-stream-login-link-sent',
-      'identity-x-login-displayed',
-      'identity-x-login-link-sent',
-      'identity-x-login-errored',
-      'identity-x-logout-displayed',
-      'identity-x-logout',
-      'identity-x-logout-errored',
-      'identity-x-profile-displayed',
-      'identity-x-profile-updated',
-      'identity-x-profile-errored',
-    ].forEach((event) => {
-      EventBus.$on(event, args => dataLayer.push({
-        event,
-        'identity-x': {
-          ...(args && args),
-          event,
-          label: args.label,
-        },
-      }));
-    });
-  }
 };
