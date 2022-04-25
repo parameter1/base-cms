@@ -160,6 +160,8 @@
   <div v-else>
     <p>You must be logged-in to modify your user profile.</p>
     <login
+      :additional-event-data="additionalEventData"
+      :event-label="eventLabel"
       :endpoints="endpoints"
       :app-context-id="appContextId"
       :consent-policy="consentPolicy"
@@ -170,6 +172,7 @@
 </template>
 
 <script>
+import emit from './utils/emit';
 import post from './utils/post';
 import cookiesEnabled from './utils/cookies-enabled';
 import regionCountryCodes from './utils/region-country-codes';
@@ -193,6 +196,11 @@ import FormError from './errors/form';
 const { isArray } = Array;
 
 export default {
+  /**
+   *
+   */
+  inject: ['EventBus'],
+
   components: {
     AddressBlock,
     CustomBoolean,
@@ -462,9 +470,9 @@ export default {
     if (!cookiesEnabled()) {
       const error = new FeatureError('Your browser does not support cookies. Please enable cookies to use this feature.');
       this.error = error.message;
-      this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: this.error.message });
+      emit('profile-errored', this, { message: error.message });
     }
-    this.$emit('displayed', { ...this.additionalEventData, label: this.eventLabel });
+    emit('profile-displayed', this);
   },
 
   /**
@@ -521,7 +529,7 @@ export default {
         this.user = data.user;
         this.didSubmit = true;
 
-        this.$emit('submitted', { ...this.additionalEventData, label: this.eventLabel });
+        emit('profile-updated', this);
 
         if (this.reloadPageOnSubmit) {
           this.isReloadingPage = true;
@@ -529,7 +537,7 @@ export default {
         }
       } catch (e) {
         this.error = e;
-        this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: e.message });
+        emit('profile-errored', this, { message: e.message });
       } finally {
         this.isLoading = false;
       }

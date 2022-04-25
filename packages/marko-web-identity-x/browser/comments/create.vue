@@ -17,12 +17,18 @@
 </template>
 
 <script>
+import emit from '../utils/emit';
 import post from '../utils/post';
 import FormError from '../errors/form';
 import DisplayName from '../form/fields/display-name.vue';
 import CommentBody from '../form/fields/comment-body.vue';
 
 export default {
+  /**
+   *
+   */
+  inject: ['EventBus'],
+
   /**
    *
    */
@@ -96,10 +102,10 @@ export default {
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
         this.body = '';
-        this.$emit('submitted', { ...this.additionalEventData, label: this.eventLabel });
+        emit('comment-post-submitted', this);
       } catch (e) {
         this.error = e;
-        this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: e.message });
+        emit('comment-post-errored', this, { message: e.message });
       } finally {
         this.isLoading = false;
       }

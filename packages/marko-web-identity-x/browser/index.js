@@ -18,46 +18,9 @@ export default (Browser, {
   const CommentStreamComponent = CustomCommentStreamComponent || CommentStream;
 
   const { EventBus } = Browser;
-  Browser.register('IdentityXAuthenticate', AuthenticateComponent, {
-    on: {
-      displayed: (...args) => { EventBus.$emit('identity-x-authenticate-displayed', ...args); },
-      submitted: (...args) => { EventBus.$emit('identity-x-authenticated', ...args); },
-      errored: (...args) => { EventBus.$emit('identity-x-authenticate-errored', ...args); },
-    },
-  });
-  Browser.register('IdentityXLogin', LoginComponent, {
-    on: {
-      displayed: (...args) => { EventBus.$emit('identity-x-login-displayed', ...args); },
-      submitted: (...args) => { EventBus.$emit('identity-x-login-link-sent', ...args); },
-      errored: (...args) => { EventBus.$emit('identity-x-login-errored', ...args); },
-    },
-  });
-  Browser.register('IdentityXLogout', LogoutComponent, {
-    on: {
-      displayed: (...args) => { EventBus.$emit('identity-x-logout-displayed', ...args); },
-      submitted: (...args) => { EventBus.$emit('identity-x-logout', ...args); },
-      errored: (...args) => { EventBus.$emit('identity-x-logout-errored', ...args); },
-    },
-  });
-  Browser.register('IdentityXProfile', ProfileComponent, {
-    on: {
-      displayed: (...args) => { EventBus.$emit('identity-x-profile-displayed', ...args); },
-      submitted: (...args) => { EventBus.$emit('identity-x-profile-updated', ...args); },
-      errored: (...args) => { EventBus.$emit('identity-x-profile-errored', ...args); },
-    },
-  });
-  Browser.register('IdentityXCommentStream', CommentStreamComponent, {
-    on: {
-      'post-errored': (...args) => { EventBus.$emit('identity-x-comment-post-errored', ...args); },
-      'post-submitted': (...args) => { EventBus.$emit('identity-x-comment-post-submitted', ...args); },
-      'report-errored': (...args) => { EventBus.$emit('identity-x-comment-report-errored', ...args); },
-      'report-submitted': (...args) => { EventBus.$emit('identity-x-comment-report-submitted', ...args); },
-      displayed: (...args) => { EventBus.$emit('identity-x-comment-stream-displayed', ...args); },
-      errored: (...args) => { EventBus.$emit('identity-x-stream-errored', ...args); },
-      loaded: (...args) => { EventBus.$emit('identity-x-comment-stream-loaded', ...args); },
-      'loaded-more': (...args) => { EventBus.$emit('identity-x-comment-stream-loaded-more', ...args); },
-      'login-link-sent': (...args) => { EventBus.$emit('identity-x-comment-stream-login-link-sent', ...args); },
-    },
-  });
-
+  Browser.register('IdentityXAuthenticate', AuthenticateComponent, { provide: { EventBus } });
+  Browser.register('IdentityXLogin', LoginComponent, { provide: { EventBus } });
+  Browser.register('IdentityXLogout', LogoutComponent, { provide: { EventBus } });
+  Browser.register('IdentityXProfile', ProfileComponent, { provide: { EventBus } });
+  Browser.register('IdentityXCommentStream', CommentStreamComponent, { provide: { EventBus } });
 };

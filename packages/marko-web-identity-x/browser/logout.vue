@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import emit from './utils/emit';
 import redirect from './utils/redirect';
 import getReferringPage from './utils/get-referring-page';
 import cookiesEnabled from './utils/cookies-enabled';
@@ -16,6 +17,11 @@ import LogoutError from './errors/logout';
 import FeatureError from './errors/feature';
 
 export default {
+  /**
+   *
+   */
+  inject: ['EventBus'],
+
   props: {
     additionalEventData: {
       type: Object,
@@ -35,12 +41,12 @@ export default {
   }),
   mounted() {
     if (cookiesEnabled()) {
-      this.$emit('displayed', { ...this.additionalEventData, label: this.eventLabel });
+      emit('logout-displayed', this);
       this.logout();
     } else {
       const error = new FeatureError('Your browser does not support cookies. Please enable cookies to use this feature.');
       this.error = error.message;
-      this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: this.error });
+      emit('logout-errored', this, { message: error.message });
     }
   },
   methods: {
@@ -53,11 +59,11 @@ export default {
         const res = await post('/logout');
         const data = await res.json();
         if (!res.ok) throw new LogoutError(data.message, res.status);
-        this.$emit('submitted', { ...this.additionalEventData, label: this.eventLabel, data });
+        emit('logout-submitted', this, { data });
         this.redirect();
       } catch (e) {
         this.error = `Unable to logout: ${e.message}`;
-        this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: e.message });
+        emit('logout-errored', this, { message: e.message });
       }
     },
 

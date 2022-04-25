@@ -20,7 +20,7 @@
       :regional-consent-policies="regionalConsentPolicies"
       :button-label="buttonLabel"
       :call-to-action="callToAction"
-      @submitted="redirect"
+      @profile-updated="redirect"
     />
   </div>
   <div v-else-if="error" class="alert alert-danger" role="alert">
@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import emit from './utils/emit';
 import redirect from './utils/redirect';
 import cookiesEnabled from './utils/cookies-enabled';
 import post from './utils/post';
@@ -46,6 +47,11 @@ import FeatureError from './errors/feature';
 const isEmpty = v => v == null || v === '';
 
 export default {
+  /**
+   *
+   */
+  inject: ['EventBus'],
+
   /**
    *
    */
@@ -167,11 +173,11 @@ export default {
    */
   mounted() {
     if (cookiesEnabled()) {
-      this.$emit('displayed', { ...this.additionalEventData, label: this.eventLabel });
+      emit('authenticate-displayed', this);
       this.authenticate();
     } else {
       this.error = new FeatureError('Your browser does not support cookies. Please enable cookies to use this feature.');
-      this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: this.error.message });
+      emit('authenticate-errored', this, { message: this.error.message });
     }
   },
 
@@ -199,9 +205,7 @@ export default {
         this.requiresCustomFieldAnswers = this.activeUser.customSelectFieldAnswers
           .some(({ hasAnswered, field }) => field.required && !hasAnswered);
 
-        this.$emit('submitted', {
-          ...this.additionalEventData,
-          label: this.eventLabel,
+        emit('authenticated', this, {
           mustReVerifyProfile: this.mustReVerifyProfile,
           isProfileComplete: this.isProfileComplete,
           requiresCustomFieldAnswers: this.requiresCustomFieldAnswers,
@@ -213,7 +217,7 @@ export default {
           e.message = 'This login link has either expired or was already used.';
         }
         this.error = e;
-        this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: this.error.message });
+        emit('authenticate-errored', this, { message: e.message });
       } finally {
         this.isLoading = false;
       }

@@ -34,10 +34,16 @@
 
 <script>
 import moment from 'moment';
+import emit from '../utils/emit';
 import post from '../utils/post';
 import FormError from '../errors/form';
 
 export default {
+  /**
+   *
+   */
+  inject: ['EventBus'],
+
   /**
    *
    */
@@ -140,15 +146,10 @@ export default {
         const res = await post(`/comment/flag/${this.id}`);
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
-        this.$emit('reported', { ...this.additionalEventData, label: this.eventLabel, id: this.id });
+        emit('comment-report-submitted', this, { id: this.id });
       } catch (e) {
         this.error = e;
-        this.$emit('errored', {
-          ...this.additionalEventData,
-          label: this.eventLabel,
-          message: e.message,
-          id: this.id,
-        });
+        emit('comment-report-errored', this, { message: e.message, id: this.id });
       } finally {
         this.isReporting = false;
       }
