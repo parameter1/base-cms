@@ -34,15 +34,16 @@
 
 <script>
 import moment from 'moment';
-import emit from '../utils/emit';
 import post from '../utils/post';
 import FormError from '../errors/form';
+import IdentityMixin from '../mixins/identity-x';
 
 export default {
+  name: 'CommentPost',
   /**
    *
    */
-  inject: ['EventBus'],
+  mixins: [IdentityMixin],
 
   /**
    *
@@ -146,10 +147,10 @@ export default {
         const res = await post(`/comment/flag/${this.id}`);
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
-        emit('comment-report-submitted', this, { id: this.id });
+        this.emit('submitted', { id: this.id });
       } catch (e) {
         this.error = e;
-        emit('comment-report-errored', this, { message: e.message, id: this.id });
+        this.emit('errored', { message: e.message, id: this.id });
       } finally {
         this.isReporting = false;
       }

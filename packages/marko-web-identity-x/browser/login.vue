@@ -46,25 +46,27 @@
 
 <script>
 import Email from './form/fields/email.vue';
-import emit from './utils/emit';
+
 import cleanPath from './utils/clean-path';
 import post from './utils/post';
 import cookiesEnabled from './utils/cookies-enabled';
 import FormError from './errors/form';
 import FeatureError from './errors/feature';
+import IdentityMixin from './mixins/identity-x';
 
 export default {
-  /**
-   *
-   */
-  inject: ['EventBus'],
-
+  name: 'Login',
   /**
    *
    */
   components: {
     Email,
   },
+
+  /**
+   *
+   */
+  mixins: [IdentityMixin],
 
   /**
    *
@@ -169,9 +171,8 @@ export default {
   mounted() {
     if (!cookiesEnabled()) {
       this.error = new FeatureError('Your browser does not support cookies. Please enable cookies to use this feature.');
-      emit('login-errored', this, { message: this.error.message });
+      this.emit('errored', { message: this.error.message });
     }
-    emit('login-displayed', this);
   },
 
   /**
@@ -195,10 +196,10 @@ export default {
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
         this.complete = true;
-        emit('login-link-sent', this, { data });
+        this.emit('link-sent', { data });
       } catch (e) {
         this.error = e;
-        emit('login-errored', this, { message: e.message });
+        this.emit('errored', { message: e.message });
       } finally {
         this.loading = false;
       }

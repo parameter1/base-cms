@@ -36,26 +36,27 @@
 </template>
 
 <script>
-import emit from './utils/emit';
 import redirect from './utils/redirect';
 import cookiesEnabled from './utils/cookies-enabled';
 import post from './utils/post';
 import ProfileForm from './profile.vue';
 import AuthenticationError from './errors/authentication';
 import FeatureError from './errors/feature';
+import IdentityMixin from './mixins/identity-x';
 
 const isEmpty = v => v == null || v === '';
 
 export default {
-  /**
-   *
-   */
-  inject: ['EventBus'],
-
+  name: 'Authenticate',
   /**
    *
    */
   components: { ProfileForm },
+
+  /**
+   *
+   */
+  mixins: [IdentityMixin],
 
   /**
    *
@@ -173,11 +174,10 @@ export default {
    */
   mounted() {
     if (cookiesEnabled()) {
-      emit('authenticate-displayed', this);
       this.authenticate();
     } else {
       this.error = new FeatureError('Your browser does not support cookies. Please enable cookies to use this feature.');
-      emit('authenticate-errored', this, { message: this.error.message });
+      this.emit('errored', { message: this.error.message });
     }
   },
 
@@ -205,7 +205,7 @@ export default {
         this.requiresCustomFieldAnswers = this.activeUser.customSelectFieldAnswers
           .some(({ hasAnswered, field }) => field.required && !hasAnswered);
 
-        emit('authenticated', this, {
+        this.emit('authenticated', {
           mustReVerifyProfile: this.mustReVerifyProfile,
           isProfileComplete: this.isProfileComplete,
           requiresCustomFieldAnswers: this.requiresCustomFieldAnswers,
@@ -217,7 +217,7 @@ export default {
           e.message = 'This login link has either expired or was already used.';
         }
         this.error = e;
-        emit('authenticate-errored', this, { message: e.message });
+        this.emit('errored', { message: e.message });
       } finally {
         this.isLoading = false;
       }

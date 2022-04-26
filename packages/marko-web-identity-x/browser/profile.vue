@@ -172,7 +172,6 @@
 </template>
 
 <script>
-import emit from './utils/emit';
 import post from './utils/post';
 import cookiesEnabled from './utils/cookies-enabled';
 import regionCountryCodes from './utils/region-country-codes';
@@ -192,15 +191,12 @@ import Login from './login.vue';
 
 import FeatureError from './errors/feature';
 import FormError from './errors/form';
+import IdentityMixin from './mixins/identity-x';
 
 const { isArray } = Array;
 
 export default {
-  /**
-   *
-   */
-  inject: ['EventBus'],
-
+  name: 'Profile',
   components: {
     AddressBlock,
     CustomBoolean,
@@ -215,6 +211,11 @@ export default {
     RegionalPolicy,
     Login,
   },
+
+  /**
+   *
+   */
+  mixins: [IdentityMixin],
 
   /**
    *
@@ -470,9 +471,8 @@ export default {
     if (!cookiesEnabled()) {
       const error = new FeatureError('Your browser does not support cookies. Please enable cookies to use this feature.');
       this.error = error.message;
-      emit('profile-errored', this, { message: error.message });
+      this.emit('errored', { message: error.message });
     }
-    emit('profile-displayed', this);
   },
 
   /**
@@ -529,7 +529,7 @@ export default {
         this.user = data.user;
         this.didSubmit = true;
 
-        emit('profile-updated', this);
+        this.emit('updated');
 
         if (this.reloadPageOnSubmit) {
           this.isReloadingPage = true;
@@ -537,7 +537,7 @@ export default {
         }
       } catch (e) {
         this.error = e;
-        emit('profile-errored', this, { message: e.message });
+        this.emit('errored', { message: e.message });
       } finally {
         this.isLoading = false;
       }

@@ -92,22 +92,23 @@
 </template>
 
 <script>
-import emit from '../utils/emit';
 import get from '../utils/get';
 import Login from '../login.vue';
 import Post from './post.vue';
 import Create from './create.vue';
+import IdentityMixin from '../mixins/identity-x';
 
 export default {
-  /**
-   *
-   */
-  inject: ['EventBus'],
-
+  name: 'CommentStream',
   /**
    *
    */
   components: { Login, Post, Create },
+
+  /**
+   *
+   */
+  mixins: [IdentityMixin],
 
   /**
    *
@@ -238,13 +239,6 @@ export default {
   /**
    *
    */
-  mounted() {
-    emit('comment-stream-displayed', this, { identifier: this.identifier });
-  },
-
-  /**
-   *
-   */
   methods: {
     /**
      *
@@ -268,10 +262,10 @@ export default {
         this.hasNextPage = data.pageInfo.hasNextPage;
         this.endCursor = data.pageInfo.endCursor;
         this.archived = data.stream ? data.stream.archived : false;
-        emit('comment-stream-loaded', this, { hasNextPage: this.hasNextPage });
+        this.emit('loaded', { hasNextPage: this.hasNextPage });
       } catch (e) {
         this.error = e;
-        emit('comment-stream-errored', this, { message: e.message });
+        this.emit('errored', { message: e.message });
       } finally {
         this.isLoading = false;
       }
@@ -292,10 +286,10 @@ export default {
         this.comments.push(...comments);
         this.hasNextPage = data.pageInfo.hasNextPage;
         this.endCursor = data.pageInfo.endCursor;
-        emit('comment-stream-loaded-more', this, { hasNextPage: this.hasNextPage });
+        this.emit('loaded-more', { hasNextPage: this.hasNextPage });
       } catch (e) {
         this.error = e;
-        emit('comment-stream-errored', this, { message: e.message });
+        this.emit('errored', { message: e.message });
       } finally {
         this.isLoadingMore = false;
       }

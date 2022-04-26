@@ -17,22 +17,23 @@
 </template>
 
 <script>
-import emit from '../utils/emit';
 import post from '../utils/post';
 import FormError from '../errors/form';
 import DisplayName from '../form/fields/display-name.vue';
 import CommentBody from '../form/fields/comment-body.vue';
+import IdentityMixin from '../mixins/identity-x';
 
 export default {
-  /**
-   *
-   */
-  inject: ['EventBus'],
-
+  name: 'CommentCreate',
   /**
    *
    */
   components: { DisplayName, CommentBody },
+
+  /**
+   *
+   */
+  mixins: [IdentityMixin],
 
   /**
    *
@@ -102,10 +103,10 @@ export default {
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
         this.body = '';
-        emit('comment-post-submitted', this);
+        this.emit('submitted');
       } catch (e) {
         this.error = e;
-        emit('comment-post-errored', this, { message: e.message });
+        this.emit('errored', { message: e.message });
       } finally {
         this.isLoading = false;
       }
