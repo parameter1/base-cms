@@ -271,6 +271,13 @@ type PublishedContentDate {
   count: Int!
 }
 
+type ContentEstimatedReadingTime {
+  text: String!
+  minutes: Float!
+  time: Int!
+  words: Int!
+}
+
 type ContentSitemapUrl {
   id: String! @value(localField: "_id")
   loc: String!
@@ -693,6 +700,11 @@ input RelatedPublishedContentQueryInput {
   requiresImage: Boolean = false
   queryTypes: [RelatedContentQueryType!] = [owned, inverse]
   pagination: PaginationInput = {}
+}
+
+input ContentEstimatedReadingTimeInput {
+  mutation: ContentMutation = Website
+  wordsPerMinute: Int = 200
 }
 
 input ContentRelatedContentInput {
