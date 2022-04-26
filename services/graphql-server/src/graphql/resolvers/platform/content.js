@@ -11,6 +11,7 @@ const moment = require('moment');
 const momentTZ = require('moment-timezone');
 const cheerio = require('cheerio');
 const fetch = require('node-fetch');
+const readingTime = require('reading-time');
 
 const newrelic = require('../../../newrelic');
 const defaults = require('../../defaults');
@@ -546,6 +547,22 @@ module.exports = {
       });
       return value;
     },
+
+    estimatedReadingTime: async (content, { input }) => {
+      const { mutation, wordsPerMinute } = input;
+      const { body } = content;
+      const mutated = get(content, `mutations.${mutation}.body`);
+
+
+      const value = mutation ? mutated || body : body;
+
+      if (!value) return null;
+      const trimmed = value.trim();
+      if (!trimmed) return null;
+
+      return readingTime(trimmed, { wordsPerMinute });
+    },
+
 
     userRegistration: (content) => {
       const requiresRegistration = get(content, 'mutations.Website.requiresRegistration');

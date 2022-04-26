@@ -57,6 +57,8 @@ interface Content @requiresProject(fields: ["type"]) {
   slug: String @projection(localField: "mutations.Website.slug") @value(localField: "mutations.Website.slug")
 
   # GraphQL-only fields.
+  estimatedReadingTime(input: ContentEstimatedReadingTimeInput = {}): ContentEstimatedReadingTime @projection(localField: "body", needs: ["mutations.Website.body", "mutations.Email.body", "mutations.Magazine.body"])
+
   statusText: String! @projection(localField: "status", needs: ["published", "unpublished"])
   metadata: ContentMetadata! @projection(localField: "name", needs: ["type", "company", "primaryImage", "mutations.Website.name", "mutations.Website.seoTitle", "teaser", "mutations.Website.teaser", "mutations.Website.seoDescription", "published", "updated", "unpublished"])
   createdDate(input: FormatDate = {}): String @projection(localField: "created") @momentFormat(localField: "created")
