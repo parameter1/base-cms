@@ -161,7 +161,7 @@
     <p>You must be logged-in to modify your user profile.</p>
     <login
       :additional-event-data="additionalEventData"
-      :event-label="eventLabel"
+      :login-source="loginSource"
       :endpoints="endpoints"
       :app-context-id="appContextId"
       :consent-policy="consentPolicy"
@@ -220,7 +220,7 @@ export default {
    *
    */
   props: {
-    eventLabel: {
+    loginSource: {
       type: String,
       default: 'profile',
     },

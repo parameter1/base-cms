@@ -71,7 +71,7 @@ export default {
    *
    */
   props: {
-    eventLabel: {
+    source: {
       type: String,
       default: 'login',
     },
@@ -185,6 +185,7 @@ export default {
         this.loading = true;
         const res = await post('/login', {
           email: this.email,
+          source: this.source,
           redirectTo: this.redirectTo,
           authUrl: this.authUrl,
           appContextId: this.appContextId,

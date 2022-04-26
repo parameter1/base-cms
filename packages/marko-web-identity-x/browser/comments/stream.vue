@@ -36,7 +36,7 @@
         <login
           :class="element('login-form')"
           :additional-event-data="additionalEventData"
-          :event-label="eventLabel"
+          :login-source="loginSource"
           :active-user="activeUser"
           :endpoints="endpoints"
           :consent-policy="consentPolicy"
@@ -113,7 +113,7 @@ export default {
    *
    */
   props: {
-    eventLabel: {
+    loginSource: {
       type: String,
       default: 'comment-stream',
     },
