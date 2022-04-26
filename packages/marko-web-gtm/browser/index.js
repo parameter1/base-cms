@@ -46,7 +46,7 @@ export default (Browser) => {
       'identity-x': {
         ...(args && args),
         event,
-        label: args.label,
+        loginSource: window.IdentityX.getLoginSource(),
       },
     }));
   });
