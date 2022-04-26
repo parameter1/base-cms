@@ -71,10 +71,6 @@ export default {
    *
    */
   props: {
-    additionalEventData: {
-      type: Object,
-      default: () => ({}),
-    },
     eventLabel: {
       type: String,
       default: 'login',

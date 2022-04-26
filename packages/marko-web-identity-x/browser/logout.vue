@@ -23,10 +23,6 @@ export default {
   mixins: [EventEmitter],
 
   props: {
-    additionalEventData: {
-      type: Object,
-      default: () => ({}),
-    },
     eventLabel: {
       type: String,
       default: 'logout',
