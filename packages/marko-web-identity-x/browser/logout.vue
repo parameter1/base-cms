@@ -23,10 +23,6 @@ export default {
   mixins: [EventEmitter],
 
   props: {
-    eventLabel: {
-      type: String,
-      default: 'logout',
-    },
     redirectTo: {
       type: String,
       default: null,

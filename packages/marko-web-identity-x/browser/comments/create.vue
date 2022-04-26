@@ -38,10 +38,6 @@ export default {
    *
    */
   props: {
-    eventLabel: {
-      type: String,
-      default: 'comment-create',
-    },
     stream: {
       type: Object,
       required: true,

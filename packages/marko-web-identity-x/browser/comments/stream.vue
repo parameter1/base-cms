@@ -69,7 +69,6 @@
         <post
           :id="comment.id"
           :additional-event-data="additionalEventData"
-          :event-label="eventLabel"
           :body="comment.body"
           :display-name="comment.user.displayName"
           :created-at="comment.createdAt"

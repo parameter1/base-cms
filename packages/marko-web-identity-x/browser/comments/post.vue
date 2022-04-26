@@ -48,10 +48,6 @@ export default {
    *
    */
   props: {
-    eventLabel: {
-      type: String,
-      default: 'comment-post',
-    },
     id: {
       type: String,
       required: true,

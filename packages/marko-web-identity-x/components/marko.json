@@ -15,10 +15,6 @@
   "<marko-web-identity-x-form-authenticate>": {
     "template": "./form-authenticate.marko",
     "@additional-event-data": "object",
-    "@event-label": {
-      "type": "string",
-      "default-value": "authenticate"
-    },
     "@call-to-action": "string",
     "@button-label": "string"
   },
@@ -35,19 +31,11 @@
   },
   "<marko-web-identity-x-form-logout>": {
     "template": "./form-logout.marko",
-    "@additional-event-data": "object",
-    "@event-label": {
-      "type": "string",
-      "default-value": "logout"
-    }
+    "@additional-event-data": "object"
   },
   "<marko-web-identity-x-form-register>": {
     "template": "./form-register.marko",
     "@additional-event-data": "object",
-    "@event-label": {
-      "type": "string",
-      "default-value": "logout"
-    },
     "@button-labels": "object",
     "@login-email-placeholder": "string",
     "@redirect": "string"

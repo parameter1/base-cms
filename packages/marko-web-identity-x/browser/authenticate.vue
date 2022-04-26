@@ -8,7 +8,6 @@
   <div v-else-if="showProfileForm">
     <profile-form
       :additional-event-data="additionalEventData"
-      :event-label="eventLabel"
       :endpoints="endpoints"
       :active-user="activeUser"
       :required-server-fields="requiredServerFields"
@@ -61,10 +60,6 @@ export default {
    *
    */
   props: {
-    eventLabel: {
-      type: String,
-      default: 'authenticate',
-    },
     token: {
       type: String,
       required: true,
