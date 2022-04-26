@@ -39,7 +39,6 @@ import FormError from '../errors/form';
 import EventEmitter from '../mixins/global-event-emitter';
 
 export default {
-  name: 'CommentPost',
   /**
    *
    */

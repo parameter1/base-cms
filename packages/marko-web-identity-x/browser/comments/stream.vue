@@ -99,7 +99,6 @@ import Create from './create.vue';
 import EventEmitter from '../mixins/global-event-emitter';
 
 export default {
-  name: 'CommentStream',
   /**
    *
    */

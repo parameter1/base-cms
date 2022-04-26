@@ -24,7 +24,6 @@ import CommentBody from '../form/fields/comment-body.vue';
 import EventEmitter from '../mixins/global-event-emitter';
 
 export default {
-  name: 'CommentCreate',
   /**
    *
    */

@@ -47,7 +47,6 @@ import EventEmitter from './mixins/global-event-emitter';
 const isEmpty = v => v == null || v === '';
 
 export default {
-  name: 'Authenticate',
   /**
    *
    */

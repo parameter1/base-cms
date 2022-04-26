@@ -196,7 +196,6 @@ import EventEmitter from './mixins/global-event-emitter';
 const { isArray } = Array;
 
 export default {
-  name: 'Profile',
   components: {
     AddressBlock,
     CustomBoolean,

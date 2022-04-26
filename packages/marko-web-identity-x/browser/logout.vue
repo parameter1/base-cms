@@ -17,7 +17,6 @@ import FeatureError from './errors/feature';
 import EventEmitter from './mixins/global-event-emitter';
 
 export default {
-  name: 'Logout',
   /**
    *
    */
