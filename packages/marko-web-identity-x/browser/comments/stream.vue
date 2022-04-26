@@ -239,6 +239,13 @@ export default {
   /**
    *
    */
+  mounted() {
+    this.emit('comment-stream-mounted', { identifier: this.identifier });
+  },
+
+  /**
+   *
+   */
   methods: {
     /**
      *
@@ -262,10 +269,10 @@ export default {
         this.hasNextPage = data.pageInfo.hasNextPage;
         this.endCursor = data.pageInfo.endCursor;
         this.archived = data.stream ? data.stream.archived : false;
-        this.emit('loaded', { hasNextPage: this.hasNextPage });
+        this.emit('comment-stream-loaded', { hasNextPage: this.hasNextPage });
       } catch (e) {
         this.error = e;
-        this.emit('errored', { message: e.message });
+        this.emit('comment-stream-errored', { message: e.message });
       } finally {
         this.isLoading = false;
       }
@@ -286,10 +293,10 @@ export default {
         this.comments.push(...comments);
         this.hasNextPage = data.pageInfo.hasNextPage;
         this.endCursor = data.pageInfo.endCursor;
-        this.emit('loaded-more', { hasNextPage: this.hasNextPage });
+        this.emit('comment-stream-loaded-more', { hasNextPage: this.hasNextPage });
       } catch (e) {
         this.error = e;
-        this.emit('errored', { message: e.message });
+        this.emit('comment-stream-errored', { message: e.message });
       } finally {
         this.isLoadingMore = false;
       }

@@ -468,10 +468,12 @@ export default {
    *
    */
   mounted() {
-    if (!cookiesEnabled()) {
+    if (cookiesEnabled()) {
+      this.emit('profile-mounted');
+    } else {
       const error = new FeatureError('Your browser does not support cookies. Please enable cookies to use this feature.');
       this.error = error.message;
-      this.emit('errored', { message: error.message });
+      this.emit('profile-errored', { message: error.message });
     }
   },
 
@@ -529,7 +531,7 @@ export default {
         this.user = data.user;
         this.didSubmit = true;
 
-        this.emit('updated');
+        this.emit('profile-updated');
 
         if (this.reloadPageOnSubmit) {
           this.isReloadingPage = true;
@@ -537,7 +539,7 @@ export default {
         }
       } catch (e) {
         this.error = e;
-        this.emit('errored', { message: e.message });
+        this.emit('profile-errored', { message: e.message });
       } finally {
         this.isLoading = false;
       }

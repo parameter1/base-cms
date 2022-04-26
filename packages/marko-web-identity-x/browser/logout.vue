@@ -42,11 +42,12 @@ export default {
   }),
   mounted() {
     if (cookiesEnabled()) {
+      this.emit('logout-mounted');
       this.logout();
     } else {
       const error = new FeatureError('Your browser does not support cookies. Please enable cookies to use this feature.');
       this.error = error.message;
-      this.emit('errored', { message: error.message });
+      this.emit('logout-errored', { message: error.message });
     }
   },
   methods: {
@@ -59,11 +60,11 @@ export default {
         const res = await post('/logout');
         const data = await res.json();
         if (!res.ok) throw new LogoutError(data.message, res.status);
-        this.emit('submitted', { data });
+        this.emit('logout-submitted', { data });
         this.redirect();
       } catch (e) {
         this.error = `Unable to logout: ${e.message}`;
-        this.emit('errored', { message: e.message });
+        this.emit('logout-errored', { message: e.message });
       }
     },
 

@@ -169,9 +169,11 @@ export default {
    *
    */
   mounted() {
-    if (!cookiesEnabled()) {
+    if (cookiesEnabled()) {
+      this.emit('login-mounted');
+    } else {
       this.error = new FeatureError('Your browser does not support cookies. Please enable cookies to use this feature.');
-      this.emit('errored', { message: this.error.message });
+      this.emit('login-errored', { message: this.error.message });
     }
   },
 
@@ -196,10 +198,10 @@ export default {
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
         this.complete = true;
-        this.emit('link-sent', { data });
+        this.emit('login-link-sent', { data });
       } catch (e) {
         this.error = e;
-        this.emit('errored', { message: e.message });
+        this.emit('login-errored', { message: e.message });
       } finally {
         this.loading = false;
       }

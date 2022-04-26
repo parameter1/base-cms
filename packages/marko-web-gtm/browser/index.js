@@ -16,11 +16,13 @@ export default (Browser) => {
   window.dataLayer = window.dataLayer || [];
   [
     // Views
-    'identity-x-authenticate-displayed',
-    'identity-x-comment-stream-displayed',
-    'identity-x-login-displayed',
-    'identity-x-logout-displayed',
-    'identity-x-profile-displayed',
+    'identity-x-authenticate-mounted',
+    'identity-x-comment-stream-mounted',
+    'identity-x-comment-post-mounted',
+    'identity-x-comment-create-mounted',
+    'identity-x-login-mounted',
+    'identity-x-logout-mounted',
+    'identity-x-profile-mounted',
     // Actions/submissions
     'identity-x-authenticated',
     'identity-x-comment-post-submitted',

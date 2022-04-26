@@ -147,10 +147,10 @@ export default {
         const res = await post(`/comment/flag/${this.id}`);
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
-        this.emit('submitted', { id: this.id });
+        this.emit('comment-report-submitted', { id: this.id });
       } catch (e) {
         this.error = e;
-        this.emit('errored', { message: e.message, id: this.id });
+        this.emit('comment-report-errored', { message: e.message, id: this.id });
       } finally {
         this.isReporting = false;
       }

@@ -103,10 +103,10 @@ export default {
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
         this.body = '';
-        this.emit('submitted');
+        this.emit('comment-post-submitted');
       } catch (e) {
         this.error = e;
-        this.emit('errored', { message: e.message });
+        this.emit('comment-post-errored', { message: e.message });
       } finally {
         this.isLoading = false;
       }

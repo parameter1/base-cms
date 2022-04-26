@@ -174,10 +174,11 @@ export default {
    */
   mounted() {
     if (cookiesEnabled()) {
+      this.emit('authenticate-mounted');
       this.authenticate();
     } else {
       this.error = new FeatureError('Your browser does not support cookies. Please enable cookies to use this feature.');
-      this.emit('errored', { message: this.error.message });
+      this.emit('authenticate-errored', { message: this.error.message });
     }
   },
 
@@ -217,7 +218,7 @@ export default {
           e.message = 'This login link has either expired or was already used.';
         }
         this.error = e;
-        this.emit('errored', { message: e.message });
+        this.emit('authenticate-errored', { message: e.message });
       } finally {
         this.isLoading = false;
       }
