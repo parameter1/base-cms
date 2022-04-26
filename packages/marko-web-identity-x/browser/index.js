@@ -1,3 +1,5 @@
+import IdentityX from './service';
+
 const Authenticate = () => import(/* webpackChunkName: "identity-x-authenticate" */ './authenticate.vue');
 const Logout = () => import(/* webpackChunkName: "identity-x-logout" */ './logout.vue');
 const Login = () => import(/* webpackChunkName: "identity-x-login" */ './login.vue');
@@ -16,6 +18,8 @@ export default (Browser, {
   const LogoutComponent = CustomLogoutComponent || Logout;
   const ProfileComponent = CustomProfileComponent || Profile;
   const CommentStreamComponent = CustomCommentStreamComponent || CommentStream;
+
+  window.IdentityX = new IdentityX();
 
   const { EventBus } = Browser;
   Browser.register('IdentityXAuthenticate', AuthenticateComponent, { provide: { EventBus } });
