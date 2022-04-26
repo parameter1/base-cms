@@ -96,7 +96,7 @@ import get from '../utils/get';
 import Login from '../login.vue';
 import Post from './post.vue';
 import Create from './create.vue';
-import IdentityMixin from '../mixins/identity-x';
+import EventEmitter from '../mixins/global-event-emitter';
 
 export default {
   name: 'CommentStream',
@@ -108,7 +108,7 @@ export default {
   /**
    *
    */
-  mixins: [IdentityMixin],
+  mixins: [EventEmitter],
 
   /**
    *

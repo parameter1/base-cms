@@ -42,7 +42,7 @@ import post from './utils/post';
 import ProfileForm from './profile.vue';
 import AuthenticationError from './errors/authentication';
 import FeatureError from './errors/feature';
-import IdentityMixin from './mixins/identity-x';
+import EventEmitter from './mixins/global-event-emitter';
 
 const isEmpty = v => v == null || v === '';
 
@@ -56,7 +56,7 @@ export default {
   /**
    *
    */
-  mixins: [IdentityMixin],
+  mixins: [EventEmitter],
 
   /**
    *

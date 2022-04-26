@@ -21,7 +21,7 @@ import post from '../utils/post';
 import FormError from '../errors/form';
 import DisplayName from '../form/fields/display-name.vue';
 import CommentBody from '../form/fields/comment-body.vue';
-import IdentityMixin from '../mixins/identity-x';
+import EventEmitter from '../mixins/global-event-emitter';
 
 export default {
   name: 'CommentCreate',
@@ -33,7 +33,7 @@ export default {
   /**
    *
    */
-  mixins: [IdentityMixin],
+  mixins: [EventEmitter],
 
   /**
    *

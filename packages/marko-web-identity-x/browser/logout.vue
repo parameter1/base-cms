@@ -14,14 +14,14 @@ import cookiesEnabled from './utils/cookies-enabled';
 import post from './utils/post';
 import LogoutError from './errors/logout';
 import FeatureError from './errors/feature';
-import IdentityMixin from './mixins/identity-x';
+import EventEmitter from './mixins/global-event-emitter';
 
 export default {
   name: 'Logout',
   /**
    *
    */
-  mixins: [IdentityMixin],
+  mixins: [EventEmitter],
 
   props: {
     additionalEventData: {

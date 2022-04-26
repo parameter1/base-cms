@@ -36,14 +36,14 @@
 import moment from 'moment';
 import post from '../utils/post';
 import FormError from '../errors/form';
-import IdentityMixin from '../mixins/identity-x';
+import EventEmitter from '../mixins/global-event-emitter';
 
 export default {
   name: 'CommentPost',
   /**
    *
    */
-  mixins: [IdentityMixin],
+  mixins: [EventEmitter],
 
   /**
    *

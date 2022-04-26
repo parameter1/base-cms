@@ -52,7 +52,7 @@ import post from './utils/post';
 import cookiesEnabled from './utils/cookies-enabled';
 import FormError from './errors/form';
 import FeatureError from './errors/feature';
-import IdentityMixin from './mixins/identity-x';
+import EventEmitter from './mixins/global-event-emitter';
 
 export default {
   name: 'Login',
@@ -66,7 +66,7 @@ export default {
   /**
    *
    */
-  mixins: [IdentityMixin],
+  mixins: [EventEmitter],
 
   /**
    *

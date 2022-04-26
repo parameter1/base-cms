@@ -191,7 +191,7 @@ import Login from './login.vue';
 
 import FeatureError from './errors/feature';
 import FormError from './errors/form';
-import IdentityMixin from './mixins/identity-x';
+import EventEmitter from './mixins/global-event-emitter';
 
 const { isArray } = Array;
 
@@ -215,7 +215,7 @@ export default {
   /**
    *
    */
-  mixins: [IdentityMixin],
+  mixins: [EventEmitter],
 
   /**
    *
