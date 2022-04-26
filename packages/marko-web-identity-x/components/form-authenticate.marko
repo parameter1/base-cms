@@ -3,13 +3,14 @@ import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 
 $ const { req } = out.global;
 $ const { identityX, query } = req;
+$ const source = get(query, 'source');
 $ const isEnabled = Boolean(req.identityX);
 $ const additionalEventData = defaultValue(input.additionalEventData, {});
 
 <if(isEnabled)>
   <marko-web-identity-x-context|{ application }|>
     $ const props = {
-      additionalEventData: additionalEventData,
+      additionalEventData: { ...additionalEventData, source },
       eventLabel: input.eventLabel,
       token: query.token,
       redirectTo: query.redirectTo,
