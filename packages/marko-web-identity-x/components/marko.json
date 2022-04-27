@@ -46,7 +46,7 @@
     "@additional-event-data": "object",
     "@event-label": {
       "type": "string",
-      "default-value": "logout"
+      "default-value": "register"
     },
     "@button-labels": "object",
     "@login-email-placeholder": "string",
@@ -57,7 +57,7 @@
     "@additional-event-data": "object",
     "@event-label": {
       "type": "string",
-      "default-value": "logout"
+      "default-value": "profile"
     },
     "@call-to-action": "string",
     "@reload-page-on-submit": "boolean",
