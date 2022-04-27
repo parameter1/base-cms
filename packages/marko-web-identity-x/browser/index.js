@@ -27,4 +27,7 @@ export default (Browser, {
   Browser.register('IdentityXLogout', LogoutComponent, { provide: { EventBus } });
   Browser.register('IdentityXProfile', ProfileComponent, { provide: { EventBus } });
   Browser.register('IdentityXCommentStream', CommentStreamComponent, { provide: { EventBus } });
+
+  // Ensure the client-side IdX context is refreshed when the authentication event occurs
+  EventBus.$on('identity-x-authenticated', () => window.IdentityX.refreshContext());
 };
