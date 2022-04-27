@@ -36,7 +36,7 @@
         <login
           :class="element('login-form')"
           :additional-event-data="additionalEventData"
-          :login-source="loginSource"
+          :source="loginSource"
           :active-user="activeUser"
           :endpoints="endpoints"
           :consent-policy="consentPolicy"

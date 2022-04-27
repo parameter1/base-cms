@@ -161,7 +161,7 @@
     <p>You must be logged-in to modify your user profile.</p>
     <login
       :additional-event-data="additionalEventData"
-      :login-source="loginSource"
+      :source="loginSource"
       :endpoints="endpoints"
       :app-context-id="appContextId"
       :consent-policy="consentPolicy"
