@@ -1,6 +1,7 @@
 const gql = require('graphql-tag');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 const tokenCookie = require('../utils/token-cookie');
+const contextCookie = require('../utils/context-cookie');
 const callHooksFor = require('../utils/call-hooks-for');
 const userFragment = require('../api/fragments/active-user');
 
@@ -14,6 +15,7 @@ const loginAppUser = gql`
       user {
         ...ActiveUserFragment
       }
+      loginSource
     }
   }
 
@@ -28,7 +30,7 @@ module.exports = asyncRoute(async (req, res) => {
   const input = { token };
   const variables = { input };
   const { data = {} } = await identityX.client.mutate({ mutation: loginAppUser, variables });
-  const { token: authToken, user } = data.loginAppUser;
+  const { token: authToken, user, loginSource } = data.loginAppUser;
 
   // call authentication hooks
   await callHooksFor(identityX, 'onAuthenticationSuccess', {
@@ -38,5 +40,6 @@ module.exports = asyncRoute(async (req, res) => {
     authToken,
   });
   tokenCookie.setTo(res, authToken.value);
+  contextCookie.setTo(res, { loginSource });
   res.json({ ok: true, user });
 });

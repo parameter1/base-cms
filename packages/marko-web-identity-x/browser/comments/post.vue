@@ -36,20 +36,18 @@
 import moment from 'moment';
 import post from '../utils/post';
 import FormError from '../errors/form';
+import EventEmitter from '../mixins/global-event-emitter';
 
 export default {
   /**
    *
    */
+  mixins: [EventEmitter],
+
+  /**
+   *
+   */
   props: {
-    additionalEventData: {
-      type: Object,
-      default: () => ({}),
-    },
-    eventLabel: {
-      type: String,
-      default: 'comment-post',
-    },
     id: {
       type: String,
       required: true,
@@ -140,15 +138,10 @@ export default {
         const res = await post(`/comment/flag/${this.id}`);
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
-        this.$emit('reported', { ...this.additionalEventData, label: this.eventLabel, id: this.id });
+        this.emit('comment-report-submitted', { id: this.id });
       } catch (e) {
         this.error = e;
-        this.$emit('errored', {
-          ...this.additionalEventData,
-          label: this.eventLabel,
-          message: e.message,
-          id: this.id,
-        });
+        this.emit('comment-report-errored', { message: e.message, id: this.id });
       } finally {
         this.isReporting = false;
       }

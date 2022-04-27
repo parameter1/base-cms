@@ -160,6 +160,8 @@
   <div v-else>
     <p>You must be logged-in to modify your user profile.</p>
     <login
+      :additional-event-data="additionalEventData"
+      :source="loginSource"
       :endpoints="endpoints"
       :app-context-id="appContextId"
       :consent-policy="consentPolicy"
@@ -189,6 +191,7 @@ import Login from './login.vue';
 
 import FeatureError from './errors/feature';
 import FormError from './errors/form';
+import EventEmitter from './mixins/global-event-emitter';
 
 const { isArray } = Array;
 
@@ -211,12 +214,13 @@ export default {
   /**
    *
    */
+  mixins: [EventEmitter],
+
+  /**
+   *
+   */
   props: {
-    additionalEventData: {
-      type: Object,
-      default: () => ({}),
-    },
-    eventLabel: {
+    loginSource: {
       type: String,
       default: 'profile',
     },
@@ -459,12 +463,13 @@ export default {
    *
    */
   mounted() {
-    if (!cookiesEnabled()) {
+    if (cookiesEnabled()) {
+      this.emit('profile-mounted');
+    } else {
       const error = new FeatureError('Your browser does not support cookies. Please enable cookies to use this feature.');
       this.error = error.message;
-      this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: this.error.message });
+      this.emit('profile-errored', { message: error.message });
     }
-    this.$emit('displayed', { ...this.additionalEventData, label: this.eventLabel });
   },
 
   /**
@@ -521,7 +526,7 @@ export default {
         this.user = data.user;
         this.didSubmit = true;
 
-        this.$emit('submitted', { ...this.additionalEventData, label: this.eventLabel });
+        this.emit('profile-updated');
 
         if (this.reloadPageOnSubmit) {
           this.isReloadingPage = true;
@@ -529,7 +534,7 @@ export default {
         }
       } catch (e) {
         this.error = e;
-        this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: e.message });
+        this.emit('profile-errored', { message: e.message });
       } finally {
         this.isLoading = false;
       }

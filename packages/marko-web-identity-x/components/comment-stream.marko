@@ -9,7 +9,7 @@ $ const additionalEventData = defaultValue(input.additionalEventData, {});
   <marko-web-identity-x-context|{ user, isEnabled, application }|>
     $ const props = {
       additionalEventData: additionalEventData,
-      eventLabel: input.eventLabel,
+      loginSource: input.loginSource,
       activeUser: user,
       identifier: `${input.identifier}`,
       title: input.title,

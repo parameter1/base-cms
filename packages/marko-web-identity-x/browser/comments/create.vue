@@ -21,6 +21,7 @@ import post from '../utils/post';
 import FormError from '../errors/form';
 import DisplayName from '../form/fields/display-name.vue';
 import CommentBody from '../form/fields/comment-body.vue';
+import EventEmitter from '../mixins/global-event-emitter';
 
 export default {
   /**
@@ -31,15 +32,12 @@ export default {
   /**
    *
    */
+  mixins: [EventEmitter],
+
+  /**
+   *
+   */
   props: {
-    additionalEventData: {
-      type: Object,
-      default: () => ({}),
-    },
-    eventLabel: {
-      type: String,
-      default: 'comment-create',
-    },
     stream: {
       type: Object,
       required: true,
@@ -96,10 +94,10 @@ export default {
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
         this.body = '';
-        this.$emit('submitted', { ...this.additionalEventData, label: this.eventLabel });
+        this.emit('comment-post-submitted');
       } catch (e) {
         this.error = e;
-        this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: e.message });
+        this.emit('comment-post-errored', { message: e.message });
       } finally {
         this.isLoading = false;
       }

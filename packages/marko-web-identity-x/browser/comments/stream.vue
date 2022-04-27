@@ -21,8 +21,7 @@
           v-else
           :display-name="activeUser.displayName"
           :stream="{ identifier, title, description, url }"
-          @submitted="handlePostCreate"
-          @errored="handlePostCreateError"
+          @comment-post-submitted="load"
         />
       </div>
       <div v-else :class="element('login-form-wrapper')">
@@ -37,14 +36,14 @@
         <login
           :class="element('login-form')"
           :additional-event-data="additionalEventData"
-          :event-label="eventLabel"
+          :source="loginSource"
           :active-user="activeUser"
           :endpoints="endpoints"
           :consent-policy="consentPolicy"
           :app-context-id="appContextId"
           :regional-consent-policies="regionalConsentPolicies"
           :button-labels="loginButtonLabels"
-          @submitted="handleLoginSubmit"
+          @login-link-sent="showLoginMessage = false"
         />
       </div>
 
@@ -69,6 +68,7 @@
       >
         <post
           :id="comment.id"
+          :additional-event-data="additionalEventData"
           :body="comment.body"
           :display-name="comment.user.displayName"
           :created-at="comment.createdAt"
@@ -76,8 +76,7 @@
           :flagged="comment.flagged"
           :date-format="dateFormat"
           :active-user="activeUser"
-          @reported="handlePostReport"
-          @errored="handlePostReportError"
+          @comment-report-submitted="load"
         />
       </div>
       <div v-if="hasNextPage" :class="element('post')">
@@ -96,6 +95,7 @@ import get from '../utils/get';
 import Login from '../login.vue';
 import Post from './post.vue';
 import Create from './create.vue';
+import EventEmitter from '../mixins/global-event-emitter';
 
 export default {
   /**
@@ -106,12 +106,13 @@ export default {
   /**
    *
    */
+  mixins: [EventEmitter],
+
+  /**
+   *
+   */
   props: {
-    additionalEventData: {
-      type: Object,
-      default: () => ({}),
-    },
-    eventLabel: {
+    loginSource: {
       type: String,
       default: 'comment-stream',
     },
@@ -233,36 +234,13 @@ export default {
    *
    */
   mounted() {
-    this.$emit('displayed', { ...this.additionalEventData, label: this.eventLabel, identifier: this.identifier });
+    this.emit('comment-stream-mounted', { identifier: this.identifier });
   },
 
   /**
    *
    */
   methods: {
-    handleLoginSubmit() {
-      this.$emit('login-link-sent', { ...this.additionalEventData, label: this.eventLabel });
-      this.showLoginMessage = false;
-    },
-
-    handlePostCreate(data) {
-      this.$emit('post-submitted', { ...this.additionalEventData, label: this.eventLabel, ...data });
-      this.load();
-    },
-
-    handlePostReport(data) {
-      this.$emit('report-submitted', { ...this.additionalEventData, label: this.eventLabel, ...data });
-      this.load();
-    },
-
-    handlePostCreateError(data) {
-      this.$emit('post-errored', { ...this.additionalEventData, label: this.eventLabel, ...data });
-    },
-
-    handlePostReportError(data) {
-      this.$emit('report-errored', { ...this.additionalEventData, label: this.eventLabel, ...data });
-    },
-
     /**
      *
      */
@@ -285,10 +263,10 @@ export default {
         this.hasNextPage = data.pageInfo.hasNextPage;
         this.endCursor = data.pageInfo.endCursor;
         this.archived = data.stream ? data.stream.archived : false;
-        this.$emit('loaded', { ...this.additionalEventData, label: this.eventLabel, hasNextPage: this.hasNextPage });
+        this.emit('comment-stream-loaded', { hasNextPage: this.hasNextPage });
       } catch (e) {
         this.error = e;
-        this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: e.message });
+        this.emit('comment-stream-errored', { message: e.message });
       } finally {
         this.isLoading = false;
       }
@@ -309,10 +287,10 @@ export default {
         this.comments.push(...comments);
         this.hasNextPage = data.pageInfo.hasNextPage;
         this.endCursor = data.pageInfo.endCursor;
-        this.$emit('loaded-more', { ...this.additionalEventData, label: this.eventLabel, hasNextPage: this.hasNextPage });
+        this.emit('comment-stream-loaded-more', { hasNextPage: this.hasNextPage });
       } catch (e) {
         this.error = e;
-        this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: e.message });
+        this.emit('comment-stream-errored', { message: e.message });
       } finally {
         this.isLoadingMore = false;
       }

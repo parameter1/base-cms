@@ -31,6 +31,7 @@ module.exports = asyncRoute(async (req, res) => {
   const { identityX, body } = req;
   const {
     email,
+    source,
     authUrl,
     redirectTo,
     appContextId,
@@ -54,6 +55,7 @@ module.exports = asyncRoute(async (req, res) => {
     variables: {
       input: {
         email: appUser.email,
+        source,
         authUrl,
         redirectTo,
         appContextId,

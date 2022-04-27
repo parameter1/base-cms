@@ -52,6 +52,7 @@ import post from './utils/post';
 import cookiesEnabled from './utils/cookies-enabled';
 import FormError from './errors/form';
 import FeatureError from './errors/feature';
+import EventEmitter from './mixins/global-event-emitter';
 
 export default {
   /**
@@ -64,12 +65,13 @@ export default {
   /**
    *
    */
+  mixins: [EventEmitter],
+
+  /**
+   *
+   */
   props: {
-    additionalEventData: {
-      type: Object,
-      default: () => ({}),
-    },
-    eventLabel: {
+    source: {
       type: String,
       default: 'login',
     },
@@ -162,11 +164,12 @@ export default {
    *
    */
   mounted() {
-    if (!cookiesEnabled()) {
+    if (cookiesEnabled()) {
+      this.emit('login-mounted');
+    } else {
       this.error = new FeatureError('Your browser does not support cookies. Please enable cookies to use this feature.');
-      this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: this.error.message });
+      this.emit('login-errored', { message: this.error.message });
     }
-    this.$emit('displayed', { ...this.additionalEventData, label: this.eventLabel });
   },
 
   /**
@@ -182,6 +185,7 @@ export default {
         this.loading = true;
         const res = await post('/login', {
           email: this.email,
+          source: this.source,
           redirectTo: this.redirectTo,
           authUrl: this.authUrl,
           appContextId: this.appContextId,
@@ -190,14 +194,10 @@ export default {
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
         this.complete = true;
-        this.$emit('submitted', {
-          ...this.additionalEventData,
-          label: this.eventLabel,
-          data,
-        });
+        this.emit('login-link-sent', { data, source: this.source });
       } catch (e) {
         this.error = e;
-        this.$emit('errored', { ...this.additionalEventData, label: this.eventLabel, message: e.message });
+        this.emit('login-errored', { message: e.message });
       } finally {
         this.loading = false;
       }

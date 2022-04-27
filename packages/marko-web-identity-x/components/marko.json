@@ -15,17 +15,13 @@
   "<marko-web-identity-x-form-authenticate>": {
     "template": "./form-authenticate.marko",
     "@additional-event-data": "object",
-    "@event-label": {
-      "type": "string",
-      "default-value": "authenticate"
-    },
     "@call-to-action": "string",
     "@button-label": "string"
   },
   "<marko-web-identity-x-form-login>": {
     "template": "./form-login.marko",
     "@additional-event-data": "object",
-    "@event-label": {
+    "@source": {
       "type": "string",
       "default-value": "login"
     },
@@ -35,19 +31,11 @@
   },
   "<marko-web-identity-x-form-logout>": {
     "template": "./form-logout.marko",
-    "@additional-event-data": "object",
-    "@event-label": {
-      "type": "string",
-      "default-value": "logout"
-    }
+    "@additional-event-data": "object"
   },
   "<marko-web-identity-x-form-register>": {
     "template": "./form-register.marko",
     "@additional-event-data": "object",
-    "@event-label": {
-      "type": "string",
-      "default-value": "logout"
-    },
     "@button-labels": "object",
     "@login-email-placeholder": "string",
     "@redirect": "string"
@@ -55,9 +43,9 @@
   "<marko-web-identity-x-form-profile>": {
     "template": "./form-profile.marko",
     "@additional-event-data": "object",
-    "@event-label": {
+    "@login-source": {
       "type": "string",
-      "default-value": "logout"
+      "default-value": "profile"
     },
     "@call-to-action": "string",
     "@reload-page-on-submit": "boolean",
@@ -66,9 +54,9 @@
   "<marko-web-identity-x-comment-stream>": {
     "template": "./comment-stream.marko",
     "@additional-event-data": "object",
-    "@event-label": {
+    "@login-source": {
       "type": "string",
-      "default-value": "logout"
+      "default-value": "comment-stream"
     },
     "@identifier": {
       "type": "string",

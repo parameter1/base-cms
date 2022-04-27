@@ -10,7 +10,6 @@ $ const additionalEventData = defaultValue(input.additionalEventData, {});
   <marko-web-identity-x-context|{ application }|>
     $ const props = {
       additionalEventData: additionalEventData,
-      eventLabel: input.eventLabel,
       token: query.token,
       redirectTo: query.redirectTo,
       requiredServerFields: identityX.config.getRequiredServerFields(),

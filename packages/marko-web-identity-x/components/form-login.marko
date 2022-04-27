@@ -9,7 +9,7 @@ $ const additionalEventData = defaultValue(input.additionalEventData, {});
   <marko-web-identity-x-context|{ user, isEnabled, application }|>
     $ const props = {
       additionalEventData: additionalEventData,
-      eventLabel: input.eventLabel,
+      source: input.source,
       activeUser: user,
       endpoints: identityX.config.getEndpoints(),
       buttonLabels: input.buttonLabels,
