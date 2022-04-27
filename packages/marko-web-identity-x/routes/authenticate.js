@@ -1,4 +1,5 @@
 const gql = require('graphql-tag');
+const jwt = require('jsonwebtoken');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 const tokenCookie = require('../utils/token-cookie');
 const contextCookie = require('../utils/context-cookie');
@@ -22,11 +23,11 @@ const loginAppUser = gql`
 `;
 
 module.exports = asyncRoute(async (req, res) => {
-  const { identityX, body, query } = req;
+  const { identityX, body } = req;
   const { token } = body;
   if (!token) throw new Error('No login token was provided.');
 
-  const loginSource = query.source || 'login';
+  const { src: loginSource } = jwt.decode(token);
   const input = { token };
   const variables = { input };
   const { data = {} } = await identityX.client.mutate({ mutation: loginAppUser, variables });
