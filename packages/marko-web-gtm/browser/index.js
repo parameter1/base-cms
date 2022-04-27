@@ -42,16 +42,15 @@ export default (Browser) => {
     'identity-x-profile-errored',
   ].forEach((event) => {
     EventBus.$on(event, (args) => {
-      if (window.IdentityX) {
-        window.dataLayer.push({
+      if (!window.IdentityX) return;
+      window.dataLayer.push({
+        event,
+        'identity-x': {
+          ...(args && args),
           event,
-          'identity-x': {
-            ...(args && args),
-            event,
-            loginSource: window.IdentityX.getLoginSource(),
-          },
-        });
-      }
+          loginSource: window.IdentityX.getLoginSource(),
+        },
+      });
     });
   });
 };
