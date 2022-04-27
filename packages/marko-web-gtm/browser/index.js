@@ -41,13 +41,17 @@ export default (Browser) => {
     'identity-x-logout-errored',
     'identity-x-profile-errored',
   ].forEach((event) => {
-    EventBus.$on(event, args => window.dataLayer.push({
-      event,
-      'identity-x': {
-        ...(args && args),
-        event,
-        loginSource: window.IdentityX.getLoginSource(),
-      },
-    }));
+    EventBus.$on(event, (args) => {
+      if (window.IdentityX) {
+        window.dataLayer.push({
+          event,
+          'identity-x': {
+            ...(args && args),
+            event,
+            loginSource: window.IdentityX.getLoginSource(),
+          },
+        });
+      }
+    });
   });
 };
