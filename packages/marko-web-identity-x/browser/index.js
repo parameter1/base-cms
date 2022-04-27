@@ -29,5 +29,5 @@ export default (Browser, {
   Browser.register('IdentityXCommentStream', CommentStreamComponent, { provide: { EventBus } });
 
   // Ensure the client-side IdX context is refreshed when the authentication event occurs
-  EventBus.$on('identity-x-authenticated', () => window.IdentityX.loadContext());
+  EventBus.$on('identity-x-authenticated', () => window.IdentityX.refreshContext());
 };

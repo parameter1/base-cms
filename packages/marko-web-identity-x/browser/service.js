@@ -19,14 +19,14 @@ const parseContext = () => {
 
 export default class IdentityX {
   constructor() {
-    this.loadContext();
+    this.refreshContext();
   }
 
   getLoginSource() {
     return this.context.loginSource;
   }
 
-  loadContext() {
+  refreshContext() {
     this.context = parseContext();
   }
 }
