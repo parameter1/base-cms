@@ -1,0 +1,49 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import { getAsObject } from "@parameter1/base-cms-object-path";
+
+$ const { nativeX: nxConfig } = out.global;
+$ const nativeX = getAsObject(input, "nativeX");
+$ const cols = defaultValue(input.cols, 4);
+$ const nodeImageInput = getAsObject(input, "node.image");
+
+<default-theme-card-deck-flow cols=cols nodes=input.nodes modifiers=input.modifiers>
+  <@slot|{ node, index }|>
+    <if(nxConfig)>
+      <marko-web-native-x-render|{ node: nxNode, linkAttrs, containerAttrs }|
+        ...nativeX
+        when=(index === nativeX.index)
+        node=node
+        config=nxConfig
+      >
+        <theme-content-node
+          image-position="top"
+          card=true
+          flush=true
+          full-height=true
+          with-teaser=false
+          with-dates=false
+          ...input.node
+          node=nxNode
+          link-attrs=linkAttrs
+          attrs=containerAttrs
+        >
+          <@image ar="3:2" fluid=true ...nodeImageInput />
+        </theme-content-node>
+      </marko-web-native-x-render>
+    </if>
+    <else>
+      <theme-content-node
+        image-position="top"
+        card=true
+        flush=true
+        full-height=true
+        with-teaser=false
+        with-dates=false
+        ...input.node
+        node=node
+      >
+        <@image ar="3:2" fluid=true ...nodeImageInput />
+      </theme-content-node>
+    </else>
+  </@slot>
+</default-theme-card-deck-flow>

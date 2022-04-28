@@ -1,0 +1,80 @@
+.node-list {
+  $self: &;
+  &--section-list {
+    #{ $self } {
+      &__header {
+        @include skin-typography($style: "section-header-small", $link-style: "primary");
+        margin-bottom: 16px;
+      }
+
+      &__nodes {
+        padding-top: 0;
+        padding-bottom: 16px;
+      }
+    }
+  }
+
+  &__footer {
+    &--view-more {
+      @include skin-typography($style: "view-more", $link-style: "primary");
+    }
+  }
+}
+
+.node {
+  $self: &;
+  &--section-list-card {
+    #{ $self } {
+      &__title {
+        @include skin-typography($style: "header-3", $link-style: "primary");
+        margin-bottom: 0;
+      }
+
+      &__website-section-name {
+        @include skin-typography($style: "slug-small", $link-style: "primary");
+      }
+    }
+  }
+  &--section-cards {
+    #{ $self } {
+      &__title {
+        @include skin-typography($style: "header-3", $link-style: "primary");
+        margin-bottom: 0;
+      }
+
+      &__website-section-name {
+        @include skin-typography($style: "slug-small", $link-style: "primary");
+      }
+    }
+  }
+  &--section-list-item {
+    #{ $self } {
+      &__title {
+        @include skin-typography($style: "header-3", $link-style: "primary");
+        margin-bottom: 0;
+      }
+
+      &__website-section-name {
+        @include skin-typography($style: "slug-small", $link-style: "primary");
+      }
+    }
+  }
+}
+
+.section-list-deck {
+  &__row {
+    @include make-row();
+  }
+
+  &__col {
+    @include make-col-ready();
+    @include media-breakpoint-up(md) {
+      @include make-col(4);
+      margin-bottom: 0;
+    }
+    margin-bottom: 30px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

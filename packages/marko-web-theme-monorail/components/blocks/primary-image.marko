@@ -1,0 +1,82 @@
+import { buildImgixUrl } from "@parameter1/base-cms-image";
+import { getAsObject, getAsArray, get } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const blockName = "primary-image";
+$ const image = getAsObject(input, "obj");
+$ const hasImage = Boolean(image.src);
+
+$ const forceDisplay = defaultValue(input.forceDisplay);
+$ let display = forceDisplay || image.primaryImageDisplay || "center";
+$ const aspectRatio = get(image, "cropDimensions.aspectRatio");
+$ const { isLogo } = image;
+
+$ const withCaption = defaultValue(input.withCaption, true);
+$ const withCredit = defaultValue(input.withCredit, true);
+$ const withDisplayName = defaultValue(input.withDisplayName, true);
+
+$ const fluidWidth = defaultValue(input.fluidWidth, 700);
+$ const alignedWidth = defaultValue(input.alignedWidth, 300);
+$ const shouldFill = defaultValue(input.shouldFill, false);
+$ const lazyload = defaultValue(input.lazyload, false);
+
+$ if (display === "center" && isLogo) {
+  // force logos to the right when set to center
+  display = "right";
+}
+
+$ const modifiers = [...getAsArray(input, "modifiers")];
+$ if (["left", "right"].includes(display)) {
+  modifiers.push("aligned");
+}
+$ modifiers.push(`aligned-${display}`);
+
+$ const maxWidth = input.maxWidth || 700;
+$ const fluid = !["left", "right"].includes(display);
+$ if (fluid) modifiers.push("fluid");
+$ if (fluid && aspectRatio === "16x9") modifiers.push("fluid-16by9")
+
+$ const imageOptions = {};
+$ if (fluid) {
+  imageOptions.w = fluidWidth;
+  if (shouldFill && !isLogo) {
+    imageOptions.fit = "fillmax";
+    imageOptions.fill = "blur";
+  }
+} else {
+  imageOptions.w = alignedWidth;
+};
+
+$ const imageAttrs = {};
+$ if (image.id) imageAttrs["data-image-id"] = image.id;
+
+<if(hasImage && display !== "none")>
+  $ const src = buildImgixUrl(image.src, imageOptions);
+  $ const srcset = [`${buildImgixUrl(src, { dpr: 2 })} 2x`];
+
+  <marko-web-block
+    name=blockName
+    modifiers=modifiers
+  >
+    <if(withDisplayName)>
+      <marko-web-image-display-name block-name=blockName obj=image />
+    </if>
+    <div class=`${blockName}__wrapper`>
+      <marko-web-img
+        src=src
+        srcset=srcset
+        alt=image.alt
+        class=`${blockName}__image`
+        attrs=imageAttrs
+        lazyload=lazyload
+      />
+    </div>
+
+    <if(withCaption)>
+      <marko-web-image-caption block-name=blockName obj=image />
+    </if>
+    <if(withCredit)>
+      <marko-web-image-credit block-name=blockName obj=image />
+    </if>
+  </marko-web-block>
+</if>

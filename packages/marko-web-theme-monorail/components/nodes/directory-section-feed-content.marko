@@ -1,0 +1,98 @@
+import { getAsObject, get } from "@parameter1/base-cms-object-path";
+import { buildImgixUrl } from "@parameter1/base-cms-image";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { i18n } = out.global;
+
+$ const content = getAsObject(input, "node");
+$ const primaryImage = getAsObject(content, "primaryImage");
+$ const primarySection = getAsObject(content, "primarySection");
+$ const containerAttrs = getAsObject(input, "containerAttrs");
+$ const linkAttrs = getAsObject(input, "linkAttrs");
+
+$ const withSection = defaultValue(input.withSection, false);
+$ const displayImage = defaultValue(input.displayImage, true);
+$ const isFeatured = defaultValue(input.isFeatured, false);
+$ const displayFeaturedTeaser = defaultValue(input.displayFeaturedTeaser, true);
+$ const requestQuote = defaultValue(input.requestQuote, true);
+
+$ const imageOptions = {
+  w: 250,
+  h: 167,
+  fit: "fill",
+};
+
+$ const blockName = "section-feed-content-node";
+
+<marko-web-block name=blockName modifiers=input.modifiers attrs=containerAttrs>
+  <marko-web-element block-name=blockName name="contents">
+    <marko-web-element block-name=blockName name="body">
+      <if(input.sponsoredBy)>
+        <marko-web-element block-name=blockName name="sponsored-by">
+          ${i18n("Sponsored By")} ${input.sponsoredBy}
+        </marko-web-element>
+      </if>
+      <else-if(withSection)>
+        <section-sponsor block-name=blockName section=primarySection labels=content.labels />
+      </else-if>
+      <marko-web-content-short-name
+        tag="h5"
+        block-name=blockName
+        obj=content
+        link={ attrs: linkAttrs }
+      />
+      <if(isFeatured)>
+        <marko-web-block name=blockName modifiers=["listing-details"] >
+          <if(displayFeaturedTeaser)>
+            <marko-web-content-teaser
+              block-name=blockName
+              obj=content
+              link={ attrs: linkAttrs }
+            />
+          </if>
+          <marko-web-block name=blockName modifiers=["contact-info"] >
+            <marko-web-content-address1 block-name=blockName obj=content />
+            <marko-web-content-address2 block-name=blockName obj=content />
+            <marko-web-content-city-state-zip block-name=blockName obj=content />
+            <marko-web-content-tollfree block-name=blockName obj=content />
+            <if(requestQuote)>
+              <marko-web-link
+                href=content.siteContext.path
+                attrs=linkAttrs
+              >
+                ${i18n("Request Quote")} &raquo;
+              </marko-web-link>
+            </if>
+            <marko-web-content-website
+              block-name=blockName
+              obj=content
+              link=true
+              attrs={ target: "_blank" }
+            >
+              ${i18n("Website")} &raquo;
+            </marko-web-content-website>
+          </marko-web-block>
+        </marko-web-block>
+      </if>
+      <else-if(content.city && content.state)>
+        <marko-web-content-city-state-zip block-name=blockName obj=content>
+          ${content.city}, ${content.state}
+        </marko-web-content-city-state-zip>
+      </else-if>
+    </marko-web-element>
+  </marko-web-element>
+  <if(displayImage && primaryImage.src)>
+    <marko-web-element block-name=blockName name="image-wrapper">
+      $ const src = buildImgixUrl(primaryImage.src, imageOptions);
+      $ const srcset = [`${buildImgixUrl(src, { dpr: 2 })} 2x`];
+      <marko-web-link href=get(content, "siteContext.path") attrs=linkAttrs>
+        <marko-web-img
+          src=src
+          srcset=srcset
+          alt=primaryImage.alt
+          class=[`${blockName}__image`]
+        />
+      </marko-web-link>
+    </marko-web-element>
+  </if>
+</marko-web-block>

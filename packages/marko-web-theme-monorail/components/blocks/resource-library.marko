@@ -1,0 +1,76 @@
+import queryFragment from "../../graphql/fragments/resource-library-block";
+import sectionFragment from "../../graphql/fragments/section-info";
+
+$ const { i18n } = out.global;
+
+<!-- @todo likely should change the name of this component -->
+$ const queryParams = {
+  ...input.queryParams,
+  sectionAlias: input.alias,
+  requiresImage: true,
+  limit: 4,
+  queryFragment,
+  sectionFragment,
+};
+
+$ const blockName = "resource-library";
+
+<marko-web-query|{ nodes, section }| name="website-scheduled-content" params=queryParams>
+  <marko-web-block name=blockName>
+    <marko-web-element block-name=blockName name="header">
+      ${section && section.name || input.name}
+    </marko-web-element>
+    <marko-web-element block-name=blockName name="description-wrapper">
+      <marko-web-element block-name=blockName name="description">
+        $!{section && section.description || input.defaultDescription}
+      </marko-web-element>
+      <if(section)>
+        <marko-web-element block-name=blockName name="view-more">
+          <marko-web-link href=section.canonicalPath>
+            ${i18n("View more")} &raquo;
+          </marko-web-link>
+        </marko-web-element>
+      </if>
+    </marko-web-element>
+    <marko-web-element block-name=blockName name="deck-wrapper">
+
+      <marko-web-element block-name=blockName name="row">
+        <for|node| of=nodes>
+          <marko-web-element block-name=blockName name="col">
+            <marko-web-node
+              type=`${node.type}-content`
+              image-position="top"
+              card=true
+              flush=true
+              modifiers=[blockName]
+            >
+              <@image
+                fluid=true
+                gradient=true
+                width=250
+                ar="3:4"
+                src=node.primaryImage.src
+                alt=node.primaryImage.alt
+                link=true
+              >
+                <@body>
+                  <@title tag="h5">
+                    <marko-web-content-short-name tag=null obj=node link=true />
+                  </@title>
+                </@body>
+              </@image>
+            </marko-web-node>
+          </marko-web-element>
+        </for>
+      </marko-web-element>
+    </marko-web-element>
+
+    <if(section)>
+      <marko-web-element block-name=blockName name="view-more-bottom">
+        <marko-web-link href=section.canonicalPath>
+          ${i18n("View more")} &raquo;
+        </marko-web-link>
+      </marko-web-element>
+    </if>
+  </marko-web-block>
+</marko-web-query>

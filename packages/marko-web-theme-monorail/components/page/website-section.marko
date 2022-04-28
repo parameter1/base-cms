@@ -1,0 +1,30 @@
+import { get, getAsObject } from "@parameter1/base-cms-object-path";
+
+$ const {
+  id,
+  alias,
+  name,
+  withRss = true,
+  head,
+  abovePage,
+  belowPage,
+  page,
+  ...rest
+} = input;
+$ const { document } = out.global;
+
+<${document} ...rest>
+  <@head>
+    <marko-web-website-section-page-metadata alias=alias />
+    <if(withRss)>
+      <marko-web-website-section-rss query-name="website-scheduled-content" query-params={ sectionAlias: alias } name=name />
+    </if>
+    <${head} />
+  </@head>
+  <!-- Note: camelcased vars due to nest input of dynamic document. perhaps a marko bug -->
+  <@container abovePage=abovePage belowPage=belowPage>
+    <@page for="website-section" id=id>
+      <${page} />
+    </@page>
+  </@container>
+</>

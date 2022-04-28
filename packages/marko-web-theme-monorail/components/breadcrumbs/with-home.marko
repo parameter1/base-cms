@@ -1,0 +1,13 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+
+$ const items = getAsArray(input, "items");
+$ const homeTitle = input.homeTitle || "Home";
+
+<theme-breadcrumbs>
+  <@item>
+    <marko-web-link href="/" title=homeTitle>$!{homeTitle}</marko-web-link>
+  </@item>
+  <for|item| of=items>
+    <@item ...item />
+  </for>
+</theme-breadcrumbs>

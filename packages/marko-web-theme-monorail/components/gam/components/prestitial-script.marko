@@ -1,0 +1,29 @@
+<script>
+  (function(w, d) {
+    var adblockOn = 1;
+
+    function removeOpacity() {
+      var wrapper = d.getElementById('body-wrapper');
+      if (!wrapper) return;
+      w.scrollTo(0, 0);
+      if (wrapper.style.removeProperty) {
+        wrapper.style.removeProperty('opacity');
+      } else {
+        wrapper.style.removeAttribute('opacity');
+      }
+    }
+
+    setTimeout(function() {
+      if (adblockOn) removeOpacity();
+    }, 2000);
+
+    googletag.cmd.push(function() {
+      googletag.pubads().addEventListener('slotRenderEnded', function(event) {
+        adblockOn = 0;
+        if (event.slot.getSlotElementId() === 'div-interstitial' && event.isEmpty) {
+          removeOpacity();
+        }
+      });
+    });
+  })(window, document);
+</script>

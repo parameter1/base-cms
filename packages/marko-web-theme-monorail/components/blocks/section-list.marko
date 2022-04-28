@@ -1,0 +1,86 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import { getAsObject } from "@parameter1/base-cms-object-path";
+import cardFragment from "../../graphql/fragments/section-list-card-block";
+import listFragment from "../../graphql/fragments/section-list-block";
+import sectionFragment from "../../graphql/fragments/section-info";
+
+$ const { i18n } = out.global;
+
+$ const { alias } = input;
+
+$ const withSection = defaultValue(input.withSection, true);
+$ const withViewMore = defaultValue(input.withViewMore, true);
+
+$ const queryParams = {
+  limit: 4,
+  ...getAsObject(input, "queryParams"),
+  queryFragment: listFragment,
+  sectionFragment,
+  sectionAlias: alias,
+};
+$ const heroParams = {
+  ...queryParams,
+  limit: 1,
+  requiresImage: true,
+  queryFragment: cardFragment,
+};
+
+$ const blockName = "section-list";
+
+<marko-web-query|{ nodes: heroNodes, section }| name="website-scheduled-content" params=heroParams>
+  $ const listParams = {
+    ...queryParams,
+    limit: queryParams.limit - 1,
+    excludeContentIds: heroNodes.map((node) => node.id),
+    sectionFragment: undefined,
+  };
+  <marko-web-query|{ nodes: listNodes }| name="website-scheduled-content" params=listParams>
+    $ const nodes = [...heroNodes, ...listNodes];
+    <marko-web-node-list
+      inner-justified=true
+      flush-x=true
+      flush-y=true
+      modifiers=[blockName]
+    >
+      <@header>
+        <marko-web-website-section-name obj=section link=true />
+      </@header>
+      <@nodes nodes=nodes>
+        <@slot|{ node, index }|>
+          <if(index === 0)>
+            <theme-content-node
+              image-position="top"
+              card=true
+              flush=true
+              modifiers=[`${blockName}-card`]
+              with-teaser=false
+              with-dates=false
+              with-section=withSection
+              node=node
+            >
+              <@image fluid=true width=330 ar="3:2" />
+            </theme-content-node>
+          </if>
+          <else>
+            <theme-content-node
+              display-image=false
+              flush=true
+              modifiers=[`${blockName}-item`]
+              with-teaser=false
+              with-dates=false
+              with-section=withSection
+              node=node
+            />
+          </else>
+        </@slot>
+      </@nodes>
+      <if(withViewMore)>
+        <@footer modifiers=["view-more"]>
+          <marko-web-website-section-name obj=section link=true>
+            ${i18n("View More")} &raquo;
+          </marko-web-website-section-name>
+        </@footer>
+      </if>
+    </marko-web-node-list>
+  </marko-web-query>
+</marko-web-query>

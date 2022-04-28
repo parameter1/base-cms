@@ -1,0 +1,86 @@
+import queryFragment from "../../graphql/fragments/section-card-list-block";
+import sectionFragment from "../../graphql/fragments/section-info";
+
+$ const { i18n } = out.global;
+
+$ const queryParams = {
+  limit: 3,
+  requiresImage: true,
+  sectionAlias: input.alias,
+  queryFragment,
+  sectionFragment,
+};
+$ const blockName = "section-card-list";
+
+<marko-web-query|{ nodes, section }| name="website-scheduled-content" params=queryParams>
+  $ const heroNode = nodes.slice(0, 1)[0];
+  $ const heroImageNode = {
+    id: heroNode.id,
+    type: heroNode.type,
+    siteContext: heroNode.siteContext,
+    primaryImage: heroNode.primaryImage,
+  };
+  $ const listNodes = nodes.slice(1);
+
+  <marko-web-block name=blockName>
+    <marko-web-element block-name=blockName name="header">
+      ${section.name}
+    </marko-web-element>
+    <marko-web-element block-name=blockName name="description">
+      ${section.description || input.defaultDescription}
+    </marko-web-element>
+
+    <marko-web-element block-name=blockName name="row">
+      <marko-web-element block-name=blockName name="col">
+        <theme-content-node
+          image-position="top"
+          card=true
+          flush=true
+          image-only=true
+          modifiers=[`${blockName}-hero-image`]
+          node=heroImageNode
+        >
+          <@image fluid=true width=340 ar="3:2" />
+        </theme-content-node>
+      </marko-web-element>
+      <marko-web-element block-name=blockName name="col">
+        <theme-content-node
+          full-height=true
+          card=true
+          display-image=false
+          flush=true
+          modifiers=[`${blockName}-hero`]
+          with-dates=false
+          with-section=false
+          node=heroNode
+        />
+      </marko-web-element>
+      <marko-web-element block-name=blockName name="col">
+        <marko-web-node-list
+          flush-x=true
+          flush-y=true
+          modifiers=[blockName]
+        >
+          <@nodes nodes=listNodes>
+            <@slot|{ node }|>
+              <theme-content-node
+                display-image=false
+                flush=true
+                modifiers=[`${blockName}-item`]
+                with-teaser=false
+                with-dates=false
+                with-section=false
+                node=node
+              />
+            </@slot>
+          </@nodes>
+        </marko-web-node-list>
+        <marko-web-element block-name=blockName name="btn-wrapper">
+          <marko-web-link href=section.canonicalPath class="btn btn-secondary">
+            ${i18n("More")} ${section.name}
+          </marko-web-link>
+        </marko-web-element>
+      </marko-web-element>
+    </marko-web-element>
+  </marko-web-block>
+</marko-web-query>

@@ -1,0 +1,55 @@
+import { defaultValue } from "@parameter1/base-cms-marko-web/utils";
+import convertAdToContent from "@parameter1/base-cms-marko-web-native-x/utils/convert-ad-to-content";
+
+$ const { nativeX: nxConfig, i18n } = out.global;
+$ const { section } = input;
+$ const limit = defaultValue(input.limit, 3);
+$ const placementName = defaultValue(input.placementName, "default");
+$ const aliases = defaultValue(input.aliases, []);
+
+$ const blockName = "section-card-deck";
+$ const uri = nxConfig.getUri();
+$ const placement = nxConfig.getPlacement({ name: placementName, aliases });
+
+<marko-web-native-x-fetch-elements|{ ads }| uri=uri id=placement.id opts={ n: limit }>
+  $ const hasAd = ads && ads.length && ads[0] && ads[0].hasCampaign;
+  <if(hasAd)>
+    <marko-web-block name=blockName>
+      <marko-web-element block-name=blockName name="header">
+        ${section.name}
+      </marko-web-element>
+      <marko-web-element block-name=blockName name="description-wrapper">
+        <marko-web-element block-name=blockName name="description">
+          $!{section.description || input.defaultDescription}
+        </marko-web-element>
+      </marko-web-element>
+
+      <marko-web-element block-name=blockName name="deck-wrapper">
+
+        <marko-web-element block-name=blockName name="row">
+          <for|ad| of=ads>
+            <if(ad.hasCampaign)>
+              $ const node = convertAdToContent(ad, { sectionName: `${i18n("Sponsored by")} ${ad.campaign.advertiserName}` });
+              <marko-web-element block-name=blockName name="col">
+                <theme-content-node
+                  image-position="top"
+                  card=true
+                  flush=true
+                  modifiers=[blockName]
+                  node=node
+                  with-section=true
+                  with-teaser=false
+                  with-dates=false
+                  attrs=ad.attributes.container
+                  link-attrs=ad.attributes.link
+                >
+                  <@image fluid=true width=330 ar="4:3" />
+                </theme-content-node>
+              </marko-web-element>
+            </if>
+          </for>
+        </marko-web-element>
+      </marko-web-element>
+    </marko-web-block>
+  </if>
+</marko-web-native-x-fetch-elements>

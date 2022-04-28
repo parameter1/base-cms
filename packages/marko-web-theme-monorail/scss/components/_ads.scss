@@ -1,0 +1,247 @@
+.ad-container {
+  $self: &;
+  text-align: left;
+
+  $container-bottom-padding: 30px;
+  $wrapper-first-child-padding: 16px;
+  $label-bottom-padding: 4px;
+  $label-font-size: 10px;
+  $label-line-height: 1;
+  $container-height: $container-bottom-padding + $wrapper-first-child-padding + ($label-font-size * $label-line-height) + $label-bottom-padding;
+
+  $leaderboard-min-height-mobile: 50px !default;
+  $leaderboard-min-height-desktop: 90px !default;
+  $billboard-min-height-mobile: 210px !default;
+  $billboard-min-height-desktop: 596px !default;
+  $rotation-min-height-mobile: 50px !default;
+  $rotation-min-height-desktop: 90px !default;
+
+  $rail-ad-bg-color: $skin-ad-bg-color !default;
+
+  &--inter-block {
+    margin-right: -#{$marko-web-page-wrapper-padding};
+    margin-bottom: 0;
+    margin-left: -#{$marko-web-page-wrapper-padding};
+    background-color: $skin-ad-bg-color;
+    @media (min-width: $marko-web-document-container-max-width) {
+      $margin: calc((((100vw - #{$marko-web-document-container-max-width}) / 2) + #{$marko-web-page-wrapper-padding}) * -1);
+      margin-right: $margin;
+      margin-left: $margin;
+    }
+
+    @include media-breakpoint-down(md) {
+      margin-right: -16px;
+      margin-left: -16px;
+    }
+
+    #{ $self } {
+      &__wrapper {
+        padding-bottom: $container-bottom-padding;
+        margin-right: auto;
+        margin-left: auto;
+        text-align: center;
+
+        @media (min-width: 970px) {
+          max-width: 970px;
+        }
+      }
+    }
+  }
+
+  &--inline {
+    margin-right: $marko-web-page-wrapper-padding * -1;
+    margin-bottom: 0;
+    margin-left: $marko-web-page-wrapper-padding * -1;
+    background-color: $skin-ad-bg-color;
+    @media (min-width: $marko-web-document-container-max-width) {
+      $margin: calc((((100vw - #{$marko-web-document-container-max-width}) / 2) + #{$marko-web-page-wrapper-padding}) * -1);
+      margin-right: $margin;
+      margin-left: $margin;
+    }
+
+    @include media-breakpoint-down(md) {
+      margin-right: -16px;
+      margin-left: -16px;
+    }
+  }
+
+  &--inline-content {
+    margin-right: $marko-web-page-wrapper-padding * -1;
+    margin-bottom: 30px;
+    margin-left: $marko-web-page-wrapper-padding * -1;
+
+    clear: both;
+    background-color: $skin-ad-bg-color;
+
+    @media (min-width: $skin-content-body-max-width) {
+      $margin: calc(((100vw - #{$skin-content-body-max-width}) / 2) * -1);
+      margin-right: $margin;
+      margin-left: $margin;
+    }
+
+    @include media-breakpoint-down(md) {
+      margin-right: -16px;
+      margin-left: -16px;
+    }
+  }
+
+  &--inline,
+  &--inline-content {
+    #{ $self } {
+      &__wrapper {
+        padding-bottom: $container-bottom-padding;
+      }
+    }
+  }
+
+  &--rail {
+    background-color: $rail-ad-bg-color;
+    > *:first-child {
+      padding-bottom: $container-bottom-padding;
+    }
+    @media (min-width: 980px) {
+      margin-bottom: 24px;
+    }
+  }
+
+  &--rail-mobile {
+    background-color: $rail-ad-bg-color;
+    > *:first-child {
+      padding-bottom: $container-bottom-padding;
+    }
+    @media (min-width: 300px) {
+      margin-bottom: 24px;
+    }
+    @media (min-width: 980px) {
+      margin-bottom: 0;
+    }
+  }
+
+  &--inline-feed {
+    background-color: $skin-ad-bg-color;
+    > *:first-child {
+      padding-bottom: $container-bottom-padding;
+    }
+  }
+
+  &--max-width-300 {
+    #{ $self } {
+      &__wrapper {
+        @media (min-width: 300px) {
+          max-width: 300px;
+        }
+      }
+    }
+  }
+
+  &--max-width-970 {
+    #{ $self } {
+      &__wrapper {
+        @media (min-width: 970px) {
+          max-width: 970px;
+        }
+      }
+    }
+  }
+
+  &--margin-auto-x {
+    #{ $self } {
+      &__wrapper {
+        margin-right: auto;
+        margin-left: auto;
+        text-align: center;
+      }
+    }
+  }
+
+  &--template-leaderboard {
+    min-height: $leaderboard-min-height-mobile + $container-height;
+    @media (min-width: 780px) {
+      min-height: $leaderboard-min-height-desktop + $container-height;
+    }
+  }
+
+  &--template-billboard {
+    min-height: $billboard-min-height-mobile + $container-height;
+    @media (min-width: 780px) {
+      min-height: $billboard-min-height-desktop + $container-height;
+    }
+  }
+
+  &--template-rotation,
+  &--template-inline-content-desktop,
+  &--template-inline-content-mobile {
+    min-height: $rotation-min-height-mobile + $container-height;
+    @media (min-width: 780px) {
+      min-height: $rotation-min-height-desktop + $container-height;
+    }
+  }
+
+  &--inline-content#{&}--template-inline-content-desktop {
+    display: none;
+    @media (min-width: 780px) {
+      display: block;
+    }
+  }
+
+  &--inline-content#{&}--template-inline-content-mobile {
+    @media (min-width: 780px) {
+      display: none;
+    }
+  }
+
+  &--with-label {
+    > *:first-child {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: $wrapper-first-child-padding;
+
+      &::before {
+        padding-bottom: $label-bottom-padding;
+        font-size: $label-font-size;
+        line-height: $label-line-height;
+        color: $skin-ad-label-color;
+        text-transform: uppercase;
+        content: "Advertisement";
+      }
+    }
+  }
+}
+
+.wallpaper-ad {
+  $width: 300px;
+
+  position: fixed;
+  right: 0;
+  left: 0;
+
+  display: none;
+
+  @media (min-width: 1400px) {
+    display: block;
+  }
+
+  &__left,
+  &__right {
+    position: absolute;
+    top: 0;
+  }
+
+  &__left {
+    left: 0;
+  }
+  &__right {
+    right: 0;
+  }
+
+  @media (max-width: calc(#{$marko-web-document-container-max-width} + (#{$width} * 2))) {
+    $lr: calc((100vw - #{$marko-web-document-container-max-width} - (#{$width} * 2)) / 2);
+    &__left {
+      left: $lr;
+    }
+    &__right {
+      right: $lr;
+    }
+  }
+}

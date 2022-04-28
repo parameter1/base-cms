@@ -1,0 +1,85 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+import gql from "graphql-tag";
+import fetch from "node-fetch";
+import { extractFragmentData } from "@parameter1/base-cms-web-common/utils";
+import queryFragment from "../../graphql/fragments/most-popular-block";
+
+$ const { MOST_POPULAR_API_URI } = process.env;
+$ const { site, config, apollo, i18n } = out.global;
+
+$ const blockName = "most-popular";
+
+$ const getMostPopular = async () => {
+  const uri = MOST_POPULAR_API_URI || 'https://most-popular.caprica.base.parameter1.com';
+  const tenant = site.get("p1events.tenant");
+  const realm = config.website("id");
+
+  const url = `${uri}/retrieve?tenant=${tenant}&realm=${realm}`;
+  const res = await fetch(url);
+  const json = await res.json();
+  if (!res.ok) throw new Error(json.message || res.statusText || "An unknown fatal error occurred.");  return json.data;
+};
+
+$ const buildContentQuery = () => {
+  const { spreadFragmentName, processedFragment } = extractFragmentData(queryFragment);
+  return gql`
+    query WebsiteMostPopularBlock(
+      $ids: [Int!]!
+      $limit: Int!
+    ) {
+      allContent(input: {
+        ids: $ids,
+        status: any,
+        pagination: { limit: $limit }
+      }) {
+        edges {
+          node {
+            ${spreadFragmentName}
+          }
+        }
+      }
+    }
+
+    ${processedFragment}
+  `;
+};
+
+<marko-web-resolve|{ resolved }| promise=getMostPopular()>
+  $ const ids = resolved.map(({ id }) => id);
+  <if(ids.length)>
+    $ const query = buildContentQuery();
+    $ const variables = { ids, limit: 6 };
+    <marko-web-resolve|{ resolved: response }| promise=apollo.query({ query, variables })>
+      $ const nodes = getAsArray(response, "data.allContent.edges").map((edge) => edge.node);
+      $ const map = nodes.reduce((m, r) => m.set(`${r.id}`, r), new Map());
+      $ const ordered = ids.map(id => map.get(`${id}`)).filter(id => id);
+      <if(ordered.length)>
+        <marko-web-block name=blockName>
+          <marko-web-element block-name=blockName name="header">
+            ${i18n("Most Popular")}
+          </marko-web-element>
+          <default-theme-card-deck-flow
+            modifiers=[blockName]
+            cols=3
+            nodes=ordered
+          >
+            <@slot|{ node, index }|>
+              <marko-web-element block-name=blockName name="card-wrapper">
+                <marko-web-element block-name=blockName name="position">
+                  ${index + 1}
+                </marko-web-element>
+                <theme-content-node
+                  display-image=false
+                  with-teaser=false
+                  with-dates=false
+                  modifiers=[blockName]
+                  node=node
+                />
+              </marko-web-element>
+            </@slot>
+          </default-theme-card-deck-flow>
+        </marko-web-block>
+      </if>
+    </marko-web-resolve>
+  </if>
+</marko-web-resolve>

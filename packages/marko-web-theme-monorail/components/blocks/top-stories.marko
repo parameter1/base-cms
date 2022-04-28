@@ -1,0 +1,75 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import queryFragment from "../../graphql/fragments/top-stories-block";
+
+$ const { i18n } = out.global;
+
+$ const queryParams = {
+  limit: 5,
+  requiresImage: true,
+  queryFragment,
+  sectionAlias: "home",
+  ...input.queryParams,
+};
+$ const blockName = "top-stories";
+$ const withHeader = defaultValue(input.withHeader, true);
+$ const withNativeX = defaultValue(input.withNativeX, true);
+$ const lazyload = defaultValue(input.lazyload, true);
+$ const queryName = (queryParams.optionName) ? "website-optioned-content" : "website-scheduled-content";
+
+<marko-web-query|{ nodes }| name=queryName params=queryParams>
+  <if(nodes.length)>
+    $ const heroNode = nodes.slice(0, 1)[0];
+    $ const heroImageNode = {
+      id: heroNode.id,
+      type: heroNode.type,
+      siteContext: heroNode.siteContext,
+      primaryImage: heroNode.primaryImage,
+    };
+    $ const cardNodes = nodes.slice(1);
+
+    <marko-web-block name=blockName>
+      <if(withHeader)>
+        <marko-web-element block-name=blockName name="header">
+          ${i18n("Top Stories")}
+        </marko-web-element>
+      </if>
+
+      <marko-web-element block-name=blockName name="row">
+        <marko-web-element block-name=blockName name="col" modifiers=["hero"]>
+          <theme-content-node
+            image-position="top"
+            card=true
+            flush=true
+            image-only=true
+            modifiers=[`${blockName}-hero-image`]
+            node=heroImageNode
+          >
+            <@image fluid=true width=600 ar="3:2" lazyload=lazyload />
+          </theme-content-node>
+        </marko-web-element>
+        <marko-web-element block-name=blockName name="col" modifiers=["list"]>
+          <theme-content-node
+            full-height=true
+            card=true
+            display-image=false
+            flush=true
+            modifiers=[`${blockName}-hero`]
+            node=heroNode
+          />
+        </marko-web-element>
+      </marko-web-element>
+
+      <if(cardNodes.length)>
+        <theme-content-card-deck-col-flow
+          nodes=cardNodes
+          modifiers=[blockName]
+          ...(withNativeX && { nativeX: { name: "default", index: 3, sectionName: "Sponsor Content" } })
+        >
+          <@node modifiers=[`${blockName}-card`]>
+            <@image lazyload=lazyload />
+          </@node>
+        </theme-content-card-deck-col-flow>
+      </if>
+    </marko-web-block>
+  </if>
+</marko-web-query>

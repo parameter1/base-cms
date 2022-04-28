@@ -1,0 +1,40 @@
+import { getAsObject } from "@parameter1/base-cms-object-path";
+
+$ const { site, GAM } = out.global;
+$ const slotId = "div-interstitial";
+$ const adunit = GAM.getAdUnit({ name: input.name, aliases: input.aliases });
+
+<if(adunit && adunit.path)>
+  <if(input.init)>
+    $ const targeting = { ...getAsObject(adunit, 'targeting'), ...getAsObject(input, 'targeting') };
+    $ const slots = {
+      [slotId]: {
+        path: adunit.path,
+        size: adunit.size,
+        sizeMapping: adunit.sizeMapping,
+        targeting,
+      },
+    };
+    <marko-web-gam-slots slots=slots />
+    <prestitial-script />
+  </if>
+  <if(input.display)>
+    $ const logoSrc = site.get("logos.prestitial.src", site.get("logos.footer.src"));
+    $ const bgSrc = site.get("prestitialBgSrc", "https://p1-cms-assets.imgix.net/files/base/randallreilly/all/image/static/prestitial-randall-reilly.jpg");
+    <div
+      data-interstitial-prop="bg-url"
+      data-interstitial-value=bgSrc
+      style="display: none;"
+    />
+    <div
+      id="wl_flogop_div"
+      data-interstitial-prop="logo-url"
+      data-interstitial-value=logoSrc
+      style="display: none;"
+    />
+    <marko-web-gam-out-of-page-ad ...adunit id=slotId style="height: 0;" />
+  </if>
+</if>
+<else>
+  $ warn(`Unable to load prestitial: no adunit found.`);
+</else>

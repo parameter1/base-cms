@@ -1,0 +1,132 @@
+@mixin skin-button($style) {
+  $vars: map-get($skin-buttons, $style);
+  $props: background-color, border-radius, color, font-family, font-weight, font-size, letter-spacing, line-height, padding, text-transform;
+
+  @each $prop in $props {
+    #{ $prop }: map-get($vars, $prop);
+  }
+
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+
+  $border: map-get($vars, "border");
+  @if $border {
+    border: $border;
+  } @else {
+    border: none;
+  }
+
+  $hover-background-color: map-get($vars, "hover-background-color");
+  $hover-border: map-get($vars, "hover-border");
+  $hover-color: map-get($vars, "hover-color");
+
+  $focus-background-color: if(map-get($vars, "focus-background-color"), map-get($vars, "focus-background-color"), $hover-background-color);
+  $focus-color: if(map-get($vars, "focus-color"), map-get($vars, "focus-color"), $hover-color);
+  $focus-border: if(map-get($vars, "focus-border"), map-get($vars, "focus-border"), $hover-border);
+
+  $active-background-color: if(map-get($vars, "active-background-color"), map-get($vars, "active-background-color"), $focus-background-color);
+  $active-color: if(map-get($vars, "active-color"), map-get($vars, "active-color"), $focus-color);
+  $active-border: if(map-get($vars, "active-border"), map-get($vars, "active-border"), $focus-border);
+
+  &:hover {
+    @if $hover-border {
+      border: $hover-border;
+    }
+    color: $hover-color;
+    background-color: $hover-background-color;
+  }
+
+  &:focus,
+  &.focus {
+    @if $focus-border {
+      border: $focus-border;
+    }
+    color: $focus-color;
+    background-color: $focus-background-color;
+    outline: 0;
+  }
+
+  &:not(:disabled):not(.disabled):active,
+  &:not(:disabled):not(.disabled).active,
+  .show > &.dropdown-toggle {
+    @if $active-border {
+      border: $active-border;
+    }
+    color: $active-color;
+    background-color: $active-background-color;
+    outline: 0;
+  }
+
+  &.disabled,
+  &:disabled {
+    opacity: $btn-disabled-opacity;
+  }
+
+}
+
+@mixin skin-typography(
+  $style,
+  $link-style: false,
+  $max-lines: null,
+  $breakpoint: $theme-responsive-text-breakpoint
+) {
+  $vars: map-get($typography, $style);
+  $props: font-family, font-size, font-weight, line-height, color, text-transform, letter-spacing;
+
+  @each $prop in $props {
+    #{ $prop }: map-get($vars, $prop);
+  }
+
+  @include theme-apply-responsive-fonts(
+    $font-size: map-get($vars, font-size-mobile),
+    $line-height: map-get($vars, line-height-mobile),
+    $breakpoint: $breakpoint
+  );
+
+  @if $link-style {
+    $link: map-deep-get($typography-links, $style, $link-style);
+    a {
+      @include skin-typography-link($style, $link-style, $max-lines);
+    }
+  }
+}
+
+@mixin skin-typography-link(
+  $style,
+  $link-style,
+  $max-lines: null,
+  $breakpoint: $theme-responsive-text-breakpoint
+) {
+  $vars: map-get($typography, $style);
+  $link: map-deep-get($typography-links, $style, $link-style);
+
+  @if map-get($link, max-lines) or $max-lines {
+    @include theme-max-lines(
+      $font-size: map-get($vars, font-size),
+      $font-size-sm: map-get($vars, font-size-mobile),
+      $line-height: map-get($vars, line-height),
+      $line-height-sm: map-get($vars, line-height-mobile),
+      $num: if($max-lines, $max-lines, map-get($link, max-lines)),
+      $breakpoint: $breakpoint
+    );
+  }
+
+  // if no link color specified, fallback to the main color.
+  $link-color: if(map-get($link, "color"), map-get($link, "color"), map-get($vars, "color"));
+  color: $link-color;
+  text-decoration: map-get($link, text-decoration);
+  &:hover {
+    // if no hover color specified, fallback to the link color
+    $hover-color: if(map-get($link, "hover-color"), map-get($link, "hover-color"), $link-color);
+    color: $hover-color;
+    text-decoration: map-get($link, hover-text-decoration);
+  }
+}
+
+@mixin section-header-underline() {
+  margin-bottom: 30px;
+
+  @include skin-typography($style: "section-header");
+}

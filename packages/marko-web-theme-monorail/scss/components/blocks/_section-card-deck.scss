@@ -1,0 +1,82 @@
+.section-card-deck {
+  &__header {
+    @include skin-typography($style: "section-header");
+  }
+
+  &__description-wrapper {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-top: 6px;
+    margin-bottom: 24px;
+    @include media-breakpoint-up(md) {
+      margin-bottom: 30px;
+    }
+  }
+
+  &__description {
+    @include skin-typography($style: "article-text");
+  }
+
+  &__view-more {
+    @include skin-typography($style: "view-more", $link-style: "primary");
+
+    display: none;
+    @include media-breakpoint-up(md) {
+      display: block;
+    }
+  }
+
+  &__view-more-bottom {
+    @include skin-typography($style: "view-more", $link-style: "primary");
+
+    display: block;
+    margin-top: 24px;
+    @include media-breakpoint-up(md) {
+      display: none;
+    }
+  }
+
+  &__deck-wrapper {
+    margin-right: -#{$marko-web-page-wrapper-padding};
+    margin-left: -#{$marko-web-page-wrapper-padding};
+    overflow-x: scroll;
+    overflow-y: hidden;
+  }
+
+  &__row {
+    display: flex;
+    flex-wrap: nowrap;
+    min-width: 750px;
+  }
+
+  &__col {
+    @include make-col-ready();
+    @include make-col(4);
+  }
+}
+
+.node {
+  $self: &;
+
+  &__website-section-name {
+    margin-bottom: 6px;
+    @include skin-typography($style: "slug-small", $link-style: "primary", $breakpoint: sm);
+  }
+
+  &--section-card-deck {
+    #{ $self } {
+      &__title {
+        @include skin-typography($style: "header-3", $link-style: "primary");
+      }
+
+      &__image-wrapper + #{$self}__body {
+        margin-top: 12px;
+
+        @include media-breakpoint-up(md) {
+          margin-top: 14px;
+        }
+      }
+    }
+  }
+}

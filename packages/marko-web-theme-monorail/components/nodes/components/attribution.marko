@@ -1,0 +1,13 @@
+import { getAsObject } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { content } = input;
+$ const company = getAsObject(content, "company");
+$ const displayCompany = defaultValue(input.displayCompany, true);
+
+<if(company.id && displayCompany)>
+  <company-name company=company />
+</if>
+<else>
+  <authors content=content />
+</else>

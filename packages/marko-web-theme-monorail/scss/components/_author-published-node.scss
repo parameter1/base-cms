@@ -1,0 +1,43 @@
+.author-published-node {
+  display: flex;
+  align-items: center;
+  margin-top: 17px;
+
+  &__image {
+    $size: 48px;
+    width: $size;
+    height: $size;
+    margin-right: 10px;
+    border-radius: $size;
+  }
+
+  &__content-name {
+    @include skin-typography($style: "author-content-page", $link-style: "primary");
+  }
+
+  &__content-published,
+  &__content-updated {
+    @include skin-typography($style: "date-content-page");
+    display: inline;
+    margin-top: 2px;
+    text-transform: none;
+  }
+
+  &__content-updated {
+    &::before {
+      content: " | ";
+    }
+  }
+}
+
+.inline-author-bio {
+  &__content-body {
+    margin-bottom: 18px;
+    font-size: 16px;
+    font-style: italic;
+
+    @include media-breakpoint-up(md) {
+      font-size: 18px;
+    }
+  }
+}

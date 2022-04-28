@@ -1,0 +1,57 @@
+import queryFragment from "../../graphql/fragments/products-block";
+import sectionFragment from "../../graphql/fragments/section-info";
+
+$ const { i18n } = out.global;
+
+$ const queryParams = {
+  sectionAlias: input.alias,
+  limit: 3,
+  queryFragment,
+  sectionFragment,
+};
+
+$ const blockName = "products-block";
+
+<marko-web-query|{ nodes, section }| name="website-scheduled-content" params=queryParams>
+  <marko-web-block name=blockName>
+    <marko-web-element block-name=blockName name="header">
+      ${section.name}
+    </marko-web-element>
+    <marko-web-element block-name=blockName name="description-wrapper">
+      <marko-web-element block-name=blockName name="description">
+        $!{section.description || input.defaultDescription}
+      </marko-web-element>
+      <marko-web-element block-name=blockName name="view-more">
+        <marko-web-link href=section.canonicalPath>
+          ${i18n("View more")} &raquo;
+        </marko-web-link>
+      </marko-web-element>
+    </marko-web-element>
+    <default-theme-card-deck-flow
+      cols=3
+      nodes=nodes
+      modifiers=[blockName]
+    >
+      <@slot|{ node }|>
+        <theme-content-node
+          image-position="right"
+          full-height=true
+          card=true
+          flush=false
+          modifiers=[blockName]
+          node=node
+          with-teaser=false
+          with-dates=false
+        >
+          <@image width=112 ar="1:1" />
+        </theme-content-node>
+      </@slot>
+    </default-theme-card-deck-flow>
+
+    <marko-web-element block-name=blockName name="view-more-bottom">
+      <marko-web-link href=section.canonicalPath>
+        ${i18n("View more")} &raquo;
+      </marko-web-link>
+    </marko-web-element>
+  </marko-web-block>
+</marko-web-query>

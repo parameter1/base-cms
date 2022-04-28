@@ -1,0 +1,127 @@
+@if $navbarStyle == "navbar-b" {
+  .site-navbar {
+    $self: &;
+    &__container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: $marko-web-document-container-max-width;
+      @include media-breakpoint-up(xl, $grid-breakpoints) {
+        max-width: $marko-web-document-container-max-width;
+      }
+    }
+    &__logo {
+      filter: none;
+    }
+    &__brand {
+      margin: 0;
+    }
+    &--top {
+      width: 100%;
+      @media (max-width: map-get($theme-site-header-breakpoints, small-logo)) {
+        height: 58px;
+      }
+      background-color: $theme-site-navbar-secondary-bg-color;
+      #{ $self } {
+        &__container {
+          height: $theme-site-navbar-logo-height + 30px;
+          @media (max-width: map-get($theme-site-header-breakpoints, small-logo)) {
+            height: $theme-site-navbar-logo-height-sm + 20px;
+          }
+        }
+        &__left {
+          align-self: flex-end;
+          padding-left: 0;
+          @media (max-width: map-get($theme-site-header-breakpoints, small-logo)) {
+            display: none;
+          }
+        }
+        &__center {
+          display: flex;
+          @media (min-width: map-get($theme-site-header-breakpoints, small-logo)) {
+            justify-content: center;
+          }
+        }
+        &__center.col-lg-6 {
+          justify-content: flex-start;
+          padding-left: 0;
+        }
+        &__right {
+          display: flex;
+          justify-content: flex-end;
+          @media (min-width: map-get($theme-site-header-breakpoints, hide-primary)) {
+            padding-right: 0;
+          }
+          .btn,
+          #{ $self }__toggler {
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            margin: 0 0 0 12px;
+            font-size: 1rem;
+            background-color: $gray-100;
+            border-radius: 4px;
+          }
+        }
+      }
+      .subscribe-box {
+        display: flex;
+        &--cover-image {
+          align-self: flex-end;
+        }
+        &--call-to-action {
+          align-self: center;
+          .btn-primary {
+            padding: 8px;
+            margin-left: 16px;
+            font-size: 12px;
+            text-transform: initial;
+          }
+          &:only-child {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: $theme-site-navbar-logo-height + 30px;
+            @media (max-width: map-get($theme-site-header-breakpoints, small-logo)) {
+              height: $theme-site-navbar-logo-height-sm + 20px;
+            }
+            .btn-primary {
+              @media (min-width: map-get($theme-site-header-breakpoints, hide-primary)) {
+                margin-left: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+    &--primary {
+      background-color: $theme-site-navbar-primary-bg-color;
+      border-top: 1px solid $gray-400;
+      #{ $self } {
+        &__link {
+          color: $theme-site-navbar-primary-link-color;
+          text-transform: initial;
+          &--active {
+            color: $theme-site-navbar-primary-link-active-color;
+            font-weight: 700;
+            text-decoration: none;
+            text-shadow: none;
+          }
+        }
+        &__items {
+          justify-content: space-between;
+        }
+      }
+      .site-navbar {
+        &__item {
+          flex-grow: unset;
+          padding-right: 0;
+          padding-left: 0;
+        }
+      }
+    }
+    .magazine-cover {
+      height: 78px;
+    }
+  }
+}

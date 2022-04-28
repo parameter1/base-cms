@@ -1,0 +1,13 @@
+import { getAsObject } from "@parameter1/base-cms-object-path";
+
+$ const { nativeX: nxConfig } = out.global;
+
+<if(nxConfig)>
+  <marko-web-native-x-render|results|
+    name=input.name
+    when=input.when
+    config=nxConfig
+  >
+    <${input.renderBody} ...results />
+  </marko-web-native-x-render>
+</if>

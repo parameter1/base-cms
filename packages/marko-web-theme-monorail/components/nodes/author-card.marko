@@ -1,0 +1,42 @@
+import { getAsObject, get } from "@parameter1/base-cms-object-path";
+
+$ const { i18n } = out.global;
+
+$ const content = getAsObject(input, "node");
+$ const primaryImage = getAsObject(content, "primaryImage");
+$ const withTitle = input.withTitle != null ? input.withTitle : true;
+
+<marko-web-node
+  image-position="left"
+  card=false
+  full-height=false
+  attrs=input.attrs
+  modifiers=["image-headshot"]
+>
+  <@image
+    src=primaryImage.src
+    alt=primaryImage.alt
+    options={ fit: "facearea", facepad: 2 }
+    width=100
+    ar="1:1"
+    link=false
+    use-placeholder=false
+  />
+  <@body>
+    <@title tag="h5" modifiers=input.titleModifiers>
+      <marko-web-content-name tag=null obj=content link=false />
+    </@title>
+    <@text modifiers=["teaser"] show=(withTitle && content.title)>
+      <marko-web-content-title tag=null obj=content />
+    </@text>
+    <@footer>
+      <@right>
+        <if(input.withEmail && content.publicEmail)>
+          <marko-web-content-public-email obj=content link={ href: `mailto:${content.publicEmail}`, class:"btn btn-sm btn-primary" }>
+            ${i18n("Email")}
+          </marko-web-content-public-email>
+        </if>
+      </@right>
+    </@footer>
+  </@body>
+</marko-web-node>

@@ -1,0 +1,30 @@
+{
+  "<theme-breadcrumbs>": {
+    "template": "./index.marko",
+    "@items <item>[]": {},
+    "@modifiers": "array"
+  },
+  "<theme-breadcrumbs-with-home>": {
+    "template": "./with-home.marko",
+    "@items <item>[]": {},
+    "@home-title": "string"
+  },
+  "<theme-content-page-breadcrumbs>": {
+    "template": "./content-page.marko",
+    "@section": "object",
+    "@home-title": "string",
+    "@home-alias": "string",
+    "@display-self": "boolean",
+    "@display-home": "boolean",
+    "@modifiers": "array"
+  },
+  "<theme-website-section-breadcrumbs>": {
+    "template": "./website-section.marko",
+    "@section": "object",
+    "@home-title": "string",
+    "@home-alias": "string",
+    "@display-self": "boolean",
+    "@display-home": "boolean",
+    "@modifiers": "array"
+  }
+}

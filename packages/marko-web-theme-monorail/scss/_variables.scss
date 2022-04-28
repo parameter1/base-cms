@@ -1,0 +1,320 @@
+// Fonts
+//
+// Skin primary + secondary fonts. By default, set secondary to primary.
+$skin-font-family-primary: Arial, sans-serif !default;
+$skin-font-family-secondary: Arial, sans-serif !default;
+
+// Set bootstrap font to primary skin font
+$font-family-sans-serif: $skin-font-family-primary;
+
+// Set theme's font family and page title to primary skin font.
+$theme-font-family-sans-serif: $skin-font-family-primary !default;
+$theme-font-family-page-title: $skin-font-family-primary !default;
+
+// Use secondary font for content body headings, by default.
+$theme-heading-font-family: $skin-font-family-secondary !default;
+
+// Reduced the z-index to prevent overlaying the welcome ad.
+$theme-site-header-z-index: 15000;
+
+// Low-Level Vars
+//
+// Disable rounding and shadows
+$enable-shadows: false;
+$enable-rounded: false;
+// Disable box shadow on button focus
+$btn-active-box-shadow: none;
+$btn-focus-width: 0;
+// Override bredcrumb divider
+$breadcrumb-divider: "|" !default;
+// Set gutter and block spacer
+$grid-gutter-width: 20px;
+$block-spacer: 24px;
+$spacers: (
+  block-xl: $block-spacer * 2.5,
+  block-lg: $block-spacer * 1.5,
+  block: $block-spacer,
+  block-sm: $block-spacer / 2,
+  block-xs: $block-spacer / 4,
+);
+
+// Determine the response text breakpoint
+$theme-responsive-text-breakpoint: md;
+
+$hr-margin-y: $grid-gutter-width / 2;
+
+// Marko Web Document and Page Settings
+//
+$marko-web-document-container-max-width: 1080px;
+$marko-web-document-container-gutter: 0;
+$marko-web-page-wrapper-padding: 10px;
+$marko-web-page-padding: 0;
+
+// Colors
+//
+// Set default grayscale
+$black:    #000 !default;
+$gray-900: #232325 !default;
+$gray-800: #3f4043 !default;
+$gray-700: #68686c !default;
+$gray-600: #8c8e97 !default;
+$gray-500: #91939c !default;
+$gray-400: #c4c6cb !default;
+$gray-300: #dee2e6 !default;
+$gray-200: #e3e4e5 !default;
+$gray-100: #f0f1f2 !default;
+$white:    #fff !default;
+
+// Set default body bg, font color, and primary/secondary color
+$body-bg: $white !default;
+$body-color: $gray-800 !default;
+$blue: #134f8c !default;
+// Primary/secondary
+$primary: $blue !default;
+$secondary: $gray-800 !default;
+// Default hover colors
+$skin-primary-hover-color: darken($primary, 13%) !default;
+$skin-secondary-hover-color: $gray-900 !default;
+// Newsletter signup colors
+$skin-newsletter-signup-inline-btn-color: #103a57 !default;
+$skin-newsletter-signup-bg-color: #0d9dc9 !default;
+
+// Ad background colors
+$skin-ad-bg-color: $gray-100 !default;
+$skin-ad-label-color: $gray-700 !default;
+// HR color
+$hr-border-color: $gray-700 !default;
+
+$colors: (
+  "blue": $blue,
+  "tar-black": $gray-900,
+  "charcoal": $gray-800,
+  "smokey-gray": $gray-700,
+  "silver-fox": $gray-600,
+  "cloud": $gray-400,
+  "concrete": $gray-200,
+  "fog": $gray-100,
+  "sponsor-blue": $blue,
+);
+
+// Marko Web Nodes
+//
+$marko-web-node-padding: 20px;
+
+$marko-web-node-placeholder-image: none;
+$marko-web-node-placeholder-image-bg-color: transparent;
+
+$marko-web-node-overlay-image-text-shadow: none;
+$marko-web-node-overlay-image-gradient: linear-gradient(to top, rgba($gray-800, .1), rgba($gray-800, .1));
+
+// Marko Web Node Lists
+//
+$marko-web-node-list-padding: 16px;
+$marko-web-node-list-border-color: $gray-200 !default;
+
+// Font Weights
+//
+$font-weight-bold: 700;
+$font-weight-semibold: 600;
+$font-weight-medium: 500;
+$font-weight-normal: 400;
+
+// Buttons, Inputs, and Typography
+//
+@import "./variables/buttons";
+@import "./variables/inputs";
+@import "./variables/typography";
+
+// Marko Icons
+$marko-web-icon-fill-dark: $gray-800 !default;
+$marko-web-icon-fill-light: $white !default;
+
+// Skin content body and image widths
+$skin-aligned-image-width: 300px;
+$skin-aligned-body-image-spacer: .75rem;
+$skin-content-body-max-width: 700px;
+$skin-content-primary-image-max-width: 880px;
+
+// Page
+$theme-page-title-font-weight: $font-weight-bold;
+
+// Header
+$navbarStyle: "navbar" !default;
+$theme-site-header-box-shadow: none !default;
+$theme-site-header-breakpoints: () !default;
+$theme-site-header-breakpoints: map-merge(
+  (
+    hide-primary: 100000px, // effectively always hide the primary nav
+    hide-secondary: 700px,
+    small-logo: 775px,
+    small-text-primary: 0,
+    small-text-secondary: 830px
+  ),
+  $theme-site-header-breakpoints
+);
+
+// Navbar
+$skin-desktop-menu-breakpoint: map-get($theme-site-header-breakpoints, hide-secondary);
+$theme-site-navbar-brand-margin-x: 36px !default;
+
+$theme-site-navbar-logo-height: 46px !default;
+$theme-site-navbar-logo-height-sm: 35px !default;
+
+$theme-site-navbar-primary-link-color: $gray-800 !default;
+$theme-site-navbar-primary-link-active-color: $gray-800 !default;
+$theme-site-navbar-primary-link-hover-color: $gray-800 !default;
+$theme-site-navbar-primary-bg-color: $white !default;
+$theme-site-navbar-primary-height-sm: 0 !default;
+
+$theme-site-navbar-secondary-link-color: $gray-800 !default;
+$theme-site-navbar-secondary-bg-color: $white !default;
+$theme-site-navbar-secondary-font-size: 18px !default;
+$theme-site-navbar-secondary-font-size-sm: $theme-site-navbar-secondary-font-size - 2;
+$theme-site-navbar-secondary-line-height: get-line-height($theme-site-navbar-secondary-font-size, 26px);
+$theme-site-navbar-secondary-line-height-sm: get-line-height($theme-site-navbar-secondary-font-size-sm, 24px);
+$theme-site-navbar-secondary-font-weight: $font-weight-semibold !default;
+$theme-site-navbar-secondary-padding-y: 15px !default;
+$theme-site-navbar-secondary-type: light !default;
+$theme-site-navbar-secondary-link-active-decoration: none !default;
+$theme-site-navbar-secondary-link-hover-decoration: none !default;
+
+$theme-site-navbar-secondary-link-color: $gray-800 !default;
+$theme-site-navbar-secondary-link-active-color: $primary !default;
+$theme-site-navbar-secondary-link-hover-color: $primary !default;
+$theme-site-navbar-secondary-link-padding: 15px !default;
+
+// Site Menu
+$theme-site-navbar-menu-width: 500px;
+$theme-site-navbar-menu-max-width: 100%;
+
+$theme-site-navbar-menu-box-shadow: 0 8px 8px 0 rgba(0, 0, 0, .1), 0 6px 20px 0 rgba(0, 0, 0, .15);
+$theme-site-navbar-menu-padding-x: 24px;
+$theme-site-navbar-menu-padding-y: 24px;
+$theme-site-navbar-menu-bg-color: $white;
+$theme-site-navbar-menu-hover-background-color: transparent;
+
+$theme-site-navbar-menu-item-font-size: 24px;
+$theme-site-navbar-menu-item-font-weight: $font-weight-bold;
+$theme-site-navbar-menu-item-border-color: transparent;
+
+$theme-site-navbar-menu-active-item-font-weight: $font-weight-bold;
+
+$theme-site-navbar-menu-link-padding-x: 10px !default;
+$theme-site-navbar-menu-link-padding-y: 0;
+$theme-site-navbar-menu-link-color: $black !default;
+$theme-site-navbar-menu-link-hover-color: $primary !default;
+
+// Site Footer
+$global-site-footer-color: $white;
+
+$theme-site-footer-font-size: 16px;
+$theme-site-footer-line-height: get-line-height($theme-site-footer-font-size, 30px);
+
+$theme-site-footer-secondary-bg-color: $gray-800 !default;
+$theme-site-footer-primary-bg-color: $gray-900 !default;
+
+$theme-site-footer-copyright-color: $white;
+$theme-site-footer-copyright-font-size: $theme-site-footer-font-size;
+
+$theme-site-footer-spacer: 14px;
+$theme-site-footer-spacer-sm: 14px;
+
+$theme-site-footer-logo-height: 35px !default;
+$theme-site-footer-logo-height-sm: 35px !default;
+
+$theme-site-footer-corporate-logo-height: 30px !default;
+
+// Items/Nodes
+$theme-item-link-hover-decoration: none;
+
+$theme-item-header-color: $black;
+$theme-item-header-font-family: $skin-font-family-primary;
+$theme-item-header-font-size: 15px;
+$theme-item-header-font-weight: $font-weight-bold;
+
+$theme-item-header-link-hover-color: $primary !default;
+
+$theme-item-title-link-hover-color: $primary !default;
+
+$theme-item-description-max-lines: 3;
+$theme-item-description-margin: 10px;
+
+// Ads
+$theme-ad-box-shadow: none;
+
+// Cards and Card Headers
+$theme-card-header-background-color: transparent;
+$theme-card-header-color: $black;
+$theme-card-header-font-size: 22px;
+$theme-card-header-font-weight: $font-weight-bold;
+$theme-card-header-text-transform: none;
+$theme-card-header-border: none;
+
+$theme-card-header-link-hover-color: $primary;
+$theme-card-header-link-hover-decoration: none;
+
+$marko-web-node-bg-color: transparent;
+$theme-card-background-color: transparent;
+
+// Pages
+$theme-page-body-font-family: $theme-font-family-sans-serif;
+
+$theme-page-body-font-size: 19px;
+$theme-page-body-font-size-sm: $theme-page-body-font-size;
+$theme-page-body-line-height: get-line-height($theme-page-body-font-size, 25px);
+$theme-page-body-line-height-sm: $theme-page-body-line-height;
+
+// Caption / Credit / Media
+$theme-media-footer-font-size: 16px;
+
+$theme-media-footer-line-height: get-line-height($theme-media-footer-font-size, 22px);
+$theme-media-caption-color: #6c6972;
+$theme-media-credit-font-size: 14px !default;
+
+// Headings
+$theme-heading-large-font-size:       28px !default;
+$theme-heading-large-font-size-sm:    28px !default;
+$theme-heading-large-line-height:     1.2 !default;
+$theme-heading-large-line-height-sm:  1.2 !default;
+
+$theme-heading-h4-font-size:          24px !default;
+$theme-heading-h4-font-size-sm:       24px !default;
+$theme-heading-h4-line-height:        1.2 !default;
+$theme-heading-h4-line-height-sm:     1.2 !default;
+
+$theme-heading-h5-font-size:          24px !default;
+$theme-heading-h5-font-size-sm:       24px !default;
+$theme-heading-h5-line-height:        1.2 !default;
+$theme-heading-h5-line-height-sm:     1.2 !default;
+
+$theme-heading-h6-font-size:          20px !default;
+$theme-heading-h6-font-size-sm:       20px !default;
+$theme-heading-h6-line-height:        1.2 !default;
+$theme-heading-h6-line-height-sm:     1.2 !default;
+
+// Content Headings
+$theme-content-heading-large-margin-bottom:     1rem !default;
+$theme-content-heading-large-margin-bottom-sm:  1rem !default;
+
+$theme-content-heading-h2-margin-bottom:        1rem !default;
+$theme-content-heading-h2-margin-bottom-sm:     1rem !default;
+
+$theme-content-heading-h3-margin-bottom:        1rem !default;
+$theme-content-heading-h3-margin-bottom-sm:     1rem !default;
+
+$theme-content-heading-h4-margin-bottom:        1rem !default;
+$theme-content-heading-h4-margin-bottom-sm:     1rem !default;
+
+$theme-content-heading-h5-margin-bottom:        1rem !default;
+$theme-content-heading-h5-margin-bottom-sm:     1rem !default;
+
+$theme-content-heading-h6-margin-bottom:        1rem !default;
+$theme-content-heading-h6-margin-bottom-sm:     1rem !default;
+
+
+// Embedded media
+$theme-embedded-media-align-left-width: $skin-aligned-image-width;
+$theme-embedded-media-align-left-margin: $skin-aligned-body-image-spacer;
+
+$theme-embedded-media-align-right-width: $skin-aligned-image-width;
+$theme-embedded-media-align-right-margin: $skin-aligned-body-image-spacer;

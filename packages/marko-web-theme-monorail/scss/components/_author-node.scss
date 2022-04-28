@@ -1,0 +1,23 @@
+.author-node {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+
+  &__image {
+    $size: 48px;
+    width: $size;
+    height: $size;
+    margin-right: 10px;
+    border-radius: $size;
+  }
+
+  &__content-name {
+    @include skin-typography($style: "author-name-list", $link-style: "primary");
+  }
+
+  &__content-title {
+    margin-top: 5px;
+    @include skin-typography($style: "author-title-list");
+    text-transform: capitalize;
+  }
+}

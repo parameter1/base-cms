@@ -1,0 +1,75 @@
+@if $navbarStyle == "navbar" {
+  .site-navbar {
+    $self: &;
+
+    &__container {
+      max-width: $marko-web-document-container-max-width;
+      @include media-breakpoint-up(xl, $grid-breakpoints) {
+        max-width: $marko-web-document-container-max-width;
+      }
+    }
+
+    &__brand {
+      @media (max-width: map-get($theme-site-header-breakpoints, small-logo)) {
+        // reduce padding on small logo
+        margin-right: $theme-site-navbar-brand-margin-x / 2;
+        margin-left: $theme-site-navbar-brand-margin-x / 2;
+      }
+    }
+
+    &__logo {
+      filter: none;
+    }
+
+    &__newsletter-toggler {
+      @include theme-toggle-button();
+      padding: 0;
+      margin-top: auto;
+      margin-bottom: auto;
+
+      @media (min-width: map-get($theme-site-header-breakpoints, hide-secondary)) {
+        margin-left: auto;
+      }
+
+      & > .marko-web-icon {
+        @include theme-navbar-link-color($theme-site-navbar-secondary-colors);
+      }
+    }
+
+    &--secondary {
+      #{ $self } {
+        &__container {
+          @media (max-width: map-get($theme-site-header-breakpoints, hide-secondary)) {
+            justify-content: space-between;
+          }
+        }
+      }
+    }
+
+    &__items {
+      text-transform: none;
+
+      &--secondary {
+        @media (max-width: map-get($theme-site-header-breakpoints, hide-secondary)) {
+          display: none;
+        }
+        margin-top: auto;
+        margin-bottom: auto;
+
+        // set letter spacing per design
+        letter-spacing: .5px;
+
+        #{ $self } {
+          &__link {
+            padding-top: 0;
+
+            @media (max-width: map-get($theme-site-header-breakpoints, small-text-secondary)) {
+              padding-right: 8px;
+              padding-left: 8px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

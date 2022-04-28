@@ -1,0 +1,160 @@
+.section-feed-content-node {
+  $self: &;
+
+  $image-size: 112px;
+  $image-desktop-width: 250px;
+  $image-desktop-height: 167px;
+
+  display: flex;
+  width: 100%;
+
+  @include media-breakpoint-up(md) {
+    flex-direction: row-reverse;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  &__sponsored-by {
+    margin-bottom: 6px;
+    @include skin-typography($style: "sponsored-by");
+  }
+
+  &__contents {
+    width: 100%;
+  }
+
+  &__body {
+    @include media-breakpoint-up(md) {
+      max-width: 700px;
+    }
+  }
+
+  &__image-wrapper {
+    width: $image-size;
+    min-width: $image-size;
+    height: $image-size;
+    margin-left: 15px;
+    @include media-breakpoint-up(md) {
+      width: $image-desktop-width;
+      min-width: $image-desktop-width;
+      height: $image-desktop-height;
+      margin-right: 15px;
+      margin-left: 0;
+    }
+  }
+
+  &__image {
+    width: $image-size;
+    height: $image-size;
+    object-fit: cover;
+    object-position: left;
+    border: 1px solid rgba(239, 239, 239, .9);
+    @include media-breakpoint-up(md) {
+      width: $image-desktop-width;
+      height: $image-desktop-height;
+    }
+  }
+
+  &__website-section-name {
+    margin-bottom: 6px;
+    @include skin-typography($style: "slug-small", $link-style: "primary", $breakpoint: sm);
+  }
+
+  &__content-short-name {
+    width: 100%;
+    @include skin-typography($style: "header-1.5", $link-style: "primary", $breakpoint: sm);
+  }
+
+  &__content-teaser {
+    display: none;
+    margin-top: 10px;
+    @include skin-typography($style: "teaser-text-1", $link-style: "primary", $breakpoint: sm);
+    @include media-breakpoint-up(md) {
+      display: block;
+    }
+  }
+
+  &__content-event-dates {
+    margin-top: 10px;
+    @include skin-typography($style: "teaser-text-1", $link-style: "primary", $breakpoint: sm);
+  }
+  &__content-start-date {
+    &::before {
+      font-weight: $font-weight-bold;
+      content: "Date: ";
+    }
+  }
+
+  .btn-primary {
+    margin-top: 10px;
+  }
+
+  &__content-published {
+    margin-top: 10px;
+    @include skin-typography($style: "date");
+  }
+
+  &--full-width-native-ad {
+    padding: 24px;
+    background-color: $gray-100;
+    border-radius: 4px;
+    #{ $self } {
+      &__content-teaser {
+        display: block;
+      }
+    }
+  }
+}
+
+.node-list {
+  $self: &;
+  &--section-feed {
+    #{ $self } {
+      &__node {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        border-bottom: none;
+        @include marko-web-node-list-border(border-bottom);
+        @include media-breakpoint-up(md) {
+          padding-top: 15px;
+          padding-bottom: 15px;
+          border-bottom: none;
+        }
+      }
+
+      &__nodes {
+        padding-top: 0;
+        padding-bottom: 0;
+        @include marko-web-node-list-border(border-top);
+        @include media-breakpoint-up(md) {
+          border-top: none;
+        }
+      }
+    }
+  }
+  &--company-related-feed,
+  &--company-categories-feed {
+    #{ $self } {
+      &__header {
+        @include skin-typography($style: "section-header");
+        padding-bottom: 10px;
+        margin-top: 20px;
+        font-size: 26px;
+        border-bottom: 1px solid $gray-700;
+      }
+    }
+    .section-feed-content-node {
+      @include media-breakpoint-up(md) {
+        flex-direction: row;
+      }
+    }
+  }
+  &--company-categories-feed {
+    #{ $self } {
+      &__node {
+        padding-top: .5rem;
+        padding-bottom: 0;
+      }
+    }
+  }
+}

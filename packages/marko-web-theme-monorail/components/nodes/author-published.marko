@@ -1,0 +1,41 @@
+import { buildImgixUrl } from "@parameter1/base-cms-image";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { author, content } = input;
+$ const blockName = "author-published-node";
+$ const showPublished = defaultValue(input.showPublished, true);
+$ const lazyload = defaultValue(input.lazyload, true);
+$ const displayUpdatedDate = defaultValue(input.displayUpdatedDate, true);
+
+<marko-web-block name=blockName>
+  $ const { primaryImage } = author;
+  <if(primaryImage && primaryImage.src)>
+    $ const src = buildImgixUrl(primaryImage.src, {
+      w: 48,
+      h: 48,
+      crop: "faces",
+      fit: "crop",
+    });
+    $ const srcset = [`${buildImgixUrl(src, { dpr: 2 })} 2x`];
+    <marko-web-img
+      src=src
+      srcset=srcset
+      alt=primaryImage.alt
+      class=`${blockName}__image`
+      link={ href: author.siteContext.path }
+      lazyload=lazyload
+    />
+  </if>
+  <marko-web-element block-name=blockName name="details">
+    <marko-web-content-name block-name=blockName obj=author link=true />
+    <if(showPublished)>
+      <theme-content-published-node
+        block-name=blockName
+        obj=content
+        format=input.format
+        published-prefix=input.publishedPrefix
+        display-updated-date=displayUpdatedDate
+      />
+    </if>
+  </marko-web-element>
+</marko-web-block>

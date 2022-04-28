@@ -1,0 +1,18 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+
+$ const blockName = "section-list-deck";
+$ const aliases = getAsArray(input, "aliases");
+
+<marko-web-block name=blockName>
+  <marko-web-element block-name=blockName name="row">
+    <marko-web-element block-name=blockName name="col">
+      <theme-section-list-block alias=aliases[0] />
+    </marko-web-element>
+    <marko-web-element block-name=blockName name="col">
+      <theme-section-list-block alias=aliases[1] />
+    </marko-web-element>
+    <marko-web-element block-name=blockName name="col">
+      <theme-section-list-block alias=aliases[2] />
+    </marko-web-element>
+  </marko-web-element>
+</marko-web-block>

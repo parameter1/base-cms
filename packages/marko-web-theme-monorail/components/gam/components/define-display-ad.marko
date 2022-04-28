@@ -1,0 +1,102 @@
+import { BEM, warn } from "@parameter1/base-cms-utils";
+import { get, getAsObject } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import generateId from "@parameter1/base-cms-marko-web-gam/utils/generate-id";
+import buildSlots from "@parameter1/base-cms-marko-web-gam/utils/build-slots";
+import slotStyle from "@parameter1/base-cms-marko-web-gam/utils/slot-size-style";
+import incrementPos from "../utils/increment-pos";
+
+$ const { req, res, site } = out.global;
+
+$ const parseReferrer = () => {
+  const referrer = req.get('referrer');
+  if (!referrer) return 'none';
+  return `${referrer}`.includes(req.hostname) ? 'internal' : 'external';
+};
+
+$ const { isArray } = Array;
+$ const {
+  path,
+  inc,
+  targeting,
+  sizeMapping,
+  withWrapper,
+  collapseBeforeAdFetch,
+  requestOnMediaMatch,
+  position,
+} = input;
+$ const id = input.id || generateId({ inc });
+$ if (position) targeting.pos = incrementPos({ position, inc, res });
+$ targeting.referrer = parseReferrer();
+
+$ const collapse = defaultValue(input.collapse, true);
+$ const oop = defaultValue(input.oop, false);
+$ const size = typeof input.size === "string" ? [input.size] : (isArray(input.size) ? input.size : []);
+$ const applyStyle = input.applyStyle == null ? false : input.applyStyle;
+$ const style = applyStyle ? slotStyle(size) : null;
+
+$ const calls = [];
+$ const slots = {
+  [id]: {
+    path,
+    size,
+    sizeMapping,
+    targeting,
+    oop,
+    collapse,
+    collapseBeforeAdFetch: input.collapseBeforeAdFetch,
+  },
+};
+$ calls.push(...buildSlots(slots));
+
+$ const attrs = {
+  ...getAsObject(input.attrs),
+  "data-gam-path": path,
+  "data-gam-size": JSON.stringify(size),
+  "data-gam-size-mapping": sizeMapping ? JSON.stringify(sizeMapping) : undefined,
+  "data-gam-targeting": targeting ? JSON.stringify(targeting) : undefined,
+  "data-gam-collapse": `${collapse}`,
+  ...(collapseBeforeAdFetch && { "data-gam-collapse-before-ad-fetch": "true" }),
+  ...(oop && { "data-gam-oop": "true" }),
+};
+
+$ const blockName = input.blockName || "ad-container";
+$ const classNames = [blockName, ...BEM.applyModifiers(blockName, input.modifiers), input.class];
+
+$ const debugMediaQuery = Boolean(defaultValue(input.debugMediaQuery, false));
+$ if (requestOnMediaMatch) calls.push(`
+  var hasRequested = false; var debugMediaQuery = ${debugMediaQuery};
+  var handler = function(media) {
+    if (hasRequested) return;
+    if (media.matches) {
+      googletag.display('${id}'); hasRequested = true;
+      if (debugMediaQuery) console.log('GAM ad request sent based on media query', '${id}', '${requestOnMediaMatch}');
+    } else {
+      if (debugMediaQuery) console.log('GAM ad request ineligble based on media query', '${id}', '${requestOnMediaMatch}');
+    }
+  };
+  var mql = window.matchMedia('${requestOnMediaMatch}');
+  mql.addEventListener('change', function(event) { handler(event); });
+  handler(mql);
+`);
+$ if (!requestOnMediaMatch) calls.push(`googletag.display('${id}');`);
+
+<if(path)>
+  <div
+    id=(withWrapper ? null : id)
+    style=style
+    class=classNames
+    ...attrs
+  >
+    <marko-web-gam-ad-wrapper id=id enabled=withWrapper block-name=blockName>
+      <if(input.renderBody)>
+        <${input.renderBody} block-name=blockName />
+      </if>
+
+      <script>googletag.cmd.push(function() { ${calls.join(" ")} });</script>
+    </marko-web-gam-ad-wrapper>
+  </div>
+</if>
+<else>
+  $ warn("Unable to render ad unit: no `path` was provided.");
+</else>

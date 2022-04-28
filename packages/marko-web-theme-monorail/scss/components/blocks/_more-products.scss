@@ -1,0 +1,35 @@
+.more-products {
+  &__header-wrapper {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 30px;
+  }
+
+  &__header {
+    margin-bottom: 6px;
+    @include skin-typography($style: "section-header");
+  }
+
+  &__view-more {
+    @include skin-typography($style: "view-more", $link-style: "primary");
+  }
+}
+
+.node {
+  $self: &;
+
+  &--more-products {
+    padding: 16px;
+    background-color: $gray-100;
+    border-radius: 4px;
+    #{ $self } {
+      &__title {
+        @include skin-typography($style: "header-3", $link-style: "primary", $max-lines: 4);
+      }
+      &__website-section-name {
+        @include skin-typography($style: "slug-small", $link-style: "primary");
+      }
+    }
+  }
+}

@@ -1,0 +1,76 @@
+.opinion {
+  background-color: $white;
+
+  @include media-breakpoint-up(md) {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color: $gray-100;
+  }
+
+  &__header {
+    padding-bottom: 10px;
+    margin-right: 10px;
+    margin-bottom: 24px;
+    margin-left: 10px;
+
+    border-bottom: 1px solid $gray-700;
+    @include media-breakpoint-up(md) {
+      margin-bottom: 30px;
+    }
+    a {
+      @include skin-typography($style: "section-header");
+    }
+  }
+}
+
+.node {
+  $self: &;
+  &--opinion {
+    padding-bottom: 16px;
+    background-color: $white;
+    @include marko-web-node-list-border(border-bottom);
+
+    @include media-breakpoint-up(md) {
+      padding-bottom: 0;
+      background-color: $gray-100;
+      border-bottom: none;
+    }
+
+    #{ $self } {
+      &__title {
+        @include skin-typography($style: "header-3", $link-style: "primary");
+        margin-bottom: 0;
+      }
+      &__website-section-name {
+        @include skin-typography($style: "slug-small", $link-style: "primary");
+      }
+    }
+  }
+}
+
+.card-deck-flow {
+  $self: &;
+  &--opinion {
+    margin-right: 0;
+    margin-left: 0;
+
+    background-color: $white;
+
+    @include media-breakpoint-up(md) {
+      background-color: $gray-100;
+    }
+
+    #{ $self } {
+      &__node {
+        margin-bottom: 16px;
+        @include media-breakpoint-up(md) {
+          margin-bottom: 0;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}

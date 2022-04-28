@@ -1,0 +1,21 @@
+{
+  "<theme-identity-x-comment-stream>": {
+    "template": "./comment-stream.marko"
+  },
+  "<theme-content-page-gate>": {
+    "template": "./content-page-gate.marko",
+    "@can-access": "boolean",
+    "@is-logged-in": "boolean",
+    "@has-required-access-level": "boolean",
+    "@requires-access-level": "boolean",
+    "@requires-user-input": "boolean",
+    "@messages": "object",
+    "@title": "string",
+    "@user-input-title": "string",
+    "@profile-confirmation": "string",
+    "@profile-call-to-action": "string",
+    "@profile-button-label": "string",
+    "@login-event-name": "string",
+    "@profile-event-name": "string"
+  }
+}

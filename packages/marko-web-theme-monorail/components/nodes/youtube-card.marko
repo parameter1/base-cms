@@ -1,0 +1,53 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import { getAsObject } from "@parameter1/base-cms-object-path";
+import eventLinkAttrs from "@parameter1/base-cms-marko-web-p1-events/utils/link-attrs";
+import eventEntity from "@parameter1/base-cms-marko-web-p1-events/utils/base-content-entity";
+
+$ const video = getAsObject(input, "node");
+$ const primaryImage = getAsObject(video, "primaryImage");
+$ const withDescription = input.withDescription != null ? input.withDescription : true;
+$ const imagePosition = defaultValue(input.imagePosition, 'left');
+
+$ const href = video.url;
+$ const link = {
+  href,
+  target: "_blank",
+  attrs: {
+    ...input.linkAttrs,
+    ...eventLinkAttrs({
+      category: "Company Profile Page",
+      label: "YouTube Video", // matches the same label as the data card
+      entity: eventEntity(input.companyId, "company"),
+    }),
+  },
+};
+
+<marko-web-node
+  type="video-content"
+  image-position=imagePosition
+  flush=true
+  attrs=input.attrs
+  modifiers=input.modifiers
+>
+  <@image
+    src=video.thumbnail
+    alt=video.title
+    width=160
+    fluid=true
+    ar="16:9"
+    link=link
+  />
+  <@body>
+    <@title tag="h5" modifiers=input.titleModifiers>
+      <marko-web-obj-text type="content" obj=video field="title" tag=null link=link />
+    </@title>
+    <@text modifiers=["teaser"] show=(withDescription && video.description)>
+      <marko-web-obj-text type="content" obj=video field="description" tag=null />
+    </@text>
+    <@footer>
+      <@right|{ blockName }|>
+        <marko-web-content-published obj=video />
+      </@right>
+    </@footer>
+  </@body>
+</marko-web-node>

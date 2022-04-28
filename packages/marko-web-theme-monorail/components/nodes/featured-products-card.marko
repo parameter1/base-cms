@@ -1,0 +1,52 @@
+import { getAsArray, getAsObject, get } from "@parameter1/base-cms-object-path";
+import eventLinkAttrs from "@parameter1/base-cms-marko-web-p1-events/utils/link-attrs";
+import eventEntity from "@parameter1/base-cms-marko-web-p1-events/utils/base-content-entity";
+
+$ const content = getAsObject(input, "node");
+$ const primaryImage = getAsObject(content, "primaryImage");
+$ const displayImage = input.displayImage != null ? input.displayImage : true;
+$ const title = get(content, "linkText") || get(content, "shortName");
+$ const withTeaser = input.withTeaser != null ? input.withTeaser : true;
+
+$ const href = get(content, "siteContext.path");
+$ const link = {
+  href,
+  target: "_blank",
+  attrs: {
+    ...input.linkAttrs,
+    ...eventLinkAttrs({
+      category: "Company Profile Page",
+      label: "Promotion Item", // matches the same label as the data card
+      entity: eventEntity(input.companyId, "company"),
+      context: eventEntity(content.id, content.type),
+    }),
+  }
+};
+
+<marko-web-node
+  type=`${content.type}-content`
+  image-position="top"
+  card=true
+  full-height=true
+  attrs=input.attrs
+>
+  <if(displayImage)>
+    <@image
+      src=primaryImage.src
+      alt=primaryImage.alt
+      is-logo=primaryImage.isLogo
+      fluid=true
+      ar="4:3"
+      width=(input.imageWidth || 300)
+      link=link
+    />
+  </if>
+  <@body>
+  <@title tag="h5" modifiers=input.titleModifiers>
+    <marko-core-text value=title link=link />
+  </@title>
+  <@text modifiers=["teaser"] show=(withTeaser && content.teaser)>
+    <marko-web-content-teaser tag=null obj=content link=link />
+  </@text>
+  </@body>
+</marko-web-node>

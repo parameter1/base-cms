@@ -1,0 +1,81 @@
+.page-wrapper {
+  $self: &;
+  padding-top: 0;
+  padding-bottom: 0;
+
+  @include media-breakpoint-down(md) {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  &__website-section-name {
+    margin-bottom: 20px;
+    @include skin-typography($style: "section-header");
+  }
+
+  &__website-section-subhead {
+    margin-bottom: 20px;
+    @include skin-typography($style: "section-header-small");
+  }
+
+  &__website-section-description {
+    font-size: 20px;
+  }
+
+  &__section {
+    margin-bottom: 30px;
+    @include media-breakpoint-up(md) {
+      margin-bottom: 60px;
+    }
+
+    &--break-container {
+      margin-right: $marko-web-page-wrapper-padding * -1;
+      margin-left: $marko-web-page-wrapper-padding * -1;
+      background-color: $gray-100;
+      @media (min-width: $marko-web-document-container-max-width) {
+        $margin: calc((((100vw - #{$marko-web-document-container-max-width}) / 2) + #{$marko-web-page-wrapper-padding}) * -1);
+        margin-right: $margin;
+        margin-left: $margin;
+
+        > * {
+          max-width: $marko-web-document-container-max-width;
+          margin-right: auto;
+          margin-left: auto;
+        }
+      }
+    }
+
+    &--first-sm {
+      margin-bottom: 30px;
+    }
+
+    &--first {
+      margin-bottom: 40px;
+    }
+
+    &--content-header,
+    &--nativex-story-header {
+      margin-bottom: 20px;
+      @include media-breakpoint-up(md) {
+        margin-bottom: 30px;
+      }
+    }
+
+    &--content-body {
+      margin-bottom: 2rem;
+    }
+
+    &--nativex-story-header {
+      padding-top: 30px;
+    }
+
+    &--no-spacer {
+      margin-bottom: 0;
+    }
+  }
+
+  &--no-padding-x {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}

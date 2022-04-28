@@ -1,0 +1,31 @@
+import { getAsObject, getAsArray } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const section = getAsObject(input, "section");
+$ const children = getAsArray(section, "hierarchy");
+$ const homeTitle = input.homeTitle || "Home";
+$ const homeAlias = input.homeAlias || "home";
+$ const displaySelf = defaultValue(input.displaySelf, true);
+$ const displayHome = defaultValue(input.displayHome, true);
+
+<theme-breadcrumbs modifiers=input.modifiers>
+  <if(displayHome)>
+    <@item>
+      <marko-web-link href="/" title=homeTitle>${homeTitle}</marko-web-link>
+    </@item>
+  </if>
+  <for|child| of=children>
+    <if(section.alias !== homeAlias)>
+      <if(displaySelf)>
+        <@item>
+          <marko-web-link title=child.name href=`/${child.alias}`>$!{child.name}</marko-web-link>
+        </@item>
+      </if>
+      <else-if(child.alias !== section.alias)>
+        <@item>
+          <marko-web-link title=child.name href=`/${child.alias}`>$!{child.name}</marko-web-link>
+        </@item>
+      </else-if>
+    </if>
+  </for>
+</theme-breadcrumbs>

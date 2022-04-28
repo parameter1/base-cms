@@ -1,0 +1,52 @@
+import { get, getAsObject } from "@parameter1/base-cms-object-path";
+import { buildImgixUrl } from "@parameter1/base-cms-image";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const content = getAsObject(input, "node");
+$ const primaryImage = getAsObject(content, "primaryImage");
+$ const primarySection = getAsObject(content, "primarySection");
+$ const withSection = defaultValue(input.withSection, true);
+
+$ const imageOptions = {
+  w: 176,
+  h: 176,
+  fit: "crop",
+};
+
+$ const blockName = "product-feed-content-node";
+
+<marko-web-block name=blockName>
+  <marko-web-element block-name=blockName name="contents">
+    <marko-web-element block-name=blockName name="body">
+      <if(withSection)>
+        <section-sponsor block-name=blockName section=primarySection labels=content.labels />
+      </if>
+      <marko-web-content-short-name
+        tag="h5"
+        block-name=blockName
+        obj=content
+        link=true
+      />
+      <marko-web-content-teaser
+        block-name=blockName
+        obj=content
+        link=true
+      />
+    </marko-web-element>
+  </marko-web-element>
+
+  <marko-web-element block-name=blockName name="image-wrapper">
+    <if(primaryImage.src)>
+      $ const src = buildImgixUrl(primaryImage.src, imageOptions);
+      $ const srcset = [`${buildImgixUrl(src, { dpr: 2 })} 2x`];
+      <marko-web-link href=get(content, "siteContext.path")>
+        <marko-web-img
+          src=src
+          srcset=srcset
+          alt=primaryImage.alt
+          class=[`${blockName}__image`]
+        />
+      </marko-web-link>
+    </if>
+  </marko-web-element>
+</marko-web-block>

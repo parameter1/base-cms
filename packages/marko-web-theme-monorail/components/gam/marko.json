@@ -1,0 +1,28 @@
+{
+  "<theme-gam-define-display-ad>": {
+    "template": "./define-display-ad.marko"
+  },
+  "<theme-gam-wallpaper-ad>": {
+    "template": "./wallpaper-ad.marko",
+    "@aliases": "array",
+    "@position": "string"
+  },
+  "<theme-gam-inject-ads>": {
+    "template": "./inject-ads.marko",
+    "@inject <inject>[]": {},
+    "@detect-embeds": "boolean",
+    "@selector": "string",
+    "@child-selector": "string"
+  },
+  "<theme-gam-prestitial>": {
+    "template": "./prestitial.marko",
+    "@name": {
+      "type": "string",
+      "required": true
+    },
+    "@aliases": "array",
+    "@targeting": "object",
+    "@init": "boolean",
+    "@display": "boolean"
+  }
+}

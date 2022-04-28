@@ -1,0 +1,25 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+import { dasherize } from "@parameter1/base-cms-inflector";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { GAM, req } = out.global;
+
+$ const adUnit = GAM.getAdUnit({ name: input.name, aliases: input.aliases });
+$ const { templateName } = adUnit;
+$ const showLabel = defaultValue(input.showLabel, true);
+$ const targeting = defaultValue(input.targeting, {});
+$ const modifiers = [
+  ...(showLabel ? ["with-label"] : []),
+  ...getAsArray(input.modifiers),
+];
+$ if (templateName) modifiers.push(`template-${dasherize(templateName)}`);
+
+<define-display-ad
+  ...adUnit
+  position=input.position
+  targeting=targeting
+  modifiers=modifiers
+  with-wrapper=true
+  class=input.class
+  collapse-before-ad-fetch=true
+/>
