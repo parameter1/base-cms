@@ -10,6 +10,7 @@ module.exports = ({ obj, req }) => {
     alias: s.alias,
   }));
   return {
+    event: 'page_view',
     page_type: 'website-section',
     canonical_path: section.canonicalPath,
     query_string: buildQueryString({ req }),

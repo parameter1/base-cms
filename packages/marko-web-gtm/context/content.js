@@ -23,6 +23,7 @@ module.exports = ({ obj, req }) => {
     name: node.name,
   }));
   return {
+    event: 'page_view',
     page_type: 'content',
     canonical_path: get(content, 'siteContext.path'),
     query_string: buildQueryString({ req }),
