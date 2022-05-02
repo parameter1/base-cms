@@ -50,6 +50,7 @@ export default {
   }),
 
   created() {
+    // @todo to move this component/functionality to the marko-web-identity-x package
     this.expanded = this.isExpanded;
     this.loadCount();
   },
@@ -75,7 +76,8 @@ export default {
 
     toggle() {
       this.expanded = !this.expanded;
-      EventBus.$emit('comments-expanded', this.expanded);
+      // @todo to move this component/functionality to the marko-web-identity-x package
+      EventBus.$emit('identity-x-comments-expanded', this.expanded);
       const elements = document.querySelectorAll(this.targets.join(','));
       Array.prototype.forEach.call(elements, el => el.classList.toggle(this.toggleClass));
     },
