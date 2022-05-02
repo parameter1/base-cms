@@ -1,7 +1,13 @@
 $ const blockName = "newsletter-signup-banner-large";
 
 $ const { site } = out.global;
-$ const { action, hiddenInputs, name, description, disabled } = site.getAsObject('newsletter.signupBannerLarge');
+$ const {
+  action,
+  hiddenInputs,
+  name,
+  description,
+  disabled
+} = site.getAsObject('newsletter.signupBannerLarge');
 
 <if(action && description && name)>
   <marko-web-block name=blockName class=input.class>
