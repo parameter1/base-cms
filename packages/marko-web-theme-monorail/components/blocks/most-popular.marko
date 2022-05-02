@@ -17,7 +17,11 @@ $ const getMostPopular = async () => {
   const url = `${uri}/retrieve?tenant=${tenant}&realm=${realm}`;
   const res = await fetch(url);
   const json = await res.json();
-  if (!res.ok) throw new Error(json.message || res.statusText || "An unknown fatal error occurred.");  return json.data;
+  if (!res.ok) {
+    const e = json.message || res.statusText;
+    throw new Error(e || "An unknown fatal error occurred.");
+  }
+  return json.data;
 };
 
 $ const buildContentQuery = () => {
