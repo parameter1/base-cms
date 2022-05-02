@@ -1,5 +1,5 @@
 <template>
-  <form-group>
+  <div class="mt-2">
     <form-label v-if="label" :for="id" :required="required">
       {{ label }}
     </form-label>
@@ -12,16 +12,14 @@
       :placeholder="placeholder"
       autocomplete="off"
     >
-  </form-group>
+  </div>
 </template>
 
 <script>
-import FormGroup from '../common/form-group.vue';
 import FormLabel from '../common/form-label.vue';
 
 export default {
   components: {
-    FormGroup,
     FormLabel,
   },
   props: {
