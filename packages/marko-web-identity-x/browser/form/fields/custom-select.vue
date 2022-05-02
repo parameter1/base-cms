@@ -30,17 +30,25 @@
         {{ option.label }}
       </option>
     </select>
+    <custom-select-write-in
+      v-if="canWriteIn"
+      :label="writeInLabel"
+      :selected="selected"
+      :required="required"
+    />
   </form-group>
 </template>
 
 <script>
 import CheckboxGroup from '../common/checkbox-group.vue';
+import CustomSelectWriteIn from './custom-select-write-in.vue';
 import FormGroup from '../common/form-group.vue';
 import FormLabel from '../common/form-label.vue';
 
 export default {
   components: {
     CheckboxGroup,
+    CustomSelectWriteIn,
     FormGroup,
     FormLabel,
   },
@@ -58,6 +66,11 @@ export default {
      * The field display label.
      */
     label: {
+      type: String,
+      required: true,
+    },
+
+    writeInLabel: {
       type: String,
       required: true,
     },
@@ -108,6 +121,14 @@ export default {
       const { selectedOptionIds, multiple } = this;
       if (!multiple) return selectedOptionIds[0] || '';
       return selectedOptionIds.slice();
+    },
+
+    canWriteIn() {
+      if (this.selectedOptionId) {
+        const selected = this.options.find(option => option.id === this.selectedOptionId);
+        return selected && selected.canWriteIn;
+      }
+      return false;
     },
   },
 };

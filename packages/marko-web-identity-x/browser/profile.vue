@@ -94,6 +94,7 @@
             :multiple="fieldAnswer.field.multiple"
             :selected="fieldAnswer.answers"
             :options="fieldAnswer.field.options"
+            :write-in-label="customSelectWriteInLabel"
             @change="onCustomSelectChange(fieldAnswer.answers, $event)"
           />
         </div>
@@ -235,6 +236,10 @@ export default {
     callToAction: {
       type: String,
       default: 'To complete your profile, please fill out the required fields.',
+    },
+    customSelectWriteInLabel: {
+      type: String,
+      default: 'Please specify below:',
     },
     requiredServerFields: {
       type: Array,
