@@ -330,7 +330,8 @@ services:
       PORT: 80
       EXPOSED_PORT: 51269
       LIVERELOAD_PORT: 61269
-      TENANT_KEY: ${EXAMPLE_TENANT_KEY-allured_all}
+      TENANT_KEY: ${EXAMPLE_TENANT_KEY-p1_sandbox}
+      HOST: www-p1-sandbox.dev.parameter1.com
       SITE_ID: ${EXAMPLE_SITE_ID-5ec4407aa7124b22008b4569}
 
       GRAPHQL_URI: ${GRAPHQL_URI-http://graphql-server-tauron}
@@ -348,6 +349,7 @@ services:
       OMEDA_APP_ID: ${EXAMPLE_OMEDA_APP_ID}
       OMEDA_INPUT_ID: ${EXAMPLE_OMEDA_INPUT_ID}
       OMEDA_RAPID_IDENT_PRODUCT_ID: ${EXAMPLE_OMEDA_RAPID_IDENT_PRODUCT_ID-374}
+    hostname: www-p1-sandbox.dev.parameter1.com
     depends_on:
       - graphql-server-tauron
       - oembed
