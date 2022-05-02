@@ -1,8 +1,9 @@
 <template>
-  <div class="mt-2">
-    <form-label v-if="label" :for="id" :required="required">
-      {{ label }}
-    </form-label>
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <div class="input-group-text">{{ label }}</div>
+    </div>
+
     <input
       :id="id"
       v-model="answer.writeInValue"
@@ -10,18 +11,25 @@
       type="text"
       :required="required"
       :placeholder="placeholder"
+      :autofocus="autofocus"
       autocomplete="off"
     >
+
+    <div class="input-group-append">
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        @click="$emit('clear', $event)"
+      >
+        Clear
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
-import FormLabel from '../common/form-label.vue';
 
 export default {
-  components: {
-    FormLabel,
-  },
   props: {
     required: {
       type: Boolean,
@@ -50,6 +58,9 @@ export default {
     },
     answer() {
       return this.selected[0];
+    },
+    autofocus() {
+      return this.answer && !this.answer.writeInValue;
     },
   },
 };

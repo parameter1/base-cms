@@ -12,7 +12,7 @@
       @change="$emit('change', $event)"
     />
     <select
-      v-else
+      v-else-if="!canWriteIn"
       :id="fieldId"
       class="custom-select"
       :required="required"
@@ -31,10 +31,11 @@
       </option>
     </select>
     <custom-select-write-in
-      v-if="canWriteIn"
+      v-else
       :label="writeInLabel"
       :selected="selected"
       :required="required"
+      @clear="clearWriteIn"
     />
   </form-group>
 </template>
@@ -66,11 +67,6 @@ export default {
      * The field display label.
      */
     label: {
-      type: String,
-      required: true,
-    },
-
-    writeInLabel: {
       type: String,
       required: true,
     },
@@ -130,6 +126,14 @@ export default {
       }
       return false;
     },
+    showWriteIn() {
+      return this.selected && this.canWriteIn;
+    },
+    writeInLabel() {
+      const selected = this.options.find(option => option.id === this.selectedOptionId);
+      return selected && selected.label;
+    },
+  },
   },
 };
 </script>
