@@ -35,7 +35,7 @@
       :label="writeInLabel"
       :selected="selected"
       :required="required"
-      @clear="clearWriteIn"
+      @clear="clearWriteIn($event)"
     />
   </form-group>
 </template>
@@ -134,6 +134,11 @@ export default {
       return selected && selected.label;
     },
   },
+  methods: {
+    clearWriteIn(optionId) {
+      const selected = this.selected.filter(item => item.id !== optionId);
+      this.$emit('change', selected);
+    },
   },
 };
 </script>

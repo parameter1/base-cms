@@ -19,7 +19,7 @@
       <button
         type="button"
         class="btn btn-outline-secondary"
-        @click="$emit('clear', $event)"
+        @click="$emit('clear', answer.id)"
       >
         Clear
       </button>
