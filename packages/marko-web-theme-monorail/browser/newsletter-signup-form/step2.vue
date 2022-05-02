@@ -25,7 +25,7 @@
               :block-name="blockName"
               :disabled="isLoading"
               field="company-name"
-              :label="companyName"
+              :label="translate('companyName')"
               required
               @focus="didFocus = true"
             />
@@ -93,7 +93,11 @@
                 :lang="lang"
               />
             </div>
-            <privacy-policy :block-name="blockName" :lang="lang" />
+            <privacy-policy
+              :block-name="blockName"
+              :privacy-policy-link="privacyPolicyLink"
+              :lang="lang"
+            />
           </div>
         </div>
       </transition>
@@ -176,6 +180,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    privacyPolicyLink: {
+      type: Object,
+      required: true,
+    },
     lang: {
       type: String,
       default: 'en',
@@ -203,9 +211,6 @@ export default {
       if (this.asCard) classNames.push(`${blockName}--as-card`);
       if (this.inPushdown) classNames.push(`${blockName}--in-pushdown`);
       return classNames;
-    },
-    companyName() {
-      return i18n(this.lang, 'companyName');
     },
   },
 

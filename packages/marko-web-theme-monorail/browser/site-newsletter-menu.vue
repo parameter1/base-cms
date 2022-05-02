@@ -26,6 +26,7 @@
         :newsletters="newsletters"
         :demographic="demographic"
         :recaptcha-site-key="recaptchaSiteKey"
+        :privacy-policy-link="privacyPolicyLink"
         :lang="lang"
         in-pushdown
         @submit="$emit('submit', { step: 2 })"
