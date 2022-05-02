@@ -74,10 +74,7 @@ services:
     working_dir: /base-cms/services/keyword-analysis
     command: ["src"]
     environment:
-      <<: *env
-      <<: *env-mongo
-      <<: *env-newrelic
-      <<: *env-elastic
+      <<: [*env, *env-mongo, *env-newrelic, *env-elastic]
     depends_on:
       - mongodb
       - elasticsearch
@@ -90,9 +87,7 @@ services:
     working_dir: /base-cms/services/graphql-server
     entrypoint: ["/base-cms/node_modules/.bin/gulp"]
     environment:
-      <<: *env
-      <<: *env-mongo
-      <<: *env-newrelic
+      <<: [*env, *env-mongo, *env-newrelic]
       REDIS_CACHE_DSN: ${REDIS_CACHE_DSN-redis://redis}
       GRAPHQL_CACHE_CONTROL_ENABLED: ${GRAPHQL_CACHE_CONTROL_ENABLED-false}
       GRAPHQL_DEBUG_ENABLED: ${GRAPHQL_DEBUG_ENABLED-false}
@@ -119,8 +114,7 @@ services:
     working_dir: /base-cms/services/graphql-server
     entrypoint: ["/base-cms/node_modules/.bin/gulp"]
     environment:
-      <<: *env
-      <<: *env-newrelic
+      <<: [*env, *env-newrelic]
       GRAPHQL_PLAYGROUND_ENABLED: 1
       MONGO_DSN: ${MONGO_DSN_LEONIS-mongodb://mongodb:27017}
       REDIS_CACHE_DSN: ${REDIS_CACHE_DSN_LEONIS-redis://redis}
@@ -143,8 +137,7 @@ services:
     working_dir: /base-cms/services/graphql-server
     entrypoint: ["/base-cms/node_modules/.bin/gulp"]
     environment:
-      <<: *env
-      <<: *env-newrelic
+      <<: [*env, *env-newrelic]
       GRAPHQL_PLAYGROUND_ENABLED: 1
       MONGO_DSN: ${MONGO_DSN_TAURON-mongodb://mongodb:27017}
       REDIS_CACHE_DSN: ${REDIS_CACHE_DSN_TAURON-redis://redis}
@@ -167,8 +160,7 @@ services:
     working_dir: /base-cms/services/graphql-server
     entrypoint: ["/base-cms/node_modules/.bin/gulp"]
     environment:
-      <<: *env
-      <<: *env-newrelic
+      <<: [*env, *env-newrelic]
       GRAPHQL_PLAYGROUND_ENABLED: 1
       MONGO_DSN: ${MONGO_DSN_VIRGON-mongodb://mongodb:27017}
       REDIS_CACHE_DSN: ${REDIS_CACHE_DSN_VIRGON-redis://redis}
@@ -193,8 +185,7 @@ services:
     working_dir: /base-cms/services/rss
     command: ["/base-cms/node_modules/.bin/gulp"]
     environment:
-      <<: *env
-      <<: *env-newrelic
+      <<: [*env, *env-newrelic]
       GRAPHQL_URI: http://graphql-server
       ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
       PORT: 80
@@ -209,8 +200,7 @@ services:
     working_dir: /base-cms/services/rss
     command: ["/base-cms/node_modules/.bin/gulp"]
     environment:
-      <<: *env
-      <<: *env-newrelic
+      <<: [*env, *env-newrelic]
       GRAPHQL_URI: http://graphql-server-leonis
       ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
       PORT: 80
@@ -225,8 +215,7 @@ services:
     working_dir: /base-cms/services/rss
     command: ["/base-cms/node_modules/.bin/gulp"]
     environment:
-      <<: *env
-      <<: *env-newrelic
+      <<: [*env, *env-newrelic]
       GRAPHQL_URI: http://graphql-server-tauron
       ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
       PORT: 80
@@ -241,8 +230,7 @@ services:
     working_dir: /base-cms/services/rss
     command: ["/base-cms/node_modules/.bin/gulp"]
     environment:
-      <<: *env
-      <<: *env-newrelic
+      <<: [*env, *env-newrelic]
       GRAPHQL_URI: http://graphql-server-virgon
       ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
       PORT: 80
@@ -259,8 +247,7 @@ services:
     working_dir: /base-cms/services/sitemaps
     command: ["/base-cms/node_modules/.bin/gulp"]
     environment:
-      <<: *env
-      <<: *env-newrelic
+      <<: [*env, *env-newrelic]
       GRAPHQL_URI: http://graphql-server
       ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
       PORT: 80
@@ -275,8 +262,7 @@ services:
     working_dir: /base-cms/services/sitemaps
     command: ["/base-cms/node_modules/.bin/gulp"]
     environment:
-      <<: *env
-      <<: *env-newrelic
+      <<: [*env, *env-newrelic]
       GRAPHQL_URI: http://graphql-server-leonis
       ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
       PORT: 80
@@ -291,8 +277,7 @@ services:
     working_dir: /base-cms/services/sitemaps
     command: ["/base-cms/node_modules/.bin/gulp"]
     environment:
-      <<: *env
-      <<: *env-newrelic
+      <<: [*env, *env-newrelic]
       GRAPHQL_URI: http://graphql-server-tauron
       ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
       PORT: 80
@@ -307,8 +292,7 @@ services:
     working_dir: /base-cms/services/sitemaps
     command: ["/base-cms/node_modules/.bin/gulp"]
     environment:
-      <<: *env
-      <<: *env-newrelic
+      <<: [*env, *env-newrelic]
       GRAPHQL_URI: http://graphql-server-virgon
       ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
       PORT: 80
@@ -374,9 +358,7 @@ services:
     working_dir: /base-cms/services/hooks
     command: ["/base-cms/node_modules/.bin/gulp"]
     environment:
-      <<: *env
-      <<: *env-mongo
-      <<: *env-newrelic
+      <<: [*env, *env-mongo, *env-newrelic]
       VIRGON_DSN: ${VIRGON_DSN-mongodb://mongodb:27017}
       TAURON_DSN: ${TAURON_DSN-mongodb://mongodb:27017}
       LEONIS_DSN: ${LEONIS_DSN-mongodb://mongodb:27017}
@@ -391,8 +373,7 @@ services:
     working_dir: /base-cms/services/oembed
     command: ["/base-cms/node_modules/.bin/gulp"]
     environment:
-      <<: *env
-      <<: *env-newrelic
+      <<: [*env, *env-newrelic]
       REDIS_CACHE_DSN: ${REDIS_CACHE_DSN-redis://redis}
       EMBEDLY_API_KEY: ${EMBEDLY_API_KEY-}
       EXPOSED_PORT: 10402
@@ -406,8 +387,7 @@ services:
     working_dir: /base-cms/services/google-data-api
     command: ["/base-cms/node_modules/.bin/gulp"]
     environment:
-      <<: *env
-      <<: *env-newrelic
+      <<: [*env, *env-newrelic]
       GOOGLE_DATA_MONGO_DSN: ${GOOGLE_DATA_MONGO_DSN-mongodb://mongodb}
       GOOGLE_API_KEY: ${GOOGLE_API_KEY}
       PORT: 80
@@ -422,8 +402,7 @@ services:
     working_dir: /base-cms/services/omail-link-processor
     entrypoint: ["/base-cms/node_modules/.bin/gulp"]
     environment:
-      <<: *env
-      <<: *env-newrelic
+      <<: [*env, *env-newrelic]
       GRAPHQL_URI: ${GRAPHQL_URI-http://graphql-server-virgon}
       PORT: 80
       EXPOSED_PORT: 10404
