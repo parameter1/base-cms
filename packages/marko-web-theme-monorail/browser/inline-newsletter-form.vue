@@ -119,10 +119,9 @@ export default {
 
   methods: {
     stepOneSubmit({ email, encryptedCustomerId }) {
-      this.$emit('submit', { step: 1 });
+      this.$emit('submit', { step: 1, encryptedCustomerId });
       this.email = email;
       this.step = 2;
-      if (window.olytics) window.olytics.confirm(encryptedCustomerId);
     },
   },
 };

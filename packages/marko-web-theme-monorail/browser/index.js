@@ -94,7 +94,10 @@ export default (Browser, config = {
       load: data => emitNewsletterEvent({ type: 'Inline', action: 'Load', data }),
       view: data => emitNewsletterEvent({ type: 'Inline', action: 'View', data }),
       focus: data => emitNewsletterEvent({ type: 'Inline', action: 'Focus', data }),
-      submit: data => emitNewsletterEvent({ type: 'Inline', action: 'Submit', data }),
+      submit: (data) => {
+        emitNewsletterEvent({ type: 'Inline', action: 'Submit', data });
+        if (window.olytics) window.olytics.confirm(data.encryptedCustomerId);
+      },
       subscribe: ({ newsletter }) => emitNewsletterSubscription({ type: 'Pushdown', newsletter }),
       error: data => emitNewsletterEvent({ type: 'Inline', action: 'Error', data: { ...data, error: data.error.message } }),
     },
