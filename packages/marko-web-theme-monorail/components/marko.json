@@ -14,65 +14,25 @@
     "template": "./client-side-block-loader.marko"
   },
   "<theme-menu-toggle-button>": {
-    "template": "./menu-toggle-button.marko",
-    "@class": "string",
-    "@before": "string",
-    "@before-expanded": "string",
-    "@before-collapsed": "string",
-    "@after": "string",
-    "@after-expanded": "string",
-    "@after-collapsed": "string",
-    "@targets": "array",
-    "@toggle-class": "string",
-    "@icon-modifiers": "array",
-    "@icon-name": "string",
-    "@initially-expanded": "boolean",
-    "@expanded-icon-name": "string"
+    "template": "./menu-toggle-button.marko"
   },
   "<theme-pagination-controls>": {
-    "template": "./pagination-controls.marko",
-    "@as-rels": "boolean",
-    "@per-page": "number",
-    "@total-count": "number",
-    "@path": "string",
-    "@query": "object",
-    "@class": "string"
-
+    "template": "./pagination-controls.marko"
   },
   "<theme-recaptcha>": {
     "template": "./recaptcha.marko"
   },
   "<theme-site-footer>": {
-    "template": "./site-footer.marko",
-    "@block-name": "string",
-    "@tag": "string",
-    "@class": "string",
-    "@modifiers": "array",
-    "@attrs": "object",
-    "@has-user": "boolean",
-    "@reg-enabled": "boolean"
+    "template": "./site-footer.marko"
   },
   "<theme-site-menu>": {
-    "template": "./site-menu/index.marko",
-    "@block-name": "string",
-    "@reg-enabled": "boolean",
-    "@has-user": "boolean",
-    "@tag": "string",
-    "@class": "string",
-    "@modifiers": "array",
-    "@attrs": "object"
+    "template": "./site-menu/index.marko"
   },
   "<theme-site-newsletter-menu>": {
     "template": "./site-newsletter-menu.marko"
   },
   "<theme-social-follow>": {
-    "template": "./social-follow.marko",
-    "@block-name": "string",
-    "@dark": "boolean",
-    "@tag": "string",
-    "@class": "string",
-    "@modifiers": "array",
-    "@attrs": "object"
+    "template": "./social-follow.marko"
   },
   "<theme-query-total-count>": {
     "template": "./query-total-count.marko"

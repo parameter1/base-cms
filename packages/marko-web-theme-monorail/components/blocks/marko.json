@@ -24,21 +24,13 @@
     "@count-only": "boolean"
   },
   "<theme-more-products-block>": {
-    "template": "./more-products.marko",
-    "<params>": {},
-    "@alias": "string",
-    "@default-description": "string"
+    "template": "./more-products.marko"
   },
   "<theme-most-popular-block>": {
     "template": "./most-popular.marko"
   },
   "<theme-native-x-card-deck-block>": {
-    "template": "./native-x-card-deck.marko",
-    "@section": "object",
-    "@limit": "number",
-    "@placement-name": "string",
-    "@aliases": "array",
-    "@default-description": "string"
+    "template": "./native-x-card-deck.marko"
   },
   "<theme-newsletter-signup-banner-block>": {
     "template": "./newsletter-signup-banner.marko"
@@ -51,43 +43,19 @@
     "@alias" : "string"
   },
   "<theme-primary-image-block>": {
-    "template": "./primary-image.marko",
-    "@obj": "object",
-    "@force-display": "boolean",
-    "@with-caption": "boolean",
-    "@with-credit": "boolean",
-    "@with-display-name": "boolean",
-    "@fluid-width": "number",
-    "@alined-width": "number",
-    "@should-fill": "boolean",
-    "@lazyload": "boolean",
-    "@modifiers": "array",
-    "@max-width": "number"
+    "template": "./primary-image.marko"
   },
   "<theme-products-block>": {
-    "template": "./products.marko",
-    "@alias": "string",
-    "@default-description": "string"
+    "template": "./products.marko"
   },
   "<theme-read-next-block>": {
-    "template": "./read-next.marko",
-    "@published": "string",
-    "@content-id": "number",
-    "@section-id": "number"
+    "template": "./read-next.marko"
   },
   "<theme-related-stories-block>": {
-    "template": "./related-stories.marko",
-    "@content-id": "number",
-    "@section-id": "number",
-    "@published": "number",
-    "@with-native-x": "boolean"
+    "template": "./related-stories.marko"
   },
   "<theme-resource-library-block>": {
-    "template": "./resource-library.marko",
-    "@alias": "string",
-    "@name": "string",
-    "@query-params": "object",
-    "@default-description": "string"
+    "template": "./resource-library.marko"
   },
   "<theme-section-body-feed-block>": {
     "template": "./section-body-feed.marko",
@@ -102,13 +70,10 @@
     "@default-description": "string"
   },
   "<theme-section-card-deck-featured-block>": {
-    "template": "./section-card-deck-featured.marko",
-    "@alias": "string"
+    "template": "./section-card-deck-featured.marko"
   },
   "<theme-section-card-list-block>": {
-    "template": "./section-card-list.marko",
-    "@alias" : "string",
-    "@default-description": "string"
+    "template": "./section-card-list.marko"
   },
   "<theme-section-feed-block>": {
     "template": "./section-feed.marko",
@@ -123,15 +88,10 @@
     "@query-name": "string"
   },
   "<theme-section-list-deck-block>": {
-    "template": "./section-list-deck.marko",
-    "@aliases": "array"
+    "template": "./section-list-deck.marko"
   },
   "<theme-section-list-block>": {
-    "template": "./section-list.marko",
-    "@alias": "string",
-    "@withSection": "boolean",
-    "@withViewMore": "boolean",
-    "<query-params>": {}
+    "template": "./section-list.marko"
   },
   "<theme-section-title-feed-block>": {
     "template": "./section-title-feed.marko",
@@ -140,20 +100,12 @@
     "@count-only": "boolean"
   },
   "<theme-top-stories-block>": {
-    "template": "./top-stories.marko",
-    "@query-params": "object",
-    "@with-header": "boolean",
-    "@with-native-x": "boolean",
-    "@lazyload": "boolean"
+    "template": "./top-stories.marko"
   },
   "<theme-top-stories-menu-block>": {
-    "template": "./top-stories-menu.marko",
-    "@section-alias": "string"
+    "template": "./top-stories-menu.marko"
   },
   "<theme-white-papers-block>": {
-    "template": "./white-papers.marko",
-    "@section-alias": "string",
-    "@content-types": "array",
-    "@query-params": "object"
+    "template": "./white-papers.marko"
   }
 }

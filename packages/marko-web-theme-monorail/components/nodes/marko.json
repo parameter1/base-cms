@@ -1,17 +1,9 @@
 {
   "<theme-author-node>": {
-    "template": "./author.marko",
-    "@author": "object"
+    "template": "./author.marko"
   },
   "<theme-author-published-node>": {
-    "template": "./author-published.marko",
-    "@author": "object",
-    "@content": "object",
-    "@show-published": "boolean",
-    "@lazyload": "boolean",
-    "@display-updated-date": "boolean",
-    "@format": "string",
-    "@published-prefix": "string"
+    "template": "./author-published.marko"
   },
   "<theme-content-node>": {
     "template": "./content.marko",
@@ -44,47 +36,16 @@
     "@link-attrs": "object"
   },
   "<theme-content-published-node>": {
-    "template": "./content-published.marko",
-    "@obj": "object",
-    "@block-name": "string",
-    "@format": "string",
-    "@timezone": "string",
-    "@locale": "string",
-    "@display-updated-date": "boolean",
-    "@published-prefix": "string"
+    "template": "./content-published.marko"
   },
   "<theme-directory-section-feed-content-node>": {
-    "template": "./directory-section-feed-content.marko",
-    "@node": "object",
-    "@modifiers": "array",
-    "@content-attrs": "object",
-    "@link-attrs": "object",
-    "@with-section": "boolean",
-    "@display-image": "boolean",
-    "@is-featured": "boolean",
-    "@display-featured-teaser": "boolean",
-    "@request-quote": "boolean",
-    "@sponsored-by": "string"
+    "template": "./directory-section-feed-content.marko"
   },
   "<theme-product-feed-content-node>": {
-    "template": "./product-feed-content.marko",
-    "@node": "object",
-    "@with-section": "boolean"
+    "template": "./product-feed-content.marko"
   },
   "<theme-section-feed-content-node>": {
-    "template": "./section-feed-content.marko",
-    "@node": "object",
-    "@content-attrs": "object",
-    "@link-attrs": "object",
-    "@with-body": "boolean",
-    "@with-dates": "boolean",
-    "@with-section": "boolean",
-    "@with-teaser": "boolean",
-    "@display-image": "boolean",
-    "@lazyload": "boolean",
-    "@modifiers": "array",
-    "@sponsored-by": "string"
-
+    "template": "./section-feed-content.marko"
   },
   "<theme-youtube-card-node>": {
     "template": "./youtube-card.marko",

@@ -1,7 +1,6 @@
 {
   "<theme-identity-x-comment-stream>": {
-    "template": "./comment-stream.marko",
-    "@content": "object"
+    "template": "./comment-stream.marko"
   },
   "<theme-content-page-gate>": {
     "template": "./content-page-gate.marko",

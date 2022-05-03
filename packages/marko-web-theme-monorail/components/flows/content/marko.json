@@ -31,13 +31,6 @@
     "@with-section": "boolean"
   },
   "<theme-content-card-deck-col-flow>": {
-    "template": "./card-deck-col.marko",
-    "@native-x": "object",
-    "@cols": "number",
-    "<node>": {
-      "<image>": {}
-    },
-    "@nodes": "array",
-    "@modifiers": "array"
+    "template": "./card-deck-col.marko"
   }
 }
