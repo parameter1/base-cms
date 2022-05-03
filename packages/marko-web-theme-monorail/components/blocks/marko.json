@@ -15,8 +15,7 @@
     "@query-params": "object"
   },
   "<theme-latest-podcast-block>": {
-    "template": "./latest-podcast.marko",
-    "@alias": "string"
+    "template": "./latest-podcast.marko"
   },
   "<theme-latest-products-feed-block>": {
     "template": "./latest-products-feed.marko",

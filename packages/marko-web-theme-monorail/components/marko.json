@@ -11,10 +11,7 @@
     "./page/marko.json"
   ],
   "<theme-client-side-block-loader>": {
-    "template": "./client-side-block-loader.marko",
-    "@label": "string",
-    "@name": "string",
-    "@input": "object"
+    "template": "./client-side-block-loader.marko"
   },
   "<theme-menu-toggle-button>": {
     "template": "./menu-toggle-button.marko",
@@ -78,8 +75,6 @@
     "@attrs": "object"
   },
   "<theme-query-total-count>": {
-    "template": "./query-total-count.marko",
-    "@params": "object",
-    "@name": "string"
+    "template": "./query-total-count.marko"
   }
 }
