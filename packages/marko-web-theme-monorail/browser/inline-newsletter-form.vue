@@ -25,6 +25,7 @@
       :newsletters="newsletters"
       :demographic="demographic"
       :recaptcha-site-key="recaptchaSiteKey"
+      :privacy-policy-link="privacyPolicyLink"
       :lang="lang"
       as-card
       @submit="$emit('submit', { step: 2 })"
