@@ -1,5 +1,7 @@
 {
   "<theme-native-x-render>": {
-    "template": "./render.marko"
+    "template": "./render.marko",
+    "@name": "string",
+    "@when": "string"
   }
 }

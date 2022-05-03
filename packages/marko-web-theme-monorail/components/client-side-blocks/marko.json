@@ -1,5 +1,6 @@
 {
   "<theme-client-side-most-popular-block>": {
-    "template": "./most-popular.marko"
+    "template": "./most-popular.marko",
+    "@queryInput": "object"
   }
 }
