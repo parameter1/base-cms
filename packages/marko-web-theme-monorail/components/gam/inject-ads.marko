@@ -1,3 +1,8 @@
+<!-- @todo: MERGE ~ marko-web-gam/inject-ads.marko -->
+<!-- @todo: Merge this with <marko-web-gam-inject-ads>. The $global: out.global trick is providing access to the express request and response objects for retrieving the referrer and incrementing/storing the position counter. Investigate if this can be done better -- perhaps passing the referrer directly, along with the res.local prop (or a reference to it). -->
+
+<!-- This line and the default value for position are the only differences. -->
+
 import { getAsArray } from "@parameter1/base-cms-object-path";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 import DefineDisplayAd from "./define-display-ad";

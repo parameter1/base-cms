@@ -1,3 +1,5 @@
+// @todo: MERGE ~ marko-web-gam/utils/increment-pos.js
+// @todo: Move this logic into the <marko-web-gam-inject-ads> component when consolidating.
 module.exports = ({ res, position, inc = 1 } = {}) => {
   // Do nothing if no position key is passed.
   if (!position) return position;
