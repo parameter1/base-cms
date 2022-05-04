@@ -36,5 +36,8 @@
     "http-errors": "^1.7.3",
     "moment": "^2.29.1",
     "node-fetch": "^2.6.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
