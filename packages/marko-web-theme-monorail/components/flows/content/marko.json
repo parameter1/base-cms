@@ -1,0 +1,36 @@
+{
+  "<theme-content-list-flow>": {
+    "template": "./list.marko",
+    "<header>": {},
+    "<body>": {},
+    "<footer>": {},
+    "<node>": {
+      "<attribution>": {},
+      "<image>": {}
+    },
+    "<native-x>": {
+      "@index": "number",
+      "@name": "string",
+      "@aliases": "array"
+    },
+    "@nodes": "array",
+    "@inner-justified": "boolean",
+    "@flush-x": "boolean",
+    "@flush-y": "boolean",
+    "@class": "string",
+    "@collapsible": "boolean",
+    "@modifiers": "array"
+  },
+  "<theme-content-directory-section-flow>": {
+    "template": "./directory-section.marko",
+    "<header>": {},
+    "<node>": {
+      "<image>": {}
+    },
+    "@nodes": "array",
+    "@with-section": "boolean"
+  },
+  "<theme-content-card-deck-col-flow>": {
+    "template": "./card-deck-col.marko"
+  }
+}

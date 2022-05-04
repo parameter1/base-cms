@@ -1,0 +1,67 @@
+.promo-card {
+  height: 100%;
+  padding: 24px;
+  background-color: $gray-100;
+  border-radius: 4px;
+
+  &__header {
+    margin-bottom: 16px;
+    @include skin-typography($style: "section-header-small");
+  }
+
+  &__logo {
+    height: 48px;
+  }
+}
+
+.node {
+  $self: &;
+
+  &--promo-card {
+    background-color: $gray-100;
+
+    #{ $self } {
+      &__title {
+        margin-bottom: 0;
+        @include skin-typography($style: "header-2", $link-style: "primary");
+      }
+
+      &__contents--body {
+        margin-bottom: 24px;
+      }
+
+      &__text--teaser {
+        margin-top: 8px;
+        margin-bottom: 0;
+        @include skin-typography($style: "small-body-text", $link-style: "primary", $max-lines: 10);
+      }
+    }
+  }
+}
+
+.pib-page-card {
+  height: 100%;
+  padding: 24px;
+  background-color: $gray-100;
+  border-radius: 4px;
+
+  &__title {
+    margin-bottom: 8px;
+    @include skin-typography($style: "header-2");
+  }
+
+  &__description {
+    margin-bottom: 16px;
+    @include skin-typography($style: "small-body-text");
+  }
+
+  &__inner-wrapper {
+    display: flex;
+  }
+
+  &__issue-cover {
+    align-self: flex-start;
+    width: 120px;
+    margin-left: 24px;
+  }
+}

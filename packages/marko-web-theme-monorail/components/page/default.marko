@@ -1,0 +1,24 @@
+$ const {
+  type = "default",
+  title,
+  description,
+  head,
+  page,
+  abovePage,
+  belowPage,
+  ...rest
+} = input;
+$ const { document } = out.global;
+
+<${document} ...rest>
+  <@head>
+    <marko-web-default-page-metadata title=title description=description />
+    <${head} />
+  </@head>
+  <!-- Note: camelcased vars due to nest input of dynamic document. perhaps a marko bug -->
+  <@container abovePage=abovePage belowPage=belowPage>
+    <@page for=type>
+      <${page} />
+    </@page>
+  </@container>
+</>

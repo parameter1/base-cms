@@ -1,0 +1,42 @@
+import queryFragment from "../../graphql/fragments/read-next-block";
+
+$ const { i18n } = out.global;
+
+$ const queryParams = {
+  publishedAfter: input.published,
+  excludeContentIds: [input.contentId],
+  sectionId: input.sectionId,
+  limit: 1,
+  queryFragment,
+};
+$ const blockName = "read-next";
+
+<marko-web-query|{ nodes }| name="all-published-content" params=queryParams>
+  <if(nodes.length)>
+    <marko-web-block name=blockName>
+      <marko-web-element block-name=blockName name="header">
+        ${i18n("Read Next")}
+      </marko-web-element>
+
+      <marko-web-node-list
+        inner-justified=false
+        flush-x=true
+        flush-y=true
+        modifiers=[blockName]
+      >
+        <@nodes nodes=nodes>
+          <@slot|{ node }|>
+            <theme-content-node
+              image-position="left"
+              flush=true
+              node=node
+              modifiers=[blockName]
+            >
+              <@image width=160 ar="3:2" />
+            </theme-content-node>
+          </@slot>
+        </@nodes>
+      </marko-web-node-list>
+    </marko-web-block>
+  </if>
+</marko-web-query>

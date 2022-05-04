@@ -1,0 +1,119 @@
+import queryFragment from "../graphql/fragments/section-feed-block";
+import { get } from '@parameter1/base-cms-object-path';
+
+$ const { config, req, $markoWebSearch: search, site, i18n } = out.global;
+
+$ const type = "search";
+$ const title = "Search";
+$ const description = `Search ${config.siteName()}`;
+
+$ const currentPage = search.getCurrentPage();
+
+$ const overrideSortField = get(site, 'config.setSearchSortFieldToScore');
+$ const searchQueryPresent = (search.query.searchQuery && search.query.searchQuery !== '');
+$ const setDefaultSortField = (searchQueryPresent && !search.query.sortField && overrideSortField);
+$ const sortField = setDefaultSortField ? 'SCORE' : search.input.sortField;
+
+<marko-web-default-page-layout type=type title=title description=description>
+  <@head>
+    <marko-web-gtm-default-context|{ context }| type=type>
+      <marko-web-gtm-push data=context />
+    </marko-web-gtm-default-context>
+    <meta name="robots" content="noindex">
+  </@head>
+  <@page>
+    <marko-web-page-wrapper>
+      <@section modifiers=["first"]>
+        <theme-gam-define-display-ad
+          name="leaderboard"
+          position="static_page"
+          modifiers=["inter-block"]
+        />
+      </@section>
+      <@section|{ blockName }|>
+        <div class="row">
+          <div class="col-lg-3">
+            <marko-web-search-filter-container modifiers=["sticky"]>
+              <@before-title|{ blockName }|>
+                <marko-web-website-section-name|{ value }| tag="h1" block-name=blockName obj={ name: title }>
+                  <if(currentPage > 1)>${value}: ${i18n("Page")} ${currentPage}</if>
+                  <else>${value}</else>
+                </marko-web-website-section-name>
+              </@before-title>
+              <marko-web-search-content-types-filter />
+              <marko-web-search-website-sections-filter />
+            </marko-web-search-filter-container>
+          </div>
+
+          <div class="col-lg-9">
+            <div class="row">
+              <div class="col-xl-9">
+                <marko-web-search-form>
+                  <@block class="search-form" />
+                  <div class="form-group search-form__group">
+                    <label for="search-phrase" class="sr-only">Enter search phrase</label>
+                    <marko-web-search-input
+                      id="search-phrase"
+                      class="form-control"
+                      placeholder="Enter search phrase..."
+                    />
+                  </div>
+                  <button type="submit" class="btn btn-primary search-form__btn">
+                    ${i18n("Search")}
+                  </button>
+                </marko-web-search-form>
+                </div>
+                <div class="col-xl-3">
+                  <marko-web-search-sort-by sort-field=sortField />
+                </div>
+              </div>
+
+            <marko-web-search-query|{ nodes, totalCount }|
+              limit=search.getLimit()
+              skip=search.getSkip()
+              sort-field=sortField
+              sort-order=search.input.sortOrder
+              content-types=search.input.contentTypes
+              search-query=search.input.searchQuery
+              assigned-to-website-section-ids=search.input.assignedToWebsiteSectionIds
+              query-fragment=queryFragment
+            >
+              <marko-web-page-wrapper modifiers=["no-padding-x"]>
+                <@section modifiers=["search-results"]>
+                  <div>${new Intl.NumberFormat().format(totalCount)} ${i18n("Results")}</div>
+                  <marko-web-search-selected-filters />
+                </@section>
+                <if(nodes.length)>
+                  <@section>
+                    <marko-web-node-list
+                      inner-justified=true
+                      flush-x=true
+                      flush-y=false
+                      modifiers=["section-feed"]
+                    >
+                      <@nodes nodes=nodes>
+                        <@slot|{ node }|>
+                          <theme-section-feed-content-node node=node />
+                        </@slot>
+                      </@nodes>
+                    </marko-web-node-list>
+                    <marko-web-search-pagination-controls total-count=totalCount>
+                      <@link class="btn btn-primary" />
+                    </marko-web-search-pagination-controls>
+                  </@section>
+                </if>
+              </marko-web-page-wrapper>
+            </marko-web-search-query>
+          </div>
+        </div>
+      </@section>
+      <@section>
+        <theme-gam-define-display-ad
+          name="rotation"
+          position="static_page"
+          modifiers=["inter-block"]
+        />
+      </@section>
+    </marko-web-page-wrapper>
+  </@page>
+</marko-web-default-page-layout>

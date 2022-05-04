@@ -1,0 +1,92 @@
+$marko-web-primary-image-margin: 1.5rem !default;
+
+.primary-image {
+  $self: &;
+  margin-bottom: $marko-web-primary-image-margin;
+  clear: both;
+
+  &__image-caption {
+    @include theme-media-caption();
+  }
+
+  &__image-credit {
+    @include theme-media-credit();
+  }
+
+  // > :last-child:not(#{ $self }__wrapper) {
+  //   border-bottom: 1px solid #ccc;
+  // }
+
+  &--fluid {
+    #{ $self } {
+      &__image {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+
+  &--aligned {
+    max-width: $skin-aligned-image-width;
+    margin-bottom: 0;
+
+    @include media-breakpoint-down(xs) {
+      max-width: 100%;
+      margin: $skin-aligned-body-image-spacer auto;
+
+      #{ $self } {
+        &__image {
+          width: 100%;
+          height: auto;
+        }
+      }
+    }
+  }
+
+  &--aligned-right {
+    float: right;
+    margin-left: $skin-aligned-body-image-spacer;
+    @include media-breakpoint-down(xs) {
+      float: none;
+      margin-left: auto;
+    }
+  }
+
+  &--aligned-left {
+    float: left;
+    margin-right: $skin-aligned-body-image-spacer;
+    @include media-breakpoint-down(xs) {
+      float: none;
+      margin-right: auto;
+    }
+  }
+
+  &--aligned-center {
+    @media (min-width: 900px) {
+      $margin: ($skin-content-primary-image-max-width - $skin-content-body-max-width) / 2 * -1;
+      position: relative;
+      width: $skin-content-primary-image-max-width;
+      margin-left: $margin;
+    }
+  }
+
+  &--forced-left {
+    margin-bottom: 1.5rem;
+  }
+
+  @each $ar in $marko-web-node-image-aspect-ratios {
+    $x: nth($ar, 1);
+    $y: nth($ar, 2);
+
+    &--fluid-#{$x}by#{$y} {
+      #{ $self } {
+        &__wrapper {
+          @include marko-web-node-fluid-image($x, $y);
+        }
+        &__image {
+          @include marko-web-node-fluid-image-item();
+        }
+      }
+    }
+  }
+}

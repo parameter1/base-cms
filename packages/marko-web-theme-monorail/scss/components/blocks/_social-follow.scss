@@ -1,0 +1,28 @@
+.social-follow {
+  $self: &;
+  &__header {
+    margin-bottom: 12px;
+    @include skin-typography($style: "social-follow-header");
+  }
+
+  &__section {
+    > .social-icon-link {
+      margin-right: 15px;
+    }
+  }
+}
+
+.marko-web-icon {
+  &--social-follow {
+    svg {
+      width: 36px;
+      height: 36px;
+    }
+    @media (max-width: 1080px) {
+      svg {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+}

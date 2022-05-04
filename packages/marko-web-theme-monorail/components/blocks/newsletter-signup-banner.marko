@@ -1,0 +1,39 @@
+import { buildImgixUrl } from "@parameter1/base-cms-image";
+
+$ const blockName = "newsletter-signup-banner";
+
+$ const { config, site, recaptcha } = out.global;
+$ const {
+  name,
+  description,
+  imagePath,
+  defaultNewsletter,
+  newsletters,
+  demographic,
+  disabled,
+  privacyPolicy,
+} = site.getAsObject("newsletter.signupBanner");
+
+$ const lang = site.config.lang || "en";
+$ const imageSrc = imagePath ? buildImgixUrl(`https://${config.website("imageHost")}/${imagePath}`, { w: 120, auto: "format,compress" }) : null;
+$ const imageSrcset = imageSrc ? `${imageSrc}&dpr=2 2x` : null;
+
+<if(name && description)>
+  <marko-web-browser-component
+    name="ThemeInlineNewsletterForm"
+    props={
+      siteName: config.website("name"),
+      name,
+      description,
+      defaultNewsletter,
+      newsletters,
+      demographic,
+      disabled,
+      imageSrc,
+      imageSrcset,
+      recaptchaSiteKey: recaptcha.siteKey,
+      privacyPolicyLink: privacyPolicy,
+      lang
+    }
+  />
+</if>

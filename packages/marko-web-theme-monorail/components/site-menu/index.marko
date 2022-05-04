@@ -1,0 +1,106 @@
+import { asObject } from "@parameter1/base-cms-utils";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const blockName = input.blockName || "site-menu";
+
+$ const { site, config } = out.global;
+
+$ const regEnabled = defaultValue(input.regEnabled, false);
+$ const hasUser = defaultValue(input.hasUser, false);
+
+<marko-web-block
+  name=blockName
+  tag=(input.tag || "aside")
+  class=input.class
+  modifiers=input.modifiers
+  attrs=input.attrs
+>
+  <!-- desktop -->
+  <marko-web-element block-name=blockName name="contents-desktop">
+    <div class="row">
+      <div class="col-6 col-md-4 col-lg-4">
+        <!-- search box -->
+        <search block-name=blockName />
+        <!-- user section || IDX_NAV_ENABLE -->
+        <if(site.getAsArray("navigation.desktopMenu.user"))>
+          <!-- user section -->
+            <default-theme-site-menu-section
+            tag="nav"
+            block-name=blockName
+            label="Account"
+            items=site.getAsArray("navigation.desktopMenu.user")
+            modifiers=["user"]
+            reg-enabled=regEnabled
+            has-user=hasUser
+          />
+        </if>
+        <!-- social -->
+        <social-icons block-name=blockName />
+        <!-- about section -->
+        <default-theme-site-menu-section
+          tag="nav"
+          block-name=blockName
+          label="About"
+          items=site.getAsArray("navigation.desktopMenu.about")
+          modifiers=["secondary"]
+          reg-enabled=regEnabled
+          has-user=hasUser
+        />
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <!-- sections -->
+        <default-theme-site-menu-section
+          tag="nav"
+          block-name=blockName
+          label="Sections"
+          items=site.getAsArray("navigation.desktopMenu.sections")
+          modifiers=["primary"]
+          reg-enabled=regEnabled
+          has-user=hasUser
+        />
+      </div>
+      <div class="d-none d-md-flex col-md-4">
+        <!-- top stories (defer to client-side loader) -->
+        <marko-web-browser-component name="ThemeTopStoriesMenu" />
+      </div>
+    </div>
+  </marko-web-element>
+  <!-- mobile -->
+  <marko-web-element block-name=blockName name="contents-mobile">
+    <!-- search box -->
+    <search block-name=blockName />
+    <!-- user section || IDX_NAV_ENABLE -->
+    <if(site.getAsArray("navigation.mobileMenu.user"))>
+      <!-- user section -->
+        <default-theme-site-menu-section
+        tag="nav"
+        block-name=blockName
+        label="Account"
+        items=site.getAsArray("navigation.mobileMenu.user")
+        modifiers=["user"]
+        reg-enabled=regEnabled
+        has-user=hasUser
+      />
+    </if>
+    <!-- social -->
+    <social-icons block-name=blockName />
+    <!-- primary section -->
+    <default-theme-site-menu-section
+      tag="nav"
+      block-name=blockName
+      items=site.getAsArray("navigation.mobileMenu.primary")
+      modifiers=["primary"]
+      reg-enabled=regEnabled
+      has-user=hasUser
+    />
+    <!-- secondary section -->
+    <default-theme-site-menu-section
+      tag="nav"
+      block-name=blockName
+      items=site.getAsArray("navigation.mobileMenu.secondary")
+      modifiers=["secondary"]
+      reg-enabled=regEnabled
+      has-user=hasUser
+    />
+  </marko-web-element>
+</marko-web-block>

@@ -1,0 +1,73 @@
+import hierarchyAliases from "@parameter1/base-cms-marko-web/utils/hierarchy-aliases";
+import { getAsArray } from "@parameter1/base-cms-object-path";
+import queryFragment from "../graphql/fragments/section-feed-block";
+
+$ const { id, name, type, description, i18n } = input;
+$ const { GAM, req } = out.global;
+
+$ const { pagination: p } = out.global;
+$ const perPage = 12;
+
+$ const queryParams = {
+  limit: perPage,
+  skip: p.skip({ perPage }),
+  includeTaxonomyIds: [id],
+  queryFragment,
+};
+
+$ const title = `${type}: ${name}`;
+
+<marko-web-default-page-layout type="taxonomy" title=title description=description>
+  <@head>
+    <meta name="robots" content="noindex">
+  </@head>
+  <@page>
+    <marko-web-page-wrapper>
+      <@section modifiers=["first"]>
+        <theme-gam-define-display-ad
+          name="leaderboard"
+          position="section_page"
+          modifiers=["inter-block"]
+        />
+      </@section>
+
+      <@section|{ blockName }|>
+        <marko-web-website-section-name|{ value }| tag="h1" block-name=blockName obj={ name: title }>
+          <if(p.page > 1)>${value}: ${i18n("Page")} ${p.page}</if>
+          <else>${value}</else>
+        </marko-web-website-section-name>
+
+        <marko-web-query|{ nodes }| name="all-published-content" params=queryParams>
+          <marko-web-node-list
+            inner-justified=true
+            flush-x=true
+            flush-y=false
+            modifiers=["section-feed"]
+          >
+            <@nodes nodes=nodes>
+              <@slot|{ node }|>
+                <theme-section-feed-content-node node=node />
+              </@slot>
+            </@nodes>
+          </marko-web-node-list>
+        </marko-web-query>
+
+        <theme-query-total-count|{ totalCount }| name="all-published-content" params={ includeTaxonomyIds: [id] }>
+          <theme-pagination-controls
+            per-page=perPage
+            total-count=totalCount
+            path=req.path
+          />
+        </theme-query-total-count>
+      </@section>
+
+      <@section>
+        <theme-gam-define-display-ad
+          name="rotation"
+          position="section_page"
+          modifiers=["inter-block"]
+        />
+      </@section>
+    </marko-web-page-wrapper>
+  </@page>
+</marko-web-default-page-layout>

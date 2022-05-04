@@ -1,0 +1,75 @@
+import { getAsObject } from "@parameter1/base-cms-object-path";
+import defaultValue  from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { config, site } = out.global;
+
+$ const blockName = "content-page-gate";
+$ const {
+  canAccess,
+  isLoggedIn,
+  hasRequiredAccessLevel,
+  requiresAccessLevel,
+  requiresUserInput,
+  profileCallToAction,
+  profileButtonLabel,
+  loginEventName,
+  profileEventName,
+} = input;
+$ const messages = getAsObject(input, "messages");
+$ const title = defaultValue(input.title, "Log in to view the full article");
+$ const profileConfirmation= defaultValue(input.profielConfirmation, 'Email Confirmed!')
+$ const userInputTitle = defaultValue(input.userInputTitle, "Complete your profile to view the full article");
+$ const additionalEventData = {
+  promoCode: site.get("contentMetering.promoCode", undefined),
+};
+
+<marko-web-block name=blockName>
+  <if(!canAccess)>
+    <marko-web-element tag="h5" name="title" block-name=blockName>
+      ${title}
+    </marko-web-element>
+    <if(isLoggedIn && !hasRequiredAccessLevel)>
+      <marko-web-element name="body" block-name=blockName>
+        $!{messages.loggedInNoAccess}
+      </marko-web-element>
+    </if>
+    <else>
+      <marko-web-element name="body" block-name=blockName>
+        <if(!requiresAccessLevel)>
+          $!{messages.loggedOutNoAccess}
+        </if>
+        <else>
+          <p>Register on ${config.website("name")} and gain access to premium content, including this article and much more.</p>
+          <p>To log in or register, begin by entering your email address below.</p>
+        </else>
+      </marko-web-element>
+
+      <marko-web-element name="form-wrapper" block-name=blockName>
+        <marko-web-identity-x-form-login
+          additional-event-data=additionalEventData
+          source=loginEventName
+        />
+      </marko-web-element>
+    </else>
+  </if>
+  <else-if(isLoggedIn && requiresUserInput)>
+    <if(profileConfirmation)>
+      <marko-web-element name="confirmation" block-name=blockName>
+        ${profileConfirmation}
+      </marko-web-element>
+    </if>
+    <marko-web-element tag="h5" name="title" block-name=blockName>
+      ${userInputTitle}
+    </marko-web-element>
+
+    <marko-web-element name="form-wrapper" block-name=blockName>
+      <marko-web-identity-x-form-profile
+        call-to-action=profileCallToAction
+        button-label=profileButtonLabel
+        reload-page-on-submit=true
+        additional-event-data=additionalEventData
+        login-source=profileEventName
+      />
+    </marko-web-element>
+  </else-if>
+</marko-web-block>

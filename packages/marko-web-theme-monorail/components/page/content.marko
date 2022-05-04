@@ -1,0 +1,23 @@
+$ const {
+  id,
+  type,
+  head,
+  page,
+  abovePage,
+  belowPage,
+  ...rest
+} = input;
+$ const { document } = out.global;
+
+<${document} ...rest>
+  <@head>
+    <marko-web-content-page-metadata id=id />
+    <${head} />
+  </@head>
+  <!-- Note: camelcased vars due to nest input of dynamic document. perhaps a marko bug -->
+  <@container abovePage=abovePage belowPage=belowPage>
+    <@page for="content" tag="article" id=id type=type>
+      <${page} />
+    </@page>
+  </@container>
+</>

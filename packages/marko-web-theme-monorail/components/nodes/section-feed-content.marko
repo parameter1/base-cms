@@ -1,0 +1,97 @@
+import { getAsObject, get } from "@parameter1/base-cms-object-path";
+import { buildImgixUrl } from "@parameter1/base-cms-image";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { i18n } = out.global;
+
+$ const content = getAsObject(input, "node");
+$ const primaryImage = getAsObject(content, "primaryImage");
+$ const primarySection = getAsObject(content, "primarySection");
+$ const containerAttrs = getAsObject(input, "containerAttrs");
+$ const linkAttrs = getAsObject(input, "linkAttrs");
+
+$ const withBody = defaultValue(input.withBody, false);
+$ const withDates = defaultValue(input.withDates, true);
+$ const isUpcoming = content.startDate > Date.now();
+$ const withSection = defaultValue(input.withSection, true);
+$ const withTeaser = defaultValue(input.withTeaser, true);
+$ const displayImage = defaultValue(input.displayImage, true);
+$ const lazyload = defaultValue(input.lazyload, true);
+
+$ const imageOptions = {
+  w: 250,
+  h: 167,
+  fit: "crop",
+};
+
+$ const blockName = "section-feed-content-node";
+
+<marko-web-block name=blockName modifiers=input.modifiers attrs=containerAttrs>
+  <marko-web-element block-name=blockName name="contents">
+    <marko-web-element block-name=blockName name="body">
+      <if(input.sponsoredBy)>
+        <marko-web-element block-name=blockName name="sponsored-by">
+          ${i18n("Sponsored By")} ${input.sponsoredBy}
+        </marko-web-element>
+      </if>
+      <else-if(withSection)>
+        <section-sponsor block-name=blockName section=primarySection labels=content.labels />
+      </else-if>
+      <marko-web-content-short-name
+        tag="h5"
+        block-name=blockName
+        obj=content
+        link={ attrs: linkAttrs }
+      />
+      <if(withTeaser)>
+        <marko-web-content-teaser
+          block-name=blockName
+          obj=content
+          link={ attrs: linkAttrs }
+        />
+      </if>
+      <if(withBody)>
+        <marko-web-content-body
+          block-name=blockName
+          obj=content
+        />
+      </if>
+      <if(withDates && content.startDate)>
+        <div class=`${blockName}__content-event-dates`>
+          <marko-web-content-start-date tag="span" block-name=blockName obj=content />
+        </div>
+        <if(content.linkUrl)>
+          <default-theme-content-link-url
+            obj=content
+            label=(isUpcoming ? `${i18n("Register for Webinar")}` : `${i18n("View Webinar")}`)
+            target="_blank"
+          />
+        </if>
+      </if>
+      <else-if(withDates)>
+        <marko-web-content-published
+          block-name=blockName
+          obj=content
+          format="MMMM D, YYYY"
+        />
+      </else-if>
+    </marko-web-element>
+  </marko-web-element>
+  <if(displayImage)>
+    <marko-web-element block-name=blockName name="image-wrapper">
+      <if(primaryImage.src)>
+        $ const src = buildImgixUrl(primaryImage.src, imageOptions);
+        $ const srcset = [`${buildImgixUrl(src, { dpr: 2 })} 2x`];
+        <marko-web-link href=get(content, "siteContext.path") attrs=linkAttrs>
+          <marko-web-img
+            src=src
+            srcset=srcset
+            alt=primaryImage.alt
+            class=[`${blockName}__image`]
+            lazyload=lazyload
+          />
+        </marko-web-link>
+      </if>
+    </marko-web-element>
+  </if>
+</marko-web-block>

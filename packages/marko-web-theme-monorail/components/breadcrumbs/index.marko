@@ -1,0 +1,20 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+
+$ const items = getAsArray(input, "items");
+$ const modifiers = getAsArray(input, "modifiers");
+$ const blockName = "breadcrumbs";
+$ const classes = [blockName, ...modifiers.map(mod => `${blockName}--${mod}`)];
+
+<if(items.length)>
+  <nav class=classes aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <for|item| of=items>
+        <if(item.renderBody)>
+          <li class="breadcrumb-item">
+            <${item.renderBody} />
+          </li>
+        </if>
+      </for>
+    </ol>
+  </nav>
+</if>

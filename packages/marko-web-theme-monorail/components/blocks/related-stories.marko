@@ -1,0 +1,70 @@
+import { defaultValue } from "@parameter1/base-cms-marko-web/utils";
+import queryFragment from "../../graphql/fragments/related-stories-block";
+
+$ const { i18n } = out.global;
+$ const { contentId, sectionId, published } = input;
+
+$ const withNativeX = defaultValue(input.withNativeX, false);
+$ const nativeX = {
+  name: "default",
+  index: 3,
+  sectionName: "Sponsor Content",
+  ...input.nativeX,
+};
+
+$ const limit = 4;
+$ const queryParams = {
+  contentId,
+  limit,
+  requiresImage: true,
+  queryFragment,
+};
+
+$ const title = `${i18n("Related Stories")}`;
+$ const blockName = "related-stories";
+
+<marko-web-query|{ nodes }| name="related-published-content" params=queryParams collapsible=false>
+  <if(nodes.length < limit)>
+    <!-- query for more content -->
+    $ const excludeContentIds = [contentId, ...nodes.map(node => node.id)];
+    $ const sinceParams = {
+      sectionId,
+      since: published,
+      limit: limit - nodes.length,
+      excludeContentIds,
+      requiresImage: true,
+      excludeContentTypes: ["Contact", "Company", "Document", "Product", "Promotion"],
+      queryFragment
+    };
+    <marko-web-query|{ nodes: related }|
+      name="all-published-content"
+      params=sinceParams
+    >
+      $ nodes.push(...related);
+      <if(nodes.length)>
+        <marko-web-block name=blockName>
+          <marko-web-element block-name=blockName name="header">
+            ${title}
+          </marko-web-element>
+          <theme-content-card-deck-col-flow
+            nodes=nodes
+            modifiers=[blockName]
+            ...(withNativeX && { nativeX })
+          >
+            <@node modifiers=[blockName] />
+          </theme-content-card-deck-col-flow>
+        </marko-web-block>
+      </if>
+    </marko-web-query>
+  </if>
+  <else>
+    <marko-web-block name=blockName>
+      <marko-web-element block-name=blockName name="header">
+        ${title}
+      </marko-web-element>
+      <theme-content-card-deck-col-flow nodes=nodes modifiers=[blockName]>
+        <@node modifiers=[blockName] />
+      </theme-content-card-deck-col-flow>
+    </marko-web-block>
+  </else>
+</marko-web-query>

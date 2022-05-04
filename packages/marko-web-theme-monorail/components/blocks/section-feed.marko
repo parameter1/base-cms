@@ -1,0 +1,44 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import queryFragment from "../../graphql/fragments/section-feed-block";
+
+$ const queryName = input.queryName ? input.queryName : "website-scheduled-content";
+$ const queryParams = {
+  ...input.queryParams,
+  ...(queryName === "website-scheduled-content") && {
+    sectionAlias: input.alias,
+    queryFragment,
+  }
+};
+
+$ const blockName = "section-feed";
+$ const countOnly = defaultValue(input.countOnly, false);
+$ const modifiers = defaultValue(input.modifiers, []);
+$ const lazyload = defaultValue(input.lazyload, true);
+$ const withSection = defaultValue(input.withSection, true);
+
+<if(countOnly)>
+  <theme-query-total-count|data| name=queryName params=queryParams>
+    <${input.renderBody} ...data />
+  </theme-query-total-count>
+</if>
+<else>
+  <marko-web-query|{ nodes }| name=queryName params=queryParams>
+    <marko-web-node-list
+      inner-justified=true
+      flush-x=true
+      flush-y=false
+      modifiers=[blockName, ...modifiers]
+    >
+      <@nodes nodes=nodes>
+        <@slot|{ node }|>
+          <theme-section-feed-content-node
+            node=node
+            display-image=input.displayImage
+            with-section=withSection
+            lazyload=lazyload
+          />
+        </@slot>
+      </@nodes>
+    </marko-web-node-list>
+  </marko-web-query>
+</else>

@@ -1,0 +1,57 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import queryFragment from "../../graphql/fragments/latest-products-feed-block";
+
+$ const queryParams = {
+  ...input.queryParams,
+  sectionAlias: input.alias,
+  queryFragment,
+};
+
+$ const blockName = "latest-products-feed";
+$ const countOnly = defaultValue(input.countOnly, false);
+
+<if(countOnly)>
+  <theme-query-total-count|data| name="website-scheduled-content" params=queryParams>
+    <${input.renderBody} ...data />
+  </theme-query-total-count>
+</if>
+<else>
+  <marko-web-query|{ nodes }| name="website-scheduled-content" params=queryParams>
+    <marko-web-node-list
+      inner-justified=false
+      flush-x=true
+      flush-y=false
+      modifiers=[blockName]
+    >
+      <@nodes nodes=nodes>
+        <@slot|{ node }|>
+          <theme-product-feed-content-node node=node />
+        </@slot>
+        <@slot position="after" index=2 modifiers=["ad"]>
+          <theme-gam-define-display-ad
+            name="rotation-1-mobile"
+            position="content_page"
+            aliases=[input.alias]
+            modifiers=["max-width-300", "center", "margin-auto-x", "inline-feed"]
+          />
+        </@slot>
+        <@slot position="after" index=5 modifiers=["ad"]>
+          <theme-gam-define-display-ad
+            name="rotation-2-mobile"
+            position="content_page"
+            aliases=[input.alias]
+            modifiers=["max-width-300", "center", "margin-auto-x", "inline-feed"]
+          />
+        </@slot>
+        <@slot position="after" index=8 modifiers=["ad"]>
+          <theme-gam-define-display-ad
+            name="rotation-3-mobile"
+            position="content_page"
+            aliases=[input.alias]
+            modifiers=["max-width-300", "center", "margin-auto-x", "inline-feed"]
+          />
+        </@slot>
+      </@nodes>
+    </marko-web-node-list>
+  </marko-web-query>
+</else>

@@ -1,0 +1,32 @@
+import { asObject, asArray } from "@parameter1/base-cms-utils";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { site, config } = out.global;
+$ const socialLinks = site.getAsArray("socialMediaLinks").map(link => asObject(link));
+$ const blockName = input.blockName || "social-follow";
+$ const dark = defaultValue(input.dark, true);
+$ const color = dark ? "dark" : "light";
+
+<if(socialLinks.length)>
+  <marko-web-block
+    name=blockName
+    tag=input.tag
+    class=input.class
+    modifiers=[color, ...asArray(input.modifiers)]
+    attrs=input.attrs
+  >
+    <marko-web-element block-name=blockName name="header">
+      Follow ${config.website('name')}
+    </marko-web-element>
+    <marko-web-element block-name=blockName name="section">
+      <for|link| of=socialLinks>
+        <default-theme-social-icon-link
+          provider=link.provider
+          href=link.href
+          target=link.target
+          modifiers=[blockName, color]
+        />
+      </for>
+    </marko-web-element>
+  </marko-web-block>
+</if>

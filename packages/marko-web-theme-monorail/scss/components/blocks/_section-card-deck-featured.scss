@@ -1,0 +1,22 @@
+.section-card-deck-featured {
+  &__title {
+    padding-top: 20px;
+    margin-bottom: 20px;
+    @include skin-typography($style: "section-header");
+  }
+}
+
+.node {
+  $self: &;
+  &--section-card-deck-featured {
+    #{ $self } {
+      &__title {
+        @include skin-typography($style: "header-1.5", $link-style: "primary");
+      }
+
+      &__text--teaser {
+        @include skin-typography($style: "teaser-text-1", $link-style: "primary");
+      }
+    }
+  }
+}

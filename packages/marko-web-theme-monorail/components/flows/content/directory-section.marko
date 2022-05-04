@@ -1,0 +1,41 @@
+import { getAsObject } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { nodes, header } = input
+$ const image = getAsObject(input, "node.image");
+
+$ const withSection = defaultValue(input.withSection, false);
+
+$ const blockName = "read-next";
+
+<if(nodes.length)>
+  <marko-web-block name=blockName>
+    <if(header && header.renderBody)>
+      <marko-web-element block-name=blockName name="header">
+        <${header.renderBody} />
+      </marko-web-element>
+    </if>
+    <marko-web-node-list
+      inner-justified=false
+      flush-x=true
+      flush-y=true
+      modifiers=[blockName]
+    >
+      <@nodes nodes=nodes>
+        <@slot|{ node }|>
+          <theme-content-node
+            image-position="left"
+            ...input.node
+            flush=true
+            node=node
+            with-dates=false
+            with-section=withSection
+            modifiers=[blockName]
+          >
+            <@image width=160 ar="3:2" ...image />
+          </theme-content-node>
+        </@slot>
+      </@nodes>
+    </marko-web-node-list>
+  </marko-web-block>
+</if>

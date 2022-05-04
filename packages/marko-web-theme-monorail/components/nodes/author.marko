@@ -1,0 +1,28 @@
+import { buildImgixUrl } from "@parameter1/base-cms-image";
+
+$ const { author } = input;
+$ const blockName = "author-node";
+
+<marko-web-block name=blockName>
+  $ const { primaryImage } = author;
+  <if(primaryImage && primaryImage.src)>
+    $ const src = buildImgixUrl(primaryImage.src, {
+      w: 48,
+      h: 48,
+      crop: "faces",
+      fit: "crop",
+    });
+    $ const srcset = [`${buildImgixUrl(src, { dpr: 2 })} 2x`];
+    <marko-web-img
+      src=src
+      srcset=srcset
+      alt=primaryImage.alt
+      class=`${blockName}__image`
+      link={ href: author.siteContext.path }
+    />
+  </if>
+  <marko-web-element block-name=blockName name="details">
+    <marko-web-content-name block-name=blockName obj=author link=true />
+    <marko-web-content-title block-name=blockName obj=author />
+  </marko-web-element>
+</marko-web-block>

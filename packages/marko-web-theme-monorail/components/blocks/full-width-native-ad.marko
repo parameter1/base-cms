@@ -1,0 +1,21 @@
+import { get } from "@parameter1/base-cms-object-path";
+
+$ const blockName = "full-width-native-ad";
+
+<theme-native-x-render|{ node: nxNode, linkAttrs, containerAttrs }|
+  name="default"
+  when=true
+>
+  <if(nxNode)>
+    <marko-web-block name=blockName>
+      <theme-section-feed-content-node
+        modifiers=[blockName]
+        node=nxNode
+        sponsored-by=get(nxNode, "company.name")
+        with-dates=false
+        link-attrs=linkAttrs
+        container-attrs=containerAttrs
+      />
+    </marko-web-block>
+  </if>
+</theme-native-x-render>

@@ -1,0 +1,34 @@
+import queryFragment from "../../graphql/fragments/opinion-block";
+import sectionFragment from "../../graphql/fragments/section-info";
+
+<!-- @todo likely should change the name of this component -->
+$ const queryParams = {
+  sectionAlias: input.alias,
+  limit: 3,
+  queryFragment,
+  sectionFragment,
+};
+
+$ const blockName = "opinion";
+
+<marko-web-query|{ nodes, section }| name="website-scheduled-content" params=queryParams>
+  <marko-web-block name=blockName>
+    <marko-web-website-section-name obj=section link=true block-name=blockName class=`${blockName}__header` />
+    <default-theme-card-deck-flow
+      cols=3
+      nodes=nodes
+      modifiers=[blockName]
+    >
+      <@slot|{ node }|>
+        <theme-content-node
+          card=true
+          flush=true
+          full-height=true
+          node=node
+          modifiers=[blockName]
+          with-attribution=true
+        />
+      </@slot>
+    </default-theme-card-deck-flow>
+  </marko-web-block>
+</marko-web-query>

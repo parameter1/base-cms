@@ -1,0 +1,60 @@
+.white-papers {
+  height: 100%;
+  padding: 24px;
+  background-color: $gray-100;
+  border-radius: 4px;
+
+  &__header {
+    margin-bottom: 24px;
+    @include skin-typography($style: "section-header-small");
+  }
+
+  &__download-btn {
+    margin-right: 16px;
+  }
+}
+
+.marko-web-icon {
+  $self: &;
+  &--white-papers {
+    margin-right: 5px;
+    svg {
+      width: 20px;
+      height: 20px;
+      fill: map-deep-get($typography, "section-header-small", "color");
+    }
+  }
+}
+
+.node {
+  $self: &;
+
+  &--white-papers {
+    background-color: $gray-100;
+
+    #{ $self } {
+      &__title {
+        margin-bottom: 0;
+        @include skin-typography($style: "header-2", $link-style: "primary");
+      }
+
+      &__header {
+        margin-bottom: 10px;
+      }
+
+      &__contents--body {
+        margin-bottom: 24px;
+      }
+
+      &__text--teaser {
+        margin-top: 8px;
+        margin-bottom: 0;
+        @include skin-typography($style: "small-body-text", $link-style: "primary");
+      }
+
+      &__header-left--company-name {
+        @include skin-typography($style: "sponsored-by");
+      }
+    }
+  }
+}

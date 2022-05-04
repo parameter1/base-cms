@@ -1,0 +1,74 @@
+import { get } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import queryFragment from "../../graphql/fragments/white-papers-block";
+import sectionFragment from "../../graphql/fragments/section-info";
+
+$ const { i18n } = out.global;
+
+$ const sectionAlias = defaultValue(input.sectionAlias, "white-papers");
+$ const contentTypes = defaultValue(input.contentTypes, ["Whitepaper"]);
+
+$ const queryParams = {
+  sectionAlias,
+  includeContentTypes: contentTypes,
+  ...input.queryParams,
+  limit: 1,
+  queryFragment,
+  sectionFragment,
+};
+
+<marko-web-query|{ nodes, section }| name="website-scheduled-content" params=queryParams>
+  <if(nodes.length)>
+    $ const node = nodes[0];
+    $ const blockName = "white-papers";
+
+    <marko-web-block name=blockName>
+      <marko-web-element block-name=blockName name="header">
+        <marko-web-icon name="file" modifiers=[blockName] />
+        ${section.name}
+      </marko-web-element>
+
+      <marko-web-node
+        type=`${node.type}-content`
+        card=true
+        flush=true
+        full-height=false
+        modifiers=[blockName]
+      >
+        <@body>
+          <@header>
+            <@left modifiers=["company-name"]>
+              <marko-web-content-name|{ value }| obj=node.company>
+                ${i18n("Sponsored by")} ${value}
+              </marko-web-content-name>
+            </@left>
+          </@header>
+          <@title tag="h5">
+            <marko-web-content-short-name tag=null obj=node link=true />
+          </@title>
+          <@text modifiers=["teaser"] show=(Boolean(node.teaser))>
+            <marko-web-content-teaser tag=null obj=node link=true />
+          </@text>
+          <@footer modifiers=["buttons"]>
+            <@left>
+              <marko-web-link
+                class=`btn btn-primary ${blockName}__download-btn`
+                href=node.siteContext.path
+                title="Download"
+              >
+                ${i18n("Download")}
+              </marko-web-link>
+              <marko-web-link
+                class="btn btn-secondary"
+                href=`/${sectionAlias}`
+                title="View All"
+              >
+                ${i18n("View All")}
+              </marko-web-link>
+            </@left>
+          </@footer>
+        </@body>
+      </marko-web-node>
+    </marko-web-block>
+  </if>
+</marko-web-query>

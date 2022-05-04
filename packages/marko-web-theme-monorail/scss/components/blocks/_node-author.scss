@@ -1,0 +1,27 @@
+.node {
+  $self: &;
+  &--author {
+    padding-top: 16px;
+    background-color: transparent;
+
+    #{ $self } {
+      &__title {
+        @include skin-typography($style: "author-name-list", $link-style: "primary");
+        margin-bottom: 5px;
+      }
+
+      &__text {
+        @include skin-typography($style: "author-title-list");
+        text-transform: capitalize;
+      }
+
+      &__image {
+        border-radius: 50px;
+      }
+
+      &__image-wrapper + #{ $self}__body {
+        margin-left: 10px;
+      }
+    }
+  }
+}

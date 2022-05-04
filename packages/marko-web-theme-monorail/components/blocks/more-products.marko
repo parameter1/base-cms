@@ -1,0 +1,49 @@
+import queryFragment from "../../graphql/fragments/products-block";
+import sectionFragment from "../../graphql/fragments/section-info";
+
+$ const { i18n } = out.global;
+
+$ const queryParams = {
+  requiresImage: true,
+  ...input.params,
+  sectionAlias: input.alias,
+  limit: 6,
+  queryFragment,
+  sectionFragment,
+};
+
+$ const blockName = "more-products";
+
+<marko-web-query|{ nodes, section }| name="website-scheduled-content" params=queryParams>
+  <marko-web-block name=blockName>
+    <marko-web-element block-name=blockName name="header-wrapper">
+      <marko-web-element block-name=blockName name="header">
+        ${i18n("More")} ${section.name}
+      </marko-web-element>
+      <marko-web-element block-name=blockName name="view-more">
+        <marko-web-link href=section.canonicalPath>
+          ${i18n("View more")} &raquo;
+        </marko-web-link>
+      </marko-web-element>
+    </marko-web-element>
+    <default-theme-card-deck-flow
+      cols=2
+      nodes=nodes
+      modifiers=[blockName]
+    >
+      <@slot|{ node }|>
+        <theme-content-node
+          image-position="right"
+          card=true
+          flush=false
+          modifiers=[blockName]
+          node=node
+          with-teaser=false
+          with-dates=false
+        >
+          <@image width=112 ar="1:1" />
+        </theme-content-node>
+      </@slot>
+    </default-theme-card-deck-flow>
+  </marko-web-block>
+</marko-web-query>

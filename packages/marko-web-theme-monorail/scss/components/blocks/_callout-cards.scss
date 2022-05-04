@@ -1,0 +1,19 @@
+.callout-cards {
+  &__row {
+    @include make-row();
+  }
+
+  &__col {
+    @include make-col-ready();
+    @include media-breakpoint-up(md) {
+      @include make-col(6);
+    }
+
+    &--last {
+      margin-top: 30px;
+      @include media-breakpoint-up(md) {
+        margin-top: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "<theme-author-node>": {
+    "template": "./author.marko"
+  },
+  "<theme-author-published-node>": {
+    "template": "./author-published.marko"
+  },
+  "<theme-content-node>": {
+    "template": "./content.marko",
+    "<image>": {},
+    "<title>": {},
+    "<teaser>": {
+      "@modifiers": "array"
+    },
+    "<attribution>": {},
+    "@node": "object",
+
+    "@display-image": "boolean",
+    "@image-position": "string",
+    "@card": "boolean",
+    "@flush": "boolean",
+    "@full-height": "boolean",
+
+    "@image-only": "boolean",
+    "@with-teaser": "boolean",
+    "@with-body": "boolean",
+    "@with-section": "boolean",
+    "@with-attribution": "boolean",
+    "@with-dates": "boolean",
+    "@with-primary-section-modifier": "boolean",
+    "@display-button": "boolean",
+    "@call-to-action": "string",
+
+    "@modifiers": "array",
+    "@attrs": "object",
+    "@link-attrs": "object"
+  },
+  "<theme-content-published-node>": {
+    "template": "./content-published.marko"
+  },
+  "<theme-directory-section-feed-content-node>": {
+    "template": "./directory-section-feed-content.marko"
+  },
+  "<theme-product-feed-content-node>": {
+    "template": "./product-feed-content.marko"
+  },
+  "<theme-section-feed-content-node>": {
+    "template": "./section-feed-content.marko"
+  },
+  "<theme-youtube-card-node>": {
+    "template": "./youtube-card.marko",
+    "@image-position": "string",
+    "@modifiers": "array",
+    "@node": "object",
+    "@company-id": "number",
+    "@link-attrs": "object"
+  },
+  "<theme-author-card-node>": {
+    "template": "./author-card.marko",
+    "@node": "object",
+    "@with-email": "boolean"
+  },
+  "<theme-featured-products-card-node>": {
+    "template": "./featured-products-card.marko",
+    "@node": "object",
+    "@company-id": "number",
+    "@image-width": {
+      "type": "number",
+      "default-value": 300
+    },
+    "@with-teaser": {
+      "type": "boolean",
+      "default-value": true
+    },
+    "@link-attrs": "object"
+  }
+}

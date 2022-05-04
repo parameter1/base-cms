@@ -1,0 +1,91 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import queryFragment from "../../graphql/fragments/content-list";
+import sectionFragment from "../../graphql/fragments/section-info";
+
+$ const { i18n } = out.global;
+
+<!-- @todo determine how to display the sponsor logo -->
+$ const queryParams = {
+  ... input.queryParams,
+  sectionAlias: input.alias,
+  limit: 3,
+  queryFragment,
+  sectionFragment,
+};
+
+$ const name = defaultValue(input.name, "");
+$ const description = defaultValue(input.description, "");
+$ const blockName = "hero-card";
+
+<marko-web-query|{ nodes, section }| name="website-scheduled-content" params=queryParams>
+  <marko-web-block name=blockName>
+    <marko-web-element block-name=blockName name="header">
+      ${section && section.name || name}
+    </marko-web-element>
+    <marko-web-element block-name=blockName name="description-wrapper">
+      <marko-web-element block-name=blockName name="description">
+        $!{section && section.description || description}
+      </marko-web-element>
+      <if(section)>
+        <marko-web-element block-name=blockName name="view-more">
+          <marko-web-link href=section.canonicalPath>
+            ${i18n("View more")} &raquo;
+          </marko-web-link>
+        </marko-web-element>
+      </if>
+    </marko-web-element>
+    <div class="row">
+      <div class="col-md col-md-9">
+        <default-theme-card-deck-flow
+          cols=1
+          nodes=nodes.slice(0,1)
+          modifiers=[blockName, "hero"]
+        >
+          <@slot|{ node }|>
+            <theme-content-node
+              image-position="top"
+              full-height=true
+              card=true
+              flush=false
+              modifiers=[blockName]
+              node=node
+              with-teaser=false
+              with-dates=false
+            >
+              <@image fluid=true width=790 ar="16:9" />
+            </theme-content-node>
+          </@slot>
+        </default-theme-card-deck-flow>
+      </div>
+      <div class="col-md col-md-3">
+        <default-theme-card-deck-flow
+          cols=1
+          nodes=nodes.slice(1)
+          modifiers=[blockName]
+        >
+          <@slot|{ node }|>
+            <theme-content-node
+              image-position="top"
+              full-height=true
+              card=true
+              flush=false
+              modifiers=[blockName]
+              node=node
+              with-teaser=false
+              with-dates=false
+            >
+              <@image fluid=true width=240 ar="16:9" />
+            </theme-content-node>
+          </@slot>
+        </default-theme-card-deck-flow>
+      </div>
+    </div>
+    <if(section)>
+      <marko-web-element block-name=blockName name="view-more-bottom">
+        <marko-web-link href=section.canonicalPath>
+          ${i18n("View more")} &raquo;
+        </marko-web-link>
+      </marko-web-element>
+    </if>
+  </marko-web-block>
+</marko-web-query>

@@ -1,0 +1,38 @@
+.node {
+  $self: &;
+
+  &--top-stories-menu {
+    #{ $self } {
+      &__title {
+        @include skin-typography($style: "header-3", $link-style: "primary");
+        margin-bottom: 0;
+      }
+      &__website-section-name {
+        @include skin-typography($style: "slug-small", $link-style: "primary");
+        margin-bottom: 1px;
+      }
+    }
+  }
+}
+
+.node-list {
+  $self: &;
+  &--top-stories-menu {
+    #{ $self } {
+      &__header {
+        @include skin-typography($style: "menu-item-primary-header");
+        margin-bottom: 12px;
+      }
+
+      &__nodes {
+        padding-top: 0;
+      }
+
+      &__node {
+        padding-top: 8px;
+        padding-bottom: 16px;
+        border-bottom: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,443 @@
+@keyframes slideOutUpAndFade {
+  from {
+    max-height: 1000px;
+    opacity: 1;
+  }
+
+  to {
+    max-height: 0;
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+@keyframes slideInDownAndFade {
+  from {
+    max-height: 0;
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  to {
+    max-height: 300px;
+    opacity: 1;
+  }
+}
+
+.grecaptcha-badge {
+  visibility: hidden;
+}
+
+.site-newsletter-menu {
+  max-height: 0;
+
+  will-change: visibility, max-height;
+  visibility: hidden;
+  background: linear-gradient($gray-100, $white);
+
+  transition: max-height .25s cubic-bezier(.4, 0, .2, 1), visibility 0s linear .25s;
+
+  &__container {
+    position: relative;
+    max-width: $marko-web-document-container-max-width;
+    padding-top: 30px;
+    padding-right: $marko-web-page-wrapper-padding;
+    padding-left: $marko-web-page-wrapper-padding;
+    margin-right: auto;
+    margin-left: auto;
+
+    @media (min-width: $marko-web-document-container-max-width) {
+      padding-right: 0;
+      padding-left: 0;
+    }
+
+    @include media-breakpoint-down(sm) {
+      padding-top: 24px;
+    }
+
+    & .row {
+      position: relative;
+    }
+  }
+
+  &__form-wrapper {
+    padding-bottom: 30px;
+    @include media-breakpoint-down(sm) {
+      max-width: 450px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+
+  &__form-button {
+    @include skin-button("primary");
+  }
+
+  &__image-wrapper {
+    display: flex;
+  }
+
+  &__image {
+    width: 280px;
+    margin-top: auto;
+    margin-right: auto;
+    margin-left: auto;
+    filter: drop-shadow(10px 10px 20px rgba(0, 0, 0, .4));
+  }
+
+  &__name {
+    @include skin-typography($style: "section-header");
+    margin-bottom: 6px;
+    line-height: 1.25;
+    text-transform: none;
+  }
+
+  &__description {
+    @include skin-typography($style: "teaser-text-1");
+    margin-bottom: 16px;
+  }
+
+  &__privacy-policy {
+    @include skin-typography($style: "credit-disclaimer");
+    margin-top: 10px;
+    margin-bottom: 14px;
+
+    line-height: 1.428;
+
+    a {
+      text-decoration: underline;
+    }
+  }
+
+  &__form {
+    input {
+      max-width: 312px;
+    }
+  }
+
+  &__close-container {
+    right: 0;
+    display: flex;
+  }
+
+  &__close {
+    @include theme-toggle-button();
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    margin-right: 0;
+    margin-left: auto;
+
+    > .marko-web-icon {
+      position: relative;
+      top: -1px;
+      @include theme-navbar-link-color($theme-site-navbar-secondary-colors);
+    }
+  }
+
+  .newsletter-name {
+    font-weight: $font-weight-bold;
+  }
+
+  &--open {
+    max-height: 1000px;
+    visibility: visible;
+
+    transition: max-height .25s cubic-bezier(.4, 0, .2, 1), visibility 0s linear 0s;
+  }
+}
+
+.complete-newsletter-signup {
+  $self: &;
+
+  &__slide-out {
+    animation-name: slideOutUpAndFade;
+    animation-duration: 500ms;
+    animation-fill-mode: both;
+  }
+
+  &__slide-in {
+    animation-name: slideInDownAndFade;
+    animation-duration: 500ms;
+    animation-fill-mode: both;
+  }
+
+  &__card-header {
+    display: inline-flex;
+    align-items: center;
+    padding: 15px 17px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    background-color: $skin-newsletter-signup-bg-color;
+
+    @include media-breakpoint-up(md) {
+      font-size: 20px;
+    }
+  }
+
+  &__card-body {
+    max-width: 652px;
+    overflow: hidden;
+  }
+
+  &__check-icon {
+    margin-right: 12px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+      fill: #fff;
+    }
+  }
+
+  &__header {
+    margin-bottom: 19px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.14;
+
+    @include media-breakpoint-up(md) {
+      margin-bottom: 24px;
+    }
+  }
+
+  &__thank-you-header {
+    margin-bottom: 12px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.14;
+  }
+
+  &__about-you {
+    margin-bottom: 6px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.14;
+
+    @include media-breakpoint-up(md) {
+      margin-bottom: 12px;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 13px;
+
+    @include media-breakpoint-up(md) {
+      flex-direction: row;
+      margin-bottom: 36px;
+    }
+  }
+
+  &__form-group {
+    margin-bottom: 19px;
+    @include media-breakpoint-up(md) {
+      margin-bottom: 0;
+    }
+
+    &--company-name {
+      max-width: 250px;
+      @include media-breakpoint-up(md) {
+        margin-right: 12px;
+      }
+    }
+    &--primary-role {
+      max-width: 250px;
+      @include media-breakpoint-up(md) {
+        max-width: 238px;
+        margin-right: 12px;
+      }
+    }
+    &--postal-code {
+      max-width: 140px;
+    }
+  }
+
+  &__form-label {
+    margin-bottom: 9px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.13;
+  }
+
+  &__form-button {
+    @include skin-button("primary");
+  }
+
+  &__subscriptions-header {
+    margin-bottom: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.14;
+
+    @include media-breakpoint-up(md) {
+      margin-bottom: 15px;
+    }
+  }
+
+  &__subscriptions {
+    margin-bottom: 15px;
+  }
+
+  &__signup {
+    display: flex;
+    flex-direction: column-reverse;
+
+    @include media-breakpoint-up(md) {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .btn {
+      white-space: nowrap;
+    }
+  }
+
+  &__privacy-policy {
+    @include skin-typography($style: "credit-disclaimer");
+    margin-bottom: 15px;
+
+    @include media-breakpoint-up(md) {
+      max-width: 100%;
+      margin-bottom: 0;
+      margin-left: 17px;
+    }
+  }
+
+  &--as-card {
+    background-color: $gray-100;
+    border-radius: 4px;
+
+    #{ $self } {
+      &__card-header {
+        display: flex;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+      }
+      &__card-body {
+        padding-right: 15px;
+        padding-bottom: 24px;
+        padding-left: 15px;
+      }
+    }
+  }
+
+  &--in-pushdown {
+    padding-bottom: 24px;
+    margin-left: 0;
+    @include media-breakpoint-up(md) {
+      padding-bottom: 30px;
+      margin-left: 64px;
+    }
+  }
+}
+
+.newsletter-checkbox-group {
+  &__name {
+    display: inline-block;
+    margin-bottom: 2px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.22;
+  }
+
+  &__description {
+    display: inline-block;
+    max-width: 250px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.38;
+  }
+
+  .custom-control-label {
+    margin-bottom: 9px;
+  }
+}
+
+.inline-newsletter-form {
+  margin-bottom: 24px;
+}
+
+.inline-newsletter-form-step1 {
+  display: flex;
+  align-items: center;
+  padding: 22px 16px;
+  background-color: $skin-newsletter-signup-bg-color;
+  border-radius: 4px;
+
+  &__left-col {
+    display: none;
+    @include media-breakpoint-up(md) {
+      display: block;
+      width: 100px;
+      margin-top: auto;
+      margin-right: 20px;
+      margin-bottom: auto;
+    }
+
+    img {
+      width: 100px;
+    }
+  }
+
+  &__title {
+    margin-bottom: 8px;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.14;
+    color: #fff;
+  }
+
+  &__description {
+    max-width: 525px;
+    margin-bottom: 12px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.38;
+    color: #fff;
+  }
+
+  &__form {
+    display: flex;
+    max-width: 435px;
+  }
+
+  &__email-group {
+    flex-grow: 1;
+  }
+
+  &__email-input {
+    background-color: #fff;
+    border-color: $skin-newsletter-signup-bg-color;
+    &:hover:not(:focus) {
+      border-color: $skin-newsletter-signup-inline-btn-color;
+    }
+    &:focus {
+      border-color: $skin-newsletter-signup-inline-btn-color;
+      box-shadow: 0 0 0 1px $skin-newsletter-signup-inline-btn-color;
+    }
+  }
+
+  &__form-button {
+    margin-left: 10px;
+    @include skin-button("inline-newsletter-signup");
+  }
+
+  &__privacy-policy {
+    max-width: 525px;
+    margin-top: 12px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.28;
+    color: $gray-100;
+
+    a {
+      color: $gray-100;
+      text-decoration: underline;
+    }
+  }
+}

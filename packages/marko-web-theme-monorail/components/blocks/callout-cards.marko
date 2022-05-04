@@ -1,0 +1,15 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+
+$ const blockName = "callout-cards";
+$ const slots = getAsArray(input, "slots");
+
+<marko-web-block name=blockName>
+  <marko-web-element block-name=blockName name="row">
+    <marko-web-element block-name=blockName name="col">
+      <${slots[0].renderBody} />
+    </marko-web-element>
+    <marko-web-element block-name=blockName name="col" modifiers=["last"]>
+      <${slots[1].renderBody} />
+    </marko-web-element>
+  </marko-web-element>
+</marko-web-block>

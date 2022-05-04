@@ -1,0 +1,36 @@
+$ const blockName = "newsletter-signup-banner-large";
+
+$ const { site } = out.global;
+$ const {
+  action,
+  hiddenInputs,
+  name,
+  description,
+  disabled
+} = site.getAsObject('newsletter.signupBannerLarge');
+
+<if(action && description && name)>
+  <marko-web-block name=blockName class=input.class>
+    <marko-web-element block-name=blockName name="name">
+      ${name}
+    </marko-web-element>
+    <marko-web-element block-name=blockName name="description">
+      $!{description}
+    </marko-web-element>
+    <form method="GET" action=action class=`${blockName}__form`>
+      <label for="newsletter-signup-banner-large-email" class="sr-only">Email</label>
+      <input
+        id="newsletter-signup-banner-large-email"
+        class="form-control"
+        placeholder="example@gmail.com"
+        type="email"
+        name="em"
+        required
+      />
+      <for|item| of=hiddenInputs>
+        <input type="hidden" name=item.name value=item.value />
+      </for>
+      <button class="btn btn-primary" type="submit" disabled=(disabled && "disabled")>Sign Up</button>
+    </form>
+  </marko-web-block>
+</if>

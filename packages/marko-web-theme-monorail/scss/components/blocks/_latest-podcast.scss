@@ -1,0 +1,69 @@
+.latest-podcast {
+  $padding: 24px;
+  $button-spacer: 8px;
+
+  height: 100%;
+  padding: $padding;
+  padding-bottom: $padding - $button-spacer;
+  background-color: $gray-100;
+  border-radius: 4px;
+
+  &__header {
+    margin-bottom: 24px;
+    @include skin-typography($style: "section-header-small");
+  }
+
+  &__btn {
+    margin-right: $button-spacer;
+    margin-bottom: $button-spacer;
+  }
+}
+
+.marko-web-icon {
+  $self: &;
+  &--latest-podcast {
+    margin-right: 5px;
+    svg {
+      width: 20px;
+      height: 20px;
+      fill: map-deep-get($typography, "section-header-small", "color");
+    }
+  }
+}
+
+.node {
+  $self: &;
+
+  &--latest-podcast {
+    background-color: $gray-100;
+
+    #{ $self } {
+      &__title {
+        margin-bottom: 20px;
+        @include skin-typography($style: "header-3", $link-style: "primary");
+      }
+
+      &__header {
+        margin-bottom: 10px;
+      }
+
+      &__header-left {
+        @include skin-typography($style: "slug-small");
+        color: $gray-700;
+      }
+
+      &__contents--body {
+        margin-bottom: 0;
+      }
+
+      &__text--more-episodes {
+        @include skin-typography($style: "view-more", $link-style: "primary");
+      }
+
+      &__footer-left--buttons {
+        max-width: 85%;
+        margin-top: 24px;
+      }
+    }
+  }
+}

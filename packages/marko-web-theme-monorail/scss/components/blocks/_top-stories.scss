@@ -1,0 +1,179 @@
+.top-stories {
+  &__header {
+    margin-bottom: 24px;
+    @include media-breakpoint-up(md) {
+      margin-bottom: 30px;
+    }
+    @include skin-typography($style: "section-header");
+  }
+
+  &__row {
+    @include make-row();
+    margin-bottom: 16px;
+    @include media-breakpoint-up(md) {
+      margin-bottom: 0;
+    }
+  }
+
+  &__col {
+    @include make-col-ready();
+
+    &--hero {
+      @include media-breakpoint-up(md) {
+        @include make-col(6);
+      }
+      @include media-breakpoint-up(lg) {
+        @include make-col(7);
+      }
+    }
+
+    &--list {
+      @include media-breakpoint-up(md) {
+        @include make-col(6);
+      }
+      @include media-breakpoint-up(lg) {
+        @include make-col(5);
+      }
+    }
+  }
+}
+
+.node {
+  $self: &;
+
+  &--top-stories-hero-image {
+    margin-bottom: 14px;
+    @include media-breakpoint-up(md) {
+      margin-bottom: 0;
+    }
+  }
+
+  &--top-stories-hero {
+    padding-bottom: 20px;
+    @include marko-web-node-list-border(border-bottom);
+
+    @include media-breakpoint-up(md) {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    #{ $self } {
+      &__header {
+        @include media-breakpoint-up(md) {
+          margin-bottom: 12px;
+        }
+      }
+
+      &__title {
+        width: 100%;
+        margin-bottom: 0;
+        @include skin-typography($style: "header-1", $link-style: "primary");
+      }
+
+      &__text--teaser {
+        margin-top: 10px;
+        margin-bottom: 0;
+        @include media-breakpoint-up(lg) {
+          margin-top: 16px;
+        }
+        @include skin-typography($style: "article-text", $link-style: "primary");
+      }
+
+      &__website-section-name {
+        @include skin-typography($style: "slug-small", $link-style: "primary");
+      }
+    }
+  }
+
+  &--top-stories-card {
+    padding-bottom: 16px;
+    @include marko-web-node-list-border(border-bottom);
+
+    @include media-breakpoint-up(md) {
+      padding-top: 16px;
+      padding-bottom: 0;
+      border-bottom: none;
+      @include marko-web-node-list-border(border-top);
+    }
+
+    @include media-breakpoint-up(lg) {
+      padding-top: 0;
+      border-top: none;
+    }
+
+    #{ $self } {
+      &__title {
+        width: 100%;
+        @include skin-typography($style: "header-3", $link-style: "primary");
+      }
+
+      &__contents {
+        flex-direction: row-reverse;
+        @include media-breakpoint-up(lg) {
+          flex-direction: column;
+        }
+      }
+
+      $image-size: 112px;
+      &__node-image {
+        width: $image-size;
+        height: $image-size;
+        @include media-breakpoint-up(lg) {
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      &__image-inner-wrapper--fluid-3by2 {
+        width: $image-size;
+        min-width: $image-size;
+        height: $image-size;
+        @include media-breakpoint-up(lg) {
+          width: 100%;
+          min-width: 100%;
+          height: auto;
+        }
+
+        &::before {
+          // use bp-down (max-width) instead, since the padding is a calculated % at all widths by default
+          @include media-breakpoint-down(md) {
+            padding-top: 0;
+          }
+        }
+      }
+
+      &__image-wrapper + #{ $self }__body {
+        margin-top: 0;
+        margin-right: 15px;
+        @include media-breakpoint-up(lg) {
+          margin-top: 14px;
+          margin-right: 0;
+        }
+      }
+
+      &__website-section-name {
+        @include skin-typography($style: "slug-small", $link-style: "primary");
+      }
+    }
+  }
+}
+
+.card-deck-flow {
+  $self: &;
+  &--top-stories {
+    #{ $self } {
+      &__node {
+        @include media-breakpoint-up(md) {
+          margin-top: 16px;
+          margin-bottom: 0;
+        }
+        @include media-breakpoint-up(lg) {
+          margin-top: 20px;
+        }
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}

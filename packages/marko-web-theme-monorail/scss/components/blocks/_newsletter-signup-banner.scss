@@ -1,0 +1,40 @@
+.newsletter-signup-banner {
+  display: block;
+  flex-direction: row;
+  justify-content: space-between;
+  max-width: 730px;
+  padding: 16px;
+  margin-top: 16px;
+  margin-bottom: 38px;
+  background-color: $gray-100;
+  border-radius: 4px;
+  @include skin-typography($style: "teaser-text-1");
+
+  &__form {
+    display: flex;
+    input {
+      display: inline;
+      max-width: 312px;
+      margin-right: $block-spacer / 2;
+    }
+  }
+
+  &__button-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .newsletter-name {
+    font-weight: $font-weight-bold;
+  }
+
+  @media (max-width: 530px) {
+    &__form {
+      display: block;
+      input {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}

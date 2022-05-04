@@ -1,0 +1,14 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+
+$ const { blockName } = input;
+$ const labels = getAsArray(input, "labels");
+$ const sponsors = labels.filter((label) => /^sponsored by/i.test(label));
+
+<if(sponsors.length)>
+  <marko-web-element block-name=blockName name="website-section-name">
+    ${labels[0]}
+  </marko-web-element>
+</if>
+<else>
+  <marko-web-website-section-name block-name=blockName obj=input.section link=true />
+</else>

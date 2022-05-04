@@ -1,0 +1,32 @@
+<!-- @todo: MERGE with marko-web-identity-x/comopnents/comment-stream.marko -->
+<!-- @todo: Use toggler based on input (default false)-->
+import { getAsObject } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { site } = out.global;
+$ const content = getAsObject(input, "content");
+$ const lang = site.config.lang || "en";
+
+<div class="comment-stream">
+  <div class="idx-comment-stream-wrapper">
+    <marko-web-identity-x-comment-stream
+      identifier=`${content.id}`
+      title=content.name
+      description=content.teaser
+      url=content.siteContext.canonicalUrl
+      load-more-button-class="btn btn-secondary"
+      login-button-labels={ continue: "Continue", logout: "Logout"}
+    />
+    <marko-web-browser-component
+      name="ThemeCommentToggleButton"
+      props={
+        identifier: `${content.id}`,
+        isExpanded: false,
+        classes: "btn btn-secondary comment-stream__toggle-btn",
+        targets: [".idx-comment-stream-wrapper"],
+        toggleClass: "idx-comment-stream-wrapper--open",
+        lang
+      }
+    />
+  </div>
+</div>
