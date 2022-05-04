@@ -13,16 +13,5 @@
     "@detect-embeds": "boolean",
     "@selector": "string",
     "@child-selector": "string"
-  },
-  "<theme-gam-prestitial>": {
-    "template": "./prestitial.marko",
-    "@name": {
-      "type": "string",
-      "required": true
-    },
-    "@aliases": "array",
-    "@targeting": "object",
-    "@init": "boolean",
-    "@display": "boolean"
   }
 }
