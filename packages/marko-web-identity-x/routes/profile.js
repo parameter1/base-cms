@@ -98,6 +98,9 @@ module.exports = asyncRoute(async (req, res) => {
     const customSelectFieldsInput = customSelectFieldAnswers.map(fieldAnswer => ({
       fieldId: fieldAnswer.field.id,
       optionIds: fieldAnswer.answers.map(({ id }) => id),
+      writeInValues: fieldAnswer.answers.reduce((arr, { id, writeInValue }) => ([
+        ...arr, { optionId: id, value: writeInValue },
+      ]), []),
     }));
     await identityX.client.mutate({
       mutation: customSelectFieldsMutation,

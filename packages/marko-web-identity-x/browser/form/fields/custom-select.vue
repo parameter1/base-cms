@@ -12,7 +12,7 @@
       @change="$emit('change', $event)"
     />
     <select
-      v-else
+      v-else-if="!canWriteIn"
       :id="fieldId"
       class="custom-select"
       :required="required"
@@ -30,17 +30,26 @@
         {{ option.label }}
       </option>
     </select>
+    <custom-select-write-in
+      v-else
+      :label="writeInLabel"
+      :selected="selected"
+      :required="required"
+      @clear="clearWriteIn($event)"
+    />
   </form-group>
 </template>
 
 <script>
 import CheckboxGroup from '../common/checkbox-group.vue';
+import CustomSelectWriteIn from './custom-select-write-in.vue';
 import FormGroup from '../common/form-group.vue';
 import FormLabel from '../common/form-label.vue';
 
 export default {
   components: {
     CheckboxGroup,
+    CustomSelectWriteIn,
     FormGroup,
     FormLabel,
   },
@@ -108,6 +117,27 @@ export default {
       const { selectedOptionIds, multiple } = this;
       if (!multiple) return selectedOptionIds[0] || '';
       return selectedOptionIds.slice();
+    },
+
+    canWriteIn() {
+      if (this.selectedOptionId) {
+        const selected = this.options.find(option => option.id === this.selectedOptionId);
+        return selected && selected.canWriteIn;
+      }
+      return false;
+    },
+    showWriteIn() {
+      return this.selected && this.canWriteIn;
+    },
+    writeInLabel() {
+      const selected = this.options.find(option => option.id === this.selectedOptionId);
+      return selected && selected.label;
+    },
+  },
+  methods: {
+    clearWriteIn(optionId) {
+      const selected = this.selected.filter(item => item.id !== optionId);
+      this.$emit('change', selected);
     },
   },
 };

@@ -52,7 +52,7 @@ fragment ActiveUserFragment on AppUser {
   }) {
     id
     hasAnswered
-    answers { id externalIdentifier }
+    answers { id externalIdentifier writeInValue }
     field {
       id
       label
@@ -64,7 +64,7 @@ fragment ActiveUserFragment on AppUser {
         namespace { provider tenant type }
         identifier { value type }
       }
-      options { id label }
+      options { id label canWriteIn }
     }
   }
 }
