@@ -99,7 +99,8 @@ module.exports = asyncRoute(async (req, res) => {
       fieldId: fieldAnswer.field.id,
       optionIds: fieldAnswer.answers.map(({ id }) => id),
       writeInValues: fieldAnswer.answers.reduce((arr, { id, writeInValue }) => ([
-        ...arr, { optionId: id, value: writeInValue },
+        ...arr,
+        ...(writeInValue ? [{ optionId: id, value: writeInValue }] : []),
       ]), []),
     }));
     await identityX.client.mutate({
