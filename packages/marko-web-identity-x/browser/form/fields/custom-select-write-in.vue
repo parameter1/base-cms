@@ -1,7 +1,9 @@
 <template>
   <div class="input-group">
-    <div class="input-group-prepend">
-      <div class="input-group-text">{{ label }}</div>
+    <div class="input-group-prepend w-25">
+      <div class="input-group-text d-inline-block text-truncate" :title="label">
+        {{ label }}
+      </div>
     </div>
 
     <input
