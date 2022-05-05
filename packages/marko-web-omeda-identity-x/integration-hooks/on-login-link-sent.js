@@ -58,6 +58,7 @@ const CUSTOMER_QUERY = gql`
       demographics {
         demographic { id description }
         value { id description }
+        writeInDesc
       }
       primaryEmailAddress {
         optInStatus { deploymentTypeId status { id } }
@@ -121,11 +122,12 @@ const setOmedaDemographics = async ({
   answeredQuestionMap,
 }) => {
   const omedaCustomerDemoValuesMap = omedaCustomer.demographics
-    .reduce((map, { demographic, value }) => {
+    .reduce((map, { demographic, value, writeInDesc }) => {
       if (!value || !value.id) return map; // skip demos without value IDs
       const id = `${demographic.id}`;
-      if (!map.has(id)) map.set(id, new Set());
-      map.get(id).add(`${value.id}`);
+      const ids = map.has(id) ? map.get(id).ids : new Set();
+      ids.add(`${value.id}`);
+      map.set(id, { ids, writeInDesc });
       return map;
     }, new Map());
 
@@ -134,15 +136,17 @@ const setOmedaDemographics = async ({
   omedaLinkedFields.forEach((field) => {
     if (answeredQuestionMap.has(field.id)) return;
     const { value: demoId } = field.externalId.identifier;
-    const valueIdSet = omedaCustomerDemoValuesMap.get(demoId);
-    if (!valueIdSet) return;
+    if (!omedaCustomerDemoValuesMap.has(demoId)) return;
+    const value = omedaCustomerDemoValuesMap.get(demoId);
+    const { ids: valueIdSet, writeInDesc } = value;
 
     if (field.type === 'select') {
       field.options.forEach((option) => {
         const { externalIdentifier } = option;
         if (!externalIdentifier || !valueIdSet.has(externalIdentifier)) return;
-        if (!selectAnswerMap.has(field.id)) selectAnswerMap.set(field.id, new Set());
-        selectAnswerMap.get(field.id).add(option.id);
+        const ids = selectAnswerMap.has(field.id) ? selectAnswerMap.get(field.id).ids : new Set();
+        ids.add(option.id);
+        selectAnswerMap.set(field.id, { ids, writeInDesc });
       });
     }
 
@@ -161,8 +165,18 @@ const setOmedaDemographics = async ({
   await (async () => {
     if (!selectAnswerMap.size) return;
     const answers = [];
-    selectAnswerMap.forEach((optionIdSet, fieldId) => {
-      answers.push({ fieldId, optionIds: [...optionIdSet] });
+    selectAnswerMap.forEach((value, fieldId) => {
+      const optionIds = [...value.ids];
+      answers.push({
+        fieldId,
+        optionIds,
+        ...(value.writeInDesc && {
+          writeInValues: optionIds.map(id => ({
+            optionId: id,
+            value: value.writeInDesc,
+          })),
+        }),
+      });
     });
     await identityX.client.mutate({
       mutation: SET_OMEDA_SELECT_FIELD_ANSWERS,
@@ -283,12 +297,16 @@ module.exports = async ({
     && omedaLinkedFields
       .deploymentType.every(field => answeredQuestionMap.has(field.id));
 
+  // @todo: user.hasAnsweredAllOmedaQuestions isn't a thing, review this.
+  // Possible typo for hasAnsweredAllOmedaQuestions to bypass omeda fetch/updates?
   if (user.verified && user.hasAnsweredAllOmedaQuestions) {
     return;
   }
 
   // find the omeda customer record to "prime" the identity-x user.
   const omedaCustomer = await getOmedaCustomerRecord(omedaGraphQLClient, encryptedCustomerId);
+
+  // Only set existing omeda data to IdentityX if the user is not yet verified (aka, new user)
   if (!user.verified) await setOmedaData({ identityX, user, omedaCustomer });
   if (!hasAnsweredAllOmedaQuestions) {
     await setOmedaDemographics({
