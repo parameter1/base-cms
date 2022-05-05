@@ -62,9 +62,11 @@ module.exports = async ({
   }).map((select) => {
     const { field } = select;
     const { identifier } = field.externalId;
+    const writeInValue = select.answers.reduce((v, answer) => (v || answer.writeInValue), null);
     return {
       id: parseInt(identifier.value, 10),
       values: select.answers.map(answer => answer.externalIdentifier).filter(v => v),
+      ...(writeInValue && { writeInValue }),
     };
   });
 
