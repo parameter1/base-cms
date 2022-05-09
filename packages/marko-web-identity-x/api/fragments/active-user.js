@@ -48,7 +48,7 @@ fragment ActiveUserFragment on AppUser {
   }
   customSelectFieldAnswers(input: {
     onlyActive: true
-    sort: { field: label, order: asc }
+    sort: { field: createdAt, order: asc }
   }) {
     id
     hasAnswered
