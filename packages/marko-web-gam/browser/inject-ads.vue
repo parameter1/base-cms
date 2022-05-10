@@ -91,7 +91,7 @@ export default {
                 }
               } else if ($child.is(headlineTags)) {
                 $child.before(cleaned);
-              } else {
+              } else if (!$next.hasClass('ad-container')) {
                 $child.after(cleaned);
               }
             }
