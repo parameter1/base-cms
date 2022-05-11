@@ -2,10 +2,8 @@ import hierarchyAliases from "@parameter1/base-cms-marko-web/utils/hierarchy-ali
 import { getAsArray } from "@parameter1/base-cms-object-path";
 import queryFragment from "../graphql/fragments/section-feed-block";
 
-$ const { id, name, type, description, i18n } = input;
-$ const { GAM, req } = out.global;
-
-$ const { pagination: p } = out.global;
+$ const { id, name, type, description } = input;
+$ const { GAM, req, i18n, pagination: p } = out.global;
 $ const perPage = 12;
 
 $ const queryParams = {
