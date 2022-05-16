@@ -21,14 +21,30 @@
       <option value="">
         Please select...
       </option>
-      <option
-        v-for="option in options"
-        :key="option.id"
-        :value="option.id"
-        :selected="option.id === selectedOptionId"
-      >
-        {{ option.label }}
-      </option>
+      <template v-for="option in options">
+        <optgroup
+          v-if="option.options"
+          :key="option.id"
+          :label="option.label"
+        >
+          <option
+            v-for="child in option.options"
+            :key="child.id"
+            :value="child.id"
+            :selected="child.id === selectedOptionId"
+          >
+            {{ child.label }}
+          </option>
+        </optgroup>
+        <option
+          v-else
+          :key="option.id"
+          :value="option.id"
+          :selected="option.id === selectedOptionId"
+        >
+          {{ option.label }}
+        </option>
+      </template>
     </select>
     <custom-select-write-in
       v-else
