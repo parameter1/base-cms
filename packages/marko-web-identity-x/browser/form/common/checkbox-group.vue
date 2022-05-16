@@ -5,7 +5,7 @@
       :key="option.id"
     >
       <div v-if="option.options">
-        <label :for="createId(option.id)" class="text-muted">
+        <label :for="createId(option.id)" class="text-muted mb-0 mt-2">
           {{ option.label }}
         </label>
         <div class="custom-control custom-checkbox-group">
