@@ -4,7 +4,7 @@
       v-for="option in options"
       :key="option.id"
     >
-      <div v-if="option.options">
+      <div v-if="option.options" class="mb-2">
         <label :for="createId(option.id)" class="text-muted mb-0 mt-2">
           {{ option.label }}
         </label>
