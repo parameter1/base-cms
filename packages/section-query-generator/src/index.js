@@ -112,7 +112,7 @@ module.exports = async ({
 
   const { matchedCount: unbuiltCount } = await contentColl.bulkWrite([{
     updateMany: {
-      filter: { status: 0 },
+      filter: { status: 0, sectionQuery: { $exists: true } },
       update: { $unset: { sectionQuery: '' } },
     },
   }]);
