@@ -42,7 +42,7 @@ $ const blockName = "related-stories";
     >
       $ nodes.push(...related);
       <if(nodes.length)>
-        <marko-web-block name=blockName>
+        <marko-web-block name=blockName attrs={ role: "region", "aria-label": "Related Stories" }>
           <marko-web-element block-name=blockName name="header">
             ${title}
           </marko-web-element>
