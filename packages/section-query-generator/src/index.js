@@ -110,6 +110,14 @@ module.exports = async ({
   const { matchedCount } = await contentColl.bulkWrite(bulkOps);
   logger('Bulk write complete.', matchedCount);
 
+  const { matchedCount: unbuiltCount } = await contentColl.bulkWrite([{
+    updateMany: {
+      filter: { status: 0, sectionQuery: { $exists: true } },
+      update: { $unset: { sectionQuery: '' } },
+    },
+  }]);
+  logger('Bulk unbuild complete.', unbuiltCount);
+
   if (createIndexes) {
     logger('Creating indices...');
     await Promise.all([
