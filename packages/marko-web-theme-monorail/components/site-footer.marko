@@ -14,7 +14,7 @@ $ const tagline = site.get("tagline");
   modifiers=input.modifiers
   attrs=input.attrs
 >
-  <default-theme-site-footer-container block-name=blockName modifiers=["secondary"]>
+  <default-theme-site-footer-container block-name=blockName modifiers=["secondary"] attrs={ "aria-label": "Footer Secondary Navigation" }>
     <marko-web-element block-name=blockName name="inner-container">
 
       <default-theme-site-navbar-brand block-name=blockName title=`${config.website("name")} Homepage`>
@@ -32,7 +32,7 @@ $ const tagline = site.get("tagline");
       </if>
 
       <div class="row">
-        <marko-web-element block-name=blockName name="section">
+        <marko-web-element block-name=blockName name="section" attrs={ "aria-label": "Newsletter Sign-Up Form Footer"}>
           $ const newsletterBlock = "site-footer-newsletter";
           <if(newsletterConfig.action)>
             <marko-web-block name=newsletterBlock>
@@ -64,10 +64,10 @@ $ const tagline = site.get("tagline");
             </marko-web-block>
           </if>
         </marko-web-element>
-        <marko-web-element block-name=blockName name="section">
+        <marko-web-element block-name=blockName name="section" attrs={ "aria-label": "Social Media Links" }>
           <theme-social-follow dark=false modifiers=["site-footer"] />
         </marko-web-element>
-        <marko-web-element block-name=blockName name="section">
+        <marko-web-element block-name=blockName name="section" attrs={ "aria-label": "Footer Site Section Navigation"}>
 
           <div class="row">
             $ const navBlockName = "site-footer-nav";
@@ -81,6 +81,7 @@ $ const tagline = site.get("tagline");
                   items=topics
                   reg-enabled=false
                   has-user=false
+                  attrs={ "aria-label": "Site Footer Navigation Topics Section" }
                 />
               </if>
             </marko-web-block>
@@ -94,6 +95,7 @@ $ const tagline = site.get("tagline");
                   items=more
                   reg-enabled=false
                   has-user=false
+                  attrs={ "aria-label": "Site Footer Navigation More Section" }
                 />
               </if>
             </marko-web-block>
@@ -104,7 +106,7 @@ $ const tagline = site.get("tagline");
 
     </marko-web-element>
   </default-theme-site-footer-container>
-  <default-theme-site-footer-container block-name=blockName modifiers=["primary"]>
+  <default-theme-site-footer-container block-name=blockName modifiers=["primary"] attrs={ "aria-label": "Primary Secondary Navigation" }>
     <marko-web-element block-name=blockName name="inner-container">
       $ const corporateSrc = site.get("logos.corporate.src");
       $ const corporateSrcset = site.getAsArray("logos.corporate.srcset");
@@ -121,7 +123,7 @@ $ const tagline = site.get("tagline");
       </if>
 
       $ const footerItems = site.getAsArray("navigation.footer.items");
-      <theme-breadcrumbs modifiers=["site-footer"]>
+      <theme-breadcrumbs modifiers=["site-footer"] aria-label="Site Footer Breadcrumbs">
         <for|item| of=getNavItems({ items: footerItems, hasUser: input.hasUser, regEnabled: input.regEnabled })>
           <@item>
             $ const obj = asObject(item);

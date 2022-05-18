@@ -4,9 +4,10 @@ $ const items = getAsArray(input, "items");
 $ const modifiers = getAsArray(input, "modifiers");
 $ const blockName = "breadcrumbs";
 $ const classes = [blockName, ...modifiers.map(mod => `${blockName}--${mod}`)];
+$ const ariaLabel = input.ariaLabel || "breadcrumb";
 
 <if(items.length)>
-  <nav class=classes aria-label="breadcrumb">
+  <nav class=classes aria-label=ariaLabel>
     <ol class="breadcrumb">
       <for|item| of=items>
         <if(item.renderBody)>

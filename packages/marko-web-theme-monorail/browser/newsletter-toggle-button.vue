@@ -2,6 +2,7 @@
   <button
     class="site-navbar__newsletter-toggler"
     type="button"
+    aria-label="Newsletter Menu Toggle"
     @click="toggle"
   >
     <icon-mail :modifiers="['lg']" />

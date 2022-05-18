@@ -27,7 +27,7 @@ $ const queryName = (queryParams.optionName) ? "website-optioned-content" : "web
     };
     $ const cardNodes = nodes.slice(1);
 
-    <marko-web-block name=blockName>
+    <marko-web-block name=blockName attrs={ role: "region", "aria-label": "Top Stories" }>
       <if(withHeader)>
         <marko-web-element block-name=blockName name="header">
           ${i18n("Top Stories")}

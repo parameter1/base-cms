@@ -3,7 +3,7 @@ import { getAsArray } from "@parameter1/base-cms-object-path";
 $ const blockName = "callout-cards";
 $ const slots = getAsArray(input, "slots");
 
-<marko-web-block name=blockName>
+<marko-web-block name=blockName attrs={ role: "region", "aria-label": "Callout Cards" }>
   <marko-web-element block-name=blockName name="row">
     <marko-web-element block-name=blockName name="col">
       <${slots[0].renderBody} />
