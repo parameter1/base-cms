@@ -50,6 +50,7 @@ import getEdgeNodes from '../utils/get-edge-nodes';
 import getAsObject from '../utils/get-as-object';
 
 export default {
+  inject: ['$graphql'],
   components: {
     Loading,
     LeadersHeader,
@@ -253,7 +254,7 @@ export default {
       const { sectionIds } = this;
       if (sectionIds && sectionIds.length) {
         const variables = { sectionIds };
-        const r = await this.$apollo.query({ query: fromIdsQuery, variables });
+        const r = await this.$graphql.query({ query: fromIdsQuery, variables });
         const sections = getEdgeNodes(r, 'data.websiteSections')
           .filter(s => s.hierarchy.some(({ alias }) => alias === this.sectionAlias));
         if (sections.length) return sections;
@@ -269,7 +270,7 @@ export default {
     async loadContentSections() {
       if (!this.contentId) return [];
       const variables = { contentId: this.contentId };
-      const r1 = await this.$apollo.query({ query: contentQuery, variables });
+      const r1 = await this.$graphql.query({ query: contentQuery, variables });
       const taxonomyIds = getEdgeNodes(r1, 'data.content.taxonomy').map(t => t.id);
       const sectionIds = [];
       this.taxonomyIds = taxonomyIds;
@@ -279,7 +280,7 @@ export default {
       }
       if (!taxonomyIds.length && !sectionIds.length) return [];
       const v2 = { taxonomyIds, relatedSectionIds: sectionIds };
-      const r2 = await this.$apollo.query({ query: fromContentQuery, variables: v2 });
+      const r2 = await this.$graphql.query({ query: fromContentQuery, variables: v2 });
       const sections = getEdgeNodes(r2, 'data.websiteSections');
       return sections
         .filter(s => s.hierarchy.some(({ alias }) => alias === this.sectionAlias));
@@ -287,7 +288,7 @@ export default {
 
     async loadAllSections() {
       const variables = { sectionAlias: this.sectionAlias };
-      const { data } = await this.$apollo.query({ query: allQuery, variables });
+      const { data } = await this.$graphql.query({ query: allQuery, variables });
       this.loadType = 'all';
       return getEdgeNodes(data, 'websiteSectionAlias.children');
     },
