@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import moment from 'moment';
+import dayjs from '../dayjs';
 import post from '../utils/post';
 import FormError from '../errors/form';
 import EventEmitter from '../mixins/global-event-emitter';
@@ -101,7 +101,7 @@ export default {
     postedAt() {
       const { createdAt } = this;
       if (!createdAt) return null;
-      return moment(createdAt).format(this.dateFormat);
+      return dayjs(createdAt).format(this.dateFormat);
     },
 
     /**
