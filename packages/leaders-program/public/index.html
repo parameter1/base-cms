@@ -10,7 +10,7 @@
     <script>
       (function(w, f) {
         w.gql = {
-          uri: 'https://caprica.graphql-staging.base-cms.io',
+          uri: 'https://graphql.tauron.base.parameter1.com',
           tenant: 'pmmi_all',
           siteIds: { pw: '5d88cedef175132c008b456b', aw: '5d88cecaf175132c008b4567' },
         };
@@ -92,7 +92,7 @@
             ],
           },
           on: { action: (...args) => console.log('track', args) },
-          apollo: { uri: gql.uri, tenant: gql.tenant, siteId: gql.siteIds.pw },
+          graphql: { uri: gql.uri, tenant: gql.tenant, siteId: gql.siteIds.pw },
         });
 
         leaders('loadComponent', {
@@ -114,7 +114,7 @@
             ],
           },
           on: { action: (...args) => console.log('track', args) },
-          apollo: { uri: gql.uri, tenant: gql.tenant, siteId: gql.siteIds.pw },
+          graphql: { uri: gql.uri, tenant: gql.tenant, siteId: gql.siteIds.pw },
         });
       }
 
@@ -136,7 +136,7 @@
             ],
           },
           on: { action: (...args) => console.log('track', args) },
-          apollo: { uri: gql.uri, tenant: gql.tenant, siteId: gql.siteIds.pw },
+          graphql: { uri: gql.uri, tenant: gql.tenant, siteId: gql.siteIds.pw },
         });
       }
     </script>

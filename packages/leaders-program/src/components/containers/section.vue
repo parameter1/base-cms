@@ -58,6 +58,7 @@ import query from '../../graphql/queries/content-for-section';
 import getEdgeNodes from '../../utils/get-edge-nodes';
 
 export default {
+  inject: ['$graphql'],
   components: {
     PlusIcon,
     MinusIcon,
@@ -197,7 +198,7 @@ export default {
             promotionLimit: this.promotionLimit,
             videoLimit: this.videoLimit,
           };
-          const { data } = await this.$apollo.query({ query, variables });
+          const { data } = await this.$graphql.query({ query, variables });
           this.items = getEdgeNodes(data, 'websiteScheduledContent');
           this.hasLoaded = true;
         } catch (e) {

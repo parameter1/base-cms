@@ -14,12 +14,9 @@
   },
   "dependencies": {
     "core-js": "^3.18.2",
-    "graphql": "^14.7.0",
-    "graphql-tag": "^2.12.5",
     "object-path": "^0.11.8",
     "portal-vue": "^2.1.7",
-    "vue": "^2.6.14",
-    "vue-apollo": "^3.0.8"
+    "vue": "^2.6.14"
   },
   "devDependencies": {
     "@parameter1/base-cms-graphql-fragment-types": "^2.45.0",
@@ -27,10 +24,6 @@
     "@vue/cli-plugin-eslint": "^4.5.13",
     "@vue/cli-service": "^4.5.13",
     "@vue/eslint-config-airbnb": "^4.0.1",
-    "apollo-cache-inmemory": "^1.6.6",
-    "apollo-client": "^2.6.10",
-    "apollo-link": "^1.2.14",
-    "apollo-link-http": "^1.5.17",
     "babel-eslint": "^10.1.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",

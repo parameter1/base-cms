@@ -1,12 +1,10 @@
 /* eslint-disable no-new */
 import Vue from 'vue';
-import VueApollo from 'vue-apollo';
 
 import Leaders from './components/leaders.vue';
-import createProvider from '../apollo/create-provider';
+import createGraphQLClient from './graphql/create-client';
 
 Vue.config.productionTip = false;
-Vue.use(VueApollo);
 
 const components = {
   Leaders,
@@ -15,21 +13,22 @@ const components = {
 const loadComponent = ({
   el,
   name,
-  apollo = {},
+  graphql = {},
   props = {},
   on,
 } = {}) => {
-  const { uri, tenant, siteId } = apollo;
+  const { uri, tenant, siteId } = graphql;
   if (!uri || !tenant || !siteId) throw new Error('The provided apollo config is invalid.');
   if (!components[name]) throw new Error(`No BaseCMS Management Component found for '${name}'`);
   const Component = components[name];
   new Vue({
     el,
-    apolloProvider: createProvider({
-      graphqlUri: uri,
-      tenantKey: tenant,
-      siteId,
-    }),
+    provide: {
+      $graphql: createGraphQLClient({
+        uri,
+        headers: { 'x-tenant-key': tenant, 'x-site-id': siteId },
+      }),
+    },
     render: h => h(Component, { props, on }),
   });
 };
