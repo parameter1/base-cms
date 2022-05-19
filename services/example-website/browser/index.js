@@ -1,9 +1,11 @@
 import Browser from '@parameter1/base-cms-marko-web/browser';
 import OmedaIdentityX from '@parameter1/base-cms-marko-web-omeda-identity-x/browser';
 import GTM from '@parameter1/base-cms-marko-web-gtm/browser';
+import Leaders from '@parameter1/base-cms-marko-web-leaders/browser';
 
 GTM(Browser);
 OmedaIdentityX(Browser);
+Leaders(Browser);
 
 const { EventBus } = Browser;
 const { log } = console;
