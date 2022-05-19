@@ -4,11 +4,8 @@ import Vue from './vue';
 import Components from './components';
 import EventBus from './event-bus';
 
-const apollo = () => import(/* webpackChunkName: "apollo" */ './apollo');
-
 const components = {};
 const providers = {};
-const requiresApollo = {};
 const listeners = {};
 
 const load = async ({
@@ -21,26 +18,19 @@ const load = async ({
   if (!el || !name) throw new Error('A Vue component name and element must be provided.');
   const Component = components[name];
   if (!Component) throw new Error(`No Vue component found for '${name}'`);
-  let apolloProvider;
-  if (requiresApollo[name]) {
-    const { default: provider } = await apollo();
-    apolloProvider = provider;
-  }
   const component = new Vue({
     provide: providers[name],
-    apolloProvider,
     render: h => h(Component, { props, on: { ...on, ...listeners[name] } }),
   });
   component.$mount(el, hydrate);
 };
 
-const register = async (name, Component, { provide, withApollo, on } = {}) => {
+const register = async (name, Component, { provide, on } = {}) => {
   if (!name) throw new Error('A Vue component name must be provided.');
   if (components[name]) throw new Error(`A Vue component already exists for '${name}'`);
   components[name] = Component;
   providers[name] = provide;
   listeners[name] = on;
-  if (withApollo) requiresApollo[name] = true;
 };
 
 /**
