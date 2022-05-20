@@ -1,6 +1,6 @@
 // eslint-disable-next-line consistent-return
 const recaptchaLoad = siteKey => new Promise(((resolve) => {
-  function loadRecaptchaScript() {
+  const loadRecaptchaScript = () => {
     window.onRecaptchaLoadCallback = () => {
       window.dispatchEvent((new Event('recaptchaloaded')));
 
@@ -14,7 +14,7 @@ const recaptchaLoad = siteKey => new Promise(((resolve) => {
     newScript.async = !0;
     newScript.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}&onload=onRecaptchaLoadCallback`;
     docScripts.parentNode.insertBefore(newScript, docScripts);
-  }
+  };
 
   if (document.readyState === 'complete') return loadRecaptchaScript();
 
