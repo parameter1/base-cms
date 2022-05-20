@@ -4,7 +4,7 @@ module.exports = gql`
 
 fragment RSSItemContentFragment on Content {
   id
-  name
+  seoTitle
   teaser(input: { useFallback: false, maxLength: null })
   siteContext {
     url
@@ -16,8 +16,16 @@ fragment RSSItemContentFragment on Content {
     name
     fullName
   }
+  images(input:{ pagination: { limit: 100 }, sort: { order: values } }) {
+    edges {
+      node {
+        id
+        src(input: { options: { auto: "format,compress", q: 70 } })
+      }
+    }
+  }
   ... on Authorable {
-    authors(input: { pagination: { limit: 1 } }) {
+    authors {
       edges {
         node {
           id
@@ -27,6 +35,9 @@ fragment RSSItemContentFragment on Content {
         }
       }
     }
+  }
+  ... on ContentVideo {
+    embedSrc
   }
 }
 
