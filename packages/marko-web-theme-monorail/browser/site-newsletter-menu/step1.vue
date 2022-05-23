@@ -58,12 +58,12 @@
 </template>
 
 <script>
+import recaptchaLoad from '@parameter1/base-cms-marko-web-recaptcha/src/load';
+import recaptchaGetToken from '@parameter1/base-cms-marko-web-recaptcha/src/get-token';
+
 import CloseButton from '../newsletter-close-button.vue';
 import PrivacyPolicy from '../newsletter-signup-form/privacy-policy.vue';
 import SignUpButton from '../newsletter-signup-form/sign-up-button.vue';
-
-import recaptcha from '../load-recaptcha';
-import getRecaptchaToken from '../newsletter-signup-form/get-recaptcha-token';
 
 export default {
   components: {
@@ -140,8 +140,8 @@ export default {
         const { email, newsletter } = this;
         const { deploymentTypeId } = newsletter;
 
-        await recaptcha(this.recaptchaSiteKey);
-        const token = await getRecaptchaToken(this.recaptchaSiteKey);
+        await recaptchaLoad(this.recaptchaSiteKey);
+        const token = await recaptchaGetToken(this.recaptchaSiteKey);
         const res = await fetch('/__omeda/newsletter-signup', {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
