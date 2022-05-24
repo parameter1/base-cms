@@ -10,7 +10,6 @@ module.exports = async ({
   const score = minimumScore || 0.5;
   const submitActions = actions || [];
 
-  console.log('hitting: ', actions, minimumScore);
   if (!token) throw createError(400, 'A verification token is required.');
   const params = new URLSearchParams();
   params.append('response', token);
