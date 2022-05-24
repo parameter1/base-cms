@@ -118,7 +118,7 @@ export default {
         const { deploymentTypeId } = newsletter;
 
         await recaptchaLoad({ siteKey: this.recaptchaSiteKey });
-        const token = await recaptchaGetToken({ siteKey: this.recaptchaSiteKey });
+        const token = await recaptchaGetToken({ siteKey: this.recaptchaSiteKey, action: 'newsletterSignup' });
         const res = await fetch('/__omeda/newsletter-signup', {
           method: 'POST',
           headers: { 'content-type': 'application/json' },

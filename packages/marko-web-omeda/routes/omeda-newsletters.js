@@ -23,7 +23,7 @@ module.exports = (app) => {
     } = req.body;
     if (!email) throw createError(400, 'An email address is required.');
     if (!token) throw createError(400, 'A verification token is required.');
-    await validateToken({ token, secretKey: recaptcha.secretKey });
+    await validateToken({ token, secretKey: recaptcha.secretKey, actions: ['newsletterSignup'] });
 
     const { encryptedCustomerId } = await req.$omedaRapidIdentify({
       email,

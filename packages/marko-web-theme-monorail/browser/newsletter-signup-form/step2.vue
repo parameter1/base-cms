@@ -241,7 +241,7 @@ export default {
         this.isLoading = true;
         const { email, selectedNewsletters } = this;
         if (!email) throw new Error('Unable to submit: no email address found.');
-        const token = await recaptchaGetToken({ siteKey: this.recaptchaSiteKey });
+        const token = await recaptchaGetToken({ siteKey: this.recaptchaSiteKey, action: 'newsletterSignup' });
         const payload = {
           token,
           email,
