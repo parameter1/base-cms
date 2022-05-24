@@ -45,24 +45,24 @@ module.exports = ({ queryFragment, notification, confirmation }) => asyncRoute(a
       addresses,
     }),
     // Notify the contacts of the submission
-    // send(notificationBuilder({
-    //   template: notification,
-    //   $global,
-    //   content,
-    //   subject: notificationSubject,
-    //   payload,
-    //   addresses,
-    // })),
-    // // Notify the user their submission was received
-    // req.body.confirmationEmail ? send(confirmationBuilder({
-    //   template: confirmation,
-    //   $global,
-    //   content,
-    //   subject: confirmationSubject,
-    //   email: req.body.confirmationEmail,
-    //   from,
-    //   bcc,
-    // })) : Promise.resolve(null),
+    send(notificationBuilder({
+      template: notification,
+      $global,
+      content,
+      subject: notificationSubject,
+      payload,
+      addresses,
+    })),
+    // Notify the user their submission was received
+    req.body.confirmationEmail ? send(confirmationBuilder({
+      template: confirmation,
+      $global,
+      content,
+      subject: confirmationSubject,
+      email: req.body.confirmationEmail,
+      from,
+      bcc,
+    })) : Promise.resolve(null),
   ]);
   res.json({ ok: true });
 });
