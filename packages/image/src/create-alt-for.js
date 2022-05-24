@@ -22,7 +22,19 @@ module.exports = ({
   caption,
   name,
   fileName,
-} = {}) => {
+} = {}, { prepend, append } = {}) => {
+  if (prepend) {
+    if (displayName) return `${prepend} ${clean(displayName)}`;
+    if (caption) return `${prepend} ${clean(caption)}`;
+    if (name) return `${prepend} ${clean(altFrom(name))}`;
+    return `${prepend} ${clean(altFrom(fileName))}`;
+  }
+  if (append) {
+    if (displayName) return `${clean(displayName)} ${append}`;
+    if (caption) return `${clean(caption)} ${append}`;
+    if (name) return `${clean(altFrom(name))} ${append}`;
+    return `${clean(altFrom(fileName))} ${append}`;
+  }
   if (displayName) return clean(displayName);
   if (caption) return clean(caption);
   if (name) return clean(altFrom(name));
