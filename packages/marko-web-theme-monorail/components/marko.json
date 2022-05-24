@@ -19,9 +19,6 @@
   "<theme-pagination-controls>": {
     "template": "./pagination-controls.marko"
   },
-  "<theme-recaptcha>": {
-    "template": "./recaptcha.marko"
-  },
   "<theme-site-footer>": {
     "template": "./site-footer.marko"
   },
