@@ -26,7 +26,7 @@ const recaptchaLoad = siteKey => new Promise(((resolve) => {
   }
 }));
 
-export default async (siteKey) => {
+export default async ({ siteKey }) => {
   if (!recaptchaLoadPromise) recaptchaLoadPromise = recaptchaLoad(siteKey);
   return recaptchaLoadPromise;
 };

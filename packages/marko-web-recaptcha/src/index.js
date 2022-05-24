@@ -1,7 +1,5 @@
-const load = require('./load');
-const getToken = require('./get-token');
+const validateToken = require('./validate-token');
 
 module.exports = {
-  getToken,
-  load,
+  validateToken,
 };

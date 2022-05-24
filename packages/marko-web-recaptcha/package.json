@@ -10,7 +10,10 @@
     "lint": "eslint --ext .js --max-warnings 5 ./",
     "test": "yarn lint"
   },
-  "dependencies": {},
+  "dependencies": {
+    "http-errors": "^1.8.0",
+    "node-fetch": "^2.6.1"
+  },
   "publishConfig": {
     "access": "public"
   }
