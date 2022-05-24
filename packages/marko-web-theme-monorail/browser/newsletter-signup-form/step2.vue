@@ -125,7 +125,7 @@
 
 
 <script>
-import recaptchaGetToken from '@parameter1/base-cms-marko-web-recaptcha/src/get-token';
+import recaptchaGetToken from '@parameter1/base-cms-marko-web-recaptcha/browser/get-token';
 
 import CheckIcon from './check-icon.vue';
 import InputFormGroup from './input-form-group.vue';
@@ -241,7 +241,7 @@ export default {
         this.isLoading = true;
         const { email, selectedNewsletters } = this;
         if (!email) throw new Error('Unable to submit: no email address found.');
-        const token = await recaptchaGetToken(this.recaptchaSiteKey);
+        const token = await recaptchaGetToken({ siteKey: this.recaptchaSiteKey });
         const payload = {
           token,
           email,
