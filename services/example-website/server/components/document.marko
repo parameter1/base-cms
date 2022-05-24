@@ -30,6 +30,30 @@
         </ul>
       </div>
     </nav>
+
+    <marko-web-block
+      name="site-header"
+      tag=(input.tag || "header")
+      class=input.class
+      modifiers=input.modifiers
+      attrs=input.attrs
+    >
+      <${input.aboveNav} />
+      <default-theme-site-navbar modifiers=["secondary"] attrs={ "aria-label": "Secondary Navigation" }>
+        <theme-menu-toggle-button
+          class="site-navbar__toggler"
+          targets=[".site-menu", "body"]
+          toggle-class="site-menu--open"
+          icon-modifiers=["lg"]
+          icon-name="three-bars"
+        />
+
+        <marko-web-browser-component name="ThemeNewsletterToggleButton" ssr=true />
+      </default-theme-site-navbar>
+      <theme-site-newsletter-menu />
+      <${input.belowNav} />
+    </marko-web-block>
+
     <${input.aboveContainer} />
   </@above-container>
   <@below-container>

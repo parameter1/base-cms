@@ -1,0 +1,26 @@
+$ const { id, type, pageNode } = data;
+
+<marko-web-default-page-layout
+  type="test"
+  title="Test Page"
+  description="This is a test page."
+>
+  <@above-container>
+    <marko-web-leaders-dropdown-portal />
+  </@above-container>
+  <@page>
+    <marko-web-resolve-page|{ data: content, resolved }| node=pageNode>
+      <h1>Company Page Inquiry</h1>
+      <!-- $ console.log(content); -->
+
+      <marko-web-node-list collapsible=false>
+        <@header>Request More Information</@header>
+        <@body>
+          <marko-web-inquiry-form content=content with-header=false modifiers=["node-list"] />
+        </@body>
+      </marko-web-node-list>
+    </marko-web-resolve-page>
+
+    <!-- <marko-web-browser-component name="CommonContactUsForm" /> -->
+  </@page>
+</marko-web-default-page-layout>

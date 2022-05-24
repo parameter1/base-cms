@@ -1,11 +1,17 @@
 import Browser from '@parameter1/base-cms-marko-web/browser';
-import OmedaIdentityX from '@parameter1/base-cms-marko-web-omeda-identity-x/browser';
-import GTM from '@parameter1/base-cms-marko-web-gtm/browser';
+// import OmedaIdentityX from '@parameter1/base-cms-marko-web-omeda-identity-x/browser';
+// import GTM from '@parameter1/base-cms-marko-web-gtm/browser';
 import Leaders from '@parameter1/base-cms-marko-web-leaders/browser';
+import MonoRail from '@parameter1/base-cms-marko-web-theme-monorail/browser';
+// import Inquiry from '@parameter1/base-cms-marko-web-inquiry/browser';
+import ContactUs from '@parameter1/base-cms-marko-web-contact-us/browser';
 
-GTM(Browser);
-OmedaIdentityX(Browser);
+MonoRail(Browser);
+// GTM(Browser);
+// OmedaIdentityX(Browser);
 Leaders(Browser);
+// Inquiry(Browser);
+ContactUs(Browser);
 
 const { EventBus } = Browser;
 const { log } = console;
