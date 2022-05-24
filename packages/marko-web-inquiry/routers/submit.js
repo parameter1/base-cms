@@ -1,12 +1,12 @@
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 const { getAsArray } = require('@parameter1/base-cms-object-path');
-const fetch = require('node-fetch');
+const { validateToken } = require('@parameter1/base-cms-marko-web-recaptcha');
 const { content: contentLoader } = require('@parameter1/base-cms-web-common/page-loaders');
 const buildMarkoGlobal = require('@parameter1/base-cms-marko-web/utils/build-marko-global');
 const send = require('../send-mail');
 const { notificationBuilder, confirmationBuilder } = require('../template-builders');
 const storeInquiry = require('../utils/store-inquiry');
-const { RECAPTCHA_SECRET_KEY } = require('../env');
+const { RECAPTCHA_V3_SECRET_KEY } = require('../env');
 
 module.exports = ({ queryFragment, notification, confirmation }) => asyncRoute(async (req, res) => {
   const { site } = res.app.locals;
@@ -30,33 +30,11 @@ module.exports = ({ queryFragment, notification, confirmation }) => asyncRoute(a
     from,
   };
 
-  const { error } = console;
-
-  const exception = (message, code = 400) => {
-    const err = new Error(message);
-    err.statusCode = code;
-    return err;
-  };
-
-  const validateRecaptcha = async () => {
-    const params = new URLSearchParams();
-    params.append('response', token);
-    params.append('secret', RECAPTCHA_SECRET_KEY);
-    const recaptchaRes = await fetch('https://www.google.com/recaptcha/api/siteverify', { method: 'post', mode: 'no-cors', body: params });
-    const json = await recaptchaRes.json();
-    if (!json.success) {
-      error('reCAPTCHA failed!', json, { secret: RECAPTCHA_SECRET_KEY, response: token });
-      throw exception('Unable to validate your request because reCAPTCHA failed!');
-    }
-    return true;
-  };
-
-  if (!payload || payload.email === '') {
-    error('Form validation failed!', payload);
-    throw exception('Invalid form submission');
-  }
-
-  await validateRecaptcha();
+  await validateToken({
+    token,
+    secretKey: RECAPTCHA_V3_SECRET_KEY,
+    actions: ['inquirySubmission'],
+  });
 
   await Promise.all([
     // Store the submission
@@ -67,24 +45,24 @@ module.exports = ({ queryFragment, notification, confirmation }) => asyncRoute(a
       addresses,
     }),
     // Notify the contacts of the submission
-    send(notificationBuilder({
-      template: notification,
-      $global,
-      content,
-      subject: notificationSubject,
-      payload,
-      addresses,
-    })),
-    // Notify the user their submission was received
-    req.body.confirmationEmail ? send(confirmationBuilder({
-      template: confirmation,
-      $global,
-      content,
-      subject: confirmationSubject,
-      email: req.body.confirmationEmail,
-      from,
-      bcc,
-    })) : Promise.resolve(null),
+    // send(notificationBuilder({
+    //   template: notification,
+    //   $global,
+    //   content,
+    //   subject: notificationSubject,
+    //   payload,
+    //   addresses,
+    // })),
+    // // Notify the user their submission was received
+    // req.body.confirmationEmail ? send(confirmationBuilder({
+    //   template: confirmation,
+    //   $global,
+    //   content,
+    //   subject: confirmationSubject,
+    //   email: req.body.confirmationEmail,
+    //   from,
+    //   bcc,
+    // })) : Promise.resolve(null),
   ]);
   res.json({ ok: true });
 });

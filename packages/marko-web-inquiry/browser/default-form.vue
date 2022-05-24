@@ -1,5 +1,5 @@
 <template>
-  <form v-if="incomplete" :class="formClass" @submit.prevent="onSubmit">
+  <form v-if="incomplete" :class="formClass" @submit.prevent="submit">
     <input type="hidden" name="contentId" :value="contentId">
     <input type="hidden" name="contentType" :value="contentType">
     <div class="row">
@@ -151,14 +151,6 @@
       </div>
     </div>
     <pre v-if="error" class="alert alert-danger text-danger">An error occurred: {{ error }}</pre>
-    <vue-recaptcha
-      ref="invisibleRecaptcha"
-      size="invisible"
-      :sitekey="sitekey"
-      :load-recaptcha-script="true"
-      @verify="onVerify"
-      @expired="onExpired"
-    />
     <button type="submit" class="btn btn-primary" :disabled="loading">
       {{ translate("submitLabel") }}
     </button>
@@ -169,14 +161,16 @@
 </template>
 
 <script>
-import VueRecaptcha from 'vue-recaptcha';
+import recaptchaLoad from '@parameter1/base-cms-marko-web-recaptcha/browser/load';
+import recaptchaGetToken from '@parameter1/base-cms-marko-web-recaptcha/browser/get-token';
+
 import FormMixin from './form-mixin';
 import CountryField from './fields/country.vue';
 import FormLabel from './elements/label.vue';
 import i18n from '../i18n';
 
 export default {
-  components: { VueRecaptcha, CountryField, FormLabel },
+  components: { CountryField, FormLabel },
   inject: ['EventBus'],
   mixins: [
     FormMixin,
@@ -186,7 +180,7 @@ export default {
       type: String,
       default: null,
     },
-    sitekey: {
+    siteKey: {
       type: String,
       required: true,
     },
@@ -215,17 +209,9 @@ export default {
     translate(key) {
       return i18n(this.lang, key);
     },
-    onSubmit() {
-      this.$refs.invisibleRecaptcha.execute();
-    },
-    onVerify(response) {
-      this.submit(response);
-    },
-    onExpired() {
-      this.error = 'Timed out validating your submission.';
-      this.loading = false;
-    },
-    async submit(token) {
+    async submit() {
+      await recaptchaLoad({ siteKey: this.siteKey });
+      const token = await recaptchaGetToken({ siteKey: this.siteKey, action: 'inquirySubmission' });
       const {
         contentId,
         contentType,
