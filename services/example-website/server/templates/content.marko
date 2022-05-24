@@ -1,4 +1,5 @@
 $ const { id, type, pageNode } = data;
+$ const { recaptcha } = out.global;
 
 <marko-web-default-page-layout
   type="test"
@@ -21,6 +22,6 @@ $ const { id, type, pageNode } = data;
       </marko-web-node-list>
     </marko-web-resolve-page>
 
-    <!-- <marko-web-browser-component name="CommonContactUsForm" /> -->
+    <marko-web-browser-component name="ContactUsForm" props={ siteKey: recaptcha.siteKey, configName: 'general' } />
   </@page>
 </marko-web-default-page-layout>
