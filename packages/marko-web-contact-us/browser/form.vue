@@ -73,6 +73,12 @@
       <hr>
       <div :class="bem('row')">
         <p
+          v-if="recaptcha.error"
+          :class="bem('text', ['danger'])"
+        >
+          {{ errorLabel }} {{ recaptcha.error.message }}
+        </p>
+        <p
           v-if="submitted"
           :class="bem('text', ['success'])"
         >
@@ -83,12 +89,6 @@
           :class="bem('text', ['loading'])"
         >
           Hold up, we're processing your submission...
-        </p>
-        <p
-          v-else-if="recaptcha.error"
-          :class="bem('text', ['danger'])"
-        >
-          {{ errorLabel }} {{ recaptcha.error.message }}
         </p>
         <p
           v-else-if="error"
