@@ -1,2 +1,2 @@
-# BaseCMS Object Path
-Utility functions for accessing JavaScript objects by path, via the `object-path` library.
+# BaseCMS reCAPTCHA
+Utility for loading, token creation & token validation with reCAPTCHA.
