@@ -30,8 +30,8 @@
         </div>
         <sign-up-button
           :class="`${blockName}__form-button`"
-          :is-loading="isLoading || recaptcha.loading || recaptcha.error"
-          :disabled="disabled"
+          :is-loading="isLoading"
+          :disabled="disabled || recaptcha.loading || recaptcha.error"
         />
       </form>
       <privacy-policy :block-name="blockName" :privacy-policy-link="privacyPolicyLink" />
