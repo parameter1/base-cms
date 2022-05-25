@@ -151,7 +151,7 @@
       </div>
     </div>
     <pre v-if="recaptcha.error" class="alert alert-danger text-danger">
-      An error occurred: {{ recaptcha.error.message }}
+      A recaptcha error occurred: {{ recaptcha.error.message }}
     </pre>
     <pre v-if="error" class="alert alert-danger text-danger">An error occurred: {{ error }}</pre>
     <button
