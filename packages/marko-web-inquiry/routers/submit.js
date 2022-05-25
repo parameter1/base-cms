@@ -30,6 +30,16 @@ module.exports = ({ queryFragment, notification, confirmation }) => asyncRoute(a
     from,
   };
 
+  const exception = (message, code = 400) => {
+    const err = new Error(message);
+    err.statusCode = code;
+    return err;
+  };
+
+  if (!payload || !payload.email) {
+    throw exception('Invalid form submission');
+  }
+
   await validateToken({
     token,
     secretKey: RECAPTCHA_V3_SECRET_KEY,
