@@ -15,5 +15,7 @@ module.exports = async ({
   params.append('secret', secretKey);
   const recaptchaRes = await fetch('https://www.google.com/recaptcha/api/siteverify', { method: 'post', mode: 'no-cors', body: params });
   const recaptchaData = await recaptchaRes.json();
-  if (!recaptchaData.success || !actions.includes(recaptchaData.action) || recaptchaData.score < minimumScore) throw createError(400, 'Unable to validate request because reCAPTCHA failed.');
+  if (!recaptchaData.success) throw createError(400, 'Unable to validate request because reCAPTCHA failed.');
+  if (!actions.includes(recaptchaData.action)) throw createError(400, 'Unable to validate request because reCAPTCHA action is not supported');
+  if (recaptchaData.score < minimumScore) throw createError(400, 'Unable to validate request because reCAPTCHA score did not meet minimum requirements.');
 };
