@@ -38,7 +38,7 @@ module.exports = {
       const opts = rect.isCropped() ? { ...input.options, rect } : input.options;
       return createSrcFor(host, { fileName, filePath }, opts, {});
     },
-    alt: image => createAltFor(image),
+    alt: (image, { input = {} }) => createAltFor({ ...image, ...input }),
     caption: image => createCaptionFor(image.caption),
     cropRectangle: async (image, _, { site, basedb }) => {
       const host = site.get('imageHost', defaults.imageHost);

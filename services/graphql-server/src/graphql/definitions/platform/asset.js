@@ -44,7 +44,7 @@ type AssetImage {
 
   # GraphQL specific fields
   src(input: AssetImageSrcInput = {}): String! @projection(localField: "fileName", needs: ["filePath", "cropDimensions", "isLogo", "width", "height"])
-  alt: String! @projection(localField: "name", needs: ["caption", "fileName", "displayName"])
+  alt(input: AssetImageAltInput = {}): String! @projection(localField: "name", needs: ["caption", "fileName", "displayName"])
   cropRectangle: AssetImageCropRectangle! @projection(localField: "cropDimensions", needs: ["width", "height", "fileName", "filePath"])
 }
 
@@ -119,6 +119,11 @@ input AssetImageSortInput {
 input AssetImageSrcInput {
   options: JSON
   useCropRectangle: Boolean = true
+}
+
+input AssetImageAltInput {
+  prepend: String
+  append: String
 }
 
 `;
