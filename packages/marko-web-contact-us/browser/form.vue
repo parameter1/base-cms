@@ -76,7 +76,7 @@
           v-if="recaptcha.error"
           :class="bem('text', ['danger'])"
         >
-          {{ errorLabel }} {{ recaptcha.error.message }}
+          A recaptcha error occurred {{ recaptcha.error.message }}
         </p>
         <p
           v-if="submitted"
