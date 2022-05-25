@@ -3,20 +3,51 @@
     <form-label :for="fieldId" :required="required">
       {{ label }}
     </form-label>
-    <treeselect
-      v-model="value"
-      :multiple="multiple"
+    <checkbox-group
+      v-if="multiple"
+      :group-id="id"
       :options="options"
-      :disable-branch-nodes="true"
-      :default-expand-level="1"
-      :clearable="!required"
-      :searchable="false"
+      :selected="selectedOptionIds"
       :required="required"
-      :normalizer="(n) => ({ children: n.options })"
-      @input="$emit('change', $event)"
+      @change="$emit('change', $event)"
     />
+    <select
+      v-else-if="!canWriteIn"
+      :id="fieldId"
+      class="custom-select"
+      :required="required"
+      @change="$emit('change', [$event.target.value])"
+    >
+      <option value="" disabled>
+        Please select...
+      </option>
+      <template v-for="option in options">
+        <optgroup
+          v-if="option.options"
+          :key="option.id"
+          :label="option.label"
+        >
+          <option
+            v-for="child in option.options"
+            :key="child.id"
+            :value="child.id"
+            :selected="child.id === selectedOptionId"
+          >
+            {{ child.label }}
+          </option>
+        </optgroup>
+        <option
+          v-else
+          :key="option.id"
+          :value="option.id"
+          :selected="option.id === selectedOptionId"
+        >
+          {{ option.label }}
+        </option>
+      </template>
+    </select>
     <custom-select-write-in
-      v-if="canWriteIn"
+      v-else
       :label="writeInLabel"
       :answer="writeInAnswer"
       :required="required"
@@ -26,15 +57,14 @@
 </template>
 
 <script>
-import Treeselect from '@riophae/vue-treeselect';
-import '@riophae/vue-treeselect/dist/vue-treeselect.css';
+import CheckboxGroup from '../common/checkbox-group.vue';
 import CustomSelectWriteIn from './custom-select-write-in.vue';
 import FormGroup from '../common/form-group.vue';
 import FormLabel from '../common/form-label.vue';
 
 export default {
   components: {
-    Treeselect,
+    CheckboxGroup,
     CustomSelectWriteIn,
     FormGroup,
     FormLabel,

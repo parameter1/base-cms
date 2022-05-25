@@ -16,6 +16,16 @@
       :autofocus="autofocus"
       autocomplete="off"
     >
+
+    <div class="input-group-append">
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        @click="$emit('clear', answer.id)"
+      >
+        Clear
+      </button>
+    </div>
   </div>
 </template>
 
