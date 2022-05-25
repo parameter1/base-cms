@@ -85,6 +85,12 @@
           Hold up, we're processing your submission...
         </p>
         <p
+          v-else-if="recaptcha.error"
+          :class="bem('text', ['danger'])"
+        >
+          {{ errorLabel }} {{ recaptcha.error.message }}
+        </p>
+        <p
           v-else-if="error"
           :class="bem('text', ['danger'])"
         >
@@ -93,7 +99,7 @@
         <button
           type="submit"
           :class="bem('submit')"
-          :disabled="disabled"
+          :disabled="disabled || recaptcha.loading || recaptcha.error"
         >
           Submit
         </button>
@@ -140,6 +146,7 @@ export default {
     error: null,
     loading: false,
     submitted: false,
+    recaptcha: { loading: false, error: null },
   }),
   computed: {
     disabled() {
@@ -147,13 +154,27 @@ export default {
     },
   },
 
+  created() {
+    this.loadRecaptcha();
+  },
+
   methods: {
     bem: (name, mod = []) => [block, `${block}__${name}`, ...mod.map(m => `${block}__${name}--${m}`)],
+    async loadRecaptcha() {
+      try {
+        this.recaptcha.loading = true;
+        this.recaptcha.error = null;
+        await recaptchaLoad({ siteKey: this.siteKey });
+      } catch (e) {
+        this.recaptcha.error = e;
+      } finally {
+        this.recaptcha.loading = false;
+      }
+    },
     async submit() {
       this.loading = true;
       this.error = null;
 
-      await recaptchaLoad({ siteKey: this.siteKey });
       const token = await recaptchaGetToken({ siteKey: this.siteKey, action: 'contactUsSubmit' });
 
       if (token) {

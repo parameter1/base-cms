@@ -150,8 +150,15 @@
         </div>
       </div>
     </div>
+    <pre v-if="recaptcha.error" class="alert alert-danger text-danger">
+      An error occurred: {{ recaptcha.error.message }}
+    </pre>
     <pre v-if="error" class="alert alert-danger text-danger">An error occurred: {{ error }}</pre>
-    <button type="submit" class="btn btn-primary" :disabled="loading">
+    <button
+      type="submit"
+      class="btn btn-primary"
+      :disabled="loading || recaptcha.loading || recaptcha.error"
+    >
       {{ translate("submitLabel") }}
     </button>
   </form>
@@ -204,13 +211,29 @@ export default {
     postalCode: '',
     comments: '',
     checkedConsents: [],
+    recaptcha: { loading: false, error: null },
   }),
+
+  created() {
+    this.loadRecaptcha();
+  },
+
   methods: {
+    async loadRecaptcha() {
+      try {
+        this.recaptcha.loading = true;
+        this.recaptcha.error = null;
+        await recaptchaLoad({ siteKey: this.siteKey });
+      } catch (e) {
+        this.recaptcha.error = e;
+      } finally {
+        this.recaptcha.loading = false;
+      }
+    },
     translate(key) {
       return i18n(this.lang, key);
     },
     async submit() {
-      await recaptchaLoad({ siteKey: this.siteKey });
       const token = await recaptchaGetToken({ siteKey: this.siteKey, action: 'inquirySubmission' });
       const {
         contentId,
