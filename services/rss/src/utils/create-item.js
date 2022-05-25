@@ -21,13 +21,15 @@ module.exports = ({
   const authorStrings = authors.reduce((arr, { node }) => {
     const { publicEmail, firstName, lastName } = node;
 
+    if (!publicEmail) return arr;
+
     const nameParts = [];
     if (firstName) nameParts.push(firstName);
-    if (lastName) nameParts.push(firstName);
+    if (lastName) nameParts.push(lastName);
 
     const authorParts = [];
     if (publicEmail) authorParts.push(publicEmail);
-    if (nameParts.length) authorParts.push(nameParts.join(' '));
+    if (nameParts.length) authorParts.push(`(${nameParts.join(' ')})`);
 
     if (authorParts.length) arr.push(authorParts.join(' '));
 
