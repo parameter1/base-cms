@@ -30,15 +30,20 @@
         </div>
         <sign-up-button
           :class="`${blockName}__form-button`"
-          :is-loading="isLoading"
+          :is-loading="isLoading || recaptcha.loading || recaptcha.error"
           :disabled="disabled"
         />
       </form>
       <privacy-policy :block-name="blockName" :privacy-policy-link="privacyPolicyLink" />
 
 
+      <div v-if="recaptcha.error" class="alert alert-danger mt-3 mb-0" role="alert">
+        <strong>A recaptcha error occurred.</strong>
+        {{ recaptcha.error.message }}
+      </div>
+
       <div v-if="error" class="alert alert-danger mt-3 mb-0" role="alert">
-        <strong>An error ocurred.</strong>
+        <strong>An error occurred.</strong>
         {{ error.message }}
       </div>
     </div>
@@ -101,6 +106,7 @@ export default {
     email: null,
     error: null,
     isLoading: false,
+    recaptcha: { loading: false, error: null },
   }),
 
   watch: {
@@ -109,7 +115,22 @@ export default {
     },
   },
 
+  created() {
+    this.loadRecaptcha();
+  },
+
   methods: {
+    async loadRecaptcha() {
+      try {
+        this.recaptcha.loading = true;
+        this.recaptcha.error = null;
+        await recaptchaLoad({ siteKey: this.recaptchaSiteKey });
+      } catch (e) {
+        this.recaptcha.error = e;
+      } finally {
+        this.recaptcha.loading = false;
+      }
+    },
     async submit() {
       try {
         this.error = null;
@@ -117,7 +138,6 @@ export default {
         const { email, newsletter } = this;
         const { deploymentTypeId } = newsletter;
 
-        await recaptchaLoad({ siteKey: this.recaptchaSiteKey });
         const token = await recaptchaGetToken({ siteKey: this.recaptchaSiteKey, action: 'newsletterSignup' });
         const res = await fetch('/__omeda/newsletter-signup', {
           method: 'POST',
