@@ -9,7 +9,7 @@ module.exports = async ({
 }) => {
   if (!token) throw createError(400, 'A verification token is required.');
   if (!secretKey) throw createError(400, 'A recaptcha secretKey is required.');
-  if (!actions || actions.length === 0) throw createError(400, 'A array of actions is required.');
+  if (!actions || !actions.length) throw createError(400, 'At least one recaptcha action is required');
   const params = new URLSearchParams();
   params.append('response', token);
   params.append('secret', secretKey);
