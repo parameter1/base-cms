@@ -15,28 +15,26 @@ const altFrom = (value = '') => {
   return v;
 };
 
-const clean = v => htmlEntities.encode(stripHtml(v));
+const strip = v => htmlEntities.encode(stripHtml(v));
+
+const clean = (v, { prepend, append }) => {
+  const values = [];
+  if (prepend) values.push(strip(prepend));
+  values.push((strip(v)));
+  if (append) values.push(strip(append));
+  return values.join(' ');
+};
 
 module.exports = ({
   displayName,
   caption,
   name,
   fileName,
-} = {}, { prepend, append } = {}) => {
-  if (prepend) {
-    if (displayName) return `${prepend} ${clean(displayName)}`;
-    if (caption) return `${prepend} ${clean(caption)}`;
-    if (name) return `${prepend} ${clean(altFrom(name))}`;
-    return `${prepend} ${clean(altFrom(fileName))}`;
-  }
-  if (append) {
-    if (displayName) return `${clean(displayName)} ${append}`;
-    if (caption) return `${clean(caption)} ${append}`;
-    if (name) return `${clean(altFrom(name))} ${append}`;
-    return `${clean(altFrom(fileName))} ${append}`;
-  }
-  if (displayName) return clean(displayName);
-  if (caption) return clean(caption);
-  if (name) return clean(altFrom(name));
-  return clean(altFrom(fileName));
+  prepend,
+  append,
+} = {}) => {
+  if (displayName) return clean(displayName, { prepend, append });
+  if (caption) return clean(caption, { prepend, append });
+  if (name) return clean(altFrom(name), { prepend, append });
+  return clean(altFrom(fileName), { prepend, append });
 };
