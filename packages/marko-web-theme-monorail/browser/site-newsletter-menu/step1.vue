@@ -37,10 +37,15 @@
         <sign-up-button
           :class="element('form-button')"
           :is-loading="isLoading"
-          :disabled="disabled"
+          :disabled="disabled || recaptcha.loading || recaptcha.error"
           :lang="lang"
         />
       </form>
+
+      <div v-if="recaptcha.error" class="alert alert-danger mt-3 mb-0" role="alert">
+        <strong>A recaptcha error occurred.</strong>
+        {{ recaptcha.error.message }}
+      </div>
 
       <div v-if="error" class="alert alert-danger mt-3 mb-0" role="alert">
         <strong>An error ocurred.</strong>
@@ -58,11 +63,12 @@
 </template>
 
 <script>
+import recaptchaLoad from '@parameter1/base-cms-marko-web-recaptcha/browser/load';
+import recaptchaGetToken from '@parameter1/base-cms-marko-web-recaptcha/browser/get-token';
+
 import CloseButton from '../newsletter-close-button.vue';
 import PrivacyPolicy from '../newsletter-signup-form/privacy-policy.vue';
 import SignUpButton from '../newsletter-signup-form/sign-up-button.vue';
-
-import getRecaptchaToken from '../newsletter-signup-form/get-recaptcha-token';
 
 export default {
   components: {
@@ -119,6 +125,7 @@ export default {
     email: null,
     error: null,
     isLoading: false,
+    recaptcha: { loading: false, error: null },
   }),
 
   watch: {
@@ -127,7 +134,22 @@ export default {
     },
   },
 
+  created() {
+    this.loadRecaptcha();
+  },
+
   methods: {
+    async loadRecaptcha() {
+      try {
+        this.recaptcha.loading = true;
+        this.recaptcha.error = null;
+        await recaptchaLoad({ siteKey: this.recaptchaSiteKey });
+      } catch (e) {
+        this.recaptcha.error = e;
+      } finally {
+        this.recaptcha.loading = false;
+      }
+    },
     element(elementName, classNames = []) {
       return [`${this.blockName}__${elementName}`, ...classNames];
     },
@@ -139,7 +161,7 @@ export default {
         const { email, newsletter } = this;
         const { deploymentTypeId } = newsletter;
 
-        const token = await getRecaptchaToken(this.recaptchaSiteKey);
+        const token = await recaptchaGetToken({ siteKey: this.recaptchaSiteKey, action: 'newsletterSignup' });
         const res = await fetch('/__omeda/newsletter-signup', {
           method: 'POST',
           headers: { 'content-type': 'application/json' },

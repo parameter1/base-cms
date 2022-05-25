@@ -1,5 +1,5 @@
 <template>
-  <form v-if="incomplete" :class="formClass" @submit.prevent="onSubmit">
+  <form v-if="incomplete" :class="formClass" @submit.prevent="submit">
     <input type="hidden" name="contentId" :value="contentId">
     <input type="hidden" name="contentType" :value="contentType">
     <div class="row">
@@ -150,16 +150,15 @@
         </div>
       </div>
     </div>
+    <pre v-if="recaptcha.error" class="alert alert-danger text-danger">
+      A recaptcha error occurred: {{ recaptcha.error.message }}
+    </pre>
     <pre v-if="error" class="alert alert-danger text-danger">An error occurred: {{ error }}</pre>
-    <vue-recaptcha
-      ref="invisibleRecaptcha"
-      size="invisible"
-      :sitekey="sitekey"
-      :load-recaptcha-script="true"
-      @verify="onVerify"
-      @expired="onExpired"
-    />
-    <button type="submit" class="btn btn-primary" :disabled="loading">
+    <button
+      type="submit"
+      class="btn btn-primary"
+      :disabled="loading || recaptcha.loading || recaptcha.error"
+    >
       {{ translate("submitLabel") }}
     </button>
   </form>
@@ -169,14 +168,16 @@
 </template>
 
 <script>
-import VueRecaptcha from 'vue-recaptcha';
+import recaptchaLoad from '@parameter1/base-cms-marko-web-recaptcha/browser/load';
+import recaptchaGetToken from '@parameter1/base-cms-marko-web-recaptcha/browser/get-token';
+
 import FormMixin from './form-mixin';
 import CountryField from './fields/country.vue';
 import FormLabel from './elements/label.vue';
 import i18n from '../i18n';
 
 export default {
-  components: { VueRecaptcha, CountryField, FormLabel },
+  components: { CountryField, FormLabel },
   inject: ['EventBus'],
   mixins: [
     FormMixin,
@@ -186,7 +187,7 @@ export default {
       type: String,
       default: null,
     },
-    sitekey: {
+    siteKey: {
       type: String,
       required: true,
     },
@@ -210,22 +211,30 @@ export default {
     postalCode: '',
     comments: '',
     checkedConsents: [],
+    recaptcha: { loading: false, error: null },
   }),
+
+  created() {
+    this.loadRecaptcha();
+  },
+
   methods: {
+    async loadRecaptcha() {
+      try {
+        this.recaptcha.loading = true;
+        this.recaptcha.error = null;
+        await recaptchaLoad({ siteKey: this.siteKey });
+      } catch (e) {
+        this.recaptcha.error = e;
+      } finally {
+        this.recaptcha.loading = false;
+      }
+    },
     translate(key) {
       return i18n(this.lang, key);
     },
-    onSubmit() {
-      this.$refs.invisibleRecaptcha.execute();
-    },
-    onVerify(response) {
-      this.submit(response);
-    },
-    onExpired() {
-      this.error = 'Timed out validating your submission.';
-      this.loading = false;
-    },
-    async submit(token) {
+    async submit() {
+      const token = await recaptchaGetToken({ siteKey: this.siteKey, action: 'inquirySubmission' });
       const {
         contentId,
         contentType,

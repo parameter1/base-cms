@@ -15,11 +15,11 @@
     "@parameter1/base-cms-env": "^2.45.0",
     "@parameter1/base-cms-marko-core": "^2.80.0",
     "@parameter1/base-cms-marko-web": "^2.91.0",
+    "@parameter1/base-cms-marko-web-recaptcha": "^2.91.0",
     "@parameter1/base-cms-utils": "^2.75.1",
     "@sendgrid/mail": "^6.4.0",
     "body-parser": "^1.19.0",
-    "node-fetch": "^2.6.0",
-    "vue-recaptcha": "^1.2.0"
+    "node-fetch": "^2.6.0"
   },
   "publishConfig": {
     "access": "public"

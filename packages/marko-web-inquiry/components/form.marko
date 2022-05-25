@@ -10,7 +10,7 @@ $ const withHeader = defaultValue(input.withHeader, true);
 $ const withDescription = defaultValue(input.withDescription, true);
 
 $ const blockName = "inquiry-form";
-$ const { RECAPTCHA_SITE_KEY } = require('../env');
+$ const { RECAPTCHA_V3_SITE_KEY } = require('../env');
 $ const lang = defaultValue(input.lang, "en");
 
 <if(inquiry.enabled)>
@@ -39,7 +39,7 @@ $ const lang = defaultValue(input.lang, "en");
       formClass: `${blockName}__form`,
       contentId: content.id,
       contentType: content.type,
-      sitekey: RECAPTCHA_SITE_KEY,
+      siteKey: RECAPTCHA_V3_SITE_KEY,
       lang: lang,
       consentCheckboxes: input.consentCheckboxes,
     } />

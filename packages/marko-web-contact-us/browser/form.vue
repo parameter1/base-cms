@@ -5,7 +5,7 @@
     </div>
     <form
       :class="bem('contents')"
-      @submit.prevent="verify"
+      @submit.prevent="submit"
     >
       <div :class="bem('row')">
         <label
@@ -73,6 +73,12 @@
       <hr>
       <div :class="bem('row')">
         <p
+          v-if="recaptcha.error"
+          :class="bem('text', ['danger'])"
+        >
+          A recaptcha error occurred {{ recaptcha.error.message }}
+        </p>
+        <p
           v-if="submitted"
           :class="bem('text', ['success'])"
         >
@@ -90,39 +96,32 @@
         >
           {{ errorLabel }} {{ error }}
         </p>
-        <vue-recaptcha
-          v-if="!submitted"
-          ref="recaptcha"
-          :sitekey="sitekey"
-          @verify="onVerify"
-          @expired="onExpired"
+        <button
+          type="submit"
+          :class="bem('submit')"
+          :disabled="disabled || recaptcha.loading || recaptcha.error"
         >
-          <button
-            type="submit"
-            :class="bem('submit')"
-            :disabled="disabled"
-          >
-            Submit
-          </button>
-        </vue-recaptcha>
+          Submit
+        </button>
       </div>
     </form>
   </div>
 </template>
 
 <script>
-import VueRecaptcha from 'vue-recaptcha';
+
+import recaptchaLoad from '@parameter1/base-cms-marko-web-recaptcha/browser/load';
+import recaptchaGetToken from '@parameter1/base-cms-marko-web-recaptcha/browser/get-token';
 
 const block = 'contact-us-form';
 
 export default {
-  components: { VueRecaptcha },
   props: {
     title: {
       type: String,
       default: 'Drop us a line!',
     },
-    sitekey: {
+    siteKey: {
       type: String,
       required: true,
     },
@@ -147,6 +146,7 @@ export default {
     error: null,
     loading: false,
     submitted: false,
+    recaptcha: { loading: false, error: null },
   }),
   computed: {
     disabled() {
@@ -154,34 +154,29 @@ export default {
     },
   },
 
-  async mounted() {
-    await Promise.all([
-      this.loadRecaptchaLibrary(),
-    ]);
+  created() {
+    this.loadRecaptcha();
   },
 
   methods: {
-    async loadRecaptchaLibrary() {
-      if (!window.recaptcha) {
-        await (new Promise((resolve, reject) => {
-          const s = document.createElement('script');
-          s.src = 'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit';
-          s.async = 1;
-          s.onerror = () => reject(new Error('Unable to load google recaptcha script.'));
-          s.onload = resolve;
-          const scr = document.getElementsByTagName('script')[0];
-          scr.parentNode.insertBefore(s, scr);
-        }));
+    bem: (name, mod = []) => [block, `${block}__${name}`, ...mod.map(m => `${block}__${name}--${m}`)],
+    async loadRecaptcha() {
+      try {
+        this.recaptcha.loading = true;
+        this.recaptcha.error = null;
+        await recaptchaLoad({ siteKey: this.siteKey });
+      } catch (e) {
+        this.recaptcha.error = e;
+      } finally {
+        this.recaptcha.loading = false;
       }
     },
-    bem: (name, mod = []) => [block, `${block}__${name}`, ...mod.map(m => `${block}__${name}--${m}`)],
-    onExpired() {
-      this.error = 'Timed out validating your submission.';
-      this.loading = false;
-    },
-    async onVerify(token) {
+    async submit() {
       this.loading = true;
       this.error = null;
+
+      const token = await recaptchaGetToken({ siteKey: this.siteKey, action: 'contactUsSubmit' });
+
       if (token) {
         // eslint-disable-next-line no-underscore-dangle
         const payload = { ...this._data, configName: this.configName, token };
