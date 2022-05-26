@@ -20,7 +20,7 @@ const send = async (res, domain, payload) => {
   const config = res.app.locals.site.getAsObject(`contactUs.${payload.configName}`);
   const subject = defaultValue(config.subject, 'A new contact submission was received.');
   const to = defaultValue(config.to, 'support@parameter1.com');
-  const from = defaultValue(config.from, 'Parameter1 <noreply@parameter1.com>');
+  const from = defaultValue(config.from, 'Base CMS <noreply@parameter1.com>');
   const input = {
     $global: res.app.locals,
     domain,
