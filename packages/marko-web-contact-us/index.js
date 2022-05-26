@@ -30,7 +30,7 @@ const send = async (res, domain, payload) => {
   const html = emailTemplate.renderToString(input);
   return sgMail.send({
     subject,
-    from: 'Base CMS <noreply@base-cms.io>',
+    from: 'Parameter1 <noreply@parameter1.com>',
     to,
     html,
     ...config.cc && { cc: config.cc },
