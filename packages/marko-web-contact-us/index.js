@@ -33,6 +33,7 @@ const send = async (res, domain, payload) => {
     from: 'Parameter1 <noreply@parameter1.com>',
     to,
     html,
+    ...(payload.name && payload.email && { replyTo: `${payload.name} <${payload.email}>` }),
     ...config.cc && { cc: config.cc },
     ...config.bcc && { bcc: config.bcc },
   });
