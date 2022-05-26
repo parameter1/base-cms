@@ -11,6 +11,7 @@
     "test": "yarn compile && yarn lint"
   },
   "dependencies": {
+    "@parameter1/base-cms-env": "^2.45.0",
     "@parameter1/base-cms-marko-web-deferred-script-loader": "^2.77.0",
     "@parameter1/base-cms-marko-web-recaptcha": "^2.91.0",
     "@parameter1/base-cms-utils": "^2.75.1",
