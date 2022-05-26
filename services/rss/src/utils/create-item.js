@@ -1,3 +1,4 @@
+const { getAsArray } = require('@parameter1/base-cms-object-path');
 const { xmlEntities: xml } = require('@parameter1/base-cms-html');
 
 module.exports = ({
@@ -18,7 +19,7 @@ module.exports = ({
   ];
   if (teaser) parts.push(`<description>${xml.encode(teaser)}</description>`);
   if (publishedDate) parts.push(`<pubDate>${publishedDate}</pubDate>`);
-  const authorStrings = authors.reduce((arr, { node }) => {
+  const authorStrings = getAsArray(authors, 'edges').reduce((arr, { node }) => {
     const { publicEmail, firstName, lastName } = node;
 
     if (!publicEmail) return arr;
@@ -39,7 +40,7 @@ module.exports = ({
   if (primarySection && primarySection.alias !== 'home') {
     parts.push(`<category domain="${website.origin}">${xml.encode(primarySection.fullName.replace('>', '/'))}</category>`);
   }
-  const imageMediaTags = images.reduce((arr, { node }) => {
+  const imageMediaTags = getAsArray(images, 'edges').reduce((arr, { node }) => {
     const { src } = node;
     if (src) arr.push(`<media:content url="${node.src}" medium="image" />`);
     return arr;
