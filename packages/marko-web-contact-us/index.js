@@ -20,6 +20,7 @@ const send = async (res, domain, payload) => {
   const config = res.app.locals.site.getAsObject(`contactUs.${payload.configName}`);
   const subject = defaultValue(config.subject, 'A new contact submission was received.');
   const to = defaultValue(config.to, 'support@parameter1.com');
+  const from = defaultValue(config.from, 'Base CMS <noreply@parameter1.com>');
   const input = {
     $global: res.app.locals,
     domain,
@@ -30,9 +31,10 @@ const send = async (res, domain, payload) => {
   const html = emailTemplate.renderToString(input);
   return sgMail.send({
     subject,
-    from: 'Base CMS <noreply@base-cms.io>',
+    from,
     to,
     html,
+    ...(payload.name && payload.email && { replyTo: `${payload.name} <${payload.email}>` }),
     ...config.cc && { cc: config.cc },
     ...config.bcc && { bcc: config.bcc },
   });
