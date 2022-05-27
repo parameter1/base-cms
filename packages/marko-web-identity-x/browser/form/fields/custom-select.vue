@@ -11,6 +11,9 @@
       :required="required"
       :label="label"
       :field-id="fieldId"
+      :can-write-in="canWriteIn"
+      :write-in-label="writeInLabel"
+      :write-in-answer="writeInAnswer"
       @change="$emit('change', $event)"
     />
     <select
@@ -49,7 +52,7 @@
       </template>
     </select>
     <custom-select-write-in
-      v-if="canWriteIn"
+      v-else
       :label="writeInLabel"
       :answer="writeInAnswer"
       :required="required"

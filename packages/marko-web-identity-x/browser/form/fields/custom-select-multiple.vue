@@ -22,6 +22,9 @@
               :selected="selected"
               :required="required"
               :group-id="groupId"
+              :can-write-in="canWriteIn"
+              :write-in-label="writeInLabel"
+              :write-in-answer="writeInAnswer"
               @change="$emit('change', $event)"
             />
           </custom-select-group>
@@ -32,6 +35,9 @@
             :selected="selected"
             :required="required"
             :group-id="groupId"
+            :can-write-in="canWriteIn"
+            :write-in-label="writeInLabel"
+            :write-in-answer="writeInAnswer"
             @change="$emit('change', $event)"
           />
         </template>
@@ -73,6 +79,18 @@ export default {
     required: {
       type: Boolean,
       default: false,
+    },
+    canWriteIn: {
+      type: Boolean,
+      default: false,
+    },
+    writeInLabel: {
+      type: String,
+      default: 'Other',
+    },
+    writeInAnswer: {
+      type: Object,
+      default: () => ({}),
     },
   },
 };

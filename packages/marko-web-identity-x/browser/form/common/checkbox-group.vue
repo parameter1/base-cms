@@ -15,16 +15,29 @@
       >
       <label
         :for="createId(option.id)"
-        class="custom-control-label"
+        class="custom-control-label w-100"
       >
-        {{ option.label }}
+        <custom-select-write-in-inline
+          v-if="showWriteIn(option.id)"
+          :answer="writeInAnswer"
+          :placeholder="writeInLabel"
+          @change="$emit('change', $event)"
+        />
+        <span v-else>
+          {{ option.label }}
+        </span>
       </label>
     </div>
   </div>
 </template>
 
 <script>
+import CustomSelectWriteInInline from '../fields/custom-select-write-in-inline.vue';
+
 export default {
+  components: {
+    CustomSelectWriteInInline,
+  },
   props: {
     /**
      * The wrapping field group identifier.
@@ -61,6 +74,19 @@ export default {
       type: Array,
       default: () => [],
     },
+
+    canWriteIn: {
+      type: Boolean,
+      default: false,
+    },
+    writeInLabel: {
+      type: String,
+      default: 'Other',
+    },
+    writeInAnswer: {
+      type: Object,
+      default: () => ({}),
+    },
   },
 
   computed: {
@@ -95,6 +121,9 @@ export default {
   methods: {
     createId(optionId) {
       return `checkbox-${this.groupId}-${optionId}`;
+    },
+    showWriteIn(optionId) {
+      return this.canWriteIn && this.writeInAnswer.id === optionId;
     },
   },
 };
