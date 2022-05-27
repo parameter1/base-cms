@@ -64,18 +64,19 @@ export default {
     },
   },
 
-  data() {
-    return {
-      /**
-       * Clone the selected value to the checked array.
-       * This is used internally as the `v-model` for the checkboxes.
-       * The value is then watched to emit the change event.
-       */
-      checked: [...this.selected],
-    };
-  },
-
   computed: {
+    /**
+     * This is used internally as the `v-model` for the checkboxes.
+     * The value is then watched to emit the change event.
+     */
+    checked: {
+      get() {
+        return [...this.selected];
+      },
+      set(value) {
+        this.$emit('change', value);
+      },
+    },
     /**
      * Determines if the checkboxes are required from a
      * validation perspective. Because HTML5 doesn't support
@@ -89,15 +90,6 @@ export default {
       if (!this.required) return false;
       if (this.selected.length) return false;
       return true;
-    },
-  },
-
-  watch: {
-    /**
-     * Emit the selected option IDs when the checked array changes.
-     */
-    checked(ids) {
-      this.$emit('change', ids);
     },
   },
 
