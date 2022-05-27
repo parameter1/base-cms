@@ -1,14 +1,16 @@
 <template>
   <form-group>
-    <form-label :for="fieldId" :required="required">
+    <form-label v-if="!multiple" :for="fieldId" :required="required">
       {{ label }}
     </form-label>
-    <checkbox-group
+    <custom-select-multiple
       v-if="multiple"
       :group-id="id"
       :options="options"
       :selected="selectedOptionIds"
       :required="required"
+      :label="label"
+      :field-id="fieldId"
       @change="$emit('change', $event)"
     />
     <select
@@ -18,7 +20,7 @@
       :required="required"
       @change="$emit('change', [$event.target.value])"
     >
-      <option value="" disabled>
+      <option value="">
         Please select...
       </option>
       <template v-for="option in options">
@@ -47,7 +49,7 @@
       </template>
     </select>
     <custom-select-write-in
-      v-else
+      v-if="canWriteIn"
       :label="writeInLabel"
       :answer="writeInAnswer"
       :required="required"
@@ -57,14 +59,14 @@
 </template>
 
 <script>
-import CheckboxGroup from '../common/checkbox-group.vue';
+import CustomSelectMultiple from './custom-select-multiple.vue';
 import CustomSelectWriteIn from './custom-select-write-in.vue';
 import FormGroup from '../common/form-group.vue';
 import FormLabel from '../common/form-label.vue';
 
 export default {
   components: {
-    CheckboxGroup,
+    CustomSelectMultiple,
     CustomSelectWriteIn,
     FormGroup,
     FormLabel,
@@ -184,9 +186,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.vue-treeselect + .input-group {
-  margin-top: 0.5rem;
-}
-</style>
