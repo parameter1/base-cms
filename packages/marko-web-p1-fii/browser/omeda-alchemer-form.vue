@@ -89,7 +89,13 @@ export default {
         });
         const json = await res.json();
         if (!res.ok) throw new Error(json.message);
-        return json.data.url;
+        const rootUrl = new URL(json.data.url);
+        const urlParams = new URLSearchParams(rootUrl.search);
+        const paramUrl = new URL(urlParams.get('url'));
+        const paramUrlParams = new URLSearchParams(paramUrl.search);
+        paramUrlParams.delete('oly_enc_id');
+        urlParams.set('url', String(paramUrl));
+        return String(rootUrl);
       } catch (e) {
         const { error } = console;
         this.error = e;
