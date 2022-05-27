@@ -93,7 +93,4 @@ export default {
 .csmulti + .input-group {
   margin-top: 0.5rem;
 }
-div.checkbox-group + fieldset.csmulti-group {
-  margin-top: 0.5rem;
-}
 </style>
