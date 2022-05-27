@@ -3,23 +3,22 @@
     <div
       v-for="option in options"
       :key="option.id"
+      class="custom-control custom-checkbox"
     >
-      <div class="custom-control custom-checkbox">
-        <input
-          :id="createId(option.id)"
-          v-model="checked"
-          :required="isRequired"
-          :value="option.id"
-          type="checkbox"
-          class="custom-control-input"
-        >
-        <label
-          :for="createId(option.id)"
-          class="custom-control-label"
-        >
-          {{ option.label }}
-        </label>
-      </div>
+      <input
+        :id="createId(option.id)"
+        v-model="checked"
+        :required="isRequired"
+        :value="option.id"
+        type="checkbox"
+        class="custom-control-input"
+      >
+      <label
+        :for="createId(option.id)"
+        class="custom-control-label"
+      >
+        {{ option.label }}
+      </label>
     </div>
   </div>
 </template>
