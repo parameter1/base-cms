@@ -16,6 +16,7 @@
       <label
         :for="createId(option.id)"
         class="custom-control-label w-100"
+        :class="{ 'has-write-in': showWriteIn(option.id) }"
       >
         <custom-select-write-in-inline
           v-if="showWriteIn(option.id)"
@@ -128,3 +129,12 @@ export default {
   },
 };
 </script>
+
+<style>
+.custom-control-label.has-write-in::before {
+  top: calc(0.125rem + 3px);
+}
+.custom-control-label.has-write-in::after {
+  top: calc(0.125rem + 3px);
+}
+</style>
