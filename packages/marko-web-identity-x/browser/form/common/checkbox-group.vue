@@ -1,24 +1,10 @@
 <template>
-  <div>
+  <div class="checkbox-group">
     <div
       v-for="option in options"
       :key="option.id"
     >
-      <div v-if="option.options" class="mb-2">
-        <label :for="createId(option.id)" class="text-muted mb-0 mt-2">
-          {{ option.label }}
-        </label>
-        <div class="custom-control custom-checkbox-group">
-          <checkbox-group
-            :group-id="option.id"
-            :options="option.options"
-            :selected="selected"
-            :required="required"
-            @change="$emit('change', $event)"
-          />
-        </div>
-      </div>
-      <div v-else class="custom-control custom-checkbox">
+      <div class="custom-control custom-checkbox">
         <input
           :id="createId(option.id)"
           v-model="checked"
@@ -40,7 +26,6 @@
 
 <script>
 export default {
-  name: 'checkbox-group',
   props: {
     /**
      * The wrapping field group identifier.
