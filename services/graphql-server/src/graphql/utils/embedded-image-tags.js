@@ -20,6 +20,8 @@ module.exports = async (body, { imageHost, imageAttrs, basedb }) => {
         fileName: 1,
         filePath: 1,
         cropDimensions: 1,
+        width: 1,
+        height: 1,
       },
     });
     if (!image) {
@@ -34,6 +36,8 @@ module.exports = async (body, { imageHost, imageAttrs, basedb }) => {
     }));
     tag.set('caption', createCaptionFor(image.caption));
     tag.set('credit', image.credit);
+    if (image.width) tag.set('width', `${image.width}w`);
+    if (image.height) tag.set('height', `${image.height}h`);
     return tag;
   }));
 };
