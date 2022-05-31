@@ -15,6 +15,6 @@ module.exports = (match) => {
   const obj = $('span').data() || {};
   return Object.keys(obj).reduce((o, k) => {
     const key = camelize(k.replace('embed', ''));
-    return ({ ...o, [key]: htmlEntities.decode(obj[k]) });
+    return ({ ...o, [key]: htmlEntities.decode(String(obj[k])) });
   }, {});
 };
