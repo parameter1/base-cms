@@ -36,8 +36,8 @@ module.exports = async (body, { imageHost, imageAttrs, basedb }) => {
     }));
     tag.set('caption', createCaptionFor(image.caption));
     tag.set('credit', image.credit);
-    if (image.width) tag.set('width', `${image.width}w`);
-    if (image.height) tag.set('height', `${image.height}h`);
+    if (image.width) tag.set('width', String(image.width));
+    if (image.height) tag.set('height', String(image.height));
     return tag;
   }));
 };
