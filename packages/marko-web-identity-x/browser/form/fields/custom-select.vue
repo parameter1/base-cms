@@ -1,14 +1,19 @@
 <template>
   <form-group>
-    <form-label :for="fieldId" :required="required">
+    <form-label v-if="!multiple" :for="fieldId" :required="required">
       {{ label }}
     </form-label>
-    <checkbox-group
+    <custom-select-multiple
       v-if="multiple"
       :group-id="id"
       :options="options"
       :selected="selectedOptionIds"
       :required="required"
+      :label="label"
+      :field-id="fieldId"
+      :can-write-in="canWriteIn"
+      :write-in-label="writeInLabel"
+      :write-in-answer="writeInAnswer"
       @change="$emit('change', $event)"
     />
     <select
@@ -21,19 +26,35 @@
       <option value="">
         Please select...
       </option>
-      <option
-        v-for="option in options"
-        :key="option.id"
-        :value="option.id"
-        :selected="option.id === selectedOptionId"
-      >
-        {{ option.label }}
-      </option>
+      <template v-for="option in options">
+        <optgroup
+          v-if="option.options"
+          :key="option.id"
+          :label="option.label"
+        >
+          <option
+            v-for="child in option.options"
+            :key="child.id"
+            :value="child.id"
+            :selected="child.id === selectedOptionId"
+          >
+            {{ child.label }}
+          </option>
+        </optgroup>
+        <option
+          v-else
+          :key="option.id"
+          :value="option.id"
+          :selected="option.id === selectedOptionId"
+        >
+          {{ option.label }}
+        </option>
+      </template>
     </select>
     <custom-select-write-in
       v-else
       :label="writeInLabel"
-      :selected="selected"
+      :answer="writeInAnswer"
       :required="required"
       @clear="clearWriteIn($event)"
     />
@@ -41,14 +62,14 @@
 </template>
 
 <script>
-import CheckboxGroup from '../common/checkbox-group.vue';
+import CustomSelectMultiple from './custom-select-multiple.vue';
 import CustomSelectWriteIn from './custom-select-write-in.vue';
 import FormGroup from '../common/form-group.vue';
 import FormLabel from '../common/form-label.vue';
 
 export default {
   components: {
-    CheckboxGroup,
+    CustomSelectMultiple,
     CustomSelectWriteIn,
     FormGroup,
     FormLabel,
@@ -105,6 +126,14 @@ export default {
   },
 
   computed: {
+    value: {
+      get() {
+        return this.multiple ? this.selectedOptionIds : this.selectedOptionId;
+      },
+      set() {
+        // noop, re-render caused by emit/prop update
+      },
+    },
     fieldId() {
       return `custom-select-${this.id}`;
     },
@@ -115,25 +144,43 @@ export default {
 
     selectedOptionId() {
       const { selectedOptionIds, multiple } = this;
-      if (!multiple) return selectedOptionIds[0] || '';
+      if (!multiple) return selectedOptionIds[0] || undefined;
       return selectedOptionIds.slice();
     },
 
+    selectedOptions() {
+      const { selectedOptionIds: sids } = this;
+      return this.options.reduce((arr, option) => ([
+        ...arr,
+        ...(sids.includes(option.id) ? [option] : []),
+        ...(option.options ? option.options.filter(opt => sids.includes(opt.id)) : []),
+      ]), []);
+    },
+
     canWriteIn() {
-      if (this.selectedOptionId) {
-        const selected = this.options.find(option => option.id === this.selectedOptionId);
-        return selected && selected.canWriteIn;
+      const { selectedOptions } = this;
+      if (selectedOptions.length) {
+        const canWriteIn = selectedOptions.find(o => o.canWriteIn);
+        return Boolean(canWriteIn);
       }
       return false;
+    },
+    writeInAnswer() {
+      const { selectedOptions, selected: answers } = this;
+      return answers.find((a) => {
+        const opt = selectedOptions.find(o => o.id === a.id);
+        return opt && opt.canWriteIn;
+      });
     },
     showWriteIn() {
       return this.selected && this.canWriteIn;
     },
     writeInLabel() {
-      const selected = this.options.find(option => option.id === this.selectedOptionId);
+      const selected = this.selectedOptions.find(option => option.canWriteIn);
       return selected && selected.label;
     },
   },
+
   methods: {
     clearWriteIn(optionId) {
       const selected = this.selected.filter(item => item.id !== optionId);

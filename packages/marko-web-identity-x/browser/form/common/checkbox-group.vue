@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="checkbox-group">
     <div
       v-for="option in options"
       :key="option.id"
@@ -15,16 +15,30 @@
       >
       <label
         :for="createId(option.id)"
-        class="custom-control-label"
+        class="custom-control-label w-100"
+        :class="{ 'has-write-in': showWriteIn(option.id) }"
       >
-        {{ option.label }}
+        <custom-select-write-in-inline
+          v-if="showWriteIn(option.id)"
+          :answer="writeInAnswer"
+          :placeholder="writeInLabel"
+          @change="$emit('change', $event)"
+        />
+        <span v-else>
+          {{ option.label }}
+        </span>
       </label>
     </div>
   </div>
 </template>
 
 <script>
+import CustomSelectWriteInInline from '../fields/custom-select-write-in-inline.vue';
+
 export default {
+  components: {
+    CustomSelectWriteInInline,
+  },
   props: {
     /**
      * The wrapping field group identifier.
@@ -61,20 +75,34 @@ export default {
       type: Array,
       default: () => [],
     },
-  },
 
-  data() {
-    return {
-      /**
-       * Clone the selected value to the checked array.
-       * This is used internally as the `v-model` for the checkboxes.
-       * The value is then watched to emit the change event.
-       */
-      checked: [...this.selected],
-    };
+    canWriteIn: {
+      type: Boolean,
+      default: false,
+    },
+    writeInLabel: {
+      type: String,
+      default: 'Other',
+    },
+    writeInAnswer: {
+      type: Object,
+      default: () => ({}),
+    },
   },
 
   computed: {
+    /**
+     * This is used internally as the `v-model` for the checkboxes.
+     * The value is then watched to emit the change event.
+     */
+    checked: {
+      get() {
+        return [...this.selected];
+      },
+      set(value) {
+        this.$emit('change', value);
+      },
+    },
     /**
      * Determines if the checkboxes are required from a
      * validation perspective. Because HTML5 doesn't support
@@ -91,19 +119,22 @@ export default {
     },
   },
 
-  watch: {
-    /**
-     * Emit the selected option IDs when the checked array changes.
-     */
-    checked(ids) {
-      this.$emit('change', ids);
-    },
-  },
-
   methods: {
     createId(optionId) {
       return `checkbox-${this.groupId}-${optionId}`;
     },
+    showWriteIn(optionId) {
+      return this.canWriteIn && this.writeInAnswer.id === optionId;
+    },
   },
 };
 </script>
+
+<style>
+.custom-control-label.has-write-in::before {
+  top: calc(0.125rem + 3px);
+}
+.custom-control-label.has-write-in::after {
+  top: calc(0.125rem + 3px);
+}
+</style>

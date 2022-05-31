@@ -37,8 +37,8 @@ export default {
       type: Boolean,
       default: false,
     },
-    selected: {
-      type: Array,
+    answer: {
+      type: Object,
       required: true,
     },
     placeholder: {
@@ -57,9 +57,6 @@ export default {
   computed: {
     id() {
       return `custom-select-write-in-${this.answer.id}`;
-    },
-    answer() {
-      return this.selected[0];
     },
     autofocus() {
       return this.answer && !this.answer.writeInValue;

@@ -64,7 +64,20 @@ fragment ActiveUserFragment on AppUser {
         namespace { provider tenant type }
         identifier { value type }
       }
-      options { id label canWriteIn }
+      options: choices {
+        id
+        label
+        ... on SelectFieldOption {
+          canWriteIn
+        }
+        ... on SelectFieldOptionGroup {
+          options {
+            id
+            label
+            canWriteIn
+          }
+        }
+      }
     }
   }
 }
