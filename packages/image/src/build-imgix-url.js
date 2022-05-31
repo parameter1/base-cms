@@ -151,7 +151,7 @@ const params = [
 ];
 
 const coreDefaults = {
-  auto: 'format',
+  auto: 'format,compress',
   h: 320,
   w: 320,
 };
