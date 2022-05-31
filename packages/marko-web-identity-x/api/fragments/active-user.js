@@ -74,6 +74,7 @@ fragment ActiveUserFragment on AppUser {
           options {
             id
             label
+            canWriteIn
           }
         }
       }
