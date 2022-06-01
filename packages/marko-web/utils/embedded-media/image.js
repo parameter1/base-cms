@@ -18,10 +18,11 @@ module.exports = (tag, { config } = {}, { lazyloadImages } = {}) => {
   };
 
   const imgAttrs = {
-    src,
+    class: lazyload ? 'lazyload' : null,
+    src: lazyload ? 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' : src,
+    'data-src': lazyload ? src : null,
     'data-image-id': tag.id,
     alt,
-    loading: lazyload ? 'lazy' : null,
   };
   const captionElement = caption ? `<span class="caption">${caption}</span>` : '';
   const creditElement = credit ? `<span class="credit">${credit}</span>` : '';
