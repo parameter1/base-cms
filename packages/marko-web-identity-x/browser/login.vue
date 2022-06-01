@@ -24,6 +24,9 @@
   <div v-else>
     <form @submit.prevent="handleSubmit">
       <fieldset :disabled="loading">
+        <legend class="visually-hidden">
+          Sign-up with E-Mail to Comment
+        </legend>
         <email v-model="email" :placeholder="loginEmailPlaceholder" />
         <small
           v-if="consentPolicy"
