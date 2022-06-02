@@ -29,10 +29,16 @@ $marko-web-primary-image-margin: 1.5rem !default;
   &--aligned {
     max-width: $skin-aligned-image-width;
     margin-bottom: 0;
+    img {
+      max-width: $skin-aligned-image-width;
+    }
 
     @include media-breakpoint-down(xs) {
       max-width: 100%;
       margin: $skin-aligned-body-image-spacer auto;
+      img {
+        max-width: 100%;
+      }
 
       #{ $self } {
         &__image {

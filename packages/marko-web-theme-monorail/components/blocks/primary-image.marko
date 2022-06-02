@@ -15,7 +15,7 @@ $ const withCaption = defaultValue(input.withCaption, true);
 $ const withCredit = defaultValue(input.withCredit, true);
 $ const withDisplayName = defaultValue(input.withDisplayName, true);
 
-$ const fluidWidth = defaultValue(input.fluidWidth, 700);
+$ const fluidWidth = defaultValue(input.fluidWidth, 880);
 $ const alignedWidth = defaultValue(input.alignedWidth, 300);
 $ const shouldFill = defaultValue(input.shouldFill, false);
 $ const lazyload = defaultValue(input.lazyload, false);
@@ -31,7 +31,7 @@ $ if (["left", "right"].includes(display)) {
 }
 $ modifiers.push(`aligned-${display}`);
 
-$ const maxWidth = input.maxWidth || 700;
+$ const maxWidth = input.maxWidth || 880;
 $ const fluid = !["left", "right"].includes(display);
 $ if (fluid) modifiers.push("fluid");
 $ if (fluid && aspectRatio === "16x9") modifiers.push("fluid-16by9")
@@ -47,12 +47,30 @@ $ if (fluid) {
   imageOptions.w = alignedWidth;
 };
 
+$ const src = buildImgixUrl(image.src, imageOptions);
+$ const srcset = [src, `${buildImgixUrl(src, { dpr: 2 })} 2x`];
+$ const srcMid = buildImgixUrl(src, { w: 700 });
+$ const srcsetMid = [srcMid, `${buildImgixUrl(srcMid, { dpr: 2 })} 2x`];
+$ const srcMin = buildImgixUrl(src, { w: 400 });
+$ const srcsetMin = [srcMin, `${buildImgixUrl(srcMin, { dpr: 2 })} 2x`];
+$ const sources = [];
+$ if (fluid) {
+  sources.push(
+    { srcset: srcset, media: "(min-width: 900px)" },
+    { srcset: srcsetMid, media: "(min-width: 576px)" }
+  );
+} else {
+  const alignedSrc = buildImgixUrl(src, { w: alignedWidth });
+  const alignedSrcset = [alignedSrc, `${buildImgixUrl(alignedSrc, { dpr: 2 })} 2x`];
+  sources.push(
+    { srcset: alignedSrcset, media: "(min-width: 576px)" }
+  );
+};
+
 $ const imageAttrs = {};
 $ if (image.id) imageAttrs["data-image-id"] = image.id;
 
 <if(hasImage && display !== "none")>
-  $ const src = buildImgixUrl(image.src, imageOptions);
-  $ const srcset = [`${buildImgixUrl(src, { dpr: 2 })} 2x`];
 
   <marko-web-block
     name=blockName
@@ -62,14 +80,19 @@ $ if (image.id) imageAttrs["data-image-id"] = image.id;
       <marko-web-image-display-name block-name=blockName obj=image />
     </if>
     <div class=`${blockName}__wrapper`>
-      <marko-web-img
-        src=src
-        srcset=srcset
-        alt=image.alt
-        class=`${blockName}__image`
-        attrs=imageAttrs
-        lazyload=lazyload
-      />
+      <marko-web-picture>
+        <for|s| of=sources>
+          <@source ...s />
+        </for>
+        <@image
+          src=srcMin
+          srcset=srcsetMin
+          class=[`${blockName}__image`]
+          alt=image.alt
+          attrs=imageAttrs
+          lazyload=lazyload
+        />
+      </marko-web-picture>
     </div>
 
     <if(withCaption)>
