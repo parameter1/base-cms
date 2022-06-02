@@ -1,3 +1,5 @@
+const { buildImgixUrl } = require('@parameter1/base-cms-image');
+
 const stringifyAttrs = attrs => Object.keys(attrs).reduce((arr, key) => {
   const value = attrs[key];
   if (value) arr.push(`${key}="${value}"`);
@@ -10,23 +12,50 @@ module.exports = (tag, { config } = {}, { lazyloadImages } = {}) => {
   const alt = tag.get('alt');
   const caption = tag.get('caption');
   const credit = tag.get('credit');
+  const align = tag.get('align');
+
+  const width = tag.get('width');
+  const height = tag.get('height');
 
   const attrs = {
     'data-embed-type': tag.type,
     'data-embed-id': tag.id,
-    'data-embed-align': tag.get('align'),
+    'data-embed-align': align,
   };
 
+  const minWidth = 400;
+  const maxWidth = (align) ? minWidth : 700;
+
+  const maxSrcset = `${buildImgixUrl(src, { w: maxWidth })}, ${buildImgixUrl(src, { w: maxWidth, dpr: 2 })} 2x`;
+
+  const sources = [
+    {
+      srcset: lazyload ? null : maxSrcset,
+      'data-srcset': lazyload ? maxSrcset : null,
+      media: '(min-width: 576px)',
+    },
+  ].map(source => `<source ${stringifyAttrs(source)}>`).join('');
+
+  const minSrc = buildImgixUrl(src, { w: minWidth });
+  const minSrcset = `${buildImgixUrl(src, { w: minWidth, dpr: 2 })} 2x`;
+
+  const transparentImg = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
   const imgAttrs = {
     class: lazyload ? 'lazyload' : null,
-    src: lazyload ? 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' : src,
-    'data-src': lazyload ? src : null,
+    src: lazyload ? transparentImg : minSrc,
+    srcset: lazyload ? null : minSrcset,
+    'data-src': lazyload ? minSrc : null,
+    'data-srcset': lazyload ? minSrcset : null,
     'data-image-id': tag.id,
     alt,
+    width: (width && height) ? minWidth : null,
+    height: (height && height) ? Math.round(height / width * minWidth) : null,
   };
+
   const captionElement = caption ? `<span class="caption">${caption}</span>` : '';
   const creditElement = credit ? `<span class="credit">${credit}</span>` : '';
 
-  const img = `<img ${stringifyAttrs(imgAttrs)}>${captionElement}${creditElement}`;
-  return `<span ${stringifyAttrs(attrs)}>${img}</span>`;
+  const img = `<img ${stringifyAttrs(imgAttrs)}>`;
+  const picture = `<picture>${sources}${img}${captionElement}${creditElement}</picture>`;
+  return `<span ${stringifyAttrs(attrs)}>${picture}</span>`;
 };
