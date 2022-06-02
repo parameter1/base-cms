@@ -31,7 +31,7 @@ const query = gql`
   }
 `;
 
-module.exports = async (omedaGraphQLClient, encryptedCustomerId) => {
+module.exports = async ({ omedaGraphQLClient, encryptedCustomerId }) => {
   const variables = { id: encryptedCustomerId };
   const { data } = await omedaGraphQLClient.query({ query, variables });
   return data.customerByEncryptedId;

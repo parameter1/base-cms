@@ -1,41 +1,10 @@
 const gql = require('graphql-tag');
-const { get, getAsArray } = require('@parameter1/base-cms-object-path');
-const isOmedaDeploymentTypeId = require('../external-id/is-deployment-type-id');
-const isOmedaDemographicId = require('../external-id/is-demographic-id');
+const { get } = require('@parameter1/base-cms-object-path');
 const extractPromoCode = require('../utils/extract-promo-code');
 const getOmedaCustomerRecord = require('../utils/get-omeda-customer-record');
-
-const FIELD_QUERY = gql`
-  query GetCustomFields {
-    fields {
-      edges {
-        node {
-          id
-          name
-          type
-          active
-          externalId {
-            id
-            namespace { provider tenant type }
-            identifier { value }
-          }
-          ... on SelectField {
-            multiple
-            options {
-              id
-              externalIdentifier
-            }
-          }
-
-          ... on BooleanField {
-            whenTrue { type value }
-            whenFalse { type value }
-          }
-        }
-      }
-    }
-  }
-`;
+const setOmedaDemographics = require('../utils/set-omeda-demographics');
+const setOmedaDeploymentTypes = require('../utils/set-omeda-deployment-types');
+const getOmedaLinkedFields = require('../utils/get-omeda-linked-fields');
 
 const SET_OMEDA_DATA = gql`
   mutation SetOmedaData($input: SetAppUserUnverifiedDataMutationInput!) {
@@ -43,18 +12,9 @@ const SET_OMEDA_DATA = gql`
   }
 `;
 
-const SET_OMEDA_BOOLEAN_FIELD_ANSWERS = gql`
-  mutation SetOmedaBooleanFieldAnswers($input: UpdateAppUserCustomBooleanAnswersMutationInput!) {
-    updateAppUserCustomBooleanAnswers(input: $input) { id }
-  }
-`;
-
-const SET_OMEDA_SELECT_FIELD_ANSWERS = gql`
-  mutation SetOmedaSelectFieldAnswers($input: UpdateAppUserCustomSelectAnswersMutationInput!) {
-    updateAppUserCustomSelectAnswers(input: $input) { id }
-  }
-`;
-
+/**
+ * Sets Omeda customer data (such as name, address, etc) to the IdentityX user fields.
+ */
 const setOmedaData = async ({ identityX, user, omedaCustomer }) => {
   const input = {
     email: user.email,
@@ -75,125 +35,6 @@ const setOmedaData = async ({ identityX, user, omedaCustomer }) => {
   return identityX.client.mutate({
     mutation: SET_OMEDA_DATA,
     variables: { input },
-  });
-};
-
-const setOmedaDemographics = async ({
-  identityX,
-  user,
-  omedaCustomer,
-  omedaLinkedFields,
-  answeredQuestionMap,
-}) => {
-  const omedaCustomerDemoValuesMap = omedaCustomer.demographics
-    .reduce((map, { demographic, value, writeInDesc }) => {
-      if (!value || !value.id) return map; // skip demos without value IDs
-      const id = `${demographic.id}`;
-      const ids = map.has(id) ? map.get(id).ids : new Set();
-      ids.add(`${value.id}`);
-      map.set(id, { ids, writeInDesc });
-      return map;
-    }, new Map());
-
-  const booleanAnswerMap = new Map();
-  const selectAnswerMap = new Map();
-  omedaLinkedFields.forEach((field) => {
-    if (answeredQuestionMap.has(field.id)) return;
-    const { value: demoId } = field.externalId.identifier;
-    if (!omedaCustomerDemoValuesMap.has(demoId)) return;
-    const value = omedaCustomerDemoValuesMap.get(demoId);
-    const { ids: valueIdSet, writeInDesc } = value;
-
-    if (field.type === 'select') {
-      field.options.forEach((option) => {
-        const { externalIdentifier } = option;
-        if (!externalIdentifier || !valueIdSet.has(externalIdentifier)) return;
-        const ids = selectAnswerMap.has(field.id) ? selectAnswerMap.get(field.id).ids : new Set();
-        ids.add(option.id);
-        selectAnswerMap.set(field.id, { ids, writeInDesc });
-      });
-    }
-
-    if (field.type === 'boolean') {
-      const { whenTrue, whenFalse } = field;
-      if (whenTrue.type === 'INTEGER' && valueIdSet.has(`${whenTrue.value}`)) {
-        booleanAnswerMap.set(field.id, true);
-        return;
-      }
-      if (whenFalse.type === 'INTEGER' && valueIdSet.has(`${whenFalse.value}`)) {
-        booleanAnswerMap.set(field.id, false);
-      }
-    }
-  });
-
-  await (async () => {
-    if (!selectAnswerMap.size) return;
-    const answers = [];
-    selectAnswerMap.forEach((value, fieldId) => {
-      const optionIds = [...value.ids];
-      answers.push({
-        fieldId,
-        optionIds,
-        ...(value.writeInDesc && {
-          writeInValues: optionIds.map(id => ({
-            optionId: id,
-            value: value.writeInDesc,
-          })),
-        }),
-      });
-    });
-    await identityX.client.mutate({
-      mutation: SET_OMEDA_SELECT_FIELD_ANSWERS,
-      variables: { input: { id: user.id, answers } },
-      context: { apiToken: identityX.config.getApiToken() },
-    });
-  })();
-
-  await (async () => {
-    if (!booleanAnswerMap.size) return;
-    const answers = [];
-    booleanAnswerMap.forEach((value, fieldId) => {
-      answers.push({ fieldId, value });
-    });
-    await identityX.client.mutate({
-      mutation: SET_OMEDA_BOOLEAN_FIELD_ANSWERS,
-      variables: { input: { id: user.id, answers } },
-      context: { apiToken: identityX.config.getApiToken() },
-    });
-  })();
-};
-
-const setOmedaDeploymentTypes = async ({
-  identityX,
-  user,
-  omedaCustomer,
-  omedaLinkedFields,
-  answeredQuestionMap,
-}) => {
-  const omedaDeploymentOptInMap = getAsArray(omedaCustomer, 'primaryEmailAddress.optInStatus').reduce((map, { deploymentTypeId, status }) => {
-    const optedIn = status.id === 'IN';
-    map.set(`${deploymentTypeId}`, optedIn);
-    return map;
-  }, new Map());
-
-  const answerMap = new Map();
-  omedaLinkedFields.forEach((field) => {
-    if (answeredQuestionMap.has(field.id)) return;
-    const { value: deploymentTypeId } = field.externalId.identifier;
-    const optedIn = omedaDeploymentOptInMap.get(deploymentTypeId);
-    if (optedIn == null) return;
-    answerMap.set(field.id, optedIn);
-  });
-  if (!answerMap.size) return;
-
-  const answers = [];
-  answerMap.forEach((value, fieldId) => {
-    answers.push({ fieldId, value });
-  });
-  await identityX.client.mutate({
-    mutation: SET_OMEDA_BOOLEAN_FIELD_ANSWERS,
-    variables: { input: { id: user.id, answers } },
-    context: { apiToken: identityX.config.getApiToken() },
   });
 };
 
@@ -222,29 +63,13 @@ module.exports = async ({
   });
 
   // get omeda customer id (via rapid identity) and load omeda custom field data
-  const [{ data }, { encryptedCustomerId }] = await Promise.all([
-    identityX.client.query({ query: FIELD_QUERY }),
+  const [omedaLinkedFields, { encryptedCustomerId }] = await Promise.all([
+    getOmedaLinkedFields({ identityX, brandKey }),
     idxOmedaRapidIdentify({
       user: user.verified ? user : { id: user.id, email: user.email },
       ...(promoCode && { promoCode }),
     }),
   ]);
-
-  const omedaLinkedFields = {
-    demographic: [],
-    deploymentType: [],
-  };
-  getAsArray(data, 'fields.edges').forEach((edge) => {
-    const { node: field } = edge;
-    const { externalId } = field;
-    if (!field.active || !externalId) return;
-    if (isOmedaDemographicId({ externalId, brandKey })) {
-      omedaLinkedFields.demographic.push(field);
-    }
-    if (field.type === 'boolean' && isOmedaDeploymentTypeId({ externalId, brandKey })) {
-      omedaLinkedFields.deploymentType.push(field);
-    }
-  });
 
   const answeredQuestionMap = new Map();
   user.customSelectFieldAnswers.forEach((select) => {
@@ -261,6 +86,7 @@ module.exports = async ({
     && omedaLinkedFields
       .deploymentType.every(field => answeredQuestionMap.has(field.id));
 
+  // @todo: Check if a valid answer exists for all omeda questions
   // @todo: user.hasAnsweredAllOmedaQuestions isn't a thing, review this.
   // Possible typo for hasAnsweredAllOmedaQuestions to bypass omeda fetch/updates?
   if (user.verified && user.hasAnsweredAllOmedaQuestions) {
@@ -268,7 +94,7 @@ module.exports = async ({
   }
 
   // find the omeda customer record to "prime" the identity-x user.
-  const omedaCustomer = await getOmedaCustomerRecord(omedaGraphQLClient, encryptedCustomerId);
+  const omedaCustomer = await getOmedaCustomerRecord({ omedaGraphQLClient, encryptedCustomerId });
 
   // Only set existing omeda data to IdentityX if the user is not yet verified (aka, new user)
   if (!user.verified) await setOmedaData({ identityX, user, omedaCustomer });
@@ -277,15 +103,13 @@ module.exports = async ({
       identityX,
       user,
       omedaCustomer,
-      omedaLinkedFields: omedaLinkedFields.demographic,
-      answeredQuestionMap,
+      fields: omedaLinkedFields.demographic,
     });
     await setOmedaDeploymentTypes({
       identityX,
       user,
       omedaCustomer,
-      omedaLinkedFields: omedaLinkedFields.deploymentType,
-      answeredQuestionMap,
+      fields: omedaLinkedFields.deploymentType,
     });
   }
 };
