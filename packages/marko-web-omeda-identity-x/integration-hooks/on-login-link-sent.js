@@ -3,6 +3,7 @@ const { get, getAsArray } = require('@parameter1/base-cms-object-path');
 const isOmedaDeploymentTypeId = require('../external-id/is-deployment-type-id');
 const isOmedaDemographicId = require('../external-id/is-demographic-id');
 const extractPromoCode = require('../utils/extract-promo-code');
+const getOmedaCustomerRecord = require('../utils/get-omeda-customer-record');
 
 const FIELD_QUERY = gql`
   query GetCustomFields {
@@ -36,37 +37,6 @@ const FIELD_QUERY = gql`
   }
 `;
 
-const CUSTOMER_QUERY = gql`
-  query CustomerByEncryptedId($id: String!) {
-    customerByEncryptedId(input: { id: $id, errorOnNotFound: false }) {
-      id
-      firstName
-      lastName
-      title
-      companyName
-      primaryPostalAddress {
-        countryCode
-        regionCode
-        postalCode
-        street
-        extraAddress
-        city
-      }
-      primaryPhoneNumber {
-        phoneNumber
-      }
-      demographics {
-        demographic { id description }
-        value { id description }
-        writeInDesc
-      }
-      primaryEmailAddress {
-        optInStatus { deploymentTypeId status { id } }
-      }
-    }
-  }
-`;
-
 const SET_OMEDA_DATA = gql`
   mutation SetOmedaData($input: SetAppUserUnverifiedDataMutationInput!) {
     setAppUserUnverifiedData(input: $input) { id }
@@ -84,12 +54,6 @@ const SET_OMEDA_SELECT_FIELD_ANSWERS = gql`
     updateAppUserCustomSelectAnswers(input: $input) { id }
   }
 `;
-
-const getOmedaCustomerRecord = async (omedaGraphQLClient, encryptedCustomerId) => {
-  const variables = { id: encryptedCustomerId };
-  const { data } = await omedaGraphQLClient.query({ query: CUSTOMER_QUERY, variables });
-  return data.customerByEncryptedId;
-};
 
 const setOmedaData = async ({ identityX, user, omedaCustomer }) => {
   const input = {
