@@ -1,0 +1,25 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+
+$ const hasImage = Boolean(input.image.src);
+
+<if(hasImage)>
+  <if(input.link)>
+    <marko-core-link ...input.link>
+      $ input.link = false;
+      <marko-web-picture ...input />
+    </marko-core-link>
+  </if>
+  <else>
+    $ const sources = getAsArray(input, "sources");
+    <picture>
+      <for|s| of=sources>
+        $ const srcset = s.srcset.join(", ");
+        <source
+          srcset=srcset
+          media=s.media
+        >
+      </for>
+      <image ...input.image />
+    </picture>
+  </else>
+</if>
