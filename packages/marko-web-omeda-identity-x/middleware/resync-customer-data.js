@@ -1,10 +1,12 @@
 const { getAsArray } = require('@parameter1/base-cms-object-path');
 const resyncCookie = require('../utils/resync-cookie');
-const getOmedaCustomerRecord = require('../utils/get-omeda-customer-record');
-const getOmedaLinkedFields = require('../utils/get-omeda-linked-fields');
-const setOmedaDemographics = require('../utils/set-omeda-demographics');
-const setOmedaDeploymentTypes = require('../utils/set-omeda-deployment-types');
 const findEncryptedId = require('../external-id/find-encrypted-customer-id');
+const {
+  getOmedaCustomerRecord,
+  getOmedaLinkedFields,
+  setOmedaDemographics,
+  setOmedaDeploymentTypes,
+} = require('../omeda-data');
 
 /**
  * A middleware to resync the IdentityX user data with the Omeda customer data. After syncing data,

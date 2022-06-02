@@ -1,5 +1,5 @@
 const gql = require('graphql-tag');
-const getAnsweredQuestionMap = require('../utils/get-answered-question-map');
+const getAnsweredQuestionMap = require('./get-answered-question-map');
 
 const SET_OMEDA_SELECT_FIELD_ANSWERS = gql`
   mutation SetOmedaSelectFieldAnswers($input: UpdateAppUserCustomSelectAnswersMutationInput!) {

@@ -1,6 +1,6 @@
 const gql = require('graphql-tag');
 const { getAsArray } = require('@parameter1/base-cms-object-path');
-const getAnsweredQuestionMap = require('../utils/get-answered-question-map');
+const getAnsweredQuestionMap = require('./get-answered-question-map');
 
 const SET_OMEDA_BOOLEAN_FIELD_ANSWERS = gql`
 mutation SetOmedaBooleanFieldAnswers($input: UpdateAppUserCustomBooleanAnswersMutationInput!) {

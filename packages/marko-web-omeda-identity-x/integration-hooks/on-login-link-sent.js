@@ -1,10 +1,12 @@
 const gql = require('graphql-tag');
 const { get } = require('@parameter1/base-cms-object-path');
 const extractPromoCode = require('../utils/extract-promo-code');
-const getOmedaCustomerRecord = require('../utils/get-omeda-customer-record');
-const setOmedaDemographics = require('../utils/set-omeda-demographics');
-const setOmedaDeploymentTypes = require('../utils/set-omeda-deployment-types');
-const getOmedaLinkedFields = require('../utils/get-omeda-linked-fields');
+const {
+  getOmedaCustomerRecord,
+  getOmedaLinkedFields,
+  setOmedaDemographics,
+  setOmedaDeploymentTypes,
+} = require('../omeda-data');
 
 const SET_OMEDA_DATA = gql`
   mutation SetOmedaData($input: SetAppUserUnverifiedDataMutationInput!) {
