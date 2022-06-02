@@ -1,7 +1,6 @@
 
 const {
   onAuthenticationSuccess,
-  onLoadActiveContext,
   onLoginLinkSent,
   onLogout,
   onUserProfileUpdate,
@@ -31,17 +30,6 @@ module.exports = ({
       req: args.req,
       service: args.service,
       user: args.user,
-    }),
-  });
-
-  idxConfig.addHook({
-    name: 'onLoadActiveContext',
-    shouldAwait: true,
-    fn: async ({ activeContext, req, res }) => onLoadActiveContext({
-      brandKey,
-      activeContext,
-      req,
-      res,
     }),
   });
 

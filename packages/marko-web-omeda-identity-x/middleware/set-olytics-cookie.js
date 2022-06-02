@@ -1,14 +1,11 @@
-const { get } = require('@parameter1/base-cms-object-path');
 const olyticsCookie = require('@parameter1/base-cms-marko-web-omeda/olytics/customer-cookie');
 const findEncryptedId = require('../external-id/find-encrypted-customer-id');
 
 module.exports = ({
   brandKey,
-  activeContext,
-  req,
-  res,
-}) => {
-  const user = get(activeContext, 'user');
+}) => async (req, res, next) => {
+  const { user } = await req.identityX.loadActiveContext();
+
   if (!user || !user.id) return;
   const idxEncId = findEncryptedId({ externalIds: user.externalIds, brandKey });
   const cookieEncId = olyticsCookie.parseFrom(req);
@@ -23,4 +20,5 @@ module.exports = ({
   if (idxEncId !== cookieEncId && !res.headersSent) {
     olyticsCookie.setTo(res, idxEncId);
   }
+  next();
 };

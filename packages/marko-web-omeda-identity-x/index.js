@@ -3,6 +3,7 @@ const identityX = require('@parameter1/base-cms-marko-web-identity-x');
 const addOmedaHooksToIdentityXConfig = require('./add-integration-hooks');
 const setPromoSourceCookie = require('./middleware/set-promo-source');
 const stripOlyticsParam = require('./middleware/strip-olytics-param');
+const setOlyticsCookie = require('./middleware/set-olytics-cookie');
 const rapidIdentify = require('./middleware/rapid-identify');
 const rapidIdentifyRouter = require('./routes/rapid-identify');
 
@@ -69,6 +70,8 @@ module.exports = (app, {
 
   // install identity x
   identityX(app, idxConfig, { templates: idxRouteTemplates });
+
+  app.use(setOlyticsCookie({ brandKey }));
 
   // register the rapid identify AJAX route
   app.use('/__idx/omeda-rapid-ident', rapidIdentifyRouter({
