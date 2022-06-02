@@ -17,7 +17,6 @@ module.exports = async ({
   omedaCustomer,
   fields = [],
 }) => {
-  console.log('setting omeda deployment types for ', user.id, omedaCustomer.id);
   const omedaDeploymentOptInMap = getAsArray(omedaCustomer, 'primaryEmailAddress.optInStatus').reduce((map, { deploymentTypeId, status }) => {
     const optedIn = status.id === 'IN';
     map.set(`${deploymentTypeId}`, optedIn);

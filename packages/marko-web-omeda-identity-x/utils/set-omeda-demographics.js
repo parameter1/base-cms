@@ -22,8 +22,6 @@ module.exports = async ({
   omedaCustomer,
   fields = [],
 }) => {
-  console.log('setting omeda demographics for ', user.id, omedaCustomer.id);
-
   // @todo check if option external id still exists or has changed!
   const answeredQuestionMap = getAnsweredQuestionMap(user);
 
