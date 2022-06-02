@@ -80,17 +80,23 @@ $ const blockName = "section-feed-content-node";
   <if(displayImage)>
     <marko-web-element block-name=blockName name="image-wrapper">
       <if(primaryImage.src)>
-        $ const src = buildImgixUrl(primaryImage.src, imageOptions);
-        $ const srcset = [`${buildImgixUrl(src, { dpr: 2 })} 2x`];
-        <marko-web-link href=get(content, "siteContext.path") attrs=linkAttrs>
-          <marko-web-img
-            src=src
-            srcset=srcset
-            alt=primaryImage.alt
+        $ const src = buildImgixUrl(primaryImage.src, { w: 250, h: 167, fit: "crop" });
+        $ const srcset = [src, `${buildImgixUrl(src, { dpr: 2 })} 2x`];
+
+        $ const srcMobile = buildImgixUrl(primaryImage.src, { w: 112, h: 112, fit: "crop" });
+        $ const srcsetMobile = [srcMobile, `${buildImgixUrl(srcMobile, { dpr: 2 })} 2x`];
+
+        <marko-web-picture>
+          <@link href=get(content, "siteContext.path") attrs=linkAttrs />
+          <@source srcset=srcset media="(min-width: 768px)" />
+          <@image
+            src=srcMobile
+            srcset=srcsetMobile
             class=[`${blockName}__image`]
+            alt=primaryImage.alt
             lazyload=lazyload
           />
-        </marko-web-link>
+        </marko-web-picture>
       </if>
     </marko-web-element>
   </if>
