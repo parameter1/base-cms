@@ -23,20 +23,23 @@
   </div>
   <div v-else>
     <form @submit.prevent="handleSubmit">
-      <fieldset :disabled="loading">
-        <email v-model="email" :placeholder="loginEmailPlaceholder" />
-        <small
-          v-if="consentPolicy"
-          class="text-muted mb-3"
-          v-html="consentPolicy"
-        />
-        <button
-          type="submit"
-          class="btn btn-primary"
-        >
-          {{ buttonLabels.continue }}
-        </button>
-      </fieldset>
+      <email
+        v-model="email"
+        :placeholder="loginEmailPlaceholder"
+        :disabled="loading"
+      />
+      <small
+        v-if="consentPolicy"
+        class="text-muted mb-3"
+        v-html="consentPolicy"
+      />
+      <button
+        type="submit"
+        class="btn btn-primary"
+        :disabled="loading"
+      >
+        {{ buttonLabels.continue }}
+      </button>
       <p v-if="error" class="mt-3 text-danger">
         An error occurred: {{ error.message }}
       </p>
