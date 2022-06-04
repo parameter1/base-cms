@@ -22,9 +22,11 @@ $ const hasImage = Boolean(image.src);
   <else>
     <picture>
       <for|s| of=sources>
-        $ const srcset = s.srcset.join(", ");
+        $ const srcset = image.lazyload ? null : s.srcset.join(", ");
+        $ const dataSrcset = image.lazyload ? s.srcset.join(", ") : null;
         <source
           srcset=srcset
+          data-srcset=dataSrcset
           media=s.media
         >
       </for>
