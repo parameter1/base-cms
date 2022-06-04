@@ -82,7 +82,7 @@ $ if (image.id) imageAttrs["data-image-id"] = image.id;
     <div class=`${blockName}__wrapper`>
       <marko-web-picture>
         <for|s| of=sources>
-          <@source ...s />
+          <@source srcset=s.srcset media=s.media />
         </for>
         <@image
           src=srcMin
