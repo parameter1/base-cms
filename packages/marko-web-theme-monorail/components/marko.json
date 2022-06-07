@@ -23,6 +23,9 @@
   "<theme-site-footer>": {
     "template": "./site-footer.marko"
   },
+  "<theme-site-header>": {
+    "template": "./site-header.marko"
+  },
   "<theme-site-menu>": {
     "template": "./site-menu/index.marko"
   },
