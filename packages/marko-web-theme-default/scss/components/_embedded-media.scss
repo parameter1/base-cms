@@ -17,6 +17,7 @@
 
 p [data-embed-type] {
   margin: $theme-embedded-media-margin;
+  text-align: center;
 }
 
 [data-embed-type][data-embed-align="left"] {
@@ -40,8 +41,6 @@ p [data-embed-type] {
 }
 
 [data-embed-type] img {
-  width: 100%;
-  min-width: 100%;
   max-width: 100%;
 }
 

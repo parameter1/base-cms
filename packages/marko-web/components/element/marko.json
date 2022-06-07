@@ -162,5 +162,40 @@
     "@class": "string",
     "@attrs": "object",
     "@modifiers": "array"
+  },
+  "<marko-web-picture>": {
+    "template": "./picture.marko",
+    "<image>": {
+      "@src": "string",
+      "@srcset": "array",
+      "@alt": "string",
+      "@lazyload": {
+        "type": "boolean",
+        "default-value": true
+      },
+      "@class": "string",
+      "@attrs": "object",
+      "@link": "object"
+    },
+    "<link>": {
+      "<before>": {},
+      "<after>": {},
+      "@href": "string",
+      "@target": "string",
+      "@title": "string",
+      "@rel": "string",
+      "@class": "string",
+      "@attrs": "object"
+    },
+    "@sources <source>[]": {
+      "@media": {
+        "type": "string",
+        "required": true
+      },
+      "@srcset": {
+        "type": "array",
+        "required": true
+      }
+    }
   }
 }

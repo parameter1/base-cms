@@ -1,0 +1,36 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+
+$ const { link, sources = [], image } = input;
+
+$ const hasImage = Boolean(image.src);
+
+<if(hasImage)>
+  <if(link)>
+    <marko-core-link
+      before=link.before
+      after=link.after
+      href=link.href
+      target=link.target
+      title=link.title
+      rel=link.rel
+      class=link.class
+      attrs=link.attrs
+    >
+      <marko-web-picture image=image sources=sources />
+    </marko-core-link>
+  </if>
+  <else>
+    <picture>
+      <for|s| of=sources>
+        $ const srcset = image.lazyload ? null : s.srcset.join(", ");
+        $ const dataSrcset = image.lazyload ? s.srcset.join(", ") : null;
+        <source
+          srcset=srcset
+          data-srcset=dataSrcset
+          media=s.media
+        >
+      </for>
+      <image ...image />
+    </picture>
+  </else>
+</if>
