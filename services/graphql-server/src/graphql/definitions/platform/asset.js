@@ -72,6 +72,7 @@ type AssetImageCropRectangle {
   y: Int!
   width: Int!
   height: Int!
+  cropped: Boolean!
 }
 
 type AssetImageCrop {
