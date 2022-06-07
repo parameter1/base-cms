@@ -1,0 +1,17 @@
+{
+  "<theme-site-navbar>": {
+    "template": "./index.marko"
+  },
+  "<theme-site-navbar-brand>": {
+    "template": "./brand.marko"
+  },
+  "<theme-site-navbar-logo>": {
+    "template": "./logo.marko"
+  },
+  "<theme-site-navbar-items>": {
+    "template": "./items.marko"
+  },
+  "<theme-site-navbar-item>": {
+    "template": "./item.marko"
+  }
+}

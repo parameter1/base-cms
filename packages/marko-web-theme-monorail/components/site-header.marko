@@ -1,0 +1,57 @@
+$ const { config, site } = out.global;
+
+$ const blockName = input.blockName || "site-header";
+
+$ const navigation = {
+  primary: site.getAsArray("navigation.primary.items"),
+  secondary: site.getAsArray("navigation.secondary.items"),
+  tertiary: site.getAsArray("navigation.tertiary.items"),
+};
+
+<marko-web-block
+  name=blockName
+  tag=(input.tag || "header")
+  class=input.class
+  modifiers=input.modifiers
+  attrs=input.attrs
+>
+  <${input.aboveNav} />
+  <theme-site-navbar modifiers=["secondary"] attrs={ "aria-label": "Secondary Navigation" }>
+    <theme-menu-toggle-button
+      class="site-navbar__toggler"
+      targets=[".site-menu", "body"]
+      toggle-class="site-menu--open"
+      icon-modifiers=["lg"]
+      icon-name="three-bars"
+    />
+
+    <theme-site-navbar-brand title=`${config.website("name")} Homepage`>
+      <theme-site-navbar-logo
+        alt=config.website("name")
+        src=site.get("logos.navbar.src")
+        srcset=site.getAsArray("logos.navbar.srcset").join(", ")
+        width=site.get("logos.navbar.width")
+        height=site.get("logos.navbar.height")
+      />
+    </theme-site-navbar-brand>
+
+    <theme-site-navbar-items
+      items=navigation.secondary
+      modifiers=["secondary"]
+      reg-enabled=input.regEnabled
+      has-user=input.hasUser
+    />
+
+    <marko-web-browser-component name="ThemeNewsletterToggleButton" ssr=true />
+  </theme-site-navbar>
+
+  <theme-site-navbar modifiers=["primary"] attrs={ "aria-label": "Primary Navigation" }>
+    <theme-site-navbar-items
+      items=navigation.primary
+      modifiers=["primary"]
+      reg-enabled=input.regEnabled
+      has-user=input.hasUser
+    />
+  </theme-site-navbar>
+  <${input.belowNav} />
+</marko-web-block>
