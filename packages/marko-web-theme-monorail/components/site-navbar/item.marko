@@ -1,0 +1,46 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+import isActiveLink from "./utils/is-active-link";
+
+$ const { req } = out.global;
+
+$ const blockName = input.blockName || "site-navbar";
+$ const linkMods = (href) => {
+  const mods = [];
+  if (isActiveLink(req.path, href)) mods.push('active');
+  return mods;
+};
+$ const containerMods = (href) => {
+  const mods = [...getAsArray(input, "modifiers")];
+  if (isActiveLink(req.path, href)) mods.push('active');
+  return mods;
+};
+
+<marko-web-element
+  block-name=blockName
+  name="item"
+  tag=(input.tag || "li")
+  modifiers=containerMods(input.href)
+>
+  $ const elementName = `${blockName}__link`;
+  $ const classNames = [elementName, ...linkMods(input.href).map(mod => `${elementName}--${mod}`)];
+  <marko-web-link
+    href=input.href
+    title=input.title
+    target=input.target
+    class=classNames
+  >
+    <if(input.icon)>
+      <marko-web-icon name=input.icon attrs={ title: input.label } class=`${blockName}__icon` />
+      <if(input.forceLabel)>
+        <span class=`${blockName}__label`>
+          $!{input.label}
+        </span>
+      </if>
+    </if>
+    <else>
+      <span class=`${blockName}__label`>
+        $!{input.label}
+      </span>
+    </else>
+  </marko-web-link>
+</marko-web-element>

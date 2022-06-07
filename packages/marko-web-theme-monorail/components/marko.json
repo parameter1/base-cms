@@ -8,7 +8,8 @@
     "./identity-x/marko.json",
     "./native-x/marko.json",
     "./nodes/marko.json",
-    "./page/marko.json"
+    "./page/marko.json",
+    "./site-navbar/marko.json"
   ],
   "<theme-client-side-block-loader>": {
     "template": "./client-side-block-loader.marko"
