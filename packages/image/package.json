@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-image",
-  "version": "2.92.0",
+  "version": "2.94.0",
   "description": "Common image utilities for BaseCMS projects.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
