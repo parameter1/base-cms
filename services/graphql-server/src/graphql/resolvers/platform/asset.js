@@ -27,12 +27,8 @@ module.exports = {
 
       // otherwise, process the image width/height and create the crop rectangle
       const { width, height } = await getImageDimensions({ image, host, basedb });
-      const rect = cropRectangle({
-        width,
-        height,
-        cropDimensions: image.cropDimensions,
-      });
-      const { fileName, filePath } = image;
+      const { fileName, filePath, cropDimensions } = image;
+      const rect = cropRectangle({ width, height, cropDimensions });
 
       // when a crop is detected, set the `rect` imgix property
       const opts = rect.isCropped() ? { ...input.options, rect } : input.options;

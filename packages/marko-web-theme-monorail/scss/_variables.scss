@@ -76,8 +76,8 @@ $secondary: $gray-800 !default;
 $skin-primary-hover-color: darken($primary, 13%) !default;
 $skin-secondary-hover-color: $gray-900 !default;
 // Newsletter signup colors
-$skin-newsletter-signup-inline-btn-color: #103a57 !default;
-$skin-newsletter-signup-bg-color: #0d9dc9 !default;
+$skin-newsletter-signup-inline-btn-color: $gray-900 !default;
+$skin-newsletter-signup-bg-color: $gray-100 !default;
 
 // Ad background colors
 $skin-ad-bg-color: $gray-100 !default;

@@ -4,19 +4,21 @@ class CropRectangle {
     y,
     width,
     height,
+    cropped,
   } = {}) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
+    this.cropped = cropped;
   }
 
   isCropped() {
-    return !this.notCropped();
+    return this.cropped;
   }
 
   notCropped() {
-    return this.x === 0 && this.y === 0;
+    return !this.cropped;
   }
 
   toString() {
@@ -38,6 +40,7 @@ module.exports = ({ width, height, cropDimensions }) => {
       y: 0,
       width,
       height,
+      cropped: false,
     });
   }
   // @see Cygnus\ApplicationBundle\Apps\Management\Controller::cropImageAction
@@ -57,5 +60,6 @@ module.exports = ({ width, height, cropDimensions }) => {
     y: y1,
     width: x2 - x1,
     height: y2 - y1,
+    cropped: true,
   });
 };
