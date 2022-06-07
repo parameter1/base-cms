@@ -6,7 +6,7 @@ $ const { req } = out.global;
 $ const blockName = input.blockName || "site-navbar";
 $ const linkMods = (href) => {
   const mods = [];
-  if (isActiveLink(req.path, href)) mods.push('active');
+  if (isActiveLink(req.path, href)) mods.push("active");
   return mods;
 };
 $ const containerMods = (href) => {
