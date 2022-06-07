@@ -11,7 +11,7 @@ $ const linkMods = (href) => {
 };
 $ const containerMods = (href) => {
   const mods = [...getAsArray(input, "modifiers")];
-  if (isActiveLink(req.path, href)) mods.push('active');
+  if (isActiveLink(req.path, href)) mods.push("active");
   return mods;
 };
 
