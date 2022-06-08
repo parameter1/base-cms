@@ -28,7 +28,7 @@ $ const blockName = "content-card-deck";
 <marko-web-query|{ nodes, section: querySection }| name="website-scheduled-content" params=queryParams>
   $ const section = { ...querySection, ...input.section };
   $ const title = input.title || section && section.name;
-  $ const description = input.description || section && section.description;
+  $ const description = input.description || section && section.description || input.defaultDescription;
   <marko-web-block name=blockName>
     <if(title)>
       <marko-web-element block-name=blockName name="header">

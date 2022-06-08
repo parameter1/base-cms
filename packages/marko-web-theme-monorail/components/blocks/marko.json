@@ -8,6 +8,7 @@
     "template": "./content-card-deck.marko",
     "<node>": {},
     "@alias" : "string",
+    "@default-description": "string",
     "@query-params": "object",
     "@section": "object",
     "@view-more": "boolean"
