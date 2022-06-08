@@ -42,10 +42,11 @@ export default {
       type: String,
       default: '',
     },
+    id: {
+      type: String,
+      default: 'sign-on-email'
+    },
   },
-  data: () => ({
-    id: 'sign-on-email',
-  }),
   computed: {
     email: {
       get() {
