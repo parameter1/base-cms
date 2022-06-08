@@ -2,7 +2,7 @@
   <button
     :class="className"
     type="button"
-    :aria-label="buttonLabel"
+    :aria-label="computedButtonLabel"
     @click="toggle"
   >
     <span v-if="calcBefore">
@@ -101,6 +101,11 @@ export default {
     expanded: false,
   }),
   computed: {
+    computedButtonLabel() {
+      if (this.calcBefore) return this.calcBefore;
+      if (this.calcAfter) return this.calcAfter;
+      return this.buttonLabel
+    },
     calcBefore() {
       const {
         before,
