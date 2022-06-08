@@ -1,8 +1,18 @@
 <template>
   <div :class="classes" :data-section-id="sectionId">
     <button class="leaders-section__toggle-button" @click="toggleExpanded">
-      <plus-icon v-show="!isExpanded" :modifiers="iconModifiers" />
-      <minus-icon v-show="isExpanded" :modifiers="iconModifiers" />
+      <chevron-plus-icon
+        v-if="iconSet === 'chevron'"
+        v-show="!isExpanded"
+        :modifiers="iconModifiers"
+      />
+      <plus-icon v-else v-show="!isExpanded" :modifiers="iconModifiers" />
+      <chevron-minus-icon
+        v-if="iconSet === 'chevron'"
+        v-show="isExpanded"
+        :modifiers="iconModifiers"
+      />
+      <minus-icon v-else v-show="isExpanded" :modifiers="iconModifiers" />
       <span class="leaders-section__toggle-button-title">{{ title }}</span>
     </button>
     <div v-if="isExpanded" class="leaders-section__list">
@@ -48,6 +58,8 @@
 <script>
 import PlusIcon from '../icons/add-circle-outline.vue';
 import MinusIcon from '../icons/remove-circle-outline.vue';
+import ChevronPlusIcon from '../icons/chevron-right.vue';
+import ChevronMinusIcon from '../icons/chevron-down.vue';
 import Loading from '../common/loading.vue';
 
 import List from '../list/index.vue';
@@ -62,6 +74,8 @@ export default {
   components: {
     PlusIcon,
     MinusIcon,
+    ChevronPlusIcon,
+    ChevronMinusIcon,
     Loading,
     List,
     Card,
@@ -108,6 +122,10 @@ export default {
     featuredProductLabel: {
       type: String,
       default: 'Featured Products',
+    },
+    iconSet: {
+      type: String,
+      default: null,
     },
   },
 

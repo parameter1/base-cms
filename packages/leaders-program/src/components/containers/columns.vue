@@ -28,7 +28,7 @@ export default {
     classes() {
       const col = 'leaders-col';
       const classes = [col];
-      if (this.number > 1) classes.push(`${col}--${this.number}`);
+      if (this.number > 1 && this.sections.length > 1) classes.push(`${col}--${this.number}`);
       return classes;
     },
     columns() {

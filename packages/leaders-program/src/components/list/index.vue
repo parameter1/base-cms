@@ -29,7 +29,7 @@
     >
       <dropdown
         :direction="navDirection"
-        :open="open"
+        :open="openDirection"
         :transitions-disabled="transitionsDisabled"
         :is-active="isDropdownActive"
         :data-identifier="identifier"
@@ -62,7 +62,7 @@
 import { get } from 'object-path';
 import { MountingPortal } from 'portal-vue';
 
-import { buildFlags } from '../../utils/link-tracking';
+import { buildFlags } from '../utils/link-tracking';
 import ElementCalculus from './element-calculus';
 import ArrowPosition from './positions/arrow-position';
 import MenuPosition from './positions/menu-position';
@@ -113,7 +113,7 @@ export default {
     open: {
       type: String,
       default: 'below',
-      validator: v => ['above', 'below', 'left', 'right', null].includes(v),
+      validator: v => ['above', 'below', 'left', 'right', 'auto', null].includes(v),
     },
     closeTimeoutMS: {
       type: Number,
@@ -146,6 +146,8 @@ export default {
     openTimeout: null,
     enableTransitionTimeout: null,
     disableTransitionTimeout: null,
+
+    openDirection: 'right',
 
     styles: {
       arrow: {},
@@ -277,7 +279,14 @@ export default {
       const navRect = this.$refs.nav.$el.getBoundingClientRect();
       const arrowRect = this.$refs.arrow.$el.getBoundingClientRect();
 
-      const { open, offsetTop, offsetBottom } = this;
+      const { open } = this;
+      if (open === 'auto') {
+        this.getAutoOpenDirection(content, linkRect);
+      } else {
+        this.openDirection = open;
+      }
+
+      const { openDirection, offsetTop, offsetBottom } = this;
       // Create element calculus info.
       const calcs = new ElementCalculus({
         content,
@@ -287,13 +296,13 @@ export default {
       });
       // Calculate dropdown menu position.
       const menu = new MenuPosition({
-        openDirection: open,
+        openDirection,
         calculus: calcs,
         offsetTop,
         offsetBottom,
       });
       // Calculate arrow position.
-      const arrow = new ArrowPosition({ openDirection: open, calculus: calcs });
+      const arrow = new ArrowPosition({ openDirection, calculus: calcs });
 
       this.clearDisableTransitionTimeout();
       this.setEnableTransitionTimeout();
@@ -307,6 +316,23 @@ export default {
       this.styles.container = menuStyles;
       this.styles.background = menuStyles;
       this.styles.arrow = { transform: `translate(${arrow.xPx}, ${arrow.yPx}) rotate(45deg)` };
+    },
+
+    getAutoOpenDirection(content, linkRect) {
+      const avaiableRight = window.innerWidth - linkRect.right;
+      const shouldOpen = (avaiableRight >= window.innerWidth / 2) ? 'right' : 'left';
+      // Check there is enought space to open the content left/right or push below
+      // Right:
+      // ContentWidth + Link's Right Position can not exceed avaiable window width
+      const canOpenRight = shouldOpen === 'right' && (content.getBoundingClientRect().width + linkRect.right) < window.innerWidth + 30;
+      // Left:
+      // ContentWidth + 30px can not exceed link's left position
+      const canOpenLeft = shouldOpen === 'left' && (linkRect.left - content.getBoundingClientRect().width) >= 30;
+      if (canOpenRight || canOpenLeft) {
+        this.openDirection = shouldOpen;
+      } else {
+        this.openDirection = 'below';
+      }
     },
 
     closeDropdown() {
