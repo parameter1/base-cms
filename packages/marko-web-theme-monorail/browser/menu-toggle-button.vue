@@ -104,7 +104,7 @@ export default {
     computedButtonLabel() {
       if (this.calcBefore) return this.calcBefore;
       if (this.calcAfter) return this.calcAfter;
-      return this.buttonLabel
+      return this.buttonLabel;
     },
     calcBefore() {
       const {
