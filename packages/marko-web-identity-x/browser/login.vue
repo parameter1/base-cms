@@ -27,7 +27,6 @@
         v-model="email"
         :placeholder="loginEmailPlaceholder"
         :disabled="loading"
-        :id="loginInputId"
       />
       <small
         v-if="consentPolicy"
@@ -133,7 +132,6 @@ export default {
     complete: false,
     error: null,
     loading: false,
-    loginInputId: 'sign-on-email',
   }),
 
   /**
@@ -169,7 +167,6 @@ export default {
    *
    */
   mounted() {
-    this.loginInputId = `${this.loginInputId}-${this._uid}`;
     if (cookiesEnabled()) {
       this.emit('login-mounted');
     } else {

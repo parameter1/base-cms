@@ -19,6 +19,7 @@
 <script>
 import FormGroup from '../common/form-group.vue';
 import FormLabel from '../common/form-label.vue';
+import uid from '../../utils/uid';
 
 export default {
   components: {
@@ -42,11 +43,10 @@ export default {
       type: String,
       default: '',
     },
-    id: {
-      type: String,
-      default: 'sign-on-email'
-    },
   },
+  data: () => ({
+    id: '',
+  }),
   computed: {
     email: {
       get() {
@@ -56,6 +56,9 @@ export default {
         this.$emit('input', email || null);
       },
     },
+  },
+  created() {
+    this.id = `sign-on-email-${uid(16)}`;
   },
 };
 </script>
