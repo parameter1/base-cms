@@ -321,7 +321,7 @@ export default {
     getAutoOpenDirection(content, linkRect) {
       const avaiableRight = window.innerWidth - linkRect.right;
       const shouldOpen = (avaiableRight >= window.innerWidth / 2) ? 'right' : 'left';
-      // Check there is enought space to open the content left/right or push below
+      // Check there is enough space to open the content left/right or push below
       // Right:
       // ContentWidth + Link's Right Position can not exceed avaiable window width
       const canOpenRight = shouldOpen === 'right' && (content.getBoundingClientRect().width + linkRect.right) < window.innerWidth + 30;
