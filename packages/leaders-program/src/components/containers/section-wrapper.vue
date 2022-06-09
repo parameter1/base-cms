@@ -27,7 +27,7 @@
             :promotion-limit="promotionLimit"
             :video-limit="videoLimit"
             :featured-product-label="featuredProductLabel"
-            :icon-set="iconSet"
+            :icon-style="iconStyle"
             @action="emitAction"
           />
         </leaders-columns>
@@ -52,7 +52,7 @@
         :offset-bottom="offsetBottom"
         :promotion-limit="promotionLimit"
         :video-limit="videoLimit"
-        :icon-set="iconSet"
+        :icon-style="iconStyle"
         @action="emitAction"
       />
     </leaders-columns>
@@ -108,9 +108,10 @@ export default {
       type: Number,
       default: 3,
     },
-    iconSet: {
+    iconStyle: {
       type: String,
-      default: null,
+      default: 'plus-minus',
+      validator: v => ['plus-minus', 'chevron'].includes(v),
     },
     featuredProductLabel: {
       type: String,

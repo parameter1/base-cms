@@ -34,7 +34,7 @@
         :promotion-limit="promotionLimit"
         :video-limit="videoLimit"
         :featured-product-label="featuredProductLabel"
-        :icon-set="iconSet"
+        :icon-style="iconStyle"
         @action="emitAction"
       />
     </div>
@@ -168,9 +168,10 @@ export default {
       type: String,
       default: 'Featured Products',
     },
-    iconSet: {
+    iconStyle: {
       type: String,
-      default: null,
+      default: 'plus-minus',
+      validator: v => ['plus-minus', 'chevron'].includes(v),
     },
   },
 
