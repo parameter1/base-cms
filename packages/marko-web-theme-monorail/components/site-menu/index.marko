@@ -25,7 +25,7 @@ $ const attrs = {
     <div class="row">
       <div class="col-6 col-md-4 col-lg-4">
         <!-- search box -->
-        <search block-name=blockName type="desktop" />
+        <search block-name=blockName />
         <!-- user section || IDX_NAV_ENABLE -->
         <if(site.getAsArray("navigation.desktopMenu.user"))>
           <!-- user section -->
@@ -76,7 +76,7 @@ $ const attrs = {
   <!-- mobile -->
   <marko-web-element block-name=blockName name="contents-mobile">
     <!-- search box -->
-    <search block-name=blockName type="mobile" />
+    <search block-name=blockName />
     <!-- user section || IDX_NAV_ENABLE -->
     <if(site.getAsArray("navigation.mobileMenu.user"))>
       <!-- user section -->
