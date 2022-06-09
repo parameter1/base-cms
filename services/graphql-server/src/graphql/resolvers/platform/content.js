@@ -312,6 +312,7 @@ module.exports = {
    */
   ContentUserRegistration: {
     bypassGating: ({ bypassGating }) => bypassGating || false,
+    isRequired: ({ isRequired }) => isRequired || false,
     isCurrentlyRequired: async ({
       bypassGating,
       isRequired,
