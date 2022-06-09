@@ -281,7 +281,7 @@ export default {
 
       const { open } = this;
       if (open === 'auto') {
-        this.getAutoOpenDirection(content, linkRect);
+        this.openDirection = this.getAutoOpenDirection(content, linkRect);
       } else {
         this.openDirection = open;
       }
@@ -328,11 +328,8 @@ export default {
       // Left:
       // ContentWidth + 30px can not exceed link's left position
       const canOpenLeft = shouldOpen === 'left' && (linkRect.left - content.getBoundingClientRect().width) >= 30;
-      if (canOpenRight || canOpenLeft) {
-        this.openDirection = shouldOpen;
-      } else {
-        this.openDirection = 'below';
-      }
+      if (canOpenRight || canOpenLeft) return shouldOpen;
+      return 'below';
     },
 
     closeDropdown() {
