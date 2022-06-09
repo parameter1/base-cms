@@ -62,7 +62,11 @@ $ const blockName = "related-stories";
       <marko-web-element block-name=blockName name="header">
         ${title}
       </marko-web-element>
-      <theme-content-card-deck-col-flow nodes=nodes modifiers=[blockName]>
+      <theme-content-card-deck-col-flow
+        nodes=nodes
+        modifiers=[blockName]
+        ...(withNativeX && { nativeX })
+      >
         <@node modifiers=[blockName] />
       </theme-content-card-deck-col-flow>
     </marko-web-block>

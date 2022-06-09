@@ -1,0 +1,74 @@
+import { defaultValue } from "@parameter1/base-cms-marko-web/utils";
+import queryFragment from "../../graphql/fragments/content-card-deck-block";
+import sectionFragment from "../../graphql/fragments/section-info";
+
+$ const { i18n } = out.global;
+
+$ const viewMore = defaultValue(input.viewMore, true);
+$ const withNativeX = defaultValue(input.withNativeX, false);
+$ const nativeX = {
+  name: "default",
+  index: 3,
+  sectionName: "Sponsor Content",
+  ...input.nativeX,
+};
+
+$ const queryParams = {
+  sectionAlias: input.alias,
+  requiresImage: true,
+  limit: 3,
+  ...input.queryParams,
+  queryFragment,
+  sectionFragment,
+};
+
+$ const cols = input.cols || queryParams.limit;
+$ const blockName = "content-card-deck";
+
+<marko-web-query|{ nodes, section: querySection }| name="website-scheduled-content" params=queryParams>
+  $ const section = { ...querySection, ...input.section };
+  $ const title = input.title || section && section.name;
+  $ const description = input.description || section && section.description || input.defaultDescription;
+  <marko-web-block name=blockName>
+    <if(title)>
+      <marko-web-element block-name=blockName name="header">
+        <marko-web-element block-name=blockName name="header-left">
+          <marko-web-element block-name=blockName name="title">
+            ${title}
+          </marko-web-element>
+          <if(description)>
+            <marko-web-element block-name=blockName name="description">
+              $!{description}
+            </marko-web-element>
+          </if>
+        </marko-web-element>
+        <marko-web-element block-name=blockName name="header-right">
+          <if(viewMore && section && section.canonicalPath)>
+            <marko-web-element block-name=blockName name="view-more">
+              <marko-web-link href=section.canonicalPath>
+                ${i18n("View more")} &raquo;
+              </marko-web-link>
+            </marko-web-element>
+          </if>
+        </marko-web-element>
+      </marko-web-element>
+    </if>
+
+    <theme-content-card-deck-col-flow
+      nodes=nodes
+      modifiers=[blockName]
+      cols=cols
+      ...(withNativeX && { nativeX })
+    >
+      <@node modifiers=[blockName] ...input.node />
+    </theme-content-card-deck-col-flow>
+
+    <if(viewMore && section && section.canonicalPath)>
+      <marko-web-element block-name=blockName name="view-more-bottom">
+        <marko-web-link href=section.canonicalPath>
+          ${i18n("View more")} &raquo;
+        </marko-web-link>
+      </marko-web-element>
+    </if>
+  </marko-web-block>
+</marko-web-query>

@@ -1,60 +1,13 @@
-import queryFragment from "../../graphql/fragments/section-card-deck-block";
-import sectionFragment from "../../graphql/fragments/section-info";
+$ process.emitWarning(
+  '<theme-section-card-deck-block /> has been deprecated. Use <theme-content-card-deck-block /> instead.',
+  'DeprecationWarning'
+);
 
-$ const { i18n } = out.global;
+$ const { alias, defaultDescription } = input;
 
-$ const queryParams = {
-  sectionAlias: input.alias,
-  requiresImage: true,
-  limit: 3,
-  queryFragment,
-  sectionFragment,
-};
-
-$ const blockName = "section-card-deck";
-
-<marko-web-query|{ nodes, section }| name="website-scheduled-content" params=queryParams>
-  <marko-web-block name=blockName>
-    <marko-web-element block-name=blockName name="header">
-      ${section.name}
-    </marko-web-element>
-    <marko-web-element block-name=blockName name="description-wrapper">
-      <marko-web-element block-name=blockName name="description">
-        $!{section.description || input.defaultDescription}
-      </marko-web-element>
-      <marko-web-element block-name=blockName name="view-more">
-        <marko-web-link href=section.canonicalPath>
-          ${i18n("View more")} &raquo;
-        </marko-web-link>
-      </marko-web-element>
-    </marko-web-element>
-
-    <marko-web-element block-name=blockName name="deck-wrapper">
-
-      <marko-web-element block-name=blockName name="row">
-        <for|node| of=nodes>
-          <marko-web-element block-name=blockName name="col">
-            <theme-content-node
-              image-position="top"
-              card=true
-              flush=true
-              modifiers=[blockName]
-              node=node
-              with-section=false
-              with-teaser=false
-              with-dates=false
-            >
-              <@image fluid=true width=330 ar="4:3" />
-            </theme-content-node>
-          </marko-web-element>
-        </for>
-      </marko-web-element>
-    </marko-web-element>
-
-    <marko-web-element block-name=blockName name="view-more-bottom">
-      <marko-web-link href=section.canonicalPath>
-        ${i18n("View more")} &raquo;
-      </marko-web-link>
-    </marko-web-element>
-  </marko-web-block>
-</marko-web-query>
+<theme-content-card-deck-block
+  alias=alias
+  query-params={ requiresImage: true, limit: 3 }
+  default-description=defaultDescription
+  node={ withSection: false }
+/>
