@@ -192,6 +192,7 @@ type ContentGating {
 }
 
 type ContentUserRegistration {
+  bypassGating: Boolean!
   isRequired: Boolean!
   isCurrentlyRequired: Boolean!
   startDate: Date
