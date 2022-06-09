@@ -1,6 +1,12 @@
 <template>
   <div :class="classes" :data-taxonomy-ids="taxonomyIds.join(',') || null">
+    <div v-if="title" class="leaders__header">
+      <div class="leaders__header-title">
+        {{ title }}
+      </div>
+    </div>
     <leaders-header
+      v-else
       :display="getResponsiveValue('displayHeader')"
       :img-src="headerImgSrc"
       :img-alt="headerImgAlt"
@@ -28,11 +34,12 @@
         :promotion-limit="promotionLimit"
         :video-limit="videoLimit"
         :featured-product-label="featuredProductLabel"
+        :icon-style="iconStyle"
         @action="emitAction"
       />
     </div>
     <div v-if="viewAll" class="leaders__footer">
-      <a :href="viewAll" v-html="viewAllText" />
+      <a class="btn btn-primary" :href="viewAll" v-html="viewAllText" />
     </div>
   </div>
 </template>
@@ -129,6 +136,10 @@ export default {
       type: String,
       default: 'leading suppliers',
     },
+    title: {
+      type: String,
+      default: null,
+    },
     offsetTop: {
       type: Number,
       default: 0,
@@ -156,6 +167,11 @@ export default {
     featuredProductLabel: {
       type: String,
       default: 'Featured Products',
+    },
+    iconStyle: {
+      type: String,
+      default: 'plus-minus',
+      validator: v => ['plus-minus', 'chevron'].includes(v),
     },
   },
 

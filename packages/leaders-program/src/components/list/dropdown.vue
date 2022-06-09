@@ -26,8 +26,8 @@ export default {
     },
     open: {
       type: String,
-      default: 'below',
-      validator: v => ['above', 'below', 'left', 'right'].includes(v),
+      default: 'auto',
+      validator: v => ['above', 'below', 'left', 'right', 'auto'].includes(v),
     },
   },
 

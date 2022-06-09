@@ -15,9 +15,22 @@ class MenuPosition extends AbstractPosition {
   get x() {
     const { calculus: calcs } = this;
     const { pageXOffset } = window;
-    if (this.opensAbove || this.opensBelow) return pageXOffset + calcs.link('left') + calcs.link('halfW') - calcs.menu('halfW');
-    if (this.opensLeft) return pageXOffset + calcs.link('left') - calcs.arrow('w') - calcs.menu('w');
-    return pageXOffset + calcs.link('right') + calcs.arrow('w');
+    if (this.opensAbove || this.opensBelow) {
+      // Determin if the card will display off screen and adjust position accordingly
+      // If negative it add the negative offset to the left position to ensure it is not off screen
+      const cardOffset = window.innerWidth - (calcs.link('left') + (calcs.link('halfW') + calcs.menu('halfW'))) < 0
+        ? window.innerWidth - (calcs.link('left') + (calcs.link('halfW') + calcs.menu('halfW')))
+        : 0;
+      return ((pageXOffset + calcs.link('left') + calcs.link('halfW') - calcs.menu('halfW')) > 0)
+        ? pageXOffset + calcs.link('left') + calcs.link('halfW') - calcs.menu('halfW') + cardOffset
+        : 0;
+    }
+    if (this.opensLeft) {
+      return ((pageXOffset + calcs.link('left') - calcs.arrow('w') - calcs.menu('w')) > 0)
+        ? pageXOffset + calcs.link('left') - calcs.arrow('w') - calcs.menu('w')
+        : 0;
+    }
+    return ((pageXOffset + calcs.link('right') + calcs.arrow('w')) > 0) ? pageXOffset + calcs.link('right') + calcs.arrow('w') : 0;
   }
 
   get y() {

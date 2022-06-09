@@ -3,6 +3,8 @@
 @import "mixins";
 @import "components";
 
+$leaders-nav-link-width: 100%;
+$leaders-nav-link-max-width: $leaders-nav-link-width;
 // In order to use the default fonts, include the line below in the website CSS.
 // @import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,500,600,700&display=swap");
 
@@ -11,12 +13,16 @@
 
   &__body {
     padding: $leaders-body-padding-y $leaders-body-padding-x;
+    background-color: #f1f1f1;
     border-bottom: 2px solid $leaders-gray-5;
   }
 
   &__header {
     display: flex;
     flex-direction: row;
+    @media (max-width: 700px) {
+      flex-direction: column;
+    }
     width: 100%;
     padding: $leaders-header-padding;
     font-weight: $leaders-header-font-weight;
@@ -47,16 +53,6 @@
   &__footer {
     padding: $leaders-footer-padding-y $leaders-footer-padding-x;
     text-align: center;
-    border-bottom: 2px solid $leaders-gray-5;
-    > a {
-      font-size: $leaders-nav-link-font-size;
-      font-weight: $leaders-nav-link-font-weight;
-      line-height: $leaders-nav-link-line-height;
-      color: $leaders-nav-link-color;
-      &:hover {
-        color: $leaders-nav-link-color;
-      }
-    }
   }
 }
 
@@ -68,4 +64,6 @@
 
 .leaders-list {
   width: 100%;
+  background: #fff;
+  border-top: solid $leaders-nav-link-color 2px;
 }

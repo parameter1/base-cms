@@ -6,6 +6,10 @@
   max-width: leaders-card-width();
   word-wrap: break-word;
   background-clip: border-box;
+  // On mobile set max width to viewport
+  @media (max-width: 600px) {
+    max-width: 100vw;
+  }
 
   &__header {
     display: flex;

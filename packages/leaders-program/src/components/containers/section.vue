@@ -1,8 +1,8 @@
 <template>
   <div :class="classes" :data-section-id="sectionId">
-    <button class="leaders-section__toggle-button" @click="toggleExpanded">
-      <plus-icon v-show="!isExpanded" :modifiers="iconModifiers" />
-      <minus-icon v-show="isExpanded" :modifiers="iconModifiers" />
+    <button class="leaders-section__toggle-button"  @click="toggleExpanded">
+      <component :is="collapsedIcon" v-show="!isExpanded" :modifiers="iconModifiers" />
+      <component :is="expandedIcon" v-show="isExpanded" :modifiers="iconModifiers" />
       <span class="leaders-section__toggle-button-title">{{ title }}</span>
     </button>
     <div v-if="isExpanded" class="leaders-section__list">
@@ -48,6 +48,8 @@
 <script>
 import PlusIcon from '../icons/add-circle-outline.vue';
 import MinusIcon from '../icons/remove-circle-outline.vue';
+import ChevronRightIcon from '../icons/chevron-right.vue';
+import ChevronDownIcon from '../icons/chevron-down.vue';
 import Loading from '../common/loading.vue';
 
 import List from '../list/index.vue';
@@ -62,6 +64,8 @@ export default {
   components: {
     PlusIcon,
     MinusIcon,
+    ChevronRightIcon,
+    ChevronDownIcon,
     Loading,
     List,
     Card,
@@ -109,6 +113,11 @@ export default {
       type: String,
       default: 'Featured Products',
     },
+    iconStyle: {
+      type: String,
+      default: 'plus-minus',
+      validator: v => ['plus-minus', 'chevron'].includes(v),
+    },
   },
 
   data: () => ({
@@ -137,6 +146,14 @@ export default {
     },
     hasChildren() {
       return Boolean(this.children.length);
+    },
+    expandedIcon() {
+      if (this.iconStyle === 'chevron') return ChevronDownIcon;
+      return MinusIcon;
+    },
+    collapsedIcon() {
+      if (this.iconStyle === 'chevron') return ChevronRightIcon;
+      return PlusIcon;
     },
   },
 
