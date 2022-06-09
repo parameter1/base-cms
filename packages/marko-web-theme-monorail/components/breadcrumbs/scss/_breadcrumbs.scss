@@ -26,7 +26,7 @@
     }
   }
 
-  &--content-page {
+  &--content-page, &--website-section {
     @include skin-typography($style: "slug-medium", $link-style: "primary");
     .breadcrumb {
       padding-bottom: 1rem;
