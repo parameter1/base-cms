@@ -16,8 +16,13 @@ class MenuPosition extends AbstractPosition {
     const { calculus: calcs } = this;
     const { pageXOffset } = window;
     if (this.opensAbove || this.opensBelow) {
+      // Determin if the card will display off screen and adjust posiiton accordinly
+      // If negative it add the negative offset to the left position to ensure it is not off screen
+      const cardOffset = window.innerWidth - (calcs.link('left') + (calcs.link('halfW') + calcs.menu('halfW'))) < 0
+        ? window.innerWidth - (calcs.link('left') + (calcs.link('halfW') + calcs.menu('halfW')))
+        : 0;
       return ((pageXOffset + calcs.link('left') + calcs.link('halfW') - calcs.menu('halfW')) > 0)
-        ? pageXOffset + calcs.link('left') + calcs.link('halfW') - calcs.menu('halfW')
+        ? pageXOffset + calcs.link('left') + calcs.link('halfW') - calcs.menu('halfW') + cardOffset
         : 0;
     }
     if (this.opensLeft) {
