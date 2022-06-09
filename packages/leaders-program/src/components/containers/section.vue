@@ -1,27 +1,8 @@
 <template>
   <div :class="classes" :data-section-id="sectionId">
-    <button
-      v-if="iconStyle === 'chevron'"
-      class="leaders-section__toggle-button"
-      @click="toggleExpanded"
-    >
-      <chevron-right-icon
-        v-show="!isExpanded"
-        :modifiers="iconModifiers"
-      />
-      <chevron-down-icon
-        v-show="isExpanded"
-        :modifiers="iconModifiers"
-      />
-      <span class="leaders-section__toggle-button-title">{{ title }}</span>
-    </button>
-    <button
-      v-else
-      class="leaders-section__toggle-button"
-      @click="toggleExpanded"
-    >
-      <plus-icon v-show="!isExpanded" :modifiers="iconModifiers" />
-      <minus-icon v-show="isExpanded" :modifiers="iconModifiers" />
+    <button class="leaders-section__toggle-button"  @click="toggleExpanded">
+      <component :is="collapsedIcon" v-show="!isExpanded" :modifiers="iconModifiers" />
+      <component :is="expandedIcon" v-show="isExpanded" :modifiers="iconModifiers" />
       <span class="leaders-section__toggle-button-title">{{ title }}</span>
     </button>
     <div v-if="isExpanded" class="leaders-section__list">
@@ -165,6 +146,14 @@ export default {
     },
     hasChildren() {
       return Boolean(this.children.length);
+    },
+    expandedIcon() {
+      if (this.iconStyle === 'chevron') return ChevronDownIcon;
+      return MinusIcon;
+    },
+    collapsedIcon() {
+      if (this.iconStyle === 'chevron') return ChevronRightIcon;
+      return PlusIcon;
     },
   },
 
