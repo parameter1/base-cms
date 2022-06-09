@@ -312,6 +312,7 @@ module.exports = {
    */
   ContentUserRegistration: {
     isCurrentlyRequired: async ({ isRequired, startDate, endDate }) => {
+    bypassGating: ({ bypassGating }) => bypassGating || false,
       if (!isRequired) return false;
       if (!startDate && !endDate) return isRequired;
       const now = new Date();
