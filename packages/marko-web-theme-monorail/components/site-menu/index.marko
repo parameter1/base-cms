@@ -8,19 +8,24 @@ $ const { site, config } = out.global;
 $ const regEnabled = defaultValue(input.regEnabled, false);
 $ const hasUser = defaultValue(input.hasUser, false);
 
+$ const attrs = {
+  "aria-label": "Site Menu",
+  ...input.attrs
+}
+
 <marko-web-block
   name=blockName
   tag=(input.tag || "aside")
   class=input.class
   modifiers=input.modifiers
-  attrs=input.attrs
+  attrs=attrs
 >
   <!-- desktop -->
   <marko-web-element block-name=blockName name="contents-desktop">
     <div class="row">
       <div class="col-6 col-md-4 col-lg-4">
         <!-- search box -->
-        <search block-name=blockName />
+        <search block-name=blockName type="desktop" />
         <!-- user section || IDX_NAV_ENABLE -->
         <if(site.getAsArray("navigation.desktopMenu.user"))>
           <!-- user section -->
@@ -32,6 +37,7 @@ $ const hasUser = defaultValue(input.hasUser, false);
             modifiers=["user"]
             reg-enabled=regEnabled
             has-user=hasUser
+            attrs={ "aria-label": "Account Management Menu (Desktop)" }
           />
         </if>
         <!-- social -->
@@ -45,6 +51,7 @@ $ const hasUser = defaultValue(input.hasUser, false);
           modifiers=["secondary"]
           reg-enabled=regEnabled
           has-user=hasUser
+          attrs={ "aria-label": "About Menu (Desktop)" }
         />
       </div>
       <div class="col-6 col-md-4 col-lg-3">
@@ -57,6 +64,7 @@ $ const hasUser = defaultValue(input.hasUser, false);
           modifiers=["primary"]
           reg-enabled=regEnabled
           has-user=hasUser
+          attrs={ "aria-label": "Site Sections Menu (Desktop)" }
         />
       </div>
       <div class="d-none d-md-flex col-md-4">
@@ -68,7 +76,7 @@ $ const hasUser = defaultValue(input.hasUser, false);
   <!-- mobile -->
   <marko-web-element block-name=blockName name="contents-mobile">
     <!-- search box -->
-    <search block-name=blockName />
+    <search block-name=blockName type="mobile" />
     <!-- user section || IDX_NAV_ENABLE -->
     <if(site.getAsArray("navigation.mobileMenu.user"))>
       <!-- user section -->
@@ -80,6 +88,7 @@ $ const hasUser = defaultValue(input.hasUser, false);
         modifiers=["user"]
         reg-enabled=regEnabled
         has-user=hasUser
+        attrs={ "aria-label": "Account Management Menu (Mobile)" }
       />
     </if>
     <!-- social -->
@@ -92,6 +101,7 @@ $ const hasUser = defaultValue(input.hasUser, false);
       modifiers=["primary"]
       reg-enabled=regEnabled
       has-user=hasUser
+      attrs={ "aria-label": "About Menu (Mobile)" }
     />
     <!-- secondary section -->
     <default-theme-site-menu-section
@@ -101,6 +111,7 @@ $ const hasUser = defaultValue(input.hasUser, false);
       modifiers=["secondary"]
       reg-enabled=regEnabled
       has-user=hasUser
+      attrs={ "aria-label": "Site Sections Menu" }
     />
   </marko-web-element>
 </marko-web-block>
