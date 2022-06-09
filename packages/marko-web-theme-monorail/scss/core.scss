@@ -19,7 +19,6 @@
 @import "./components/author-node";
 @import "./components/author-published-node";
 @import "./components/comments";
-@import "./components/content-card-deck";
 @import "./components/content-page";
 @import "./components/page-wrapper";
 @import "./components/pagination-controls";
@@ -34,6 +33,7 @@
 
 // theme component blocks
 @import "./components/blocks/callout-cards";
+@import "./components/blocks/content-card-deck";
 @import "./components/blocks/hero-card";
 @import "./components/blocks/latest-podcast";
 @import "./components/blocks/latest-products-feed";
