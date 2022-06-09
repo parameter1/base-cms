@@ -62,7 +62,7 @@
 import { get } from 'object-path';
 import { MountingPortal } from 'portal-vue';
 
-import { buildFlags } from '../utils/link-tracking';
+import { buildFlags } from '../../utils/link-tracking';
 import ElementCalculus from './element-calculus';
 import ArrowPosition from './positions/arrow-position';
 import MenuPosition from './positions/menu-position';
