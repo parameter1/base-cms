@@ -1,5 +1,22 @@
 {
   "taglib-imports": [
     "./content/marko.json"
-  ]
+  ],
+  "<theme-card-deck-flow>": {
+    "template": "./card-deck.marko",
+    "@slots <slot>[]": {
+      "@position": "number",
+      "@index": "number",
+      "@tag": "string",
+      "@class": "string",
+      "@modifiers": "array",
+      "@attrs": "object"
+    },
+    "@nodes": "array",
+    "@cols": "number",
+    "@tag": "string",
+    "@class": "string",
+    "@modifiers": "array",
+    "@attrs": "object"
+  }
 }
