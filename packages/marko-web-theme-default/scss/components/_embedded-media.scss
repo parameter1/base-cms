@@ -41,7 +41,9 @@ p [data-embed-type] {
 }
 
 [data-embed-type] img {
+  width: 100%;
   max-width: 100%;
+  height: auto;
 }
 
 [data-embed-type] .caption {
