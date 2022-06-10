@@ -311,11 +311,6 @@ module.exports = {
    *
    */
   ContentUserRegistration: {
-    bypassGating: ({ bypassGating }) => bypassGating || false,
-    isRequired: ({ bypassGating, isRequired }) => {
-      if (bypassGating) return false;
-      return isRequired || false;
-    },
     isCurrentlyRequired: async ({
       bypassGating,
       isRequired,
@@ -576,13 +571,22 @@ module.exports = {
 
 
     userRegistration: (content) => {
+      const bypassGating = get(content, 'mutations.Website.bypassGating');
       const requiresRegistration = get(content, 'mutations.Website.requiresRegistration');
-      if (!requiresRegistration) return { isRequired: false, siteIds: [], accessLevels: [] };
+      if (bypassGating || !requiresRegistration) {
+        return {
+          bypassGating: Boolean(bypassGating),
+          isRequired: false,
+          siteIds: [],
+          accessLevels: [],
+        };
+      }
 
       const requiresRegistrationOptions = getAsObject(content, 'mutations.Website.requiresRegistrationOptions');
       const requiresAccessLevels = get(content, 'mutations.Website.requiresAccessLevels');
       const { startDate, endDate } = requiresRegistrationOptions;
       const userRegistration = {
+        bypassGating: Boolean(bypassGating),
         isRequired: Boolean(requiresRegistration),
         startDate,
         endDate,
