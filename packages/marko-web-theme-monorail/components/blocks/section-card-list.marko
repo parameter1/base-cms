@@ -4,15 +4,18 @@ import sectionFragment from "../../graphql/fragments/section-info";
 $ const { i18n } = out.global;
 
 $ const queryParams = {
-  limit: 3,
-  requiresImage: true,
   sectionAlias: input.alias,
+  requiresImage: true,
+  ...input.queryParams,
+  limit: 3,
   queryFragment,
   sectionFragment,
 };
+
 $ const blockName = "section-card-list";
 
-<marko-web-query|{ nodes, section }| name="website-scheduled-content" params=queryParams>
+<marko-web-query|{ nodes, section: querySection }| name="website-scheduled-content" params=queryParams>
+  $ const section = { ...querySection, ...input.section };
   $ const heroNode = nodes.slice(0, 1)[0];
   $ const heroImageNode = {
     id: heroNode.id,
