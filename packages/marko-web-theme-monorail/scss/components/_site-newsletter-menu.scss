@@ -149,6 +149,9 @@
 
 .complete-newsletter-signup {
   $self: &;
+  max-width: 652px;
+  margin-right: auto;
+  margin-left: auto;
 
   &__slide-out {
     animation-name: slideOutUpAndFade;
@@ -360,13 +363,16 @@
 
 .inline-newsletter-form {
   margin-bottom: 24px;
+  background-color: $skin-newsletter-signup-bg-color;
 }
 
 .inline-newsletter-form-step1 {
   display: flex;
   align-items: center;
   padding: 22px 16px;
-  background-color: $skin-newsletter-signup-bg-color;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 652px;
   border-radius: 4px;
 
   &__left-col {
