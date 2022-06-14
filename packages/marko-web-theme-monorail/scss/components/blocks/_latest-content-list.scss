@@ -1,0 +1,8 @@
+.node-list {
+  $self: &;
+  &--latest-content-list {
+    #{ $self }__header {
+      @include skin-typography($style: "header-2");
+    }
+  }
+}

@@ -1,0 +1,45 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import queryFragment from "../../graphql/fragments/content-latest";
+
+$ const modifiers = ["latest-content-list"];
+$ const title = defaultValue(input.title, 'Latest in');
+$ const withSection = defaultValue(input.withSection, false);
+
+<if(input.nodes && input.nodes.length)>
+  <theme-content-list-flow
+    nodes=input.nodes
+    inner-justified=false
+    native-x=input.nativeX
+    modifiers=modifiers
+  >
+    <@header>${title}</@header>
+    <@node with-teaser=false image-position="right" with-section=withSection >
+      <@image lazyload=true width=100 height=100 ar="1:1" />
+    </@node>
+  </theme-content-list-flow>
+</if>
+<else>
+  $ const queryName = defaultValue(input.queryName, "website-scheduled-content");
+  $ const queryParams = {
+    sectionAlias: input.alias,
+    limit: 4,
+    queryFragment,
+    ...input.queryParams,
+  };
+  <marko-web-query|{ nodes }|
+    name=queryName
+    params=queryParams
+  >
+    <theme-content-list-flow
+    nodes=nodes
+    inner-justified=false
+    native-x=input.nativeX
+    modifiers=modifiers
+  >
+    <@header>${title}</@header>
+    <@node with-teaser=false image-position="right" with-section=withSection >
+      <@image lazyload=true width=100 height=100 ar="1:1" />
+    </@node>
+  </theme-content-list-flow>
+  </marko-web-query>
+</else>
