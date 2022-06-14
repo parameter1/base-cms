@@ -21,7 +21,7 @@ $ const nativeX = getAsObject(input, "nativeX");
       <if(nxConfig)>
         <marko-web-native-x-render|{ node: nxNode, linkAttrs, containerAttrs }|
           ...nativeX
-          when=(index === nativeX.index)
+          when=(index === nativeX.index || (nativeX.indexes && nativeX.indexes.includes(index)))
           node=node
           config=nxConfig
         >

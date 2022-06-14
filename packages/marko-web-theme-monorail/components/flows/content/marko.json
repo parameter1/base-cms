@@ -10,6 +10,7 @@
     },
     "<native-x>": {
       "@index": "number",
+      "@indexes": "number",
       "@name": "string",
       "@aliases": "array"
     },
