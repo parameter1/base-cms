@@ -17,5 +17,5 @@ module.exports = ({
     `<description>${xml.encode(description)}</description>`,
   ];
   if (language) parts.push(`<language>${language}</language>`);
-  return `<channel>${parts.join('')}${items.join('')}</channel>`;
+  return `<channel>${parts.join('\n')}${items.join('\n')}</channel>`;
 };

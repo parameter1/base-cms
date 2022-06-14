@@ -58,5 +58,5 @@ module.exports = asyncRoute(async (req, res) => {
     }),
     '</rss>',
   ];
-  res.end(parts.join(''));
+  res.end(parts.join('\n'));
 });
