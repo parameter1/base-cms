@@ -170,7 +170,7 @@
     font-size: 18px;
     font-weight: 700;
     line-height: 1;
-    color: #fff;
+    color: $gray-800;
     background-color: $skin-newsletter-signup-bg-color;
 
     @include media-breakpoint-up(md) {
@@ -189,7 +189,7 @@
     svg {
       width: 20px;
       height: 20px;
-      fill: #fff;
+      fill: $gray-800;
     }
   }
 
