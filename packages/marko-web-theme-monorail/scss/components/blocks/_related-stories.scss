@@ -75,6 +75,7 @@
 }
 
 .related-stories {
+  position: relative;
   &__header {
     margin-bottom: 24px;
     @include media-breakpoint-up(md) {
