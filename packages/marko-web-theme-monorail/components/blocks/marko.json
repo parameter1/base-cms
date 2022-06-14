@@ -23,6 +23,21 @@
     "@name": "string",
     "@query-params": "object"
   },
+  "<theme-latest-content-list-block>": {
+    "template": "./latest-content-list.marko",
+    "@query-name": "string",
+    "<query-params>": {},
+    "<native-x>": {
+      "@index": "number",
+      "@indexes": "array",
+      "@name": "string",
+      "@aliases": "array"
+    },
+    "@nodes": "array",
+    "@title": "string",
+    "@alias": "string",
+    "@with-section": "boolean"
+  },
   "<theme-latest-podcast-block>": {
     "template": "./latest-podcast.marko"
   },

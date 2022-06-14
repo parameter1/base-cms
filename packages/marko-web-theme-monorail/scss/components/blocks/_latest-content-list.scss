@@ -1,0 +1,20 @@
+.node-list {
+  $self: &;
+  &--latest-content-list {
+    #{ $self }__header {
+      @include skin-typography($style: "header-2");
+      margin-bottom: 16px;
+      padding-top: 24px;
+      padding-left: 0;
+      &:before {
+        background: #333;
+        content: "";
+        height: 4px;
+        left: 0;
+        position: absolute;
+        top: 12px;
+        width: 40px;
+      }
+    }
+  }
+}
