@@ -3,6 +3,7 @@
     "./breadcrumbs/marko.json",
     "./blocks/marko.json",
     "./client-side-blocks/marko.json",
+    "./content-attribution/marko.json",
     "./flows/marko.json",
     "./gam/marko.json",
     "./identity-x/marko.json",
