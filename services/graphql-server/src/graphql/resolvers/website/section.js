@@ -60,6 +60,12 @@ module.exports = {
       return sections.reverse();
     },
 
+    /**
+     * Returns the website sections directly related to this section. This is primarily used for the
+     * Leaders Program to denote a contextual relationship between two website sections.
+     */
+    relatedSectionIds: async ({ relatedSections }) => relatedSections || [],
+
     isRoot: section => !section.parent,
   },
 

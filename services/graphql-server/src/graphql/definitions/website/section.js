@@ -75,6 +75,9 @@ type WebsiteSection {
   children(input: WebsiteSectionChildrenInput = {}): WebsiteSectionConnection! @projection(localField: "_id") @refMany(model: "website.Section", localField: "_id", foreignField: "parent.$id")
   logo: AssetImage @projection @refOne(loader: "platformAsset", criteria: "assetImage")
   coverImage: AssetImage @projection @refOne(loader: "platformAsset", criteria: "assetImage")
+  "Website sections that are directly related to this section. Primarily used for Leaders Program context mapping."
+  relatedSections(input: WebsiteSectionRelatedSectionsInput = {}): WebsiteSectionConnection! @projection @refMany(model: "website.Section")
+  relatedSectionIds: [Int]! @projection(localField: "relatedSections")
 
   # fields from trait.platform::Content\SeoFields
 
@@ -192,6 +195,12 @@ input WebsiteSectionParentInput {
 }
 
 input WebsiteSectionChildrenInput {
+  status: ModelStatus = active
+  sort: WebsiteSectionSortInput = {}
+  pagination: PaginationInput = {}
+}
+
+input WebsiteSectionRelatedSectionsInput {
   status: ModelStatus = active
   sort: WebsiteSectionSortInput = {}
   pagination: PaginationInput = {}
