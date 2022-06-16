@@ -78,6 +78,9 @@ type WebsiteSection {
   "Website sections that are directly related to this section. Primarily used for Leaders Program context mapping."
   relatedSections(input: WebsiteSectionRelatedSectionsInput = {}): WebsiteSectionConnection! @projection @refMany(model: "website.Section")
   relatedSectionIds: [Int]! @projection(localField: "relatedSections")
+  "Taxonomy items that are directly related to this section. Primarily used for Leaders Program context mapping."
+  relatedTaxonomy(input: WebsiteSectionRelatedTaxonomyInput = {}): TaxonomyConnection! @projection @refMany(model: "platform.Taxonomy", using: { type: "type" })
+  relatedTaxonomyIds: [Int]! @projection(localField: "relatedTaxonomy")
 
   # fields from trait.platform::Content\SeoFields
 
@@ -203,6 +206,11 @@ input WebsiteSectionChildrenInput {
 input WebsiteSectionRelatedSectionsInput {
   status: ModelStatus = active
   sort: WebsiteSectionSortInput = {}
+  pagination: PaginationInput = {}
+}
+
+input WebsiteSectionRelatedTaxonomyInput {
+  sort: TaxonomySortInput = {}
   pagination: PaginationInput = {}
 }
 

@@ -66,6 +66,15 @@ module.exports = {
      */
     relatedSectionIds: async ({ relatedSections }) => relatedSections || [],
 
+    /**
+     * Returns the taxonomy terms directly related to this section. This is primarily used for the
+     * Leaders Program to denote a contextual relationship.
+     */
+    relatedTaxonomyIds: async ({ relatedTaxonomy }) => {
+      const refs = relatedTaxonomy || [];
+      return refs.map(BaseDB.extractRefId);
+    },
+
     isRoot: section => !section.parent,
   },
 
