@@ -170,6 +170,7 @@ module.exports = {
         site,
         parent,
         logo,
+        relatedSectionIds,
         ...fields
       } = input;
       const body = new Base4RestPayload({ type });
@@ -177,6 +178,9 @@ module.exports = {
       if (site) body.setLink('site', { id: site, type: 'website/product/site' });
       if (parent) body.setLink('parent', { id: parent, type });
       if (logo) body.setLink('logo', { id: logo, type: 'platform/asset/image' });
+      if (relatedSectionIds) {
+        body.setLinks('relatedSections', relatedSectionIds.map(i => ({ id: i, type })));
+      }
       const { data: { id } } = await base4rest.insertOne({ model: type, body });
       const projection = buildProjection({ info, type: 'WebsiteSection' });
       return basedb.findOne('website.Section', { _id: id }, { projection });
@@ -193,6 +197,7 @@ module.exports = {
         site,
         parent,
         logo,
+        relatedSectionIds,
         ...fields
       } = payload;
       const body = new Base4RestPayload({ type });
@@ -200,6 +205,9 @@ module.exports = {
       if (site) body.setLink('site', { site, type: 'website/product/site' });
       if (parent) body.setLink('parent', { parent, type });
       if (logo) body.setLink('logo', { logo, type: 'platform/asset/image' });
+      if (relatedSectionIds) {
+        body.setLinks('relatedSections', relatedSectionIds.map(i => ({ id: i, type })));
+      }
       body.set('id', id);
       await base4rest.updateOne({ model: type, id, body });
       const projection = buildProjection({ info, type: 'WebsiteSection' });
