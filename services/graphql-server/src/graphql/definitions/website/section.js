@@ -62,6 +62,7 @@ type WebsiteSection {
   description: String @projection
   fullName: String @projection
   labels: [String]! @projection @arrayValue
+  descendantIds: [Int]! @projection @arrayValue
 
   # fields from trait.platform::StatusEnabled
   status: Int @projection
