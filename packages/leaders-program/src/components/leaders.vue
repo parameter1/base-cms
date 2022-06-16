@@ -77,6 +77,10 @@ export default {
       type: Array,
       default: () => ([]),
     },
+    relatedSectionIds: {
+      type: Array,
+      default: () => ([]),
+    },
     open: {
       type: String,
       default: 'left',
@@ -267,7 +271,8 @@ export default {
     },
 
     async loadSections() {
-      const { sectionIds } = this;
+      const { sectionIds, relatedSectionIds } = this;
+      // Look up leadership sections by ID
       if (sectionIds && sectionIds.length) {
         const variables = { sectionIds };
         const r = await this.$graphql.query({ query: fromIdsQuery, variables });
@@ -275,6 +280,15 @@ export default {
           .filter(s => s.hierarchy.some(({ alias }) => alias === this.sectionAlias));
         if (sections.length) return sections;
       }
+      // Look up leadership sections by related IDs
+      if (relatedSectionIds && relatedSectionIds.length) {
+        const variables = { relatedSectionIds, taxonomyIds: [] };
+        const r = await this.$graphql.query({ query: fromContentQuery, variables });
+        const sections = getEdgeNodes(r, 'data.websiteSections')
+          .filter(s => s.hierarchy.some(({ alias }) => alias === this.sectionAlias));
+        if (sections.length) return sections;
+      }
+      // Look up leadership sections by content taxonomy, scheduling, and primary section
       const fromContent = await this.loadContentSections();
       if (fromContent.length) {
         this.loadType = 'contextual';
