@@ -1,27 +1,36 @@
 $ const { id, type, pageNode } = data;
 $ const { recaptcha } = out.global;
 
-<marko-web-default-page-layout
-  type="test"
-  title="Test Page"
-  description="This is a test page."
->
-  <@above-container>
-    <marko-web-leaders-dropdown-portal />
-  </@above-container>
+<marko-web-content-page-layout id=id type=type>
   <@page>
     <marko-web-resolve-page|{ data: content, resolved }| node=pageNode>
-      <h1>Company Page Inquiry</h1>
-      <!-- $ console.log(content); -->
+      <default-theme-website-section-breadcrumbs section=content.primarySection />
+      <marko-web-content-name obj=content tag="h1" />
+      <marko-web-content-teaser obj=content class="lead" />
 
-      <marko-web-node-list collapsible=false>
-        <@header>Request More Information</@header>
-        <@body>
-          <marko-web-inquiry-form content=content with-header=false modifiers=["node-list"] />
-        </@body>
-      </marko-web-node-list>
+      <div class="row mt-3">
+        <if(content.company)>
+          <div class="col-md-8">
+            <marko-web-content-body obj=content />
+          </div>
+          <div class="col-md-4">
+            <marko-web-node-list collapsible=false>
+              <@header>Request More Information</@header>
+              <@body>
+                <marko-web-inquiry-form content=content with-header=false modifiers=["node-list"] />
+              </@body>
+            </marko-web-node-list>
+          </div>
+        </if>
+        <else>
+          <div class="col">
+            <marko-web-content-body obj=content />
+          </div>
+        </else>
+      </div>
     </marko-web-resolve-page>
 
+    <h2>Contact Us</h2>
     <marko-web-browser-component name="ContactUsForm" props={ siteKey: recaptcha.siteKey, configName: 'general' } />
   </@page>
-</marko-web-default-page-layout>
+</marko-web-content-page-layout>

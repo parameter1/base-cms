@@ -1,0 +1,36 @@
+$ const { id, alias, name, pageNode } = data;
+$ const { config } = out.global;
+
+<marko-web-website-section-page-layout id=id alias=alias name=name>
+  <@page>
+    <marko-web-resolve-page|{ data: section, resolved }| node=pageNode>
+
+      <default-theme-website-section-breadcrumbs section=section />
+      <h1>${section.name}</h1>
+
+      <div class="row">
+        <div class="col">
+          <p>Welcome to <em>${config.siteName()}'s</em> Leadership Program.</p>
+
+          <marko-web-leaders props={
+            sectionAlias: "leaders/2022",
+            open: null,
+            expanded: true,
+            contextual: true,
+            displayHeader: false,
+            columns: 3,
+            offsetTop: 50,
+            displayViewAll: false,
+            mediaQueries: [
+              { prop: "columns", value: 2, query: "(max-width: 991px)" },
+              { prop: "columns", value: 1, query: "(max-width: 700px)" },
+            ],
+            calloutPrefix: "Browse these",
+            calloutValue: "leading suppliers",
+          }/>
+        </div>
+      </div>
+    </marko-web-resolve-page>
+
+  </@page>
+</marko-web-website-section-page-layout>
