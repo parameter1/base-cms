@@ -171,6 +171,7 @@ module.exports = {
         parent,
         logo,
         relatedSectionIds,
+        relatedTaxonomyIds,
         ...fields
       } = input;
       const body = new Base4RestPayload({ type });
@@ -180,6 +181,11 @@ module.exports = {
       if (logo) body.setLink('logo', { id: logo, type: 'platform/asset/image' });
       if (relatedSectionIds) {
         body.setLinks('relatedSections', relatedSectionIds.map(i => ({ id: i, type })));
+      }
+      if (relatedTaxonomyIds) {
+        const relatedTaxonomy = await basedb.find('platform.Taxonomy', { _id: { $in: relatedTaxonomyIds } }, { projection: { type: 1 } });
+        console.log(relatedTaxonomy);
+        body.setLinks('relatedTaxonomy', relatedTaxonomy.map(doc => ({ id: doc._id, type: doc.type })));
       }
       const { data: { id } } = await base4rest.insertOne({ model: type, body });
       const projection = buildProjection({ info, type: 'WebsiteSection' });
@@ -198,6 +204,7 @@ module.exports = {
         parent,
         logo,
         relatedSectionIds,
+        relatedTaxonomyIds,
         ...fields
       } = payload;
       const body = new Base4RestPayload({ type });
@@ -207,6 +214,11 @@ module.exports = {
       if (logo) body.setLink('logo', { logo, type: 'platform/asset/image' });
       if (relatedSectionIds) {
         body.setLinks('relatedSections', relatedSectionIds.map(i => ({ id: i, type })));
+      }
+      if (relatedTaxonomyIds) {
+        const relatedTaxonomy = await basedb.find('platform.Taxonomy', { _id: { $in: relatedTaxonomyIds } }, { projection: { type: 1 } });
+        console.log(relatedTaxonomy);
+        body.setLinks('relatedTaxonomy', relatedTaxonomy.map(doc => ({ id: doc._id, type: doc.type })));
       }
       body.set('id', id);
       await base4rest.updateOne({ model: type, id, body });

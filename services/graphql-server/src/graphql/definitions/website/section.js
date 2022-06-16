@@ -228,6 +228,7 @@ input CreateWebsiteSectionMutationInput {
   parent: Int
   logo: ObjectID
   relatedSectionIds: [Int]
+  relatedTaxonomyIds: [Int]
 }
 
 input UpdateWebsiteSectionMutationInput {
@@ -249,6 +250,7 @@ input UpdateWebsiteSectionMutationPayloadInput {
   parent: Int
   logo: ObjectID
   relatedSectionIds: [Int]
+  relatedTaxonomyIds: [Int]
 }
 
 `;
