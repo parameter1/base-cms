@@ -76,6 +76,12 @@ type WebsiteSection {
   children(input: WebsiteSectionChildrenInput = {}): WebsiteSectionConnection! @projection(localField: "_id") @refMany(model: "website.Section", localField: "_id", foreignField: "parent.$id")
   logo: AssetImage @projection @refOne(loader: "platformAsset", criteria: "assetImage")
   coverImage: AssetImage @projection @refOne(loader: "platformAsset", criteria: "assetImage")
+  "Website sections that are directly related to this section. Primarily used for Leaders Program context mapping."
+  relatedSections(input: WebsiteSectionRelatedSectionsInput = {}): WebsiteSectionConnection! @projection @refMany(model: "website.Section")
+  relatedSectionIds: [Int!]! @projection(localField: "relatedSections")
+  "Taxonomy items that are directly related to this section. Primarily used for Leaders Program context mapping."
+  relatedTaxonomy(input: WebsiteSectionRelatedTaxonomyInput = {}): TaxonomyConnection! @projection @refMany(model: "platform.Taxonomy", using: { type: "type" })
+  relatedTaxonomyIds: [Int!]! @projection(localField: "relatedTaxonomy")
 
   # fields from trait.platform::Content\SeoFields
 
@@ -198,6 +204,17 @@ input WebsiteSectionChildrenInput {
   pagination: PaginationInput = {}
 }
 
+input WebsiteSectionRelatedSectionsInput {
+  status: ModelStatus = active
+  sort: WebsiteSectionSortInput = {}
+  pagination: PaginationInput = {}
+}
+
+input WebsiteSectionRelatedTaxonomyInput {
+  sort: TaxonomySortInput = {}
+  pagination: PaginationInput = {}
+}
+
 input CreateWebsiteSectionMutationInput {
   name: String!
   alias: String!
@@ -211,6 +228,8 @@ input CreateWebsiteSectionMutationInput {
   site: ObjectID!
   parent: Int
   logo: ObjectID
+  relatedSectionIds: [Int!]
+  relatedTaxonomyIds: [Int!]
 }
 
 input UpdateWebsiteSectionMutationInput {
@@ -231,6 +250,8 @@ input UpdateWebsiteSectionMutationPayloadInput {
   site: ObjectID
   parent: Int
   logo: ObjectID
+  relatedSectionIds: [Int!]
+  relatedTaxonomyIds: [Int!]
 }
 
 `;
