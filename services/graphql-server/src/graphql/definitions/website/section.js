@@ -77,10 +77,10 @@ type WebsiteSection {
   coverImage: AssetImage @projection @refOne(loader: "platformAsset", criteria: "assetImage")
   "Website sections that are directly related to this section. Primarily used for Leaders Program context mapping."
   relatedSections(input: WebsiteSectionRelatedSectionsInput = {}): WebsiteSectionConnection! @projection @refMany(model: "website.Section")
-  relatedSectionIds: [Int]! @projection(localField: "relatedSections")
+  relatedSectionIds: [Int!]! @projection(localField: "relatedSections")
   "Taxonomy items that are directly related to this section. Primarily used for Leaders Program context mapping."
   relatedTaxonomy(input: WebsiteSectionRelatedTaxonomyInput = {}): TaxonomyConnection! @projection @refMany(model: "platform.Taxonomy", using: { type: "type" })
-  relatedTaxonomyIds: [Int]! @projection(localField: "relatedTaxonomy")
+  relatedTaxonomyIds: [Int!]! @projection(localField: "relatedTaxonomy")
 
   # fields from trait.platform::Content\SeoFields
 
@@ -227,8 +227,8 @@ input CreateWebsiteSectionMutationInput {
   site: ObjectID!
   parent: Int
   logo: ObjectID
-  relatedSectionIds: [Int]
-  relatedTaxonomyIds: [Int]
+  relatedSectionIds: [Int!]
+  relatedTaxonomyIds: [Int!]
 }
 
 input UpdateWebsiteSectionMutationInput {
@@ -249,8 +249,8 @@ input UpdateWebsiteSectionMutationPayloadInput {
   site: ObjectID
   parent: Int
   logo: ObjectID
-  relatedSectionIds: [Int]
-  relatedTaxonomyIds: [Int]
+  relatedSectionIds: [Int!]
+  relatedTaxonomyIds: [Int!]
 }
 
 `;
