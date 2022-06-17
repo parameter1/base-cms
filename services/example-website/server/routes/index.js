@@ -1,8 +1,12 @@
-const { withContent } = require('@parameter1/base-cms-marko-web/middleware');
+const { withContent, withWebsiteSection } = require('@parameter1/base-cms-marko-web/middleware');
 
-const content = require('../templates/content');
-const queryFragment = require('../../graphql/fragments/content-page');
 const index = require('../templates/index');
+const content = require('../templates/content');
+const section = require('../templates/section');
+const leaders = require('../templates/leaders');
+
+const queryFragment = require('../../graphql/fragments/content-page');
+const sectionFragment = require('../../graphql/fragments/website-section-page');
 
 module.exports = (app) => {
   app.get('/', (_, res) => {
@@ -11,5 +15,13 @@ module.exports = (app) => {
   app.get('/*?:id(\\d{8})*', withContent({
     template: content,
     queryFragment,
+  }));
+  app.get('/:alias(leaders)', withWebsiteSection({
+    template: leaders,
+    queryFragment: sectionFragment,
+  }));
+  app.get('/:alias([a-z0-9-/]+)', withWebsiteSection({
+    template: section,
+    queryFragment: sectionFragment,
   }));
 };

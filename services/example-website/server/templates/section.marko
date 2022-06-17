@@ -1,0 +1,38 @@
+$ const { id, alias, name, pageNode } = data;
+$ const { recaptcha } = out.global;
+
+<marko-web-website-section-page-layout id=id alias=alias name=name>
+  <@page>
+    <marko-web-resolve-page|{ data: section, resolved }| node=pageNode>
+
+      <default-theme-website-section-breadcrumbs section=section />
+      <h1>${section.name}</h1>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="p-4 bg-light">
+            <h3>Ինչո՞ւ ենք այն</h3>
+            <p class="muted">Հայտնի է, որ ընթերցողը, կարդալով հասկանալի տեքստ, չի կարողանա կենտրոնանալ տեքստի ձևավորման օգտագործում</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-4 bg-light">
+            <h3>օգտագործում</h3>
+            <p class="muted">Lorem Ipsum օգտագործելը բացատրվում է նրանով, որ այն բաշխում է բառերը քիչ թե շատ իրականի նման վրա բաշխում է</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <marko-web-leaders props={
+            sectionAlias: "leaders/2022",
+            relatedSectionIds: section.descendantIds,
+            open: "left",
+            viewAllHref: "/leaders",
+            useContentPrimarySection: true,
+            columns: 1,
+          } />
+        </div>
+      </div>
+    </marko-web-resolve-page>
+
+  </@page>
+</marko-web-website-section-page-layout>
