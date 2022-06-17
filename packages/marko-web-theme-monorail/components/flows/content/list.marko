@@ -4,7 +4,12 @@ import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 $ const { nativeX: nxConfig } = out.global;
 $ const nodes = getAsArray(input, "nodes");
 $ const nativeX = getAsObject(input, "nativeX");
-
+$ const withNativeXSection = defaultValue(input.withNativeXSection, true);
+$ const setWithSection = (node, nxNode, withNativeXSection = true) => {
+  if (node.withSection) return true;
+  if (!withNativeXSection) return false
+  return node.id !== nxNode.id;
+};
 <marko-web-node-list
   inner-justified=defaultValue(input.innerJustified, true)
   class=input.class
@@ -27,6 +32,7 @@ $ const nativeX = getAsObject(input, "nativeX");
         >
           <theme-content-node
             ...input.node
+            with-section=setWithSection(node, nxNode, withNativeXSection)
             node=nxNode
             attrs=containerAttrs
             link-attrs=linkAttrs
