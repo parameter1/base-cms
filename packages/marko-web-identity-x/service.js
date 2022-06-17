@@ -32,7 +32,8 @@ class IdentityX {
    * @returns {Promise<object>}
    */
   async loadActiveContext() {
-    if (!this.activeContextQuery) {
+    // Require a token/cookie to check active context. This disables team context from IP/CIDR.
+    if (!this.activeContextQuery && this.token) {
       this.activeContextQuery = this.client.query({ query: getActiveContext });
     }
     const { data = {} } = await this.activeContextQuery;
