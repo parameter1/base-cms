@@ -2,6 +2,7 @@ const { BaseDB } = require('@parameter1/base-cms-db');
 const { Base4RestPayload } = require('@parameter1/base-cms-base4-rest-api');
 const { UserInputError } = require('apollo-server-express');
 const { websiteSection: canonicalPathFor } = require('@parameter1/base-cms-canonical-path');
+const { getAsArray } = require('@parameter1/base-cms-db/src/basedb');
 
 const validateRest = require('../../utils/validate-rest');
 const buildProjection = require('../../utils/build-projection');
@@ -64,16 +65,13 @@ module.exports = {
      * Returns the website sections directly related to this section. This is primarily used for the
      * Leaders Program to denote a contextual relationship between two website sections.
      */
-    relatedSectionIds: async ({ relatedSections }) => relatedSections || [],
+    relatedSectionIds: root => getAsArray(root, 'relatedSections'),
 
     /**
      * Returns the taxonomy terms directly related to this section. This is primarily used for the
      * Leaders Program to denote a contextual relationship.
      */
-    relatedTaxonomyIds: async ({ relatedTaxonomy }) => {
-      const refs = relatedTaxonomy || [];
-      return refs.map(BaseDB.extractRefId);
-    },
+    relatedTaxonomyIds: root => getAsArray(root, 'relatedTaxonomy').map(BaseDB.extractRefId),
 
     isRoot: section => !section.parent,
   },
