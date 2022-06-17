@@ -184,7 +184,6 @@ module.exports = {
       }
       if (relatedTaxonomyIds) {
         const relatedTaxonomy = await basedb.find('platform.Taxonomy', { _id: { $in: relatedTaxonomyIds } }, { projection: { type: 1 } });
-        console.log(relatedTaxonomy);
         body.setLinks('relatedTaxonomy', relatedTaxonomy.map(doc => ({ id: doc._id, type: doc.type })));
       }
       const { data: { id } } = await base4rest.insertOne({ model: type, body });
@@ -217,7 +216,6 @@ module.exports = {
       }
       if (relatedTaxonomyIds) {
         const relatedTaxonomy = await basedb.find('platform.Taxonomy', { _id: { $in: relatedTaxonomyIds } }, { projection: { type: 1 } });
-        console.log(relatedTaxonomy);
         body.setLinks('relatedTaxonomy', relatedTaxonomy.map(doc => ({ id: doc._id, type: doc.type })));
       }
       body.set('id', id);
