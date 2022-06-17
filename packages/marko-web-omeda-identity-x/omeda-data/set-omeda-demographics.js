@@ -22,7 +22,6 @@ module.exports = async ({
   omedaCustomer,
   fields = [],
 }) => {
-  // @todo check if option external id still exists or has changed!
   const answeredQuestionMap = getAnsweredQuestionMap(user);
 
   const omedaCustomerDemoValuesMap = omedaCustomer.demographics
@@ -90,7 +89,6 @@ module.exports = async ({
     });
   })();
 
-  // @todo review
   await (async () => {
     if (!booleanAnswerMap.size) return;
     const answers = [];
@@ -103,5 +101,4 @@ module.exports = async ({
       context: { apiToken: identityX.config.getApiToken() },
     });
   })();
-  // @todo Set cookie!
 };
