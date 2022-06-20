@@ -316,7 +316,7 @@ services:
       LIVERELOAD_PORT: 61269
       TENANT_KEY: ${EXAMPLE_TENANT_KEY-p1_sandbox}
       HOST: www-p1-sandbox.dev.parameter1.com
-      SITE_ID: ${EXAMPLE_SITE_ID-5ec4407aa7124b22008b4569}
+      SITE_ID: ${EXAMPLE_SITE_ID-5ed294c6c13a4626008b4568}
 
       GRAPHQL_URI: ${GRAPHQL_URI-http://graphql-server-tauron}
       OEMBED_URI: ${OEMBED_URI-https://oembed}

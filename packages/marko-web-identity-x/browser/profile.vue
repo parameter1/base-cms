@@ -144,9 +144,9 @@
         />
 
         <div class="d-flex align-items-center">
-          <Button :disabled="!canSubmit" color="primary">
+          <button type="submit" class="btn btn-primary">
             {{ buttonLabel }}
-          </Button>
+          </button>
           <span v-if="didSubmit" class="ml-2">
             {{ submitMessage }}
           </span>
@@ -176,7 +176,6 @@ import post from './utils/post';
 import cookiesEnabled from './utils/cookies-enabled';
 import regionCountryCodes from './utils/region-country-codes';
 
-import Button from './form/common/button.vue';
 import AddressBlock from './form/address-block.vue';
 import CustomBoolean from './form/fields/custom-boolean.vue';
 import CustomSelect from './form/fields/custom-select.vue';
@@ -199,7 +198,6 @@ const { isArray } = Array;
 export default {
   components: {
     AddressBlock,
-    Button,
     CustomBoolean,
     CustomSelect,
     GivenName,
@@ -321,28 +319,6 @@ export default {
      */
     requiredFields() {
       return [...this.requiredServerFields, ...this.requiredClientFields];
-    },
-
-    canSubmit() {
-      const needSelect = this.customSelectFieldAnswers.some(
-        fa => fa.field.required && fa.answers.length === 0,
-      );
-      if (needSelect) return false;
-      // check if a write-in value is required
-      const needWriteIn = this.customSelectFieldAnswers.some(
-        fa => fa.field.required && fa.answers.every(({ id, writeInValue }) => {
-          const option = fa.field.options.find(opt => opt.id === id);
-          return option && option.canWriteIn && !writeInValue;
-        }),
-      );
-      if (needWriteIn) return false;
-      const needBool = this.customBooleanFieldAnswers.some(
-        fa => fa.field.required && !fa.answer,
-      );
-      if (needBool) return false;
-
-      // @todo check if required fields are set? html required should cover...
-      return true;
     },
 
     /**
