@@ -42,10 +42,12 @@ module.exports = ({
   }
   const imageMediaTags = getAsArray(images, 'edges').reduce((arr, { node }) => {
     const { src } = node;
-    if (src) arr.push(`<media:content url="${node.src}" medium="image" />`);
+    if (src) {
+      arr.push(`<media:content url="${src.replace(/&([a-z0-9-_]+=)/gi, '&amp;$1')}" medium="image" />`);
+    }
     return arr;
   }, []);
   if (imageMediaTags.length) parts.push(...imageMediaTags);
   if (embedSrc) parts.push(`<media:content url="${embedSrc}" medium="video" />`);
-  return `<item>${parts.join('')}</item>`;
+  return `<item>${parts.join('\n')}</item>`;
 };

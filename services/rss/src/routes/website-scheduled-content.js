@@ -47,7 +47,7 @@ module.exports = asyncRoute(async (req, res) => {
   const { section, edges } = data.websiteScheduledContent;
 
   const parts = [
-    '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">',
+    '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">',
     createChannel({
       title: channel.title || `${section.fullName || section.name} | ${website.name}`,
       link: channel.link || `${website.origin}${section.canonicalPath}`,
@@ -58,5 +58,5 @@ module.exports = asyncRoute(async (req, res) => {
     }),
     '</rss>',
   ];
-  res.end(parts.join(''));
+  res.end(parts.join('\n'));
 });
