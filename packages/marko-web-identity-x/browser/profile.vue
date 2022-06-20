@@ -337,7 +337,7 @@ export default {
       );
       if (needWriteIn) return false;
       const needBool = this.customBooleanFieldAnswers.some(
-        fa => fa.field.required && !fa.hasAnswered,
+        fa => fa.field.required && !fa.answer,
       );
       if (needBool) return false;
 
