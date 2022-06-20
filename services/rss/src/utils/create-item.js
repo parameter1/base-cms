@@ -43,8 +43,7 @@ module.exports = ({
   const imageMediaTags = getAsArray(images, 'edges').reduce((arr, { node }) => {
     const { src } = node;
     if (src) {
-      const srcUrl = new URL(src);
-      arr.push(`<media:content url="${srcUrl.origin}${srcUrl.pathname}" medium="image" />`);
+      arr.push(`<media:content url="${src.replace(/&([a-z0-9-_]+=)/gi, '&amp;$1')}" medium="image" />`);
     }
     return arr;
   }, []);
