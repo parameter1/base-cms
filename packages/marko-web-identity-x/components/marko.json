@@ -25,6 +25,10 @@
       "type": "string",
       "default-value": "login"
     },
+    "@successMessageType": {
+      "type": "string",
+      "default-value": "login"
+    },
     "@button-labels": "object",
     "@login-email-placeholder": "string",
     "@redirect": "string"

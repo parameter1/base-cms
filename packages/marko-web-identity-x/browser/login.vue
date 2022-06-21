@@ -11,9 +11,8 @@
   </div>
   <div v-else-if="complete">
     <h4>Almost Done!</h4>
-    <p>
-      We just sent an email to <em>{{ email }}</em> with your one-time login link.
-      To finish logging in, open the email message and click the link within.
+    <p v-html="message">
+      {{ message }}
     </p>
     <p>
       Note: please check your spam/junk folders.
@@ -113,6 +112,15 @@ export default {
       type: String,
       default: 'noreply@identity-x.parameter1.com',
     },
+    additionalEventData: {
+      type: Object,
+      default: null,
+    },
+    successMessageType: {
+      type: String,
+      default: 'login',
+      validator: v => ['login', 'newsletter-signup'].includes(v),
+    },
 
     /**
      * Regional consent polices to display (if/when a user selects a country on login)
@@ -143,6 +151,16 @@ export default {
      */
     authUrl() {
       return `${window.location.origin}/${cleanPath(this.endpoints.authenticate)}`;
+    },
+
+    /**
+     *
+     */
+    message() {
+      if (this.successMessageType === 'newsletter-signup') {
+        return `We just sent an email to <em>${this.email}</em> with your one-time login link. To finish signing up to receive your email notifications, open the email message and click the link within.`;
+      }
+      return `We just sent an email to <em>${this.email}</em> with your one-time login link. To finish logging in, open the email message and click the link within.`;
     },
 
     /**
