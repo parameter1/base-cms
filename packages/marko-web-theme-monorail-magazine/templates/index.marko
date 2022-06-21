@@ -1,0 +1,37 @@
+$ const { site } = out.global;
+
+$ const type = "magazines";
+$ const title = "Magazines";
+$ const description = site.get("magazines.description");
+
+<marko-web-default-page-layout type=type title=title description=description>
+  <@head>
+    <marko-web-gtm-default-context|{ context }| type=type>
+      <marko-web-gtm-push data=context />
+    </marko-web-gtm-default-context>
+  </@head>
+  <@page>
+    <marko-web-page-wrapper class="mb-block">
+      <@section|{ aliases }|>
+        <theme-gam-define-display-ad
+          name="rotation"
+          position="magazine_page"
+          aliases=aliases
+          modifiers=["inter-block"]
+        />
+      </@section>
+
+      <@section>
+        <div class="row">
+          <div class="col">
+            <h1 class="page-wrapper__title">${title}</h1>
+            <if(description)>
+              <p class="page-wrapper__deck">${description}</p>
+            </if>
+          </div>
+        </div>
+        <theme-magazine-publications-block with-header=false />
+      </@section>
+    </marko-web-page-wrapper>
+  </@page>
+</marko-web-default-page-layout>

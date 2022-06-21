@@ -1,0 +1,43 @@
+import { getAsObject } from "@parameter1/base-cms-object-path";
+import queryFragment from "../../graphql/fragments/magazine-latest-issue";
+
+$ const { site } = out.global;
+$ const { publicationId } = input;
+$ const blockName = "magazine-issues"
+
+<marko-web-query|{ nodes }| name="magazine-active-issues"
+  params={
+    publicationId,
+    queryFragment,
+    limit: 4,
+    requiresCoverImage: true
+  }
+>
+  <marko-web-block name=blockName>
+    <marko-web-element block-name=blockName name="wrapper">
+      <marko-web-element block-name=blockName name="contents">
+        <marko-web-element block-name=blockName name="header">
+          In Print
+        </marko-web-element>
+        <theme-magazine-issue-archive-flow nodes=nodes with-title=input.withTitle flush=true />
+      </marko-web-element>
+    </marko-web-element>
+    <marko-web-element block-name=blockName name="wrapper">
+      <marko-web-element block-name=blockName name="contents" modifiers=["buttons"]>
+        <marko-web-magazine-publication-subscribe-url
+          tag=null
+          obj=nodes[0].publication
+          link={
+            class: "btn btn-primary",
+            target: "_blank",
+          }
+        >
+          Subscribe
+        </marko-web-magazine-publication-subscribe-url>
+        <marko-web-link href=`/magazine/${publicationId}` class="btn btn-secondary" >
+          Archives
+        </marko-web-link>
+      </marko-web-element>
+    </marko-web-element>
+  </marko-web-block>
+</marko-web-query>

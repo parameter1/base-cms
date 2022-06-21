@@ -1,0 +1,70 @@
+import issueFragment from "../graphql/fragments/magazine-issue-archive";
+
+$ const { pagination: p, req } = out.global;
+$ const { id, pageNode } = data;
+$ const perPage = 16;
+
+<marko-web-magazine-publication-page-layout id=id>
+  <@head>
+    <marko-web-gtm-magazine-publication-context|{ context }| id=id>
+      <marko-web-gtm-push data=context />
+    </marko-web-gtm-magazine-publication-context>
+  </@head>
+  <@page>
+    <marko-web-page-wrapper>
+      <@section|{ aliases }|>
+        <theme-gam-define-display-ad
+          name="rotation"
+          position="magazine_page"
+          aliases=aliases
+          modifiers=["inter-block"]
+        />
+      </@section>
+
+      <@section>
+        <div class="row">
+          <div class="col">
+            <theme-breadcrumbs modifiers=["website-section"]>
+              <@item><marko-web-link href="/magazine">Magazine</marko-web-link></@item>
+            </theme-breadcrumbs>
+            <marko-web-resolve-page|{ data: publication }| node=pageNode>
+              <h1 class="page-wrapper__title">
+                ${publication.name} Issue Archive
+                <if(p.page > 1)>: Page ${p.page}</if>
+              </h1>
+              <if(publication.description)>
+                <p class="page-wrapper__deck">${publication.description}</p>
+              </if>
+            </marko-web-resolve-page>
+          </div>
+        </div>
+      </@section>
+      <@section>
+        <marko-web-resolve-page|{ data: publication }| node=pageNode>
+          $ const params = {
+            publicationId: id,
+            limit: perPage,
+            skip:p.skip({ perPage }),
+            queryFragment: issueFragment,
+            requiresCoverImage: true,
+          };
+          <marko-web-query|{ nodes }|
+            name="magazine-active-issues"
+            params=params
+          >
+            <theme-magazine-issue-archive-flow nodes=nodes flush=true />
+          </marko-web-query>
+          <div class="mb-block">
+            <theme-query-total-count|{ totalCount }| name="magazine-active-issues" params={publicationId: id}>
+              <theme-pagination-controls
+                per-page=perPage
+                total-count=totalCount
+                path=req.path
+              />
+            </theme-query-total-count>
+          </div>
+        </marko-web-resolve-page>
+      </@section>
+    </marko-web-page-wrapper>
+  </@page>
+</marko-web-magazine-publication-page-layout>

@@ -1,0 +1,23 @@
+{
+  "<theme-magazine-archived-issue-block>": {
+    "template": "./magazine-archived-issue.marko"
+  },
+  "<theme-magazine-latest-issue-block>": {
+    "template": "./magazine-latest-issue.marko"
+  },
+  "<theme-magazine-current-issue-block>": {
+    "template": "./magazine-current-issue.marko"
+  },
+  "<theme-magazine-issues-block>": {
+    "template": "./magazine-issues.marko"
+  },
+  "<theme-magazine-issue-cards-block>": {
+    "template": "./magazine-issue-cards.marko"
+  },
+  "<theme-magazine-publication-card-block>": {
+    "template": "./magazine-publication-card.marko"
+  },
+  "<theme-magazine-publications-block>": {
+    "template": "./magazine-publications.marko"
+  }
+}

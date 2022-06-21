@@ -1,0 +1,21 @@
+{
+  "<theme-magazine-latest-issue-node>": {
+    "template": "./magazine-latest-issue.marko",
+    "@node": "object",
+    "@flush": "boolean",
+    "@card": "boolean",
+    "@image-width": {
+      "type": "number",
+      "default-value": 300
+    }
+  },
+  "<theme-magazine-issue-archive-node>": {
+    "template": "./magazine-issue-archive.marko",
+    "@node": "object",
+    "@image-width": "number",
+    "@full-height": "boolean",
+    "@flush": "boolean",
+    "@card": "boolean",
+    "@with-title": "boolean"
+  }
+}

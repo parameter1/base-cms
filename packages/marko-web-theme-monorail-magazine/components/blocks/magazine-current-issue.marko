@@ -1,0 +1,37 @@
+import { getAsObject } from "@parameter1/base-cms-object-path";
+import latestIssueFragment from "../../graphql/fragments/magazine-latest-issue";
+
+$ const { publicationId } = input;
+
+<marko-web-query|{ node: issue }|
+  name="magazine-latest-issue"
+  params={ publicationId, queryFragment: latestIssueFragment, requiresImage: true  }
+>
+  <marko-web-node-list
+    inner-justified=true
+    flush-x=true
+    flush-y=true
+    modifiers=[
+      "latest-issue",
+    ]
+    header=input.header
+    footer=input.footer
+  >
+    <@header>
+      <marko-web-magazine-issue-name tag=null obj=issue link=true>
+        In Print
+      </marko-web-magazine-issue-name>
+    </@header>
+    <@nodes nodes=[issue]>
+      <@slot|{ node: issue }| position="at" index=0>
+        <theme-magazine-latest-issue-node node=issue />
+      </@slot>
+    </@nodes>
+    <@footer>
+      <theme-magazine-publication-buttons
+        issue=issue
+        buttons=['subscribe', 'digital-edition', 'archives']
+      />
+    </@footer>
+  </marko-web-node-list>
+</marko-web-query>

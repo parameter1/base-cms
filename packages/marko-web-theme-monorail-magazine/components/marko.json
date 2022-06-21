@@ -1,0 +1,10 @@
+{
+  "taglib-imports": [
+    "./blocks/marko.json",
+    "./flows/marko.json",
+    "./nodes/marko.json"
+  ],
+  "<theme-magazine-publication-buttons>": {
+    "template": "./publication-buttons.marko"
+  }
+}

@@ -1,0 +1,215 @@
+
+
+.magazine-issues {
+  $self: &;
+  margin-right: $marko-web-page-wrapper-padding * -1;
+  margin-left: $marko-web-page-wrapper-padding * -1;
+  @include media-breakpoint-down(md) {
+    margin-right: -16px;
+    margin-left: -16px;
+  }
+  &__wrapper {
+    padding-right: 15px;
+    padding-left: 15px;
+    background-color: $gray-100;
+
+    @media (min-width: $marko-web-document-container-max-width) {
+      $margin: calc((((100vw - #{$marko-web-document-container-max-width}) / 2) + #{$marko-web-page-wrapper-padding}) * -1);
+      margin-right: $margin;
+      margin-left: $margin;
+
+      #{ $self }__contents {
+        max-width: $marko-web-document-container-max-width;
+        margin-right: auto;
+        margin-left: auto;
+      }
+    }
+    + #{ $self }__wrapper {
+      background-color: $gray-200;
+    }
+  }
+
+  &__header {
+    padding-top: 30px;
+    padding-bottom: 15px;
+    @include skin-typography($style: "section-header-small");
+  }
+
+  &__contents {
+    &--buttons {
+      display: flex;
+      justify-content: center;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      .btn + .btn {
+        margin-left: 15px;
+      }
+    }
+  }
+
+  .card-deck-flow--4-cols {
+    .card-deck-flow {
+      &__node {
+        @include make-col(3);
+        @include media-breakpoint-down(sm) {
+          @include make-col(6);
+        }
+        .node {
+          &__title {
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}
+
+.magazine-publication-buttons {
+  $self: &;
+  &__button {
+    @extend .btn;
+    @extend .btn-sm;
+    @extend .btn-primary;
+    margin-right: $marko-web-node-spacer;
+    margin-bottom: $marko-web-node-spacer;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &--bottom {
+    #{ $self } {
+      &__button {
+        margin-top: $marko-web-node-spacer;
+      }
+    }
+  }
+}
+
+
+.magazine-publication-buttons {
+  $self: &;
+  display: flex;
+  #{ $self }__button {
+    padding: 12px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+}
+
+.magazine-publication-card-block {
+  @include theme-card();
+  &__header {
+    @include theme-card-header();
+    @include border-top-radius($theme-card-border-radius);
+    padding: $theme-item-padding ($theme-item-padding + $theme-item-contents-padding);
+    margin-bottom: 0;
+
+    &:empty {
+      display: none;
+    }
+
+    &:last-child {
+      @include border-bottom-radius(0);
+    }
+
+    a {
+      @include theme-card-header-link();
+    }
+  }
+
+  &__body {
+    padding: $marko-web-node-padding;
+  }
+
+  &--flush {
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+.magazine-publication-card-block {
+  &__header, &__header a {
+    padding-right: 0;
+    padding-left: 0;
+    @include skin-typography($style: "section-header");
+  }
+  &__body {
+    padding-right: 0;
+    padding-left: 0;
+    .issue-archive-cover {
+      margin-bottom: $block-spacer;
+    }
+  }
+}
+
+.page {
+  &--magazine-publication {
+    .page-wrapper {
+      &__title {
+        @include skin-typography($style: "section-header");
+      }
+    }
+  }
+  // &--magazine-issue {
+    .magazine-publication-card-block {
+      &__body {
+        padding-right: 10px;
+        padding-left: 10px;
+      }
+      .node {
+        &__title {
+          @include skin-typography($style: "section-header");
+          text-transform: none;
+        }
+        &__footer-left {
+          display: flex;
+          justify-content: space-between;
+          @include marko-web-node-list-border(border-top);
+          width: 100%;
+          padding-top: 1rem;
+          font-weight: $font-weight-bold;
+          .btn {
+            padding: 12px;
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  // }
+}
+.node-list {
+  $self: &;
+  &--latest-issue {
+    #{ $self }__header {
+      @include skin-typography($style: "section-header-small", $link-style: "primary");
+      margin-bottom: 1rem;
+    }
+    #{ $self }__nodes {
+      padding-top: 10px;
+    }
+    #{ $self }__footer {
+      display: flex;
+      justify-content: space-between;
+      @include marko-web-node-list-border(border-top);
+      padding-bottom: map-get($spacers, "block");
+      font-weight: $font-weight-bold;
+    }
+    .btn  {
+      padding: 12px;
+      font-size: 12px;
+    }
+    .node-list {
+      &__node:first-child {
+        @include marko-web-node-list-border(border-top);
+        padding-top: 1rem;
+      }
+      &__nodes {
+        flex-grow: 0;
+        padding-top: 0;
+        border-bottom: none;
+      }
+    }
+  }
+}

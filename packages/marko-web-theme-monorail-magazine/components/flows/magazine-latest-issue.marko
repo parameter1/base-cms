@@ -1,0 +1,22 @@
+import { getAsObject } from "@parameter1/base-cms-object-path";
+
+$ const nodes = [];
+$ const issueNode = getAsObject(input, "issueNode");
+$ if (issueNode) nodes.push(issueNode);
+
+<marko-web-node-list
+  inner-justified=true
+  flush-x=true
+  flush-y=true
+  modifiers=[
+    "latest-issue",
+  ]
+  header=input.header
+  footer=input.footer
+>
+  <@nodes nodes=nodes>
+    <@slot|{ node: issue }| position="at" index=0>
+      <theme-magazine-latest-issue-node node=issue />
+    </@slot>
+  </@nodes>
+</marko-web-node-list>

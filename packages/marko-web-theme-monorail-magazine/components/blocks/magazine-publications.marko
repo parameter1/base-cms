@@ -1,0 +1,22 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import publicationListFragment from "../../graphql/fragments/magazine-publication-list";
+
+$ const { site } = out.global;
+$ const publicationIds = site.getAsArray("publicationIds");
+$ const requiresCoverImage = defaultValue(input.requiresCoverImage, true);
+$ const withHeader = defaultValue(input.withHeader, true);
+
+<marko-web-query|{ nodes }| name="magazine-publications" params={ publicationIds: publicationIds, queryFragmet: publicationListFragment }>
+  <for|publication| of=nodes>
+    <marko-web-query|{ node: latestIssue }| name="magazine-latest-issue" params={ publicationId: publication.id, requiresCoverImage }>
+      <theme-magazine-publication-card-block publication-id=publication.id issue-id=latestIssue.id>
+        <if(withHeader)>
+          <@header>
+            <marko-web-magazine-publication-name tag=null obj=publication link=true />
+          </@header>
+        </if>
+      </theme-magazine-publication-card-block>
+    </marko-web-query>
+  </for>
+</marko-web-query>
