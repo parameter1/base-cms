@@ -34,6 +34,14 @@ module.exports = startServer({
     app.set('trust proxy', 'loopback, linklocal, uniquelocal');
     set(app.locals, 'recaptcha', recaptcha);
 
+    // i18n @todo @brian
+    const i18n = v => v;
+    set(app.locals, 'i18n', i18n);
+
+    // Setup NativeX.
+    const nativeXConfig = getAsObject(siteConfig, 'nativeX');
+    set(app.locals, 'nativeX', nativeXConfig);
+
     // Setup IdentityX + Omeda
     const omedaConfig = getAsObject(siteConfig, 'omeda');
     const idxConfig = getAsObject(siteConfig, 'identityX');

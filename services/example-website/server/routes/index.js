@@ -1,4 +1,6 @@
 const { withContent, withWebsiteSection } = require('@parameter1/base-cms-marko-web/middleware');
+const renderBlock = require('@parameter1/base-cms-marko-web-theme-monorail/routes/render-block');
+const nativeX = require('./native-x');
 
 const index = require('../templates/index');
 const content = require('../templates/content');
@@ -9,6 +11,12 @@ const queryFragment = require('../../graphql/fragments/content-page');
 const sectionFragment = require('../../graphql/fragments/website-section-page');
 
 module.exports = (app) => {
+  // NativeX
+  nativeX(app);
+
+  // Monorail
+  renderBlock(app);
+
   app.get('/', (_, res) => {
     res.marko(index);
   });

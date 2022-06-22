@@ -1,7 +1,7 @@
 const privacyPolicy = require('./privacy-policy');
 
 const baseConfig = {
-  action: 'https://randallreilly.dragonforms.com/loading.do',
+  action: '#',
   hiddenInputs: [
     { name: 'omedasite', value: 'ov_subscriptions' },
   ],
@@ -67,10 +67,5 @@ module.exports = {
     ...baseConfig,
     name: 'Don’t Miss Out',
     description: 'Get the business tips, industry insights and trending news every owner-operator needs to know in the <span class="newsletter-name">Overdrive</span> newsletter.',
-  },
-  signupFooter: {
-    ...baseConfig,
-    name: 'Newsletter Just for Owner-Operators',
-    description: 'Get owner-operator news and insights, plus diesel prices and gear reviews — delivered straight to your inbox.',
   },
 };
