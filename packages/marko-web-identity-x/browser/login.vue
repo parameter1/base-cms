@@ -11,9 +11,7 @@
   </div>
   <div v-else-if="complete">
     <h4>Almost Done!</h4>
-    <p v-html="message">
-      {{ message }}
-    </p>
+    <p v-html="message" />
     <p>
       Note: please check your spam/junk folders.
       If you do not receive this email, your firewall or ISP has likely blocked it.
