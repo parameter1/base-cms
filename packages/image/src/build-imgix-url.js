@@ -173,6 +173,8 @@ module.exports = (src, selected, defaults, isLogo) => {
       if (value) sp.append(key, value);
       return sp;
     }, new URLSearchParams());
+    searchParams.set('auto', 'format,compress');
+    searchParams.set('q', '70');
     url.search = searchParams;
     return url.toString();
   } catch (e) {
