@@ -1,0 +1,96 @@
+import convert from "@parameter1/base-cms-marko-web-native-x/utils/convert-story-to-content";
+import { buildImgixUrl } from "@parameter1/base-cms-image";
+import { get } from "@parameter1/base-cms-object-path";
+
+$ const { story } = input;
+$ const content = convert(story);
+$ const { id, type } = content;
+$ const { primarySection } = content;
+$ const blockName = "section-list";
+
+<theme-default-page title=story.title description=story.teaser>
+  <@head>
+    <marko-web-native-x-gtm-init />
+  </@head>
+  <@page>
+    <marko-web-native-x-story-track-init story=story />
+    <marko-web-native-x-story-track-page-view />
+    <marko-web-native-x-story-track-social-share />
+
+    <marko-web-page-wrapper>
+      <@section|{ blockName }| modifiers=["nativex-story-header"]>
+        <div class="content-page-header">
+          <theme-breadcrumbs modifiers=["content-page"]>
+            <@item>
+              ${primarySection.name}
+            </@item>
+          </theme-breadcrumbs>
+          <marko-web-content-name tag="h1" block-name=blockName obj=content />
+
+          $ const imgSrc = get(story, "advertiser.logo.src");
+          <if(imgSrc)>
+            $ const src = buildImgixUrl(imgSrc, { auto: "format,compress", h: 50, q: 70 });
+            $ const srcset = [`${src}&dpr=2 2x`];
+            <marko-web-block name="sponsor-logo">
+              <marko-web-element block-name="sponsor-logo" name="label">
+                Presented by
+              </marko-web-element>
+              <marko-web-img
+                class="sponsor-logo__logo"
+                src=src
+                srcset=srcset
+                alt="Sponsor Logo"
+              />
+            </marko-web-block>
+          </if>
+
+        </div>
+      </@section>
+
+      <@section>
+        <div class="content-page-body" id="native-x-story-body">
+          <default-theme-page-contents|{ blockName }|>
+            <theme-primary-image-block obj=content.primaryImage />
+            <marko-web-content-body block-name=blockName obj=content />
+            <marko-web-social-sharing
+              path=content.siteContext.path
+              providers=["facebook", "linkedin", "twitter", "pinterest"]
+            />
+          </default-theme-page-contents>
+        </div>
+      </@section>
+
+      <@section>
+        <marko-web-native-x-story-advertiser-related-stories|{ nodes, pageInfo }|
+          advertiser-id=story.advertiser.id
+          publisher-id=story.publisher.id
+          exclude-story-ids=[story.id]
+        >
+          <div class="mb-3 bg-light">
+            <marko-web-node-list modifiers=[blockName]>
+              <@header>
+                More from ${story.advertiser.name}...
+              </@header>
+              <@nodes nodes=nodes>
+                <@slot|{ node, index }|>
+                  <theme-content-node
+                    display-image=true
+                    flush=true
+                    modifiers=[`${blockName}-item`]
+                    with-teaser=true
+                    with-dates=false
+                    with-section=false
+                    node=convert(node)
+                  />
+                </@slot>
+              </@nodes>
+            </marko-web-node-list>
+          </div>
+        </marko-web-native-x-story-advertiser-related-stories>
+      </@section>
+    </marko-web-page-wrapper>
+
+    <marko-web-native-x-story-track-outbound-links container="#native-x-story-body" />
+    <marko-web-native-x-story-track-end-of-content />
+  </@page>
+</theme-default-page>

@@ -16,9 +16,6 @@
     "@parameter1/base-cms-object-path": "^2.75.1",
     "@parameter1/base-cms-utils": "^2.75.1",
     "@parameter1/base-cms-web-common": "^2.80.0",
-    "apollo-cache-inmemory": "^1.6.6",
-    "apollo-client": "^2.6.10",
-    "apollo-link-http": "^1.5.17",
     "graphql-tag": "^2.12.5",
     "node-fetch": "^2.6.5"
   },

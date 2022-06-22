@@ -1,63 +1,48 @@
+$ const { nativeX } = out.global;
+
 <marko-web-document ...input>
   <@head>
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
-    <marko-web-gtm-init container-id="GTM-T9BBXZK" />
+
+    <marko-web-deferred-script-loader-init />
+
+    <!-- init gtm -->
+    <marko-web-gtm-init
+      container-id="GTM-T9BBXZK"
+      request-frame=true
+      target-tag="body"
+      on="load"
+    />
+
+    <!-- init native-x -->
+    <marko-web-native-x-init
+      uri=nativeX.getUri()
+      enabled=nativeX.isEnabled()
+      on="load"
+      request-frame=true
+      target-tag="body"
+    />
+
     <${input.head} />
   </@head>
   <@above-wrapper>
     <marko-web-gtm-noscript container-id="GTM-T9BBXZK" />
   </@above-wrapper>
   <@above-container>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="/">Example Site</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav ml-auto">
-          <marko-web-identity-x-context|{ hasUser }|>
-            <if(hasUser)>
-              <li class="nav-item"><a class="nav-link" href="/user/profile">My Profile</a></li>
-              <li class="nav-item"><a class="nav-link" href="/user/logout">Logout</a></li>
-            </if>
-            <else>
-              <li class="nav-item"><a class="nav-link" href="/user/login">Login</a></li>
-            </else>
-          </marko-web-identity-x-context>
-        </ul>
-      </div>
-    </nav>
-
-    <marko-web-block
-      name="site-header"
-      tag=(input.tag || "header")
-      class=input.class
-      modifiers=input.modifiers
-      attrs=input.attrs
-    >
-      <${input.aboveNav} />
-      <default-theme-site-navbar modifiers=["secondary"] attrs={ "aria-label": "Secondary Navigation" }>
-        <theme-menu-toggle-button
-          class="site-navbar__toggler"
-          targets=[".site-menu", "body"]
-          toggle-class="site-menu--open"
-          icon-modifiers=["lg"]
-          icon-name="three-bars"
-        />
-
-        <marko-web-browser-component name="ThemeNewsletterToggleButton" ssr=true />
-      </default-theme-site-navbar>
-      <theme-site-newsletter-menu />
-      <${input.belowNav} />
-    </marko-web-block>
+    <marko-web-identity-x-context|{ hasUser, isEnabled }|>
+      <site-header has-user=hasUser reg-enabled=isEnabled />
+      <theme-site-menu has-user=hasUser reg-enabled=isEnabled />
+    </marko-web-identity-x-context>
+    <theme-site-newsletter-menu />
     <marko-web-leaders-dropdown-portal />
 
     <${input.aboveContainer} />
   </@above-container>
   <@below-container>
     <${input.belowContainer} />
+    <theme-site-footer />
   </@below-container>
 </marko-web-document>

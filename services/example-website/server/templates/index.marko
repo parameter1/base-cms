@@ -4,41 +4,30 @@
   description="This is a test page."
 >
   <@page>
-    <h1>Hello World!</h1>
-    <style>
-    .idx-comment-stream {
-      max-width: 50%;
-      border: 1px solid #ddd;
-      padding: 1rem;
-      border-radius: 5px;
-    }
-    </style>
-    <marko-web-identity-x-comment-stream
-      identifier="home"
-      login-source="super_neat_login_source"
-      title="Hello World!"
-      additional-event-data={
-        foo: 'bar',
-        action: "CustomComment"
-      }
-    />
+    <marko-web-page-wrapper>
+      <@section>
+        <h1>Hello World!</h1>
+      </@section>
 
-    <marko-web-leaders props={
-      sectionAlias: "leaders/2022",
-      open: null,
-      expanded: false,
-      headerImgAlt: "leaders",
-      columns: 1,
-      offsetTop: 50,
-      viewAllHref: '/leaders',
-      mediaQueries: [
-        { prop: "open", value: "right", query: "(min-width: 1490px)" },
-        { prop: "columns", value: 2, query: "(min-width: 700px)" },
-        { prop: "displayCallout", value: false, query: "(max-width: 660px)" },
-      ],
-      calloutPrefix: "Browse these",
-      calloutValue: "leading suppliers",
-      viewAllText: "View All Companies &gt;",
-    }/>
+      <@section>
+        <theme-top-stories-block query-params={ optionName: "Pinned" } with-header=true lazyload=false />
+      </@section>
+
+      <@section>
+        <theme-section-list-deck-block aliases=["clients", "markets", "services"] collapsible=false />
+      </@section>
+
+      <@section>
+        <div class="row">
+          <div class="col-md-8">
+            <leaders-homepage />
+          </div>
+          <div class="col-md-4">
+            <theme-section-list-block alias="products" collapsible=false />
+          </div>
+        </div>
+      </@section>
+
+    </marko-web-page-wrapper>
   </@page>
 </marko-web-default-page-layout>
