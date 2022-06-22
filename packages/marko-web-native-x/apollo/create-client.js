@@ -1,14 +1,41 @@
 const fetch = require('node-fetch');
-const { ApolloClient } = require('apollo-client');
-const { InMemoryCache } = require('apollo-cache-inmemory');
-const { createHttpLink } = require('apollo-link-http');
-const { name, version } = require('../package.json');
 
-module.exports = uri => new ApolloClient({
-  name,
-  version,
-  connectToDevTools: false,
-  ssrMode: true,
-  link: createHttpLink({ uri, fetch }),
-  cache: new InMemoryCache(),
+const getOperationName = (string) => {
+  const matches = /query\s+([a-z0-9]+)[(]?.+{/gi.exec(string);
+  if (matches && matches[1]) return matches[1];
+  return undefined;
+};
+
+module.exports = uri => Object.create({
+  query: async ({ query, variables, headers }) => {
+    const body = JSON.stringify({
+      operationName: getOperationName(query),
+      variables,
+      query,
+    });
+
+    const res = await fetch(uri, {
+      method: 'POST',
+      headers: {
+        ...headers,
+        'content-type': 'application/json',
+      },
+      body,
+    });
+    const json = await res.json();
+    if (!res.ok || (json && json.errors)) {
+      if (!json || !json.errors) {
+        const err = new Error(`An unknown, fatal GraphQL error was encountered (${res.status})`);
+        err.statusCode = res.status;
+        throw err;
+      }
+      const [networkError] = json.errors;
+      const err = new Error(networkError.message);
+      const { extensions } = networkError;
+      if (extensions) err.code = extensions.code;
+      if (extensions && extensions.exception) err.statusCode = extensions.exception.statusCode;
+      throw err;
+    }
+    return json;
+  },
 });
