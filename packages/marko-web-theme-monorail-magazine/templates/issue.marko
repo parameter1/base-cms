@@ -1,0 +1,104 @@
+import { getAsObject } from "@parameter1/base-cms-object-path";
+import issueFragment from "../graphql/fragments/magazine-issue-archive";
+
+$ const { site } = out.global;
+$ const { id, pageNode } = data;
+
+<marko-web-magazine-issue-page-layout id=id>
+  <@head>
+    <marko-web-gtm-magazine-issue-context|{ context }| id=id>
+      <marko-web-gtm-push data=context />
+    </marko-web-gtm-magazine-issue-context>
+  </@head>
+  <@page>
+    <marko-web-page-wrapper class="mb-block">
+      <@section|{ aliases }|>
+        <theme-gam-define-display-ad
+          name="rotation"
+          position="magazine_page"
+          aliases=aliases
+          modifiers=["inter-block"]
+        />
+      </@section>
+
+      <@section>
+        <div class="row">
+          <div class="col">
+            <marko-web-resolve-page|{ data: issue }| node=pageNode>
+              <theme-breadcrumbs modifiers=["website-section"]>
+                <@item><marko-web-link href="/magazine">Magazine</marko-web-link></@item>
+                <@item><marko-web-magazine-publication-name tag=null obj=issue.publication link=true /></@item>
+              </theme-breadcrumbs>
+              <div class="magazine-publication-card-block">
+                <div class="magazine-publication-card-block__body">
+                  <div class="row">
+                    <div class="col-lg-8 pl-0">
+                      <marko-web-node image-position="left" modifiers=["flush"] flush=false>
+                        <@image
+                          src=issue.coverImage.src
+                          alt=(issue.coverImage.alt || issue.name)
+                          fluid=false
+                          ar="3:4"
+                          width=300
+                          link={ href: issue.canonicalPath, title: issue.name }
+                          options={ fit: "max" }
+                        />
+                        <@body>
+                          <@title tag="h1">
+                            <marko-web-magazine-issue-name tag=null obj=issue />
+                          </@title>
+                          <@text modifiers=["teaser"]>
+                            <marko-web-magazine-issue-description tag=null obj=issue />
+                          </@text>
+                          <@footer>
+                            <@left>
+                              <theme-magazine-publication-buttons issue=issue />
+                            </@left>
+                          </@footer>
+                        </@body>
+                      </marko-web-node>
+                    </div>
+                    <marko-web-query|{ nodes: issues }| name="magazine-active-issues"
+                      params={
+                        publicationId: issue.publication.id,
+                        excludeIssueIds: [issue.id],
+                        queryFragment: issueFragment,
+                        limit: 9,
+                        requiresCoverImage: true
+                      }
+                    >
+                      <div class="col-lg-4">
+                        <div class="row">
+                          <for|issue| of=issues>
+                            <div class="col-4 issue-archive-cover">
+                              <marko-web-node
+                                image-position="top"
+                                card=true
+                                flush=true
+                                full-height=true
+                              >
+                                <@image
+                                  src=issue.coverImage.src
+                                  alt=(issue.coverImage.alt || issue.name)
+                                  fluid=true
+                                  ar="3:4"
+                                  width=190
+                                  link={ href: issue.canonicalPath, title: issue.name }
+                                  options={ fit: "max" }
+                                />
+                              </marko-web-node>
+                            </div>
+                          </for>
+                        </div>
+                      </div>
+                    </marko-web-query>
+                  </div>
+                </div>
+              </div>
+            </marko-web-resolve-page>
+          </div>
+        </div>
+      </@section>
+    </marko-web-page-wrapper>
+  </@page>
+</marko-web-magazine-issue-page-layout>

@@ -1,0 +1,21 @@
+{
+  "<theme-magazine-issue-archive-flow>": {
+    "template": "./magazine-issue-archive.marko",
+    "@nodes": "array",
+    "@flush": {
+      "type": "boolean",
+      "default-value": false
+    },
+    "@with-title": {
+      "type": "boolean",
+      "default-value": true
+    },
+    "@modifiers": "array"
+  },
+  "<theme-magazine-latest-issue-flow>": {
+    "template": "./magazine-latest-issue.marko",
+    "<header>": {},
+    "<footer>": {},
+    "@issue-node": "object"
+  }
+}
