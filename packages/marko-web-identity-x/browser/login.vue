@@ -2,16 +2,26 @@
   <div v-if="hasActiveUser">
     <p>You are currently logged in as {{ activeUser.email }}.</p>
     <a
+      :href="endpoints.profile"
+      class="btn btn-secondary"
+      role="button"
+    >
+      {{ buttonLabels.profile || "Modify Profile" }}
+    </a>
+    <a
       :href="endpoints.logout"
       class="btn btn-primary"
       role="button"
     >
-      {{ buttonLabels.logout }}
+      {{ buttonLabels.logout || "Log out" }}
     </a>
   </div>
   <div v-else-if="complete">
     <h4>Almost Done!</h4>
-    <p v-html="message" />
+    <p>
+      We just sent an email to <em>{{ email }}</em> with your one-time login link.
+      To finish {{ actionText || "logging in" }}, open the email message and click the link within.
+    </p>
     <p>
       Note: please check your spam/junk folders.
       If you do not receive this email, your firewall or ISP has likely blocked it.
@@ -35,7 +45,7 @@
         class="btn btn-primary"
         :disabled="loading"
       >
-        {{ buttonLabels.continue }}
+        {{ buttonLabels.continue || "Continue" }}
       </button>
       <p v-if="error" class="mt-3 text-danger">
         An error occurred: {{ error.message }}
@@ -87,6 +97,7 @@ export default {
       type: Object,
       default: () => ({
         continue: 'Continue',
+        profile: 'Modify Profile',
         logout: 'Logout',
       }),
     },
@@ -112,12 +123,11 @@ export default {
     },
     additionalEventData: {
       type: Object,
-      default: null,
+      default: () => ({}),
     },
-    successMessageType: {
+    actionText: {
       type: String,
-      default: 'login',
-      validator: v => ['login', 'newsletter-signup'].includes(v),
+      default: 'logging in',
     },
 
     /**
@@ -149,16 +159,6 @@ export default {
      */
     authUrl() {
       return `${window.location.origin}/${cleanPath(this.endpoints.authenticate)}`;
-    },
-
-    /**
-     *
-     */
-    message() {
-      if (this.successMessageType === 'newsletter-signup') {
-        return `We just sent an email to <em>${this.email}</em> with your one-time login link. To finish signing up to receive your email notifications, open the email message and click the link within.`;
-      }
-      return `We just sent an email to <em>${this.email}</em> with your one-time login link. To finish logging in, open the email message and click the link within.`;
     },
 
     /**
