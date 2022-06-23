@@ -5,3 +5,21 @@ body {
   -webkit-font-smoothing: antialiased;
   letter-spacing: .25px;
 }
+
+.document-container {
+  padding-top: 0;
+}
+
+.page {
+  &:first-child {
+    padding-top: 1rem;
+  }
+  &:last-child {
+    padding-bottom: 1rem;
+  }
+  &--home {
+    &:first-child {
+      padding-top: 0;
+    }
+  }
+}
