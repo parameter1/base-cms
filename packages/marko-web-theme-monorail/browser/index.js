@@ -6,6 +6,7 @@ import Inquiry from '@parameter1/base-cms-marko-web-inquiry/browser';
 import NativeX from '@parameter1/base-cms-marko-web-native-x/browser';
 import IdentityX from '@parameter1/base-cms-marko-web-identity-x/browser';
 import OmedaIdentityX from '@parameter1/base-cms-marko-web-omeda-identity-x/browser';
+import IdentityXNewsletterForms from './idx-newsletter-form/index';
 
 const CommentToggleButton = () => import(/* webpackChunkName: "theme-comment-toggle-button" */ './comment-toggle-button.vue');
 const BlockLoader = () => import(/* webpackChunkName: "theme-block-loader" */ './block-loader.vue');
@@ -13,7 +14,6 @@ const InlineNewsletterForm = () => import(/* webpackChunkName: "theme-inline-new
 const MenuToggleButton = () => import(/* webpackChunkName: "theme-menu-toggle-button" */ './menu-toggle-button.vue');
 const NewsletterCloseButton = () => import(/* webpackChunkName: "theme-newsletter-close-button" */ './newsletter-close-button.vue');
 const NewsletterToggleButton = () => import(/* webpackChunkName: "theme-newsletter-toggle-button" */ './newsletter-toggle-button.vue');
-
 const SiteNewsletterMenu = () => import(/* webpackChunkName: "theme-site-newsletter-menu" */ './site-newsletter-menu.vue');
 const WufooForm = () => import(/* webpackChunkName: "theme-wufoo-form" */ './wufoo-form.vue');
 const TopStoriesMenu = () => import(/* webpackChunkName: "theme-top-stories-menu" */ './top-stories-menu.vue');
@@ -72,6 +72,7 @@ export default (Browser, config = {
   } else {
     IdentityX(Browser);
   }
+  IdentityXNewsletterForms(Browser);
   Inquiry(Browser);
 
   Browser.register('ThemeBlockLoader', BlockLoader);
