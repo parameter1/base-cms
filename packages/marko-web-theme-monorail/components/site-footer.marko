@@ -34,7 +34,10 @@ $ const tagline = site.get("tagline");
       <div class="row">
         <marko-web-element block-name=blockName name="section" attrs={ "aria-label": "Newsletter Sign-Up Form Footer"}>
           $ const newsletterBlock = "site-footer-newsletter";
-          <if(newsletterConfig.action)>
+          <if(input.newsletterBlock)>
+            <${input.newsletterBlock.renderBody} block=newsletterBlock ...input />
+          </if>
+          <else-if(newsletterConfig.action)>
             <marko-web-block name=newsletterBlock>
               <marko-web-element block-name=newsletterBlock name="header">
                 $!{newsletterConfig.name}
@@ -62,7 +65,7 @@ $ const tagline = site.get("tagline");
                 <button class="btn btn-primary" type="submit" disabled=(newsletterConfig.disabled && "disabled")>${i18n("Sign Up")}</button>
               </form>
             </marko-web-block>
-          </if>
+          </else-if>
         </marko-web-element>
         <marko-web-element block-name=blockName name="section" attrs={ "aria-label": "Social Media Links" }>
           <theme-social-follow dark=false modifiers=["site-footer"] />

@@ -22,7 +22,14 @@
     "template": "./pagination-controls.marko"
   },
   "<theme-site-footer>": {
-    "template": "./site-footer.marko"
+    "template": "./site-footer.marko",
+    "@tag": "string",
+    "@class": "string",
+    "@modifiers": "array",
+    "@attrs": "object",
+    "@has-user": "boolean",
+    "@reg-enabled": "boolean",
+    "<newsletter-block>": {}
   },
   "<theme-site-header>": {
     "template": "./site-header.marko"
