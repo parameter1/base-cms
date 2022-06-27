@@ -26,6 +26,12 @@ module.exports = {
       ],
     },
   },
+  socialMediaLinks: [
+    { provider: 'facebook', href: 'https://www.facebook.com/parameter1tech', target: '_blank' },
+    { provider: 'twitter', href: 'https://www.twitter.com/parameter1tech', target: '_blank' },
+    { provider: 'linkedin', href: 'https://www.linkedin.com/company/parameter1', target: '_blank' },
+    { provider: 'github', href: 'https://github.com/parameter1', target: '_blank' },
+  ],
   inquiry: {
     enabled: true,
     directSend: false,
