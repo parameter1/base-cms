@@ -36,13 +36,17 @@ $ const { nativeX } = out.global;
       <site-header has-user=hasUser reg-enabled=isEnabled />
       <theme-site-menu has-user=hasUser reg-enabled=isEnabled />
     </marko-web-identity-x-context>
-    <theme-site-newsletter-menu />
+    <identity-x-newsletter-form-pushdown />
     <marko-web-leaders-dropdown-portal />
 
     <${input.aboveContainer} />
   </@above-container>
   <@below-container>
     <${input.belowContainer} />
-    <theme-site-footer />
+    <theme-site-footer>
+      <@newsletter-block>
+        <identity-x-newsletter-form-footer />
+      </@newsletter-block>
+    </theme-site-footer>
   </@below-container>
 </marko-web-document>
