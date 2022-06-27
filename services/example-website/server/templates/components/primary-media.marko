@@ -1,0 +1,14 @@
+$ const { content } = input;
+
+<if(content.embedCode)>
+  <marko-web-content-embed-code block-name=blockName obj=content />
+</if>
+<else>
+  $ let forceDisplay;
+  $ if (content.type === "contact") forceDisplay = "left";
+  $ if (content.type === "video") forceDisplay = "none";
+  <theme-primary-image-block
+    obj=content.primaryImage
+    force-display=forceDisplay
+  />
+</else>
