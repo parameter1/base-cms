@@ -1,0 +1,49 @@
+import { buildImgixUrl } from "@parameter1/base-cms-image";
+import { get } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const blockName = "newsletter-signup-banner";
+
+$ const { config, site, req } = out.global;
+$ const { identityX } = req;
+$ const additionalEventData = defaultValue(input.additionalEventData, {});
+$ const buttonLabels = defaultValue(input.buttonLabels, { continue: 'Sign Up' })
+$ const loginEmailPlaceholder = defaultValue(input.loginEmailPlaceholder, 'example@gmail.com');
+$ const source = defaultValue(input.source, 'footer_newsletter_login');
+
+$ const {
+  name,
+  description,
+  imagePath,
+  disabled,
+} = site.getAsObject("newsletter.signupFooter");
+
+$ const lang = site.config.lang || "en";
+
+<if(Boolean(identityX))>
+  <marko-web-identity-x-context|{ user, isEnabled, application }|>
+    <if(name && description)>
+      <marko-web-browser-component
+        name="IdentityXNewsletterFormFooter"
+        props={
+          modifiers: ["footer"],
+          siteName: config.website("name"),
+          name,
+          description,
+          disabled,
+          lang,
+          additionalEventData,
+          source,
+          activeUser: user,
+          endpoints: identityX.config.getEndpoints(),
+          buttonLabels,
+          redirect: input.redirect,
+          loginEmailPlaceholder,
+          consentPolicy: get(application, "organization.consentPolicy"),
+          regionalConsentPolicies: get(application, "organization.regionalConsentPolicies"),
+          appContextId: identityX.config.get("appContextId"),
+        }
+      />
+    </if>
+  </marko-web-identity-x-context>
+</if>
