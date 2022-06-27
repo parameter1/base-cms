@@ -76,6 +76,9 @@
   }
 
   @media (max-width: 530px) {
+    &__left-col {
+      display: none;
+    }
     &__form {
       display: block;
       input {
