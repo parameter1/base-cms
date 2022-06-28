@@ -36,10 +36,10 @@ $ const useIdxNewsletterSignup = defaultValue(input.useIdxNewsletterSignup, true
       <div class="row">
         <marko-web-element block-name=blockName name="section" attrs={ "aria-label": "Newsletter Sign-Up Form Footer"}>
           $ const newsletterBlock = "site-footer-newsletter";
-          <if(useIdxNewsletterSignup)>
+          <if(!newsletterConfig.disabled && useIdxNewsletterSignup)>
             <identity-x-newsletter-form-footer />
           </if>
-          <else-if(newsletterConfig.action)>
+          <else-if(!newsletterConfig.disabled && newsletterConfig.action)>
             <marko-web-block name=newsletterBlock>
               <marko-web-element block-name=newsletterBlock name="header">
                 $!{newsletterConfig.name}
