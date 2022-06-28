@@ -1,5 +1,5 @@
 {
-  "name": "@parameter1/package-theme-monorail-magazine",
+  "name": "@parameter1/base-cms-marko-web-theme-monorail-magazine",
   "version": "2.99.1",
   "description": "Magazine components, routes, and styling for the Monorail theme",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-theme-monorail-magazine",
