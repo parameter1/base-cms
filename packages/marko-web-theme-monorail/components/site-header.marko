@@ -64,11 +64,9 @@ $ const navigation = {
   <${input.belowNav} />
 </marko-web-block>
 
-<marko-web-block>
-  <if(useIdxNewsletterSignup)>
-    <identity-x-newsletter-form-pushdown />
-  </if>
-  <else>
-    <theme-site-newsletter-menu />
-  </else>
-</marko-web-block>
+<if(useIdxNewsletterSignup)>
+  <identity-x-newsletter-form-pushdown />
+</if>
+<else>
+  <theme-site-newsletter-menu />
+</else>
