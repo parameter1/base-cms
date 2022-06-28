@@ -35,7 +35,7 @@
         <div :class="element('close-container', ['d-none', 'd-md-flex', 'col-md-1', 'col-lg-3'])">
           <close-button
             :class-name="element('close').join(' ')"
-            target-button=".site-navbar__newsletter-toggler"
+            target-button=".site-navbar__idx-newsletter-toggler"
             :icon-modifiers="['lg']"
           />
         </div>
@@ -185,7 +185,7 @@ export default {
 
   mounted() {
     if (this.initiallyExpanded) this.didLoad = true;
-    this.EventBus.$on('newsletter-menu-expanded', (expanded) => {
+    this.EventBus.$on('idx-newsletter-menu-expanded', (expanded) => {
       this.expanded = expanded;
       if (expanded) this.didLoad = true;
     });

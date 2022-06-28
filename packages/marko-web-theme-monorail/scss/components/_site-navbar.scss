@@ -22,7 +22,8 @@
       width: auto;
     }
 
-    &__newsletter-toggler {
+    &__newsletter-toggler,
+    &__idx-newsletter-toggler {
       @include theme-toggle-button();
       padding: 0;
       margin-top: auto;
