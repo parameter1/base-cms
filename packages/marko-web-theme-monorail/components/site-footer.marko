@@ -1,4 +1,5 @@
 import getNavItems from "@parameter1/base-cms-marko-web-theme-default/components/site-navbar/utils/get-nav-items";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 import { asObject } from "@parameter1/base-cms-utils";
 
 $ const { config, site, i18n } = out.global;
@@ -6,6 +7,7 @@ $ const { config, site, i18n } = out.global;
 $ const newsletterConfig = site.getAsObject('newsletter.signupFooter');
 $ const blockName = input.blockName || "site-footer";
 $ const tagline = site.get("tagline");
+$ const useIdxNewsletterSignup = defaultValue(input.useIdxNewsletterSignup, true);
 
 <marko-web-block
   name=blockName
@@ -34,8 +36,8 @@ $ const tagline = site.get("tagline");
       <div class="row">
         <marko-web-element block-name=blockName name="section" attrs={ "aria-label": "Newsletter Sign-Up Form Footer"}>
           $ const newsletterBlock = "site-footer-newsletter";
-          <if(input.newsletterBlock)>
-            <${input.newsletterBlock.renderBody} block=newsletterBlock ...input />
+          <if(useIdxNewsletterSignup)>
+            <identity-x-newsletter-form-footer />
           </if>
           <else-if(newsletterConfig.action)>
             <marko-web-block name=newsletterBlock>
