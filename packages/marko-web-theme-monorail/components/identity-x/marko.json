@@ -17,5 +17,14 @@
     "@profile-button-label": "string",
     "@login-event-name": "string",
     "@profile-event-name": "string"
+  },
+  "<identity-x-newsletter-form-pushdown>": {
+    "template": "./newsletter-pushdown.marko"
+  },
+  "<identity-x-newsletter-form-inline>": {
+    "template": "./newsletter-inline.marko"
+  },
+  "<identity-x-newsletter-form-footer>": {
+    "template": "./newsletter-footer.marko"
   }
 }

@@ -25,6 +25,7 @@
       "type": "string",
       "default-value": "login"
     },
+    "@action-text": "string",
     "@button-labels": "object",
     "@login-email-placeholder": "string",
     "@redirect": "string"

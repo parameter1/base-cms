@@ -1,8 +1,8 @@
 .newsletter-signup-banner {
   display: block;
   flex-direction: row;
-  justify-content: space-between;
-  max-width: 730px;
+  justify-content: center;
+  width: 100%;
   padding: 16px;
   margin-top: 16px;
   margin-bottom: 38px;
@@ -10,12 +10,60 @@
   border-radius: 4px;
   @include skin-typography($style: "teaser-text-1");
 
+  &--large {
+    display: flex;
+    background-color: $gray-100;
+  }
+  &--footer {
+    color: $gray-400;
+    background-color: initial;
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  &__left-col {
+    margin-right: 1rem;
+  }
+
+  &__right-col {
+    &--large {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+
   &__form {
     display: flex;
     input {
       display: inline;
       max-width: 312px;
       margin-right: $block-spacer / 2;
+    }
+    &--large, &--footer {
+      justify-content: center;
+    }
+  }
+
+  &__name {
+    &--large {
+      @include skin-typography($style: "header-1.5");
+      margin-bottom: 6px;
+    }
+    &--footer {
+      @include skin-typography($style: "footer-header-1");
+      margin-bottom: 8px;
+    }
+  }
+
+  &__description {
+    &--large, &--footer {
+      @include skin-typography($style: "teaser-text-1");
+      max-width: 520px;
+      margin-bottom: 14px;
+    }
+    &--footer {
+      color: $gray-400;
     }
   }
 
@@ -30,6 +78,9 @@
   }
 
   @media (max-width: 530px) {
+    &__left-col {
+      display: none;
+    }
     &__form {
       display: block;
       input {

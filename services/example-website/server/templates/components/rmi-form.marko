@@ -1,0 +1,10 @@
+$ const { content } = input;
+
+<if(content.company || content.type === "company")>
+  <marko-web-node-list collapsible=false>
+    <@header>Request More Information</@header>
+    <@body>
+      <marko-web-inquiry-form content=content with-header=false modifiers=["node-list"] />
+    </@body>
+  </marko-web-node-list>
+</if>

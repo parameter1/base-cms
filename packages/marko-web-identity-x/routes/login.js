@@ -21,6 +21,15 @@ const createUser = gql`
   ${userFragment}
 `;
 
+const forceProfileReVerificationUser = gql`
+  mutation ForceRevalidateAppUser($input: ForceProfileReVerificationAppUserMutationInput!) {
+    forceProfileReVerificationAppUser(input: $input) {
+      id
+      forceProfileReVerification
+    }
+  }
+`;
+
 const sendLoginLink = gql`
   mutation LoginSendLoginLink($input: SendAppUserLoginLinkMutationInput!) {
     sendAppUserLoginLink(input: $input)
@@ -38,15 +47,23 @@ module.exports = asyncRoute(async (req, res) => {
     additionalEventData = {},
   } = body;
   const variables = { email };
+  const { forceProfileReVerification } = additionalEventData;
   const query = buildQuery();
   const { data } = await identityX.client.query({ query, variables });
   let { appUser } = data;
-
 
   if (!appUser) {
     // Create the user.
     const { data: newUser } = await identityX.client.mutate({ mutation: createUser, variables });
     appUser = newUser.createAppUser;
+  }
+
+  if (forceProfileReVerification) {
+    const { id } = appUser;
+    await identityX.client.mutate({
+      mutation: forceProfileReVerificationUser,
+      variables: { input: { id } },
+    });
   }
 
   // Send login link.

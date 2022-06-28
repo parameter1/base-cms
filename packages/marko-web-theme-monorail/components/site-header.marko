@@ -1,6 +1,10 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
 $ const { config, site } = out.global;
 
+$ const newsletterConfig = site.getAsObject('newsletter.pushdown');
 $ const blockName = input.blockName || "site-header";
+$ const useIdxNewsletterSignup = defaultValue(input.useIdxNewsletterSignup, true);
 
 $ const navigation = {
   primary: site.getAsArray("navigation.primary.items"),
@@ -41,8 +45,12 @@ $ const navigation = {
       reg-enabled=input.regEnabled
       has-user=input.hasUser
     />
-
-    <marko-web-browser-component name="ThemeNewsletterToggleButton" ssr=true />
+    <if(!newsletterConfig.disabled && useIdxNewsletterSignup)>
+      <marko-web-browser-component name="IdentityXNewsletterToggleButton" ssr=true />
+    </if>
+    <else-if(!newsletterConfig.disabled)>
+      <marko-web-browser-component name="ThemeNewsletterToggleButton" ssr=true />
+    </else-if>
   </theme-site-navbar>
 
   <theme-site-navbar modifiers=["primary"] attrs={ "aria-label": "Primary Navigation" }>
@@ -55,3 +63,10 @@ $ const navigation = {
   </theme-site-navbar>
   <${input.belowNav} />
 </marko-web-block>
+
+<if(useIdxNewsletterSignup)>
+  <identity-x-newsletter-form-pushdown />
+</if>
+<else>
+  <theme-site-newsletter-menu />
+</else>

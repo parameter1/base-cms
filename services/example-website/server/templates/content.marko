@@ -9,50 +9,21 @@ $ const { recaptcha } = out.global;
       <marko-web-content-teaser obj=content class="lead" />
 
       <div class="content-page-body">
-        <if(content.embedCode)>
-          <marko-web-content-embed-code block-name=blockName obj=content />
-        </if>
-        <else>
-          $ let forceDisplay;
-          $ if (type === "contact") forceDisplay = "left";
-          $ if (type === "video") forceDisplay = "none";
-          <theme-primary-image-block
-            obj=content.primaryImage
-            force-display=forceDisplay
-          />
-        </else>
+        <primary-media content=content />
+      </div>
 
-        <div class="row mt-3">
-          <if(content.company)>
-            <div class="col-md-8">
-              <marko-web-content-body obj=content />
-            </div>
-            <div class="col-md-4">
-              <marko-web-node-list collapsible=false>
-                <@header>Request More Information</@header>
-                <@body>
-                  <marko-web-inquiry-form content=content with-header=false modifiers=["node-list"] />
-                </@body>
-              </marko-web-node-list>
-            </div>
-          </if>
-          <else>
-            <div class="col">
-              <marko-web-content-body obj=content />
-            </div>
-          </else>
-        </div>
-        <div class="comment-stream">
-          <div class="idx-comment-stream-wrapper">
-            <marko-web-identity-x-comment-stream
-              identifier=`${content.id}`
-              title=content.name
-              description=content.teaser
-              url=content.siteContext.canonicalUrl
-              load-more-button-class="btn btn-secondary"
-              login-button-labels={ continue: "Continue", logout: "Logout"}
-            />
+
+      <div class="row mt-3">
+        <div class="col-md-8">
+          <div class="content-page-body">
+            <marko-web-content-body obj=content />
+            <identity-x-newsletter-form-inline />
+            <comment-stream content=content />
           </div>
+        </div>
+        <div class="col-md-4">
+          <rmi-form content=content />
+          <leaders-context content-id=content.id />
         </div>
       </div>
 

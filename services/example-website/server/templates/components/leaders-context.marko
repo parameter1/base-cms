@@ -1,0 +1,20 @@
+<marko-web-leaders props={
+  contentId: input.contentId,
+  useContentPrimarySection: true,
+  sectionAlias: "leaders/2022",
+  open: "left",
+  expanded: false,
+  headerImgAlt: "leaders",
+  columns: 1,
+  offsetTop: 50,
+  viewAllHref: '/leaders',
+  mediaQueries: [
+    { prop: "columns", value: 2, query: "(max-width: 991px)" },
+    { prop: "open", value: null, query: "(max-width: 991px)" },
+    { prop: "columns", value: 1, query: "(max-width: 700px)" },
+  ],
+  calloutPrefix: "Browse these",
+  calloutValue: "leading suppliers",
+  viewAllText: "View All Companies &gt;",
+  contextual: true,
+} />

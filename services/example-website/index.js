@@ -3,6 +3,8 @@ const omedaIdentityX = require('@parameter1/base-cms-marko-web-omeda-identity-x'
 const { set, get, getAsObject } = require('@parameter1/base-cms-object-path');
 const contactUs = require('@parameter1/base-cms-marko-web-contact-us');
 const omedaNewsletters = require('@parameter1/base-cms-marko-web-omeda/routes/omeda-newsletters');
+const newsletterState = require('@parameter1/base-cms-marko-web-theme-monorail/middleware/newsletter-state');
+const i18n = require('@parameter1/base-cms-marko-web-theme-monorail/middleware/i18n');
 const loadInquiry = require('@parameter1/base-cms-marko-web-inquiry');
 const document = require('./server/components/document');
 const coreConfig = require('./config/core');
@@ -34,9 +36,9 @@ module.exports = startServer({
     app.set('trust proxy', 'loopback, linklocal, uniquelocal');
     set(app.locals, 'recaptcha', recaptcha);
 
-    // i18n @todo @brian
-    const i18n = v => v;
-    set(app.locals, 'i18n', i18n);
+    // Monorail middleware
+    i18n(app);
+    app.use(newsletterState());
 
     // Setup NativeX.
     const nativeXConfig = getAsObject(siteConfig, 'nativeX');
