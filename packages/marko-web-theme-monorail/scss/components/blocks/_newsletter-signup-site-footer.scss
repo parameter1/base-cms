@@ -1,0 +1,11 @@
+.site-footer-newsletter {
+  &__name {
+    @include skin-typography($style: "footer-header-1");
+    margin-bottom: 8px;
+  }
+  &__form {
+    input {
+      margin-bottom: 1rem;
+    }
+  }
+}

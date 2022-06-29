@@ -39,7 +39,7 @@ $ const useIdxNewsletterSignup = defaultValue(input.useIdxNewsletterSignup, true
             <identity-x-newsletter-form-footer />
           </if>
           <else-if(!newsletterConfig.disabled && newsletterConfig.action)>
-            <theme-newsletter-signup-banner-external-block config-name=newsletterSignupConfigName />
+            <theme-newsletter-signup-banner-external-block block-name="site-footer-newsletter" config-name=newsletterSignupConfigName />
           </else-if>
         </marko-web-element>
         <marko-web-element block-name=blockName name="section" attrs={ "aria-label": "Social Media Links" }>
