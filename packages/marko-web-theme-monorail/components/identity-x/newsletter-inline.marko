@@ -10,13 +10,14 @@ $ const additionalEventData = defaultValue(input.additionalEventData, {});
 $ const buttonLabels = defaultValue(input.buttonLabels, { continue: 'Sign Up' })
 $ const loginEmailPlaceholder = defaultValue(input.loginEmailPlaceholder, 'example@gmail.com');
 $ const source = defaultValue(input.source, 'inline_newsletter_login');
+$ const configName = defaultValue(input.configName, 'signupBanner');
 
 $ const {
   name,
   description,
   imagePath,
   disabled,
-} = site.getAsObject("newsletter.signupBanner");
+} = site.getAsObject(`newsletter.${configName}`);
 
 $ const lang = site.config.lang || "en";
 $ const imageSrc = imagePath ? buildImgixUrl(`https://${config.website("imageHost")}/${imagePath}`, { w: 120, auto: "format,compress" }) : null;
