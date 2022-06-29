@@ -1,0 +1,34 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { site } = out.global;
+$ const configName = defaultValue(input.configName, "signupBannerExternal");
+$ const newsletterConfig = site.getAsObject(`newsletter.${configName}`);
+$ const blockName = defaultValue(input.blockName, "newsletter-signup");
+
+<marko-web-block name=newsletterBlock>
+  <marko-web-element block-name=newsletterBlock name="header">
+    $!{newsletterConfig.name}
+  </marko-web-element>
+  <if(newsletterConfig.description)>
+    <marko-web-element block-name=newsletterBlock name="description">
+      $!{newsletterConfig.description}
+    </marko-web-element>
+  </if>
+  <form action=newsletterConfig.action method="GET">
+    <div class="form-group">
+      <label for="footer-newsletter-signup-email">${i18n("Email")}</label>
+      <input
+        id="footer-newsletter-signup-email"
+        class="form-control"
+        type="email"
+        placeholder="example@gmail.com"
+        name="em"
+        required
+      />
+      <for|item| of=newsletterConfig.hiddenInputs>
+        <input type="hidden" name=item.name value=item.value />
+      </for>
+    </div>
+    <button class="btn btn-primary" type="submit" disabled=(newsletterConfig.disabled && "disabled")>${i18n("Sign Up")}</button>
+  </form>
+</marko-web-block>
