@@ -6,50 +6,59 @@ $ const { section } = input;
 $ const limit = defaultValue(input.limit, 3);
 $ const placementName = defaultValue(input.placementName, "default");
 $ const aliases = defaultValue(input.aliases, []);
+$ const cols = input.cols != null ? input.cols : limit;
+$ const viewMore = defaultValue(input.viewMore, false);
 
-$ const blockName = "section-card-deck";
+$ const blockName = "content-card-deck";
 $ const uri = nxConfig.getUri();
 $ const placement = nxConfig.getPlacement({ name: placementName, aliases });
 
 <marko-web-native-x-fetch-elements|{ ads }| uri=uri id=placement.id opts={ n: limit }>
   $ const hasAd = ads && ads.length && ads[0] && ads[0].hasCampaign;
   <if(hasAd)>
+    $ const nodes = ads.filter((ad) => ad.hasCampaign).map((ad) => convertAdToContent(ad, { sectionName: `${i18n("Sponsored by")} ${ad.campaign.advertiserName}` }));
+    $ const title = input.title || section && section.name;
+    $ const description = input.description || section && section.description || input.defaultDescription;
     <marko-web-block name=blockName>
-      <marko-web-element block-name=blockName name="header">
-        ${section.name}
-      </marko-web-element>
-      <marko-web-element block-name=blockName name="description-wrapper">
-        <marko-web-element block-name=blockName name="description">
-          $!{section.description || input.defaultDescription}
-        </marko-web-element>
-      </marko-web-element>
-
-      <marko-web-element block-name=blockName name="deck-wrapper">
-
-        <marko-web-element block-name=blockName name="row">
-          <for|ad| of=ads>
-            <if(ad.hasCampaign)>
-              $ const node = convertAdToContent(ad, { sectionName: `${i18n("Sponsored by")} ${ad.campaign.advertiserName}` });
-              <marko-web-element block-name=blockName name="col">
-                <theme-content-node
-                  image-position="top"
-                  card=true
-                  flush=true
-                  modifiers=[blockName]
-                  node=node
-                  with-section=true
-                  with-teaser=false
-                  with-dates=false
-                  attrs=ad.attributes.container
-                  link-attrs=ad.attributes.link
-                >
-                  <@image fluid=true width=330 ar="4:3" />
-                </theme-content-node>
+      <if(title)>
+        <marko-web-element block-name=blockName name="header">
+          <marko-web-element block-name=blockName name="header-left">
+            <marko-web-element block-name=blockName name="title">
+              ${title}
+            </marko-web-element>
+            <if(description)>
+              <marko-web-element block-name=blockName name="description">
+                $!{description}
               </marko-web-element>
             </if>
-          </for>
+          </marko-web-element>
+          <marko-web-element block-name=blockName name="header-right">
+            <if(viewMore && section && section.canonicalPath)>
+              <marko-web-element block-name=blockName name="view-more">
+                <marko-web-link href=section.canonicalPath>
+                  ${i18n("View more")} &raquo;
+                </marko-web-link>
+              </marko-web-element>
+            </if>
+          </marko-web-element>
         </marko-web-element>
-      </marko-web-element>
+      </if>
+
+      <theme-content-card-deck-col-flow
+        nodes=nodes
+        modifiers=[blockName]
+        cols=cols
+      >
+        <@node modifiers=[blockName] ...input.node />
+      </theme-content-card-deck-col-flow>
+
+      <if(viewMore && section && section.canonicalPath)>
+        <marko-web-element block-name=blockName name="view-more-bottom">
+          <marko-web-link href=section.canonicalPath>
+            ${i18n("View more")} &raquo;
+          </marko-web-link>
+        </marko-web-element>
+      </if>
     </marko-web-block>
   </if>
 </marko-web-native-x-fetch-elements>
