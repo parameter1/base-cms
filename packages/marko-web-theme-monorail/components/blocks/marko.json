@@ -63,6 +63,9 @@
   "<theme-newsletter-signup-banner-large-block>": {
     "template": "./newsletter-signup-banner-large.marko"
   },
+  "<theme-newsletter-signup-banner-external-block>": {
+    "template": "./newsletter-signup-banner-external.marko"
+  },
   "<theme-opinion-block>": {
     "template": "./opinion.marko",
     "@alias" : "string"

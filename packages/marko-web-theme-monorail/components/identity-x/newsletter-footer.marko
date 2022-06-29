@@ -10,13 +10,14 @@ $ const additionalEventData = defaultValue(input.additionalEventData, {});
 $ const buttonLabels = defaultValue(input.buttonLabels, { continue: 'Sign Up' })
 $ const loginEmailPlaceholder = defaultValue(input.loginEmailPlaceholder, 'example@gmail.com');
 $ const source = defaultValue(input.source, 'footer_newsletter_login');
+$ const configName = defaultValue(input.configName, 'signupFooter');
 
 $ const {
   name,
   description,
   imagePath,
   disabled,
-} = site.getAsObject("newsletter.signupFooter");
+} = site.getAsObject(`newsletter.${configName}`);
 
 $ const lang = site.config.lang || "en";
 
