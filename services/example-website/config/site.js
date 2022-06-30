@@ -27,11 +27,18 @@ module.exports = {
     },
   },
   searchSponsor: {
-    headerLogo: {
+    navbarLogo: {
       alt: 'Search Sposored by ProfiNet',
       src: 'https://img.automationworld.com/files/base/pmmi/aw/profinet_black.png?h=24&auto=format,compress',
       srcset: [
         'https://img.automationworld.com/files/base/pmmi/aw/profinet_black.png?h=24&auto=format,compress&dpr=2 2x',
+      ],
+    },
+    siteMenuLogo: {
+      alt: 'Search Sposored by ProfiNet',
+      src: 'https://img.automationworld.com/files/base/pmmi/aw/profinet_black.png?h=34&auto=format,compress',
+      srcset: [
+        'https://img.automationworld.com/files/base/pmmi/aw/profinet_black.png?h=34&auto=format,compress&dpr=2 2x',
       ],
     },
     pageLogo: {

@@ -1,6 +1,8 @@
 import { randomElementId } from "@parameter1/base-cms-utils";
 
 $ const inputId = randomElementId({ prefix: "site-menu-search" });
+$ const { site } = out.global;
+$ const sponsor = site.getAsObject("searchSponsor");
 
 <marko-web-element block-name=input.blockName name="section" modifiers=["search"]>
   <form method="GET" action="/search">
@@ -12,6 +14,14 @@ $ const inputId = randomElementId({ prefix: "site-menu-search" });
           <marko-web-icon name="search" modifiers=["light"] />
         </button>
       </div>
+      <if(sponsor.siteMenuLogo)>
+        <marko-web-img
+          alt=sponsor.siteMenuLogo.alt
+          src=sponsor.siteMenuLogo.src
+          srcset=sponsor.siteMenuLogo.srcset
+          class="search-sponsor__logo lazyload"
+        />
+      </if>
     </div>
   </form>
 </marko-web-element>

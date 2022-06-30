@@ -5,15 +5,15 @@ $ const inputId = randomElementId({ prefix: elementName });
 $ const { site } = out.global;
 $ const sponsor = site.getAsObject("searchSponsor");
 $ const classes = [elementName, "btn"];
-$ if (sponsor.headerLogo) classes.push(`${elementName}--sponsored`);
+$ if (sponsor.navbarLogo) classes.push(`${elementName}--sponsored`);
 
 <marko-web-link class=classes.join(" ") title="Search" href="/search">
   <marko-web-icon name="search" modifiers=["dark", "lg"] />
-  <if(sponsor.headerLogo)>
+  <if(sponsor.navbarLogo)>
     <marko-web-img
-      alt=sponsor.headerLogo.alt
-      src=sponsor.headerLogo.src
-      srcset=sponsor.headerLogo.srcset
+      alt=sponsor.navbarLogo.alt
+      src=sponsor.navbarLogo.src
+      srcset=sponsor.navbarLogo.srcset
       class="search-sponsor__logo lazyload"
     />
   </if>
