@@ -6,10 +6,11 @@ $ const story = getAsObject(input, "story");
 $ const on = defaultValue(input.on, "load");
 $ const requestFrame = defaultValue(input.requestFrame, true);
 $ const targetTag = defaultValue(input.targetTag, "body");
+$ const containerId = "GTM-MNQH25L";
 
 <marko-web-gtm-init
   name="dataLayerNativeX"
-  container-id="GTM-MNQH25L"
+  container-id=containerId
   on=on
   request-frame=requestFrame
   target-tag=targetTag
@@ -17,4 +18,4 @@ $ const targetTag = defaultValue(input.targetTag, "body");
   push=input.push
 />
 
-<marko-web-gtm-noscript container-id="GTM-MNQH25L" />
+<marko-web-gtm-noscript container-id=containerId />
