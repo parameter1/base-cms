@@ -21,6 +21,9 @@
     "graphql-tag": "^2.12.5",
     "object-path": "^0.11.8"
   },
+  "peerDependencies": {
+    "@parameter1/base-cms-marko-web-monorail": "^2.101.1"
+  },
   "publishConfig": {
     "access": "public"
   }
