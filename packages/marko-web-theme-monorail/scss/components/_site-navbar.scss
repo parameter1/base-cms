@@ -38,6 +38,21 @@
       }
     }
 
+    &__icon-wrapper {
+      margin-left: auto;
+      #{ $self }__toggler {
+        margin-left: 1rem;
+      }
+    }
+
+    &__search {
+      &--sponsored {
+        img {
+          margin-left: .5rem;
+        }
+      }
+    }
+
     &--secondary {
       #{ $self } {
         &__container {

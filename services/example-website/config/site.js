@@ -26,6 +26,22 @@ module.exports = {
       ],
     },
   },
+  searchSponsor: {
+    headerLogo: {
+      alt: 'Search Sposored by ProfiNet',
+      src: 'https://img.automationworld.com/files/base/pmmi/aw/profinet_black.png?h=24&auto=format,compress',
+      srcset: [
+        'https://img.automationworld.com/files/base/pmmi/aw/profinet_black.png?h=24&auto=format,compress&dpr=2 2x',
+      ],
+    },
+    pageLogo: {
+      alt: 'Search Sposored by ProfiNet',
+      src: 'https://img.automationworld.com/files/base/pmmi/aw/profinet_green.png?h=48&auto=format,compress',
+      srcset: [
+        'https://img.automationworld.com/files/base/pmmi/aw/profinet_green.png?h=48&auto=format,compress&dpr=2 2x',
+      ],
+    },
+  },
   socialMediaLinks: [
     { provider: 'facebook', href: 'https://www.facebook.com/parameter1tech', target: '_blank' },
     { provider: 'twitter', href: 'https://www.twitter.com/parameter1tech', target: '_blank' },
