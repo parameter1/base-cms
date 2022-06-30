@@ -3,7 +3,7 @@ import { get, getAsObject } from "@parameter1/base-cms-object-path";
 
 $ const { req } = out.global;
 $ const story = getAsObject(input, "story");
-$ const on = input.on === undefined ? input.on : defaultValue(input.on, "load");
+$ const on = defaultValue(input.on, "load");
 $ const requestFrame = defaultValue(input.requestFrame, true);
 $ const targetTag = defaultValue(input.targetTag, "body");
 
