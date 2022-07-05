@@ -3,18 +3,18 @@ import { randomElementId } from "@parameter1/base-cms-utils";
 $ const elementName = "site-navbar__search";
 $ const inputId = randomElementId({ prefix: elementName });
 $ const { site } = out.global;
-$ const sponsor = site.getAsObject("searchSponsor");
+$ const sponsorLogo = site.getAsObject("search.sponsorLogos.navbar");
 $ const classes = [elementName, "btn"];
-$ if (sponsor.navbarLogo) classes.push(`${elementName}--sponsored`);
+$ if (sponsorLogo) classes.push(`${elementName}--sponsored`);
 
 <marko-web-link class=classes.join(" ") title="Search" href="/search">
   <marko-web-icon name="search" modifiers=["dark", "lg"] />
-  <if(sponsor.navbarLogo)>
+  <if(sponsorLogo)>
     <marko-web-img
-      alt=sponsor.navbarLogo.alt
-      src=sponsor.navbarLogo.src
-      srcset=sponsor.navbarLogo.srcset
-      class="search-sponsor__logo lazyload"
+      alt=sponsorLogo.alt
+      src=sponsorLogo.src
+      srcset=sponsorLogo.srcset
+      class="search-sponsor__logo"
     />
   </if>
 </marko-web-link>

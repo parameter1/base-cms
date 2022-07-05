@@ -3,6 +3,8 @@ import { get } from '@parameter1/base-cms-object-path';
 
 $ const { config, req, $markoWebSearch: search, site, i18n } = out.global;
 
+$ console.log('siteSearch vs MarkoSearch: ', site.getAsObject("search"), search);
+
 $ const type = "search";
 $ const title = "Search";
 $ const description = `Search ${config.siteName()}`;
@@ -13,7 +15,7 @@ $ const overrideSortField = get(site, 'config.setSearchSortFieldToScore');
 $ const searchQueryPresent = (search.query.searchQuery && search.query.searchQuery !== '');
 $ const setDefaultSortField = (searchQueryPresent && !search.query.sortField && overrideSortField);
 $ const sortField = setDefaultSortField ? 'SCORE' : search.input.sortField;
-$ const sponsor = site.getAsObject('searchSponsor');
+$ const sponsorLogo = site.getAsObject('search.sponsorLogos.page');
 
 <marko-web-default-page-layout type=type title=title description=description>
   <@head>
@@ -24,16 +26,16 @@ $ const sponsor = site.getAsObject('searchSponsor');
   </@head>
   <@page>
     <marko-web-page-wrapper>
-      <@section modifiers=["first"]>
+      <!-- <@section modifiers=["first"]>
         <theme-gam-define-display-ad
           name="leaderboard"
           position="static_page"
           modifiers=["inter-block"]
         />
-      </@section>
+      </@section> -->
       <@section|{ blockName }|>
         <div class="row">
-          <if(sponsor.pageLogo)>
+          <if(sponsorLogo)>
             <div class="col-lg-12 ">
               <marko-web-website-section-name|{ value }| tag="h1" block-name=blockName obj={ name: title } modifiers=["sponsored-search"]>
                 <if(currentPage > 1)>${value}: ${i18n("Page")} ${currentPage}</if>
@@ -41,10 +43,10 @@ $ const sponsor = site.getAsObject('searchSponsor');
                 <div class="search-sponsor">
                   <span class="search-sponsor__label">Sponsored by</span>
                   <marko-web-img
-                    alt=sponsor.pageLogo.alt
-                    src=sponsor.pageLogo.src
-                    srcset=sponsor.pageLogo.srcset
-                    class="search-sponsor__logo lazyload"
+                    alt=sponsorLogo.alt
+                    src=sponsorLogo.src
+                    srcset=sponsorLogo.srcset
+                    class="search-sponsor__logo"
                   />
                 </div>
               </marko-web-website-section-name>
@@ -52,7 +54,7 @@ $ const sponsor = site.getAsObject('searchSponsor');
           </if>
           <div class="col-lg-3">
             <marko-web-search-filter-container modifiers=["sticky"]>
-              <if(!sponsor.pageLogo)>
+              <if(!sponsorLogo)>
                 <@before-title|{ blockName }|>
                   <marko-web-website-section-name|{ value }| tag="h1" block-name=blockName obj={ name: title }>
                     <if(currentPage > 1)>${value}: ${i18n("Page")} ${currentPage}</if>
@@ -127,13 +129,13 @@ $ const sponsor = site.getAsObject('searchSponsor');
           </div>
         </div>
       </@section>
-      <@section>
+      <!-- <@section>
         <theme-gam-define-display-ad
           name="rotation"
           position="static_page"
           modifiers=["inter-block"]
         />
-      </@section>
+      </@section> -->
     </marko-web-page-wrapper>
   </@page>
 </marko-web-default-page-layout>

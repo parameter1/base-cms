@@ -3,6 +3,7 @@ const omeda = require('./omeda');
 const nativeX = require('./native-x');
 const navigation = require('./navigation');
 const newsletter = require('./newsletter');
+const search = require('./search');
 
 module.exports = {
   identityX,
@@ -10,6 +11,7 @@ module.exports = {
   navigation,
   omeda,
   newsletter,
+  search,
   idxNavItems: { enable: true },
   company: 'Parameter1, LLC',
   logos: {
@@ -23,29 +25,6 @@ module.exports = {
       src: 'https://p1-cms-assets.imgix.net/files/base/p1/sandbox/image/static/sandbox-logo.png?h=60&auto=format,compress',
       srcset: [
         'https://p1-cms-assets.imgix.net/files/base/p1/sandbox/image/static/sandbox-logo.png?h=120&auto=format,compress 2x',
-      ],
-    },
-  },
-  searchSponsor: {
-    navbarLogo: {
-      alt: 'Search Sposored by ProfiNet',
-      src: 'https://img.automationworld.com/files/base/pmmi/aw/profinet_black.png?h=24&auto=format,compress',
-      srcset: [
-        'https://img.automationworld.com/files/base/pmmi/aw/profinet_black.png?h=24&auto=format,compress&dpr=2 2x',
-      ],
-    },
-    siteMenuLogo: {
-      alt: 'Search Sposored by ProfiNet',
-      src: 'https://img.automationworld.com/files/base/pmmi/aw/profinet_black.png?h=34&auto=format,compress',
-      srcset: [
-        'https://img.automationworld.com/files/base/pmmi/aw/profinet_black.png?h=34&auto=format,compress&dpr=2 2x',
-      ],
-    },
-    pageLogo: {
-      alt: 'Search Sposored by ProfiNet',
-      src: 'https://img.automationworld.com/files/base/pmmi/aw/profinet_green.png?h=48&auto=format,compress',
-      srcset: [
-        'https://img.automationworld.com/files/base/pmmi/aw/profinet_green.png?h=48&auto=format,compress&dpr=2 2x',
       ],
     },
   },
