@@ -1,3 +1,5 @@
+const idxConfig = require('./identity-x');
+
 const topics = {
   primary: [
     { href: '/clients', label: 'Clients' },
@@ -18,14 +20,36 @@ const utilities = [
   { href: '/page/contact-us', label: 'Contact Us' },
 ];
 
+const userLinks = [
+  {
+    href: idxConfig.getEndpointFor('login'),
+    label: 'Sign In',
+    when: 'logged-out',
+    modifiers: ['user'],
+  },
+  {
+    href: idxConfig.getEndpointFor('profile'),
+    label: 'Manage Account',
+    when: 'logged-in',
+    modifiers: ['user'],
+  },
+  {
+    href: idxConfig.getEndpointFor('logout'),
+    label: 'Sign Out',
+    when: 'logged-in',
+    modifiers: ['user'],
+  },
+];
+
 const mobileMenu = {
+  user: userLinks,
   primary: topics.primary,
   secondary: topics.secondary,
 };
 
 const desktopMenu = {
   about: [...utilities],
-  user: [],
+  user: userLinks,
   sections: [
     ...topics.primary,
     ...topics.secondary,
