@@ -1,6 +1,7 @@
 const gql = require('graphql-tag');
 const { getAsArray } = require('@parameter1/base-cms-object-path');
 const getAnsweredQuestionMap = require('./get-answered-question-map');
+const isOmedaDeploymentType = require('../external-id/is-deployment-type-id');
 
 const SET_OMEDA_BOOLEAN_FIELD_ANSWERS = gql`
 mutation SetOmedaBooleanFieldAnswers($input: UpdateAppUserCustomBooleanAnswersMutationInput!) {
@@ -13,26 +14,29 @@ mutation SetOmedaBooleanFieldAnswers($input: UpdateAppUserCustomBooleanAnswersMu
  */
 module.exports = async ({
   identityX,
+  brandKey,
   user,
   omedaCustomer,
   fields = [],
 }) => {
-  const omedaDeploymentOptInMap = getAsArray(omedaCustomer, 'primaryEmailAddress.optInStatus').reduce((map, { deploymentTypeId, status }) => {
+  const statusMap = getAsArray(omedaCustomer, 'primaryEmailAddress.optInStatus').reduce((map, { deploymentTypeId, status }) => {
     const optedIn = status.id === 'IN';
     map.set(`${deploymentTypeId}`, optedIn);
     return map;
   }, new Map());
 
   const answeredQuestionMap = getAnsweredQuestionMap(user);
-
-  const answerMap = new Map();
-  fields.forEach((field) => {
-    if (answeredQuestionMap.has(field.id)) return;
-    const { value: deploymentTypeId } = field.externalId.identifier;
-    const optedIn = omedaDeploymentOptInMap.get(deploymentTypeId);
-    if (optedIn == null) return;
-    answerMap.set(field.id, optedIn);
-  });
+  const answerMap = fields
+    .filter(field => isOmedaDeploymentType({ externalId: field.externalId, brandKey }))
+    .reduce((map, field) => {
+      // Only set values that haven't already been answered.
+      if (answeredQuestionMap.has(field.id)) return map;
+      const { value } = field.externalId.identifier;
+      const receive = statusMap.get(`${value}`);
+      if (receive == null) return map;
+      map.set(field.id, receive);
+      return map;
+    }, new Map());
   if (!answerMap.size) return;
 
   const answers = [];
