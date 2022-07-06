@@ -50,15 +50,20 @@ $ const navigation = {
       has-user=input.hasUser
     />
     <marko-web-element block-name="site-navbar" name="icon-wrapper">
-      <if(showSearchIcon)>
-        <theme-site-navbar-search-icon />
-      </if>
+      <!-- Newsletter Menue Toggler -->
       <if(!newsletterConfig.disabled && useIdxNewsletterSignup)>
         <marko-web-browser-component name="IdentityXNewsletterToggleButton" ssr=true />
       </if>
       <else-if(!newsletterConfig.disabled)>
         <marko-web-browser-component name="ThemeNewsletterToggleButton" ssr=true />
       </else-if>
+
+      <!-- Site Navbar Search Icon -->
+      <if(showSearchIcon)>
+        <theme-site-navbar-search-icon />
+      </if>
+
+      <!-- Site Menu Toggle(when positioned right) -->
       <if(menuBtnPosition === 'right')>
         <theme-menu-toggle-button
           class="site-navbar__toggler"
