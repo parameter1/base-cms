@@ -4,6 +4,7 @@ const {
   getOmedaLinkedFields,
   setOmedaData,
   setOmedaDemographics,
+  setOmedaProducts,
   setOmedaDeploymentTypes,
   getAnsweredQuestionMap,
 } = require('../omeda-data');
@@ -46,6 +47,8 @@ module.exports = async ({
   const hasAnsweredAllOmedaQuestions = omedaLinkedFields
     .demographic.every(field => answeredQuestionMap.has(field.id))
     && omedaLinkedFields
+      .product.every(field => answeredQuestionMap.has(field.id))
+    && omedaLinkedFields
       .deploymentType.every(field => answeredQuestionMap.has(field.id));
 
   // If the user is verified and has answered all Omeda questions, do nothing.
@@ -63,15 +66,24 @@ module.exports = async ({
   if (!hasAnsweredAllOmedaQuestions) {
     await setOmedaDemographics({
       identityX,
+      brandKey,
       user,
       omedaCustomer,
       fields: omedaLinkedFields.demographic,
     });
     await setOmedaDeploymentTypes({
       identityX,
+      brandKey,
       user,
       omedaCustomer,
       fields: omedaLinkedFields.deploymentType,
+    });
+    await setOmedaProducts({
+      identityX,
+      brandKey,
+      user,
+      omedaCustomer,
+      fields: omedaLinkedFields.product,
     });
   }
 };
