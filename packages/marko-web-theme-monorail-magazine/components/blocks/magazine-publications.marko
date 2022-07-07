@@ -3,7 +3,7 @@ import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 import publicationListFragment from "../../graphql/fragments/magazine-publication-list";
 
 $ const { site } = out.global;
-$ const publicationIds = site.getAsArray("publicationIds");
+$ const publicationIds = site.getAsArray("magazine.publicationIds");
 $ const requiresCoverImage = defaultValue(input.requiresCoverImage, true);
 $ const withHeader = defaultValue(input.withHeader, true);
 
