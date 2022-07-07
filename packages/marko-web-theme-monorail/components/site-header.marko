@@ -5,6 +5,8 @@ $ const { config, site } = out.global;
 $ const newsletterConfig = site.getAsObject('newsletter.pushdown');
 $ const blockName = input.blockName || "site-header";
 $ const useIdxNewsletterSignup = defaultValue(input.useIdxNewsletterSignup, true);
+$ const showSearchIcon = defaultValue(input.showSearchIcon, false);
+$ const menuBtnPosition = defaultValue(input.menuBtnPosition, 'left');
 
 $ const navigation = {
   primary: site.getAsArray("navigation.primary.items"),
@@ -21,13 +23,15 @@ $ const navigation = {
 >
   <${input.aboveNav} />
   <theme-site-navbar modifiers=["secondary"] attrs={ "aria-label": "Secondary Navigation" }>
-    <theme-menu-toggle-button
-      class="site-navbar__toggler"
-      targets=[".site-menu", "body"]
-      toggle-class="site-menu--open"
-      icon-modifiers=["lg"]
-      icon-name="three-bars"
-    />
+    <if(menuBtnPosition === 'left')>
+      <theme-menu-toggle-button
+        class="site-navbar__toggler"
+        targets=[".site-menu", "body"]
+        toggle-class="site-menu--open"
+        icon-modifiers=["lg"]
+        icon-name="three-bars"
+      />
+    </if>
 
     <theme-site-navbar-brand title=`${config.website("name")} Homepage`>
       <theme-site-navbar-logo
@@ -45,12 +49,31 @@ $ const navigation = {
       reg-enabled=input.regEnabled
       has-user=input.hasUser
     />
-    <if(!newsletterConfig.disabled && useIdxNewsletterSignup)>
-      <marko-web-browser-component name="IdentityXNewsletterToggleButton" ssr=true />
-    </if>
-    <else-if(!newsletterConfig.disabled)>
-      <marko-web-browser-component name="ThemeNewsletterToggleButton" ssr=true />
-    </else-if>
+    <marko-web-element block-name="site-navbar" name="icon-wrapper">
+      <!-- Newsletter Menue Toggler -->
+      <if(!newsletterConfig.disabled && useIdxNewsletterSignup)>
+        <marko-web-browser-component name="IdentityXNewsletterToggleButton" ssr=true />
+      </if>
+      <else-if(!newsletterConfig.disabled)>
+        <marko-web-browser-component name="ThemeNewsletterToggleButton" ssr=true />
+      </else-if>
+
+      <!-- Site Navbar Search Icon -->
+      <if(showSearchIcon)>
+        <theme-site-navbar-search-icon />
+      </if>
+
+      <!-- Site Menu Toggle(when positioned right) -->
+      <if(menuBtnPosition === 'right')>
+        <theme-menu-toggle-button
+          class="site-navbar__toggler"
+          targets=[".site-menu", "body"]
+          toggle-class="site-menu--open"
+          icon-modifiers=["lg"]
+          icon-name="three-bars"
+        />
+      </if>
+    </marko-web-element>
   </theme-site-navbar>
 
   <theme-site-navbar modifiers=["primary"] attrs={ "aria-label": "Primary Navigation" }>

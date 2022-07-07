@@ -13,5 +13,8 @@
   },
   "<theme-site-navbar-item>": {
     "template": "./item.marko"
+  },
+  "<theme-site-navbar-search-icon>": {
+    "template": "./search.marko"
   }
 }

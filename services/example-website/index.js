@@ -23,7 +23,7 @@ const routes = config => (app) => {
   // Shared/global routes (all sites)
   contactUs(app, config);
   // Load site routes
-  siteRoutes(app);
+  siteRoutes(app, config);
 };
 
 module.exports = startServer({

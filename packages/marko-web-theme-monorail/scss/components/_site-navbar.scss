@@ -15,6 +15,9 @@
         margin-right: $theme-site-navbar-brand-margin-x / 2;
         margin-left: $theme-site-navbar-brand-margin-x / 2;
       }
+      &:first-child {
+        margin-left: $marko-web-page-wrapper-padding;
+      }
     }
 
     &__logo {
@@ -35,6 +38,33 @@
 
       & > .marko-web-icon {
         @include theme-navbar-link-color($theme-site-navbar-secondary-colors);
+      }
+    }
+
+    &__icon-wrapper {
+      display: flex;
+      flex-wrap: nowrap;
+      margin-left: auto;
+      padding-left: 1rem;
+      #{ $self }__toggler {
+        margin-left: 1rem;
+      }
+    }
+
+    &__search {
+      &--sponsored {
+        padding-top: 0;
+        padding-bottom: 0;
+        display: flex;
+        align-self: center;
+        @media (max-width: map-get($theme-site-header-breakpoints, small-logo)) {
+          margin-top: 0;
+          margin-bottom: 0;
+        }
+        img {
+          margin-left: .5rem;
+          max-height: 24px;
+        }
       }
     }
 

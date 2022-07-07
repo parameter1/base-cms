@@ -3,6 +3,7 @@ const omeda = require('./omeda');
 const nativeX = require('./native-x');
 const navigation = require('./navigation');
 const newsletter = require('./newsletter');
+const search = require('./search');
 
 module.exports = {
   identityX,
@@ -10,6 +11,7 @@ module.exports = {
   navigation,
   omeda,
   newsletter,
+  search,
   idxNavItems: { enable: true },
   company: 'Parameter1, LLC',
   logos: {
