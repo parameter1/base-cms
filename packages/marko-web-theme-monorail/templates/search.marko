@@ -1,9 +1,13 @@
 import queryFragment from "../graphql/fragments/section-feed-block";
 import { get } from '@parameter1/base-cms-object-path';
 
-$ const { config, req, $markoWebSearch: search, site, i18n } = out.global;
-
-$ console.log('siteSearch vs MarkoSearch: ', site.getAsObject("search"), search);
+$ const {
+  config,
+  req,
+  $markoWebSearch: search,
+  site,
+  i18n,
+} = out.global;
 
 $ const type = "search";
 $ const title = "Search";
@@ -26,13 +30,13 @@ $ const sponsorLogo = site.getAsObject('search.sponsorLogos.page');
   </@head>
   <@page>
     <marko-web-page-wrapper>
-      <!-- <@section modifiers=["first"]>
+      <@section modifiers=["first"]>
         <theme-gam-define-display-ad
           name="leaderboard"
           position="static_page"
           modifiers=["inter-block"]
         />
-      </@section> -->
+      </@section>
       <@section|{ blockName }|>
         <div class="row">
           <if(sponsorLogo)>
@@ -129,13 +133,13 @@ $ const sponsorLogo = site.getAsObject('search.sponsorLogos.page');
           </div>
         </div>
       </@section>
-      <!-- <@section>
+      <@section>
         <theme-gam-define-display-ad
           name="rotation"
           position="static_page"
           modifiers=["inter-block"]
         />
-      </@section> -->
+      </@section>
     </marko-web-page-wrapper>
   </@page>
 </marko-web-default-page-layout>
