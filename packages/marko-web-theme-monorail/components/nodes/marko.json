@@ -47,6 +47,9 @@
   "<theme-section-feed-content-node>": {
     "template": "./section-feed-content.marko"
   },
+  "<theme-standard-promo-node>": {
+    "template": "./standard-promo.marko"
+  },
   "<theme-youtube-card-node>": {
     "template": "./youtube-card.marko",
     "@image-position": "string",

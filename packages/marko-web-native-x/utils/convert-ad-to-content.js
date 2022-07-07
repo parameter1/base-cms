@@ -11,6 +11,7 @@ module.exports = (ad = {}, { sectionName = 'Sponsored' } = {}) => {
     typeTitled: 'Text Ad',
     type: 'text-ad',
     teaser: creative.teaser,
+    linkText: creative.linkText,
     published: updatedAt > startDate ? updatedAt : startDate,
     canonicalPath: ad.href, // @deprecated. Use siteContext.path instead
     siteContext: {

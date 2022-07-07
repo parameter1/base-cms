@@ -1,0 +1,36 @@
+import { get } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { node } = input;
+
+$ const linkText = get(node, "linkText") || defaultValue(input.linkText, "Read More");
+$ const blockName = defaultValue(input.blockName, "pib-page-card");
+
+<marko-web-block name=blockName>
+  <marko-web-element block-name=blockName name="inner-wrapper">
+    <div>
+      <marko-web-element block-name=blockName name="title">
+        ${node.shortName}
+      </marko-web-element>
+      <marko-web-element block-name=blockName name="description">
+        ${node.teaser}
+      </marko-web-element>
+
+      <marko-web-link
+        class=`btn btn-primary ${blockName}__download-btn`
+        href=node.siteContext.path
+        title=linkText
+      >
+        ${linkText}
+      </marko-web-link>
+    </div>
+    <if(node.primaryImage)>
+      <marko-web-img
+        class=`${blockName}__issue-cover`
+        src=node.primaryImage.src
+        srcset=[`${node.primaryImage.src}&dpr=2 2x`]
+        alt=node.primaryImage.alt
+      />
+    </if>
+  </marko-web-element>
+</marko-web-block>
