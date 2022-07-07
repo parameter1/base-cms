@@ -2,16 +2,13 @@ import { defaultValue } from "@parameter1/base-cms-marko-web/utils";
 import convertAdToContent from "@parameter1/base-cms-marko-web-native-x/utils/convert-ad-to-content";
 
 $ const { nativeX: nxConfig, i18n } = out.global;
-$ const { section } = input;
-$ const limit = defaultValue(input.limit, 2);
 $ const placementName = defaultValue(input.placementName, "default");
 $ const aliases = defaultValue(input.aliases, []);
-
 $ const blockName = "callout-cards";
 $ const uri = nxConfig.getUri();
 $ const placement = nxConfig.getPlacement({ name: placementName, aliases });
 
-<marko-web-native-x-fetch-elements|{ ads }| uri=uri id=placement.id opts={ n: limit }>
+<marko-web-native-x-fetch-elements|{ ads }| uri=uri id=placement.id opts={ n: 2 }>
   $ const hasAd = ads && ads.length && ads[0] && ads[0].hasCampaign;
   <if(hasAd)>
     <marko-web-block name=blockName>
