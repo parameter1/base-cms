@@ -6,7 +6,7 @@ $ const { node } = input;
 $ const linkText = get(node, "linkText") || defaultValue(input.linkText, "Read More");
 $ const blockName = defaultValue(input.blockName, "pib-page-card");
 
-<marko-web-block name=blockName>
+<marko-web-block name=blockName attrs=input.attrs>
   <marko-web-element block-name=blockName name="inner-wrapper">
     <div>
       <marko-web-element block-name=blockName name="title">
@@ -20,6 +20,7 @@ $ const blockName = defaultValue(input.blockName, "pib-page-card");
         class=`btn btn-primary ${blockName}__download-btn`
         href=node.siteContext.path
         title=linkText
+        attrs=input.linkAttrs
       >
         ${linkText}
       </marko-web-link>

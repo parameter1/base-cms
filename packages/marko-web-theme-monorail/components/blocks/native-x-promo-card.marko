@@ -1,7 +1,7 @@
 import { defaultValue } from "@parameter1/base-cms-marko-web/utils";
-import convertAdToContent from "@parameter1/base-cms-marko-web-native-x/utils/convert-ad-to-content";
+import convertAdToNode from "@parameter1/base-cms-marko-web-native-x/utils/convert-ad-to-node";
 
-$ const { nativeX: nxConfig, i18n } = out.global;
+$ const { nativeX: nxConfig } = out.global;
 $ const placementName = defaultValue(input.placementName, "default");
 $ const aliases = defaultValue(input.aliases, []);
 $ const blockName = "callout-cards";
@@ -15,14 +15,12 @@ $ const placement = nxConfig.getPlacement({ name: placementName, aliases });
       <marko-web-element block-name=blockName name="row">
         <marko-web-element block-name=blockName name="col">
           <if(ads[0] && ads[0].hasCampaign)>
-            $ const nodeA = convertAdToContent(ads[0], { sectionName: `${i18n("Sponsored by")} ${ads[0].campaign.advertiserName}` });
-            <theme-standard-promo-node node=nodeA />
+            <theme-standard-promo-node ...convertAdToNode(ads[0]) />
           </if>
         </marko-web-element>
         <marko-web-element block-name=blockName name="col" modifiers=["last"]>
           <if(ads[1] && ads[1].hasCampaign)>
-            $ const nodeB = convertAdToContent(ads[1], { sectionName: `${i18n("Sponsored by")} ${ads[1].campaign.advertiserName}` });
-            <theme-standard-promo-node node=nodeB />
+            <theme-standard-promo-node ...convertAdToNode(ads[1]) />
           </if>
         </marko-web-element>
       </marko-web-element>

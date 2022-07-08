@@ -1,5 +1,6 @@
 import { defaultValue } from "@parameter1/base-cms-marko-web/utils";
-import convertAdToContent from "@parameter1/base-cms-marko-web-native-x/utils/convert-ad-to-content";
+import { getAsArray, getAsObject } from "@parameter1/base-cms-object-path";
+import convertAdToNode from "@parameter1/base-cms-marko-web-native-x/utils/convert-ad-to-node";
 
 $ const { nativeX: nxConfig, i18n } = out.global;
 $ const { section } = input;
@@ -8,6 +9,7 @@ $ const placementName = defaultValue(input.placementName, "default");
 $ const aliases = defaultValue(input.aliases, []);
 $ const cols = input.cols != null ? input.cols : limit;
 $ const viewMore = defaultValue(input.viewMore, false);
+$ const nodeImageInput = getAsObject(input, "node.image");
 
 $ const blockName = "content-card-deck";
 $ const uri = nxConfig.getUri();
@@ -16,7 +18,7 @@ $ const placement = nxConfig.getPlacement({ name: placementName, aliases });
 <marko-web-native-x-fetch-elements|{ ads }| uri=uri id=placement.id opts={ n: limit }>
   $ const hasAd = ads && ads.length && ads[0] && ads[0].hasCampaign;
   <if(hasAd)>
-    $ const nodes = ads.filter((ad) => ad.hasCampaign).map((ad) => convertAdToContent(ad, { sectionName: `${i18n("Sponsored by")} ${ad.campaign.advertiserName}` }));
+    $ const nodes = ads.filter((ad) => ad.hasCampaign);
     $ const title = input.title || section && section.name;
     $ const description = input.description || section && section.description || input.defaultDescription;
     <marko-web-block name=blockName>
@@ -44,13 +46,31 @@ $ const placement = nxConfig.getPlacement({ name: placementName, aliases });
         </marko-web-element>
       </if>
 
-      <theme-content-card-deck-col-flow
-        nodes=nodes
-        modifiers=[blockName]
-        cols=cols
-      >
-        <@node modifiers=[blockName] ...input.node />
-      </theme-content-card-deck-col-flow>
+      $ const modifiers = getAsArray(input, "modifiers");
+      $ modifiers.push(blockName, `${cols}-cols`);
+      <marko-web-block
+          name="card-deck-flow"
+          modifiers=modifiers
+          attrs=input.attrs
+        >
+          <for|ad| of=nodes>
+          <marko-web-element name="node" block-name="card-deck-flow">
+            <theme-content-node
+              image-position="top"
+              card=true
+              flush=true
+              full-height=true
+              with-teaser=false
+              with-dates=false
+              with-section=false
+              ...input.node
+              ...convertAdToNode(ad)
+            >
+              <@image ar="3:2" fluid=true ...nodeImageInput />
+            </theme-content-node>
+          </marko-web-element>
+          </for>
+        </marko-web-block>
 
       <if(viewMore && section && section.canonicalPath)>
         <marko-web-element block-name=blockName name="view-more-bottom">
