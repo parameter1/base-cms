@@ -51,10 +51,10 @@ $ const navigation = {
     />
     <marko-web-element block-name="site-navbar" name="icon-wrapper">
       <!-- Newsletter Menue Toggler -->
-      <if(!newsletterConfig.disabled && useIdxNewsletterSignup)>
+      <if(!input.hasUser && !newsletterConfig.disabled && useIdxNewsletterSignup)>
         <marko-web-browser-component name="IdentityXNewsletterToggleButton" ssr=true />
       </if>
-      <else-if(!newsletterConfig.disabled)>
+      <else-if(!newsletterConfig.disabled && !useIdxNewsletterSignup)>
         <marko-web-browser-component name="ThemeNewsletterToggleButton" ssr=true />
       </else-if>
 
@@ -88,8 +88,8 @@ $ const navigation = {
 </marko-web-block>
 
 <if(useIdxNewsletterSignup)>
-  <identity-x-newsletter-form-pushdown />
+    <identity-x-newsletter-form-pushdown ...input.newsletterMenuBlockProps />
 </if>
 <else>
-  <theme-site-newsletter-menu />
+  <theme-site-newsletter-menu ...input.newsletterMenuBlockProps />
 </else>
