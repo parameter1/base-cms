@@ -118,6 +118,11 @@
       display: none;
     }
   }
+  .node {
+    &__website-section-name {
+      @include skin-typography($style: "slug-small", $link-style: "primary");
+    }
+  }
 }
 
 .card-deck-flow {

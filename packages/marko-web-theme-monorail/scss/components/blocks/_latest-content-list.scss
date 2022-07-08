@@ -4,5 +4,10 @@
     #{ $self }__header {
       @include skin-typography($style: "header-2");
     }
+    .node {
+      &__website-section-name {
+        @include skin-typography($style: "slug-small", $link-style: "primary");
+      }
+    }
   }
 }
