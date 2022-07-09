@@ -19,7 +19,7 @@ $ const overrideSortField = get(site, 'config.setSearchSortFieldToScore');
 $ const searchQueryPresent = (search.query.searchQuery && search.query.searchQuery !== '');
 $ const setDefaultSortField = (searchQueryPresent && !search.query.sortField && overrideSortField);
 $ const sortField = setDefaultSortField ? 'SCORE' : search.input.sortField;
-$ const sponsorLogo = site.getAsObject('search.sponsorLogos.page');
+$ const sponsorLogo = site.get('search.sponsorLogos.page');
 
 <marko-web-default-page-layout type=type title=title description=description>
   <@head>
