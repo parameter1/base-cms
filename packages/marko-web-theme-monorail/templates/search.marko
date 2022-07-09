@@ -19,7 +19,7 @@ $ const overrideSortField = get(site, 'config.setSearchSortFieldToScore');
 $ const searchQueryPresent = (search.query.searchQuery && search.query.searchQuery !== '');
 $ const setDefaultSortField = (searchQueryPresent && !search.query.sortField && overrideSortField);
 $ const sortField = setDefaultSortField ? 'SCORE' : search.input.sortField;
-$ const sponsorLogo = site.getAsObject('search.sponsorLogos.page');
+$ const sponsorLogo = site.get('search.sponsorLogos.page');
 
 <marko-web-default-page-layout type=type title=title description=description>
   <@head>
@@ -39,33 +39,14 @@ $ const sponsorLogo = site.getAsObject('search.sponsorLogos.page');
       </@section>
       <@section|{ blockName }|>
         <div class="row">
-          <if(sponsorLogo)>
-            <div class="col-lg-12 ">
-              <marko-web-website-section-name|{ value }| tag="h1" block-name=blockName obj={ name: title } modifiers=["sponsored-search"]>
-                <if(currentPage > 1)>${value}: ${i18n("Page")} ${currentPage}</if>
-                <else>${value}</else>
-                <div class="search-sponsor">
-                  <span class="search-sponsor__label">Sponsored by</span>
-                  <marko-web-img
-                    alt=sponsorLogo.alt
-                    src=sponsorLogo.src
-                    srcset=sponsorLogo.srcset
-                    class="search-sponsor__logo"
-                  />
-                </div>
-              </marko-web-website-section-name>
-            </div>
-          </if>
           <div class="col-lg-3">
             <marko-web-search-filter-container modifiers=["sticky"]>
-              <if(!sponsorLogo)>
                 <@before-title|{ blockName }|>
                   <marko-web-website-section-name|{ value }| tag="h1" block-name=blockName obj={ name: title }>
                     <if(currentPage > 1)>${value}: ${i18n("Page")} ${currentPage}</if>
                     <else>${value}</else>
                   </marko-web-website-section-name>
                 </@before-title>
-              </if>
               <marko-web-search-content-types-filter />
               <marko-web-search-website-sections-filter />
             </marko-web-search-filter-container>
@@ -91,6 +72,17 @@ $ const sponsorLogo = site.getAsObject('search.sponsorLogos.page');
                 </div>
                 <div class="col-xl-3">
                   <marko-web-search-sort-by sort-field=sortField />
+                  <if(sponsorLogo)>
+                    <div class="search-sponsor">
+                      <span class="search-sponsor__label">Sponsored by</span>
+                      <marko-web-img
+                        alt=sponsorLogo.alt
+                        src=sponsorLogo.src
+                        srcset=sponsorLogo.srcset
+                        class="search-sponsor__logo"
+                      />
+                    </div>
+                  </if>
                 </div>
               </div>
 

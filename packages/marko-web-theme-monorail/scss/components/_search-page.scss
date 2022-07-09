@@ -163,13 +163,14 @@
 .search-sponsor {
   display: flex;
   align-items: center;
+  margin-top: 1rem;
 
   &__label {
     @include skin-typography($style: "input-label");
     padding: 0;
     margin-right: 1rem;
     margin-bottom: 12px;
-    font-size: 17px;
+    font-size: 12px;
     font-weight: $font-weight-semibold;
     color: $gray-800;
     text-transform: uppercase;
