@@ -1,8 +1,10 @@
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import { getAsObject } from "@parameter1/base-cms-object-path";
 
 $ const { config, site } = out.global;
 
 $ const newsletterConfig = site.getAsObject('newsletter.pushdown');
+$ const newsletterMenuBlockProps = getAsObject(input, "newsletterMenuBlockProps");
 $ const blockName = input.blockName || "site-header";
 $ const useIdxNewsletterSignup = defaultValue(input.useIdxNewsletterSignup, true);
 $ const showSearchIcon = defaultValue(input.showSearchIcon, false);
@@ -88,8 +90,8 @@ $ const navigation = {
 </marko-web-block>
 
 <if(useIdxNewsletterSignup)>
-    <identity-x-newsletter-form-pushdown ...input.newsletterMenuBlockProps />
+    <identity-x-newsletter-form-pushdown ...newsletterMenuBlockProps />
 </if>
 <else>
-  <theme-site-newsletter-menu ...input.newsletterMenuBlockProps />
+  <theme-site-newsletter-menu ...newsletterMenuBlockProps />
 </else>
