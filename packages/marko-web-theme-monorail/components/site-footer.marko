@@ -5,7 +5,7 @@ import { asObject } from "@parameter1/base-cms-utils";
 
 $ const { config, site, i18n } = out.global;
 $ const newsletterSignupConfigName = defaultValue(input.newsletterSignupConfigName, "signupFooter");
-$ const newsletterProps = getAsObject(input, "newsletterBlockProps");
+$ const newsletterBlockProps = getAsObject(input, "newsletterBlockProps");
 $ const newsletterConfig = site.getAsObject(`newsletter.${newsletterSignupConfigName}`);
 $ const blockName = input.blockName || "site-footer";
 $ const tagline = site.get("tagline");
