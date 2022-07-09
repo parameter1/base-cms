@@ -1,10 +1,11 @@
 import getNavItems from "@parameter1/base-cms-marko-web-theme-default/components/site-navbar/utils/get-nav-items";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import { getAsObject } from "@parameter1/base-cms-object-path";
 import { asObject } from "@parameter1/base-cms-utils";
 
 $ const { config, site, i18n } = out.global;
 $ const newsletterSignupConfigName = defaultValue(input.newsletterSignupConfigName, "signupFooter");
-$ const newsletterProps = defaultValue(input.newsletterBlockProps, {});
+$ const newsletterProps = getAsObject(input, "newsletterBlockProps");
 $ const newsletterConfig = site.getAsObject(`newsletter.${newsletterSignupConfigName}`);
 $ const blockName = input.blockName || "site-footer";
 $ const tagline = site.get("tagline");
