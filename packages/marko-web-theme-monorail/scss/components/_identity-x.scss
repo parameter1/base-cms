@@ -1,0 +1,14 @@
+.page {
+  &--profile, &--authenticate {
+    .custom-control {
+      padding-left: 2rem;
+    }
+    .custom-control-label {
+      line-height: 1.4;
+    }
+    .boolean-questions-label {
+      @include skin-typography($style: "header-2", $link-style: "primary");
+      margin-bottom: map-get($spacers, 2)
+    }
+  }
+}
