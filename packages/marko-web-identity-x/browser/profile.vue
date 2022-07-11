@@ -100,6 +100,11 @@
 
         <div v-if="customBooleanFieldAnswers.length" class="row">
           <div
+            v-if="booleanQuestionsLabel"
+            class="col-12 boolean-questions-label"
+            v-html="booleanQuestionsLabel"
+          />
+          <div
             v-for="fieldAnswer in customBooleanFieldAnswers"
             :key="fieldAnswer.id"
             class="col-12"
@@ -277,6 +282,10 @@ export default {
       default: () => [],
     },
     defaultCountryCode: {
+      type: String,
+      default: null,
+    },
+    booleanQuestionsLabel: {
       type: String,
       default: null,
     },
