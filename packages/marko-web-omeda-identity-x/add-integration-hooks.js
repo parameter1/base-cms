@@ -37,6 +37,7 @@ module.exports = (config) => {
       config,
       brandKey: config.getBrandKey(),
       res: args.res,
+      req: args.req,
       user: args.user,
     }),
   });
