@@ -7,6 +7,6 @@ const isFn = f => typeof f === 'function';
  */
 module.exports = (app, fn) => {
   const defaultFn = v => v;
-  const i18n = isFn(fn) || defaultFn;
+  const i18n = isFn(fn) ? fn : defaultFn;
   set(app.locals, 'i18n', i18n);
 };
