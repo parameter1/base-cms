@@ -14,6 +14,7 @@
       :required-client-fields="requiredClientFields"
       :hidden-fields="hiddenFields"
       :default-country-code="defaultCountryCode"
+      :boolean-questions-label="booleanQuestionsLabel"
       :consent-policy="consentPolicy"
       :email-consent-request="emailConsentRequest"
       :regional-consent-policies="regionalConsentPolicies"
@@ -105,6 +106,10 @@ export default {
       default: 'Submit',
     },
     defaultCountryCode: {
+      type: String,
+      default: null,
+    },
+    booleanQuestionsLabel: {
       type: String,
       default: null,
     },
