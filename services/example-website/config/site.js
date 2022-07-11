@@ -1,11 +1,13 @@
 const identityX = require('./identity-x');
 const omeda = require('./omeda');
+const oidx = require('./omeda-identity-x');
 const nativeX = require('./native-x');
 const navigation = require('./navigation');
 const newsletter = require('./newsletter');
 const search = require('./search');
 
 module.exports = {
+  omedaIdentityX: oidx({ omeda, identityX }),
   identityX,
   nativeX,
   navigation,
