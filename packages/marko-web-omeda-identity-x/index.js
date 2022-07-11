@@ -7,79 +7,88 @@ const resyncCustomerData = require('./middleware/resync-customer-data');
 const setOlyticsCookie = require('./middleware/set-olytics-cookie');
 const rapidIdentify = require('./middleware/rapid-identify');
 const rapidIdentifyRouter = require('./routes/rapid-identify');
+const OmedaIdentityXConfiguration = require('./config');
 
-module.exports = (app, {
-  brandKey: brand,
-  clientKey,
-  appId,
-  inputId,
+const { warn } = console;
 
-  rapidIdentProductId,
-  omedaGraphQLClientProp = '$omedaGraphQLClient',
-  omedaRapidIdentifyProp = '$omedaRapidIdentify',
+module.exports = (app, maybeCfg, idxRouteTemplates) => {
+  this.config = maybeCfg;
+  if (!(maybeCfg instanceof OmedaIdentityXConfiguration)) {
+    warn('Deprecated -- update call to oidx middleware to use configuration class instance!');
+    this.config = new OmedaIdentityXConfiguration({
+      omedaConfig: {
+        brandKey: maybeCfg.brandKey,
+        clientKey: maybeCfg.clientKey,
+        appId: maybeCfg.appId,
+        inputId: maybeCfg.inputId,
+        rapidIdentification: { productId: maybeCfg.rapidIdentProductId },
+      },
+      idxConfig: maybeCfg.idxConfig,
+      omedaGraphQLClientProp: maybeCfg.omedaGraphQLClientProp || '$omedaGraphQLClient',
+      omedaRapidIdentifyProp: maybeCfg.omedaRapidIdentifyProp || '$omedaRapidIdentify',
+      omedaPromoCodeCookieName: maybeCfg.omedaPromoCodeCookieName || 'omeda_promo_code',
+      idxOmedaRapidIdentifyProp: maybeCfg.idxOmedaRapidIdentifyProp || '$idxOmedaRapidIdentify',
+      omedaPromoCodeDefault: maybeCfg.omedaPromoCodeDefault,
+      ...maybeCfg,
+    });
+  }
 
-  omedaPromoCodeCookieName = 'omeda_promo_code',
-  omedaPromoCodeDefault,
-
-  idxConfig,
-  idxOmedaRapidIdentifyProp = '$idxOmedaRapidIdentify',
-  idxRouteTemplates = {},
-} = {}) => {
-  if (!brand) throw new Error('The Omeda `brandKey` is required.');
-  if (!appId) throw new Error('The Omeda `appId` is required.');
-  if (!rapidIdentProductId) throw new Error('The Omeda `rapidIdentProductId` is required.');
+  if (!this.config.getBrandKey()) throw new Error('The Omeda `brandKey` is required.');
+  if (!this.config.get('omedaConfig.appId')) throw new Error('The Omeda `appId` is required.');
+  if (!this.config.get('omedaConfig.rapidIdentification.productId')) throw new Error('The Omeda `rapidIdentification.productId` is required.');
 
   // consistently pass brand key
-  const brandKey = brand.trim().toLowerCase();
+  const brandKey = this.config.getBrandKey();
 
   // strip `oly_enc_id` when identity-x user is logged-in
   app.use(stripOlyticsParam());
 
   // set `omeda_promo_code` when the URL parameter is present
   app.use(setPromoSourceCookie({
-    omedaPromoCodeCookieName,
+    omedaPromoCodeCookieName: this.config.get('omedaPromoCodeCookieName'),
   }));
 
   // install omeda middleware
   omeda(app, {
     brandKey,
-    clientKey,
-    appId,
-    inputId,
-    rapidIdentProductId,
-    omedaGraphQLClientProp,
-    omedaRapidIdentifyProp,
+    clientKey: this.config.get('omedaConfig.clientKey'),
+    appId: this.config.get('omedaConfig.appId'),
+    inputId: this.config.get('omedaConfig.inputId'),
+    rapidIdentProductId: this.config.get('omedaConfig.rapidIdentification.productId'),
+    omedaGraphQLClientProp: this.config.get('omedaGraphQLClientProp'),
+    omedaRapidIdentifyProp: this.config.get('omedaRapidIdentifyProp'),
   });
 
   // add appropiate identity-x to omeda integration hooks
-  addOmedaHooksToIdentityXConfig({
-    idxConfig,
-    brandKey,
-    productId: rapidIdentProductId,
-    omedaGraphQLProp: omedaGraphQLClientProp,
-  });
+  addOmedaHooksToIdentityXConfig(this.config);
 
   // attach the identity-x rapid identification wrapper middleware
   app.use(rapidIdentify({
     brandKey,
-    productId: rapidIdentProductId,
-    prop: idxOmedaRapidIdentifyProp,
-    omedaRapidIdentifyProp,
-    omedaPromoCodeCookieName,
-    omedaPromoCodeDefault,
+    rapidIdentProductId: this.config.get('omedaConfig.rapidIdentification.productId'),
+    prop: this.config.get('idxOmedaRapidIdentifyProp'),
+    omedaRapidIdentifyProp: this.config.get('omedaRapidIdentifyProp'),
+    omedaPromoCodeCookieName: this.config.get('omedaPromoCodeCookieName'),
+    omedaPromoCodeDefault: this.config.get('omedaPromoCodeDefault'),
   }));
 
   // install identity x
-  identityX(app, idxConfig, { templates: idxRouteTemplates });
+  const templates = idxRouteTemplates || maybeCfg.idxRouteTemplates;
+  identityX(app, this.config.get('idxConfig'), { templates });
 
   app.use(setOlyticsCookie({ brandKey }));
 
   // install the Omeda data sync middleware
-  app.use(resyncCustomerData({ brandKey, omedaGraphQLClientProp }));
+  app.use(resyncCustomerData({
+    brandKey,
+    omedaGraphQLClientProp: this.config.get('omedaGraphQLClientProp'),
+  }));
 
   // register the rapid identify AJAX route
   app.use('/__idx/omeda-rapid-ident', rapidIdentifyRouter({
-    brandKey,
-    idxOmedaRapidIdentifyProp,
+    brandKey: this.config.getBrandKey(),
+    idxOmedaRapidIdentifyProp: this.config.get('idxOmedaRapidIdentifyProp'),
+    omedaPromoCodeCookieName: this.config.get('omedaPromoCodeCookieName'),
+    omedaPromoCodeDefault: this.config.get('omedaPromoCodeDefault'),
   }));
 };

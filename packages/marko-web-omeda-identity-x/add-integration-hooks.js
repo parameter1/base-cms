@@ -8,24 +8,20 @@ const {
 
 /**
  *
- * @param {object} params
- * @param {IdentityXConfiguration} params.idxConfig
+ * @param {OmedaIdentityXConfiguration} The oIdX config
  */
-module.exports = ({
-  idxConfig,
-  brandKey,
-  omedaGraphQLProp = '$omedaGraphQLClient',
-  idxOmedaRapidIdentifyProp = '$idxOmedaRapidIdentify',
-} = {}) => {
+module.exports = (config) => {
+  const idxConfig = config.get('idxConfig');
   if (!idxConfig) throw new Error('The IdentityX configuration instances is required to add Omeda+IdentityX integration hooks.');
   idxConfig.addHook({
     name: 'onLoginLinkSent',
     shouldAwait: false,
     fn: async args => onLoginLinkSent({
       ...args,
-      brandKey,
-      omedaGraphQLProp,
-      idxOmedaRapidIdentifyProp,
+      config,
+      brandKey: config.getBrandKey(),
+      omedaGraphQLProp: config.get('omedaGraphQLProp'),
+      idxOmedaRapidIdentifyProp: config.get('idxOmedaRapidIdentifyProp'),
 
       req: args.req,
       service: args.service,
@@ -36,7 +32,13 @@ module.exports = ({
   idxConfig.addHook({
     name: 'onAuthenticationSuccess',
     shouldAwait: true,
-    fn: async ({ user, res }) => onAuthenticationSuccess({ brandKey, user, res }),
+    fn: async args => onAuthenticationSuccess({
+      ...args,
+      config,
+      brandKey: config.getBrandKey(),
+      res: args.res,
+      user: args.user,
+    }),
   });
 
   idxConfig.addHook({
@@ -44,7 +46,8 @@ module.exports = ({
     shouldAwait: false,
     fn: async args => onUserProfileUpdate({
       ...args,
-      idxOmedaRapidIdentifyProp,
+      config,
+      idxOmedaRapidIdentifyProp: config.get('idxOmedaRapidIdentifyProp'),
       req: args.req,
       user: args.user,
     }),
@@ -53,7 +56,7 @@ module.exports = ({
   idxConfig.addHook({
     name: 'onLogout',
     shouldAwait: true,
-    fn: async ({ res }) => onLogout({ res }),
+    fn: async ({ res }) => onLogout({ res, config }),
   });
 
   return idxConfig;
