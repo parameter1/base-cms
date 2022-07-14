@@ -1,14 +1,10 @@
 const extractPromoCode = require('../utils/extract-promo-code');
 const {
+  getAnsweredQuestionMap,
   getOmedaCustomerRecord,
   getOmedaLinkedFields,
-  setOmedaData,
-  setOmedaDemographics,
-  setOmedaProducts,
-  setOmedaDeploymentTypes,
-  getAnsweredQuestionMap,
+  updateIdentityX,
 } = require('../omeda-data');
-
 
 module.exports = async ({
   brandKey,
@@ -43,47 +39,31 @@ module.exports = async ({
     }),
   ]);
 
-  const answeredQuestionMap = getAnsweredQuestionMap(user);
-  const hasAnsweredAllOmedaQuestions = omedaLinkedFields
-    .demographic.every(field => answeredQuestionMap.has(field.id))
-    && omedaLinkedFields
-      .product.every(field => answeredQuestionMap.has(field.id))
-    && omedaLinkedFields
-      .deploymentType.every(field => answeredQuestionMap.has(field.id));
+  const answers = getAnsweredQuestionMap(user);
+  const hasAllDemos = omedaLinkedFields.demographic.every(field => answers.has(field.id));
+  const hasAllDeployments = omedaLinkedFields.deploymentType.every(field => answers.has(field.id));
+  const hasAllProducts = omedaLinkedFields.product.every(field => answers.has(field.id));
+  const hasAnsweredAllOmedaQuestions = hasAllDemos && hasAllDeployments && hasAllProducts;
 
   // If the user is verified and has answered all Omeda questions, do nothing.
-  if (user.verified && hasAnsweredAllOmedaQuestions) {
-    return;
-  }
+  if (user.verified && hasAnsweredAllOmedaQuestions) return;
 
-  // find the omeda customer record to "prime" the identity-x user.
+  // Find the Omeda customer record to prime the identity-x user record.
   const omedaCustomer = await getOmedaCustomerRecord({ omedaGraphQLClient, encryptedCustomerId });
 
-  // Only set existing omeda data to IdentityX if the user is not yet verified (aka, new user)
-  if (!user.verified) await setOmedaData({ identityX, user, omedaCustomer });
-
-  // If the IdX user is missing answers, set from existing omeda demos (custom select/bool fields)
-  if (!hasAnsweredAllOmedaQuestions) {
-    await setOmedaDemographics({
-      identityX,
-      brandKey,
-      user,
-      omedaCustomer,
-      fields: omedaLinkedFields.demographic,
-    });
-    await setOmedaDeploymentTypes({
-      identityX,
-      brandKey,
-      user,
-      omedaCustomer,
-      fields: omedaLinkedFields.deploymentType,
-    });
-    await setOmedaProducts({
-      identityX,
-      brandKey,
-      user,
-      omedaCustomer,
-      fields: omedaLinkedFields.product,
-    });
-  }
+  // Update the IdentityX user record with the Omeda data (if any is present)
+  await updateIdentityX({
+    identityX,
+    brandKey,
+    user,
+    omedaCustomer,
+    omedaLinkedFields,
+  }, {
+    // Only set existing Omeda data to IdentityX if the user is not yet verified (aka, new user)
+    updateData: !user.verified,
+    // Update each type of linked (custom select/boolean) field if any are missing a value.
+    updateDemographics: !hasAllDemos,
+    updateDeploymentTypes: !hasAllDeployments,
+    updateProducts: !hasAllProducts,
+  });
 };
