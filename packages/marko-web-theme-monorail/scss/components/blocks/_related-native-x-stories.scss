@@ -1,0 +1,14 @@
+.page-wrapper {
+  $self: &;
+  &__section {
+   &--related-native-x-stories:last-child {
+    margin-bottom: 30px;
+    @include media-breakpoint-up(md) {
+      margin-bottom: 60px;
+    }
+    #{ $self }__website-section-name {
+      margin-bottom: 20px;
+    }
+   }
+  }
+}

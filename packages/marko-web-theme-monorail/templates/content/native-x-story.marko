@@ -1,0 +1,82 @@
+import convert from "@parameter1/base-cms-marko-web-native-x/utils/convert-story-to-content";
+
+$ const { nativeX } = out.global;
+
+$ const { story } = input;
+$ const content = convert(story);
+$ const { id, type } = content;
+$ const { primarySection } = content;
+
+<theme-default-page title=story.title description=story.teaser>
+  <@head>
+    <marko-web-native-x-gtm-init />
+  </@head>
+  <@page>
+    <marko-web-native-x-story-track-init story=story />
+    <marko-web-native-x-story-track-page-view />
+    <marko-web-native-x-story-track-social-share />
+
+    <marko-web-page-wrapper>
+      <@section|{ blockName }| modifiers=["nativex-story-header"]>
+        <div class="content-page-header">
+          <theme-breadcrumbs modifiers=["content-page"]>
+            <@item>
+              ${primarySection.name}
+            </@item>
+          </theme-breadcrumbs>
+          <marko-web-content-name tag="h1" block-name=blockName obj=content />
+          <presented-by advertiser=story.advertiser />
+        </div>
+      </@section>
+
+      <@section>
+        <div class="content-page-body" id="native-x-story-body">
+          <default-theme-page-contents|{ blockName }|>
+            <theme-primary-image-block obj=content.primaryImage />
+            <marko-web-content-body block-name=blockName obj=content />
+            <marko-web-social-sharing
+              url=content.siteContext.canonicalUrl
+              providers=["facebook", "linkedin", "twitter", "pinterest"]
+            />
+          </default-theme-page-contents>
+        </div>
+      </@section>
+
+      <@section modifiers=["related-native-x-stories"]>
+        <if(nativeX.publisherId)>
+          <marko-web-native-x-story-advertiser-related-stories|{ nodes }|
+            publisher-id=nativeX.publisherId
+            advertiser-id=story.advertiser.id
+            exclude-story-ids=[story.id]
+          >
+            <marko-web-node-list
+              inner-justified=true
+              flush-x=true
+              flush-y=false
+              modifiers=["section-feed"]
+            >
+              <@header>
+                <h2 title=`More from ${story.advertiser.name}` class="page-wrapper__website-section-name" >
+                  More from ${story.advertiser.name}
+                </h2>
+              </@header>
+              <@nodes nodes=nodes>
+                <@slot|{ node }|>
+                  <theme-section-feed-content-node
+                    node=convert(node)
+                    display-image=true
+                    with-section=false
+                    lazyload=false
+                  />
+                </@slot>
+              </@nodes>
+            </marko-web-node-list>
+          </marko-web-native-x-story-advertiser-related-stories>
+        </if>
+      </@section>
+    </marko-web-page-wrapper>
+
+    <marko-web-native-x-story-track-outbound-links container="#native-x-story-body" />
+    <marko-web-native-x-story-track-end-of-content />
+  </@page>
+</theme-default-page>
