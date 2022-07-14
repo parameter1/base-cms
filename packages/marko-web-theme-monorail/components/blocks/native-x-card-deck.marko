@@ -65,7 +65,7 @@ $ const placement = nxConfig.getPlacement({ name: placementName, aliases });
               with-dates=false
               with-section=true
               ...input.node
-              ...convertAdToNode(ad, `Presented by ${ad.campaign.advertiserName}`)
+              ...convertAdToNode(ad, { sectionName: `Presented by ${ad.campaign.advertiserName}` })
             >
               <@image ar="3:2" fluid=true ...nodeImageInput />
             </theme-content-node>
