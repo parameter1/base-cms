@@ -1,7 +1,7 @@
 const gql = require('graphql-tag');
 const { getAsArray } = require('@parameter1/base-cms-object-path');
 const getAnsweredQuestionMap = require('./get-answered-question-map');
-const isOmedaDeploymentType = require('../external-id/is-deployment-type-id');
+const isOmedaProductId = require('../external-id/is-product-id');
 
 const SET_OMEDA_BOOLEAN_FIELD_ANSWERS = gql`
 mutation SetOmedaBooleanFieldAnswers($input: UpdateAppUserCustomBooleanAnswersMutationInput!) {
@@ -19,15 +19,14 @@ module.exports = async ({
   omedaCustomer,
   fields = [],
 }) => {
-  const statusMap = getAsArray(omedaCustomer, 'primaryEmailAddress.optInStatus').reduce((map, { deploymentTypeId, status }) => {
-    const optedIn = status.id === 'IN';
-    map.set(`${deploymentTypeId}`, optedIn);
+  const statusMap = getAsArray(omedaCustomer, 'subscriptions').reduce((map, { product, receive }) => {
+    map.set(`${product.id}`, receive);
     return map;
   }, new Map());
 
   const answeredQuestionMap = getAnsweredQuestionMap(user);
   const answerMap = fields
-    .filter(field => isOmedaDeploymentType({ externalId: field.externalId, brandKey }))
+    .filter(field => isOmedaProductId({ externalId: field.externalId, brandKey }))
     .reduce((map, field) => {
       // Only set values that haven't already been answered.
       if (answeredQuestionMap.has(field.id)) return map;

@@ -2,6 +2,7 @@ const gql = require('graphql-tag');
 const { get, getAsArray } = require('@parameter1/base-cms-object-path');
 const isOmedaDemographicId = require('./external-id/is-demographic-id');
 const isDeploymentTypeId = require('./external-id/is-deployment-type-id');
+const isProductId = require('./external-id/is-product-id');
 
 const ALPHA3_CODE = gql`
   query GetAlpha3Code($alpha2: String!) {
@@ -71,6 +72,7 @@ module.exports = async ({
   });
 
   const deploymentTypes = [];
+  const subscriptions = [];
   getAsArray(appUser, 'customBooleanFieldAnswers').forEach((boolean) => {
     const { field, hasAnswered } = boolean;
     const { externalId } = field;
@@ -85,6 +87,10 @@ module.exports = async ({
 
     if (isDeploymentTypeId({ externalId, brandKey })) {
       deploymentTypes.push({ id, optedIn: boolean.answer });
+    }
+
+    if (isProductId({ externalId, brandKey })) {
+      subscriptions.push({ id, receive: boolean.answer });
     }
   });
 
@@ -101,6 +107,7 @@ module.exports = async ({
     ...(demographics.length && { demographics }),
     ...(deploymentTypes.length && { deploymentTypes }),
     ...(promoCode && { promoCode }),
+    ...(subscriptions.length && { subscriptions }),
   });
 
   const namespace = { provider: 'omeda', tenant: brandKey.toLowerCase(), type: 'customer' };

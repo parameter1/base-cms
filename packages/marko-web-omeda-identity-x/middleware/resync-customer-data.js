@@ -5,8 +5,7 @@ const findEncryptedId = require('../external-id/find-encrypted-customer-id');
 const {
   getOmedaCustomerRecord,
   getOmedaLinkedFields,
-  setOmedaDemographics,
-  setOmedaDeploymentTypes,
+  updateIdentityX,
 } = require('../omeda-data');
 
 /**
@@ -38,21 +37,20 @@ module.exports = ({
     getOmedaLinkedFields({ identityX, brandKey }),
   ]);
 
-  // Update the IdentityX user record custom select fields with the Omeda customer demographics
-  await setOmedaDemographics({
-    req,
+  // Update the IdentityX user record custom select fields with the Omeda user data
+  await updateIdentityX({
     identityX,
+    brandKey,
     user,
     omedaCustomer,
-    fields: omedaLinkedFields.demographic,
-  });
-
-  // Update the IdentityX user record custom boolean fields with the Omeda deployment opt-ins
-  await setOmedaDeploymentTypes({
-    identityX,
-    user,
-    omedaCustomer,
-    fields: omedaLinkedFields.deploymentType,
+    omedaLinkedFields,
+  }, {
+    // Do not update core user fields (name, email, etc) on a verified user.
+    updateData: !user.verified,
+    // Update any linked custom fields with the relevant values from Omeda.
+    updateDemographics: true,
+    updateDeploymentTypes: true,
+    updateProducts: true,
   });
 
   // Set the cookie to prevent further resyncs until interval is reached.
