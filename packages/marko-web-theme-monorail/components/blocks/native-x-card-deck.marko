@@ -57,14 +57,15 @@ $ const placement = nxConfig.getPlacement({ name: placementName, aliases });
           <marko-web-element name="node" block-name="card-deck-flow">
             <theme-content-node
               image-position="top"
+              modifiers=["content-card-deck"]
               card=true
               flush=true
               full-height=true
               with-teaser=false
               with-dates=false
-              with-section=false
+              with-section=true
               ...input.node
-              ...convertAdToNode(ad)
+              ...convertAdToNode(ad, { sectionName: `Presented by ${ad.campaign.advertiserName}` })
             >
               <@image ar="3:2" fluid=true ...nodeImageInput />
             </theme-content-node>
