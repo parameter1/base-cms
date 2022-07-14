@@ -31,12 +31,6 @@ module.exports = async (
     updateProducts = false,
   } = {},
 ) => {
-  console.log('Updating IdentityX Data', {
-    updateData,
-    updateDemographics,
-    updateDeploymentTypes,
-    updateProducts,
-  });
   if (updateData) {
     await setOmedaData({
       identityX,
