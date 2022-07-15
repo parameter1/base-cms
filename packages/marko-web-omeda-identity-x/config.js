@@ -18,6 +18,10 @@ class OmedaIdentityXConfiguration {
     omedaGraphQLClientProp = '$omedaGraphQLClient',
     omedaRapidIdentifyProp = '$omedaRapidIdentify',
   } = {}) {
+    this.hookBehaviors = {};
+    this.hookDemographics = {};
+    this.hookPromoCodes = {};
+
     if (!omedaConfig) throw new Error('Unable to configure Omeda+IdentityX: No Omeda config was provided.');
     if (!idxConfig) throw new Error('Unable to configure Omeda+IdentityX: No IdentityX config was provided.');
 
@@ -30,6 +34,29 @@ class OmedaIdentityXConfiguration {
 
     this.omedaPromoCodeCookieName = omedaPromoCodeCookieName;
     this.omedaPromoCodeDefault = omedaPromoCodeDefault;
+  }
+
+  validateHook(name) {
+    const valid = Object.keys(this.idxConfig.hooks);
+    if (!valid.includes(name)) throw new Error(`The IdentityX hook "${name}" is invalid.`);
+  }
+
+  // Sets the behavior ID to be sent when the relevant IdentityX hook is fired
+  setHookBehavior(name, behaviorId) {
+    this.validateHook(name);
+    this.hookBehaviors[name] = behaviorId;
+  }
+
+  // Sets the demographic data to be sent when the relevant IdentityX hook is fired
+  setHookDemographic(name, id, values, writeInValue) {
+    this.validateHook(name);
+    this.hookDemographics[name] = { id, values, writeInValue };
+  }
+
+  // Sets the promo code to be sent when the relevant IdentityX hook is fired
+  setHookPromoCode(name, code) {
+    this.validateHook(name);
+    this.hookPromoCodes[name] = code;
   }
 
   getBrandKey() {
