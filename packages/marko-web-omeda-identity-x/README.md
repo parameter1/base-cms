@@ -17,7 +17,7 @@ The `OmedaIdentityXConfiguration` class accepts the following parameters:
 | - | - | - | - |
 | `omedaConfig` | **Yes** | The Omeda configuration (POJO) | _n/a_
 | `idxConfig` | **Yes** | An instance of the `IdentityXConfiguration` class | _n/a_
-`omedaPromoCodeCookieName` | No | The name of the cookie to look for a persisted/original promo code. | `omeda_promo_code` |
+| `omedaPromoCodeCookieName` | No | The name of the cookie to look for a persisted/original promo code. | `omeda_promo_code` |
 | `omedaPromoCodeDefault` | No | The default promo code to send with all Omeda requests. | None: falls back to input ID default configured by Omeda. |
 | `idxOmedaRapidIdentifyProp` | No | The property (in the express app context) where the O+IdX rapid identification service is located. | `$idxOmedaRapidIdentify` |
 | `omedaGraphQLClientProp` | No | The property (in the express app context) where the Omeda GraphQL client is located. | `$omedaGraphQLClient` |
@@ -29,7 +29,7 @@ To send a custom behavior, demographic, or promocode along with a rapid identifi
 #### Custom Behavior (`setHookBehavior`)
 This function ensures that the supplied behavior id is included as part of the rapid identification request. The behavior must be created before use via the Omeda Behavior APIs.
 
-| Property | Type | Description |
+| Argument | Type | Description |
 | - | - | - |
 | `hookName` | `String` | The IdentityX hook to modify (see [IdX hooks](./add-integration-hooks.js))
 | `behaviorId` | `Number` | The Omeda Behavior ID to send
@@ -43,7 +43,7 @@ oidx.setHookBehavior('onLoginLinkSent', 6);
 #### Custom Demographic (`setHookDemographic`)
 This function ensures the supplied demographic values are included as part of the rapid identification request. If specified, a `writeInValue` can be sent for a demographic answers supporting OEC/Other values.
 
-| Property | Type | Description |
+| Argument | Type | Description |
 | - | - | - |
 | `hookName` | `String` | The IdentityX hook to modify (see [IdX hooks](./add-integration-hooks.js))
 | `demographicId` | `Number` | The Omeda Demographic ID to send
@@ -61,7 +61,7 @@ This function ensures the supplied promo code is included as part of the rapid i
 
 *Note*: unlike the other two methods, specifying a hook promo code will __overwrite__ any incoming promo code. Since Omeda promo codes overwrite each other, this allows you to specify the promo code that will __always__ be applied on a hook operation, rather than just appending to the request.
 
-| Property | Type | Description |
+| Argument | Type | Description |
 | - | - | - |
 | `hookName` | `String` | The IdentityX hook to modify (see [IdX hooks](./add-integration-hooks.js))
 | `promoCode` | `String` | The Omeda Promo Code to send
