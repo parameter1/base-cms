@@ -10,22 +10,18 @@ Based on the identity provider(s) in use, install and configure ***only one*** o
 Additional information can be found in the [Omeda](https://training.omeda.com/knowledge-base/api-overview/) and [IdentityX](https://docs.parameter1.com/identity-x) API documentation.
 
 ## Configuration
-All configuration data must be passed to the middleware when loaded (See [Middleware Setup](#1-middleware-setup) below.)
+To configure this integration, create a new instance of the `OmedaIdentityXConfiguration` class and pass it to the middleware when loaded (See [Middleware Setup](#1-middleware-setup) below.)
+The `OmedaIdentityXConfiguration` class accepts the following parameters:
 
-| Key | Description | Link
-| - | - | - |
-| `brandKey` | (Required) The Omeda Brand key (such as `orgcd`).
-| `clientKey` | (Optional) The Omeda client key (such as `client_orgc`.) *Required if sending deployment optIns via the underlying omeda package!* | [marko-web-omeda docs](../marko-web-omeda)
-| `appId` | (Required) The Omeda application API read token
-| `inputId` | (Required) The Omeda application API write token
-| `rapidIdentProductId` | (Required) The Omeda identifier for a Website product (ProductType=7).
-| `idxConfig` | (Required) An instance of the IdentityX configuration class | [marko-web-identity-x#1](../marko-web-identity-x/config.js)
-| `idxRouteTemplates` | (Required) An object containing the Marko templates to use for each IdentityX endpoint. | [marko-web-identity-x#2](../marko-web-identity-x/index.js)
-| `omedaGraphQLClientProp` | (Optional) Custom path to the Omeda GraphQL client (within app.locals), default value `$omedaGraphQLClient`
-| `omedaRapidIdentifyProp` | (Optional) Custom path to the Omeda Rapid Identification handler (within app.locals), default value `$omedaRapidIdentify`
-| `idxOmedaRapidIdentifyProp` | (Optional) Custom path to the IdentityX Omeda Rapid Identification handler (within app.locals), default value `$idXOmedaRapidIdentify`
-| `omedaPromoCodeCookieName` | (Optional) The Omeda promocode cookie name to detect, default value `omeda_promo_code`
-| `omedaPromoCodeDefault` | (Optional) The default promo code to send with rapid identification requests
+| Property  | Required? | Description | Default value |
+| - | - | - | - |
+| `omedaConfig` | **Yes** | The Omeda configuration (POJO) | _n/a_
+| `idxConfig` | **Yes** | An instance of the `IdentityXConfiguration` class | _n/a_
+`omedaPromoCodeCookieName` | No | The name of the cookie to look for a persisted/original promo code. | `omeda_promo_code` |
+| `omedaPromoCodeDefault` | No | The default promo code to send with all Omeda requests. | None: falls back to input ID default configured by Omeda. |
+| `idxOmedaRapidIdentifyProp` | No | The property (in the express app context) where the O+IdX rapid identification service is located. | `$idxOmedaRapidIdentify` |
+| `omedaGraphQLClientProp` | No | The property (in the express app context) where the Omeda GraphQL client is located. | `$omedaGraphQLClient` |
+|`omedaRapidIdentifyProp` | No | The property (in the express app context) where the Omeda rapid identification service is located. | `$omedaRapidIdentify` |
 
 ## Usage
 This package:
@@ -41,17 +37,16 @@ See config section above and the Omeda and IdentityX package documentation for a
 
 ```js
 const handler = require('@parameter1/base-cms-marko-web-omeda-identity-x');
+const config = require('@parameter1/base-cms-marko-web-omeda-identity-x/config');
 const omedaConfig = require('./config/omeda');
 const idXConfig = require('./config/identity-x');
 const idxRouteTemplates = require('./templates/user');
 
+const oidxConfig = new config({ omedaConfig, idxConfig });
+
 startServer({
   onStart: async (app) => {
-    handler(app, {
-      ...omedaConfig,
-      idxConfig,
-      idxRouteTemplates,
-    })
+    handler(app, oidxConfig, idxRouteTemplates);
   },
 }
 ```
@@ -59,7 +54,7 @@ startServer({
 It can also be loaded as a standard Express route middleware.
 ```js
 module.exports = (app) => {
-  handler(app, { ...omedaConfig, idxConfig, idxRouteTemplates });
+  handler(app, oidxConfig, idxRouteTemplates);
 };
 ```
 
