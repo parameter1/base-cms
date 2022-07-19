@@ -34,6 +34,7 @@
         v-model="email"
         :placeholder="loginEmailPlaceholder"
         :disabled="loading"
+        :label="loginEmailLabel"
       />
       <small
         v-if="consentPolicy"
@@ -128,6 +129,10 @@ export default {
     actionText: {
       type: String,
       default: 'logging in',
+    },
+    loginEmailLabel: {
+      type: String,
+      default: 'Email Address',
     },
 
     /**

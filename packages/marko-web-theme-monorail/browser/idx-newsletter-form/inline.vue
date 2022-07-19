@@ -23,6 +23,7 @@
             :consent-policy="consentPolicy"
             :regional-consent-policies="regionalConsentPolicies"
             :app-context-id="appContextId"
+            :login-email-label="translateEmail"
             success-message-type="newsletter-signup"
             @login-link-sent="handleLoginLinkSent"
           />
@@ -34,6 +35,7 @@
 
 <script>
 import LoginForm from '@parameter1/base-cms-marko-web-identity-x/browser/login.vue';
+import i18n from '../i18n-vue';
 
 export default {
   inject: ['EventBus'],
@@ -121,6 +123,10 @@ export default {
         forceProfileReVerification: true,
       }),
     },
+    loginEmailLabel: {
+      type: String,
+      default: '',
+    },
     /**
      * Regional consent polices to display (if/when a user selects a country on login)
      * if enabled.
@@ -138,6 +144,13 @@ export default {
     step: 1,
     submitted: false,
   }),
+
+  computed: {
+    translateEmail() {
+      if (this.loginEmailLabel) return this.loginEmailLabel;
+      return i18n(this.lang, 'emailAddress');
+    },
+  },
 
   watch: {
     didView(value) {
