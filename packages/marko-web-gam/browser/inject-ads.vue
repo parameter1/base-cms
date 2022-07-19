@@ -93,6 +93,12 @@ export default {
                 $child.before(cleaned);
               } else if (!$next.hasClass('ad-container')) {
                 $child.after(cleaned);
+              } else {
+                const [toInsert] = $.parseHTML(cleaned);
+                if (!toInsert) return;
+                if (toInsert.dataset.gamTemplateName !== $next.data().gamTemplateName) {
+                  $child.after(cleaned);
+                }
               }
             }
           }

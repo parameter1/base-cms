@@ -25,6 +25,7 @@ $ const {
   withWrapper,
   collapseBeforeAdFetch,
   requestOnMediaMatch,
+  templateName,
   position,
 } = input;
 $ const id = input.id || generateId({ inc });
@@ -57,6 +58,7 @@ $ const attrs = {
   "data-gam-size": JSON.stringify(size),
   "data-gam-size-mapping": sizeMapping ? JSON.stringify(sizeMapping) : undefined,
   "data-gam-targeting": targeting ? JSON.stringify(targeting) : undefined,
+  "data-gam-template-name": templateName ? templateName : undefined,
   "data-gam-collapse": `${collapse}`,
   ...(collapseBeforeAdFetch && { "data-gam-collapse-before-ad-fetch": "true" }),
   ...(oop && { "data-gam-oop": "true" }),

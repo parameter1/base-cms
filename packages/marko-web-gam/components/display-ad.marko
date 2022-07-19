@@ -13,6 +13,7 @@ $ if (slot) {
   attrs["data-gam-size"] = JSON.stringify(slot.size);
   attrs["data-gam-size-mapping"] = slot.sizeMapping ? JSON.stringify(slot.sizeMapping) : undefined;
   attrs["data-gam-targeting"] = slot.targeting ? JSON.stringify(slot.targeting) : undefined;
+  attrs["data-gam-template-name"] = slot.templateName ? slot.templateName : undefined;
 }
 
 <if(id)>
