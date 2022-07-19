@@ -1,6 +1,8 @@
 export default {
   en: {
     visitSiteLabel: 'Visit Site',
+    // Email Signup
+    emailAddress: 'Email Address',
     // Email Signup Privacy Policy
     emailProviding: 'By providing your email, you agree to our',
     protectedBy: 'This site is protected by reCAPTCHA and the Google',
@@ -23,8 +25,9 @@ export default {
   },
   es: {
     visitSiteLabel: 'Visite el sitio',
+    // Email Signup
+    emailAddress: 'Correo Electrónico',
     // Email Signup Privacy Policy
-
     emailProviding: 'Al darnos su correo electrónico usted acepta nuestra',
     protectedBy: 'Este sitio está protegido por reCAPTCHA y por la Política de Privacidad de Google',
     privacyPolicy: 'Política de Privacidad',
