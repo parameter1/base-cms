@@ -1,0 +1,22 @@
+import { buildImgixUrl } from "@parameter1/base-cms-image";
+import { get } from "@parameter1/base-cms-object-path";
+
+$ const { advertiser } = input;
+$ const imgDefaults = { auto: "format,compress", h: 50 };
+$ const imgSrc = get(advertiser, "logo.src");
+
+<if(imgSrc)>
+  $ const src = buildImgixUrl(imgSrc, imgDefaults);
+  $ const srcset = [`${src}&dpr=2 2x`];
+  <marko-web-block name="sponsor-logo">
+    <marko-web-element block-name="sponsor-logo" name="label">
+      Presented by
+    </marko-web-element>
+    <marko-web-img
+      class="sponsor-logo__logo"
+      src=src
+      srcset=srcset
+      alt="Sponsor Logo"
+    />
+  </marko-web-block>
+</if>

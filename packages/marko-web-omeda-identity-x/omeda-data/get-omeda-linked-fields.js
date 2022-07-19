@@ -2,6 +2,7 @@ const gql = require('graphql-tag');
 const { getAsArray } = require('@parameter1/base-cms-object-path');
 const isOmedaDeploymentTypeId = require('../external-id/is-deployment-type-id');
 const isOmedaDemographicId = require('../external-id/is-demographic-id');
+const isOmedaProductId = require('../external-id/is-product-id');
 
 const query = gql`
   query GetCustomFields {
@@ -44,6 +45,7 @@ module.exports = async ({
   const omedaLinkedFields = {
     demographic: [],
     deploymentType: [],
+    product: [],
   };
   getAsArray(data, 'fields.edges').forEach((edge) => {
     const { node: field } = edge;
@@ -54,6 +56,9 @@ module.exports = async ({
     }
     if (field.type === 'boolean' && isOmedaDeploymentTypeId({ externalId, brandKey })) {
       omedaLinkedFields.deploymentType.push(field);
+    }
+    if (field.type === 'boolean' && isOmedaProductId({ externalId, brandKey })) {
+      omedaLinkedFields.product.push(field);
     }
   });
 

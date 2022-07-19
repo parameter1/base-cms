@@ -27,6 +27,10 @@ const query = gql`
       primaryEmailAddress {
         optInStatus { deploymentTypeId status { id } }
       }
+      subscriptions {
+        product { id }
+        receive
+      }
     }
   }
 `;
