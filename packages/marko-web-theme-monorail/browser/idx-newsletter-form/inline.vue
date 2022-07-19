@@ -23,7 +23,7 @@
             :consent-policy="consentPolicy"
             :regional-consent-policies="regionalConsentPolicies"
             :app-context-id="appContextId"
-            :login-email-label="translateEmail('emailAddress')"
+            :login-email-label="translateEmail"
             success-message-type="newsletter-signup"
             @login-link-sent="handleLoginLinkSent"
           />
@@ -145,6 +145,13 @@ export default {
     submitted: false,
   }),
 
+  computed: {
+    translateEmail() {
+      if (this.loginEmailLabel) return this.loginEmailLabel;
+      return i18n(this.lang, 'emailAddress');
+    },
+  },
+
   watch: {
     didView(value) {
       if (value) this.$emit('view', { step: 1 });
@@ -167,10 +174,6 @@ export default {
     },
     handleLoginLinkSent() {
       this.submitted = true;
-    },
-    translateEmail(key) {
-      if (this.loginEmailLabel) return this.loginEmailLabel;
-      return i18n(this.lang, key);
     },
   },
 };
