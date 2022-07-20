@@ -89,9 +89,9 @@ $ const navigation = {
   <${input.belowNav} />
 </marko-web-block>
 
-<if(useIdxNewsletterSignup)>
+<if(!input.hasUser && !newsletterConfig.disabled && useIdxNewsletterSignup)>
     <identity-x-newsletter-form-pushdown ...newsletterMenuBlockProps />
 </if>
-<else>
+<else-if(!newsletterConfig.disabled && !useIdxNewsletterSignup)>
   <theme-site-newsletter-menu ...newsletterMenuBlockProps />
-</else>
+</else-if>
