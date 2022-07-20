@@ -9,8 +9,9 @@ $ const blockName = input.blockName || "site-header";
 
 // Newsletter Signup block display logic
 $ const useIdxNewsletterSignup = defaultValue(input.useIdxNewsletterSignup, true);
-$ const enableIdxNewsletterSignup = !newsletterConfig.disabled && useIdxNewsletterSignup && !input.hasUser;
-$ const enableNewsletterSignup = !newsletterConfig.disabled && !enableIdxNewsletterSignup;
+$ const enableIdxNewsletterSignup = !newsletterConfig.disabled && useIdxNewsletterSignup;
+$ const showIdxNewsletterSignup = enableIdxNewsletterSignup && !input.hasUser;
+$ const showNewsletterSignup = !newsletterConfig.disabled && !enableIdxNewsletterSignup;
 
 $ const showSearchIcon = defaultValue(input.showSearchIcon, false);
 $ const menuBtnPosition = defaultValue(input.menuBtnPosition, 'left');
@@ -58,10 +59,10 @@ $ const navigation = {
     />
     <marko-web-element block-name="site-navbar" name="icon-wrapper">
       <!-- Newsletter Menue Toggler -->
-      <if(enableIdxNewsletterSignup)>
+      <if(showIdxNewsletterSignup)>
         <marko-web-browser-component name="IdentityXNewsletterToggleButton" ssr=true />
       </if>
-      <else-if(enableNewsletterSignup)>
+      <else-if(showNewsletterSignup)>
         <marko-web-browser-component name="ThemeNewsletterToggleButton" ssr=true />
       </else-if>
 
@@ -94,9 +95,9 @@ $ const navigation = {
   <${input.belowNav} />
 </marko-web-block>
 
-<if(enableIdxNewsletterSignup)>
+<if(showIdxNewsletterSignup)>
   <identity-x-newsletter-form-pushdown ...newsletterMenuBlockProps />
 </if>
-<else-if(enableNewsletterSignup)>
+<else-if(showNewsletterSignup)>
   <theme-site-newsletter-menu ...newsletterMenuBlockProps />
 </else-if>
