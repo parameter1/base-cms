@@ -7,6 +7,7 @@ module.exports = async ({
   brandKey,
   promoCode: hookDataPromoCode,
   user,
+  req,
   res,
 }) => {
   const encryptedId = findEncryptedId({ externalIds: user.externalIds, brandKey });
@@ -15,7 +16,7 @@ module.exports = async ({
   const idxOmedaRapidIdentifyProp = config.get('idxOmedaRapidIdentifyProp');
   const omedaPromoCodeCookieName = config.get('omedaPromoCodeCookieName');
   const omedaPromoCodeDefault = config.get('omedaPromoCodeDefault');
-  const idxOmedaRapidIdentify = res[idxOmedaRapidIdentifyProp];
+  const idxOmedaRapidIdentify = req[idxOmedaRapidIdentifyProp];
   if (!idxOmedaRapidIdentify) throw new Error(`Unable to find the IdentityX+Omeda rapid identifier on the request using ${idxOmedaRapidIdentifyProp}`);
 
   const promoCode = extractPromoCode({
@@ -24,9 +25,9 @@ module.exports = async ({
     omedaPromoCodeDefault,
     cookies: res.req.cookies,
   });
-  const appendBehavior = config.get('hookBehaviors.onUserProfileUpdate');
-  const appendDemographic = config.get('hookDemographics.onUserProfileUpdate');
-  const appendPromoCode = config.get('hookPromoCodes.onUserProfileUpdate');
+  const appendBehavior = config.get('hookBehaviors.onAuthenticationSuccess');
+  const appendDemographic = config.get('hookDemographics.onAuthenticationSuccess');
+  const appendPromoCode = config.get('hookPromoCodes.onAuthenticationSuccess');
 
   await idxOmedaRapidIdentify({
     user,

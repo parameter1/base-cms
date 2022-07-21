@@ -12,9 +12,9 @@ module.exports = ({ omeda, identityX }) => {
    * If present, the specified behavior, demographic, and/or promo code will be used/appended when
    * handling the relevant IdentityX hook event.
    */
-  oidx.setHookBehavior('onLoginLinkSent', 6);
-  oidx.setHookBehavior('onAuthenticationSuccess', 7);
-  oidx.setHookBehavior('onUserProfileUpdate', 8);
+  oidx.setHookBehavior('onLoginLinkSent', 6232);
+  oidx.setHookBehavior('onAuthenticationSuccess', 6231);
+  oidx.setHookBehavior('onUserProfileUpdate', 6233);
   // oidx.setHookBehavior('onLoadActiveContext', 0);
   // oidx.setHookBehavior('onLogout', 0);
 

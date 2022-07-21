@@ -110,12 +110,7 @@ module.exports = async ({
 
   // Append custom behavior, if specified
   if (appendBehavior) {
-    behaviors.push({
-      id: appendBehavior.id,
-      date: appendBehavior.date || new Date(),
-      ...(appendBehavior.promoCode && { promoCode: appendBehavior.promoCode }),
-      ...(appendBehavior.attributes && { attributes: appendBehavior.attributes }),
-    });
+    behaviors.push({ id: appendBehavior });
   }
 
   const { id, encryptedCustomerId } = await omedaRapidIdentify({
