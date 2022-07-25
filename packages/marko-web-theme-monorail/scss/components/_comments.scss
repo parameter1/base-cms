@@ -39,12 +39,17 @@ $bottom-gradient-height: 180px !default;
   .idx-comment-stream {
     &:not(.idx-comment-stream__counter--1) {
       max-height: $comment-start-height;
+      overflow: hidden;
     }
   }
   &--open {
     .idx-comment-stream {
       max-height: 100%;
       overflow: visible;
+      &:not(.idx-comment-stream__counter--1) {
+        max-height: initial;
+        overflow: visible;
+      }
     }
     height: initial;
     max-height: initial;
@@ -59,7 +64,6 @@ $bottom-gradient-height: 180px !default;
 
 .idx-comment-stream {
   $self: &;
-  overflow: hidden;
   position: relative;
   display: block;
   padding-top: map-get($spacers, block);
