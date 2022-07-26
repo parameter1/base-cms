@@ -10,15 +10,19 @@ Based on the identity provider(s) in use, install and configure ***only one*** o
 Additional information can be found in the [Omeda](https://training.omeda.com/knowledge-base/api-overview/) and [IdentityX](https://docs.parameter1.com/identity-x) API documentation.
 
 ## Configuration
-To configure this integration, create a new instance of the `OmedaIdentityXConfiguration` class and pass it to the middleware when loaded (See [Middleware Setup](#1-middleware-setup) below.)
-The `OmedaIdentityXConfiguration` class accepts the following parameters:
+All configuration data must be passed to the middleware when loaded (See [Middleware Setup](#1-middleware-setup) below.)
 
 | Property  | Required? | Description | Default value |
 | - | - | - | - |
-| `omedaConfig` | **Yes** | The Omeda configuration (POJO) | _n/a_
-| `idxConfig` | **Yes** | An instance of the `IdentityXConfiguration` class | _n/a_
+| `brandKey` | **Yes** | The Omeda Brand key (such as `orgcd`).
+| `clientKey` | No | The Omeda client key (such as `client_orgc`.) *Required if sending deployment optIns via the underlying omeda package!* [marko-web-omeda docs](../marko-web-omeda)
+| `appId` | **Yes** | The Omeda application API read token
+| `inputId` | **Yes** | The Omeda application API write token
+| `rapidIdentProductId` | **Yes** | The Omeda identifier for a Website product (ProductType=7).
+| `idxConfig` | **Yes** | An instance of the IdentityX configuration class (see [marko-web-identity-x#1](../marko-web-identity-x/config.js)) | _n/a_
+| `idxRouteTemplates` | **Yes** | An object containing the Marko templates to use for each IdentityX endpoint. (see [marko-web-identity-x#2](../marko-web-identity-x/index.js))
 | `omedaPromoCodeCookieName` | No | The name of the cookie to look for a persisted/original promo code. | `omeda_promo_code` |
-| `omedaPromoCodeDefault` | No | The default promo code to send with all Omeda requests. | None: falls back to input ID default configured by Omeda. |
+| `omedaPromoCodeDefault` | No | The default promo code to send with all Omeda requests. Falls back to input ID default configured by Omeda. |
 | `idxOmedaRapidIdentifyProp` | No | The property (in the express app context) where the O+IdX rapid identification service is located. | `$idxOmedaRapidIdentify` |
 | `omedaGraphQLClientProp` | No | The property (in the express app context) where the Omeda GraphQL client is located. | `$omedaGraphQLClient` |
 |`omedaRapidIdentifyProp` | No | The property (in the express app context) where the Omeda rapid identification service is located. | `$omedaRapidIdentify` |
@@ -86,16 +90,18 @@ See config section above and the Omeda and IdentityX package documentation for a
 
 ```js
 const handler = require('@parameter1/base-cms-marko-web-omeda-identity-x');
-const config = require('@parameter1/base-cms-marko-web-omeda-identity-x/config');
 const omedaConfig = require('./config/omeda');
 const idXConfig = require('./config/identity-x');
 const idxRouteTemplates = require('./templates/user');
 
-const oidxConfig = new config({ omedaConfig, idxConfig });
-
 startServer({
   onStart: async (app) => {
-    handler(app, oidxConfig, idxRouteTemplates);
+    handler(app, {
+      ...omedaConfig,
+      idxConfig,
+      idxRouteTemplates,
+      // additional config, as needed
+    })
   },
 }
 ```
@@ -103,7 +109,7 @@ startServer({
 It can also be loaded as a standard Express route middleware.
 ```js
 module.exports = (app) => {
-  handler(app, oidxConfig, idxRouteTemplates);
+  handler(app, { ...omedaConfig, idxConfig, idxRouteTemplates }, idxRouteTemplates);
 };
 ```
 
@@ -117,3 +123,10 @@ export default (Browser) => {
   OmedaIdentityX(Browser);
 };
 ```
+
+# Todo
+- [ ] Drop IdentityXConfiguration class in favor of adding options to middleware args
+- [ ] Remove default values from modules )onProfileUpated,etc)
+- [ ] Add Joi validation middleware args
+- [ ] Add Joi validation to module args
+- [ ] re-test

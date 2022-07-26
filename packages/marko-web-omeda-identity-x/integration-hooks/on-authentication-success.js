@@ -1,11 +1,14 @@
+
 const olyticsCookie = require('@parameter1/base-cms-marko-web-omeda/olytics/customer-cookie');
 const extractPromoCode = require('../utils/extract-promo-code');
 const findEncryptedId = require('../external-id/find-encrypted-customer-id');
 
 module.exports = async ({
-  config,
   brandKey,
   promoCode: hookDataPromoCode,
+  idxOmedaRapidIdentifyProp,
+  omedaPromoCodeCookieName,
+  omedaPromoCodeDefault,
   user,
   req,
   res,
@@ -13,9 +16,6 @@ module.exports = async ({
   const encryptedId = findEncryptedId({ externalIds: user.externalIds, brandKey });
   if (!encryptedId) return;
   olyticsCookie.setTo(res, encryptedId);
-  const idxOmedaRapidIdentifyProp = config.get('idxOmedaRapidIdentifyProp');
-  const omedaPromoCodeCookieName = config.get('omedaPromoCodeCookieName');
-  const omedaPromoCodeDefault = config.get('omedaPromoCodeDefault');
   const idxOmedaRapidIdentify = req[idxOmedaRapidIdentifyProp];
   if (!idxOmedaRapidIdentify) throw new Error(`Unable to find the IdentityX+Omeda rapid identifier on the request using ${idxOmedaRapidIdentifyProp}`);
 
@@ -25,15 +25,15 @@ module.exports = async ({
     omedaPromoCodeDefault,
     cookies: res.req.cookies,
   });
-  const appendBehavior = config.get('hookBehaviors.onAuthenticationSuccess');
-  const appendDemographic = config.get('hookDemographics.onAuthenticationSuccess');
-  const appendPromoCode = config.get('hookPromoCodes.onAuthenticationSuccess');
+  // const appendBehavior = config.get('hookBehaviors.onAuthenticationSuccess');
+  // const appendDemographic = config.get('hookDemographics.onAuthenticationSuccess');
+  // const appendPromoCode = config.get('hookPromoCodes.onAuthenticationSuccess');
 
   await idxOmedaRapidIdentify({
     user,
     ...(promoCode && { promoCode }),
-    ...(appendBehavior && { appendBehavior }),
-    ...(appendDemographic && { appendDemographic }),
-    ...(appendPromoCode && { appendPromoCode }),
+    // ...(appendBehavior && { appendBehavior }),
+    // ...(appendDemographic && { appendDemographic }),
+    // ...(appendPromoCode && { appendPromoCode }),
   });
 };

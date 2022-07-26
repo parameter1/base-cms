@@ -46,6 +46,6 @@ module.exports = startServer({
 
     // Setup IdentityX + Omeda
     const oidxConfig = getAsObject(siteConfig, 'omedaIdentityX');
-    omedaIdentityX(app, oidxConfig, idxRouteTemplates);
+    omedaIdentityX(app, { ...oidxConfig, idxRouteTemplates });
   },
 }).then(() => log('Website started!')).catch(e => setImmediate(() => { throw e; }));

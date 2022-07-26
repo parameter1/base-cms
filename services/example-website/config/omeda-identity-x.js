@@ -1,10 +1,14 @@
-const OmedaIdentityXConfiguration = require('@parameter1/base-cms-marko-web-omeda-identity-x/config');
+const { get } = require('@parameter1/base-cms-object-path');
+const idxConfig = require('./identity-x');
+const omedaConfig = require('./omeda');
 
-module.exports = ({ omeda, identityX }) => {
-  const oidx = new OmedaIdentityXConfiguration({
-    omedaConfig: omeda,
-    idxConfig: identityX,
-  });
+module.exports = {
+  clientKey: omedaConfig.clientKey,
+  brandKey: omedaConfig.brandKey,
+  appId: omedaConfig.appId,
+  inputId: omedaConfig.inputId,
+  rapidIdentProductId: get(omedaConfig, 'rapidIdentification.productId'),
+  idxConfig,
 
   /**
    * IdentityX hook customization
@@ -12,25 +16,6 @@ module.exports = ({ omeda, identityX }) => {
    * If present, the specified behavior, demographic, and/or promo code will be used/appended when
    * handling the relevant IdentityX hook event.
    */
-  oidx.setHookBehavior('onLoginLinkSent', 6232);
-  oidx.setHookBehavior('onAuthenticationSuccess', 6231);
-  oidx.setHookBehavior('onUserProfileUpdate', 6233);
-  // oidx.setHookBehavior('onLoadActiveContext', 0);
-  // oidx.setHookBehavior('onLogout', 0);
 
-  // Demographics to apply
-  oidx.setHookDemographic('onLoginLinkSent', 1234, [2345]);
-  oidx.setHookDemographic('onAuthenticationSuccess', 1234, [2345, 3456]);
-  oidx.setHookDemographic('onUserProfileUpdate', 1234, [2345, 3456, 4567]);
-  // oidx.setHookDemographic('onLoadActiveContext', 1234, 5678);
-  // oidx.setHookDemographic('onLogout', 1234, 6789);
 
-  // Promo codes to apply
-  oidx.setHookPromoCode('onLoginLinkSent', 'Parameter1');
-  oidx.setHookPromoCode('onAuthenticationSuccess', 'P1Verified');
-  oidx.setHookPromoCode('onUserProfileUpdate', 'P1FullProfile');
-  // oidx.setHookPromoCode('onLoadActiveContext', 'whatever');
-  // oidx.setHookPromoCode('onLogout', 'somethingelse);
-
-  return oidx;
 };
