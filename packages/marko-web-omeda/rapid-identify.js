@@ -57,7 +57,6 @@ module.exports = async (omedaGraphQLClient, {
     ...(isArray(deploymentTypes) && deploymentTypes.length && { deploymentTypes }),
     ...(isArray(demographics) && demographics.length && { demographics }),
     ...(isArray(subscriptions) && subscriptions.length && { subscriptions }),
-    ...(isArray(behaviors) && behaviors.length && { behaviors }),
 
     ...(promoCode && { promoCode }),
   };
