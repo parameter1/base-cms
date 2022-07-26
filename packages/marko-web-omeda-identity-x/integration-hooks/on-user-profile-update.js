@@ -1,15 +1,23 @@
+const Joi = require('@parameter1/joi');
+const { validate } = require('@parameter1/joi/utils');
 const extractPromoCode = require('../utils/extract-promo-code');
 
-module.exports = async ({
-  idxOmedaRapidIdentifyProp = '$idxOmedaRapidIdentify',
-  omedaPromoCodeCookieName = 'omeda_promo_code',
-  omedaPromoCodeDefault,
-  req,
-  user,
-  promoCode: hookDataPromoCode,
-}) => {
-  const idxOmedaRapidIdentify = req[idxOmedaRapidIdentifyProp];
-  if (!idxOmedaRapidIdentify) throw new Error(`Unable to find the IdentityX+Omeda rapid identifier on the request using ${idxOmedaRapidIdentifyProp}`);
+module.exports = async (params = {}) => {
+  const {
+    idxOmedaRapidIdentify,
+    omedaPromoCodeCookieName,
+    omedaPromoCodeDefault,
+    promoCode: hookDataPromoCode,
+    req,
+    user,
+  } = validate(Joi.object({
+    idxOmedaRapidIdentify: Joi.function().required(),
+    omedaPromoCodeCookieName: Joi.string().required(),
+    omedaPromoCodeDefault: Joi.string(),
+    promoCode: Joi.string(),
+    req: Joi.object().required(),
+    user: Joi.object().required(),
+  }).unknown(), params);
 
   const promoCode = extractPromoCode({
     promoCode: hookDataPromoCode,

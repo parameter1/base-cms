@@ -61,10 +61,12 @@ module.exports = (app, params = {}) => {
 
   // add appropiate identity-x to omeda integration hooks
   addOmedaHooksToIdentityXConfig({
-    idxConfig,
     brandKey,
-    productId: rapidIdentProductId,
-    omedaGraphQLProp: omedaGraphQLClientProp,
+    idxConfig,
+    idxOmedaRapidIdentifyProp,
+    omedaGraphQLClientProp,
+    omedaPromoCodeCookieName,
+    omedaPromoCodeDefault,
   });
 
   // attach the identity-x rapid identification wrapper middleware

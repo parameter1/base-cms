@@ -1,3 +1,5 @@
+const Joi = require('@parameter1/joi');
+const { validate } = require('@parameter1/joi/utils');
 const extractPromoCode = require('../utils/extract-promo-code');
 const {
   getAnsweredQuestionMap,
@@ -6,22 +8,28 @@ const {
   updateIdentityX,
 } = require('../omeda-data');
 
-module.exports = async ({
-  brandKey,
-  omedaGraphQLProp = '$omedaGraphQLClient',
-  idxOmedaRapidIdentifyProp = '$idxOmedaRapidIdentify',
-  omedaPromoCodeCookieName = 'omeda_promo_code',
-  omedaPromoCodeDefault,
-  promoCode: hookDataPromoCode,
-
-  req,
-  service: identityX,
-  user,
-}) => {
-  const omedaGraphQLClient = req[omedaGraphQLProp];
-  if (!omedaGraphQLClient) throw new Error(`Unable to load the Omeda GraphQL API from the request using prop ${omedaGraphQLProp}`);
-  const idxOmedaRapidIdentify = req[idxOmedaRapidIdentifyProp];
-  if (!idxOmedaRapidIdentify) throw new Error(`Unable to find the IdentityX+Omeda rapid identifier on the request using ${idxOmedaRapidIdentifyProp}`);
+module.exports = async (params = {}) => {
+  const {
+    brandKey,
+    idxOmedaRapidIdentify,
+    omedaGraphQLClient,
+    omedaPromoCodeCookieName,
+    omedaPromoCodeDefault,
+    promoCode: hookDataPromoCode,
+    req,
+    service: identityX,
+    user,
+  } = validate(Joi.object({
+    brandKey: Joi.string().required(),
+    idxOmedaRapidIdentify: Joi.function().required(),
+    omedaGraphQLClient: Joi.object().required(),
+    omedaPromoCodeCookieName: Joi.string().required(),
+    omedaPromoCodeDefault: Joi.string(),
+    promoCode: Joi.string(),
+    req: Joi.object().required(),
+    service: Joi.object().required(),
+    user: Joi.object().required(),
+  }).unknown(), params);
 
   const promoCode = extractPromoCode({
     promoCode: hookDataPromoCode,
