@@ -12,38 +12,40 @@ $ const targetBlankLink = {
 
 $ const issue = getAsObject(input, "issue");
 
-<if(buttons.includes("subscribe"))>
-  <marko-web-magazine-publication-subscribe-url tag=null obj=issue.publication link=targetBlankLink>
-    Subscribe
-  </marko-web-magazine-publication-subscribe-url>
-</if>
-<if(buttons.includes("renew"))>
-  <marko-web-magazine-publication-renewal-url tag=null obj=issue.publication link=targetBlankLink>
-    Renew
-  </marko-web-magazine-publication-renewal-url>
-</if>
-<if(buttons.includes("digital-edition"))>
-  <marko-web-magazine-issue-digital-edition-url tag=null obj=issue link=targetBlankLink>
-    Digital Edition
-  </marko-web-magazine-issue-digital-edition-url>
-</if>
-<if(buttons.includes("pdf"))>
-  <marko-web-magazine-issue-pdf-url tag=null obj=issue link=targetBlankLink>
-    Download PDF
-  </marko-web-magazine-issue-pdf-url>
-</if>
-<if(buttons.includes("archives"))>
-  <marko-web-magazine-publication-name tag=null obj=issue.publication link=link>
-    Archives
-  </marko-web-magazine-publication-name>
-</if>
-<if(buttons.includes("reprints"))>
-  <marko-web-magazine-publication-reprints-url tag=null obj=issue.publication link=targetBlankLink>
-    Reprints
-  </marko-web-magazine-publication-reprints-url>
-</if>
-<if(buttons.includes("e-inquiry"))>
-  <marko-web-magazine-publication-einquiry-url tag=null obj=issue.publication link=targetBlankLink>
-    E-Inquiry
-  </marko-web-magazine-publication-einquiry-url>
-</if>
+<for|button| of=buttons>
+  <if(button === "subscribe")>
+    <marko-web-magazine-publication-subscribe-url tag=null obj=issue.publication link=targetBlankLink>
+      Subscribe
+    </marko-web-magazine-publication-subscribe-url>
+  </if>
+  <if(button === "renew")>
+    <marko-web-magazine-publication-renewal-url tag=null obj=issue.publication link=targetBlankLink>
+      Renew
+    </marko-web-magazine-publication-renewal-url>
+  </if>
+  <if(button === "digital-edition")>
+    <marko-web-magazine-issue-digital-edition-url tag=null obj=issue link=targetBlankLink>
+      Digital Edition
+    </marko-web-magazine-issue-digital-edition-url>
+  </if>
+  <if(button === "pdf")>
+    <marko-web-magazine-issue-pdf-url tag=null obj=issue link=targetBlankLink>
+      Download PDF
+    </marko-web-magazine-issue-pdf-url>
+  </if>
+  <if(button === "archives")>
+    <marko-web-magazine-publication-name tag=null obj=issue.publication link=link>
+      Archives
+    </marko-web-magazine-publication-name>
+  </if>
+  <if(button === "reprints")>
+    <marko-web-magazine-publication-reprints-url tag=null obj=issue.publication link=targetBlankLink>
+      Reprints
+    </marko-web-magazine-publication-reprints-url>
+  </if>
+  <if(button === "e-inquiry")>
+    <marko-web-magazine-publication-einquiry-url tag=null obj=issue.publication link=targetBlankLink>
+      E-Inquiry
+    </marko-web-magazine-publication-einquiry-url>
+  </if>
+</for>
