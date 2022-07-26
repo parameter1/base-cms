@@ -1,4 +1,3 @@
-
 const olyticsCookie = require('@parameter1/base-cms-marko-web-omeda/olytics/customer-cookie');
 const extractPromoCode = require('../utils/extract-promo-code');
 const findEncryptedId = require('../external-id/find-encrypted-customer-id');
@@ -25,15 +24,9 @@ module.exports = async ({
     omedaPromoCodeDefault,
     cookies: res.req.cookies,
   });
-  // const appendBehavior = config.get('hookBehaviors.onAuthenticationSuccess');
-  // const appendDemographic = config.get('hookDemographics.onAuthenticationSuccess');
-  // const appendPromoCode = config.get('hookPromoCodes.onAuthenticationSuccess');
 
   await idxOmedaRapidIdentify({
     user,
     ...(promoCode && { promoCode }),
-    // ...(appendBehavior && { appendBehavior }),
-    // ...(appendDemographic && { appendDemographic }),
-    // ...(appendPromoCode && { appendPromoCode }),
   });
 };

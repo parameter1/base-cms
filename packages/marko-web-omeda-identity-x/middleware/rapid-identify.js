@@ -20,9 +20,6 @@ module.exports = ({
     const handler = async ({
       user,
       promoCode,
-      appendBehavior,
-      appendDemographic,
-      appendPromoCode,
     } = {}) => idxOmedaRapidIdentify({
       brandKey,
       productId,
@@ -33,10 +30,6 @@ module.exports = ({
         omedaPromoCodeDefault,
         cookies: req.cookies,
       }),
-
-      appendBehavior,
-      appendDemographic,
-      appendPromoCode,
 
       identityX: req.identityX,
       omedaRapidIdentify,

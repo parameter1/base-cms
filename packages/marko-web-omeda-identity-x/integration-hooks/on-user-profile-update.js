@@ -17,15 +17,9 @@ module.exports = async ({
     omedaPromoCodeDefault,
     cookies: req.cookies,
   });
-  // const appendBehavior = config.get('hookBehaviors.onUserProfileUpdate');
-  // const appendDemographic = config.get('hookDemographics.onUserProfileUpdate');
-  // const appendPromoCode = config.get('hookPromoCodes.onUserProfileUpdate');
 
   return idxOmedaRapidIdentify({
     user,
     ...(promoCode && { promoCode }),
-    // ...(appendBehavior && { appendBehavior }),
-    // ...(appendDemographic && { appendDemographic }),
-    // ...(appendPromoCode && { appendPromoCode }),
   });
 };

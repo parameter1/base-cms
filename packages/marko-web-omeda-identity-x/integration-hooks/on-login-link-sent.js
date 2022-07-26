@@ -30,19 +30,12 @@ module.exports = async ({
     cookies: req.cookies,
   });
 
-  // const appendBehavior = config.get('hookBehaviors.onLoginLinkSent');
-  // const appendDemographic = config.get('hookDemographics.onLoginLinkSent');
-  // const appendPromoCode = config.get('hookPromoCodes.onLoginLinkSent');
-
   // get omeda customer id (via rapid identity) and load omeda custom field data
   const [omedaLinkedFields, { encryptedCustomerId }] = await Promise.all([
     getOmedaLinkedFields({ identityX, brandKey }),
     idxOmedaRapidIdentify({
       user: user.verified ? user : { id: user.id, email: user.email },
       ...(promoCode && { promoCode }),
-      // ...(appendBehavior && { appendBehavior }),
-      // ...(appendDemographic && { appendDemographic }),
-      // ...(appendPromoCode && { appendPromoCode }),
     }),
   ]);
 
