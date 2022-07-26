@@ -27,55 +27,6 @@ All configuration data must be passed to the middleware when loaded (See [Middle
 | `omedaGraphQLClientProp` | No | The property (in the express app context) where the Omeda GraphQL client is located. | `$omedaGraphQLClient` |
 |`omedaRapidIdentifyProp` | No | The property (in the express app context) where the Omeda rapid identification service is located. | `$omedaRapidIdentify` |
 
-### Applying Omeda data to events
-To send a custom behavior, demographic, or promocode along with a rapid identification request, use the relevant `setHookBehavior`, `setHookDemographic`, or `setHookPromoCode` functions of the config instance.
-
-#### Custom Behavior (`setHookBehavior`)
-This function ensures that the supplied behavior id is included as part of the rapid identification request. The behavior must be created before use via the Omeda Behavior APIs.
-
-| Argument | Type | Description |
-| - | - | - |
-| `hookName` | `String` | The IdentityX hook to modify (see [IdX hooks](./add-integration-hooks.js))
-| `behaviorId` | `Number` | The Omeda Behavior ID to send
-
-Example:
-```js
-const oidx = new OIdXConfig({ omedaConfig, idxConfig });
-oidx.setHookBehavior('onLoginLinkSent', 6);
-```
-
-#### Custom Demographic (`setHookDemographic`)
-This function ensures the supplied demographic values are included as part of the rapid identification request. If specified, a `writeInValue` can be sent for a demographic answers supporting OEC/Other values.
-
-| Argument | Type | Description |
-| - | - | - |
-| `hookName` | `String` | The IdentityX hook to modify (see [IdX hooks](./add-integration-hooks.js))
-| `demographicId` | `Number` | The Omeda Demographic ID to send
-| `valueIds` | `[Number]` | The Omeda Demographic Value IDs to send
-| `writeInValue` | `String` | (optional) The OEC/Other value to send
-
-Example:
-```js
-const oidx = new OIdXConfig({ omedaConfig, idxConfig });
-oidx.setHookDemographic('onAuthenticationSuccess', 1234, [2345, 3456, 4567], 'My custom other/oec value');
-```
-
-#### Custom Promo Code (`setHookPromoCode`)
-This function ensures the supplied promo code is included as part of the rapid identification request.
-
-*Note*: unlike the other two methods, specifying a hook promo code will __overwrite__ any incoming promo code. Since Omeda promo codes overwrite each other, this allows you to specify the promo code that will __always__ be applied on a hook operation, rather than just appending to the request.
-
-| Argument | Type | Description |
-| - | - | - |
-| `hookName` | `String` | The IdentityX hook to modify (see [IdX hooks](./add-integration-hooks.js))
-| `promoCode` | `String` | The Omeda Promo Code to send
-
-Example:
-```js
-const oidx = new OIdXConfig({ omedaConfig, idxConfig });
-oidx.setHookPromoCode('onUserProfileUpdate', 'FOO_BAR');
-```
-
 ## Usage
 This package:
 1. Configures the underlying [omeda](../marko-web-omeda) and [identity-x](../marko-web-identity-x) packages
