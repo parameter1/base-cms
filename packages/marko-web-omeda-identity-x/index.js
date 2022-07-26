@@ -1,4 +1,5 @@
 const Joi = require('@parameter1/joi');
+const { getAsObject } = require('@parameter1/base-cms-utils');
 const { validate } = require('@parameter1/joi/utils');
 const IdXConfig = require('@parameter1/base-cms-marko-web-identity-x/config');
 const omeda = require('@parameter1/base-cms-marko-web-omeda');
@@ -12,7 +13,7 @@ const rapidIdentify = require('./middleware/rapid-identify');
 const rapidIdentifyRouter = require('./routes/rapid-identify');
 
 module.exports = (app, params = {}) => {
-  const validHooks = Object.keys(params.idxConfig.hooks);
+  const validHooks = Object.keys(getAsObject(params, 'idxConfig.hooks'));
   const {
     appId,
     brandKey,
