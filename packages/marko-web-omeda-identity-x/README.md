@@ -100,7 +100,6 @@ startServer({
       ...omedaConfig,
       idxConfig,
       idxRouteTemplates,
-      // additional config, as needed
     })
   },
 }
@@ -109,7 +108,7 @@ startServer({
 It can also be loaded as a standard Express route middleware.
 ```js
 module.exports = (app) => {
-  handler(app, { ...omedaConfig, idxConfig, idxRouteTemplates }, idxRouteTemplates);
+  handler(app, { ...omedaConfig, idxConfig, idxRouteTemplates });
 };
 ```
 
@@ -123,10 +122,3 @@ export default (Browser) => {
   OmedaIdentityX(Browser);
 };
 ```
-
-# Todo
-- [ ] Drop IdentityXConfiguration class in favor of adding options to middleware args
-- [ ] Remove default values from modules )onProfileUpated,etc)
-- [ ] Add Joi validation middleware args
-- [ ] Add Joi validation to module args
-- [ ] re-test
