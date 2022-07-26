@@ -25,7 +25,7 @@ All configuration data must be passed to the middleware when loaded (See [Middle
 | `omedaPromoCodeDefault` | No | The default promo code to send with all Omeda requests. Falls back to input ID default configured by Omeda. |
 | `idxOmedaRapidIdentifyProp` | No | The property (in the express app context) where the O+IdX rapid identification service is located. | `$idxOmedaRapidIdentify` |
 | `omedaGraphQLClientProp` | No | The property (in the express app context) where the Omeda GraphQL client is located. | `$omedaGraphQLClient` |
-|`omedaRapidIdentifyProp` | No | The property (in the express app context) where the Omeda rapid identification service is located. | `$omedaRapidIdentify` |
+| `omedaRapidIdentifyProp` | No | The property (in the express app context) where the Omeda rapid identification service is located. | `$omedaRapidIdentify` |
 
 ## Usage
 This package:
