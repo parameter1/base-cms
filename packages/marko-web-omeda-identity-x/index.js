@@ -1,5 +1,4 @@
 const Joi = require('@parameter1/joi');
-const { getAsObject } = require('@parameter1/base-cms-utils');
 const { validate } = require('@parameter1/joi/utils');
 const IdXConfig = require('@parameter1/base-cms-marko-web-identity-x/config');
 const omeda = require('@parameter1/base-cms-marko-web-omeda');
