@@ -13,7 +13,6 @@ const rapidIdentify = require('./middleware/rapid-identify');
 const rapidIdentifyRouter = require('./routes/rapid-identify');
 
 module.exports = (app, params = {}) => {
-  const validHooks = Object.keys(getAsObject(params, 'idxConfig.hooks'));
   const {
     appId,
     brandKey,
