@@ -32,7 +32,6 @@ module.exports = async (omedaGraphQLClient, {
   deploymentTypes,
   demographics,
   subscriptions,
-  behaviors,
 
   promoCode,
 } = {}) => {
