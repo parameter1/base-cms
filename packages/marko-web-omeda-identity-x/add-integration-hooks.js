@@ -1,4 +1,7 @@
-
+const Joi = require('@parameter1/joi');
+const { validate } = require('@parameter1/joi/utils');
+const { get } = require('@parameter1/base-cms-object-path');
+const IdXConfig = require('@parameter1/base-cms-marko-web-identity-x/config');
 const {
   onAuthenticationSuccess,
   onLoginLinkSent,
@@ -11,32 +14,43 @@ const {
  * @param {object} params
  * @param {IdentityXConfiguration} params.idxConfig
  */
-module.exports = ({
-  idxConfig,
-  brandKey,
-  omedaGraphQLProp = '$omedaGraphQLClient',
-  idxOmedaRapidIdentifyProp = '$idxOmedaRapidIdentify',
-} = {}) => {
-  if (!idxConfig) throw new Error('The IdentityX configuration instances is required to add Omeda+IdentityX integration hooks.');
+module.exports = (params = {}) => {
+  const {
+    idxConfig,
+    brandKey,
+    omedaGraphQLClientProp,
+    idxOmedaRapidIdentifyProp,
+    omedaPromoCodeCookieName,
+    omedaPromoCodeDefault,
+  } = validate(Joi.object({
+    brandKey: Joi.string().required(),
+    idxConfig: Joi.object().instance(IdXConfig).required(),
+    idxOmedaRapidIdentifyProp: Joi.string().required(),
+    omedaGraphQLClientProp: Joi.string().required(),
+    omedaPromoCodeCookieName: Joi.string().required(),
+    omedaPromoCodeDefault: Joi.string(),
+  }), params);
+
   idxConfig.addHook({
     name: 'onLoginLinkSent',
     shouldAwait: false,
     fn: async args => onLoginLinkSent({
       ...args,
       brandKey,
-      omedaGraphQLProp,
-      idxOmedaRapidIdentifyProp,
-
-      req: args.req,
-      service: args.service,
-      user: args.user,
+      idxOmedaRapidIdentify: get(args, `req.${idxOmedaRapidIdentifyProp}`),
+      omedaGraphQLClient: get(args, `req.${omedaGraphQLClientProp}`),
+      omedaPromoCodeCookieName,
+      omedaPromoCodeDefault,
     }),
   });
 
   idxConfig.addHook({
     name: 'onAuthenticationSuccess',
     shouldAwait: true,
-    fn: async ({ user, res }) => onAuthenticationSuccess({ brandKey, user, res }),
+    fn: async args => onAuthenticationSuccess({
+      ...args,
+      brandKey,
+    }),
   });
 
   idxConfig.addHook({
@@ -44,16 +58,18 @@ module.exports = ({
     shouldAwait: false,
     fn: async args => onUserProfileUpdate({
       ...args,
-      idxOmedaRapidIdentifyProp,
-      req: args.req,
-      user: args.user,
+      idxOmedaRapidIdentify: get(args, `req.${idxOmedaRapidIdentifyProp}`),
+      omedaPromoCodeCookieName,
+      omedaPromoCodeDefault,
     }),
   });
 
   idxConfig.addHook({
     name: 'onLogout',
     shouldAwait: true,
-    fn: async ({ res }) => onLogout({ res }),
+    fn: async args => onLogout({
+      ...args,
+    }),
   });
 
   return idxConfig;

@@ -1,6 +1,6 @@
 const { startServer } = require('@parameter1/base-cms-marko-web');
 const omedaIdentityX = require('@parameter1/base-cms-marko-web-omeda-identity-x');
-const { set, get, getAsObject } = require('@parameter1/base-cms-object-path');
+const { set, getAsObject } = require('@parameter1/base-cms-object-path');
 const contactUs = require('@parameter1/base-cms-marko-web-contact-us');
 const omedaNewsletters = require('@parameter1/base-cms-marko-web-omeda/routes/omeda-newsletters');
 const newsletterState = require('@parameter1/base-cms-marko-web-theme-monorail/middleware/newsletter-state');
@@ -45,16 +45,7 @@ module.exports = startServer({
     set(app.locals, 'nativeX', nativeXConfig);
 
     // Setup IdentityX + Omeda
-    const omedaConfig = getAsObject(siteConfig, 'omeda');
-    const idxConfig = getAsObject(siteConfig, 'identityX');
-    omedaIdentityX(app, {
-      clientKey: omedaConfig.clientKey,
-      brandKey: omedaConfig.brandKey,
-      appId: omedaConfig.appId,
-      inputId: omedaConfig.inputId,
-      rapidIdentProductId: get(omedaConfig, 'rapidIdentification.productId'),
-      idxConfig,
-      idxRouteTemplates,
-    });
+    const oidxConfig = getAsObject(siteConfig, 'omedaIdentityX');
+    omedaIdentityX(app, { ...oidxConfig, idxRouteTemplates });
   },
 }).then(() => log('Website started!')).catch(e => setImmediate(() => { throw e; }));
