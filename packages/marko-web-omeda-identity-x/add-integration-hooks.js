@@ -50,6 +50,9 @@ module.exports = (params = {}) => {
     fn: async args => onAuthenticationSuccess({
       ...args,
       brandKey,
+      idxOmedaRapidIdentify: get(args, `req.${idxOmedaRapidIdentifyProp}`),
+      omedaPromoCodeCookieName,
+      omedaPromoCodeDefault,
     }),
   });
 
