@@ -7,6 +7,7 @@ const {
   getOmedaLinkedFields,
   updateIdentityX,
 } = require('../omeda-data');
+const props = require('../validation/props');
 
 module.exports = async (params = {}) => {
   const {
@@ -20,7 +21,7 @@ module.exports = async (params = {}) => {
     service: identityX,
     user,
   } = validate(Joi.object({
-    brandKey: Joi.string().required(),
+    brandKey: props.brandKey.required(),
     idxOmedaRapidIdentify: Joi.function().required(),
     omedaGraphQLClient: Joi.object().required(),
     omedaPromoCodeCookieName: Joi.string().required(),

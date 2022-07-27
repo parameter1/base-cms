@@ -1,7 +1,7 @@
 const Joi = require('@parameter1/joi');
 const { validate } = require('@parameter1/joi/utils');
 const { get } = require('@parameter1/base-cms-object-path');
-const IdXConfig = require('@parameter1/base-cms-marko-web-identity-x/config');
+const props = require('./validation/props');
 const {
   onAuthenticationSuccess,
   onLoginLinkSent,
@@ -23,8 +23,8 @@ module.exports = (params = {}) => {
     omedaPromoCodeCookieName,
     omedaPromoCodeDefault,
   } = validate(Joi.object({
-    brandKey: Joi.string().required(),
-    idxConfig: Joi.object().instance(IdXConfig).required(),
+    brandKey: props.brandKey.required(),
+    idxConfig: props.idxConfig.required(),
     idxOmedaRapidIdentifyProp: Joi.string().required(),
     omedaGraphQLClientProp: Joi.string().required(),
     omedaPromoCodeCookieName: Joi.string().required(),

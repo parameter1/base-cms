@@ -1,6 +1,5 @@
 const Joi = require('@parameter1/joi');
 const { validate } = require('@parameter1/joi/utils');
-const IdXConfig = require('@parameter1/base-cms-marko-web-identity-x/config');
 const omeda = require('@parameter1/base-cms-marko-web-omeda');
 const identityX = require('@parameter1/base-cms-marko-web-identity-x');
 const addOmedaHooksToIdentityXConfig = require('./add-integration-hooks');
@@ -10,6 +9,7 @@ const resyncCustomerData = require('./middleware/resync-customer-data');
 const setOlyticsCookie = require('./middleware/set-olytics-cookie');
 const rapidIdentify = require('./middleware/rapid-identify');
 const rapidIdentifyRouter = require('./routes/rapid-identify');
+const props = require('./validation/props');
 
 module.exports = (app, params = {}) => {
   const {
@@ -27,9 +27,9 @@ module.exports = (app, params = {}) => {
     rapidIdentProductId,
   } = validate(Joi.object({
     appId: Joi.string().required(),
-    brandKey: Joi.string().required().trim().lowercase(),
-    clientKey: Joi.string().required().trim().lowercase(),
-    idxConfig: Joi.object().required().instance(IdXConfig),
+    brandKey: props.brandKey.required(),
+    clientKey: props.clientKey.required(),
+    idxConfig: props.idxConfig.required(),
     idxOmedaRapidIdentifyProp: Joi.string().default('$idxOmedaRapidIdentify'),
     idxRouteTemplates: Joi.object().required(),
     inputId: Joi.string().required(),
