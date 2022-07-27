@@ -31,14 +31,26 @@ $bottom-gradient-height: 180px !default;
   }
 }
 .idx-comment-stream-wrapper {
-  max-height: $comment-start-height;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   margin-top: 24px;
   border-radius: 4px;
   border: 1px solid $gray-200;
+  .idx-comment-stream {
+    &:not(.idx-comment-stream__counter--1) {
+      max-height: $comment-start-height;
+      overflow: hidden;
+    }
+  }
   &--open {
+    .idx-comment-stream {
+      max-height: 100%;
+      overflow: visible;
+      &:not(.idx-comment-stream__counter--1) {
+        max-height: initial;
+        overflow: visible;
+      }
+    }
     height: initial;
     max-height: initial;
     .idx-comment-stream ~ .comment-stream__toggle-btn {
@@ -52,8 +64,6 @@ $bottom-gradient-height: 180px !default;
 
 .idx-comment-stream {
   $self: &;
-  max-height: 100%;
-  overflow: hidden;
   position: relative;
   display: block;
   padding-top: map-get($spacers, block);
