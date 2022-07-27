@@ -26,6 +26,17 @@ All configuration data must be passed to the middleware when loaded (See [Middle
 | `idxOmedaRapidIdentifyProp` | No | The property (in the express app context) where the O+IdX rapid identification service is located. | `$idxOmedaRapidIdentify` |
 | `omedaGraphQLClientProp` | No | The property (in the express app context) where the Omeda GraphQL client is located. | `$omedaGraphQLClient` |
 | `omedaRapidIdentifyProp` | No | The property (in the express app context) where the Omeda rapid identification service is located. | `$omedaRapidIdentify` |
+| `appendBehaviorToHook` | No | An array of objects defining behaviors to append to rapid identification calls.
+| `appendBehaviorToHook[].hook` | | The name of the hook, such as `onLoginLinkSent`
+| `appendBehaviorToHook[].behaviorId` || The Omeda Behavior ID to append to the rapid identification call.
+| `appendDemographicToHook` | No | An array of objects defining demographics to append to rapid identification calls.
+| `appendDemographicToHook[].hook` | | The name of the hook, such as `onLoginLinkSent`
+| `appendDemographicToHook[].demographicId` || The Omeda Demographic ID to append.
+| `appendDemographicToHook[].valueIds` || An array of Omeda Demographic Value IDs (`Int`s) to append
+| `appendDemographicToHook[].writeInValue` || A string to include as an OEC/Other value
+| `appendPromoCodeToHook` | No | An array of objects defining demographics to append to rapid identification calls.
+| `appendPromoCodeToHook[].hook` | | The name of the hook, such as `onLoginLinkSent`
+| `appendPromoCodeToHook[].promoCode` || The Omeda Promo Code (`String`) to append.
 
 ## Usage
 This package:

@@ -1,6 +1,7 @@
 const Joi = require('@parameter1/joi');
 const { validate } = require('@parameter1/joi/utils');
 const extractPromoCode = require('../utils/extract-promo-code');
+const { appendBehavior, appendDemographic, appendPromoCode } = require('../validation/schemas');
 const {
   getAnsweredQuestionMap,
   getOmedaCustomerRecord,
@@ -11,6 +12,9 @@ const props = require('../validation/props');
 
 module.exports = async (params = {}) => {
   const {
+    appendBehaviors,
+    appendDemographics,
+    appendPromoCodes,
     brandKey,
     idxOmedaRapidIdentify,
     omedaGraphQLClient,
@@ -21,6 +25,9 @@ module.exports = async (params = {}) => {
     service: identityX,
     user,
   } = validate(Joi.object({
+    appendBehaviors: Joi.array().items(appendBehavior.required()),
+    appendDemographics: Joi.array().items(appendDemographic.required()),
+    appendPromoCodes: Joi.array().items(appendPromoCode.required()),
     brandKey: props.brandKey.required(),
     idxOmedaRapidIdentify: Joi.function().required(),
     omedaGraphQLClient: Joi.object().required(),
@@ -45,6 +52,9 @@ module.exports = async (params = {}) => {
     idxOmedaRapidIdentify({
       user: user.verified ? user : { id: user.id, email: user.email },
       ...(promoCode && { promoCode }),
+      ...(appendBehaviors && { appendBehaviors }),
+      ...(appendDemographics && { appendDemographics }),
+      ...(appendPromoCodes.length && { promoCode: appendPromoCodes[0].promoCode }),
     }),
   ]);
 
