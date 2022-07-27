@@ -1,6 +1,7 @@
 const Joi = require('@parameter1/joi');
 const { validate } = require('@parameter1/joi/utils');
 const { get } = require('@parameter1/base-cms-object-path');
+const schemas = require('./validation/schemas');
 const props = require('./validation/props');
 const {
   onAuthenticationSuccess,
@@ -16,6 +17,9 @@ const {
  */
 module.exports = (params = {}) => {
   const {
+    appendBehaviorToHook,
+    appendDemographicToHook,
+    appendPromoCodeToHook,
     idxConfig,
     brandKey,
     omedaGraphQLClientProp,
@@ -23,6 +27,9 @@ module.exports = (params = {}) => {
     omedaPromoCodeCookieName,
     omedaPromoCodeDefault,
   } = validate(Joi.object({
+    appendBehaviorToHook: Joi.array().items(schemas.hookBehavior),
+    appendDemographicToHook: Joi.array().items(schemas.hookDemographic),
+    appendPromoCodeToHook: Joi.array().items(schemas.hookPromoCode),
     brandKey: props.brandKey.required(),
     idxConfig: props.idxConfig.required(),
     idxOmedaRapidIdentifyProp: Joi.string().required(),
@@ -30,6 +37,24 @@ module.exports = (params = {}) => {
     omedaPromoCodeCookieName: Joi.string().required(),
     omedaPromoCodeDefault: Joi.string(),
   }), params);
+
+  // Return the configured behaviors, demographics, and promocodes for the supplied event/hook
+  const buildAppendFor = (hookName) => {
+    const appendBehaviors = appendBehaviorToHook
+      .filter(({ hook }) => hook === hookName)
+      .map(({ hook, ...rest }) => rest);
+    const appendDemographics = appendDemographicToHook
+      .filter(({ hook }) => hook === hookName)
+      .map(({ hook, ...rest }) => rest);
+    const appendPromoCodes = appendPromoCodeToHook
+      .filter(({ hook }) => hook === hookName)
+      .map(({ hook, ...rest }) => rest);
+    return {
+      ...(appendBehaviors.length && { appendBehaviors }),
+      ...(appendDemographics.length && { appendDemographics }),
+      ...(appendPromoCodes.length && { appendPromoCodes }),
+    };
+  };
 
   idxConfig.addHook({
     name: 'onLoginLinkSent',
@@ -41,6 +66,7 @@ module.exports = (params = {}) => {
       omedaGraphQLClient: get(args, `req.${omedaGraphQLClientProp}`),
       omedaPromoCodeCookieName,
       omedaPromoCodeDefault,
+      ...buildAppendFor('onLoginLinkSent'),
     }),
   });
 
@@ -53,6 +79,7 @@ module.exports = (params = {}) => {
       idxOmedaRapidIdentify: get(args, `req.${idxOmedaRapidIdentifyProp}`),
       omedaPromoCodeCookieName,
       omedaPromoCodeDefault,
+      ...buildAppendFor('onAuthenticationSuccess'),
     }),
   });
 
@@ -64,6 +91,7 @@ module.exports = (params = {}) => {
       idxOmedaRapidIdentify: get(args, `req.${idxOmedaRapidIdentifyProp}`),
       omedaPromoCodeCookieName,
       omedaPromoCodeDefault,
+      ...buildAppendFor('onUserProfileUpdate'),
     }),
   });
 
@@ -72,6 +100,7 @@ module.exports = (params = {}) => {
     shouldAwait: true,
     fn: async args => onLogout({
       ...args,
+      ...buildAppendFor('onLogout'),
     }),
   });
 

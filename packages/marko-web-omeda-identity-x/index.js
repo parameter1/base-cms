@@ -10,9 +10,13 @@ const setOlyticsCookie = require('./middleware/set-olytics-cookie');
 const rapidIdentify = require('./middleware/rapid-identify');
 const rapidIdentifyRouter = require('./routes/rapid-identify');
 const props = require('./validation/props');
+const schemas = require('./validation/schemas');
 
 module.exports = (app, params = {}) => {
   const {
+    appendBehaviorToHook,
+    appendDemographicToHook,
+    appendPromoCodeToHook,
     appId,
     brandKey,
     clientKey,
@@ -26,6 +30,9 @@ module.exports = (app, params = {}) => {
     omedaRapidIdentifyProp,
     rapidIdentProductId,
   } = validate(Joi.object({
+    appendBehaviorToHook: Joi.array().items(schemas.hookBehavior),
+    appendDemographicToHook: Joi.array().items(schemas.hookDemographic),
+    appendPromoCodeToHook: Joi.array().items(schemas.hookPromoCode),
     appId: Joi.string().required(),
     brandKey: props.brandKey.required(),
     clientKey: props.clientKey.required(),
@@ -61,6 +68,9 @@ module.exports = (app, params = {}) => {
 
   // add appropiate identity-x to omeda integration hooks
   addOmedaHooksToIdentityXConfig({
+    appendBehaviorToHook,
+    appendDemographicToHook,
+    appendPromoCodeToHook,
     brandKey,
     idxConfig,
     idxOmedaRapidIdentifyProp,

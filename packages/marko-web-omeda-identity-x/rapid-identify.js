@@ -36,6 +36,9 @@ module.exports = async ({
 
   promoCode,
 
+  appendBehaviors,
+  appendDemographics,
+
   identityX,
   omedaRapidIdentify,
 } = {}) => {
@@ -55,6 +58,7 @@ module.exports = async ({
     alpha3 = await getAlpha3CodeFor(countryCode, identityX);
   }
 
+  const behaviors = [];
   const demographics = getAsArray(appUser, 'customSelectFieldAnswers').filter((select) => {
     const { field, hasAnswered } = select;
     if (!field.active || !field.externalId || !hasAnswered) return false;
@@ -94,6 +98,24 @@ module.exports = async ({
     }
   });
 
+  // Append custom demographic answer, if specified
+  if (appendDemographics && appendDemographics.length) {
+    appendDemographics.forEach(({ demographicId, valueIds, writeInValue }) => {
+      demographics.push({
+        id: demographicId,
+        values: valueIds.map(v => `${v}`),
+        ...(writeInValue && { writeInValue }),
+      });
+    });
+  }
+
+  // Append custom behavior, if specified
+  if (appendBehaviors && appendBehaviors.length) {
+    appendBehaviors.forEach(({ behaviorId }) => {
+      behaviors.push({ id: behaviorId });
+    });
+  }
+
   const { id, encryptedCustomerId } = await omedaRapidIdentify({
     email: appUser.email,
     productId,
@@ -105,6 +127,7 @@ module.exports = async ({
     ...(regionCode && { regionCode }),
     ...(postalCode && { postalCode }),
     ...(demographics.length && { demographics }),
+    ...(behaviors.length && { behaviors }),
     ...(deploymentTypes.length && { deploymentTypes }),
     ...(promoCode && { promoCode }),
     ...(subscriptions.length && { subscriptions }),
