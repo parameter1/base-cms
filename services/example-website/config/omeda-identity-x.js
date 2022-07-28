@@ -34,19 +34,18 @@ module.exports = {
   appendDemographicToHook: [
     {
       hook: 'onLoginLinkSent',
-      demographicId: 5071302, // SDC Job Title
-      valueIds: [5075829], // Corporate Mgmt
+      demographicId: 5081074, // Email Authorization Status
+      valueIds: [5104240], // Submitted
     },
     {
       hook: 'onAuthenticationSuccess',
-      demographicId: 5071302, // SDC Job Title
-      valueIds: [5075833], // Other
-      writeInValue: 'CEO',
+      demographicId: 5081074,
+      valueIds: [5104240, 5104239], // Submitted, Verified
     },
     {
       hook: 'onUserProfileUpdate',
-      demographicId: 5071302,
-      valueIds: [5075831], // Logistics Mgmt
+      demographicId: 5081074,
+      valueIds: [5104240, 5104239, 5104238], // Submitted, Verified, Full Profile
     },
   ],
 
