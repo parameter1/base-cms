@@ -2,17 +2,37 @@ import { getAsArray } from "@parameter1/base-cms-object-path";
 
 $ const blockName = "section-list-deck";
 $ const aliases = getAsArray(input, "aliases");
+$ const sections = getAsArray(input, "sections");
+
+$ if (sections.length && aliases.length) {
+    process.emitWarning(
+    '<theme-section-list-deck-block />. Aliases takes precedent over sections, pick one!',
+    'UnsupportedWarning'
+  );
+} else if (sections.length > 3 || aliases.length > 3) {
+  process.emitWarning(
+    '<theme-section-list-deck-block /> is designed for at most 3 sections, use an additional theme-section-list-deck-block for additional section(s)',
+    'UnsupportedWarning'
+  );
+};
 
 <marko-web-block name=blockName>
-  <marko-web-element block-name=blockName name="row">
-    <marko-web-element block-name=blockName name="col">
-      <theme-section-list-block alias=aliases[0] />
+  <if(aliases.length)>
+    <marko-web-element block-name=blockName name="row">
+      <for|alias| of=aliases>
+        <marko-web-element block-name=blockName name="col">
+          <theme-section-list-block alias=alias />
+        </marko-web-element>
+      </for>
     </marko-web-element>
-    <marko-web-element block-name=blockName name="col">
-      <theme-section-list-block alias=aliases[1] />
+  </if>
+  <else-if(sections.length)>
+    <marko-web-element block-name=blockName name="row">
+      <for|section| of=sections>
+        <marko-web-element block-name=blockName name="col">
+          <theme-section-list-block section=section />
+        </marko-web-element>
+      </for>
     </marko-web-element>
-    <marko-web-element block-name=blockName name="col">
-      <theme-section-list-block alias=aliases[2] />
-    </marko-web-element>
-  </marko-web-element>
+  </else-if>
 </marko-web-block>
