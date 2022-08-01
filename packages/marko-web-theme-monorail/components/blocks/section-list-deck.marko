@@ -5,15 +5,22 @@ $ const aliases = getAsArray(input, "aliases");
 $ const sections = getAsArray(input, "sections")
 
 <marko-web-block name=blockName>
-  <marko-web-element block-name=blockName name="row">
-    <marko-web-element block-name=blockName name="col">
-      <theme-section-list-block alias=aliases[0] section=sections[0] />
+  <if(aliases.length)>
+    <marko-web-element block-name=blockName name="row">
+      <for|alias| of=aliases>
+        <marko-web-element block-name=blockName name="col">
+          <theme-section-list-block alias=alias />
+        </marko-web-element>
+      </for>
     </marko-web-element>
-    <marko-web-element block-name=blockName name="col">
-      <theme-section-list-block alias=aliases[1] section=sections[1] />
+  </if>
+  <else-if(sections.length)>
+    <marko-web-element block-name=blockName name="row">
+      <for|section| of=sections>
+        <marko-web-element block-name=blockName name="col">
+          <theme-section-list-block section=section />
+        </marko-web-element>
+      </for>
     </marko-web-element>
-    <marko-web-element block-name=blockName name="col">
-      <theme-section-list-block alias=aliases[2] section=sections[2] />
-    </marko-web-element>
-  </marko-web-element>
+  </else-if>
 </marko-web-block>
