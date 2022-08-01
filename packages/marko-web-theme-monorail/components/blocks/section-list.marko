@@ -6,7 +6,7 @@ import sectionFragment from "../../graphql/fragments/section-info";
 
 $ const { i18n } = out.global;
 
-$ const { alias } = input;
+$ const { alias, name } = input;
 
 $ const withSection = defaultValue(input.withSection, true);
 $ const withViewMore = defaultValue(input.withViewMore, true);
@@ -43,7 +43,8 @@ $ const blockName = "section-list";
       modifiers=[blockName]
     >
       <@header>
-        <marko-web-website-section-name obj=section link=true />
+        $ const obj = { ...section, ...(name && { name })};
+        <marko-web-website-section-name obj=obj link=true />
       </@header>
       <@nodes nodes=nodes>
         <@slot|{ node, index }|>
