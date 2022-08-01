@@ -2,7 +2,19 @@ import { getAsArray } from "@parameter1/base-cms-object-path";
 
 $ const blockName = "section-list-deck";
 $ const aliases = getAsArray(input, "aliases");
-$ const sections = getAsArray(input, "sections")
+$ const sections = getAsArray(input, "sections");
+
+$ if (sections.length && aliases.length) {
+    process.emitWarning(
+    '<theme-section-list-deck-block />. Aliases takes precedent over sections, pick one!',
+    'UnsupportedWarning'
+  );
+} else if (sections.length > 3 || aliases.length > 3) {
+  process.emitWarning(
+    '<theme-section-list-deck-block /> is designed for at most 3 sections, use an additional theme-section-list-deck-block for additional section(s)',
+    'UnsupportedWarning'
+  );
+};
 
 <marko-web-block name=blockName>
   <if(aliases.length)>
