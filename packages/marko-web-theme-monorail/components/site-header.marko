@@ -10,9 +10,9 @@ $ const blockName = input.blockName || "site-header";
 // Newsletter Signup block display logic
 $ const useIdxNewsletterSignup = defaultValue(input.useIdxNewsletterSignup, true);
 $ const enableIdxNewsletterSignup = !newsletterConfig.disabled && useIdxNewsletterSignup;
-$ const showIdxNewsletterSignup = enableIdxNewsletterSignup && !input.hasUser;
+$ const showIdxNewsletterSignup = enableIdxNewsletterSignup;
+$ const idxNesletterSignupIcon = (input.hasUser) ? 'person' : 'mail';
 $ const showNewsletterSignup = !newsletterConfig.disabled && !enableIdxNewsletterSignup;
-
 $ const showSearchIcon = defaultValue(input.showSearchIcon, false);
 $ const menuBtnPosition = defaultValue(input.menuBtnPosition, 'left');
 
@@ -60,7 +60,7 @@ $ const navigation = {
     <marko-web-element block-name="site-navbar" name="icon-wrapper">
       <!-- Newsletter Menue Toggler -->
       <if(showIdxNewsletterSignup)>
-        <marko-web-browser-component name="IdentityXNewsletterToggleButton" ssr=true />
+        <marko-web-browser-component name="IdentityXNewsletterToggleButton" props={ iconName: idxNesletterSignupIcon } ssr=true />
       </if>
       <else-if(showNewsletterSignup)>
         <marko-web-browser-component name="ThemeNewsletterToggleButton" ssr=true />
