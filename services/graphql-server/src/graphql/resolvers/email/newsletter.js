@@ -33,7 +33,6 @@ module.exports = {
           mergedAttributes[attribute] = attributes[attribute];
         }
       });
-      console.log(mergedAttributes);
 
       const body = new Base4RestPayload({ type });
       if (providerType) body.set('provider.type', providerType);
