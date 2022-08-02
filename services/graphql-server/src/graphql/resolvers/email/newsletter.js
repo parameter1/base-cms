@@ -1,5 +1,5 @@
 const { Base4RestPayload } = require('@parameter1/base-cms-base4-rest-api');
-const { get } = require('@parameter1/base-cms-object-path');
+const { getAsObject } = require('@parameter1/base-cms-object-path');
 
 const validateRest = require('../../utils/validate-rest');
 
@@ -18,20 +18,11 @@ module.exports = {
         attributes,
       } = input;
 
-      const existingNewsletterProduct = await basedb.findOne('platform.Product', { _id: id }, { projection: { provider: 1 } });
-      const existingAttributes = get(existingNewsletterProduct, 'provider.attributes');
-      const mergedAttributes = {};
-      Object.keys(existingAttributes).forEach((attribute) => {
-        if (typeof attributes[attribute] !== 'undefined') {
-          mergedAttributes[attribute] = attributes[attribute];
-        } else {
-          mergedAttributes[attribute] = existingAttributes[attribute];
-        }
-      });
-      Object.keys(attributes).forEach((attribute) => {
-        if (!mergedAttributes[attribute] && typeof attributes[attribute] !== 'undefined') {
-          mergedAttributes[attribute] = attributes[attribute];
-        }
+      const product = await basedb.strictFindById('platform.Product', id, { projection: { provider: 1 } });
+      const existingAttributes = getAsObject(product, 'provider.attributes');
+      const mergedAttributes = { ...existingAttributes, ...attributes };
+      Object.entries(attributes).forEach(([key, value]) => {
+        if (value === null) delete mergedAttributes[key];
       });
 
       const body = new Base4RestPayload({ type });
