@@ -32,7 +32,7 @@ module.exports = {
       const body = new Base4RestPayload({ type });
       if (providerType) body.set('provider.type', providerType);
       if (providerId) body.set('provider.providerId', providerId);
-      if (Object.keys(mergedAttributes)) body.set('provider.attributes', mergedAttributes);
+      body.set('provider.attributes', mergedAttributes);
       body.set('id', id);
       await base4rest.updateOne({ model: type, id, body });
       return basedb.findOne('platform.Product', { _id: id });
