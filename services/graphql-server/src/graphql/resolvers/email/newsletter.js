@@ -9,8 +9,9 @@ module.exports = {
    */
   Mutation: {
     /**
-      * Setting an key in attributes value to null,
-      * will subsequently remove that key on the respective Newsletter Product,
+    * @description Update email newsletter provider fields.
+    * Setting an key in attributes value to null,
+    * will subsequently remove that key on the respective Newsletter Product's attributes,
     */
     updateEmailNewsletterProvider: async (_, { input }, { base4rest, basedb }) => {
       validateRest(base4rest);
