@@ -228,10 +228,10 @@ $theme-site-footer-corporate-logo-height: 30px !default;
 // Items/Nodes
 $theme-item-link-hover-decoration: none;
 
-$theme-item-header-color: $black;
 $theme-item-header-font-family: $skin-font-family-primary;
 $theme-item-header-font-size: 15px;
 $theme-item-header-font-weight: $font-weight-bold;
+$theme-item-header-color: $primary !default;
 
 $theme-item-header-link-hover-color: $primary !default;
 
