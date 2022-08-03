@@ -33,6 +33,7 @@
       "@name": "string",
       "@aliases": "array"
     },
+    "<node>": {},
     "@with-native-x-section": "boolean",
     "@nodes": "array",
     "@title": "string",
