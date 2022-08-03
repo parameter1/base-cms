@@ -32,6 +32,8 @@ type MagazinePublication {
   coverImage: AssetImage @projection @refOne(loader: "platformAsset", criteria: "assetImage")
   subscribeUrl: String @projection
   renewalUrl: String @projection
+  cancelUrl: String @projection
+  changeAddressUrl: String @projection
   reprintsUrl: String @projection
   einquiryUrl: String @projection
   # socialLinks: [PlatformEntityStubSocial]! @arrayValue
