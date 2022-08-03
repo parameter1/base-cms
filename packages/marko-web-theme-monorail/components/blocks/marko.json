@@ -25,8 +25,6 @@
   },
   "<theme-latest-content-list-block>": {
     "template": "./latest-content-list.marko",
-    "@query-name": "string",
-    "<query-params>": {},
     "<native-x>": {
       "@index": "number",
       "@indexes": "array",
@@ -34,6 +32,8 @@
       "@aliases": "array"
     },
     "<node>": {},
+    "<query-params>": {},
+    "@query-name": "string",
     "@with-native-x-section": "boolean",
     "@nodes": "array",
     "@title": "string",
