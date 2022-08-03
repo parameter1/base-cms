@@ -245,11 +245,11 @@ $theme-ad-box-shadow: none;
 
 // Cards and Card Headers
 $theme-card-header-background-color: transparent;
-$theme-card-header-color: $black;
 $theme-card-header-font-size: 22px;
 $theme-card-header-font-weight: $font-weight-bold;
 $theme-card-header-text-transform: none;
 $theme-card-header-border: none;
+$theme-card-header-color: $gray-800 !default;
 
 $theme-card-header-link-hover-color: $primary;
 $theme-card-header-link-hover-decoration: none;
