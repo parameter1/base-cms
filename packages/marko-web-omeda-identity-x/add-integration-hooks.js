@@ -27,9 +27,9 @@ module.exports = (params = {}) => {
     omedaPromoCodeCookieName,
     omedaPromoCodeDefault,
   } = validate(Joi.object({
-    appendBehaviorToHook: Joi.array().items(schemas.hookBehavior),
-    appendDemographicToHook: Joi.array().items(schemas.hookDemographic),
-    appendPromoCodeToHook: Joi.array().items(schemas.hookPromoCode),
+    appendBehaviorToHook: Joi.array().items(schemas.hookBehavior).default([]),
+    appendDemographicToHook: Joi.array().items(schemas.hookDemographic).default([]),
+    appendPromoCodeToHook: Joi.array().items(schemas.hookPromoCode).default([]),
     brandKey: props.brandKey.required(),
     idxConfig: props.idxConfig.required(),
     idxOmedaRapidIdentifyProp: Joi.string().required(),

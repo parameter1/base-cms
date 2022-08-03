@@ -19,9 +19,9 @@ module.exports = async (params = {}) => {
     res,
     user,
   } = validate(Joi.object({
-    appendBehaviors: Joi.array().items(appendBehavior.required()),
-    appendDemographics: Joi.array().items(appendDemographic.required()),
-    appendPromoCodes: Joi.array().items(appendPromoCode.required()),
+    appendBehaviors: Joi.array().items(appendBehavior.required()).default([]),
+    appendDemographics: Joi.array().items(appendDemographic.required()).default([]),
+    appendPromoCodes: Joi.array().items(appendPromoCode.required()).default([]),
     brandKey: props.brandKey.required(),
     user: Joi.object().required(),
     res: Joi.object().required(),

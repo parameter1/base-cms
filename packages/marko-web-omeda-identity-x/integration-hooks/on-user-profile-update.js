@@ -15,9 +15,9 @@ module.exports = async (params = {}) => {
     req,
     user,
   } = validate(Joi.object({
-    appendBehaviors: Joi.array().items(appendBehavior.required()),
-    appendDemographics: Joi.array().items(appendDemographic.required()),
-    appendPromoCodes: Joi.array().items(appendPromoCode.required()),
+    appendBehaviors: Joi.array().items(appendBehavior.required()).default([]),
+    appendDemographics: Joi.array().items(appendDemographic.required()).default([]),
+    appendPromoCodes: Joi.array().items(appendPromoCode.required()).default([]),
     idxOmedaRapidIdentify: Joi.function().required(),
     omedaPromoCodeCookieName: Joi.string().required(),
     omedaPromoCodeDefault: Joi.string(),
