@@ -50,12 +50,12 @@ module.exports = (app, params = {}) => {
         // The Omeda BehaviorAttribute ID for the `Parameter1 Website` attribute.
         id: Joi.number().required(),
         // The Omeda DefinedValue ID for the current website.
-        value: Joi.number().required(),
+        valueId: Joi.number().required(),
       }).required(),
       actionSource: Joi.object({
         // The Omeda BehaviorAttribute ID for the `Parameter1 Action Source` attribute.
         id: Joi.number().required(),
-        values: Joi.object({
+        valueIds: Joi.object({
           default: Joi.number().required(),
           newsletterSignup: Joi.number().required(),
           comments: Joi.number().required(),
@@ -65,7 +65,7 @@ module.exports = (app, params = {}) => {
       newsletterSignupType: Joi.object({
         // The Omeda BehaviorAttribute ID for the `Parameter1 Newsletter Signup Type` attribute.
         id: Joi.number().required(),
-        values: Joi.object({
+        valueIds: Joi.object({
           default: Joi.number().required(),
           pushdown: Joi.number().required(),
           inlineContent: Joi.number().required(),
@@ -76,7 +76,7 @@ module.exports = (app, params = {}) => {
       contentGateType: Joi.object({
         // The Omeda BehaviorAttribute ID for the `Parameter1 Content Gate Type` attribute.
         id: Joi.number().required(),
-        values: Joi.object({
+        valueIds: Joi.object({
           default: Joi.number().required(),
           metered: Joi.number().required(),
           printPreview: Joi.number().required(),

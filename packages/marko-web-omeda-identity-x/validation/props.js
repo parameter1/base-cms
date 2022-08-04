@@ -5,8 +5,9 @@ const validHooks = require('@parameter1/base-cms-marko-web-identity-x/hooks');
 module.exports = {
   behaviorAttribute: Joi.object({
     id: Joi.number().required(),
-    value: Joi.alternatives().try(Joi.number(), Joi.string()).required(),
-  }),
+    valueId: Joi.number(),
+    value: Joi.string(),
+  }).xor('valueId', 'value'),
   behaviorId: Joi.number(),
   brandKey: Joi.string().trim().lowercase(),
   clientKey: Joi.string().trim().lowercase(),

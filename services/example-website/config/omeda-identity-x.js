@@ -22,11 +22,11 @@ module.exports = {
   behaviorAttributes: {
     website: {
       id: 7,
-      value: 21146,
+      valueId: 21146,
     },
     actionSource: {
       id: 6,
-      values: {
+      valueIds: {
         default: 21141,
         newsletterSignup: 21143,
         comments: 21145,
@@ -35,7 +35,7 @@ module.exports = {
     },
     newsletterSignupType: {
       id: 4,
-      values: {
+      valueIds: {
         default: 21138,
         pushdown: 21136,
         inlineContent: 21144,
@@ -45,7 +45,7 @@ module.exports = {
     },
     contentGateType: {
       id: 5,
-      values: {
+      valueIds: {
         default: 21135,
         metered: 21137,
         printPreview: 21140,
