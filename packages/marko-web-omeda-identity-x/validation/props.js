@@ -3,6 +3,10 @@ const IdXConfig = require('@parameter1/base-cms-marko-web-identity-x/config');
 const validHooks = require('@parameter1/base-cms-marko-web-identity-x/hooks');
 
 module.exports = {
+  behaviorAttribute: Joi.object({
+    id: Joi.number().required(),
+    value: Joi.alternatives().try(Joi.number(), Joi.string()).required(),
+  }),
   behaviorId: Joi.number(),
   brandKey: Joi.string().trim().lowercase(),
   clientKey: Joi.string().trim().lowercase(),
