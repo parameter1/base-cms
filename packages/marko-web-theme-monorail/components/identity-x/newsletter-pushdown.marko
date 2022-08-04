@@ -18,7 +18,6 @@ $ const {
   imagePath,
   disabled,
 } = site.getAsObject(`newsletter.${configName}`);
-$ console.log(name, withUserName, description, withUserDescription);
 $ const lang = site.config.lang || "en";
 $ const { initiallyExpanded } = getAsObject(out.global, "newsletterState");
 $ const imageSrc = imagePath ? buildImgixUrl(`https://${config.website("imageHost")}/${imagePath}`, { w: 280, auto: "format,compress" }) : null;
