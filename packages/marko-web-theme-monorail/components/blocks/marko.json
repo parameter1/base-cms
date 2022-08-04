@@ -13,6 +13,11 @@
     "@section": "object",
     "@view-more": "boolean"
   },
+  "<theme-company-inquiry-form-block>": {
+    "template": "./company-inquiry-form.marko",
+    "@content": {},
+    "@initially-expanded": "boolean"
+  },
   "<theme-full-width-native-ad-block>": {
     "template": "./full-width-native-ad.marko"
   },

@@ -1,0 +1,26 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { content } = input;
+$ const initiallyExpanded = defaultValue(input.initiallyExpanded, true)
+$ const modifiers = initiallyExpanded ? ["open"] : [];
+
+<marko-web-node-list class="node-list" block-name="inquiry-form" modifiers=modifiers collapsible=false>
+  <@header>
+    <marko-web-browser-component
+      name="ThemeMenuToggleButton"
+      props={
+        className: 'inquiry-form-button btn btn-primary',
+        before: 'Request More Info',
+        targets: ['.node-list.inquiry-form'],
+        toggleClass: 'inquiry-form--open',
+        iconName: 'chevron-down',
+        initiallyExpanded,
+        expandedIconName: 'chevron-up',
+      }
+      ssr=true
+    />
+  </@header>
+  <@body>
+    <marko-web-inquiry-form content=content with-header=false />
+  </@body>
+</marko-web-node-list>
