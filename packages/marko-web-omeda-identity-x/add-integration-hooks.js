@@ -2,6 +2,7 @@ const Joi = require('@parameter1/joi');
 const { validate } = require('@parameter1/joi/utils');
 const { get } = require('@parameter1/base-cms-object-path');
 const appendDataFactory = require('./utils/append-data');
+const behaviorFactory = require('./utils/build-behavior');
 const schemas = require('./validation/schemas');
 const props = require('./validation/props');
 const {
@@ -21,6 +22,8 @@ module.exports = (params = {}) => {
     appendBehaviorToHook,
     appendDemographicToHook,
     appendPromoCodeToHook,
+    behaviors,
+    behaviorAttributes,
     idxConfig,
     brandKey,
     omedaGraphQLClientProp,
@@ -41,6 +44,7 @@ module.exports = (params = {}) => {
     omedaPromoCodeDefault: Joi.string(),
   }), params);
 
+  const buildBehaviorFor = behaviorFactory({ behaviors, behaviorAttributes });
   const appendDataFor = appendDataFactory({
     behaviors: appendBehaviorToHook,
     demographics: appendDemographicToHook,
@@ -58,6 +62,8 @@ module.exports = (params = {}) => {
       omedaPromoCodeCookieName,
       omedaPromoCodeDefault,
       ...appendDataFor('onLoginLinkSent'),
+      behavior: buildBehaviorFor('onLoginLinkSent', {
+      }),
     }),
   });
 
@@ -71,6 +77,8 @@ module.exports = (params = {}) => {
       omedaPromoCodeCookieName,
       omedaPromoCodeDefault,
       ...appendDataFor('onAuthenticationSuccess'),
+      behavior: buildBehaviorFor('onAuthenticationSuccess', {
+      }),
     }),
   });
 
@@ -83,6 +91,8 @@ module.exports = (params = {}) => {
       omedaPromoCodeCookieName,
       omedaPromoCodeDefault,
       ...appendDataFor('onUserProfileUpdate'),
+      behavior: buildBehaviorFor('onUserProfileUpdate', {
+      }),
     }),
   });
 
@@ -92,6 +102,8 @@ module.exports = (params = {}) => {
     fn: async args => onLogout({
       ...args,
       ...appendDataFor('onLogout'),
+      behavior: buildBehaviorFor('onLogout', {
+      }),
     }),
   });
 
