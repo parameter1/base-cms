@@ -155,9 +155,13 @@ input EmailNewsletterSortInput {
 }
 
 input UpdateEmailNewsletterProviderInput {
+  "The id of the newsletter product to update the provider information for"
   id: ObjectID!
+  "The provider type for the email service provider (typically set to omeda)"
   type: String
+  "The provider id for the newsletter product from an email service provider"
   providerId: String
+  "The key-values to append to the newsletter provider attributes. Send `null` value to unset a key."
   attributes: JSON
 }
 
