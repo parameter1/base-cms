@@ -38,6 +38,7 @@ module.exports = async ({
 
   appendBehaviors,
   appendDemographics,
+  appendPromoCodes,
 
   behavior,
 
@@ -128,6 +129,14 @@ module.exports = async ({
     });
   }
 
+  const promoCodes = [];
+  if (promoCode) promoCodes.push(promoCode);
+
+  // Append promo codes, if specified
+  if (appendBehaviors && appendBehaviors.length) {
+    appendPromoCodes.forEach(code => promoCodes.push(code.promoCode));
+  }
+
   const { id, encryptedCustomerId } = await omedaRapidIdentify({
     email: appUser.email,
     productId,
@@ -141,7 +150,7 @@ module.exports = async ({
     ...(demographics.length && { demographics }),
     ...(behaviors.length && { behaviors }),
     ...(deploymentTypes.length && { deploymentTypes }),
-    ...(promoCode && { promoCode }),
+    ...(promoCodes.length && { promoCode: promoCodes.pop() }),
     ...(subscriptions.length && { subscriptions }),
   });
 

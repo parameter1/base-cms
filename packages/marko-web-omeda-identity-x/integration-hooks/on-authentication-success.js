@@ -45,6 +45,6 @@ module.exports = async (params = {}) => {
     ...(promoCode && { promoCode }),
     ...(appendBehaviors && { appendBehaviors }),
     ...(appendDemographics && { appendDemographics }),
-    ...(appendPromoCodes.length && { promoCode: appendPromoCodes[0].promoCode }),
+    ...(appendPromoCodes && { appendPromoCodes }),
   });
 };

@@ -92,18 +92,18 @@ module.exports = {
   //   },
   // ],
 
-  // appendPromoCodeToHook: [
-  //   {
-  //     hook: 'onLoginLinkSent',
-  //     promoCode: 'Parameter1',
-  //   },
-  //   {
-  //     hook: 'onAuthenticationSuccess',
-  //     promoCode: 'P1Verified',
-  //   },
-  //   {
-  //     hook: 'onUserProfileUpdate',
-  //     promoCode: 'P1FullProfile',
-  //   },
-  // ],
+  appendPromoCodeToHook: [
+    {
+      hook: 'onLoginLinkSent',
+      promoCode: 'P1Login',
+    },
+    {
+      hook: 'onAuthenticationSuccess',
+      promoCode: 'P1Verified',
+    },
+    {
+      hook: 'onUserProfileUpdate',
+      promoCode: 'P1FullProfile',
+    },
+  ],
 };
