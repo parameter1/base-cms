@@ -74,6 +74,17 @@
     color: $white;
     text-align: center;
   }
+  .newsletter-form {
+    .btn-secondary {
+      margin-bottom: map-get($spacers, block);
+      background-color: $primary;
+      border-color: $primary;
+      color: $white;
+      &:hover {
+        color: $white;
+      }
+    }
+  }
 }
 
 .site-footer-nav {
