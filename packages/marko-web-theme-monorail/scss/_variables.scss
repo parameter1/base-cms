@@ -5,7 +5,7 @@ $skin-font-family-primary: Arial, sans-serif !default;
 $skin-font-family-secondary: Arial, sans-serif !default;
 
 // Set bootstrap font to primary skin font
-$font-family-sans-serif: $skin-font-family-primary;
+$font-family-sans-serif: $skin-font-family-primary !default;
 
 // Set theme's font family and page title to primary skin font.
 $theme-font-family-sans-serif: $skin-font-family-primary !default;
@@ -16,21 +16,21 @@ $theme-item-description-font-family: $skin-font-family-secondary !default;
 $theme-heading-font-family: $skin-font-family-secondary !default;
 
 // Reduced the z-index to prevent overlaying the welcome ad.
-$theme-site-header-z-index: 15000;
+$theme-site-header-z-index: 15000 !default;
 
 // Low-Level Vars
 //
 // Disable rounding and shadows
-$enable-shadows: false;
-$enable-rounded: false;
+$enable-shadows: false !default;
+$enable-rounded: false !default;
 // Disable box shadow on button focus
-$btn-active-box-shadow: none;
-$btn-focus-width: 0;
+$btn-active-box-shadow: none !default;
+$btn-focus-width: 0 !default;
 // Override bredcrumb divider
 $breadcrumb-divider: "|" !default;
 // Set gutter and block spacer
-$grid-gutter-width: 20px;
-$block-spacer: 24px;
+$grid-gutter-width: 20px !default;
+$block-spacer: 24px !default;
 $spacers: (
   block-xl: $block-spacer * 2.5,
   block-lg: $block-spacer * 1.5,
@@ -40,16 +40,16 @@ $spacers: (
 );
 
 // Determine the response text breakpoint
-$theme-responsive-text-breakpoint: md;
+$theme-responsive-text-breakpoint: md !default;
 
-$hr-margin-y: $grid-gutter-width / 2;
+$hr-margin-y: $grid-gutter-width / 2 !default;
 
 // Marko Web Document and Page Settings
 //
-$marko-web-document-container-max-width: 1080px;
-$marko-web-document-container-gutter: 0;
-$marko-web-page-wrapper-padding: 10px;
-$marko-web-page-padding: 0;
+$marko-web-document-container-max-width: 1080px !default;
+$marko-web-document-container-gutter: 0 !default;
+$marko-web-page-wrapper-padding: 10px !default;
+$marko-web-page-padding: 0 !default;
 
 // Colors
 //
@@ -100,25 +100,25 @@ $colors: (
 
 // Marko Web Nodes
 //
-$marko-web-node-padding: 20px;
+$marko-web-node-padding: 20px !default;
 
-$marko-web-node-placeholder-image: none;
-$marko-web-node-placeholder-image-bg-color: transparent;
+$marko-web-node-placeholder-image: none !default;
+$marko-web-node-placeholder-image-bg-color: transparent !default;
 
-$marko-web-node-overlay-image-text-shadow: none;
-$marko-web-node-overlay-image-gradient: linear-gradient(to top, rgba($gray-800, .1), rgba($gray-800, .1));
+$marko-web-node-overlay-image-text-shadow: none !default;
+$marko-web-node-overlay-image-gradient: linear-gradient(to top, rgba($gray-800, .1), rgba($gray-800, .1)) !default;
 
 // Marko Web Node Lists
 //
-$marko-web-node-list-padding: 16px;
+$marko-web-node-list-padding: 16px !default;
 $marko-web-node-list-border-color: $gray-200 !default;
 
 // Font Weights
 //
-$font-weight-bold: 700;
-$font-weight-semibold: 600;
-$font-weight-medium: 500;
-$font-weight-normal: 400;
+$font-weight-bold: 700 !default;
+$font-weight-semibold: 600 !default;
+$font-weight-medium: 500 !default;
+$font-weight-normal: 400 !default;
 
 // Buttons, Inputs, and Typography
 //
@@ -131,10 +131,10 @@ $marko-web-icon-fill-dark: $gray-800 !default;
 $marko-web-icon-fill-light: $white !default;
 
 // Skin content body and image widths
-$skin-aligned-image-width: 300px;
-$skin-aligned-body-image-spacer: .75rem;
-$skin-content-body-max-width: 700px;
-$skin-content-primary-image-max-width: 880px;
+$skin-aligned-image-width: 300px !default;
+$skin-aligned-body-image-spacer: .75rem !default;
+$skin-content-body-max-width: 700px !default;
+$skin-content-primary-image-max-width: 880px !default;
 
 // Page
 $theme-page-title-font-weight: $font-weight-bold;
@@ -155,7 +155,7 @@ $theme-site-header-breakpoints: map-merge(
 );
 
 // Navbar
-$skin-desktop-menu-breakpoint: map-get($theme-site-header-breakpoints, hide-secondary);
+$skin-desktop-menu-breakpoint: map-get($theme-site-header-breakpoints, hide-secondary) !default;
 $theme-site-navbar-brand-margin-x: 36px !default;
 
 $theme-site-navbar-logo-height: 46px !default;
@@ -170,9 +170,9 @@ $theme-site-navbar-primary-height-sm: 0 !default;
 $theme-site-navbar-secondary-link-color: $gray-800 !default;
 $theme-site-navbar-secondary-bg-color: $white !default;
 $theme-site-navbar-secondary-font-size: 18px !default;
-$theme-site-navbar-secondary-font-size-sm: $theme-site-navbar-secondary-font-size - 2;
-$theme-site-navbar-secondary-line-height: get-line-height($theme-site-navbar-secondary-font-size, 26px);
-$theme-site-navbar-secondary-line-height-sm: get-line-height($theme-site-navbar-secondary-font-size-sm, 24px);
+$theme-site-navbar-secondary-font-size-sm: $theme-site-navbar-secondary-font-size - 2 !default;
+$theme-site-navbar-secondary-line-height: get-line-height($theme-site-navbar-secondary-font-size, 26px) !default;
+$theme-site-navbar-secondary-line-height-sm: get-line-height($theme-site-navbar-secondary-font-size-sm, 24px) !default;
 $theme-site-navbar-secondary-font-weight: $font-weight-semibold !default;
 $theme-site-navbar-secondary-padding-y: 15px !default;
 $theme-site-navbar-secondary-type: light !default;
@@ -185,40 +185,40 @@ $theme-site-navbar-secondary-link-hover-color: $primary !default;
 $theme-site-navbar-secondary-link-padding: 15px !default;
 
 // Site Menu
-$theme-site-navbar-menu-width: 500px;
-$theme-site-navbar-menu-max-width: 100%;
+$theme-site-navbar-menu-width: 500px !default;
+$theme-site-navbar-menu-max-width: 100% !default;
 
-$theme-site-navbar-menu-box-shadow: 0 8px 8px 0 rgba(0, 0, 0, .1), 0 6px 20px 0 rgba(0, 0, 0, .15);
-$theme-site-navbar-menu-padding-x: 24px;
-$theme-site-navbar-menu-padding-y: 24px;
-$theme-site-navbar-menu-bg-color: $white;
-$theme-site-navbar-menu-hover-background-color: transparent;
+$theme-site-navbar-menu-box-shadow: 0 8px 8px 0 rgba(0, 0, 0, .1), 0 6px 20px 0 rgba(0, 0, 0, .15) !default;
+$theme-site-navbar-menu-padding-x: 24px !default;
+$theme-site-navbar-menu-padding-y: 24px !default;
+$theme-site-navbar-menu-bg-color: $white !default;
+$theme-site-navbar-menu-hover-background-color: transparent !default;
 
-$theme-site-navbar-menu-item-font-size: 24px;
-$theme-site-navbar-menu-item-font-weight: $font-weight-bold;
-$theme-site-navbar-menu-item-border-color: transparent;
+$theme-site-navbar-menu-item-font-size: 24px !default;
+$theme-site-navbar-menu-item-font-weight: $font-weight-bold !default;
+$theme-site-navbar-menu-item-border-color: transparent !default;
 
-$theme-site-navbar-menu-active-item-font-weight: $font-weight-bold;
+$theme-site-navbar-menu-active-item-font-weight: $font-weight-bold !default;
 
 $theme-site-navbar-menu-link-padding-x: 10px !default;
-$theme-site-navbar-menu-link-padding-y: 0;
+$theme-site-navbar-menu-link-padding-y: 0 !default;
 $theme-site-navbar-menu-link-color: $black !default;
 $theme-site-navbar-menu-link-hover-color: $primary !default;
 
 // Site Footer
-$global-site-footer-color: $white;
+$global-site-footer-color: $white !default;
 
-$theme-site-footer-font-size: 16px;
-$theme-site-footer-line-height: get-line-height($theme-site-footer-font-size, 30px);
+$theme-site-footer-font-size: 16px !default;
+$theme-site-footer-line-height: get-line-height($theme-site-footer-font-size, 30px) !default;
 
 $theme-site-footer-secondary-bg-color: $gray-800 !default;
 $theme-site-footer-primary-bg-color: $gray-900 !default;
 
-$theme-site-footer-copyright-color: $white;
-$theme-site-footer-copyright-font-size: $theme-site-footer-font-size;
+$theme-site-footer-copyright-color: $white !default;
+$theme-site-footer-copyright-font-size: $theme-site-footer-font-size !default;
 
-$theme-site-footer-spacer: 14px;
-$theme-site-footer-spacer-sm: 14px;
+$theme-site-footer-spacer: 14px !default;
+$theme-site-footer-spacer-sm: 14px !default;
 
 $theme-site-footer-logo-height: 35px !default;
 $theme-site-footer-logo-height-sm: 35px !default;
@@ -226,50 +226,50 @@ $theme-site-footer-logo-height-sm: 35px !default;
 $theme-site-footer-corporate-logo-height: 30px !default;
 
 // Items/Nodes
-$theme-item-link-hover-decoration: none;
+$theme-item-link-hover-decoration: none !default;
 
-$theme-item-header-color: $black;
-$theme-item-header-font-family: $skin-font-family-primary;
-$theme-item-header-font-size: 15px;
-$theme-item-header-font-weight: $font-weight-bold;
+$theme-item-header-color: $primary !default;
+$theme-item-header-font-family: $skin-font-family-primary !default;
+$theme-item-header-font-size: 15px !default;
+$theme-item-header-font-weight: $font-weight-bold !default;
 
 $theme-item-header-link-hover-color: $primary !default;
 
 $theme-item-title-link-hover-color: $primary !default;
 
-$theme-item-description-max-lines: 3;
-$theme-item-description-margin: 10px;
+$theme-item-description-max-lines: 3 !default;
+$theme-item-description-margin: 10px !default;
 
 // Ads
-$theme-ad-box-shadow: none;
+$theme-ad-box-shadow: none !default;
 
 // Cards and Card Headers
-$theme-card-header-background-color: transparent;
-$theme-card-header-color: $black;
-$theme-card-header-font-size: 22px;
-$theme-card-header-font-weight: $font-weight-bold;
-$theme-card-header-text-transform: none;
-$theme-card-header-border: none;
+$theme-card-header-background-color: transparent !default;
+$theme-card-header-color: $gray-800 !default;
+$theme-card-header-font-size: 22px !default;
+$theme-card-header-font-weight: $font-weight-bold !default;
+$theme-card-header-text-transform: none !default;
+$theme-card-header-border: none !default;
 
-$theme-card-header-link-hover-color: $primary;
-$theme-card-header-link-hover-decoration: none;
+$theme-card-header-link-hover-color: $primary !default;
+$theme-card-header-link-hover-decoration: none !default;
 
-$marko-web-node-bg-color: transparent;
-$theme-card-background-color: transparent;
+$marko-web-node-bg-color: transparent !default;
+$theme-card-background-color: transparent !default;
 
 // Pages
-$theme-page-body-font-family: $theme-font-family-sans-serif;
+$theme-page-body-font-family: $theme-font-family-sans-serif !default;
 
-$theme-page-body-font-size: 19px;
-$theme-page-body-font-size-sm: $theme-page-body-font-size;
-$theme-page-body-line-height: get-line-height($theme-page-body-font-size, 25px);
-$theme-page-body-line-height-sm: $theme-page-body-line-height;
+$theme-page-body-font-size: 19px !default;
+$theme-page-body-font-size-sm: $theme-page-body-font-size !default;
+$theme-page-body-line-height: get-line-height($theme-page-body-font-size, 25px) !default;
+$theme-page-body-line-height-sm: $theme-page-body-line-height !default;
 
 // Caption / Credit / Media
-$theme-media-footer-font-size: 16px;
+$theme-media-footer-font-size: 16px !default;
 
-$theme-media-footer-line-height: get-line-height($theme-media-footer-font-size, 22px);
-$theme-media-caption-color: #474747;
+$theme-media-footer-line-height: get-line-height($theme-media-footer-font-size, 22px) !default;
+$theme-media-caption-color: #474747 !default;
 $theme-media-credit-font-size: 14px !default;
 
 // Headings
@@ -314,8 +314,8 @@ $theme-content-heading-h6-margin-bottom-sm:     1rem !default;
 
 
 // Embedded media
-$theme-embedded-media-align-left-width: $skin-aligned-image-width;
-$theme-embedded-media-align-left-margin: $skin-aligned-body-image-spacer;
+$theme-embedded-media-align-left-width: $skin-aligned-image-width !default;
+$theme-embedded-media-align-left-margin: $skin-aligned-body-image-spacer !default;
 
-$theme-embedded-media-align-right-width: $skin-aligned-image-width;
-$theme-embedded-media-align-right-margin: $skin-aligned-body-image-spacer;
+$theme-embedded-media-align-right-width: $skin-aligned-image-width !default;
+$theme-embedded-media-align-right-margin: $skin-aligned-body-image-spacer !default;
