@@ -23,6 +23,7 @@ module.exports = ({
       appendBehaviors,
       appendDemographics,
       appendPromoCodes,
+      behavior,
     } = {}) => idxOmedaRapidIdentify({
       brandKey,
       productId,
@@ -34,9 +35,13 @@ module.exports = ({
         cookies: req.cookies,
       }),
 
+      // Custom behaviors, demos, or codes to append to the API call
       appendBehaviors,
       appendDemographics,
       appendPromoCodes,
+
+      // The pre-configured behavior/attribute definitions.
+      behavior,
 
       identityX: req.identityX,
       omedaRapidIdentify,

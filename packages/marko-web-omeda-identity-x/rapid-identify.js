@@ -39,6 +39,8 @@ module.exports = async ({
   appendBehaviors,
   appendDemographics,
 
+  behavior,
+
   identityX,
   omedaRapidIdentify,
 } = {}) => {
@@ -58,7 +60,7 @@ module.exports = async ({
     alpha3 = await getAlpha3CodeFor(countryCode, identityX);
   }
 
-  const behaviors = [];
+  const behaviors = [{ id: behavior.id, attributes: getAsArray(behavior, 'attributes') }];
   const demographics = getAsArray(appUser, 'customSelectFieldAnswers').filter((select) => {
     const { field, hasAnswered } = select;
     if (!field.active || !field.externalId || !hasAnswered) return false;
@@ -111,8 +113,18 @@ module.exports = async ({
 
   // Append custom behavior, if specified
   if (appendBehaviors && appendBehaviors.length) {
-    appendBehaviors.forEach(({ behaviorId }) => {
-      behaviors.push({ id: behaviorId });
+    appendBehaviors.forEach(({ behaviorId, attributes }) => {
+      behaviors.push({
+        id: behaviorId,
+        // Only pass attributes through if they are present
+        ...(attributes && attributes.length && {
+          attributes: attributes.map(attr => ({
+            id: attr.id,
+            ...(attr.valueId && { valueId: attr.valueId }),
+            ...(attr.value && { value: attr.value }),
+          })),
+        }),
+      });
     });
   }
 

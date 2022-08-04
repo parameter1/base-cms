@@ -4,13 +4,14 @@ const olyticsCookie = require('@parameter1/base-cms-marko-web-omeda/olytics/cust
 const extractPromoCode = require('../utils/extract-promo-code');
 const findEncryptedId = require('../external-id/find-encrypted-customer-id');
 const props = require('../validation/props');
-const { appendBehavior, appendDemographic, appendPromoCode } = require('../validation/schemas');
+const schemas = require('../validation/schemas');
 
 module.exports = async (params = {}) => {
   const {
     appendBehaviors,
     appendDemographics,
     appendPromoCodes,
+    behavior,
     brandKey,
     idxOmedaRapidIdentify,
     omedaPromoCodeCookieName,
@@ -19,9 +20,10 @@ module.exports = async (params = {}) => {
     res,
     user,
   } = validate(Joi.object({
-    appendBehaviors: Joi.array().items(appendBehavior.required()).default([]),
-    appendDemographics: Joi.array().items(appendDemographic.required()).default([]),
-    appendPromoCodes: Joi.array().items(appendPromoCode.required()).default([]),
+    appendBehaviors: Joi.array().items(schemas.appendBehavior.required()).default([]),
+    appendDemographics: Joi.array().items(schemas.appendDemographic.required()).default([]),
+    appendPromoCodes: Joi.array().items(schemas.appendPromoCode.required()).default([]),
+    behavior: schemas.behavior.required(),
     brandKey: props.brandKey.required(),
     user: Joi.object().required(),
     res: Joi.object().required(),
@@ -39,6 +41,7 @@ module.exports = async (params = {}) => {
 
   await idxOmedaRapidIdentify({
     user,
+    behavior,
     ...(promoCode && { promoCode }),
     ...(appendBehaviors && { appendBehaviors }),
     ...(appendDemographics && { appendDemographics }),

@@ -1,13 +1,14 @@
 const Joi = require('@parameter1/joi');
 const { validate } = require('@parameter1/joi/utils');
 const extractPromoCode = require('../utils/extract-promo-code');
-const { appendBehavior, appendDemographic, appendPromoCode } = require('../validation/schemas');
+const schemas = require('../validation/schemas');
 
 module.exports = async (params = {}) => {
   const {
     appendBehaviors,
     appendDemographics,
     appendPromoCodes,
+    behavior,
     idxOmedaRapidIdentify,
     omedaPromoCodeCookieName,
     omedaPromoCodeDefault,
@@ -15,9 +16,10 @@ module.exports = async (params = {}) => {
     req,
     user,
   } = validate(Joi.object({
-    appendBehaviors: Joi.array().items(appendBehavior.required()).default([]),
-    appendDemographics: Joi.array().items(appendDemographic.required()).default([]),
-    appendPromoCodes: Joi.array().items(appendPromoCode.required()).default([]),
+    appendBehaviors: Joi.array().items(schemas.appendBehavior.required()).default([]),
+    appendDemographics: Joi.array().items(schemas.appendDemographic.required()).default([]),
+    appendPromoCodes: Joi.array().items(schemas.appendPromoCode.required()).default([]),
+    behavior: schemas.behavior.required(),
     idxOmedaRapidIdentify: Joi.function().required(),
     omedaPromoCodeCookieName: Joi.string().required(),
     omedaPromoCodeDefault: Joi.string(),
@@ -35,6 +37,7 @@ module.exports = async (params = {}) => {
 
   return idxOmedaRapidIdentify({
     user,
+    behavior,
     ...(promoCode && { promoCode }),
     ...(appendBehaviors && { appendBehaviors }),
     ...(appendDemographics && { appendDemographics }),
