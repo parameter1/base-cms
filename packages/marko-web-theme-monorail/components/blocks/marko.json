@@ -114,6 +114,7 @@
   },
   "<theme-section-feed-block>": {
     "template": "./section-feed.marko",
+    "<header>": {},
     "<query-params>": {},
     "<node>": {},
     "@alias": "string",
