@@ -1,6 +1,7 @@
 const Joi = require('@parameter1/joi');
 const { validate } = require('@parameter1/joi/utils');
 const { get } = require('@parameter1/base-cms-object-path');
+const appendDataFactory = require('./utils/append-data');
 const schemas = require('./validation/schemas');
 const props = require('./validation/props');
 const {
@@ -40,23 +41,11 @@ module.exports = (params = {}) => {
     omedaPromoCodeDefault: Joi.string(),
   }), params);
 
-  // Return the configured behaviors, demographics, and promocodes for the supplied event/hook
-  const buildAppendFor = (hookName) => {
-    const appendBehaviors = appendBehaviorToHook
-      .filter(({ hook }) => hook === hookName)
-      .map(({ hook, ...rest }) => rest);
-    const appendDemographics = appendDemographicToHook
-      .filter(({ hook }) => hook === hookName)
-      .map(({ hook, ...rest }) => rest);
-    const appendPromoCodes = appendPromoCodeToHook
-      .filter(({ hook }) => hook === hookName)
-      .map(({ hook, ...rest }) => rest);
-    return {
-      ...(appendBehaviors.length && { appendBehaviors }),
-      ...(appendDemographics.length && { appendDemographics }),
-      ...(appendPromoCodes.length && { appendPromoCodes }),
-    };
-  };
+  const appendDataFor = appendDataFactory({
+    behaviors: appendBehaviorToHook,
+    demographics: appendDemographicToHook,
+    promoCodes: appendPromoCodeToHook,
+  });
 
   idxConfig.addHook({
     name: 'onLoginLinkSent',
@@ -68,7 +57,7 @@ module.exports = (params = {}) => {
       omedaGraphQLClient: get(args, `req.${omedaGraphQLClientProp}`),
       omedaPromoCodeCookieName,
       omedaPromoCodeDefault,
-      ...buildAppendFor('onLoginLinkSent'),
+      ...appendDataFor('onLoginLinkSent'),
     }),
   });
 
@@ -81,7 +70,7 @@ module.exports = (params = {}) => {
       idxOmedaRapidIdentify: get(args, `req.${idxOmedaRapidIdentifyProp}`),
       omedaPromoCodeCookieName,
       omedaPromoCodeDefault,
-      ...buildAppendFor('onAuthenticationSuccess'),
+      ...appendDataFor('onAuthenticationSuccess'),
     }),
   });
 
@@ -93,7 +82,7 @@ module.exports = (params = {}) => {
       idxOmedaRapidIdentify: get(args, `req.${idxOmedaRapidIdentifyProp}`),
       omedaPromoCodeCookieName,
       omedaPromoCodeDefault,
-      ...buildAppendFor('onUserProfileUpdate'),
+      ...appendDataFor('onUserProfileUpdate'),
     }),
   });
 
@@ -102,7 +91,7 @@ module.exports = (params = {}) => {
     shouldAwait: true,
     fn: async args => onLogout({
       ...args,
-      ...buildAppendFor('onLogout'),
+      ...appendDataFor('onLogout'),
     }),
   });
 
