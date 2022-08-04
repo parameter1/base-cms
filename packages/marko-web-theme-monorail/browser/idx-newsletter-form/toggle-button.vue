@@ -5,22 +5,39 @@
     aria-label="Newsletter Menu Toggle"
     @click="toggle"
   >
-    <icon-mail :modifiers="['lg']" />
+    <component :is="icon" :modifiers="['lg']" />
   </button>
 </template>
 
 <script>
 import IconMail from '@parameter1/base-cms-marko-web-icons/browser/mail.vue';
+import IconPerson from '@parameter1/base-cms-marko-web-icons/browser/person.vue';
+
+const validateIcon = v => ['mail', 'person'].includes(v);
 
 export default {
   inject: ['EventBus'],
   components: {
     IconMail,
+    IconPerson,
+  },
+  props: {
+    iconName: {
+      type: String,
+      default: 'mail',
+      validator: validateIcon,
+    },
   },
 
   data: () => ({
     expanded: false,
   }),
+
+  computed: {
+    icon() {
+      return `icon-${this.iconName}`;
+    },
+  },
 
   methods: {
     toggle() {
