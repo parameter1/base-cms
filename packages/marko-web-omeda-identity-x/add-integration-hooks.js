@@ -30,6 +30,8 @@ module.exports = (params = {}) => {
     appendBehaviorToHook: Joi.array().items(schemas.hookBehavior).default([]),
     appendDemographicToHook: Joi.array().items(schemas.hookDemographic).default([]),
     appendPromoCodeToHook: Joi.array().items(schemas.hookPromoCode).default([]),
+    behaviors: Joi.object().required(),
+    behaviorAttributes: Joi.object().required(),
     brandKey: props.brandKey.required(),
     idxConfig: props.idxConfig.required(),
     idxOmedaRapidIdentifyProp: Joi.string().required(),
