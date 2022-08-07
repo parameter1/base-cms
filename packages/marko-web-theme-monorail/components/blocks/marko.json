@@ -117,6 +117,7 @@
     "<header>": {},
     "<query-params>": {},
     "<node>": {},
+    "<node-list>": {},
     "@alias": "string",
     "@count-only": "boolean",
     "@display-image": "boolean",
