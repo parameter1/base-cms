@@ -161,7 +161,7 @@ input UpdateEmailNewsletterProviderInput {
   type: String
   "The provider id for the newsletter product from an email service provider"
   providerId: String
-  "The key-values to append to the newsletter provider attributes. Send `null` value to unset a key."
+  "The key-values to append to the newsletter provider attributes. Send ``null`` value to unset a key."
   attributes: JSON
 }
 
