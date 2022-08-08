@@ -1491,14 +1491,14 @@ module.exports = {
 
       const projection = connectionProjection(info);
       const sort = input.sort.field ? input.sort : { field: 'sectionQuery.0.start', order: 'desc' };
-      const excludeProjection = input.sort.field ? undefined : ['sectionQuery.start'];
+      const excludeProjection = ['sectionQuery.0.start'];
 
       if (!query.$and.length) delete query.$and;
 
       return basedb.paginate('platform.Content', {
         query,
         sort,
-        projection: { ...(!input.sort.field && { 'sectionQuery.$.start': 1 }), ...projection },
+        projection,
         excludeProjection,
         additionalData: { sectionId: hasSectionInput ? section._id : null },
         ...pagination,
