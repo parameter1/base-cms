@@ -6,13 +6,13 @@ $ const blockName = "newsletter-signup-banner";
 
 $ const { config, site, req } = out.global;
 $ const { identityX } = req;
-$ const buttonLabels = defaultValue(input.buttonLabels, { continue: 'Sign Up' })
-$ const loginEmailPlaceholder = defaultValue(input.loginEmailPlaceholder, 'example@gmail.com');
-$ const configName = defaultValue(input.configName, 'signupBanner');
 $ const additionalEventData = {
   ...defaultValue(input.additionalEventData, {}),
   actionSource: "newsletterSignup",
 };
+$ const buttonLabels = defaultValue(input.buttonLabels, { continue: "Sign Up" })
+$ const loginEmailPlaceholder = defaultValue(input.loginEmailPlaceholder, "example@gmail.com");
+$ const configName = defaultValue(input.configName, "signupBanner");
 
 $ if (!additionalEventData.newsletterSignupType) {
   additionalEventData.newsletterSignupType = "default";

@@ -15,10 +15,14 @@ $ const {
 } = input;
 $ const messages = getAsObject(input, "messages");
 $ const title = defaultValue(input.title, "Log in to view the full article");
-$ const profileConfirmation= defaultValue(input.profielConfirmation, 'Email Confirmed!')
+$ const profileConfirmation = defaultValue(input.profileConfirmation, "Email Confirmed!")
 $ const userInputTitle = defaultValue(input.userInputTitle, "Complete your profile to view the full article");
 $ const additionalEventData = {
   promoCode: site.get("contentMetering.promoCode", undefined),
+  ...defaultValue(input.additionalEventData, {}),
+  actionSource: "contentGate",
+  // @todo fix incoming login/profile event name, should be `default|metered|printPreview`
+  contentGateType: defaultValue(input.contentGateType, "default"),
 };
 
 <marko-web-block name=blockName>
