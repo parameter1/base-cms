@@ -15,7 +15,7 @@ const getBehavior = (event, behaviors) => {
 
 const buildAttributes = (attrs, data) => Object.keys(attrs).reduce((arr, key) => {
   const attr = attrs[key];
-  const valueId = get(attrs, `${key}.valueIds.${data[key]}`, attr.value);
+  const valueId = get(attrs, `${key}.valueIds.${data[key]}`, attr.valueId);
   if (!valueId) return arr;
   return [...arr, { id: attr.id, valueId }];
 }, []);
