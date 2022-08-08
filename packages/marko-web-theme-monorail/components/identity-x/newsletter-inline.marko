@@ -14,6 +14,11 @@ $ const additionalEventData = {
   actionSource: "newsletterSignup",
 };
 
+$ if (!additionalEventData.newsletterSignupType) {
+  additionalEventData.newsletterSignupType = "default";
+  console.log("identity-x-newsletter-form-inline component is deprecated. Use identity-x-newsletter-form-inline-content or identity-x-newsletter-form-inline-section instead.");
+}
+
 $ const {
   name,
   description,
