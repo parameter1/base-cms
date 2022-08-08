@@ -23,6 +23,7 @@
     "@additional-event-data": "object",
     "@source": {
       "type": "string",
+      "deprecated": true,
       "default-value": "login"
     },
     "@action-text": "string",
@@ -46,6 +47,7 @@
     "@additional-event-data": "object",
     "@login-source": {
       "type": "string",
+      "deprecated": true,
       "default-value": "profile"
     },
     "@call-to-action": "string",
@@ -57,6 +59,7 @@
     "@additional-event-data": "object",
     "@login-source": {
       "type": "string",
+      "deprecated": true,
       "default-value": "comment-stream"
     },
     "@identifier": {

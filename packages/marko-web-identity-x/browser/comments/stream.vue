@@ -35,8 +35,10 @@
         </p>
         <login
           :class="element('login-form')"
-          :additional-event-data="additionalEventData"
-          :source="loginSource"
+          :additional-event-data="{
+            ...additionalEventData,
+            actionSource: 'comments', // Always set source to comments
+          }"
           :active-user="activeUser"
           :endpoints="endpoints"
           :consent-policy="consentPolicy"
@@ -112,10 +114,6 @@ export default {
    *
    */
   props: {
-    loginSource: {
-      type: String,
-      default: 'comment-stream',
-    },
     activeUser: {
       type: Object,
       default: () => {},

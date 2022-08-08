@@ -165,8 +165,10 @@
   <div v-else>
     <p>You must be logged-in to modify your user profile.</p>
     <login
-      :additional-event-data="additionalEventData"
-      :source="loginSource"
+      :additional-event-data="{
+        actionSource: 'default', // Set default value if not passed in
+        ...additionalEventData,
+      }"
       :endpoints="endpoints"
       :app-context-id="appContextId"
       :consent-policy="consentPolicy"
@@ -225,10 +227,6 @@ export default {
    *
    */
   props: {
-    loginSource: {
-      type: String,
-      default: 'profile',
-    },
     endpoints: {
       type: Object,
       required: true,
@@ -529,7 +527,13 @@ export default {
       this.isLoading = true;
       this.didSubmit = false;
       try {
-        const res = await post('/profile', this.user);
+        const res = await post('/profile', {
+          ...this.user,
+          additionalEventData: {
+            actionSource: 'default', // Set default value if not passed in
+            ...this.additionalEventData,
+          },
+        });
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
 

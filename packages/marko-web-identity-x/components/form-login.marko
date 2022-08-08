@@ -8,8 +8,10 @@ $ const additionalEventData = defaultValue(input.additionalEventData, {});
 <if(Boolean(identityX))>
   <marko-web-identity-x-context|{ user, isEnabled, application }|>
     $ const props = {
-      additionalEventData,
-      source: input.source,
+      additionalEventData: {
+        actionSource: 'default', // Set default value if not present
+        ...additionalEventData,
+      },
       actionText: input.actionText,
       activeUser: user,
       endpoints: identityX.config.getEndpoints(),
