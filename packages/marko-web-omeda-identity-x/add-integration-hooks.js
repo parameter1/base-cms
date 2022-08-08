@@ -63,6 +63,9 @@ module.exports = (params = {}) => {
       omedaPromoCodeDefault,
       ...appendDataFor('onLoginLinkSent'),
       behavior: buildBehaviorFor('onLoginLinkSent', {
+        actionSource: get(args, 'actionSource'),
+        newsletterSignupType: get(args, 'newsletterSignupType'),
+        contentGateType: get(args, 'contentGateType'),
       }),
     }),
   });
@@ -78,6 +81,9 @@ module.exports = (params = {}) => {
       omedaPromoCodeDefault,
       ...appendDataFor('onAuthenticationSuccess'),
       behavior: buildBehaviorFor('onAuthenticationSuccess', {
+        actionSource: get(args, 'actionSource'),
+        newsletterSignupType: get(args, 'newsletterSignupType'),
+        contentGateType: get(args, 'contentGateType'),
       }),
     }),
   });
@@ -92,6 +98,9 @@ module.exports = (params = {}) => {
       omedaPromoCodeDefault,
       ...appendDataFor('onUserProfileUpdate'),
       behavior: buildBehaviorFor('onUserProfileUpdate', {
+        actionSource: get(args, 'actionSource'),
+        newsletterSignupType: get(args, 'newsletterSignupType'),
+        contentGateType: get(args, 'contentGateType'),
       }),
     }),
   });
@@ -103,6 +112,9 @@ module.exports = (params = {}) => {
       ...args,
       ...appendDataFor('onLogout'),
       behavior: buildBehaviorFor('onLogout', {
+        actionSource: get(args, 'actionSource'),
+        newsletterSignupType: get(args, 'newsletterSignupType'),
+        contentGateType: get(args, 'contentGateType'),
       }),
     }),
   });
