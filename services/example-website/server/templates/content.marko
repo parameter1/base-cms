@@ -12,13 +12,18 @@ $ const { recaptcha } = out.global;
         <primary-media content=content />
       </div>
 
-
       <div class="row mt-3">
         <div class="col-md-8">
           <div class="content-page-body">
-            <marko-web-content-body obj=content />
-            <identity-x-newsletter-form-inline />
-            <comment-stream content=content />
+            <default-theme-page-contents|{ blockName }| attrs={ "data-gallery-id": id }>
+              <content-body content=content block-name=blockName>
+                <@after-body|{ context }|>
+                  <if(context.canAccess)>
+                    <comment-stream content=content />
+                  </if>
+                </@after-body>
+              </content-body>
+            </default-theme-page-contents>
           </div>
         </div>
         <div class="col-md-4">
