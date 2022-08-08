@@ -73,6 +73,14 @@
     justify-content: center;
   }
 
+  &__form-wrapper {
+    &--footer {
+      label {
+        color: $gray-400;
+      }
+    }
+  }
+
   .newsletter-name {
     font-weight: $font-weight-bold;
   }
