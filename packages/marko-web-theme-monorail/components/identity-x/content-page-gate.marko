@@ -12,8 +12,6 @@ $ const {
   requiresUserInput,
   profileCallToAction,
   profileButtonLabel,
-  loginEventName,
-  profileEventName,
 } = input;
 $ const messages = getAsObject(input, "messages");
 $ const title = defaultValue(input.title, "Log in to view the full article");
@@ -45,10 +43,7 @@ $ const additionalEventData = {
       </marko-web-element>
 
       <marko-web-element name="form-wrapper" block-name=blockName>
-        <marko-web-identity-x-form-login
-          additional-event-data=additionalEventData
-          source=loginEventName
-        />
+        <marko-web-identity-x-form-login additional-event-data=additionalEventData />
       </marko-web-element>
     </else>
   </if>
@@ -68,7 +63,6 @@ $ const additionalEventData = {
         button-label=profileButtonLabel
         reload-page-on-submit=true
         additional-event-data=additionalEventData
-        login-source=profileEventName
       />
     </marko-web-element>
   </else-if>

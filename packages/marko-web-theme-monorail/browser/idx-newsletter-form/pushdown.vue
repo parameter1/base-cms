@@ -18,8 +18,12 @@
           <!-- eslint-disable-next-line vue/no-v-html -->
           <div v-if="!submitted" :class="element('description')" v-html="description" />
           <login-form
-            :additional-event-data="loginAdditionalEventData"
-            :source="source"
+            :additional-event-data="{
+              ...additionalEventData,
+              forceProfileReVerification: true,
+              actionSource: 'newsletterSignup',
+              newsletterSignupType: 'pushdown',
+            }"
             :active-user="activeUser"
             :endpoints="endpoints"
             :button-labels="buttonLabels"
@@ -97,10 +101,6 @@ export default {
     },
 
     // LOGIN FORM PROPS
-    source: {
-      type: String,
-      default: 'login',
-    },
     activeUser: {
       type: Object,
       default: () => {},

@@ -4,10 +4,13 @@ import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 
 $ const { site, config, req } = out.global;
 $ const { identityX } = req;
-$ const additionalEventData = defaultValue(input.additionalEventData, {});
+$ const additionalEventData = {
+  ...defaultValue(input.additionalEventData, {}),
+  actionSource: "newsletterSignup",
+  newsletterSignupType: "pushdown",
+};
 $ const buttonLabels = defaultValue(input.buttonLabels, { continue: "Sign Up" })
 $ const loginEmailPlaceholder = defaultValue(input.loginEmailPlaceholder, "example@gmail.com");
-$ const source = defaultValue(input.source, "pushdown_newsletter_login");
 $ const configName = defaultValue(input.configName, 'pushdown');
 
 $ const {
@@ -29,6 +32,7 @@ $ const imageSrcset = imageSrc ? `${imageSrc}&dpr=2 2x` : null;
       <marko-web-browser-component
         name="IdentityXNewsletterFormPushdown"
         props={
+          additionalEventData,
           siteName: config.website("name"),
           name: (user && withUserName) ? withUserName : name,
           description: (user && withUserDescription) ? withUserDescription : description,
@@ -37,8 +41,6 @@ $ const imageSrcset = imageSrc ? `${imageSrc}&dpr=2 2x` : null;
           imageSrcset,
           initiallyExpanded,
           lang,
-          additionalEventData,
-          source,
           activeUser: user,
           endpoints: identityX.config.getEndpoints(),
           buttonLabels,
