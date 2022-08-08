@@ -4,6 +4,7 @@ const { set, getAsObject } = require('@parameter1/base-cms-object-path');
 const contactUs = require('@parameter1/base-cms-marko-web-contact-us');
 const omedaNewsletters = require('@parameter1/base-cms-marko-web-omeda/routes/omeda-newsletters');
 const newsletterState = require('@parameter1/base-cms-marko-web-theme-monorail/middleware/newsletter-state');
+const contentGating = require('@parameter1/base-cms-marko-web-theme-monorail/middleware/content-gating');
 const i18n = require('@parameter1/base-cms-marko-web-theme-monorail/middleware/i18n');
 const loadInquiry = require('@parameter1/base-cms-marko-web-inquiry');
 const document = require('./server/components/document');
@@ -38,6 +39,7 @@ module.exports = startServer({
 
     // Monorail middleware
     i18n(app);
+    contentGating(app);
     app.use(newsletterState());
 
     // Setup NativeX.
