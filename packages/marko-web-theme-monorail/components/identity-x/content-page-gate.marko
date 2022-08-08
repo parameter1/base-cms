@@ -21,7 +21,6 @@ $ const additionalEventData = {
   promoCode: site.get("contentMetering.promoCode", undefined),
   ...defaultValue(input.additionalEventData, {}),
   actionSource: "contentGate",
-  // @todo fix incoming login/profile event name, should be `default|metered|printPreview`
   contentGateType: defaultValue(input.contentGateType, "default"),
 };
 
