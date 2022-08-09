@@ -2,7 +2,10 @@ import { getAsObject } from "@parameter1/base-cms-object-path";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 import queryFragment from "../../graphql/fragments/content-list";
 
-$ const modifiers = ["latest-content-list"];
+$ const modifiers = [
+  "latest-content-list",
+  ...(input.modifiers ? input.modifiers : []),
+];
 $ const title = defaultValue(input.title, 'Latest in');
 $ const withSection = defaultValue(input.withSection, false);
 $ const withNativeXSection = defaultValue(input.withNativeXSection, true);
