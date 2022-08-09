@@ -3,5 +3,5 @@ const { behaviorAttribute, behaviorId } = require('../props');
 
 module.exports = Joi.object({
   behaviorId: behaviorId.required(),
-  attributes: Joi.array().items(behaviorAttribute.required()).default([]),
+  attributes: Joi.array().items(behaviorAttribute).default([]),
 });
