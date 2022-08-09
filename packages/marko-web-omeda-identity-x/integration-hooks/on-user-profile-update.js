@@ -39,8 +39,8 @@ module.exports = async (params = {}) => {
     user,
     behavior,
     ...(promoCode && { promoCode }),
-    ...(appendBehaviors && { appendBehaviors }),
-    ...(appendDemographics && { appendDemographics }),
-    ...(appendPromoCodes && { appendPromoCodes }),
+    appendBehaviors,
+    appendDemographics,
+    appendPromoCodes,
   });
 };

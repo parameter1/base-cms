@@ -55,9 +55,9 @@ module.exports = async (params = {}) => {
       user: user.verified ? user : { id: user.id, email: user.email },
       behavior,
       ...(promoCode && { promoCode }),
-      ...(appendBehaviors && { appendBehaviors }),
-      ...(appendDemographics && { appendDemographics }),
-      ...(appendPromoCodes && { appendPromoCodes }),
+      appendBehaviors,
+      appendDemographics,
+      appendPromoCodes,
     }),
   ]);
 
