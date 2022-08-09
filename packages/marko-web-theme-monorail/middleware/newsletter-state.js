@@ -17,7 +17,7 @@ const query = gql`
 /**
  * @param {object} req The Express request object.
  */
-async function isContentCurrentlyGatedByReg(req) {
+async function isContentRegistrationCurrentlyRequired(req) {
   const { apollo, params } = req;
   const id = Number(params.id);
   const variables = { input: { id } };
@@ -33,7 +33,7 @@ module.exports = () => asyncRoute(async (req, res, next) => {
   const contentRegex = new RegExp(/\d{8}/, 'i');
   const isContent = contentRegex.test(req.params.id);
   // If there is a content id see if it is a gated piece of content
-  const gatedByReg = (isContent) ? await isContentCurrentlyGatedByReg(req) : false;
+  const gatedByReg = (isContent) ? await isContentRegistrationCurrentlyRequired(req) : false;
   const hasCookie = Boolean(get(req, `cookies.${cookieName}`));
   const utmMedium = get(req, 'query.utm_medium');
   const olyEncId = get(req, 'query.oly_enc_id');
