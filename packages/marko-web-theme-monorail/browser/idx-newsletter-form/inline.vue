@@ -131,7 +131,7 @@ export default {
     additionalEventData: {
       type: Object,
       default: () => ({
-        forceProfileReverification: true,
+        forceProfileReVerification: true,
       }),
     },
     loginEmailLabel: {
