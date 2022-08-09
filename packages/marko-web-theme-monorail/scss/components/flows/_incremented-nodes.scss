@@ -15,12 +15,6 @@
           margin-right: map-get($spacers, 2);
           white-space: nowrap;
         }
-        &:first-of-type {
-          &::before {
-            // font-size: 40px;
-            color: $primary;
-          }
-        }
       }
     }
   }
