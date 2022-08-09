@@ -82,6 +82,10 @@ export default {
    *
    */
   props: {
+    source: {
+      type: String,
+      default: 'default',
+    },
     activeUser: {
       type: Object,
       default: () => {},
@@ -206,7 +210,7 @@ export default {
           authUrl: this.authUrl,
           appContextId: this.appContextId,
           additionalEventData: {
-            actionSource: 'default', // Set source default
+            actionSource: this.source,
             ...this.additionalEventData,
           },
         });

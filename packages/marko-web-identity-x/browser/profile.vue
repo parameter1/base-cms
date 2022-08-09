@@ -165,10 +165,8 @@
   <div v-else>
     <p>You must be logged-in to modify your user profile.</p>
     <login
-      :additional-event-data="{
-        actionSource: 'default', // Set default value if not passed in
-        ...additionalEventData,
-      }"
+      :additional-event-data="additionalEventData"
+      :source="loginSource"
       :endpoints="endpoints"
       :app-context-id="appContextId"
       :consent-policy="consentPolicy"
@@ -227,6 +225,10 @@ export default {
    *
    */
   props: {
+    loginSource: {
+      type: String,
+      default: 'default',
+    },
     endpoints: {
       type: Object,
       required: true,
@@ -530,7 +532,7 @@ export default {
         const res = await post('/profile', {
           ...this.user,
           additionalEventData: {
-            actionSource: 'default', // Set default value if not passed in
+            actionSource: this.loginSource,
             ...this.additionalEventData,
           },
         });
