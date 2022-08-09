@@ -54,7 +54,7 @@ module.exports = async (params = {}) => {
     idxOmedaRapidIdentify({
       user: user.verified ? user : { id: user.id, email: user.email },
       behavior,
-      ...(promoCode && { promoCode }),
+      promoCode,
       appendBehaviors,
       appendDemographics,
       appendPromoCodes,

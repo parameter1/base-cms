@@ -133,7 +133,7 @@ module.exports = async ({
   if (promoCode) promoCodes.push(promoCode);
 
   // Append promo codes, if specified
-  if (appendBehaviors && appendBehaviors.length) {
+  if (appendPromoCodes && appendPromoCodes.length) {
     appendPromoCodes.forEach(code => promoCodes.push(code.promoCode));
   }
 
@@ -150,7 +150,7 @@ module.exports = async ({
     ...(demographics.length && { demographics }),
     ...(behaviors.length && { behaviors }),
     ...(deploymentTypes.length && { deploymentTypes }),
-    ...(promoCodes.length && { promoCode: promoCodes.pop() }),
+    ...(promoCodes.length && { promoCode: [...promoCodes].pop() }),
     ...(subscriptions.length && { subscriptions }),
   });
 
