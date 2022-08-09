@@ -532,8 +532,8 @@ export default {
         const res = await post('/profile', {
           ...this.user,
           additionalEventData: {
-            actionSource: this.loginSource,
             ...this.additionalEventData,
+            actionSource: this.loginSource,
           },
         });
         const data = await res.json();

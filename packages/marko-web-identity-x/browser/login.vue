@@ -210,8 +210,8 @@ export default {
           authUrl: this.authUrl,
           appContextId: this.appContextId,
           additionalEventData: {
-            actionSource: this.source,
             ...this.additionalEventData,
+            actionSource: this.source,
           },
         });
         const data = await res.json();

@@ -13,12 +13,8 @@
         <div v-if="!submitted" :class="bem('description')" v-html="description" />
         <div :class="bem('form-wrapper')">
           <login-form
-            :additional-event-data="{
-              ...additionalEventData,
-              forceProfileReVerification: true,
-              actionSource: 'newsletterSignup',
-              newsletterSignupType: type,
-            }"
+            :additional-event-data="loginAdditionalEventData"
+            :source="source"
             :active-user="activeUser"
             :endpoints="endpoints"
             :button-labels="buttonLabels"
@@ -93,6 +89,10 @@ export default {
       default: 'en',
     },
     // LOGIN FORM PROPS
+    source: {
+      type: String,
+      default: 'newsletterSignup',
+    },
     activeUser: {
       type: Object,
       default: () => {},
@@ -130,7 +130,9 @@ export default {
     },
     additionalEventData: {
       type: Object,
-      default: () => ({}),
+      default: () => ({
+        forceProfileReverification: true,
+      }),
     },
     loginEmailLabel: {
       type: String,
@@ -155,6 +157,13 @@ export default {
   }),
 
   computed: {
+    loginAdditionalEventData() {
+      return {
+        ...this.additionalEventData,
+        forceProfileReVerification: true,
+        newsletterSignupType: this.type,
+      };
+    },
     translateEmail() {
       if (this.loginEmailLabel) return this.loginEmailLabel;
       return i18n(this.lang, 'emailAddress');
