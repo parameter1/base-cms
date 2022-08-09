@@ -8,7 +8,7 @@ $ const additionalEventData = defaultValue(input.additionalEventData, {});
 <if(Boolean(identityX))>
   <marko-web-identity-x-context|{ user, isEnabled, application }|>
     $ const props = {
-      additionalEventData,
+      additionalEventData: additionalEventData,
       loginSource: input.loginSource,
       activeUser: user,
       requiredServerFields: identityX.config.getRequiredServerFields(),
