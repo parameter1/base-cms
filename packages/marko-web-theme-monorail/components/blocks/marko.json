@@ -40,6 +40,7 @@
     "<query-params>": {},
     "@query-name": "string",
     "@with-native-x-section": "boolean",
+    "@modifiers": "array",
     "@nodes": "array",
     "@title": "string",
     "@alias": "string",
