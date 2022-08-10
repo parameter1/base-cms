@@ -1,11 +1,8 @@
-import { getAsObject } from "@parameter1/base-cms-object-path";
+import { getAsObject, getAsArray } from "@parameter1/base-cms-object-path";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 import queryFragment from "../../graphql/fragments/content-list";
 
-$ const modifiers = [
-  "latest-content-list",
-  ...(input.modifiers ? input.modifiers : []),
-];
+$ const modifiers = ["latest-content-list", ...(input.modifiers ? input.modifiers : [])];
 $ const title = defaultValue(input.title, 'Latest in');
 $ const withSection = defaultValue(input.withSection, false);
 $ const withNativeXSection = defaultValue(input.withNativeXSection, true);
@@ -50,16 +47,16 @@ $ const nodeImageInput = {
     params=queryParams
   >
     <theme-content-list-flow
-    nodes=nodes
-    inner-justified=false
-    native-x=input.nativeX
-    modifiers=modifiers
-    with-native-x-section=withNativeXSection
-  >
-    <@header>${title}</@header>
-    <@node ...nodeInput >
-      <@image ...nodeImageInput />
-    </@node>
-  </theme-content-list-flow>
+      nodes=nodes
+      inner-justified=false
+      native-x=input.nativeX
+      modifiers=modifiers
+      with-native-x-section=withNativeXSection
+    >
+      <@header>${title}</@header>
+      <@node ...nodeInput >
+        <@image ...nodeImageInput />
+      </@node>
+    </theme-content-list-flow>
   </marko-web-query>
 </else>
