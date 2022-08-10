@@ -17,14 +17,8 @@
     "@profile-button-label": "string",
     "@additional-event-data": "object",
     "@content-gate-type": "string",
-    "@login-event-name": {
-      "type": "string",
-      "deprecated": true
-    },
-    "@profile-event-name": {
-      "type": "string",
-      "deprecated": true
-    }
+    "@login-event-name": "string",
+    "@profile-event-name": "string"
   },
   "<identity-x-newsletter-form-pushdown>": {
     "template": "./newsletter-pushdown.marko"

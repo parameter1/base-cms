@@ -13,6 +13,7 @@ $ const additionalEventData = {
 };
 $ const buttonLabels = defaultValue(input.buttonLabels, { continue: "Sign Up" })
 $ const loginEmailPlaceholder = defaultValue(input.loginEmailPlaceholder, "example@gmail.com");
+$ const source = defaultValue(input.source, "newsletterSignup");
 $ const configName = defaultValue(input.configName, "signupFooter");
 
 $ const {
@@ -30,14 +31,15 @@ $ const lang = site.config.lang || "en";
       <marko-web-browser-component
         name="IdentityXNewsletterFormFooter"
         props={
-          additionalEventData,
-          type: "footer",
           modifiers: ["footer"],
           siteName: config.website("name"),
           name,
           description,
           disabled,
           lang,
+          additionalEventData,
+          source,
+          type: "footer",
           activeUser: user,
           endpoints: identityX.config.getEndpoints(),
           buttonLabels,

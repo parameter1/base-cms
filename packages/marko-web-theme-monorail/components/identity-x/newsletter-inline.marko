@@ -8,10 +8,10 @@ $ const { config, site, req } = out.global;
 $ const { identityX } = req;
 $ const additionalEventData = {
   ...defaultValue(input.additionalEventData, {}),
-  actionSource: "newsletterSignup",
 };
 $ const buttonLabels = defaultValue(input.buttonLabels, { continue: "Sign Up" })
 $ const loginEmailPlaceholder = defaultValue(input.loginEmailPlaceholder, "example@gmail.com");
+$ const source = defaultValue(input.source, "newsletterSignup");
 $ const configName = defaultValue(input.configName, "signupBanner");
 
 $ if (!additionalEventData.newsletterSignupType) {
@@ -36,8 +36,6 @@ $ const imageSrcset = imageSrc ? `${imageSrc}&dpr=2 2x` : null;
       <marko-web-browser-component
         name="IdentityXNewsletterFormInline"
         props={
-          additionalEventData,
-          type: additionalEventData.newsletterSignupType,
           imageSrc,
           imageSrcset,
           siteName: config.website("name"),
@@ -45,6 +43,9 @@ $ const imageSrcset = imageSrc ? `${imageSrc}&dpr=2 2x` : null;
           description,
           disabled,
           lang,
+          additionalEventData,
+          source,
+          type: additionalEventData.newsletterSignupType,
           activeUser: user,
           endpoints: identityX.config.getEndpoints(),
           buttonLabels,
