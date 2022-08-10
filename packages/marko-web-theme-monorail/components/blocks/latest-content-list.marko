@@ -48,16 +48,16 @@ $ const nodeImageInput = {
     params=queryParams
   >
     <theme-content-list-flow
-    nodes=nodes
-    inner-justified=false
-    native-x=input.nativeX
-    modifiers=modifiers
-    with-native-x-section=withNativeXSection
-  >
-    <@header>${title}</@header>
-    <@node ...nodeInput >
-      <@image ...nodeImageInput />
-    </@node>
-  </theme-content-list-flow>
+      nodes=nodes
+      inner-justified=false
+      native-x=input.nativeX
+      modifiers=modifiers
+      with-native-x-section=withNativeXSection
+    >
+      <@header>${title}</@header>
+      <@node ...nodeInput >
+        <@image ...nodeImageInput />
+      </@node>
+    </theme-content-list-flow>
   </marko-web-query>
 </else>
