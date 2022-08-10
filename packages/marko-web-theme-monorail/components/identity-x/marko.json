@@ -26,12 +26,6 @@
   "<identity-x-newsletter-form-inline>": {
     "template": "./newsletter-inline.marko"
   },
-  "<identity-x-newsletter-form-inline-content>": {
-    "template": "./newsletter-inline-content.marko"
-  },
-  "<identity-x-newsletter-form-inline-section>": {
-    "template": "./newsletter-inline-section.marko"
-  },
   "<identity-x-newsletter-form-footer>": {
     "template": "./newsletter-footer.marko"
   }

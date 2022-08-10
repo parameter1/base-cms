@@ -6,17 +6,16 @@ $ const blockName = "newsletter-signup-banner";
 
 $ const { config, site, req } = out.global;
 $ const { identityX } = req;
-$ const additionalEventData = {
-  ...defaultValue(input.additionalEventData, {}),
-};
+$ const additionalEventData = defaultValue(input.additionalEventData, {});
 $ const buttonLabels = defaultValue(input.buttonLabels, { continue: "Sign Up" })
 $ const loginEmailPlaceholder = defaultValue(input.loginEmailPlaceholder, "example@gmail.com");
 $ const source = defaultValue(input.source, "newsletterSignup");
 $ const configName = defaultValue(input.configName, "signupBanner");
+$ const newsletterSignupType = defaultValue(input.type, "default");
+$ const validTypes = ["inlineContent", "inlineSection", "footer"];
 
-$ if (!additionalEventData.newsletterSignupType) {
-  additionalEventData.newsletterSignupType = "default";
-  console.log("identity-x-newsletter-form-inline component is deprecated. Use identity-x-newsletter-form-inline-content or identity-x-newsletter-form-inline-section instead.");
+$ if (!validTypes.includes(newsletterSignupType)) {
+  console.log(`Unknown inline signup type. One of ${validTypes} expected!`);
 }
 
 $ const {
@@ -43,9 +42,9 @@ $ const imageSrcset = imageSrc ? `${imageSrc}&dpr=2 2x` : null;
           description,
           disabled,
           lang,
-          additionalEventData,
+          additionalEventData: additionalEventData,
           source,
-          type: additionalEventData.newsletterSignupType,
+          type: newsletterSignupType,
           activeUser: user,
           endpoints: identityX.config.getEndpoints(),
           buttonLabels,
