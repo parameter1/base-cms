@@ -1,0 +1,21 @@
+.node-list {
+  $self: &;
+  &--incremented-nodes {
+    #{ $self }__nodes {
+      counter-reset: nodeCount;
+      #{ $self }__node {
+        display: flex;
+        flex-direction: row;
+        &::before {
+          counter-increment: nodeCount;                  /* Increment the value of nodeCount counter by 1 */
+          content: counter(nodeCount);
+          font-weight: bold;
+          padding-right: map-get($spacers, 2);
+          padding-left: map-get($spacers, 2);
+          margin-right: map-get($spacers, 2);
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
