@@ -38,6 +38,7 @@
     },
     "<node>": {},
     "<query-params>": {},
+    "@class": "string",
     "@modifiers": "array",
     "@query-name": "string",
     "@with-native-x-section": "boolean",
