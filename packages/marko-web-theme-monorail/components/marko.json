@@ -38,5 +38,19 @@
   },
   "<theme-query-total-count>": {
     "template": "./query-total-count.marko"
+  },
+  "<theme-reveal-ad-handler>": {
+    "template": "./reveal-ad-handler.marko",
+    "@target": "string",
+    "@defaults": "object",
+    "@select-all-targets": "boolean",
+    "@id": {
+      "type": "string",
+      "required": true
+    },
+    "@path": {
+      "type": "string",
+      "required": true
+    }
   }
 }
