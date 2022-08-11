@@ -8,6 +8,9 @@
 @import "../../node_modules/bootstrap/scss/input-group";
 @import "../../node_modules/@parameter1/base-cms-marko-web-html-sitemap/scss/index";
 
+// Default reveal ad css
+@import "../../node_modules/@parameter1/base-cms-marko-web-reveal-ad/scss/reveal-ad";
+
 // skin mixins
 @import "./mixins";
 
@@ -54,6 +57,7 @@
 @import "./components/blocks/related-native-x-stories";
 @import "./components/blocks/related-stories";
 @import "./components/blocks/resource-library";
+@import "./components/blocks/reveal-ad";
 @import "./components/blocks/section-card-deck-featured";
 @import "./components/blocks/section-card-list";
 @import "./components/blocks/section-feed";
