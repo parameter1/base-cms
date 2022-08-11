@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-cli-utils",
-  "version": "2.8.4",
+  "version": "3.0.0",
   "description": "Utility functions for BaseCMS CLI projects.",
   "main": "src/index.js",
   "author": "Josh Worden <josh@parameter1.com>",

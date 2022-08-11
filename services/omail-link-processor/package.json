@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-omail-link-processor",
-  "version": "2.75.1",
+  "version": "3.0.0",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "repository": "https://github.com/parameter1/base-cms/tree/master/services/omail-link-processor",
   "license": "MIT",
@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "@godaddy/terminus": "^4.9.0",
-    "@parameter1/base-cms-env": "^2.45.0",
-    "@parameter1/base-cms-express-apollo": "^2.45.0",
-    "@parameter1/base-cms-object-path": "^2.75.1",
-    "@parameter1/base-cms-utils": "^2.75.1",
+    "@parameter1/base-cms-env": "^3.0.0",
+    "@parameter1/base-cms-express-apollo": "^3.0.0",
+    "@parameter1/base-cms-object-path": "^3.0.0",
+    "@parameter1/base-cms-utils": "^3.0.0",
     "express": "^4.17.1",
     "graphql": "^14.7.0",
     "graphql-tag": "^2.12.5",

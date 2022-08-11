@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-html",
-  "version": "2.45.0",
+  "version": "3.0.0",
   "description": "Common HTML utilities for BaseCMS projects.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",

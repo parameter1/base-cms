@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-compiler",
-  "version": "2.45.0",
+  "version": "3.0.0",
   "description": "A simple, CLI Marko template compiler.",
   "bin": {
     "basecms-marko-compile": "bin/compile.js"

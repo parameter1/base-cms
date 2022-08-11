@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-dependency-tool",
-  "version": "2.75.1",
+  "version": "3.0.0",
   "description": "Command line tool for managing BaseCMS project dependencies.",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "main": "src/index.js",
@@ -14,8 +14,8 @@
     "test": "yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-cli-utils": "^2.8.4",
-    "@parameter1/base-cms-object-path": "^2.75.1",
+    "@parameter1/base-cms-cli-utils": "^3.0.0",
+    "@parameter1/base-cms-object-path": "^3.0.0",
     "chalk": "^2.4.2",
     "fancy-log": "^1.3.3",
     "yargs": "^14.2.3"
