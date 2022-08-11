@@ -12,15 +12,18 @@ $ const {
   requiresUserInput,
   profileCallToAction,
   profileButtonLabel,
-  loginEventName,
-  profileEventName,
 } = input;
 $ const messages = getAsObject(input, "messages");
 $ const title = defaultValue(input.title, "Log in to view the full article");
-$ const profileConfirmation= defaultValue(input.profielConfirmation, 'Email Confirmed!')
+$ const profileConfirmation = defaultValue(input.profileConfirmation, "Email Confirmed!")
 $ const userInputTitle = defaultValue(input.userInputTitle, "Complete your profile to view the full article");
+$ const contentGateType = defaultValue(input.contentGateType, "default");
 $ const additionalEventData = {
   promoCode: site.get("contentMetering.promoCode", undefined),
+  ...defaultValue(input.additionalEventData, {}),
+  contentGateType,
+  ...(input.loginEventName === "content_meter_login" && { contentGateType: "metered" }),
+  ...(input.profileEventName === "content_meter_profile" && { contentGateType: "metered" }),
 };
 
 <marko-web-block name=blockName>
@@ -47,7 +50,7 @@ $ const additionalEventData = {
       <marko-web-element name="form-wrapper" block-name=blockName>
         <marko-web-identity-x-form-login
           additional-event-data=additionalEventData
-          source=loginEventName
+          source="contentGate"
         />
       </marko-web-element>
     </else>
@@ -68,7 +71,7 @@ $ const additionalEventData = {
         button-label=profileButtonLabel
         reload-page-on-submit=true
         additional-event-data=additionalEventData
-        login-source=profileEventName
+        login-source="contentGate"
       />
     </marko-web-element>
   </else-if>

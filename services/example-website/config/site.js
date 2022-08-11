@@ -44,4 +44,5 @@ module.exports = {
     logo: '',
     bgColor: '#000',
   },
+  gtm: { containerId: 'GTM-T9BBXZK' },
 };

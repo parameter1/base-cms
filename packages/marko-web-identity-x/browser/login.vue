@@ -84,7 +84,7 @@ export default {
   props: {
     source: {
       type: String,
-      default: 'login',
+      default: 'default',
     },
     activeUser: {
       type: Object,
@@ -121,10 +121,6 @@ export default {
     senderEmailAddress: {
       type: String,
       default: 'noreply@identity-x.parameter1.com',
-    },
-    additionalEventData: {
-      type: Object,
-      default: () => ({}),
     },
     actionText: {
       type: String,
@@ -213,7 +209,10 @@ export default {
           redirectTo: this.redirectTo,
           authUrl: this.authUrl,
           appContextId: this.appContextId,
-          additionalEventData: this.additionalEventData,
+          additionalEventData: {
+            ...this.additionalEventData,
+            actionSource: this.source,
+          },
         });
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);

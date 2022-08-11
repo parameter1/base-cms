@@ -1,15 +1,21 @@
 const Joi = require('@parameter1/joi');
 const { validate } = require('@parameter1/joi/utils');
 const extractPromoCode = require('../utils/extract-promo-code');
+const schemas = require('../validation/schemas');
 const {
   getAnsweredQuestionMap,
   getOmedaCustomerRecord,
   getOmedaLinkedFields,
   updateIdentityX,
 } = require('../omeda-data');
+const props = require('../validation/props');
 
 module.exports = async (params = {}) => {
   const {
+    appendBehaviors,
+    appendDemographics,
+    appendPromoCodes,
+    behavior,
     brandKey,
     idxOmedaRapidIdentify,
     omedaGraphQLClient,
@@ -20,7 +26,11 @@ module.exports = async (params = {}) => {
     service: identityX,
     user,
   } = validate(Joi.object({
-    brandKey: Joi.string().required(),
+    appendBehaviors: Joi.array().items(schemas.appendBehavior).default([]),
+    appendDemographics: Joi.array().items(schemas.appendDemographic).default([]),
+    appendPromoCodes: Joi.array().items(schemas.appendPromoCode).default([]),
+    behavior: schemas.behavior.required(),
+    brandKey: props.brandKey.required(),
     idxOmedaRapidIdentify: Joi.function().required(),
     omedaGraphQLClient: Joi.object().required(),
     omedaPromoCodeCookieName: Joi.string().required(),
@@ -43,7 +53,11 @@ module.exports = async (params = {}) => {
     getOmedaLinkedFields({ identityX, brandKey }),
     idxOmedaRapidIdentify({
       user: user.verified ? user : { id: user.id, email: user.email },
-      ...(promoCode && { promoCode }),
+      behavior,
+      promoCode,
+      appendBehaviors,
+      appendDemographics,
+      appendPromoCodes,
     }),
   ]);
 

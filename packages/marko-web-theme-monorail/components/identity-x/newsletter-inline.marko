@@ -7,10 +7,16 @@ $ const blockName = "newsletter-signup-banner";
 $ const { config, site, req } = out.global;
 $ const { identityX } = req;
 $ const additionalEventData = defaultValue(input.additionalEventData, {});
-$ const buttonLabels = defaultValue(input.buttonLabels, { continue: 'Sign Up' })
-$ const loginEmailPlaceholder = defaultValue(input.loginEmailPlaceholder, 'example@gmail.com');
-$ const source = defaultValue(input.source, 'inline_newsletter_login');
-$ const configName = defaultValue(input.configName, 'signupBanner');
+$ const buttonLabels = defaultValue(input.buttonLabels, { continue: "Sign Up" })
+$ const loginEmailPlaceholder = defaultValue(input.loginEmailPlaceholder, "example@gmail.com");
+$ const source = defaultValue(input.source, "newsletterSignup");
+$ const configName = defaultValue(input.configName, "signupBanner");
+$ const newsletterSignupType = defaultValue(input.type, "default");
+$ const validTypes = ["inlineContent", "inlineSection", "footer"];
+
+$ if (!validTypes.includes(newsletterSignupType)) {
+  console.log(`Unknown inline signup type. One of ${validTypes} expected!`);
+}
 
 $ const {
   name,
@@ -38,6 +44,7 @@ $ const imageSrcset = imageSrc ? `${imageSrc}&dpr=2 2x` : null;
           lang,
           additionalEventData: additionalEventData,
           source,
+          type: newsletterSignupType,
           activeUser: user,
           endpoints: identityX.config.getEndpoints(),
           buttonLabels,

@@ -1,0 +1,103 @@
+import { get, getAsArray, getAsObject } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import getContentPreview from "@parameter1/base-cms-marko-web-theme-monorail/utils/get-content-preview";
+
+$ const { content, blockName } = input;
+$ const { contentGatingHandler, req } = out.global;
+
+$ const requiresReg = contentGatingHandler({ content, req });
+$ const accessLevels = getAsArray(content, "userRegistration.accessLevels");
+$ const authors = getAsArray(content, "authors.edges").map((edge) => edge.node);
+$ const sidebars = getAsArray(content, "sidebars").map((sidebar) => sidebar.body);
+$ const additionalEventData = getAsObject(req.identityX.additionalEventData);
+$ const contentGateType = defaultValue(input.contentGateType, "default");
+
+$ const shouldInjectAds = defaultValue(input.shouldInjectAds, false);
+$ const displayInlineAuthorBio = defaultValue(input.displayInlineAuthorBio, true);
+$ const displayLeadersCompanies = defaultValue(input.displayLeadersCompanies, false);
+$ const displayLeadersVideos = defaultValue(input.displayLeadersVideos, false);
+$ const displayNewsletterForm = defaultValue(input.displayNewsletterForm, true);
+$ const displayReadNext = defaultValue(input.displayReadNext, true);
+$ const displaySidebars = defaultValue(input.displaySidebars, true);
+$ const displaySocialShare = defaultValue(input.displaySocialShare, true);
+
+<marko-web-identity-x-access|context| enabled=requiresReg required-access-level-ids=accessLevels>
+  <if(input.beforeBody)>
+    <${input.beforeBody} context=context />
+  </if>
+  <if(!context.canAccess || context.requiresUserInput)>
+    $ const body = getContentPreview({ body: content.body, selector: "p:lt(3)" });
+    <marko-web-content-body block-name=blockName obj={ body } />
+
+    <div class="content-page-preview-overlay" />
+    <!-- @todo when porting metering, set content-gate-type! -->
+    <theme-content-page-gate
+      can-access=context.canAccess
+      is-logged-in=context.isLoggedIn
+      has-required-access-level=context.hasRequiredAccessLevel
+      requires-access-level=context.requiresAccessLevel
+      requires-user-input=context.requiresUserInput
+      messages=context.messages
+      additional-event-data=additionalEventData
+      content-gate-type=contentGateType
+    />
+  </if>
+  <else>
+    $ const bodyId = `content-body-${content.id}`;
+    <if(shouldInjectAds)>
+      <!-- ... -->
+    </if>
+    <marko-web-content-body block-name=blockName obj=content attrs={ id: bodyId } />
+    <if(displaySidebars)>
+      <marko-web-content-sidebars block-name=blockName obj={ sidebars } />
+    </if>
+    <if(displayLeadersCompanies)>
+      <!-- @todo port this component to marko-web-leaders package from pmmi -->
+      <!-- <marko-web-leaders-featured-companies content=content /> -->
+    </if>
+
+    <default-theme-content-download obj=content>
+      <!-- @todo retrieve from site config? -->
+      <@wufoo user-name="parameter1" />
+      <@link class="btn btn-primary" />
+    </default-theme-content-download>
+
+    <if(displayInlineAuthorBio && content.type !== "contact")>
+      <for|author| of=authors>
+        <if(getAsArray(author, "labels").includes("Contributor"))>
+          <marko-web-content-body obj=author block-name="inline-author-bio" />
+        </if>
+      </for>
+    </if>
+
+    <if(displayReadNext)>
+      $ const { primarySection } = content;
+      <theme-read-next-block
+        content-id=content.id
+        section-id=primarySection.id
+        published=content.published
+      />
+    </if>
+
+    <if(displaySocialShare)>
+      <marko-web-social-sharing
+        path=content.siteContext.path
+        providers=["print", "facebook", "linkedin", "twitter", "pinterest"]
+        print-path=`/print/content/${content.id}`
+      />
+    </if>
+
+    <if(displayLeadersVideos)>
+      <!-- @todo port this component to marko-web-leaders package from pmmi -->
+      <!-- <marko-web-leaders-company-videos content-id=content.id /> -->
+    </if>
+
+    <if(displayNewsletterForm)>
+      <identity-x-newsletter-form-inline type="inlineContent" />
+    </if>
+  </else>
+
+  <if(input.afterBody)>
+    <${input.afterBody} context=context />
+  </if>
+</marko-web-identity-x-access>

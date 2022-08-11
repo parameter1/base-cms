@@ -7,10 +7,10 @@ $ const blockName = "newsletter-signup-banner";
 $ const { config, site, req } = out.global;
 $ const { identityX } = req;
 $ const additionalEventData = defaultValue(input.additionalEventData, {});
-$ const buttonLabels = defaultValue(input.buttonLabels, { continue: 'Sign Up' })
-$ const loginEmailPlaceholder = defaultValue(input.loginEmailPlaceholder, 'example@gmail.com');
-$ const source = defaultValue(input.source, 'footer_newsletter_login');
-$ const configName = defaultValue(input.configName, 'signupFooter');
+$ const buttonLabels = defaultValue(input.buttonLabels, { continue: "Sign Up" })
+$ const loginEmailPlaceholder = defaultValue(input.loginEmailPlaceholder, "example@gmail.com");
+$ const source = defaultValue(input.source, "newsletterSignup");
+$ const configName = defaultValue(input.configName, "signupFooter");
 
 $ const {
   name,
@@ -35,6 +35,7 @@ $ const lang = site.config.lang || "en";
           lang,
           additionalEventData,
           source,
+          type: "footer",
           activeUser: user,
           endpoints: identityX.config.getEndpoints(),
           buttonLabels,

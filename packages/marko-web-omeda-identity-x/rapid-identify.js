@@ -36,6 +36,12 @@ module.exports = async ({
 
   promoCode,
 
+  appendBehaviors,
+  appendDemographics,
+  appendPromoCodes,
+
+  behavior,
+
   identityX,
   omedaRapidIdentify,
 } = {}) => {
@@ -55,6 +61,7 @@ module.exports = async ({
     alpha3 = await getAlpha3CodeFor(countryCode, identityX);
   }
 
+  const behaviors = [{ id: behavior.id, attributes: getAsArray(behavior, 'attributes') }];
   const demographics = getAsArray(appUser, 'customSelectFieldAnswers').filter((select) => {
     const { field, hasAnswered } = select;
     if (!field.active || !field.externalId || !hasAnswered) return false;
@@ -94,6 +101,42 @@ module.exports = async ({
     }
   });
 
+  // Append custom demographic answer, if specified
+  if (appendDemographics && appendDemographics.length) {
+    appendDemographics.forEach(({ demographicId, valueIds, writeInValue }) => {
+      demographics.push({
+        id: demographicId,
+        values: valueIds.map(v => `${v}`),
+        ...(writeInValue && { writeInValue }),
+      });
+    });
+  }
+
+  // Append custom behavior, if specified
+  if (appendBehaviors && appendBehaviors.length) {
+    appendBehaviors.forEach(({ behaviorId, attributes }) => {
+      behaviors.push({
+        id: behaviorId,
+        // Only pass attributes through if they are present
+        ...(attributes && attributes.length && {
+          attributes: attributes.map(attr => ({
+            id: attr.id,
+            ...(attr.valueId && { valueId: attr.valueId }),
+            ...(attr.value && { value: attr.value }),
+          })),
+        }),
+      });
+    });
+  }
+
+  const promoCodes = [];
+  if (promoCode) promoCodes.push(promoCode);
+
+  // Append promo codes, if specified
+  if (appendPromoCodes && appendPromoCodes.length) {
+    appendPromoCodes.forEach(code => promoCodes.push(code.promoCode));
+  }
+
   const { id, encryptedCustomerId } = await omedaRapidIdentify({
     email: appUser.email,
     productId,
@@ -105,8 +148,9 @@ module.exports = async ({
     ...(regionCode && { regionCode }),
     ...(postalCode && { postalCode }),
     ...(demographics.length && { demographics }),
+    ...(behaviors.length && { behaviors }),
     ...(deploymentTypes.length && { deploymentTypes }),
-    ...(promoCode && { promoCode }),
+    ...(promoCodes.length && { promoCode: [...promoCodes].pop() }),
     ...(subscriptions.length && { subscriptions }),
   });
 

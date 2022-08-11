@@ -99,7 +99,7 @@ export default {
     // LOGIN FORM PROPS
     source: {
       type: String,
-      default: 'login',
+      default: 'newsletterSignup',
     },
     activeUser: {
       type: Object,
@@ -168,6 +168,7 @@ export default {
       return {
         ...this.additionalEventData,
         forceProfileReVerification: true,
+        newsletterSignupType: 'pushdown',
       };
     },
     currentlyExpanded() {

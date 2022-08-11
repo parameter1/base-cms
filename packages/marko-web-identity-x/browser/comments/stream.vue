@@ -114,7 +114,7 @@ export default {
   props: {
     loginSource: {
       type: String,
-      default: 'comment-stream',
+      default: 'comments',
     },
     activeUser: {
       type: Object,

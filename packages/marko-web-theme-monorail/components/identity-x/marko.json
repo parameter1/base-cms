@@ -15,6 +15,8 @@
     "@profile-confirmation": "string",
     "@profile-call-to-action": "string",
     "@profile-button-label": "string",
+    "@additional-event-data": "object",
+    "@content-gate-type": "string",
     "@login-event-name": "string",
     "@profile-event-name": "string"
   },

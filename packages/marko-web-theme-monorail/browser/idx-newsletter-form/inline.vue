@@ -13,7 +13,7 @@
         <div v-if="!submitted" :class="bem('description')" v-html="description" />
         <div :class="bem('form-wrapper')">
           <login-form
-            :additional-event-data="{ forceProfileReVerification: true }"
+            :additional-event-data="loginAdditionalEventData"
             :source="source"
             :active-user="activeUser"
             :endpoints="endpoints"
@@ -44,6 +44,17 @@ export default {
   },
 
   props: {
+    type: {
+      type: String,
+      required: true,
+      validator(value) {
+        return [
+          'inlineContent',
+          'inlineSection',
+          'footer',
+        ].includes(value);
+      },
+    },
     siteName: {
       type: String,
       required: true,
@@ -80,7 +91,7 @@ export default {
     // LOGIN FORM PROPS
     source: {
       type: String,
-      default: 'login',
+      default: 'newsletterSignup',
     },
     activeUser: {
       type: Object,
@@ -146,6 +157,13 @@ export default {
   }),
 
   computed: {
+    loginAdditionalEventData() {
+      return {
+        ...this.additionalEventData,
+        forceProfileReVerification: true,
+        newsletterSignupType: this.type,
+      };
+    },
     translateEmail() {
       if (this.loginEmailLabel) return this.loginEmailLabel;
       return i18n(this.lang, 'emailAddress');

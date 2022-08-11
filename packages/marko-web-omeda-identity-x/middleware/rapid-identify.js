@@ -20,6 +20,10 @@ module.exports = ({
     const handler = async ({
       user,
       promoCode,
+      appendBehaviors,
+      appendDemographics,
+      appendPromoCodes,
+      behavior,
     } = {}) => idxOmedaRapidIdentify({
       brandKey,
       productId,
@@ -30,6 +34,14 @@ module.exports = ({
         omedaPromoCodeDefault,
         cookies: req.cookies,
       }),
+
+      // Custom behaviors, demos, or codes to append to the API call
+      appendBehaviors,
+      appendDemographics,
+      appendPromoCodes,
+
+      // The pre-configured behavior/attribute definitions.
+      behavior,
 
       identityX: req.identityX,
       omedaRapidIdentify,

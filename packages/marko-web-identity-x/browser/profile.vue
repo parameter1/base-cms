@@ -227,7 +227,7 @@ export default {
   props: {
     loginSource: {
       type: String,
-      default: 'profile',
+      default: 'default',
     },
     endpoints: {
       type: Object,
@@ -529,7 +529,13 @@ export default {
       this.isLoading = true;
       this.didSubmit = false;
       try {
-        const res = await post('/profile', this.user);
+        const res = await post('/profile', {
+          ...this.user,
+          additionalEventData: {
+            ...this.additionalEventData,
+            actionSource: this.loginSource,
+          },
+        });
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
 

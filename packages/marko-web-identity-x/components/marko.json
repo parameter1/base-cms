@@ -23,7 +23,7 @@
     "@additional-event-data": "object",
     "@source": {
       "type": "string",
-      "default-value": "login"
+      "default-value": "default"
     },
     "@action-text": "string",
     "@button-labels": "object",
@@ -46,7 +46,7 @@
     "@additional-event-data": "object",
     "@login-source": {
       "type": "string",
-      "default-value": "profile"
+      "default-value": "default"
     },
     "@call-to-action": "string",
     "@reload-page-on-submit": "boolean",
@@ -57,7 +57,7 @@
     "@additional-event-data": "object",
     "@login-source": {
       "type": "string",
-      "default-value": "comment-stream"
+      "default-value": "comments"
     },
     "@identifier": {
       "type": "string",
