@@ -1,0 +1,27 @@
+// Prevent Reveal Ad from causing CLS
+#marko-web-reveal-ad-handler {
+  display: none;
+  // remove white default bg to allow for bg image to display correctly
+   ~ .document-container {
+    background-color: transparent;;
+   }
+}
+.reveal-ad {
+  height: 298px;
+}
+body .document-container > .page:first-of-type {
+  margin-top: 298px;
+  // excluded the following page types as they dont use reskin ads
+  &.page--search,
+  &.page--authenticate,
+  &.page--login,
+  &.page--logout,
+  &.page--profile,
+  &.page--register {
+    margin-top: 60px;
+    margin-bottom: 60px;
+  }
+}
+body .document-container > .reveal-ad + .page {
+  margin-top: 0;
+}

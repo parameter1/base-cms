@@ -17,6 +17,7 @@ const NewsletterToggleButton = () => import(/* webpackChunkName: "theme-newslett
 const SiteNewsletterMenu = () => import(/* webpackChunkName: "theme-site-newsletter-menu" */ './site-newsletter-menu.vue');
 const WufooForm = () => import(/* webpackChunkName: "theme-wufoo-form" */ './wufoo-form.vue');
 const TopStoriesMenu = () => import(/* webpackChunkName: "theme-top-stories-menu" */ './top-stories-menu.vue');
+const RevealAdHandler = () => import(/* webpackChunkName: "reveal-ad-handler" */ './reveal-ad-handler.vue');
 
 const setP1EventsIdentity = ({ p1events, brandKey, encryptedId }) => {
   if (!p1events || !brandKey || !encryptedId) return;
@@ -112,4 +113,5 @@ export default (Browser, config = {
   });
   Browser.register('ThemeTopStoriesMenu', TopStoriesMenu);
   Browser.register('WufooForm', WufooForm);
+  Browser.register('RevealAdHandler', RevealAdHandler);
 };

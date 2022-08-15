@@ -8,6 +8,9 @@
 @import "../../node_modules/bootstrap/scss/input-group";
 @import "../../node_modules/@parameter1/base-cms-marko-web-html-sitemap/scss/index";
 
+// Default reveal ad css
+@import "../../node_modules/@parameter1/base-cms-marko-web-reveal-ad/scss/reveal-ad";
+
 // skin mixins
 @import "./mixins";
 
@@ -23,6 +26,7 @@
 @import "./components/identity-x";
 @import "./components/page-wrapper";
 @import "./components/pagination-controls";
+@import "./components/reveal-ad";
 @import "./components/search-page";
 @import "./components/site-footer";
 @import "./components/site-menu";
