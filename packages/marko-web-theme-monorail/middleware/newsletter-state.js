@@ -2,7 +2,7 @@ const { asyncRoute } = require('@parameter1/base-cms-utils');
 const { get } = require('@parameter1/base-cms-object-path');
 const gql = require('graphql-tag');
 
-// Contnet is currently gated by reg fragment
+// Content is currently gated by reg fragment
 const query = gql`
   query content($input: ContentQueryInput!) {
     content(input: $input){
