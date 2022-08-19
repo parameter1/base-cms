@@ -28,6 +28,10 @@ fragment SectionFeedBlockContentFragment on Content {
     linkUrl
     startDate
   }
+  ... on ContentEvent {
+    startDate
+    endDate
+  }
 }
 
 `;

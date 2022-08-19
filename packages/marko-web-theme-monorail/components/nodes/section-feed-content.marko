@@ -56,9 +56,10 @@ $ const blockName = "section-feed-content-node";
           obj=content
         />
       </if>
-      <if(withDates && content.startDate)>
+      <if(withDates && (content.startDate || content.endDate))>
         <div class=`${blockName}__content-event-dates`>
           <marko-web-content-start-date tag="span" block-name=blockName obj=content />
+          <marko-web-content-end-date tag="span" block-name=blockName obj=content />
         </div>
         <if(content.linkUrl)>
           <default-theme-content-link-url
