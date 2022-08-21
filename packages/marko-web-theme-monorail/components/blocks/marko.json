@@ -126,7 +126,14 @@
     "@with-section": "boolean",
     "@lazyload": "boolean",
     "@modifiers": "array",
-    "@query-name": "string"
+    "@query-name": "string",
+    "<native-x>": {
+      "@index": "number",
+      "@indexes": "array",
+      "@name": "string",
+      "@aliases": "array"
+    },
+    "@with-native-x-section": "boolean"
   },
   "<theme-section-list-deck-block>": {
     "template": "./section-list-deck.marko"
