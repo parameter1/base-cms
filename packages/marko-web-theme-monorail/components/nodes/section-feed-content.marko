@@ -81,10 +81,10 @@ $ const blockName = "section-feed-content-node";
   <if(displayImage)>
     <marko-web-element block-name=blockName name="image-wrapper">
       <if(primaryImage.src)>
-        $ const src = buildImgixUrl(primaryImage.src, { w: 250, h: 167, fit: "crop" });
+        $ const src = buildImgixUrl(primaryImage.src, { w: 250, h: 167, fit: "crop" }, null, get(primaryImage, 'isLogo'));
         $ const srcset = [src, `${buildImgixUrl(src, { dpr: 2 })} 2x`];
 
-        $ const srcMobile = buildImgixUrl(primaryImage.src, { w: 112, h: 112, fit: "crop" });
+        $ const srcMobile = buildImgixUrl(primaryImage.src, { w: 112, h: 112, fit: "crop" }, null, get(primaryImage, 'isLogo'));
         $ const srcsetMobile = [srcMobile, `${buildImgixUrl(srcMobile, { dpr: 2 })} 2x`];
 
         <marko-web-picture>
