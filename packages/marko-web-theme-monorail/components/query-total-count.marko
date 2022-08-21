@@ -1,9 +1,19 @@
 import gql from "graphql-tag";
 import { getAsObject } from "@parameter1/base-cms-object-path";
 
+$ const date = v => (v instanceof Date ? v.valueOf() : v);
 $ const { apollo } = out.global;
+$ const validateParams = (params) => {
+  // Ref package web-common/src/block-loader/website-scheduled-content.js
+  // If endingAfter set ending to the following and remove invalid endingAfter param
+  if (params.endingAfter) {
+    params.ending = { after: date(params.endingAfter) };
+    delete params.endingAfter;
+  }
+  return params;
+};
 
-$ const params = { ...getAsObject(input, "params") };
+$ const params = validateParams({ ...getAsObject(input, "params") });
 $ delete params.queryFragment;
 $ delete params.sectionFragment;
 

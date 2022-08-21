@@ -78,10 +78,17 @@
     margin-top: 10px;
     @include skin-typography($style: "teaser-text-1", $link-style: "primary", $breakpoint: sm);
   }
-  &__content-start-date {
+  &__content-start-date,
+  &__content-end-date {
     &::before {
       font-weight: $font-weight-bold;
       content: "Date: ";
+    }
+  }
+  &__content-start-date + #{ $self }__content-end-date {
+    &::before {
+      font-weight: $font-weight-normal;
+      content: " -  ";
     }
   }
 
