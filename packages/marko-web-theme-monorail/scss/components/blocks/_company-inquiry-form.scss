@@ -25,3 +25,17 @@
     }
   }
 }
+
+.inquiry-form {
+  #privacyConsent,
+  #notificationConsent,
+  #thirdPartyConsent {
+    display: inline;
+    + label {
+      display: inline;
+      .consent-html {
+        display: inline;
+      }
+    }
+  }
+}

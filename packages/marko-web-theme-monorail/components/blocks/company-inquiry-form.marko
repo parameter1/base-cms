@@ -1,6 +1,6 @@
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 
-$ const { content } = input;
+$ const { content, consentCheckboxes } = input;
 $ const initiallyExpanded = defaultValue(input.initiallyExpanded, true)
 $ const modifiers = initiallyExpanded ? ["open"] : [];
 
@@ -21,6 +21,6 @@ $ const modifiers = initiallyExpanded ? ["open"] : [];
     />
   </@header>
   <@body>
-    <marko-web-inquiry-form content=content with-header=false />
+    <marko-web-inquiry-form content=content with-header=false consent-checkboxes=consentCheckboxes />
   </@body>
 </marko-web-node-list>

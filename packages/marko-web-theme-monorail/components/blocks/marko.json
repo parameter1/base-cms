@@ -16,6 +16,7 @@
   "<theme-company-inquiry-form-block>": {
     "template": "./company-inquiry-form.marko",
     "@content": {},
+    "@consent-checkboxes": "array",
     "@initially-expanded": "boolean"
   },
   "<theme-full-width-native-ad-block>": {
