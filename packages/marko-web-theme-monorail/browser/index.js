@@ -15,6 +15,7 @@ const MenuToggleButton = () => import(/* webpackChunkName: "theme-menu-toggle-bu
 const NewsletterCloseButton = () => import(/* webpackChunkName: "theme-newsletter-close-button" */ './newsletter-close-button.vue');
 const NewsletterToggleButton = () => import(/* webpackChunkName: "theme-newsletter-toggle-button" */ './newsletter-toggle-button.vue');
 const CompanySearch = () => import(/* webpackChunkName: "theme-company-search" */ './company-search.vue');
+const SectionSearch = () => import(/* webpackChunkName: "theme-section-search" */ './section-search.vue');
 const SiteNewsletterMenu = () => import(/* webpackChunkName: "theme-site-newsletter-menu" */ './site-newsletter-menu.vue');
 const WufooForm = () => import(/* webpackChunkName: "theme-wufoo-form" */ './wufoo-form.vue');
 const TopStoriesMenu = () => import(/* webpackChunkName: "theme-top-stories-menu" */ './top-stories-menu.vue');
@@ -113,6 +114,9 @@ export default (Browser, config = {
     provide: { EventBus },
   });
   Browser.register('ThemeCompanySearch', CompanySearch, {
+    provide: { EventBus },
+  });
+  Browser.register('ThemeSectionSearch', SectionSearch, {
     provide: { EventBus },
   });
   Browser.register('ThemeTopStoriesMenu', TopStoriesMenu);
