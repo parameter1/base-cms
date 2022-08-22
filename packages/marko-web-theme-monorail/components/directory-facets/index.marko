@@ -1,0 +1,27 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import categorySectionsFragment from "../../graphql/fragments/category-sections"
+
+$ const activeId = defaultValue(input.activeId, null);
+$ const aliases = defaultValue(input.aliases, []);
+$ const contentType = defaultValue(input.contentType, "");
+$ const searchQuery = defaultValue(input.searchQuery, null);
+$ const primaryAlias = defaultValue(input.primaryAlias, "directory");
+$ const title = defaultValue(input.title, "");
+$ const description = defaultValue(input.description, "");
+$ const withToggle = defaultValue(input.withToggle, false);
+<marko-web-query|{ node }|
+  name="website-section"
+  params={ alias: primaryAlias, queryFragment: categorySectionsFragment }
+>
+  $ const children = getAsArray(node, "children.edges").map(({ node }) => node);
+  <theme-directory-facet
+    title=title
+    description=description
+    facets=children
+    active-id=activeId
+    aliases=aliases
+    search-query=searchQuery
+    initially-expanded=input.initiallyExpanded
+  />
+</marko-web-query>

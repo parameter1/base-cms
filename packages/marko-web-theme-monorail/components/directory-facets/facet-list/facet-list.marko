@@ -1,0 +1,62 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+
+$ const block = "directory-facets";
+
+$ const {
+  facets,
+  activeId,
+  aliases,
+  initiallyExpanded,
+  searchQuery
+} = input;
+
+$ const isActiveId = ({id}) => (activeId && (`${activeId}` === `${id}`));
+$ facets.sort((a, b) => a.name.localeCompare(b.name));
+<if(facets && facets.length)>
+  $ const expandedClass = (initiallyExpanded) ? `${block}__list ${block}__list--open` : `${block}__list`;
+  <div class=expandedClass>
+    <for|facet| of=facets>
+      $ const children = getAsArray(facet, "children.edges").map(({ node }) => node);
+      $ const isOpen = aliases.includes(facet.alias);
+      $ const isActive = isActiveId(facet);
+
+      $ const classNames = [`${block}__item`, `${block}__item--${facet.id}`];
+      $ const linkClasses = [`${block}__link`]
+      $ if (isOpen) classNames.push(`${block}__item--open`);
+      $ if (isActive) linkClasses.push(`${block}__link--active`);
+      <div class=classNames>
+        $ const facetLink = searchQuery ? `/${facet.alias}?searchQuery=${searchQuery}` : `/${facet.alias}`;
+        <a class=linkClasses href=facetLink>
+          ${facet.name}
+        </a>
+        <if(children.length)>
+          <theme-menu-toggle-button
+            class-name=`${block}__toggle`
+            targets=[`.${block}__item--${facet.id}`]
+            toggle-class=`${block}__item--open`
+            initially-expanded=isOpen
+            icon-modifiers=["sm"]
+            icon-name="plus"
+            expanded-icon-name="dash"
+          />
+        </if>
+        <if(isActive)>
+          <marko-web-browser-component
+            name="GlobalAutoScroll"
+            props={
+              containerTarget: `.${block} > .${block}__list`,
+              elementTarget: `.${block}__link--active`,
+              offset: -12,
+            }
+          />
+        </if>
+        <theme-directory-facet-list
+          facets=children
+          active-id=activeId
+          aliases=aliases
+          search-query=searchQuery
+        />
+      </div>
+    </for>
+  </div>
+</if>

@@ -1,0 +1,25 @@
+{
+  "<theme-directory-facet-container>": {
+    "template": "./facet-container.marko",
+    "@facets": {
+      "type": "array",
+      "required": true
+    },
+    "@title": "string",
+    "@description": "string",
+    "@content-type": "string",
+    "@search-query": "string",
+    "@initially-expanded": {
+      "type": "boolean",
+      "default-value": false
+    },
+    "@active-id": {
+      "type": "string",
+      "required": true
+    },
+    "@aliases": {
+      "type": "array",
+      "required": true
+    }
+  }
+}

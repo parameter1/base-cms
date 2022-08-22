@@ -1,0 +1,22 @@
+{
+  "<theme-directory-facet-list>": {
+    "template": "./facet-list.marko",
+    "@search-query": "string",
+    "@facets": {
+      "type": "array",
+      "required": true
+    },
+    "@active-id": {
+      "type": "string",
+      "required": true
+    },
+    "@aliases": {
+      "type": "array",
+      "required": true
+    },
+    "@initially-expanded": {
+      "type": "boolean",
+      "default-value": false
+    }
+  }
+}

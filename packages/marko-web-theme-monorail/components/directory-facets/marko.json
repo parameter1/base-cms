@@ -1,0 +1,38 @@
+{
+  "taglib-imports": [
+    "./facet-list/marko.json",
+    "./facet-container/marko.json"
+  ],
+  "<theme-directory-facet>": {
+    "template": "./facet.marko",
+    "@facets": "array",
+    "@content-type": "string",
+    "@search-query": "string",
+    "@aliases": "array",
+    "@active-id": "expression",
+    "@title": "string",
+    "@description": "string",
+    "@initially-expanded": {
+      "type": "boolean",
+      "default-value": false
+    }
+  },
+  "<theme-directory-facet-block>": {
+    "template": "./index.marko",
+    "@aliases": "array",
+    "@active-id": "number",
+    "@content-type": "string",
+    "@search-query": "string",
+    "@primary-alias": "string",
+    "@title": "string",
+    "@description": "string",
+    "@with-toggle": {
+      "type": "boolean",
+      "default-value": false
+    },
+    "@initially-expanded": {
+      "type": "boolean",
+      "default-value": false
+    }
+  }
+}
