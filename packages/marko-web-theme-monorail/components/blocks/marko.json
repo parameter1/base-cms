@@ -19,6 +19,9 @@
     "@consent-checkboxes": "array",
     "@initially-expanded": "boolean"
   },
+  "<theme-company-search-block>": {
+    "template": "./company-search.marko"
+  },
   "<theme-full-width-native-ad-block>": {
     "template": "./full-width-native-ad.marko"
   },
