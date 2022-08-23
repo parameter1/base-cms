@@ -19,6 +19,9 @@
     "@consent-checkboxes": "array",
     "@initially-expanded": "boolean"
   },
+  "<theme-company-search-block>": {
+    "template": "./company-search.marko"
+  },
   "<theme-full-width-native-ad-block>": {
     "template": "./full-width-native-ad.marko"
   },
@@ -141,6 +144,9 @@
   },
   "<theme-section-list-block>": {
     "template": "./section-list.marko"
+  },
+  "<theme-section-search-block>": {
+    "template": "./section-search.marko"
   },
   "<theme-section-title-feed-block>": {
     "template": "./section-title-feed.marko",

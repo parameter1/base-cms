@@ -1,0 +1,55 @@
+.company-search {
+  position: relative;
+  &__title {
+    margin-bottom: 18px;
+    font-size: 18px;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+  .autocomplete-input{
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0;
+    outline: none;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    &:focus {
+      border-color: #ebebeb;
+      box-shadow: none;
+    }
+  }
+  .autocomplete-result-list {
+    @include box-shadow($theme-card-box-shadow);
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    max-height: 10em;
+    padding: map-get($spacers, 2);
+    overflow: scroll;
+    list-style: none;
+    background: $white;
+    border: 1px solid #ebebeb;
+    li {
+      color: $primary;
+      cursor: pointer;
+      .autocomplete-result-error {
+        font-size: 40px;
+        font-weight: 700;
+
+      }
+    }
+  }
+  .errors {
+    li {
+      cursor: initial;
+    }
+  }
+}

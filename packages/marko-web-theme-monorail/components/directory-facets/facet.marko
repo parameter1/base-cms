@@ -1,0 +1,14 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+
+$ const facets = getAsArray(input, "facets");
+$ const aliases = getAsArray(input, "aliases");
+<theme-directory-facet-container
+  facets=facets
+  aliases=aliases
+  content-type=input.contentType
+  search-query=input.searchQuery
+  title=input.title
+  description=input.description
+  active-id=input.activeId
+  initially-expanded=input.initiallyExpanded
+/>

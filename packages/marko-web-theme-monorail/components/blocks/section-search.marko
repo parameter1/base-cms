@@ -1,0 +1,14 @@
+import queryFragment from "../../graphql/fragments/sections-search"
+import { getChildSectionsById } from "../../utils/get-child-sections-by-id";
+
+$ const { sectionIds, includeSelf } = input;
+
+<if(sectionIds.length)>
+  <marko-web-query|{ nodes: parent }|
+    name="website-sections"
+    params={ includeIds: sectionIds, queryFragment }
+  >
+    $ const nodesById = getChildSectionsById(parent[0], {}, includeSelf);
+    <marko-web-browser-component name="ThemeSectionSearch" props={ sections: Object.values(nodesById) } />
+  </marko-web-query>
+</if>

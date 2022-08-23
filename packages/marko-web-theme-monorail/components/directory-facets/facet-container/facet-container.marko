@@ -1,0 +1,23 @@
+$ const { facets, title, description, aliases, initiallyExpanded, searchQuery } = input;
+
+<if(facets.length)>
+  <div class='directory-facets'>
+    <if(title)>
+      <h3 class="directory-facets__title">
+        ${title}
+      </h3>
+    </if>
+    <if(description)>
+      <div class="directory-facets__description">
+        $!{description}
+      </div>
+    </if>
+    <theme-directory-facet-list
+      facets=facets
+      aliases=aliases
+      active-id=input.activeId
+      search-query=searchQuery
+      initially-expanded=initiallyExpanded
+    />
+  </div>
+</if>

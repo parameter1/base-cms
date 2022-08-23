@@ -5,6 +5,7 @@
     "./blocks/marko.json",
     "./client-side-blocks/marko.json",
     "./content-attribution/marko.json",
+    "./directory-facets/marko.json",
     "./flows/marko.json",
     "./gam/marko.json",
     "./identity-x/marko.json",
