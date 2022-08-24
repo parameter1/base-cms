@@ -74,10 +74,12 @@ $ const blockName = "section-feed-content-node";
           </marko-web-block>
         </marko-web-block>
       </if>
-      <else-if(content.city && content.state)>
-        <marko-web-content-city-state-zip block-name=blockName obj=content>
-          ${content.city}, ${content.state}
-        </marko-web-content-city-state-zip>
+      <else-if(content.address1 || content.address2 || content.cityStateZip)>
+        <marko-web-block name=blockName modifiers=["contact-info"] >
+          <marko-web-content-address1 block-name=blockName obj=content />
+          <marko-web-content-address2 block-name=blockName obj=content />
+          <marko-web-content-city-state-zip block-name=blockName obj=content />
+        </marko-web-block>
       </else-if>
     </marko-web-element>
   </marko-web-element>
