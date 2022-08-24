@@ -4,6 +4,7 @@ const TriggerScreenChangeEvent = () => import(/* webpackChunkName: "trigger-scre
 const OEmbed = () => import(/* webpackChunkName: "oembed" */ './oembed.vue');
 const FormDotComGatedDownload = () => import(/* webpackChunkName: "form-dot-com" */ './gated-download/form-dot-com.vue');
 const WufooGatedDownload = () => import(/* webpackChunkName: "wufoo-gated-download" */ './gated-download/wufoo.vue');
+const ImageSlider = () => import(/* webpackChunkName: "image-slider" */ './image-slider.vue');
 
 export default (Browser) => {
   Browser.register('LoadMoreTrigger', LoadMoreTrigger);
@@ -12,4 +13,5 @@ export default (Browser) => {
   Browser.register('OEmbed', OEmbed);
   Browser.register('FormDotComGatedDownload', FormDotComGatedDownload);
   Browser.register('WufooGatedDownload', WufooGatedDownload);
+  Browser.register('ImageSlider', ImageSlider);
 };
