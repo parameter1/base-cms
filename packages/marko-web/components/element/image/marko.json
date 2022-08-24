@@ -28,5 +28,11 @@
     "@modifiers": "string",
     "@attrs": "object",
     "@link": "expression"
+  },
+  "<marko-web-image-slider>": {
+    "template": "./slider.marko",
+    "@images": "array",
+    "@image-options": "array",
+    "@modifiers": "array"
   }
 }
