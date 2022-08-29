@@ -16,6 +16,11 @@ module.exports = {
   search,
   idxNavItems: { enable: true },
   company: 'Parameter1, LLC',
+  p1events: {
+    enabled: true,
+    tenant: 'p1',
+    cookieDomain: 'dev.parameter1.com',
+  },
   logos: {
     navbar: {
       src: 'https://p1-cms-assets.imgix.net/files/base/p1/sandbox/image/static/sandbox-logo.png?h=45&auto=format,compress',

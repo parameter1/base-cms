@@ -5,6 +5,8 @@ $ const { recaptcha } = out.global;
   <@page>
     <marko-web-resolve-page|{ data: section, resolved }| node=pageNode>
 
+      <marko-web-p1-events-track-website-section node=section />
+
       <default-theme-website-section-breadcrumbs section=section />
       <h1>${section.name}</h1>
 

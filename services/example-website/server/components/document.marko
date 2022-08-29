@@ -1,3 +1,6 @@
+import createOmedaIdentityBuilder from "@parameter1/base-cms-marko-web-p1-events/utils/create-omeda-identity-builder";
+import omedaConfig from "../../config/omeda";
+
 $ const { nativeX } = out.global;
 
 <marko-web-document ...input>
@@ -8,6 +11,14 @@ $ const { nativeX } = out.global;
     <link rel="manifest" href="/site.webmanifest">
 
     <marko-web-deferred-script-loader-init />
+
+    <!-- init p1 website events -->
+    <marko-web-p1-events-init
+      on="load"
+      request-frame=true
+      target-tag="body"
+      identity-query-builder=createOmedaIdentityBuilder(omedaConfig.brandKey)
+    />
 
     <!-- init gtm -->
     <marko-web-gtm-init
@@ -47,5 +58,6 @@ $ const { nativeX } = out.global;
         <identity-x-newsletter-form-footer />
       </@newsletter-block>
     </theme-site-footer>
+    <marko-web-deferred-script-loader-load />
   </@below-container>
 </marko-web-document>
