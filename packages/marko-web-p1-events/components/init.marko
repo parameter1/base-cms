@@ -6,9 +6,9 @@ $ const realm = core.website("id");
 $ const { NODE_ENV } = process.env;
 
 $ const { on } = input;
-$ const scriptSrc = defaultValue(input.scriptSrc, "https://cdn.parameter1.com/p1-events/9ba4a865.js");
+$ const scriptSrc = defaultValue(input.scriptSrc, "https://cdn.parameter1.com/p1-events/232c605c.js");
 $ const uri = defaultValue(input.uri, "https://db0y8smio0.execute-api.us-east-2.amazonaws.com/default/p1-website-events-enqueue");
-$ const identityQueryBuilder = `identityQueryBuilder: function(query) { ${input.identityQueryBuilder ? input.identityQueryBuilder.split("\n").map((l) => l.trim()).join(" ") : ""} }`;
+$ const identityQueryBuilder = `identityQueryBuilder: function(query, cookies) { ${input.identityQueryBuilder ? input.identityQueryBuilder.split("\n").map((l) => l.trim()).join(" ") : ""} }`;
 
 <if(enabled && tenant)>
   <if(on)>
