@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import { get } from '@parameter1/base-cms-object-path';
 import { share } from '../utils/gtm-events';
 
 export default {
@@ -16,8 +15,8 @@ export default {
   },
   created() {
     this.EventBus.$on(this.eventName, (event) => {
-      const provider = get(event, 'provider.name');
-      share(provider);
+      const provider = event && event.provider && event.provider.name ? event.provider.name : null;
+      if (provider) share(provider);
     });
   },
 };
