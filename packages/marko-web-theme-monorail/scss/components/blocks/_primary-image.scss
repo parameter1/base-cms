@@ -6,11 +6,11 @@ $marko-web-primary-image-margin: 1.5rem !default;
   clear: both;
 
   &__image-caption {
-    @include theme-media-caption();
+    @include skin-typography($style: "primary-image-caption");
   }
 
   &__image-credit {
-    @include theme-media-credit();
+    @include skin-typography($style: "primary-image-credit");
   }
 
   // > :last-child:not(#{ $self }__wrapper) {
