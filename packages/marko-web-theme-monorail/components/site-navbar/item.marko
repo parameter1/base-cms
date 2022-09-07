@@ -51,8 +51,8 @@ $ if (children.length) listItemModifiers.push('with-children');
       </marko-web-link>
       <theme-menu-toggle-button
         class="site-menu-items__toggler"
-        targets=[`.site-menu__items--${input.href.replace('/','')}`]
-        toggle-class=`site-menu__items--${input.href.replace('/','')}-open`
+        targets=[`.site-menu__items--${input.href.replace(/\W+/g, "")}`]
+        toggle-class=`site-menu__items--${input.href.replace(/\W+/g, "")}-open`
         icon-modifiers=["sm"]
         icon-name="chevron-right"
         initiallyExpanded=isActiveLink(req.path, input.href)
@@ -60,8 +60,8 @@ $ if (children.length) listItemModifiers.push('with-children');
 
       />
     </marko-web-element>
-    $ const modifiers = [`${input.href.replace('/','')}`];
-    $ const activeClass = (isActiveLink(req.path, input.href)) ?`${blockName}__items--${input.href.replace('/','')}-open` : '';
+    $ const modifiers = [`${input.href.replace(/\W+/g, "")}`];
+    $ const activeClass = (isActiveLink(req.path, input.href)) ?`${blockName}__items--${input.href.replace(/\W+/g, "")}-open` : '';
     <!-- $ if (isActiveLink(req.path, input.href)) modifiers.push('open') -->
     <theme-site-navbar-items
       block-name="site-menu"
