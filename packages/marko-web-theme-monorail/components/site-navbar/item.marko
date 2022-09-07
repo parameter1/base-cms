@@ -61,8 +61,7 @@ $ if (children.length) listItemModifiers.push('with-children');
       />
     </marko-web-element>
     $ const modifiers = [`${input.href.replace(/\W+/g, "")}`];
-    $ const activeClass = (isActiveLink(req.path, input.href)) ?`${blockName}__items--${input.href.replace(/\W+/g, "")}-open` : '';
-    <!-- $ if (isActiveLink(req.path, input.href)) modifiers.push('open') -->
+    $ const activeClass = (isActiveLink(req.path, input.href)) ? `${blockName}__items--${input.href.replace(/\W+/g, "")}-open` : '';
     <theme-site-navbar-items
       block-name=blockName
       modifiers=modifiers
