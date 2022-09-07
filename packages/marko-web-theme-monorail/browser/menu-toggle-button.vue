@@ -18,6 +18,7 @@
 <script>
 import IconChevronDown from '@parameter1/base-cms-marko-web-icons/browser/chevron-down.vue';
 import IconChevronUp from '@parameter1/base-cms-marko-web-icons/browser/chevron-up.vue';
+import IconChevronRight from '@parameter1/base-cms-marko-web-icons/browser/chevron-right.vue';
 import IconDash from '@parameter1/base-cms-marko-web-icons/browser/dash.vue';
 import IconMail from '@parameter1/base-cms-marko-web-icons/browser/mail.vue';
 import IconPlus from '@parameter1/base-cms-marko-web-icons/browser/plus.vue';
@@ -25,12 +26,13 @@ import IconThreeBars from '@parameter1/base-cms-marko-web-icons/browser/three-ba
 import IconX from '@parameter1/base-cms-marko-web-icons/browser/x.vue';
 import EventBus from '@parameter1/base-cms-marko-web/browser/event-bus';
 
-const validateIcon = v => ['chevron-down', 'chevron-up', 'dash', 'mail', 'plus', 'three-bars', 'x'].includes(v);
+const validateIcon = v => ['chevron-down', 'chevron-up', 'chevron-right', 'dash', 'mail', 'plus', 'three-bars', 'x'].includes(v);
 
 export default {
   components: {
     IconChevronDown,
     IconChevronUp,
+    IconChevronRight,
     IconDash,
     IconMail,
     IconPlus,
