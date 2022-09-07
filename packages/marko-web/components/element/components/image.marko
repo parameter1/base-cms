@@ -2,7 +2,7 @@ import { getAsArray } from "@parameter1/base-cms-object-path";
 
 $ const { config } = out.global;
 $ const { src, alt } = input;
-$ const lazyload = config.lazyloadImages() && input.lazyload !== false
+$ const lazyload = config && config.lazyloadImages() && input.lazyload !== false
 $ const srcset = getAsArray(input.srcset).join(", ") || null;
 
 $ const classNames = [input.class];
