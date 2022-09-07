@@ -12,6 +12,7 @@
     "./native-x/marko.json",
     "./nodes/marko.json",
     "./page/marko.json",
+    "./site-menu/marko.json",
     "./site-navbar/marko.json"
   ],
   "<theme-client-side-block-loader>": {

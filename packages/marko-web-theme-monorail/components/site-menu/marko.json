@@ -1,0 +1,11 @@
+{
+  "<theme-site-menu>": {
+    "template": "./index.marko"
+  },
+  "<theme-site-menu-section>": {
+    "template": "./section.marko"
+  },
+  "<theme-site-menu-header>": {
+    "template": "./header.marko"
+  }
+}

@@ -1,0 +1,26 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+
+$ const blockName = input.blockName || "site-menu";
+$ const items = getAsArray(input, "items");
+
+<if(items.length)>
+  <marko-web-element
+    block-name=blockName
+    name="section"
+    tag=input.tag
+    modifiers=input.modifiers
+    attrs=input.attrs
+  >
+    <if(input.label)>
+      <theme-site-menu-header block-name=blockName>
+        ${input.label}
+      </theme-site-menu-header>
+    </if>
+    <theme-site-navbar-items
+      block-name=blockName
+      items=items
+      reg-enabled=input.regEnabled
+      has-user=input.hasUser
+    />
+  </marko-web-element>
+</if>
