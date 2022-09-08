@@ -6,6 +6,13 @@ const stringifyAttrs = attrs => Object.keys(attrs).reduce((arr, key) => {
   return arr;
 }, []).join(' ');
 
+const buildWrapperClass = ({ caption, credit }) => {
+  const classes = [];
+  if (caption) classes.push('image-with-caption');
+  if (credit) classes.push('image-with-credit');
+  return classes.join(' ');
+};
+
 module.exports = (tag, { config } = {}, { lazyloadImages } = {}) => {
   const lazyload = lazyloadImages == null ? config.lazyloadImages() : lazyloadImages;
   const src = tag.get('src');
@@ -17,10 +24,13 @@ module.exports = (tag, { config } = {}, { lazyloadImages } = {}) => {
   const width = tag.get('width');
   const height = tag.get('height');
 
+  const wrapperClass = buildWrapperClass({ caption, credit });
+
   const attrs = {
     'data-embed-type': tag.type,
     'data-embed-id': tag.id,
     'data-embed-align': align,
+    ...(wrapperClass && { class: wrapperClass }),
   };
 
   const minWidth = 400;
