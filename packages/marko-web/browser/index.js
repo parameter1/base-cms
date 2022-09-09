@@ -14,10 +14,13 @@ const load = async ({
   props,
   on,
   hydrate,
+  skipWhenExists,
 } = {}) => {
   if (!el || !name) throw new Error('A Vue component name and element must be provided.');
   const Component = components[name];
   if (!Component) throw new Error(`No Vue component found for '${name}'`);
+  const shouldRender = skipWhenExists ? document.querySelectorAll(`script.component[data-name="${name}"]`).length <= 1 : true;
+  if (!shouldRender) return;
   const component = new Vue({
     provide: providers[name],
     render: h => h(Component, { props, on: { ...on, ...listeners[name] } }),

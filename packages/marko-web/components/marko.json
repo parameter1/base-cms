@@ -17,6 +17,7 @@
     },
     "@hydrate": "boolean",
     "@ssr": "boolean",
+    "@skip-when-exists": "boolean",
     "@tag": "string",
     "@class": "string",
     "@attrs": "object",
