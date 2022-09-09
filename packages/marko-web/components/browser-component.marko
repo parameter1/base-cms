@@ -7,8 +7,9 @@ $ const tag = defaultValue(input.tag, "div");
 $ const { name } = input;
 $ const ssr = defaultValue(input.ssr, false);
 $ const hydrate = ssr ? true : defaultValue(input.hydrate, false);
+$ const skipWhenExists = defaultValue(input.skipWhenExists, false);
 $ const props = JSON.stringify(input.props || {});
-$ const contents = `CMSBrowserComponents.load({ el: '#${id}', name: '${name}', props: ${props}, hydrate: ${hydrate} });`;
+$ const contents = `CMSBrowserComponents.load({ el: '#${id}', name: '${name}', props: ${props}, hydrate: ${hydrate}, skipWhenExists: ${skipWhenExists} });`;
 
 <if(ssr)>
   $ const { compiledVueComponents } = out.global;
@@ -23,4 +24,4 @@ $ const contents = `CMSBrowserComponents.load({ el: '#${id}', name: '${name}', p
     <${input.renderBody} />
   </>
 </else>
-<script>$!{contents}</script>
+<script class="component" data-name=name>$!{contents}</script>
