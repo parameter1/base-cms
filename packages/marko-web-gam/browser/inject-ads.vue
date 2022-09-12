@@ -92,7 +92,12 @@ export default {
               } else if ($child.is(headlineTags)) {
                 $child.before(cleaned);
               } else if (!$next.hasClass('ad-container')) {
-                $child.after(cleaned);
+                let hasInParagraphImage = false;
+                $child.children().each(function injectAdsChild() {
+                  if ($(this).attr('data-embed-type')) hasInParagraphImage = true;
+                });
+                if (hasInParagraphImage) $next.after(cleaned);
+                else $child.after(cleaned);
               } else {
                 const [toInsert] = $.parseHTML(cleaned);
                 if (!toInsert) return;
