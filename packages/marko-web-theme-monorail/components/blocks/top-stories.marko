@@ -63,7 +63,7 @@ $ const queryName = (queryParams.optionName) ? "website-optioned-content" : "web
         <theme-content-card-deck-col-flow
           nodes=cardNodes
           modifiers=[blockName]
-          ...(withNativeX && { nativeX: { name: "default", index: 3, sectionName: "Sponsor Content" } })
+          ...(withNativeX && { nativeX: { name: "default", index: 3, sectionName: `${i18n("Sponsor Content")}` } })
         >
           <@node modifiers=[`${blockName}-card`]>
             <@image lazyload=lazyload />
