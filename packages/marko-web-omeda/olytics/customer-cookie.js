@@ -24,14 +24,13 @@ const clearFrom = (res) => {
 const setTo = (res, value) => {
   const cleaned = clean(value);
   if (!cleaned) return false;
-  const v = `"${cleaned}"`;
   const options = {
     maxAge: 60 * 60 * 24 * 365,
     httpOnly: false,
   };
   const dotDomain = getDotDomainFrom(res.req);
-  res.cookie(COOKIE_NAME, v, options);
-  res.cookie(COOKIE_NAME, v, { ...options, domain: dotDomain });
+  res.cookie(COOKIE_NAME, cleaned, options);
+  res.cookie(COOKIE_NAME, cleaned, { ...options, domain: dotDomain });
   return true;
 };
 
