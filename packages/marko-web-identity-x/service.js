@@ -2,6 +2,7 @@ const createClient = require('./utils/create-client');
 const getActiveContext = require('./api/queries/get-active-context');
 const checkContentAccess = require('./api/queries/check-content-access');
 const addExternalUserId = require('./api/mutations/add-external-user-id');
+const impersonateAppUser = require('./api/mutations/impersonate-app-user');
 const sendLoginLinkMutation = require('./api/mutations/send-login-link');
 const createAppUser = require('./api/mutations/create-app-user');
 const logoutAppUser = require('./api/mutations/logout-app-user');
@@ -115,6 +116,20 @@ class IdentityX {
       context: { apiToken },
     });
     return data.addAppUserExternalId;
+  }
+
+  async impersonateAppUser({ userId }) {
+    const apiToken = this.config.getApiToken();
+    if (!apiToken) throw new Error('Unable to add external ID: No API token has been configured.');
+    const variables = { input: { id: userId, verify: true } };
+    const { data } = await this.client.mutate({
+      mutation: impersonateAppUser,
+      variables,
+      context: { apiToken },
+    });
+    const { token } = data.impersonateAppUser;
+    tokenCookie.setTo(this.res, token.value);
+    this.token = token;
   }
 
   async logoutAppUser() {
