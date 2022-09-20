@@ -1,0 +1,25 @@
+$ const { config, req } = out.global;
+$ const { canAccess } = input;
+$ const blockName = "content-page-gate";
+$ const loginUrl = `/login?returnTo=${encodeURIComponent(req.originalUrl)}`;
+
+<marko-web-block name=blockName>
+  <if(!canAccess)>
+    <marko-web-element tag="h5" name="title" block-name=blockName>
+      Log in to view the full article
+    </marko-web-element>
+    <marko-web-element name="body" block-name=blockName>
+      <p>Register on ${config.website("name")} and gain access to premium content, including this article and much more. To get started, click the button below.</p>
+    </marko-web-element>
+
+    <marko-web-element name="form-wrapper" block-name=blockName>
+      <marko-web-link
+        class=`btn btn-primary ${blockName}__login-btn`
+        href=loginUrl
+        title="Log In"
+      >
+        Log In
+      </marko-web-link>
+    </marko-web-element>
+  </if>
+</marko-web-block>
