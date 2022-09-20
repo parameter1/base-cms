@@ -2,9 +2,11 @@ const createClient = require('./utils/create-client');
 const getActiveContext = require('./api/queries/get-active-context');
 const checkContentAccess = require('./api/queries/check-content-access');
 const addExternalUserId = require('./api/mutations/add-external-user-id');
+const sendLoginLinkMutation = require('./api/mutations/send-login-link');
+const createAppUser = require('./api/mutations/create-app-user');
+const logoutAppUser = require('./api/mutations/logout-app-user');
 const tokenCookie = require('./utils/token-cookie');
 const callHooksFor = require('./utils/call-hooks-for');
-
 
 const isEmpty = v => v == null || v === '';
 
@@ -113,6 +115,60 @@ class IdentityX {
       context: { apiToken },
     });
     return data.addAppUserExternalId;
+  }
+
+  async logoutAppUser() {
+    const { token } = this;
+    const input = { token };
+    const variables = { input };
+    const { data } = await this.client.mutate({ mutation: logoutAppUser, variables });
+    tokenCookie.removeFrom(this.res);
+    await callHooksFor(this, 'onLogout', {
+      req: this.req,
+      res: this.res,
+      user: data.logoutAppUserWithData,
+    });
+    this.token = null;
+  }
+
+  /**
+   * Creates an AppUser from an email address
+   */
+  async createAppUser({ email }) {
+    const { data } = await this.client.mutate({
+      mutation: createAppUser,
+      variables: { email },
+    });
+    return data.createAppUser;
+  }
+
+  /**
+   * Sends a login link to an existing user
+   */
+  async sendLoginLink({
+    appUser,
+    source,
+    redirectTo,
+    additionalEventData,
+  }) {
+    const authUrl = `${this.req.protocol}://${this.req.get('host')}${this.config.getEndpointFor('authenticate')}`;
+    await this.client.mutate({
+      mutation: sendLoginLinkMutation,
+      variables: {
+        input: {
+          email: appUser.email,
+          authUrl,
+          appContextId: this.config.get('appContextId'),
+          source,
+          redirectTo,
+        },
+      },
+    });
+    await callHooksFor(this, 'onLoginLinkSent', {
+      ...(additionalEventData || {}),
+      req: this.req,
+      user: appUser,
+    });
   }
 }
 
