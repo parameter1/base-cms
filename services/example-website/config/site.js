@@ -7,6 +7,12 @@ const newsletter = require('./newsletter');
 const search = require('./search');
 
 module.exports = {
+  auth0: {
+    baseURL: process.env.AUTH0_BASEURL,
+    clientID: process.env.AUTH0_CLIENTID,
+    clientSecret: process.env.AUTH0_SECRET,
+    issuerBaseURL: process.env.AUTH0_ISSUER_URL,
+  },
   omedaIdentityX,
   identityX,
   nativeX,
