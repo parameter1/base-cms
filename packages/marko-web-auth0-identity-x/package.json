@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@parameter1/base-cms-marko-web": "^3.4.0",
+    "@parameter1/base-cms-marko-web-auth0": "^3.4.0",
     "@parameter1/base-cms-marko-web-identity-x": "^3.0.0",
     "@parameter1/base-cms-utils": "3.0.0",
     "@parameter1/joi": "^1.2.10",
@@ -18,9 +19,6 @@
     "graphql-tag": "^2.12.6",
     "jsonwebtoken": "^8.5.1",
     "object-path": "^0.11.8"
-  },
-  "peerDependencies": {
-    "@parameter1/base-cms-marko-web-auth0": "^3.4.0"
   },
   "devDependencies": {
     "express": "^4.17.1"
