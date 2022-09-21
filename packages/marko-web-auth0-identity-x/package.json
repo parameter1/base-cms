@@ -10,18 +10,11 @@
     "test": "yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-marko-web": "^3.4.0",
     "@parameter1/base-cms-marko-web-auth0": "^3.4.0",
     "@parameter1/base-cms-marko-web-identity-x": "^3.0.0",
     "@parameter1/base-cms-utils": "3.0.0",
     "@parameter1/joi": "^1.2.10",
-    "express-openid-connect": "^2.8.0",
-    "graphql-tag": "^2.12.6",
-    "jsonwebtoken": "^8.5.1",
-    "object-path": "^0.11.8"
-  },
-  "devDependencies": {
-    "express": "^4.17.1"
+    "jsonwebtoken": "^8.5.1"
   },
   "resolutions": {
     "compress-brotli": "1.2.2"

@@ -10165,13 +10165,6 @@ graphql-tag@^2.12.5:
   dependencies:
     tslib "^2.1.0"
 
-graphql-tag@^2.12.6:
-  version "2.12.6"
-  resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.12.6.tgz#d441a569c1d2537ef10ca3d1633b48725329b5f1"
-  integrity sha512-FdSNcu2QQcWnM2VNvSCCDCVS5PpPqpzgFT8+GXzqJuoDd0CBncxCY278u4mhRO7tMgo2JjgJA5aZ+nWSQ/Z+xg==
-  dependencies:
-    tslib "^2.1.0"
-
 graphql-tools@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/graphql-tools/-/graphql-tools-4.0.8.tgz#e7fb9f0d43408fb0878ba66b522ce871bafe9d30"
