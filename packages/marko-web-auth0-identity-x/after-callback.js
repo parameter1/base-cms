@@ -3,6 +3,7 @@ const { decode } = require('jsonwebtoken');
 const gql = require('graphql-tag');
 
 const { log } = process.env.NODE_ENV === 'development' ? console : { log: v => v };
+const error = (...msgs) => process.stdout.write(...msgs);
 
 const findUser = gql`
 query LoginCheckAppUser($email: String!) {
@@ -50,15 +51,15 @@ module.exports = async (req, res, session, decoded) => {
     log('A0+IdX.cb', 'created user', appUser);
   }
 
-  if (user.email_verified) {
-    // federate trusted verification state to IdX and log in via impersonation api
-    try {
-      await service.impersonateAppUser({ userId: appUser.id });
-      log('A0+IdX.cb', 'logged in as', appUser.id);
-    } catch (e) {
-      log('A0+IdX.cb', 'autherr', e.networkError ? e.networkError.result.errors : e);
-      throw e; // @todo flash/log
-    }
+  // federate trusted verification state to IdX and log in via impersonation api
+  try {
+    await service.impersonateAppUser({ userId: appUser.id });
+    log('A0+IdX.cb', 'logged in as', appUser.id);
+  } catch (e) {
+    error('A0+IdX.cb', 'autherr', e);
+    throw e;
   }
+
+  // Return the user session
   return session;
 };
