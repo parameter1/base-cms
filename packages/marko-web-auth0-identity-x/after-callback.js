@@ -36,11 +36,8 @@ module.exports = async (req, res, session, decoded) => {
   log('A0+IdX.cb', { email: user && user.email, token, decoded });
 
   // Destroy A0 context if no email is present
-  const { email } = user;
-  if (!email) {
-    res.oidc.logout();
-    throw new Error('Auth0 users must provide an email address.'); // @todo flash/log?
-  }
+  const { email, email_verified: ev } = user;
+  if (!email || !ev) throw new Error('Auth0 user must provide a verified email address.');
 
   // Attempt to load the IdentityX AppUser by email address
   const qr = await client.query({ query: findUser, variables: { email } });
@@ -60,13 +57,8 @@ module.exports = async (req, res, session, decoded) => {
       log('A0+IdX.cb', 'logged in as', appUser.id);
     } catch (e) {
       log('A0+IdX.cb', 'autherr', e.networkError ? e.networkError.result.errors : e);
-      res.oidc.logout();
       throw e; // @todo flash/log
     }
-  } else {
-    // Email is not verified, force verification via IdentityX
-    await service.sendLoginLink({ appUser });
-    throw new Error('Please verify your email address to continue.'); // @todo flash/log
   }
   return session;
 };
