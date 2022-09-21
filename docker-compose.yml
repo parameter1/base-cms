@@ -337,11 +337,11 @@ services:
       RECAPTCHA_V3_SITE_KEY: ${EXAMPLE_RECAPTCHA_V3_SITE_KEY-}
       SENDGRID_API_KEY: ${EXAMPLE_SENDGRID_API_KEY-}
 
-      AUTH0_ENABLED: ${AUTH0_ENABLED-0}
-      AUTH0_ISSUER_URL: ${AUTH0_ISSUER_URL-https://parameter1.us.auth0.com}
-      AUTH0_CLIENTID: ${AUTH0_CLIENTID-1O2py91c6ZEbN1xqm1smD9jOcULvO2sx}
-      AUTH0_SECRET: ${AUTH0_SECRET-}
-      AUTH0_BASEURL: ${AUTH0_BASEURL-http://www-p1-sandbox.dev.parameter1.com:51269}
+      AUTH0_ENABLED: ${EXAMPLE_AUTH0_ENABLED-0}
+      AUTH0_ISSUER_URL: ${EXAMPLE_AUTH0_ISSUER_URL-https://parameter1.us.auth0.com}
+      AUTH0_CLIENTID: ${EXAMPLE_AUTH0_CLIENTID-1O2py91c6ZEbN1xqm1smD9jOcULvO2sx}
+      AUTH0_SECRET: ${EXAMPLE_AUTH0_SECRET-}
+      AUTH0_BASEURL: ${EXAMPLE_AUTH0_BASEURL-http://www-p1-sandbox.dev.parameter1.com:51269}
 
     hostname: www-p1-sandbox.dev.parameter1.com
     depends_on:
