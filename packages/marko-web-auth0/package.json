@@ -13,12 +13,6 @@
     "@parameter1/joi": "^1.2.10",
     "express-openid-connect": "^2.8.0"
   },
-  "peerDependencies": {
-    "@parameter1/base-cms-marko-web": "^3.4.0"
-  },
-  "devDependencies": {
-    "express": "^4.17.1"
-  },
   "resolutions": {
     "compress-brotli": "1.2.2"
   }

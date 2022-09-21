@@ -1,5 +1,0 @@
-$ const { req, site } = out.global;
-$ const isEnabled = req.auth0Enabled || false;
-$ const hasUser = req.oidc ? req.oidc.isAuthenticated() : false;
-
-<${input.renderBody} is-enabled=isEnabled has-user=hasUser />

@@ -2,6 +2,9 @@ const { auth } = require('express-openid-connect');
 const Joi = require('@parameter1/joi');
 const { validate } = require('@parameter1/joi/utils');
 
+/**
+ *
+ */
 module.exports = (app, params = {}) => {
   const config = validate(Joi.object({
     authRequired: Joi.boolean().default(false),
