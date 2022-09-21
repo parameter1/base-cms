@@ -1,6 +1,6 @@
 const idxConfig = require('./identity-x');
 
-const useAuth0 = Boolean(process.env.AUTH0_ENABLED);
+const useAuth0 = Boolean(process.env.AUTH0_ENABLED === '1');
 
 const topics = {
   primary: [

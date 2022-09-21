@@ -17,7 +17,7 @@ const idxRouteTemplates = require('./server/templates/user');
 const recaptcha = require('./config/recaptcha');
 
 const { log } = console;
-const useAuth0 = Boolean(process.env.AUTH0_ENABLED);
+const useAuth0 = Boolean(process.env.AUTH0_ENABLED === '1');
 
 const routes = config => (app) => {
   // Handle submissions on /__inquiry
