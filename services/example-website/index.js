@@ -7,14 +7,17 @@ const newsletterState = require('@parameter1/base-cms-marko-web-theme-monorail/m
 const contentGating = require('@parameter1/base-cms-marko-web-theme-monorail/middleware/content-gating');
 const i18n = require('@parameter1/base-cms-marko-web-theme-monorail/middleware/i18n');
 const loadInquiry = require('@parameter1/base-cms-marko-web-inquiry');
+const auth0IdX = require('@parameter1/base-cms-marko-web-auth0-identity-x');
 const document = require('./server/components/document');
 const coreConfig = require('./config/core');
 const siteConfig = require('./config/site');
+const idxConfig = require('./config/identity-x');
 const siteRoutes = require('./server/routes');
 const idxRouteTemplates = require('./server/templates/user');
 const recaptcha = require('./config/recaptcha');
 
 const { log } = console;
+const useAuth0 = Boolean(process.env.AUTH0_ENABLED === '1');
 
 const routes = config => (app) => {
   // Handle submissions on /__inquiry
@@ -46,8 +49,16 @@ module.exports = startServer({
     const nativeXConfig = getAsObject(siteConfig, 'nativeX');
     set(app.locals, 'nativeX', nativeXConfig);
 
-    // Setup IdentityX + Omeda
-    const oidxConfig = getAsObject(siteConfig, 'omedaIdentityX');
-    omedaIdentityX(app, { ...oidxConfig, idxRouteTemplates });
+    if (useAuth0) {
+      // Setup IdentityX + Auth0
+      const config = getAsObject(siteConfig, 'auth0');
+      auth0IdX(app, { ...config, idxConfig, idxRouteTemplates });
+      log('Enabled IdentityX + Auth0');
+    } else {
+      // Setup IdentityX + Omeda
+      const oidxConfig = getAsObject(siteConfig, 'omedaIdentityX');
+      omedaIdentityX(app, { ...oidxConfig, idxRouteTemplates });
+      log('Enabled IdentityX + Omeda');
+    }
   },
 }).then(() => log('Website started!')).catch(e => setImmediate(() => { throw e; }));

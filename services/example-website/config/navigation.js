@@ -1,5 +1,7 @@
 const idxConfig = require('./identity-x');
 
+const useAuth0 = Boolean(process.env.AUTH0_ENABLED === '1');
+
 const topics = {
   primary: [
     { href: '/clients', label: 'Clients' },
@@ -22,19 +24,19 @@ const utilities = [
 
 const userLinks = [
   {
-    href: idxConfig.getEndpointFor('login'),
+    href: useAuth0 ? '/login' : idxConfig.getEndpointFor('login'),
     label: 'Sign In',
     when: 'logged-out',
     modifiers: ['user'],
   },
   {
-    href: idxConfig.getEndpointFor('profile'),
+    href: useAuth0 ? '/profile' : idxConfig.getEndpointFor('profile'),
     label: 'Manage Account',
     when: 'logged-in',
     modifiers: ['user'],
   },
   {
-    href: idxConfig.getEndpointFor('logout'),
+    href: useAuth0 ? '/logout' : idxConfig.getEndpointFor('logout'),
     label: 'Sign Out',
     when: 'logged-in',
     modifiers: ['user'],

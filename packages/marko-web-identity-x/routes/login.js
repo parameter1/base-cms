@@ -1,20 +1,10 @@
 const gql = require('graphql-tag');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
-const callHooksFor = require('../utils/call-hooks-for');
 const userFragment = require('../api/fragments/active-user');
 
 const buildQuery = () => gql`
   query LoginCheckAppUser($email: String!) {
     appUser(input: { email: $email }) {
-      ...ActiveUserFragment
-    }
-  }
-  ${userFragment}
-`;
-
-const createUser = gql`
-  mutation LoginCreateAppUser($email: String!) {
-    createAppUser(input: { email: $email }) {
       ...ActiveUserFragment
     }
   }
@@ -30,20 +20,12 @@ const forceProfileReVerificationUser = gql`
   }
 `;
 
-const sendLoginLink = gql`
-  mutation LoginSendLoginLink($input: SendAppUserLoginLinkMutationInput!) {
-    sendAppUserLoginLink(input: $input)
-  }
-`;
-
 module.exports = asyncRoute(async (req, res) => {
   const { identityX, body } = req;
   const {
     email,
     source,
-    authUrl,
     redirectTo,
-    appContextId,
     additionalEventData = {},
   } = body;
   const variables = { email };
@@ -54,8 +36,7 @@ module.exports = asyncRoute(async (req, res) => {
 
   if (!appUser) {
     // Create the user.
-    const { data: newUser } = await identityX.client.mutate({ mutation: createUser, variables });
-    appUser = newUser.createAppUser;
+    appUser = await identityX.createAppUser({ email });
   }
 
   if (forceProfileReVerification) {
@@ -67,22 +48,11 @@ module.exports = asyncRoute(async (req, res) => {
   }
 
   // Send login link.
-  await identityX.client.mutate({
-    mutation: sendLoginLink,
-    variables: {
-      input: {
-        email: appUser.email,
-        source,
-        authUrl,
-        redirectTo,
-        appContextId,
-      },
-    },
-  });
-  await callHooksFor(identityX, 'onLoginLinkSent', {
-    ...(additionalEventData || {}),
-    req,
-    user: appUser,
+  await identityX.sendLoginLink({
+    appUser,
+    source,
+    redirectTo,
+    additionalEventData,
   });
   return res.json({ ok: true });
 });
