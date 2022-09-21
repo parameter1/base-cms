@@ -98,7 +98,7 @@
           />
         </div>
 
-        <div v-if="customBooleanFieldAnswers.length" class="row">
+        <div v-if="customBooleanFieldAnswers.length" class="row mt-3">
           <div
             v-if="booleanQuestionsLabel"
             class="col-12 boolean-questions-label"
@@ -120,7 +120,7 @@
         </div>
 
         <div v-if="emailConsentRequest" class="row mt-3">
-          <div class="col-md-6">
+          <div class="col-12">
             <receive-email
               v-model="user.receiveEmail"
               :email-consent-request="emailConsentRequest"
@@ -144,7 +144,7 @@
 
         <small
           v-if="consentPolicy"
-          class="text-muted mb-3"
+          class="text-muted mb-3 d-inline-block"
           v-html="consentPolicy"
         />
 

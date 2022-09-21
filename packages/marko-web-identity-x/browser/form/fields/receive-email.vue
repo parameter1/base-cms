@@ -2,24 +2,26 @@
   <form-group>
     <div class="custom-control custom-checkbox">
       <input
-        :id="id"
+        :id="`custom-boolean-${id}`"
         v-model="receiveEmail"
         :disabled="disabled"
+        :required="required"
         type="checkbox"
         class="custom-control-input"
       >
-      <label :for="id" class="custom-control-label">
-        {{ emailConsentRequest }}
-      </label>
+      <form-label class="custom-control-label" :for="`custom-boolean-${id}`" :required="required">
+        <span v-html="emailConsentRequest" />
+      </form-label>
     </div>
   </form-group>
 </template>
 
 <script>
 import FormGroup from '../common/form-group.vue';
+import FormLabel from '../common/form-label.vue';
 
 export default {
-  components: { FormGroup },
+  components: { FormGroup, FormLabel },
   props: {
     emailConsentRequest: {
       type: String,
@@ -32,6 +34,10 @@ export default {
     value: {
       type: Boolean,
       default: false,
+    },
+    required: {
+      type: Boolean,
+      default: true,
     },
   },
   data: () => ({
