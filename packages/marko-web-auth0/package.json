@@ -4,7 +4,6 @@
   "author": "Josh Worden <josh@parameter1.com>",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-auth0",
   "license": "MIT",
-  "private": true,
   "scripts": {
     "lint": "eslint --ext .js --ext .vue --max-warnings 5 --ignore-path ../../.eslintignore ./",
     "test": "yarn lint"
@@ -15,5 +14,8 @@
   },
   "resolutions": {
     "compress-brotli": "1.2.2"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
