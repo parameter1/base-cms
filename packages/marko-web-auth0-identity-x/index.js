@@ -15,16 +15,18 @@ module.exports = (app, params = {}) => {
     clientSecret,
     // IdentityX Config
     idxConfig,
+    idxRouteTemplates,
   } = validate(Joi.object({
     baseURL: Joi.string().required().description('The application\'s currently available URL.'),
     clientID: Joi.string().required().description('The application\'s Auth0 ClientID'),
     clientSecret: Joi.string().required().description('The application\'s Auth0 Client Secert'),
     issuerBaseURL: Joi.string().required().description('The Auth0 tenant URL'),
     idxConfig: Joi.object().required().instance(IdXConfig),
+    idxRouteTemplates: Joi.object().required(),
   }), params);
 
   // install identity x
-  identityX(app, idxConfig);
+  identityX(app, idxConfig, { templates: idxRouteTemplates });
 
   // install auth0 middleware
   auth0(app, {
