@@ -52,7 +52,7 @@ module.exports = startServer({
     if (useAuth0) {
       // Setup IdentityX + Auth0
       const config = getAsObject(siteConfig, 'auth0');
-      auth0IdX(app, { ...config, idxConfig });
+      auth0IdX(app, { ...config, idxConfig, idxRouteTemplates });
       log('Enabled IdentityX + Auth0');
     } else {
       // Setup IdentityX + Omeda
