@@ -24,7 +24,7 @@ query LoginCheckAppUser($email: String!) {
  */
 module.exports = async (req, res, session, decoded) => {
   // Only handle if Auth0 & IdentityX are loaded
-  if (!req.identityX) return session;
+  if (!req.identityX) throw new Error('IdentityX must be enabled and configured!');
 
   const { identityX: service } = req;
   const { token, client } = service;

@@ -4,7 +4,7 @@ const { log } = process.env.NODE_ENV === 'development' ? console : { log: v => v
 
 module.exports = asyncRoute(async (req, _, next) => {
   // Only handle if Auth0 & IdentityX are loaded
-  if (!req.oidc || !req.identityX) return next();
+  if (!req.oidc || !req.identityX) throw new Error('Auth0 and IdentityX must be enabled!');
 
   const { identityX: idxSvc } = req;
   const { token } = idxSvc;
