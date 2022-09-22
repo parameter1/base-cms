@@ -31,6 +31,7 @@
     "@target-tag": "string",
     "@request-frame": "boolean",
     "@init": "string",
+    "@init-only": "boolean",
     "@on-script-build": "string",
     "@on-script-load": "string",
     "@attrs": "object"

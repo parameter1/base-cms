@@ -17,8 +17,9 @@ $ const {
 });
 
 $ const init = `function() { ${input.init || ''} }`;
+$ const initOnly = defaultValue(input.initOnly, false);
 $ const onScriptBuild = `function(script) { ${input.onScriptBuild || ''} }`;
 $ const onScriptLoad = `function() { ${input.onScriptLoad || ''} }`;
 $ const attrs = JSON.stringify(getAsObject(input, "attrs"));
 
-<script>deferScript('register', { name: '${input.name}', src: '${input.src}', on: '${on}', requestFrame: ${requestFrame}, targetTag: '${targetTag}', init: ${init}, onScriptBuild: ${onScriptBuild}, onScriptLoad: ${onScriptLoad}, attrs: ${attrs} });</script>
+<script>deferScript('register', { name: '${input.name}', src: '${input.src}', on: '${on}', requestFrame: ${requestFrame}, targetTag: '${targetTag}', init: ${init}, initOnly: ${initOnly}, onScriptBuild: ${onScriptBuild}, onScriptLoad: ${onScriptLoad}, attrs: ${attrs} });</script>
