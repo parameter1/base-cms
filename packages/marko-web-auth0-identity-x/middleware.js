@@ -11,15 +11,16 @@ const isEmpty = v => v == null || v === '';
 const isInputRequired = async (service) => {
   const { user, application } = await service.loadActiveContext({ forceQuery: true });
 
-  // Sync fields, intercept/redirect if missing required fields? check force verify?
+  // Check that all requires fields (from IdentityX config) are set
   const requiredFields = service.config.getRequiredServerFields();
   const requiresUserInput = user ? requiredFields.some(key => isEmpty(user[key])) : false;
   if (requiresUserInput) return true;
 
-  // @todo should this be allowed to pass through on impersonation?
+  // Check that the user does not need to reverify their profile
   const mustReverify = Boolean(user.mustReVerifyProfile);
   if (mustReverify) return true;
 
+  // Check that all regional consent policies are agreed to
   const { regionalConsentPolicies } = application.organization;
   const matchingPolicies = regionalConsentPolicies.filter((policy) => {
     const countryCodes = policy.countries.map(country => country.id);
