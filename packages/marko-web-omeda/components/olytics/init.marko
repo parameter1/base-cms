@@ -6,6 +6,7 @@ $ const clean = (js) => js.split('\n').map((line) => line.trim()).join(' ');
   on=input.on
   request-frame=input.requestFrame
   target-tag=input.targetTag
+  init-only=input.initOnly
   init=clean(`
     window.olytics || (window.olytics = []), window.olytics.methods = ['fire', 'confirm'], window.olytics.factory = function(i) {
       return function() {
