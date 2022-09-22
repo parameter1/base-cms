@@ -30,9 +30,11 @@ export default (Browser, config = {
   enableOmedaIdentityX: true,
   withGTM: true,
   withP1Events: true,
+  idxArgs: {},
 }) => {
   const { EventBus } = Browser;
   const { enableOmedaIdentityX } = config;
+  const idxArgs = config.idxArgs || {};
 
   if (enableOmedaIdentityX) {
     EventBus.$on('omeda-identity-x-authenticated', ({ brandKey, encryptedId }) => {
@@ -71,9 +73,9 @@ export default (Browser, config = {
   SocialSharing(Browser);
   NativeX(Browser);
   if (enableOmedaIdentityX) {
-    OmedaIdentityX(Browser);
+    OmedaIdentityX(Browser, idxArgs);
   } else {
-    IdentityX(Browser);
+    IdentityX(Browser, idxArgs);
   }
   IdentityXNewsletterForms(Browser);
   Inquiry(Browser);
