@@ -130,6 +130,14 @@ class IdentityX {
     const { token } = data.impersonateAppUser;
     tokenCookie.setTo(this.res, token.value);
     this.token = token;
+
+    // Re-init the client because the token changed
+    this.client = createClient({
+      req: this.req,
+      token,
+      appId: this.config.getAppId(),
+      config: this.config,
+    });
   }
 
   async logoutAppUser() {
