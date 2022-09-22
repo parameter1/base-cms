@@ -17,6 +17,13 @@
       "required": true
     }
   },
+  "<marko-web-deferred-script-loader-load-script>": {
+    "template": "./load-script.marko",
+    "@name": {
+      "type": "string",
+      "required": true
+    }
+  },
   "<marko-web-deferred-script-loader-register>": {
     "template": "./register.marko",
     "@name": {
