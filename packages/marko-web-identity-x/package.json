@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-identity-x",
-  "version": "3.6.0",
+  "version": "3.7.0",
   "description": "Marko Wrapper for IdentityX",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-identity-x",
   "author": "Josh Worden <josh@parameter1.com>",
@@ -11,7 +11,7 @@
     "test": "yarn compile && yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-marko-web-gtm": "^3.0.0",
+    "@parameter1/base-cms-marko-web-gtm": "^3.7.0",
     "@parameter1/base-cms-object-path": "^3.0.0",
     "@parameter1/base-cms-utils": "^3.0.0",
     "apollo-cache-inmemory": "^1.6.6",
