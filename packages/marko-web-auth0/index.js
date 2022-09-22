@@ -27,7 +27,7 @@ module.exports = (app, params = {}) => {
   // Redirect after login if `returnTo` URL parameter is present.
   if (config.routes.login === false) {
     app.get('/login', (req, res) => {
-      const returnTo = req.query.returnTo || config.baseURL;
+      const returnTo = req.query.returnTo || req.get('referrer') || config.baseURL;
       res.oidc.login({ returnTo });
     });
   }
