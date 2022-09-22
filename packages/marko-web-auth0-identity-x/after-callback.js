@@ -1,7 +1,6 @@
 const { decode } = require('jsonwebtoken');
 
-const { log } = process.env.NODE_ENV === 'development' ? console : { log: v => v };
-const error = (...msgs) => process.stdout.write(...msgs);
+const { log } = console;
 
 /**
  * Syncs Auth0 and IdentityX user states
@@ -22,22 +21,19 @@ module.exports = async (req, _, session) => {
   // If there's no Auth0 context, or an IdX context already exists, there's nothing to do here.
   if (!user || token) return session;
 
-  log('A0+IdX.cb', { email: user && user.email, token });
-
   // Destroy A0 context if no email is present
   const { email, email_verified: ev } = user;
   if (!email || !ev) throw new Error('Auth0 user must provide a verified email address.');
 
   // Upsert the IdentityX AppUser
   const appUser = await service.createAppUser({ email });
-  log('A0+IdX.cb', 'retrieved user', appUser && appUser.id);
 
   // federate trusted verification state to IdX and log in via impersonation api
   try {
     await service.impersonateAppUser({ userId: appUser.id });
-    log('A0+IdX.cb', 'logged in as', appUser.id);
+    log('A0+IdX.cb', 'impersonated', appUser.id);
   } catch (e) {
-    error('A0+IdX.cb', 'autherr', e);
+    log('A0+IdX.cb', 'autherr', e);
     throw e;
   }
 

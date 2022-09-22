@@ -1,15 +1,13 @@
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 
-const { log } = process.env.NODE_ENV === 'development' ? console : { log: v => v };
+const { log } = console;
 
 module.exports = asyncRoute(async (req, _, next) => {
   // Only handle if Auth0 & IdentityX are loaded
   if (!req.oidc || !req.identityX) throw new Error('Auth0 and IdentityX must be enabled!');
 
   const { identityX: idxSvc } = req;
-  const { token } = idxSvc;
   const { user } = req.oidc;
-  log('A0+IdX.mw', { email: user && user.email, token });
 
   // the Auth0 user has been logged out, log out the IdentityX user.
   if (!user && idxSvc.token) {
