@@ -289,6 +289,10 @@ export default {
       type: String,
       default: null,
     },
+    returnTo: {
+      type: String,
+      default: null,
+    },
   },
 
   /**
@@ -299,6 +303,7 @@ export default {
       error: null,
       isLoading: false,
       isReloadingPage: false,
+      isRedirectingPage: false,
       didSubmit: false,
       user: {
         ...this.activeUser,
@@ -342,6 +347,7 @@ export default {
     submitMessage() {
       const message = 'Profile updated.';
       if (this.isReloadingPage) return `${message} Reloading page...`;
+      if (this.isRedirectingPage) return `${message} Redirecting page...`;
       return message;
     },
 
@@ -543,6 +549,11 @@ export default {
         this.didSubmit = true;
 
         this.emit('profile-updated');
+
+        if (this.returnTo) {
+          this.isRedirectingPage = true;
+          window.location = this.returnTo;
+        }
 
         if (this.reloadPageOnSubmit) {
           this.isReloadingPage = true;
