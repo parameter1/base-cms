@@ -48,15 +48,18 @@ module.exports = asyncRoute(async (req, res, next) => {
     await idxSvc.logoutAppUser();
   }
 
-  if (idxSvc.token && await isInputRequired(idxSvc)) {
+  if (idxSvc.token && await isInputRequired(idxSvc) && req.query.isAuth0Login) {
     const profile = idxSvc.config.getEndpointFor('profile');
-    const url = [
-      profile,
-      ...(originalUrl && ![profile, '/'].includes(originalUrl) ? [
-        `?returnTo=${encodeURIComponent(originalUrl)}`,
-      ] : []),
-    ].join('');
-    res.redirect(302, url);
+    const url = new URL(`${req.protocol}://${req.get('host')}${originalUrl}`);
+    url.searchParams.delete('isAuth0Login');
+    const returnTo = `${url}`;
+
+    // If the user attempted to access the profile page, don't redirect after submission.
+    if (url.pathname === profile) {
+      res.redirect(302, profile);
+    } else {
+      res.redirect(302, `${profile}?returnTo=${encodeURIComponent(returnTo)}`);
+    }
   } else {
     next();
   }
