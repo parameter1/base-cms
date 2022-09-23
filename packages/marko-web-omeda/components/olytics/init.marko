@@ -1,9 +1,13 @@
+$ const { disabledFeatures } = out.global;
+
 $ const clean = (js) => js.split('\n').map((line) => line.trim()).join(' ');
+
+$ const on = disabledFeatures.has('olytics') ? 'never' : input.on;
 
 <marko-web-deferred-script-loader-register
   name="olytics"
   src="https://olytics.omeda.com/olytics/js/v3/p/olytics.min.js"
-  on=input.on
+  on=on
   request-frame=input.requestFrame
   target-tag=input.targetTag
   init-only=input.initOnly
