@@ -9,11 +9,12 @@ const isEmpty = v => v == null || v === '';
  * @returns Boolean
  */
 const isInputRequired = async (service) => {
-  const { user, application } = await service.loadActiveContext({ forceQuery: true });
+  const { user: activeUser, application } = await service.loadActiveContext({ forceQuery: true });
+  const user = activeUser || {};
 
   // Check that all requires fields (from IdentityX config) are set
   const requiredFields = service.config.getRequiredServerFields();
-  const requiresUserInput = user ? requiredFields.some(key => isEmpty(user[key])) : false;
+  const requiresUserInput = requiredFields.some(key => isEmpty(user[key]));
   if (requiresUserInput) return true;
 
   // Check that the user does not need to reverify their profile
