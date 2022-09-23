@@ -48,7 +48,7 @@ module.exports = asyncRoute(async (req, res, next) => {
     await idxSvc.logoutAppUser();
   }
 
-  if (await isInputRequired(idxSvc)) {
+  if (idxSvc.token && await isInputRequired(idxSvc)) {
     const profile = idxSvc.config.getEndpointFor('profile');
     const url = [
       profile,
