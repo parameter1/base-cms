@@ -1,5 +1,7 @@
 import { isObject, warn } from "@parameter1/base-cms-utils";
 
+$ const { disabledFeatures } = out.global;
+
 $ const { isArray } = Array;
 
 $ const createContainerScript = (containerId, name) => `
@@ -10,7 +12,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','${name}','${containerId}');
 `;
 
-$ const { on } = input;
+$ const on = disabledFeatures.has('gtm') ? 'never' : input.on;
 $ const name = input.name || "dataLayer";
 $ const containerIds = (isArray(input.containerId) ? input.containerId : [input.containerId]).filter(v => v);
 $ const start = input.start == null ? false : input.start;
