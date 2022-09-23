@@ -6,6 +6,7 @@ const { isFunction: isFn, parseBooleanHeader } = require('@parameter1/base-cms-u
 const errorHandlers = require('./express/error-handlers');
 const express = require('./express');
 const loadMore = require('./express/load-more');
+const disabledFeatures = require('./middleware/disabled-features');
 
 const { env } = process;
 if (!process.env.LIVERELOAD_PORT) process.env.LIVERELOAD_PORT = 4010;
@@ -89,6 +90,8 @@ module.exports = async ({
 
   // Register load more after onStart to ensure userland middleware is available.
   loadMore(app);
+
+  app.use(disabledFeatures());
 
   // Load website routes.
   if (!isFn(routes)) throw new Error('A routes function is required.');
