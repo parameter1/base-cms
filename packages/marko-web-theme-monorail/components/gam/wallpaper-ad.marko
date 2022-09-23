@@ -2,16 +2,13 @@ import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 
 $ const { aliases, position } = input;
 
-$ const { req } = out.global;
+$ const { disabledFeatures } = out.global;
 
 $ const enabled = defaultValue(input.enabled, true);
 
-$ const { cookies } = req;
-$ const disableWallpaper = cookies.disableWallpaper || false;
-
 $ const blockName = "wallpaper-ad";
 
-<if(enabled && !disableWallpaper)>
+<if(!disabledFeatures.has('wallpaper'))>
   <marko-web-block name=blockName>
     <marko-web-element block-name=blockName name="left">
       <theme-gam-define-display-ad name="wallpaper-left" position=position aliases=aliases show-label=false />
