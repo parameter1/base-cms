@@ -1,6 +1,6 @@
 import { isObject, warn } from "@parameter1/base-cms-utils";
 
-$ const { disabledFeatures } = out.global;
+$ const disabledFeatures = out.global.disabledFeatures || new Set();
 
 $ const { isArray } = Array;
 

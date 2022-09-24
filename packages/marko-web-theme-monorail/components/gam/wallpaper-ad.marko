@@ -2,7 +2,7 @@ import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 
 $ const { aliases, position } = input;
 
-$ const { disabledFeatures } = out.global;
+$ const disabledFeatures = out.global.disabledFeatures || new Set();
 
 $ const blockName = "wallpaper-ad";
 
