@@ -85,13 +85,13 @@ module.exports = async ({
     baseBrowseGraphqlUri,
   });
 
+  app.use(disabledFeatures());
+
   // Await required services here...
   if (isFn(onStart)) await onStart(app);
 
   // Register load more after onStart to ensure userland middleware is available.
   loadMore(app);
-
-  app.use(disabledFeatures());
 
   // Load website routes.
   if (!isFn(routes)) throw new Error('A routes function is required.');
