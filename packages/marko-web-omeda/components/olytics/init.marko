@@ -1,4 +1,4 @@
-$ const { disabledFeatures } = out.global;
+$ const disabledFeatures = out.global.disabledFeatures || new Set();
 
 $ const clean = (js) => js.split('\n').map((line) => line.trim()).join(' ');
 
