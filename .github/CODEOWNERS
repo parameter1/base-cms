@@ -1,4 +1,6 @@
 
+/packages/marko-web-auth0 @solocommand
+/packages/marko-web-auth0-identity-x @solocommand
 /packages/marko-web-identity-x @solocommand
 /packages/marko-web-omeda @solocommand
 /packages/marko-web-omeda-identity-x @solocommand

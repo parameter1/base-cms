@@ -34,12 +34,12 @@ class IdentityX {
    *
    * @returns {Promise<object>}
    */
-  async loadActiveContext() {
+  async loadActiveContext({ forceQuery = false, useIps = false } = {}) {
     // Require a token/cookie to check active context. This disables team context from IP/CIDR.
-    if (!this.token) return {};
+    if (!this.token && !useIps) return {};
 
     // Only run the active context query once
-    if (!this.activeContextQuery) {
+    if (!this.activeContextQuery || forceQuery) {
       this.activeContextQuery = this.client.query({ query: getActiveContext });
     }
     const { data = {} } = await this.activeContextQuery;
@@ -130,6 +130,14 @@ class IdentityX {
     const { token } = data.impersonateAppUser;
     tokenCookie.setTo(this.res, token.value);
     this.token = token;
+
+    // Re-init the client because the token changed
+    this.client = createClient({
+      req: this.req,
+      token,
+      appId: this.config.getAppId(),
+      config: this.config,
+    });
   }
 
   async logoutAppUser() {

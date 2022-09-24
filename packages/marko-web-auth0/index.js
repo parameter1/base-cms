@@ -27,8 +27,15 @@ module.exports = (app, params = {}) => {
   // Redirect after login if `returnTo` URL parameter is present.
   if (config.routes.login === false) {
     app.get('/login', (req, res) => {
-      const returnTo = req.query.returnTo || config.baseURL;
-      res.oidc.login({ returnTo });
+      const referrer = req.query.returnTo || req.get('referrer') || config.baseURL;
+      let returnTo;
+      try {
+        returnTo = new URL(referrer);
+      } catch (e) {
+        returnTo = new URL(referrer, `${req.protocol}://${req.get('host')}`);
+      }
+      returnTo.searchParams.append('isAuth0Login', true);
+      res.oidc.login({ returnTo: `${returnTo}` });
     });
   }
 };
