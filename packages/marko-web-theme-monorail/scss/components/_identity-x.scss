@@ -11,4 +11,27 @@
       margin-bottom: map-get($spacers, 2)
     }
   }
+  form {
+    .custom-control-label::before {
+      border-radius: 4px;
+    }
+    .custom-control-label {
+      strong {
+        font-size: 18px;
+        line-height: 1.22;
+      }
+    }
+    .boolean-questions-label {
+      font-size: 18px;
+      margin-bottom: 1rem;
+    }
+    .csmulti-wrapper {
+      border: 1px solid #91939c !important;
+      border-radius: 4px;
+      background-color: #f8f8f8;
+    }
+    fieldset {
+      border-radius: 4px;
+    }
+  }
 }
