@@ -33,6 +33,9 @@ $ const setWithSection = (node, nxNode, withNativeXSection = true) => {
 </if>
 <else>
   <marko-web-query|{ nodes }| name=queryName params=queryParams>
+    <if(input.before)>
+      <${input.before.renderBody} />
+    </if>
     <marko-web-node-list
       inner-justified=true
       flush-x=true
@@ -71,5 +74,8 @@ $ const setWithSection = (node, nxNode, withNativeXSection = true) => {
         </@slot>
       </@nodes>
     </marko-web-node-list>
+    <if(input.after)>
+      <${input.after.renderBody} />
+    </if>
   </marko-web-query>
 </else>
