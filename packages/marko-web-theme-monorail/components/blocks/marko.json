@@ -123,6 +123,8 @@
   "<theme-section-feed-block>": {
     "template": "./section-feed.marko",
     "<header>": {},
+    "<before>": {},
+    "<after>": {},
     "<query-params>": {},
     "<node>": {},
     "<node-list>": {},
