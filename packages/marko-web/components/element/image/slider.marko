@@ -1,0 +1,18 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+import { buildImgixUrl } from "@parameter1/base-cms-image";
+
+$ const images = getAsArray(input, "images").map(node => {
+  const src = buildImgixUrl(node.src, input.imageOptions);
+  return {
+    ...node,
+    src,
+    srcset: `${buildImgixUrl(node.src, { ...input.imageOptions, dpr: 2 })} 2x`,
+  };
+});
+
+<if(images.length)>
+  <marko-web-browser-component
+    name="ImageSlider"
+    props={ images, modifiers: input.modifiers }
+  />
+</if>
