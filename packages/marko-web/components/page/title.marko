@@ -6,7 +6,7 @@ $ const parts = [
   config.website("name"),
 ];
 $ const concatWith = input.concatWith || "|";
-$ const title = parts.filter(v => v).join(` ${concatWith} `);
+$ const title = parts.filter(v => v && v !== 'Home').join(` ${concatWith} `);
 
 <title>
   <if(input.renderBody)>
