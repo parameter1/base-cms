@@ -304,6 +304,24 @@ services:
 
   # EXAMPLES / OTHER
 
+  example-export:
+    <<: *node
+    working_dir: /base-cms/services/example-export
+    entrypoint: ["yarn"]
+    command: ["dev"]
+    environment:
+      <<: *env
+      GRAPHQL_URI: ${GRAPHQL_URI-http://graphql-server-tauron}
+      TENANT_KEY: ${EXAMPLE_TENANT_KEY-p1_sandbox}
+      EXPOSED_HOST: exports.dev.parameter1.com
+      EXPOSED_PORT: 51270
+      PORT: 80
+    hostname: exports.dev.parameter1.com
+    depends_on:
+      - graphql-server-tauron
+    ports:
+      - "51270:80"
+
   example-website:
     <<: *node
     working_dir: /base-cms/services/example-website
