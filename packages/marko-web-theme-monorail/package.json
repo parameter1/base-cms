@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-theme-monorail",
-  "version": "3.7.8",
+  "version": "3.7.9",
   "author": "Brian Miller <brian@parameter1.com>",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-theme-monorail",
   "license": "MIT",
@@ -22,7 +22,7 @@
     "@parameter1/base-cms-marko-web-inquiry": "^3.0.0",
     "@parameter1/base-cms-marko-web-native-x": "^3.7.3",
     "@parameter1/base-cms-marko-web-omeda": "^3.7.3",
-    "@parameter1/base-cms-marko-web-omeda-identity-x": "^3.7.8",
+    "@parameter1/base-cms-marko-web-omeda-identity-x": "^3.7.9",
     "@parameter1/base-cms-marko-web-p1-events": "^3.7.1",
     "@parameter1/base-cms-marko-web-recaptcha": "^3.0.0",
     "@parameter1/base-cms-marko-web-reveal-ad": "^2.75.1",
