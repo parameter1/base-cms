@@ -38,7 +38,7 @@ type ContentCompany implements Content & PrimaryCategory & Contactable & Address
   youtubeVideos(input: ContentCompanyYoutubeVideosInput = {}): YoutubePlaylistConnection! @projection(needs: ["youtube"])
 
   # Computed relationship of companies where parentCompany is set to current _id
-  children(input: ContentCompanyChildCompaniesInput = {}): ContentCompanyConnection! @projection(localField: "_id") @refMany(model: "platform.Content", localField: "_id", foreignField: "parentCompany")
+  children(input: ContentCompanyChildrenInput = {}): ContentCompanyConnection! @projection(localField: "_id") @refMany(model: "platform.Content", localField: "_id", foreignField: "parentCompany")
 
   # fields directly on platform.model::Content\Company from mutations
   featuredCategories(input: ContentCompanyFeaturedCategoriesInput = {}): TaxonomyConnection! @projection(localField: "mutations.Website.featuredCategories") @refMany(model: "platform.Taxonomy", localField: "mutations.Website.featuredCategories", criteria: "taxonomyCategory")
@@ -166,7 +166,7 @@ input ContentCompanyCompanyCompetitorsInput {
   pagination: PaginationInput = {}
 }
 
-input ContentCompanyChildCompaniesInput {
+input ContentCompanyChildrenInput {
   status: ModelStatus = active
   sort: ContentCompanySortInput = {}
   pagination: PaginationInput = {}
