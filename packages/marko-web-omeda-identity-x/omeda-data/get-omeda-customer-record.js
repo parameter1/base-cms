@@ -28,7 +28,7 @@ const query = gql`
         optInStatus { deploymentTypeId status { id } }
       }
       subscriptions {
-        product { id }
+        product { id deploymentTypeId }
         receive
       }
     }
