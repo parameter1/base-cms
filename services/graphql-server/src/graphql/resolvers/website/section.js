@@ -206,9 +206,9 @@ module.exports = {
       } = payload;
       const body = new Base4RestPayload({ type });
       Object.keys(fields).forEach(k => body.set(k, fields[k]));
-      if (site) body.setLink('site', { site, type: 'website/product/site' });
-      if (parent) body.setLink('parent', { parent, type });
-      if (logo) body.setLink('logo', { logo, type: 'platform/asset/image' });
+      if (site) body.setLink('site', { id: site, type: 'website/product/site' });
+      if (parent) body.setLink('parent', { id: parent, type });
+      if (logo) body.setLink('logo', { id: logo, type: 'platform/asset/image' });
       if (relatedSectionIds) {
         body.setLinks('relatedSections', relatedSectionIds.map(i => ({ id: i, type })));
       }
