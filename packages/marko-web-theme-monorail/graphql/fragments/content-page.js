@@ -42,6 +42,10 @@ fragment ContentPageFragment on Content {
       aspectRatio
     }
     primaryImageDisplay
+    source {
+      height
+      width
+    }
   }
   gating {
     surveyType

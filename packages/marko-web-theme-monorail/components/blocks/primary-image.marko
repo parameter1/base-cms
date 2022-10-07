@@ -19,6 +19,7 @@ $ const fluidWidth = defaultValue(input.fluidWidth, 880);
 $ const alignedWidth = defaultValue(input.alignedWidth, 300);
 $ const shouldFill = defaultValue(input.shouldFill, false);
 $ const lazyload = defaultValue(input.lazyload, false);
+$ const initialImageWidth = defaultValue(input.initialImageWidth, 350);
 
 $ if (display === "center" && isLogo) {
   // force logos to the right when set to center
@@ -69,6 +70,10 @@ $ if (fluid) {
 
 $ const imageAttrs = {};
 $ if (image.id) imageAttrs["data-image-id"] = image.id;
+$ if (image.source.width && image.source.height) {
+  imageAttrs["width"] = initialImageWidth;
+  imageAttrs["height"] = Math.round((initialImageWidth / image.source.width) * image.source.height);
+};
 
 <if(hasImage && display !== "none")>
 
