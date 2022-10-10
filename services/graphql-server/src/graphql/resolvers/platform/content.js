@@ -1891,6 +1891,38 @@ module.exports = {
     /**
      *
      */
+    contentTaxonomy: async (_, { input }, { base4rest, basedb }, info) => {
+      validateRest(base4rest);
+      const { id: contentId, addIds, removeIds } = input;
+      const content = await basedb.strictFindById('platform.Content', contentId, { projection: { type: 1, taxonomy: 1 } });
+      const contentType = `platform/content/${dasherize(content.type)}`;
+
+      if (!addIds.length && !removeIds.length) {
+        throw new UserInputError('You must specify at least one taxonomy ID to add or remove!');
+      }
+
+      // Validate taxonomy ids
+      const ids = [...addIds, ...removeIds, ...getAsArray(content, 'taxonomy').map(r => r.oid)];
+      const query = { status: 1, _id: { $in: ids } };
+      const docs = await basedb.find('platform.Taxonomy', query, { projection: { type: 1 } });
+      const taxonomyMap = docs.reduce((map, term) => {
+        map.set(term._id, `platform/content/${dasherize(term.type)}`);
+        return map;
+      }, new Map());
+      removeIds.forEach(tid => taxonomyMap.delete(tid));
+
+      const body = new Base4RestPayload({ type: contentType });
+      body.set('id', contentId);
+      body.setLinks('taxonomy', [...taxonomyMap].map(([id, type]) => ({ id, type })));
+      await base4rest.updateOne({ model: contentType, id: contentId, body });
+
+      const projection = buildProjection({ info, type: 'Content' });
+      return basedb.findOne('platform.Content', { _id: contentId }, { projection });
+    },
+
+    /**
+     *
+     */
     contentCompanyField: async (_, { input }, { base4rest, basedb }, info) => {
       validateRest(base4rest);
       const company = 'platform/content/company';
