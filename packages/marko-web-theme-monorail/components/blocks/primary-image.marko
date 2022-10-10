@@ -1,4 +1,4 @@
-import { buildImgixUrl } from "@parameter1/base-cms-image";
+import { buildImgixUrl, getRelativeCropRectangleHeight } from "@parameter1/base-cms-image";
 import { getAsObject, getAsArray, get } from "@parameter1/base-cms-object-path";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 
@@ -55,21 +55,36 @@ $ const srcsetMin = [srcMin, `${buildImgixUrl(srcMin, { dpr: 2 })} 2x`];
 $ const sources = [];
 $ if (fluid) {
   sources.push(
-    { srcset: srcset, media: "(min-width: 900px)", width: maxWidth, height: getImageHeight({ width: maxWidth, image }) },
-    { srcset: srcsetMid, media: "(min-width: 576px)", width: 700, height: getImageHeight({ width: 700, image }) }
+    {
+      srcset: srcset,
+      media: "(min-width: 900px)",
+      width: maxWidth,
+      height: getRelativeCropRectangleHeight({ width: maxWidth, cropRectangle: image.cropRectangle }),
+    },
+    {
+      srcset: srcsetMid,
+      media: "(min-width: 576px)",
+      width: 700,
+      height: getRelativeCropRectangleHeight({ width: 700, cropRectangle: image.cropRectanglemage }),
+    }
   );
 } else {
   const alignedSrc = buildImgixUrl(src, { w: alignedWidth });
   const alignedSrcset = [alignedSrc, `${buildImgixUrl(alignedSrc, { dpr: 2 })} 2x`];
   sources.push(
-    { srcset: alignedSrcset, media: "(min-width: 576px)", width: alignedWidth, height: getImageHeight({ width: alignedWidth, image }) }
+    {
+      srcset: alignedSrcset,
+      media: "(min-width: 576px)",
+      width: alignedWidth,
+      height: getRelativeCropRectangleHeight({ width: alignedWidth, cropRectangle: image.cropRectangle }),
+    }
   );
 };
 
 $ const imageAttrs = {};
 $ if (image.id) imageAttrs["data-image-id"] = image.id;
 
-$ const height = getImageHeight({ width: initialImageWidth, image});
+$ const height = getRelativeCropRectangleHeight({ width: initialImageWidth, cropRectangle: image.cropRectangle });
 $ if (height) {
   imageAttrs.width = initialImageWidth;
   imageAttrs.height = height;
