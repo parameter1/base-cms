@@ -34,6 +34,10 @@ fragment ContentPageFragment on Content {
   primaryImage {
     id
     src(input: { useCropRectangle: true, options: { auto: "format,compress" } })
+    cropRectangle {
+      width
+      height
+    }
     alt
     caption
     credit
@@ -42,10 +46,6 @@ fragment ContentPageFragment on Content {
       aspectRatio
     }
     primaryImageDisplay
-    source {
-      height
-      width
-    }
   }
   gating {
     surveyType

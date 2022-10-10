@@ -1,6 +1,7 @@
 import { buildImgixUrl } from "@parameter1/base-cms-image";
 import { getAsObject, getAsArray, get } from "@parameter1/base-cms-object-path";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import getImageHeight from "../../utils/get-image-height";
 
 $ const blockName = "primary-image";
 $ const image = getAsObject(input, "obj");
@@ -70,9 +71,10 @@ $ if (fluid) {
 
 $ const imageAttrs = {};
 $ if (image.id) imageAttrs["data-image-id"] = image.id;
-$ if (image.source.width && image.source.height) {
+$ const height = getImageHeight({ width: initialImageWidth, image});
+$ if (height) {
   imageAttrs["width"] = initialImageWidth;
-  imageAttrs["height"] = Math.round((initialImageWidth / image.source.width) * image.source.height);
+  imageAttrs["height"] = height;
 };
 
 <if(hasImage && display !== "none")>
