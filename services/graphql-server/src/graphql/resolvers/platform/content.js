@@ -1891,6 +1891,39 @@ module.exports = {
     /**
      *
      */
+    contentTaxonomy: async (_, { input }, { base4rest, basedb }, info) => {
+      validateRest(base4rest);
+      const { id, addIds, removeIds } = input;
+      const doc = await basedb.strictFindById('platform.Content', id, { projection: { type: 1, taxonomy: 1 } });
+      const type = `platform/content/${dasherize(doc.type)}`;
+
+      // Validate taxonomy ids
+      const ids = [...addIds, ...removeIds, ...getAsArray(doc, 'taxonomy').map(r => r.oid)];
+      const query = { status: 1, _id: { $in: ids } };
+      const docs = await basedb.find('platform.Taxonomy', query, { projection: { type: 1 } });
+      const taxonomyMap = docs.reduce((map, term) => {
+        map.set(term._id, `platform/content/${dasherize(term.type)}`);
+        return map;
+      }, new Map());
+
+      // 2.0rcpi is hardcoded to use the `set` action, so we update all instead of assign/remove.
+      const taxonomy = getAsArray(doc, 'taxonomy')
+        .map(t => t.oid)
+        .filter(tid => !removeIds.includes(tid));
+      addIds.forEach(tid => taxonomy.push(tid));
+
+      const body = new Base4RestPayload({ type });
+      body.set('id', id);
+      body.setLinks('taxonomy', taxonomy.map(tid => ({ id: tid, type: taxonomyMap.get(tid) })));
+      await base4rest.updateOne({ model: type, id, body });
+
+      const projection = buildProjection({ info, type: 'Content' });
+      return basedb.findOne('platform.Content', { _id: id }, { projection });
+    },
+
+    /**
+     *
+     */
     contentCompanyField: async (_, { input }, { base4rest, basedb }, info) => {
       validateRest(base4rest);
       const company = 'platform/content/company';

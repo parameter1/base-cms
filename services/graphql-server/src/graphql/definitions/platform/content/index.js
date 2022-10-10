@@ -72,6 +72,8 @@ extend type Mutation {
   contentUserRegistration(input: ContentUserRegistrationMutationInput!): Content! @requiresAuth
   "Sets the Content company field"
   contentCompanyField(input: ContentCompanyFieldMutationInput!): Content! @requiresAuth
+  "Updates the content taxonomy field"
+  contentTaxonomy(input: ContentTaxonomyMutationInput!): Content! @requiresAuth
 }
 
 enum GateableUserRole {
@@ -498,6 +500,15 @@ input ContentUserRegistrationMutationInput {
   startDate: Date
   "The date when the registration requirement ends"
   endDate: Date
+}
+
+input ContentTaxonomyMutationInput {
+  "The content ID"
+  id: Int!
+  "The taxonomy IDs to add to this content item"
+  addIds: [Int!]! = []
+  "The taxonomy IDs to remove from this content item"
+  removeIds: [Int!] = []
 }
 
 input AllPublishedContentQueryInput {
