@@ -1893,32 +1893,27 @@ module.exports = {
      */
     contentTaxonomy: async (_, { input }, { base4rest, basedb }, info) => {
       validateRest(base4rest);
-      const { id, addIds, removeIds } = input;
-      const doc = await basedb.strictFindById('platform.Content', id, { projection: { type: 1, taxonomy: 1 } });
-      const type = `platform/content/${dasherize(doc.type)}`;
+      const { id: contentId, addIds, removeIds } = input;
+      const content = await basedb.strictFindById('platform.Content', contentId, { projection: { type: 1, taxonomy: 1 } });
+      const contentType = `platform/content/${dasherize(content.type)}`;
 
       // Validate taxonomy ids
-      const ids = [...addIds, ...removeIds, ...getAsArray(doc, 'taxonomy').map(r => r.oid)];
+      const ids = [...addIds, ...removeIds, ...getAsArray(content, 'taxonomy').map(r => r.oid)];
       const query = { status: 1, _id: { $in: ids } };
       const docs = await basedb.find('platform.Taxonomy', query, { projection: { type: 1 } });
       const taxonomyMap = docs.reduce((map, term) => {
         map.set(term._id, `platform/content/${dasherize(term.type)}`);
         return map;
       }, new Map());
+      removeIds.forEach(tid => taxonomyMap.delete(tid));
 
-      // 2.0rcpi is hardcoded to use the `set` action, so we update all instead of assign/remove.
-      const taxonomy = getAsArray(doc, 'taxonomy')
-        .map(t => t.oid)
-        .filter(tid => !removeIds.includes(tid));
-      addIds.forEach(tid => taxonomy.push(tid));
-
-      const body = new Base4RestPayload({ type });
-      body.set('id', id);
-      body.setLinks('taxonomy', taxonomy.map(tid => ({ id: tid, type: taxonomyMap.get(tid) })));
-      await base4rest.updateOne({ model: type, id, body });
+      const body = new Base4RestPayload({ type: contentType });
+      body.set('id', contentId);
+      body.setLinks('taxonomy', [...taxonomyMap].map(([id, type]) => ({ id, type })));
+      await base4rest.updateOne({ model: contentType, id: contentId, body });
 
       const projection = buildProjection({ info, type: 'Content' });
-      return basedb.findOne('platform.Content', { _id: id }, { projection });
+      return basedb.findOne('platform.Content', { _id: contentId }, { projection });
     },
 
     /**
