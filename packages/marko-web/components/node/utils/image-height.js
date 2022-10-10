@@ -1,5 +1,3 @@
-module.exports = (width, ar) => {
-  const [x, y] = ar.split(':');
-  const r = x / y;
-  return Math.round(width / r);
-};
+const { getRelativeAspectRatioHeight } = require('@parameter1/base-cms-image');
+
+module.exports = getRelativeAspectRatioHeight;
