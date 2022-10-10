@@ -1,5 +1,6 @@
 import { buildImgixUrl } from "@parameter1/base-cms-image";
 import { get } from "@parameter1/base-cms-object-path";
+import imageHeight from "./utils/image-height";
 
 $ const element = "node__image";
 $ const hasImage = Boolean(input.src);
@@ -14,6 +15,11 @@ $ const options = {
   ...input.options,
 }
 
+$ if (options.w) {
+  attrs.width = options.w;
+  attrs.height = options.h || (input.ar ? imageHeight(input.width, input.ar) : undefined);
+}
+
 <!-- @todo add modifiers -->
 
 <if(hasImage)>
@@ -26,6 +32,8 @@ $ const options = {
     attrs=attrs
     class=[element, input.class]
     lazyload=input.lazyload
+    width=input.width
+    height=input.height
   />
 </if>
 <else-if(input.usePlaceholder)>

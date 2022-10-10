@@ -63,7 +63,10 @@
     },
     "@class": "string",
     "@attrs": "object",
-    "@link": "object"
+    "@link": "object",
+    "@width": "number",
+    "@height": "number",
+    "@ar": "string"
   },
   "<marko-web-link>": {
     "template": "./link.marko",
@@ -175,7 +178,10 @@
       },
       "@class": "string",
       "@attrs": "object",
-      "@link": "object"
+      "@link": "object",
+      "@width": "string",
+      "@height": "string",
+      "@ar": "string"
     },
     "<link>": {
       "<before>": {},
@@ -195,7 +201,10 @@
       "@srcset": {
         "type": "array",
         "required": true
-      }
+      },
+      "@width": "number",
+      "@height": "number",
+      "@ar": "string"
     }
   }
 }

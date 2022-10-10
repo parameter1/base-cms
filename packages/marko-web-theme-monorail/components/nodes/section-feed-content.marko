@@ -89,13 +89,16 @@ $ const blockName = "section-feed-content-node";
 
         <marko-web-picture>
           <@link href=get(content, "siteContext.path") attrs=linkAttrs />
-          <@source srcset=srcset media="(min-width: 768px)" />
+          <@source srcset=srcset media="(min-width: 768px)" width=250 height=167 />
           <@image
             src=srcMobile
             srcset=srcsetMobile
             class=[`${blockName}__image`]
             alt=primaryImage.alt
             lazyload=lazyload
+            width=112
+            height=112
+            ar="1:1"
           />
         </marko-web-picture>
       </if>
