@@ -1,7 +1,6 @@
-import { buildImgixUrl } from "@parameter1/base-cms-image";
+import { buildImgixUrl, getRelativeCropRectangleHeight } from "@parameter1/base-cms-image";
 import { getAsObject, getAsArray, get } from "@parameter1/base-cms-object-path";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
-import getImageHeight from "../../utils/get-image-height";
 
 $ const blockName = "primary-image";
 $ const image = getAsObject(input, "obj");
@@ -9,7 +8,6 @@ $ const hasImage = Boolean(image.src);
 
 $ const forceDisplay = defaultValue(input.forceDisplay);
 $ let display = forceDisplay || image.primaryImageDisplay || "center";
-$ const aspectRatio = get(image, "cropDimensions.aspectRatio");
 $ const { isLogo } = image;
 
 $ const withCaption = defaultValue(input.withCaption, true);
@@ -36,7 +34,6 @@ $ modifiers.push(`aligned-${display}`);
 $ const maxWidth = input.maxWidth || 880;
 $ const fluid = !["left", "right"].includes(display);
 $ if (fluid) modifiers.push("fluid");
-$ if (fluid && aspectRatio === "16x9") modifiers.push("fluid-16by9")
 
 $ const imageOptions = {};
 $ if (fluid) {
@@ -58,21 +55,36 @@ $ const srcsetMin = [srcMin, `${buildImgixUrl(srcMin, { dpr: 2 })} 2x`];
 $ const sources = [];
 $ if (fluid) {
   sources.push(
-    { srcset: srcset, media: "(min-width: 900px)", width: maxWidth, height: getImageHeight({ width: maxWidth, image }) },
-    { srcset: srcsetMid, media: "(min-width: 576px)", width: 700, height: getImageHeight({ width: 700, image }) }
+    {
+      srcset: srcset,
+      media: "(min-width: 900px)",
+      width: maxWidth,
+      height: getRelativeCropRectangleHeight({ width: maxWidth, cropRectangle: image.cropRectangle }),
+    },
+    {
+      srcset: srcsetMid,
+      media: "(min-width: 576px)",
+      width: 700,
+      height: getRelativeCropRectangleHeight({ width: 700, cropRectangle: image.cropRectanglemage }),
+    }
   );
 } else {
   const alignedSrc = buildImgixUrl(src, { w: alignedWidth });
   const alignedSrcset = [alignedSrc, `${buildImgixUrl(alignedSrc, { dpr: 2 })} 2x`];
   sources.push(
-    { srcset: alignedSrcset, media: "(min-width: 576px)", width: alignedWidth, height: getImageHeight({ width: alignedWidth, image }) }
+    {
+      srcset: alignedSrcset,
+      media: "(min-width: 576px)",
+      width: alignedWidth,
+      height: getRelativeCropRectangleHeight({ width: alignedWidth, cropRectangle: image.cropRectangle }),
+    }
   );
 };
 
 $ const imageAttrs = {};
 $ if (image.id) imageAttrs["data-image-id"] = image.id;
 
-$ const height = getImageHeight({ width: initialImageWidth, image});
+$ const height = getRelativeCropRectangleHeight({ width: initialImageWidth, cropRectangle: image.cropRectangle });
 $ if (height) {
   imageAttrs.width = initialImageWidth;
   imageAttrs.height = height;

@@ -172,6 +172,7 @@
     "template": "./image.marko",
     "@src": "string",
     "@alt": "string",
+    "@ar": "string",
     "@width": "number",
     "@height": "number",
     "@options": "object",

@@ -1,26 +1,35 @@
-import { buildImgixUrl } from "@parameter1/base-cms-image";
-import { get } from "@parameter1/base-cms-object-path";
-import imageHeight from "./utils/image-height";
+import { buildImgixUrl, getRelativeAspectRatioHeight, getRelativeAspectRatioWidth } from "@parameter1/base-cms-image";
+import { get, getAsObject } from "@parameter1/base-cms-object-path";
 
 $ const element = "node__image";
 $ const hasImage = Boolean(input.src);
 
-$ const style = [];
-$ if (input.width) style.push(`width: ${input.width}px;`);
-$ if (input.height) style.push(`height: ${input.height}px;`);
-$ const attrs = { ...input.attrs, style };
+<!--
+1. If either width or height input is set, use them as the options.w and options.h
+2. Using options.w and options.h, determine relative w and h when not present
+3. Finally, using options, set the image width and height attrs
+-->
 
-$ const options = {
-  fit: get(input, "options.w") && get(input, "options.h") ? "crop" : undefined,
-  ...input.options,
+$ const { width, height } = input;
+$ const options = getAsObject(input, "options");
+
+$ if (width || height) {
+  options.w = width || undefined;
+  options.h = height || undefined;
 }
+$ if (input.ar) options.ar = input.ar;
 
-$ if (options.w) {
-  attrs.width = options.w;
-  attrs.height = options.h || (input.ar ? imageHeight(input.width, input.ar) : undefined);
-}
+$ const {
+  w,
+  h,
+  ar,
+  fit,
+} = options;
+$ if (w && !h) options.h = ar ? getRelativeAspectRatioHeight(w, ar) : undefined;
+$ if (h && !w) options.w = ar ? getRelativeAspectRatioWidth(h, ar) : undefined;
+$ if (!fit) options.fit = options.w && options.h ? "crop" : undefined;
 
-<!-- @todo add modifiers -->
+$ const attrs = { ...input.attrs, width: options.w, height: options.h };
 
 <if(hasImage)>
   $ const src = buildImgixUrl(input.src, options, input.defaultOptions, input.isLogo);
@@ -32,8 +41,6 @@ $ if (options.w) {
     attrs=attrs
     class=[element, input.class]
     lazyload=input.lazyload
-    width=input.width
-    height=input.height
   />
 </if>
 <else-if(input.usePlaceholder)>
