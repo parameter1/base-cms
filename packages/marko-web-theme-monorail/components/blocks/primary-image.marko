@@ -58,23 +58,24 @@ $ const srcsetMin = [srcMin, `${buildImgixUrl(srcMin, { dpr: 2 })} 2x`];
 $ const sources = [];
 $ if (fluid) {
   sources.push(
-    { srcset: srcset, media: "(min-width: 900px)" },
-    { srcset: srcsetMid, media: "(min-width: 576px)" }
+    { srcset: srcset, media: "(min-width: 900px)", width: maxWidth, height: getImageHeight({ width: maxWidth, image }) },
+    { srcset: srcsetMid, media: "(min-width: 576px)", width: 700, height: getImageHeight({ width: 700, image }) }
   );
 } else {
   const alignedSrc = buildImgixUrl(src, { w: alignedWidth });
   const alignedSrcset = [alignedSrc, `${buildImgixUrl(alignedSrc, { dpr: 2 })} 2x`];
   sources.push(
-    { srcset: alignedSrcset, media: "(min-width: 576px)" }
+    { srcset: alignedSrcset, media: "(min-width: 576px)", width: alignedWidth, height: getImageHeight({ width: alignedWidth, image }) }
   );
 };
 
 $ const imageAttrs = {};
 $ if (image.id) imageAttrs["data-image-id"] = image.id;
+
 $ const height = getImageHeight({ width: initialImageWidth, image});
 $ if (height) {
-  imageAttrs["width"] = initialImageWidth;
-  imageAttrs["height"] = height;
+  imageAttrs.width = initialImageWidth;
+  imageAttrs.height = height;
 };
 
 <if(hasImage && display !== "none")>
@@ -89,7 +90,7 @@ $ if (height) {
     <div class=`${blockName}__wrapper`>
       <marko-web-picture>
         <for|s| of=sources>
-          <@source srcset=s.srcset media=s.media />
+          <@source srcset=s.srcset media=s.media width=s.width height=s.height />
         </for>
         <@image
           src=srcMin
