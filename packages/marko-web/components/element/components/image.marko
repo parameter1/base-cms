@@ -1,4 +1,5 @@
-import { getAsArray } from "@parameter1/base-cms-object-path";
+import { getAsArray, getAsObject } from "@parameter1/base-cms-object-path";
+import imageHeight from "../../node/utils/image-height";
 
 $ const { config } = out.global;
 $ const { src, alt } = input;
@@ -7,10 +8,16 @@ $ const srcset = getAsArray(input.srcset).join(", ") || null;
 
 $ const classNames = [input.class];
 $ if (lazyload) classNames.push("lazyload");
+$ const attrs = getAsObject(input.attrs);
+$ if (input.width && input.width > 0 && !attrs.width && !attrs.height) {
+  attrs.width = input.width;
+  const height = input.height || imageHeight(input.width, input.ar) || undefined;
+  if (height) attrs.height = height;
+};
 
 <if(lazyload)>
   <img
-    ...input.attrs
+    ...attrs
     src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
     srcset=null
     data-src=src
@@ -21,7 +28,7 @@ $ if (lazyload) classNames.push("lazyload");
 </if>
 <else>
   <img
-    ...input.attrs
+    ...attrs
     src=src
     srcset=srcset
     class=classNames
