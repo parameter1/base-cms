@@ -1897,6 +1897,10 @@ module.exports = {
       const content = await basedb.strictFindById('platform.Content', contentId, { projection: { type: 1, taxonomy: 1 } });
       const contentType = `platform/content/${dasherize(content.type)}`;
 
+      if (!addIds.length && !removeIds.length) {
+        throw new UserInputError('You must specify at least one taxonomy ID to add or remove!');
+      }
+
       // Validate taxonomy ids
       const ids = [...addIds, ...removeIds, ...getAsArray(content, 'taxonomy').map(r => r.oid)];
       const query = { status: 1, _id: { $in: ids } };
