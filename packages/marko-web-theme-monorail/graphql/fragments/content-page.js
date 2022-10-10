@@ -34,6 +34,10 @@ fragment ContentPageFragment on Content {
   primaryImage {
     id
     src(input: { useCropRectangle: true, options: { auto: "format,compress" } })
+    cropRectangle {
+      width
+      height
+    }
     alt
     caption
     credit
