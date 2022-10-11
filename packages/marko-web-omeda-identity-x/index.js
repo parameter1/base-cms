@@ -12,6 +12,8 @@ const rapidIdentifyRouter = require('./routes/rapid-identify');
 const props = require('./validation/props');
 const schemas = require('./validation/schemas');
 
+const defaultFormatter = async ({ payload }) => payload;
+
 module.exports = (app, params = {}) => {
   const {
     appendBehaviorToHook,
@@ -30,9 +32,9 @@ module.exports = (app, params = {}) => {
     omedaPromoCodeCookieName,
     omedaPromoCodeDefault,
     omedaRapidIdentifyProp,
-    onLoginLinkSentFormatter = (async ({ payload }) => ({ ...payload })),
-    onAuthenticationSuccessFormatter = (async ({ payload }) => ({ ...payload })),
-    onUserProfileUpdateFormatter = (async ({ payload }) => ({ ...payload })),
+    onLoginLinkSentFormatter = defaultFormatter,
+    onAuthenticationSuccessFormatter = defaultFormatter,
+    onUserProfileUpdateFormatter = defaultFormatter,
     rapidIdentProductId,
   } = validate(Joi.object({
     appendBehaviorToHook: Joi.array().items(schemas.hookBehavior),
