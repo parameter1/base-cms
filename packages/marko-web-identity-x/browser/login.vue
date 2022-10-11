@@ -140,6 +140,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    lang: {
+      type: String,
+      default: 'en',
+    },
   },
 
   /**

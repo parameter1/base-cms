@@ -12,6 +12,7 @@
             <given-name
               v-model="user.givenName"
               :required="givenNameSettings.required"
+              :lang="lang"
             />
           </div>
           <div
@@ -22,6 +23,7 @@
             <family-name
               v-model="user.familyName"
               :required="familyNameSettings.required"
+              :lang="lang"
             />
           </div>
         </div>
@@ -35,6 +37,7 @@
             <organization
               v-model="user.organization"
               :required="organizationSettings.required"
+              :lang="lang"
             />
           </div>
           <div
@@ -45,6 +48,7 @@
             <organization-title
               v-model="user.organizationTitle"
               :required="organizationTitleSettings.required"
+              :lang="lang"
             />
           </div>
         </div>
@@ -68,6 +72,7 @@
             <country
               v-model="user.countryCode"
               :required="countryCodeSettings.required"
+              :lang="lang"
             />
           </div>
         </div>
@@ -80,6 +85,7 @@
           :city="citySettings"
           :region-code="regionCodeSettings"
           :postal-code="postalCodeSettings"
+          :lang="lang"
         />
 
         <div v-if="customSelectFieldAnswers.length" class="row">
@@ -293,6 +299,10 @@ export default {
     returnTo: {
       type: String,
       default: null,
+    },
+    lang: {
+      type: String,
+      default: 'en',
     },
   },
 
