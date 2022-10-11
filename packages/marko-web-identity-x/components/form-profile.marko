@@ -1,9 +1,10 @@
 import { get } from "@parameter1/base-cms-object-path";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 
-$ const { req } = out.global;
+$ const { req, site } = out.global;
 $ const { identityX, query } = req;
 $ const additionalEventData = defaultValue(input.additionalEventData, {});
+$ const lang = site.config.lang || "en";
 
 <if(Boolean(identityX))>
   <marko-web-identity-x-context|{ user, isEnabled, application }|>
@@ -24,6 +25,7 @@ $ const additionalEventData = defaultValue(input.additionalEventData, {});
       appContextId: identityX.config.get("appContextId"),
       regionalConsentPolicies: get(application, "organization.regionalConsentPolicies"),
       returnTo: query.returnTo,
+      lang: lang,
     };
     <if(isEnabled)>
       <marko-web-browser-component name="IdentityXProfile" props=props />
