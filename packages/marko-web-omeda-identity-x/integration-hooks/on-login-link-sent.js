@@ -50,21 +50,20 @@ module.exports = async (params = {}) => {
     cookies: req.cookies,
   });
 
-  // get omeda customer id (via rapid identity) and load omeda custom field data
-  const omedaLinkedFields = await getOmedaLinkedFields({ identityX, brandKey });
-
-  const payload = await formatter({
-    req,
-    payload: {
-      user: user.verified ? user : { id: user.id, email: user.email },
-      behavior,
-      promoCode,
-      appendBehaviors,
-      appendDemographics,
-      appendPromoCodes,
-    },
-  });
-  const { encryptedCustomerId } = await idxOmedaRapidIdentify(payload);
+  const [omedaLinkedFields, { encryptedCustomerId }] = await Promise.all([
+    getOmedaLinkedFields({ identityX, brandKey }),
+    idxOmedaRapidIdentify(await formatter({
+      req,
+      payload: {
+        user: user.verified ? user : { id: user.id, email: user.email },
+        behavior,
+        promoCode,
+        appendBehaviors,
+        appendDemographics,
+        appendPromoCodes,
+      },
+    })),
+  ]);
 
   const answers = getAnsweredQuestionMap(user);
   const hasAllDemos = omedaLinkedFields.demographic.every(field => answers.has(field.id));
