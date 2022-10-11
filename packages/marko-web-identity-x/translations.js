@@ -21,7 +21,7 @@ module.exports = {
     pleaseCheckLine1: 'Note: please check your spam/junk folders',
     pleaseCheckLine2: 'If you do not receive this email, your firewall or ISP has likely blocked it.',
     pleaseAdd: 'Please add',
-    whiteList: 'to your whitelist and try registing again',
+    whitelist: 'to your whitelist and try registing again',
   },
   es: {
     // Step 2 Form Labels
