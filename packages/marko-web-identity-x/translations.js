@@ -19,7 +19,7 @@ module.exports = {
     actionText: 'logging in',
     openEmail: 'open the email message and click the link within',
     pleaseCheckLine1: 'Note: please check your spam/junk folders',
-    pleaseCheckLine2: 'If you do not receive this email, your firewall or ISP has likely blocked it.',
+    pleaseCheckLine2: 'If you do not receive this email, your firewall or ISP has likely blocked it',
     pleaseAdd: 'Please add',
     whitelist: 'to your whitelist and try registing again',
   },
