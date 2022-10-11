@@ -26,7 +26,9 @@ $ const useIdxNewsletterSignup = defaultValue(input.useIdxNewsletterSignup, true
           block-name=blockName
           alt=config.website("name")
           src=site.get("logos.footer.src")
-          srcset=site.getAsArray("logos.footer.srcset").join(",")
+          srcset=site.getAsArray("logos.footer.srcset").join(", ")
+          width=site.get("logos.navbar.width")
+          height=site.get("logos.navbar.height")
           lazyload=true
         />
       </default-theme-site-navbar-brand>
@@ -103,6 +105,7 @@ $ const useIdxNewsletterSignup = defaultValue(input.useIdxNewsletterSignup, true
           srcset=corporateSrcset
           link={ href: corporateHref, class: `${blockName}__corporate-link`, target: '_blank' }
           class=`${blockName}__corporate-logo lazyload`
+          attrs={ width: site.get("logos.corporate.width"), height: site.get("logos.corporate.height") }
         />
       </if>
 
