@@ -21,7 +21,7 @@ module.exports = {
     pleaseCheckLine1: 'Note: please check your spam/junk folders',
     pleaseCheckLine2: 'If you do not receive this email, your firewall or ISP has likely blocked it',
     pleaseAdd: 'Please add',
-    whitelist: 'to your whitelist and try registing again',
+    whitelist: 'to your whitelist and try registering again',
   },
   es: {
     // Step 2 Form Labels
@@ -45,6 +45,6 @@ module.exports = {
     pleaseCheckLine1: 'Nota: por favor revise sus carpetas de spam/basura',
     pleaseCheckLine2: 'Si no recibe este correo electrónico, es probable que su firewall o ISP lo haya bloqueado',
     pleaseAdd: 'Agregue',
-    whitelist: ' a su lista blanca e intente registrarse nuevamente',
+    whitelist: 'a su lista blanca e intente registrarse nuevamente',
   },
 };
