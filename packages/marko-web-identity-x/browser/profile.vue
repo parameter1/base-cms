@@ -150,7 +150,7 @@
 
         <div class="d-flex align-items-center">
           <button type="submit" class="btn btn-primary">
-            {{ buttonLabel }}
+            {{ translate("submitLabel") }}
           </button>
           <span v-if="didSubmit" class="ml-2">
             {{ submitMessage }}
@@ -197,6 +197,7 @@ import Login from './login.vue';
 import FeatureError from './errors/feature';
 import FormError from './errors/form';
 import EventEmitter from './mixins/global-event-emitter';
+import i18n from '../i18n';
 
 const { isArray } = Array;
 
@@ -565,6 +566,14 @@ export default {
       } finally {
         this.isLoading = false;
       }
+    },
+
+    /**
+     *
+     */
+    translate(key) {
+      if (this.label) return this.label;
+      return i18n(this.lang, key);
     },
   },
 };

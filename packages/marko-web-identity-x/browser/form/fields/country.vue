@@ -1,7 +1,7 @@
 <template>
   <form-group>
     <form-label :for="id" :required="required">
-      {{ label }}
+      {{ translate("countryLabel") }}
     </form-label>
     <select
       :id="id"
@@ -13,7 +13,7 @@
       autocomplete="country"
     >
       <option disabled value="">
-        Select country...
+        {{ translate("countryPlaceholder") }}
       </option>
       <option v-for="country in countries" :key="country.id" :value="country.id">
         {{ country.name }} {{ country.flag }}
@@ -29,6 +29,7 @@
 import FormGroup from '../common/form-group.vue';
 import FormLabel from '../common/form-label.vue';
 import get from '../../utils/get';
+import i18n from '../../../i18n';
 
 export default {
   components: {
@@ -46,7 +47,7 @@ export default {
     },
     label: {
       type: String,
-      default: 'Country',
+      default: '',
     },
     value: {
       type: String,
@@ -84,6 +85,10 @@ export default {
       } finally {
         this.isLoading = false;
       }
+    },
+    translate(key) {
+      if (this.label) return this.label;
+      return i18n(this.lang, key);
     },
   },
 };

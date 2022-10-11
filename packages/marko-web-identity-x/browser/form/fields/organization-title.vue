@@ -1,7 +1,7 @@
 <template>
   <form-group>
     <form-label :for="id" :required="required">
-      {{ label }}
+      {{ translate("jobTitleLabel") }}
     </form-label>
     <input
       :id="id"
@@ -19,6 +19,7 @@
 <script>
 import FormGroup from '../common/form-group.vue';
 import FormLabel from '../common/form-label.vue';
+import i18n from '../../../i18n';
 
 export default {
   components: {
@@ -36,7 +37,7 @@ export default {
     },
     label: {
       type: String,
-      default: 'Job Title',
+      default: '',
     },
     placeholder: {
       type: String,
@@ -45,6 +46,10 @@ export default {
     value: {
       type: String,
       default: '',
+    },
+    lang: {
+      type: String,
+      default: 'en',
     },
   },
   data: () => ({
@@ -58,6 +63,12 @@ export default {
       set(organizationTitle) {
         this.$emit('input', organizationTitle || null);
       },
+    },
+  },
+  methods: {
+    translate(key) {
+      if (this.label) return this.label;
+      return i18n(this.lang, key);
     },
   },
 };

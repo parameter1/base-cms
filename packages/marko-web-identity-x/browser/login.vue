@@ -17,15 +17,15 @@
     </a>
   </div>
   <div v-else-if="complete">
-    <h4>Almost Done!</h4>
+    <h4>{{ translate("almostDone") }}</h4>
     <p>
-      We just sent an email to <em>{{ email }}</em> with your one-time login link.
-      To finish {{ actionText || "logging in" }}, open the email message and click the link within.
+      {{ translate("sentAnEmail") }} <em>{{ email }}</em> {{ translate("oneTimeLoginLink") }}.
+      {{ translate("toFinish") }} {{ translate("actionText") }}, {{ translate("openEmail") }}.
     </p>
     <p>
-      Note: please check your spam/junk folders.
-      If you do not receive this email, your firewall or ISP has likely blocked it.
-      Please add {{ senderEmailAddress }} to your whitelist and try registering again.
+      {{ translate("pleaseCheckLine1") }}.
+      {{ translate("pleaseCheckLine2") }}.
+      {{ translate("pleaseAdd") }} {{ senderEmailAddress }} {{ translate('whitelist') }}.
     </p>
   </div>
   <div v-else>
@@ -64,6 +64,7 @@ import cookiesEnabled from './utils/cookies-enabled';
 import FormError from './errors/form';
 import FeatureError from './errors/feature';
 import EventEmitter from './mixins/global-event-emitter';
+import i18n from '../i18n';
 
 export default {
   /**
@@ -124,7 +125,7 @@ export default {
     },
     actionText: {
       type: String,
-      default: 'logging in',
+      default: '',
     },
     loginEmailLabel: {
       type: String,
@@ -224,6 +225,12 @@ export default {
       } finally {
         this.loading = false;
       }
+    },
+    /**
+     *
+     */
+    translate(key) {
+      return i18n(this.lang, key);
     },
   },
 };

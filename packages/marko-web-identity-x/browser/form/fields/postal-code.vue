@@ -1,7 +1,7 @@
 <template>
   <form-group :class-name="className">
     <form-label :for="id" :required="required">
-      {{ label }}
+      {{ translate("zipLabel") }}
     </form-label>
     <input
       :id="id"
@@ -19,6 +19,7 @@
 <script>
 import FormGroup from '../common/form-group.vue';
 import FormLabel from '../common/form-label.vue';
+import i18n from '../../../i18n';
 
 export default {
   components: {
@@ -36,7 +37,7 @@ export default {
     },
     label: {
       type: String,
-      default: 'Postal/ZIP Code',
+      default: '',
     },
     placeholder: {
       type: String,
@@ -62,6 +63,12 @@ export default {
       set(postalCode) {
         this.$emit('input', postalCode || null);
       },
+    },
+  },
+  methods: {
+    translate(key) {
+      if (this.label) return this.label;
+      return i18n(this.lang, key);
     },
   },
 };
