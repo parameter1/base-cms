@@ -27,6 +27,12 @@ module.exports = {
     tenant: 'p1',
     cookieDomain: 'dev.parameter1.com',
   },
+  idxOnProductHooks: {
+    onUserProfileUpdate: {
+      productIds: [33],
+      promoCode: 'OV_registration_meter',
+    },
+  },
   logos: {
     navbar: {
       src: 'https://p1-cms-assets.imgix.net/files/base/p1/sandbox/image/static/sandbox-logo.png?h=45&auto=format,compress',
