@@ -19,6 +19,7 @@ module.exports = async (params = {}) => {
     omedaPromoCodeDefault,
     promoCode: hookDataPromoCode,
     res,
+    req,
     user,
   } = validate(Joi.object({
     appendBehaviors: Joi.array().items(schemas.appendBehavior).default([]),
@@ -29,6 +30,7 @@ module.exports = async (params = {}) => {
     formatter: Joi.function().required(),
     user: Joi.object().required(),
     res: Joi.object().required(),
+    req: Joi.object().required(),
   }).unknown(true), params);
   const encryptedId = findEncryptedId({ externalIds: user.externalIds, brandKey });
   if (!encryptedId) return;
