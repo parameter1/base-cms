@@ -1,7 +1,7 @@
 <template>
   <form-group :class-name="className">
     <form-label :for="id" :required="required">
-      {{ label }}
+      {{ translate("regionLabel") }}
     </form-label>
     <select
       :id="id"
@@ -30,6 +30,7 @@ import FormGroup from '../common/form-group.vue';
 import FormLabel from '../common/form-label.vue';
 import get from '../../utils/get';
 import regionCountryCodes from '../../utils/region-country-codes';
+import i18n from '../../../i18n';
 
 export default {
   components: {
@@ -60,6 +61,10 @@ export default {
     className: {
       type: String,
       default: 'col-md-6',
+    },
+    lang: {
+      type: String,
+      default: 'en',
     },
   },
   data: () => ({
@@ -100,6 +105,10 @@ export default {
       } finally {
         this.isLoading = false;
       }
+    },
+    translate(key) {
+      if (this.label) return this.label;
+      return i18n(this.lang, key);
     },
   },
 };
