@@ -51,6 +51,10 @@ export default {
       type: String,
       default: 'col-md-12',
     },
+    lang: {
+      type: String,
+      default: 'en',
+    },
   },
   data: () => ({
     id: 'sign-on-postal-code',

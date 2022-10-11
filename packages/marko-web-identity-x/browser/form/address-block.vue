@@ -30,12 +30,14 @@
         :country-code="user.countryCode"
         :required="regionCode.required"
         :class-name="addressLineTwoFieldClass"
+        :lang="lang"
       />
       <postal-code
         v-if="postalCode.visible"
         v-model="user.postalCode"
         :required="postalCode.required"
         :class-name="addressLineTwoFieldClass"
+        :lang="lang"
       />
     </div>
   </fieldset>
@@ -80,6 +82,10 @@ export default {
     postalCode: {
       type: Object,
       required: true,
+    },
+    lang: {
+      type: String,
+      default: 'en',
     },
   },
   /**
