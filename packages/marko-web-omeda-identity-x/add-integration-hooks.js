@@ -30,6 +30,9 @@ module.exports = (params = {}) => {
     idxOmedaRapidIdentifyProp,
     omedaPromoCodeCookieName,
     omedaPromoCodeDefault,
+    onLoginLinkSentFormatter,
+    onAuthenticationSuccessFormatter,
+    onUserProfileUpdateFormatter,
   } = validate(Joi.object({
     appendBehaviorToHook: Joi.array().items(schemas.hookBehavior).default([]),
     appendDemographicToHook: Joi.array().items(schemas.hookDemographic).default([]),
@@ -42,6 +45,9 @@ module.exports = (params = {}) => {
     omedaGraphQLClientProp: Joi.string().required(),
     omedaPromoCodeCookieName: Joi.string().required(),
     omedaPromoCodeDefault: Joi.string(),
+    onLoginLinkSentFormatter: Joi.function().required(),
+    onAuthenticationSuccessFormatter: Joi.function().required(),
+    onUserProfileUpdateFormatter: Joi.function().required(),
   }), params);
 
   const buildBehaviorFor = behaviorFactory({ behaviors, behaviorAttributes });
@@ -61,6 +67,7 @@ module.exports = (params = {}) => {
       omedaGraphQLClient: get(args, `req.${omedaGraphQLClientProp}`),
       omedaPromoCodeCookieName,
       omedaPromoCodeDefault,
+      formatter: onLoginLinkSentFormatter,
       ...appendDataFor('onLoginLinkSent'),
       behavior: buildBehaviorFor('onLoginLinkSent', {
         actionSource: get(args, 'actionSource'),
@@ -79,6 +86,7 @@ module.exports = (params = {}) => {
       idxOmedaRapidIdentify: get(args, `req.${idxOmedaRapidIdentifyProp}`),
       omedaPromoCodeCookieName,
       omedaPromoCodeDefault,
+      formatter: onAuthenticationSuccessFormatter,
       ...appendDataFor('onAuthenticationSuccess'),
       behavior: buildBehaviorFor('onAuthenticationSuccess', {
         actionSource: get(args, 'actionSource'),
@@ -96,6 +104,7 @@ module.exports = (params = {}) => {
       idxOmedaRapidIdentify: get(args, `req.${idxOmedaRapidIdentifyProp}`),
       omedaPromoCodeCookieName,
       omedaPromoCodeDefault,
+      formatter: onUserProfileUpdateFormatter,
       ...appendDataFor('onUserProfileUpdate'),
       behavior: buildBehaviorFor('onUserProfileUpdate', {
         actionSource: get(args, 'actionSource'),

@@ -13,6 +13,7 @@ module.exports = async (params = {}) => {
     appendPromoCodes,
     behavior,
     brandKey,
+    formatter,
     idxOmedaRapidIdentify,
     omedaPromoCodeCookieName,
     omedaPromoCodeDefault,
@@ -25,6 +26,7 @@ module.exports = async (params = {}) => {
     appendPromoCodes: Joi.array().items(schemas.appendPromoCode).default([]),
     behavior: schemas.behavior.required(),
     brandKey: props.brandKey.required(),
+    formatter: Joi.function().required(),
     user: Joi.object().required(),
     res: Joi.object().required(),
   }).unknown(true), params);
@@ -39,12 +41,16 @@ module.exports = async (params = {}) => {
     cookies: res.req.cookies,
   });
 
-  await idxOmedaRapidIdentify({
-    user,
-    behavior,
-    promoCode,
-    appendBehaviors,
-    appendDemographics,
-    appendPromoCodes,
+  const payload = await formatter({
+    req,
+    payload: {
+      user,
+      behavior,
+      promoCode,
+      appendBehaviors,
+      appendDemographics,
+      appendPromoCodes,
+    },
   });
+  await idxOmedaRapidIdentify(payload);
 };

@@ -17,6 +17,7 @@ module.exports = async (params = {}) => {
     appendPromoCodes,
     behavior,
     brandKey,
+    formatter,
     idxOmedaRapidIdentify,
     omedaGraphQLClient,
     omedaPromoCodeCookieName,
@@ -31,6 +32,7 @@ module.exports = async (params = {}) => {
     appendPromoCodes: Joi.array().items(schemas.appendPromoCode).default([]),
     behavior: schemas.behavior.required(),
     brandKey: props.brandKey.required(),
+    formatter: Joi.function().required(),
     idxOmedaRapidIdentify: Joi.function().required(),
     omedaGraphQLClient: Joi.object().required(),
     omedaPromoCodeCookieName: Joi.string().required(),
@@ -49,17 +51,20 @@ module.exports = async (params = {}) => {
   });
 
   // get omeda customer id (via rapid identity) and load omeda custom field data
-  const [omedaLinkedFields, { encryptedCustomerId }] = await Promise.all([
-    getOmedaLinkedFields({ identityX, brandKey }),
-    idxOmedaRapidIdentify({
+  const omedaLinkedFields = await getOmedaLinkedFields({ identityX, brandKey });
+
+  const payload = await formatter({
+    req,
+    payload: {
       user: user.verified ? user : { id: user.id, email: user.email },
       behavior,
       promoCode,
       appendBehaviors,
       appendDemographics,
       appendPromoCodes,
-    }),
-  ]);
+    },
+  });
+  const { encryptedCustomerId } = await idxOmedaRapidIdentify(payload);
 
   const answers = getAnsweredQuestionMap(user);
   const hasAllDemos = omedaLinkedFields.demographic.every(field => answers.has(field.id));

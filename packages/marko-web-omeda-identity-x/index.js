@@ -30,6 +30,9 @@ module.exports = (app, params = {}) => {
     omedaPromoCodeCookieName,
     omedaPromoCodeDefault,
     omedaRapidIdentifyProp,
+    onLoginLinkSentFormatter = (async ({ payload }) => ({ ...payload })),
+    onAuthenticationSuccessFormatter = (async ({ payload }) => ({ ...payload })),
+    onUserProfileUpdateFormatter = (async ({ payload }) => ({ ...payload })),
     rapidIdentProductId,
   } = validate(Joi.object({
     appendBehaviorToHook: Joi.array().items(schemas.hookBehavior),
@@ -93,6 +96,9 @@ module.exports = (app, params = {}) => {
     omedaPromoCodeCookieName: Joi.string().default('omeda_promo_code'),
     omedaPromoCodeDefault: Joi.string(),
     omedaRapidIdentifyProp: Joi.string().default('$omedaRapidIdentify'),
+    onLoginLinkSentFormatter: Joi.function(),
+    onAuthenticationSuccessFormatter: Joi.function(),
+    onUserProfileUpdateFormatter: Joi.function(),
     rapidIdentProductId: Joi.number().required(),
   }), params);
 
@@ -128,6 +134,9 @@ module.exports = (app, params = {}) => {
     omedaGraphQLClientProp,
     omedaPromoCodeCookieName,
     omedaPromoCodeDefault,
+    onLoginLinkSentFormatter,
+    onAuthenticationSuccessFormatter,
+    onUserProfileUpdateFormatter,
   });
 
   // attach the identity-x rapid identification wrapper middleware
