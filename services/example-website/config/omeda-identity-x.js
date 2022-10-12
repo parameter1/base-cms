@@ -120,16 +120,13 @@ module.exports = {
     if (idxOnProductHooks.onUserProfileUpdate) {
       const { productIds, promoCode } = idxOnProductHooks.onUserProfileUpdate;
       const { user } = payload;
-      // Get the encriptedCustomerId that matches the omeda brandKey
-      const encryptedCustomerId = user.externalIds.filter(({
-        identifier,
-        namespace,
-      }) => identifier.type === 'encrypted'
-      && namespace.provider === 'omeda'
-      && namespace.tenant === omeda.brandKey)[0].identifier.value;
-
+      const found = getAsArray(user, 'externalIds')
+        .find(({ identifier, namespace }) => identifier.type === 'encrypted'
+          && namespace.provider === 'omeda'
+          && namespace.tenant === omeda.brandKey);
       // BAIL if no encryptedCustomerId and return payload
-      if (!encryptedCustomerId) return payload;
+      if (!found) return payload;
+      const encryptedCustomerId = get(found, 'identifier.value');
 
       // Retrive the omeda customer
       const omedaCustomer = await getOmedaCustomerRecord({
