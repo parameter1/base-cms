@@ -8,6 +8,10 @@ module.exports = new IdentityXConfiguration({
   requiredServerFields: ['givenName', 'familyName', 'countryCode'],
   requiredClientFields: ['regionCode', 'countryCode'],
   booleanQuestionsLabel: 'Choose your subscriptions:',
+  defaultFieldLabels: {
+    phoneNumber: 'Mobile Phone',
+    organization: 'Company Name',
+  },
   hiddenFields: [],
   onHookError: (e) => {
     log('IDENTITY-X HOOK ERROR!', e);
