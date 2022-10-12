@@ -488,7 +488,6 @@ export default {
    *
    */
   mounted() {
-
     if (cookiesEnabled()) {
       this.emit('profile-mounted');
     } else {
