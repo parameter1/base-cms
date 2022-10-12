@@ -9,11 +9,13 @@
         v-model="user.street"
         :required="street.required"
         :class-name="addressExtra.visible ? 'col-md-8' : 'col-md-12'"
+        :label="defaultFieldLabels.street"
       />
       <address-extra
         v-if="addressExtra.visible"
         v-model="user.addressExtra"
         :required="addressExtra.required"
+        :label="defaultFieldLabels.addressExtra"
       />
     </div>
 
@@ -23,6 +25,7 @@
         v-model="user.city"
         :required="city.required"
         :class-name="addressLineTwoFieldClass"
+        :label="defaultFieldLabels.city"
       />
       <region
         v-if="regionCode.visible"
@@ -30,12 +33,14 @@
         :country-code="user.countryCode"
         :required="regionCode.required"
         :class-name="addressLineTwoFieldClass"
+        :label="defaultFieldLabels.region"
       />
       <postal-code
         v-if="postalCode.visible"
         v-model="user.postalCode"
         :required="postalCode.required"
         :class-name="addressLineTwoFieldClass"
+        :label="defaultFieldLabels.postalCode"
       />
     </div>
   </fieldset>
@@ -60,6 +65,10 @@ export default {
     user: {
       type: Object,
       required: true,
+    },
+    defaultFieldLabels: {
+      type: Object,
+      default: () => {},
     },
     street: {
       type: Object,
