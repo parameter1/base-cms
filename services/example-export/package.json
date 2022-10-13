@@ -18,6 +18,6 @@
   },
   "dependencies": {
     "@parameter1/base-cms-export-cli": "^3.0.0",
-    "@parameter1/base-cms-export-framework": "^3.3.1`"
+    "@parameter1/base-cms-export-framework": "^3.8.0"
   }
 }
