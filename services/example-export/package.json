@@ -11,9 +11,8 @@
     "dev": "basecms-exports dev index.js",
     "build": "basecms-exports build",
     "compile": "basecms-marko-compile compile --dir ./ --silent true",
-    "lint": "yarn lint:js && yarn lint:css",
+    "lint": "yarn lint:js",
     "lint:js": "eslint --ext .js --ext .vue --max-warnings 5 --ignore-path ../../.eslintignore ./",
-    "lint:css": "stylelint ./**/*.scss --max-warnings 5",
     "test": "yarn lint && yarn compile && yarn build"
   },
   "dependencies": {
