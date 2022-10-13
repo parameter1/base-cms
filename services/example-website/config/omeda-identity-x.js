@@ -135,7 +135,6 @@ module.exports = {
     if (hasWebsiteSubscription && (payload.promoCode || payload.appendPromoCodes.length)) {
       const promoCode = !payload.promoCode.includes('registration_meter') ? payload.promoCode : undefined;
       const appendPromoCodes = payload.appendPromoCodes.filter(code => !code.includes('registration_meter'));
-      console.log(payload, { ...payload, promoCode, appendPromoCodes });
       return {
         ...payload,
         promoCode,
