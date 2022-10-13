@@ -109,7 +109,41 @@ module.exports = {
     },
   ],
 
-  // onLoginLinkSentFormatter: (async ({ payload }) => ({ ...payload })),
+  onLoginLinkSentFormatter: (async ({ req, payload }) => {
+    // const identityXOptInHooks = req.app.locals.site.getAsObject('identityXOptInHooks');
+    const omeda = req.app.locals.site.getAsObject('omeda');
+    const { user } = payload;
+
+    const found = getAsArray(user, 'externalIds')
+      .find(({ identifier, namespace }) => identifier.type === 'encrypted'
+        && namespace.provider === 'omeda'
+        && namespace.tenant === omeda.brandKey);
+
+    // BAIL if no encryptedCustomerId and return payload
+    if (!found) return payload;
+    const encryptedCustomerId = get(found, 'identifier.value');
+
+    // Retrive the omeda customer
+    const omedaCustomer = await getOmedaCustomerRecord({
+      omedaGraphQLClient: req.$omedaGraphQLClient,
+      encryptedCustomerId,
+    });
+    const subscriptions = getAsArray(omedaCustomer, 'subscriptions');
+    const hasWebsiteSubscription = subscriptions.find(({ product }) => product.type.id === 'WEBSITE' && product.id === get(omedaConfig, 'rapidIdentification.productId'));
+    // If the user already has the website product do
+    // return payload with registration_meter promo code ref removed
+    if (hasWebsiteSubscription && (payload.promoCode || payload.appendPromoCodes.length)) {
+      const promoCode = !payload.promoCode.includes('registration_meter') ? payload.promoCode : undefined;
+      const appendPromoCodes = payload.appendPromoCodes.filter(code => !code.includes('registration_meter'));
+      console.log(payload, { ...payload, promoCode, appendPromoCodes });
+      return {
+        ...payload,
+        promoCode,
+        appendPromoCodes,
+      };
+    }
+    return payload;
+  }),
   onAuthenticationSuccessFormatter: (async ({ payload }) => ({ ...payload, promoCode: 'ExampleWebsiteOnAuthSuccessPromo' })),
   onUserProfileUpdateFormatter: (async ({ req, payload }) => {
     // BAIL if omedaGraphQLCLient isnt available return payload.
