@@ -13,11 +13,13 @@ module.exports = async (params = {}) => {
     appendPromoCodes,
     behavior,
     brandKey,
+    formatter,
     idxOmedaRapidIdentify,
     omedaPromoCodeCookieName,
     omedaPromoCodeDefault,
     promoCode: hookDataPromoCode,
     res,
+    req,
     user,
   } = validate(Joi.object({
     appendBehaviors: Joi.array().items(schemas.appendBehavior).default([]),
@@ -25,8 +27,10 @@ module.exports = async (params = {}) => {
     appendPromoCodes: Joi.array().items(schemas.appendPromoCode).default([]),
     behavior: schemas.behavior.required(),
     brandKey: props.brandKey.required(),
+    formatter: Joi.function().required(),
     user: Joi.object().required(),
     res: Joi.object().required(),
+    req: Joi.object().required(),
   }).unknown(true), params);
   const encryptedId = findEncryptedId({ externalIds: user.externalIds, brandKey });
   if (!encryptedId) return;
@@ -39,12 +43,16 @@ module.exports = async (params = {}) => {
     cookies: res.req.cookies,
   });
 
-  await idxOmedaRapidIdentify({
-    user,
-    behavior,
-    promoCode,
-    appendBehaviors,
-    appendDemographics,
-    appendPromoCodes,
+  const payload = await formatter({
+    req,
+    payload: {
+      user,
+      behavior,
+      promoCode,
+      appendBehaviors,
+      appendDemographics,
+      appendPromoCodes,
+    },
   });
+  await idxOmedaRapidIdentify(payload);
 };

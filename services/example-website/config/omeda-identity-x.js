@@ -1,4 +1,6 @@
-const { get } = require('@parameter1/base-cms-object-path');
+const { get, getAsArray } = require('@parameter1/base-cms-object-path');
+const { getOmedaCustomerRecord } = require('@parameter1/base-cms-marko-web-omeda-identity-x/omeda-data');
+
 const idxConfig = require('./identity-x');
 const omedaConfig = require('./omeda');
 
@@ -106,4 +108,60 @@ module.exports = {
       promoCode: 'P1FullProfile',
     },
   ],
+
+  // onLoginLinkSentFormatter: (async ({ payload }) => ({ ...payload })),
+  onAuthenticationSuccessFormatter: (async ({ payload }) => ({ ...payload, promoCode: 'ExampleWebsiteOnAuthSuccessPromo' })),
+  onUserProfileUpdateFormatter: (async ({ req, payload }) => {
+    // BAIL if omedaGraphQLCLient isnt available return payload.
+    if (!req.$omedaGraphQLClient) return payload;
+
+    const idxOnProductHooks = req.app.locals.site.getAsObject('idxOnProductHooks');
+    const omeda = req.app.locals.site.getAsObject('omeda');
+    if (idxOnProductHooks.onUserProfileUpdate) {
+      const { productIds, promoCode } = idxOnProductHooks.onUserProfileUpdate;
+      const { user } = payload;
+      const found = getAsArray(user, 'externalIds')
+        .find(({ identifier, namespace }) => identifier.type === 'encrypted'
+          && namespace.provider === 'omeda'
+          && namespace.tenant === omeda.brandKey);
+      // BAIL if no encryptedCustomerId and return payload
+      if (!found) return payload;
+      const encryptedCustomerId = get(found, 'identifier.value');
+
+      // Retrive the omeda customer
+      const omedaCustomer = await getOmedaCustomerRecord({
+        omedaGraphQLClient: req.$omedaGraphQLClient,
+        encryptedCustomerId,
+      });
+      // Get the current user subscriptions
+      const subscriptions = getAsArray(omedaCustomer, 'subscriptions');
+      // For each autoOptinProduct check if they have a subscription.
+      // Sign the user up if they do not
+      const newSubscriptions = productIds.filter(
+        id => !subscriptions.some(({ product }) => product.deploymentTypeId === id),
+      );
+      if (newSubscriptions) {
+        const deploymentTypeIds = payload.deploymentTypeIds
+          ? [...payload.deploymentTypeIds, ...newSubscriptions]
+          : [...newSubscriptions];
+        return ({
+          ...payload,
+          deploymentTypeIds,
+          appendPromoCodes: [
+            promoCode,
+          ],
+        });
+      }
+    }
+    return payload;
+  }),
+
+  /**
+   * Customize Omeda+IdentityX payload
+   */
+  // onAuthenticationSuccessFormatter: async payload => ({
+  //   ...payload,
+  //   // productIds: [33],
+  //   promoCode: 'onAuthenticationSuccessWithFormatter',
+  // }),
 };
