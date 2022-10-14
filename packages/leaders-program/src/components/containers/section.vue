@@ -1,6 +1,6 @@
 <template>
   <div :class="classes" :data-section-id="sectionId">
-    <button class="leaders-section__toggle-button"  @click="toggleExpanded">
+    <button class="leaders-section__toggle-button" @click="toggleExpanded">
       <component :is="collapsedIcon" v-show="!isExpanded" :modifiers="iconModifiers" />
       <component :is="expandedIcon" v-show="isExpanded" :modifiers="iconModifiers" />
       <span class="leaders-section__toggle-button-title">{{ title }}</span>
