@@ -36,6 +36,8 @@ module.exports = async ({
 
   promoCode,
 
+  deploymentTypes = [],
+
   appendBehaviors,
   appendDemographics,
   appendPromoCodes,
@@ -78,7 +80,6 @@ module.exports = async ({
     };
   });
 
-  const deploymentTypes = [];
   const subscriptions = [];
   getAsArray(appUser, 'customBooleanFieldAnswers').forEach((boolean) => {
     const { field, hasAnswered } = boolean;

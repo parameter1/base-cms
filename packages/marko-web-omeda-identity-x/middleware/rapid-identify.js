@@ -20,6 +20,7 @@ module.exports = ({
     const handler = async ({
       user,
       promoCode,
+      deploymentTypes,
       appendBehaviors,
       appendDemographics,
       appendPromoCodes,
@@ -36,6 +37,7 @@ module.exports = ({
       }),
 
       // Custom behaviors, demos, or codes to append to the API call
+      deploymentTypes,
       appendBehaviors,
       appendDemographics,
       appendPromoCodes,
