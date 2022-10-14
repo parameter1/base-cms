@@ -141,14 +141,13 @@ module.exports = {
         id => !subscriptions.some(({ product }) => product.deploymentTypeId === id),
       );
       if (newSubscriptions) {
-        const deploymentTypeIds = payload.deploymentTypeIds
-          ? [...payload.deploymentTypeIds, ...newSubscriptions]
-          : [...newSubscriptions];
+        const deploymentTypes = newSubscriptions.map(id => ({ id, optedIn: true }));
         return ({
           ...payload,
-          deploymentTypeIds,
+          deploymentTypes,
+          promoCode,
           appendPromoCodes: [
-            promoCode,
+            { promoCode },
           ],
         });
       }
