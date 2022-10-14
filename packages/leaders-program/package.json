@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-leaders-program",
-  "version": "3.0.0",
+  "version": "3.10.1",
   "description": "Leaders Program Vue components",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/leaders-program",
   "author": "Jacob Bare <jacob@parameter1.com>",

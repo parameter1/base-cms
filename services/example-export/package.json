@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-example-export",
-  "version": "3.7.6",
+  "version": "3.10.1",
   "description": "Example BaseCMS export.",
   "main": "src/index.js",
   "author": "Josh Worden <josh@parameter1.com>",
