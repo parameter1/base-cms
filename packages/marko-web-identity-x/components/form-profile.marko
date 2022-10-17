@@ -13,6 +13,7 @@ $ const additionalEventData = defaultValue(input.additionalEventData, {});
       activeUser: user,
       requiredServerFields: identityX.config.getRequiredServerFields(),
       requiredClientFields: identityX.config.getRequiredClientFields(),
+      defaultFieldLabels: identityX.config.get("defaultFieldLabels"),
       hiddenFields: identityX.config.getHiddenFields(),
       defaultCountryCode: identityX.config.get('defaultCountryCode'),
       booleanQuestionsLabel: identityX.config.get('booleanQuestionsLabel'),

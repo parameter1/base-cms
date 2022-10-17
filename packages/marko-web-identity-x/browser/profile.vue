@@ -12,6 +12,7 @@
             <given-name
               v-model="user.givenName"
               :required="givenNameSettings.required"
+              :label="defaultFieldLabels.givenName"
             />
           </div>
           <div
@@ -22,6 +23,7 @@
             <family-name
               v-model="user.familyName"
               :required="familyNameSettings.required"
+              :label="defaultFieldLabels.familyName"
             />
           </div>
         </div>
@@ -35,6 +37,7 @@
             <organization
               v-model="user.organization"
               :required="organizationSettings.required"
+              :label="defaultFieldLabels.organization"
             />
           </div>
           <div
@@ -45,6 +48,7 @@
             <organization-title
               v-model="user.organizationTitle"
               :required="organizationTitleSettings.required"
+              :label="defaultFieldLabels.organizationTitle"
             />
           </div>
         </div>
@@ -58,6 +62,7 @@
             <phone-number
               v-model="user.phoneNumber"
               :required="phoneNumberSettings.required"
+              :label="defaultFieldLabels.phoneNumber"
             />
           </div>
           <div
@@ -80,6 +85,7 @@
           :city="citySettings"
           :region-code="regionCodeSettings"
           :postal-code="postalCodeSettings"
+          :field-labels="defaultFieldLabels"
         />
 
         <div v-if="customSelectFieldAnswers.length" class="row">
@@ -248,6 +254,10 @@ export default {
     requiredClientFields: {
       type: Array,
       default: () => [],
+    },
+    defaultFieldLabels: {
+      type: Object,
+      default: () => {},
     },
     hiddenFields: {
       type: Array,

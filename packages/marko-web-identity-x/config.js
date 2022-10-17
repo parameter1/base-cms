@@ -21,6 +21,7 @@ class IdentityXConfiguration {
     apiToken,
     requiredServerFields = [],
     requiredClientFields = [],
+    defaultFieldLabels = {},
     hiddenFields = ['city', 'street', 'addressExtra', 'phoneNumber'],
     defaultCountryCode,
     booleanQuestionsLabel,
@@ -33,6 +34,7 @@ class IdentityXConfiguration {
     this.options = {
       requiredServerFields,
       requiredClientFields,
+      defaultFieldLabels,
       hiddenFields,
       defaultCountryCode,
       booleanQuestionsLabel,
