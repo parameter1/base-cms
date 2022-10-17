@@ -2,12 +2,12 @@ import { get, getAsArray, getAsObject } from "@parameter1/base-cms-object-path";
 import { dasherize } from "@parameter1/base-cms-inflector";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 
-$ const { $markoWebSearch: search } = out.global;
+$ const { $markoWebSearch: search, i18n } = out.global;
 
 $ const blockName = "marko-web-search-sort-by";
 $ const options = [
-  { id: 'PUBLISHED', label: 'Published' },
-  { id: 'SCORE', label: 'Relevancy' },
+  { id: 'PUBLISHED', label: `${i18n("Sort")}: ${i18n("Published")}` },
+  { id: 'SCORE', label: `${i18n("Sort")}: ${i18n("Relevancy")}` },
 ];
 
 <marko-web-block name=blockName modifiers=input.modifiers>
