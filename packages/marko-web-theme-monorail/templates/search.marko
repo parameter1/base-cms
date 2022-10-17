@@ -10,8 +10,8 @@ $ const {
 } = out.global;
 
 $ const type = "search";
-$ const title = "Search";
-$ const description = `Search ${config.siteName()}`;
+$ const title = i18n("Search");
+$ const description = `${i18n("Search")} ${config.siteName()}`;
 
 $ const currentPage = search.getCurrentPage();
 
@@ -40,7 +40,7 @@ $ const sponsorLogo = site.get('search.sponsorLogos.page');
       <@section|{ blockName }|>
         <div class="row">
           <div class="col-lg-3">
-            <marko-web-search-filter-container modifiers=["sticky"]>
+            <marko-web-search-filter-container modifiers=["sticky"] title={ value: `${i18n("Filters")}`}>
                 <@before-title|{ blockName }|>
                   <marko-web-website-section-name|{ value }| tag="h1" block-name=blockName obj={ name: title }>
                     <if(currentPage > 1)>${value}: ${i18n("Page")} ${currentPage}</if>
@@ -58,11 +58,11 @@ $ const sponsorLogo = site.get('search.sponsorLogos.page');
                 <marko-web-search-form>
                   <@block class="search-form" />
                   <div class="form-group search-form__group">
-                    <label for="search-phrase" class="sr-only">Enter search phrase</label>
+                    <label for="search-phrase" class="sr-only">${i18n("Enter search phrase")}</label>
                     <marko-web-search-input
                       id="search-phrase"
                       class="form-control"
-                      placeholder="Enter search phrase..."
+                      placeholder=`${i18n("Enter search phrase")}...`
                     />
                   </div>
                   <button type="submit" class="btn btn-primary search-form__btn">
