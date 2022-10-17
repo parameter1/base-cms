@@ -1,4 +1,4 @@
-$ const { $markoWebSearch: search } = out.global;
+$ const { $markoWebSearch: search, i18n } = out.global;
 
 $ const previousPage = search.getPrevPage();
 
@@ -15,7 +15,7 @@ $ const previousPage = search.getPrevPage();
       <${input.renderBody} />
     </if>
     <else>
-      Previous Page
+      ${i18n("Previous Page")}
     </else>
   </marko-web-search-link>
 </if>

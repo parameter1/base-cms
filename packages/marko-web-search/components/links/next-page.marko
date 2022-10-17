@@ -1,4 +1,4 @@
-$ const { $markoWebSearch: search } = out.global;
+$ const { $markoWebSearch: search, i18n } = out.global;
 
 $ const nextPage = search.getNextPage(input.totalCount);
 
@@ -15,7 +15,7 @@ $ const nextPage = search.getNextPage(input.totalCount);
       <${input.renderBody} />
     </if>
     <else>
-      Next Page
+      ${i18n("Next Page")}
     </else>
   </marko-web-search-link>
 </if>
