@@ -73,6 +73,7 @@
             <country
               v-model="user.countryCode"
               :required="countryCodeSettings.required"
+              :label="defaultFieldLabels.country"
             />
           </div>
         </div>
