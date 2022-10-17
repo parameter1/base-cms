@@ -1,8 +1,8 @@
-$ const { $markoWebSearch: search } = out.global;
+$ const { $markoWebSearch: search, i18n } = out.global;
 
 <marko-web-search-filter-block
   filter-key="contentTypes"
   items=search.config.contentTypeObjects
 >
-  <@title value="Content Types" />
+  <@title value=`${i18n("Content Types")}` />
 </marko-web-search-filter-block>

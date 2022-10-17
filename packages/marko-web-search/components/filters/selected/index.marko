@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 import { get, getAsArray, getAsObject } from "@parameter1/base-cms-object-path";
 
-$ const { $markoWebSearch: search } = out.global;
+$ const { $markoWebSearch: search, i18n } = out.global;
 $ const blockName = "marko-web-search-selected-filters";
 $ const { contentTypes, assignedToWebsiteSectionIds } = search.input;
 $ const { contentTypeObjectMap } = search.config;
@@ -21,9 +21,9 @@ $ const hasFilters = !search.isDefaultInputValueFor("contentTypes") || assignedT
       <for|contentTypeId| of=contentTypes>
         $ const contentType = contentTypeObjectMap.get(contentTypeId);
         <marko-web-search-selected-filter
-          prefix="Type"
+          prefix=`${i18n("Type")}`
           filter-key="contentTypes"
-          label=contentType.label
+          label=`${i18n(contentType.label)}`
           />
       </for>
     </if>
@@ -35,7 +35,7 @@ $ const hasFilters = !search.isDefaultInputValueFor("contentTypes") || assignedT
       >
         <for|section| of=nodes>
           <marko-web-search-selected-filter
-            prefix="Section"
+            prefix=`${i18n("Section")}`
             filter-key="assignedToWebsiteSectionIds"
             label=section.fullName
           />

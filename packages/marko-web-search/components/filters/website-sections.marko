@@ -1,7 +1,7 @@
 import { getAsArray } from "@parameter1/base-cms-object-path";
 import loadWebsiteSections from "./load-website-sections";
 
-$ const { $markoWebSearch, apollo } = out.global;
+$ const { $markoWebSearch, apollo, i18n } = out.global;
 $ const filterKey = "assignedToWebsiteSectionIds";
 
 <marko-web-resolve|{ resolved }| promise=loadWebsiteSections({
@@ -10,7 +10,7 @@ $ const filterKey = "assignedToWebsiteSectionIds";
 })>
   $ const { selectedSection, configuredSections } = resolved;
   <marko-web-search-filter-block filter-key=filterKey items=configuredSections>
-    <@title value="Website Sections" />
+    <@title value=`${i18n("Website Sections")}` />
     <@item|{ node, blockName }|>
       <if(selectedSection && selectedSection.hierarchyMap.has(node.id))>
         <!-- loop through hierarchy to create "breadcrumb" links -->
