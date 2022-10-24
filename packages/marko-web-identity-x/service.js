@@ -1,3 +1,4 @@
+const { get } = require('@parameter1/base-cms-object-path');
 const createClient = require('./utils/create-client');
 const getActiveContext = require('./api/queries/get-active-context');
 const checkContentAccess = require('./api/queries/check-content-access');
@@ -10,6 +11,7 @@ const tokenCookie = require('./utils/token-cookie');
 const callHooksFor = require('./utils/call-hooks-for');
 
 const isEmpty = v => v == null || v === '';
+const isFn = v => typeof v === 'function';
 
 class IdentityX {
   constructor({
@@ -27,6 +29,17 @@ class IdentityX {
       appId: config.getAppId(),
       config,
     });
+  }
+
+  /**
+   * Validates the email address with a user-supplied function, if present.
+   * @param {String} email
+   * @return {Tuple} [Boolean, String] The validation status and error message (if present)
+   */
+  async validateEmail(email) {
+    const targetFn = get(this, 'config.options.emailValidator');
+    const fn = isFn(targetFn) ? targetFn : () => [Boolean(email)];
+    return fn({ email, req: this.req });
   }
 
   /**
@@ -158,6 +171,8 @@ class IdentityX {
    * Creates an AppUser from an email address
    */
   async createAppUser({ email }) {
+    const [valid, msg] = await this.validateEmail(email);
+    if (!valid) throw new Error(msg || 'The supplied email address cannot be used.');
     const { data } = await this.client.mutate({
       mutation: createAppUser,
       variables: { email },
