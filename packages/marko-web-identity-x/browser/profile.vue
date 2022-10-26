@@ -176,8 +176,8 @@
       :endpoints="endpoints"
       :app-context-id="appContextId"
       :consent-policy="consentPolicy"
+      :email-consent-request="emailConsentRequest"
       :regional-consent-policies="regionalConsentPolicies"
-      :required-fields="requiredLoginFields"
     />
   </div>
 </template>

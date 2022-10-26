@@ -36,9 +36,16 @@
         :disabled="loading"
         :label="loginEmailLabel"
       />
+
+      <small
+        v-if="emailConsentRequest"
+        class="text-muted mb-3 d-block"
+        v-html="emailConsentRequest"
+      />
+
       <small
         v-if="consentPolicy"
-        class="text-muted mb-3"
+        class="text-muted mb-3 d-block"
         v-html="consentPolicy"
       />
       <button
@@ -103,6 +110,10 @@ export default {
       }),
     },
     consentPolicy: {
+      type: String,
+      default: null,
+    },
+    emailConsentRequest: {
       type: String,
       default: null,
     },
