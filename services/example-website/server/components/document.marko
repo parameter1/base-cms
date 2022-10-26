@@ -49,6 +49,9 @@ $ const { nativeX } = out.global;
         reg-enabled=isEnabled
         show-search-icon=true
         menu-btn-position="right"
+        newsletter-menu-block-props={
+          consentPolicy: 'Custom consent policy - <strong>header</strong>'
+        }
       />
       <theme-site-menu has-user=hasUser reg-enabled=isEnabled />
     </marko-web-identity-x-context>
@@ -58,7 +61,11 @@ $ const { nativeX } = out.global;
   </@above-container>
   <@below-container>
     <${input.belowContainer} />
-    <theme-site-footer />
+    <theme-site-footer
+      newsletter-block-props={
+        consentPolicy: 'Custom consent policy - footer'
+      }
+    />
     <marko-web-deferred-script-loader-load />
   </@below-container>
 </marko-web-document>
