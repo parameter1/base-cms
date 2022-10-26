@@ -8,7 +8,6 @@ const props = require('./validation/props');
 const {
   onAuthenticationSuccess,
   onLoginLinkSent,
-  onLogout,
   onUserProfileUpdate,
 } = require('./integration-hooks');
 
@@ -107,20 +106,6 @@ module.exports = (params = {}) => {
       formatter: onUserProfileUpdateFormatter,
       ...appendDataFor('onUserProfileUpdate'),
       behavior: buildBehaviorFor('onUserProfileUpdate', {
-        actionSource: get(args, 'actionSource'),
-        newsletterSignupType: get(args, 'newsletterSignupType'),
-        contentGateType: get(args, 'contentGateType'),
-      }),
-    }),
-  });
-
-  idxConfig.addHook({
-    name: 'onLogout',
-    shouldAwait: true,
-    fn: async args => onLogout({
-      ...args,
-      ...appendDataFor('onLogout'),
-      behavior: buildBehaviorFor('onLogout', {
         actionSource: get(args, 'actionSource'),
         newsletterSignupType: get(args, 'newsletterSignupType'),
         contentGateType: get(args, 'contentGateType'),
