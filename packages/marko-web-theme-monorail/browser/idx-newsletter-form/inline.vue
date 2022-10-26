@@ -21,6 +21,7 @@
             :redirect="redirect"
             :login-email-placeholder="loginEmailPlaceholder"
             :consent-policy="consentPolicy"
+            :email-consent-request="emailConsentRequest"
             :regional-consent-policies="regionalConsentPolicies"
             :app-context-id="appContextId"
             :login-email-label="translateEmail"
@@ -109,6 +110,10 @@ export default {
       }),
     },
     consentPolicy: {
+      type: String,
+      default: null,
+    },
+    emailConsentRequest: {
       type: String,
       default: null,
     },
