@@ -44,7 +44,12 @@ $ const { nativeX } = out.global;
   </@above-wrapper>
   <@above-container>
     <marko-web-identity-x-context|{ hasUser, isEnabled }|>
-      <theme-site-header has-user=hasUser reg-enabled=isEnabled show-search-icon=true menu-btn-position="right"/>
+      <theme-site-header
+        has-user=hasUser
+        reg-enabled=isEnabled
+        show-search-icon=true
+        menu-btn-position="right"
+      />
       <theme-site-menu has-user=hasUser reg-enabled=isEnabled />
     </marko-web-identity-x-context>
     <marko-web-leaders-dropdown-portal />
@@ -53,11 +58,7 @@ $ const { nativeX } = out.global;
   </@above-container>
   <@below-container>
     <${input.belowContainer} />
-    <theme-site-footer>
-      <@newsletter-block>
-        <identity-x-newsletter-form-footer />
-      </@newsletter-block>
-    </theme-site-footer>
+    <theme-site-footer />
     <marko-web-deferred-script-loader-load />
   </@below-container>
 </marko-web-document>
