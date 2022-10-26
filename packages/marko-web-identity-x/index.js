@@ -20,7 +20,10 @@ module.exports = (app, config, {
     app.get(endpoint, (req, res) => {
       const { token } = req.identityX;
       // Redirect to profile if a user token is already present (refresh after link click)
-      if (type === 'authenticate' && token) res.redirect(302, config.getEndpointFor('profile'));
+      if (type === 'authenticate' && token) {
+        const redirectTo = req.query.redirectTo || config.getEndpointFor('profile');
+        res.redirect(302, redirectTo);
+      }
       res.marko(template);
     });
   });
