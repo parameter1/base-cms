@@ -47,10 +47,7 @@ class IdentityX {
    *
    * @returns {Promise<object>}
    */
-  async loadActiveContext({ forceQuery = false, useIps = false } = {}) {
-    // Require a token/cookie to check active context. This disables team context from IP/CIDR.
-    if (!this.token && !useIps) return {};
-
+  async loadActiveContext({ forceQuery = false } = {}) {
     // Only run the active context query once
     if (!this.activeContextQuery || forceQuery) {
       this.activeContextQuery = this.client.query({ query: getActiveContext });
