@@ -20,6 +20,7 @@
       :regional-consent-policies="regionalConsentPolicies"
       :button-label="buttonLabel"
       :call-to-action="callToAction"
+      :default-field-labels="defaultFieldLabels"
       @profile-updated="redirect"
     />
   </div>
@@ -108,6 +109,10 @@ export default {
     defaultCountryCode: {
       type: String,
       default: null,
+    },
+    defaultFieldLabels: {
+      type: Object,
+      default: () => ({}),
     },
     booleanQuestionsLabel: {
       type: String,

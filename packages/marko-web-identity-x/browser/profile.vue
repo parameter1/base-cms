@@ -85,7 +85,7 @@
           :city="citySettings"
           :region-code="regionCodeSettings"
           :postal-code="postalCodeSettings"
-          :field-labels="defaultFieldLabels"
+          :default-field-labels="defaultFieldLabels"
         />
 
         <div v-if="customSelectFieldAnswers.length" class="row">
