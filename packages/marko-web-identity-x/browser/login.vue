@@ -39,13 +39,13 @@
 
       <small
         v-if="emailConsentRequestEnabled && emailConsentRequest"
-        class="text-muted mb-3 d-block"
+        class="text-muted mb-1 d-block"
         v-html="emailConsentRequest"
       />
 
       <small
         v-if="consentPolicyEnabled && consentPolicy"
-        class="text-muted mb-3 d-block"
+        class="text-muted mb-1 d-block"
         v-html="consentPolicy"
       />
       <button
