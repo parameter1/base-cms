@@ -151,7 +151,6 @@
       clear: both;
     }
   }
-
   &__content-body p {
 
     [data-embed-type="image"][data-embed-align="right"] {
@@ -159,23 +158,12 @@
       @include media-breakpoint-up(md) {
         text-align: right;
       }
-      img {
-        width: auto;
-        min-width: auto;
-        max-width: 100%;
-        max-height: 300px;
-      }
     }
+
     [data-embed-type="image"][data-embed-align="left"] {
       margin-bottom: 1rem;
       @include media-breakpoint-up(md) {
         text-align: left;
-      }
-      img {
-        width: auto;
-        min-width: auto;
-        max-width: 100%;
-        max-height: 300px;
       }
     }
   }
