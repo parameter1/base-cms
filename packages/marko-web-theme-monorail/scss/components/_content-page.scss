@@ -151,7 +151,6 @@
       clear: both;
     }
   }
-
   &__content-body p {
 
     [data-embed-type="image"][data-embed-align="right"] {
@@ -159,24 +158,12 @@
       @include media-breakpoint-up(md) {
         text-align: right;
       }
-      img {
-        max-height: 300px;
-      }
     }
+
     [data-embed-type="image"][data-embed-align="left"] {
       margin-bottom: 1rem;
       @include media-breakpoint-up(md) {
         text-align: left;
-      }
-      img {
-        max-height: 300px;
-      }
-    }
-    [data-embed-type="image"] {
-      img {
-        height: 100%;
-        width: 100%;
-        max-width: 100%;
       }
     }
   }
