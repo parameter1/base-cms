@@ -176,8 +176,10 @@
       :endpoints="endpoints"
       :app-context-id="appContextId"
       :consent-policy="consentPolicy"
+      :consent-policy-enabled="consentPolicyEnabled"
+      :email-consent-request="emailConsentRequest"
+      :email-consent-request-enabled="emailConsentRequestEnabled"
       :regional-consent-policies="regionalConsentPolicies"
-      :required-fields="requiredLoginFields"
     />
   </div>
 </template>
@@ -271,6 +273,18 @@ export default {
       type: String,
       default: null,
     },
+    consentPolicyEnabled: {
+      type: Boolean,
+      default: false,
+    },
+    emailConsentRequest: {
+      type: String,
+      default: null,
+    },
+    emailConsentRequestEnabled: {
+      type: Boolean,
+      default: false,
+    },
     appContextId: {
       type: String,
       default: null,
@@ -278,10 +292,6 @@ export default {
     buttonLabel: {
       type: String,
       default: 'Submit',
-    },
-    emailConsentRequest: {
-      type: String,
-      default: null,
     },
     regionalConsentPolicies: {
       type: Array,

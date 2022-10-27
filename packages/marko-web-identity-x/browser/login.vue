@@ -36,9 +36,16 @@
         :disabled="loading"
         :label="loginEmailLabel"
       />
+
       <small
-        v-if="consentPolicy"
-        class="text-muted mb-3"
+        v-if="emailConsentRequestEnabled && emailConsentRequest"
+        class="text-muted mb-1 d-block"
+        v-html="emailConsentRequest"
+      />
+
+      <small
+        v-if="consentPolicyEnabled && consentPolicy"
+        class="text-muted mb-1 d-block"
         v-html="consentPolicy"
       />
       <button
@@ -105,6 +112,18 @@ export default {
     consentPolicy: {
       type: String,
       default: null,
+    },
+    consentPolicyEnabled: {
+      type: Boolean,
+      default: false,
+    },
+    emailConsentRequest: {
+      type: String,
+      default: null,
+    },
+    emailConsentRequestEnabled: {
+      type: Boolean,
+      default: false,
     },
     redirect: {
       type: String,
@@ -217,7 +236,7 @@ export default {
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
         this.complete = true;
-        this.emit('login-link-sent', { data, source: this.source });
+        this.emit('login-link-sent', { data, email: this.email, source: this.source });
       } catch (e) {
         this.error = e;
         this.emit('login-errored', { message: e.message });

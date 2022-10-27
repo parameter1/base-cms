@@ -16,7 +16,9 @@
       :default-country-code="defaultCountryCode"
       :boolean-questions-label="booleanQuestionsLabel"
       :consent-policy="consentPolicy"
+      :consent-policy-enabled="consentPolicyEnabled"
       :email-consent-request="emailConsentRequest"
+      :email-consent-request-enabled="emailConsentRequestEnabled"
       :regional-consent-policies="regionalConsentPolicies"
       :button-label="buttonLabel"
       :call-to-action="callToAction"
@@ -90,9 +92,17 @@ export default {
       type: String,
       default: null,
     },
+    consentPolicyEnabled: {
+      type: Boolean,
+      default: false,
+    },
     emailConsentRequest: {
       type: String,
       default: null,
+    },
+    emailConsentRequestEnabled: {
+      type: Boolean,
+      default: false,
     },
     regionalConsentPolicies: {
       type: Array,
@@ -207,6 +217,8 @@ export default {
           .some(({ hasAnswered, field }) => field.required && !hasAnswered);
 
         this.emit('authenticated', {
+          id: this.activeUser.id,
+          email: this.activeUser.email,
           mustReVerifyProfile: this.mustReVerifyProfile,
           isProfileComplete: this.isProfileComplete,
           requiresCustomFieldAnswers: this.requiresCustomFieldAnswers,

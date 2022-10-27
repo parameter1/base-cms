@@ -15,6 +15,16 @@ module.exports = (app, config, {
   config.endpointTypes.forEach((type) => {
     const endpoint = config.getEndpointFor(type);
     const template = templates[type];
-    if (template) app.get(endpoint, (_, res) => res.marko(template));
+    if (!template) return;
+
+    app.get(endpoint, (req, res) => {
+      const { token } = req.identityX;
+      // Redirect to profile if a user token is already present (refresh after link click)
+      if (type === 'authenticate' && token) {
+        const redirectTo = req.query.redirectTo || config.getEndpointFor('profile');
+        res.redirect(302, redirectTo);
+      }
+      res.marko(template);
+    });
   });
 };
