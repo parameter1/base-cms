@@ -38,13 +38,13 @@
       />
 
       <small
-        v-if="emailConsentRequest"
+        v-if="emailConsentRequestEnabled && emailConsentRequest"
         class="text-muted mb-3 d-block"
         v-html="emailConsentRequest"
       />
 
       <small
-        v-if="consentPolicy"
+        v-if="consentPolicyEnabled && consentPolicy"
         class="text-muted mb-3 d-block"
         v-html="consentPolicy"
       />
@@ -113,9 +113,17 @@ export default {
       type: String,
       default: null,
     },
+    consentPolicyEnabled: {
+      type: Boolean,
+      default: false,
+    },
     emailConsentRequest: {
       type: String,
       default: null,
+    },
+    emailConsentRequestEnabled: {
+      type: Boolean,
+      default: false,
     },
     redirect: {
       type: String,
