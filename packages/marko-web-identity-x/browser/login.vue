@@ -236,7 +236,7 @@ export default {
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
         this.complete = true;
-        this.emit('login-link-sent', { data, source: this.source });
+        this.emit('login-link-sent', { data, email: this.email, source: this.source });
       } catch (e) {
         this.error = e;
         this.emit('login-errored', { message: e.message });

@@ -217,6 +217,8 @@ export default {
           .some(({ hasAnswered, field }) => field.required && !hasAnswered);
 
         this.emit('authenticated', {
+          id: this.activeUser.id,
+          email: this.activeUser.email,
           mustReVerifyProfile: this.mustReVerifyProfile,
           isProfileComplete: this.isProfileComplete,
           requiresCustomFieldAnswers: this.requiresCustomFieldAnswers,
