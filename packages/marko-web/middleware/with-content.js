@@ -15,6 +15,7 @@ module.exports = ({
   redirectToFn,
   pathFn,
   formatResponse,
+  sideloadDataFn,
 } = {}) => asyncRoute(async (req, res) => {
   const id = isFn(idResolver) ? await idResolver(req, res) : req.params.id;
   const { apollo, query } = req;
@@ -36,6 +37,7 @@ module.exports = ({
     queryFragment,
     variables: { input: { id: Number(id), ...additionalInput } },
     resultField: 'content',
+    sideloadDataFn,
   });
   if (isFn(formatResponse)) await formatResponse({ res, content, pageNode });
   return res.marko(template, { ...content, pageNode });
