@@ -4,7 +4,7 @@ import loadWebsiteSections from "./load-website-sections";
 
 $ const { $markoWebSearch, apollo, i18n } = out.global;
 $ const filterKey = "assignedToWebsiteSectionIds";
-$ const title = isFn(i18n) ? i18n("Website Sections") : "Website Sections";
+$ const title = isFunction(i18n) ? i18n("Website Sections") : "Website Sections";
 
 <marko-web-resolve|{ resolved }| promise=loadWebsiteSections({
   $markoWebSearch,

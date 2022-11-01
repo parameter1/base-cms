@@ -17,7 +17,7 @@ $ const previousPage = search.getPrevPage();
       <${input.renderBody} />
     </if>
     <else>
-      ${isFn(i18n) ? i18n("Previous Page") : "Previous Page"}
+      ${isFunction(i18n) ? i18n("Previous Page") : "Previous Page"}
     </else>
   </marko-web-search-link>
 </if>

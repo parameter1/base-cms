@@ -6,9 +6,10 @@ $ const { $markoWebSearch: search, i18n } = out.global;
 $ const blockName = "marko-web-search-selected-filters";
 $ const { contentTypes, assignedToWebsiteSectionIds } = search.input;
 $ const { contentTypeObjectMap } = search.config;
-$ const typePrefix = isFn(i18n) ? i18n("Type") : "Type";
-$ const typeLabel = isFn(i18n) ? i18n(contentType.label) : contentType.label;
-$ const sectionPrefix = isFn(i18n) ? i18n("Section") : "Section";
+$ const i18nIsFunction = isFunction(i18n);
+$ const typePrefix = i18nIsFunction ? i18n("Type") : "Type";
+$ const typeLabel = i18nIsFunction? i18n(contentType.label) : contentType.label;
+$ const sectionPrefix = i18nIsFunction? i18n("Section") : "Section";
 
 $ const queryFragment = gql`
   fragment MarkoWebSearchSelectedWebsiteSectionFragment on WebsiteSection {

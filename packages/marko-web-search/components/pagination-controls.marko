@@ -24,7 +24,7 @@ $ const blockName = "marko-web-search-pagination-controls";
       </if>
       <else>
         <!-- default rendering -->
-        <if(isFn(i18n))>
+        <if(isFunction(i18n))>
           ${i18n("Page")} ${currentPage} ${i18n("of")} ${totalPages}
         </if>
         <else>

@@ -17,7 +17,7 @@ $ const nextPage = search.getNextPage(input.totalCount);
       <${input.renderBody} />
     </if>
     <else>
-      ${isFn(i18n) ? i18n("Next Page") : "Next Page"}
+      ${isFunction(i18n) ? i18n("Next Page") : "Next Page"}
     </else>
   </marko-web-search-link>
 </if>

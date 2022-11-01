@@ -49,14 +49,14 @@ $ const titleModifier = dasherize(filterKey);
               node=node
               block-name=blockName
               id=id
-              label=`${isFn(i18n) ? i18n(label) : label}`
+              label=`${isFunction(i18n) ? i18n(label) : label}`
               is-selected=isSelected
             />
           </if>
           <else>
             <!-- default item rendering -->
             <marko-web-search-set-filter-value-link name=filterKey value=id reset-class=`${blockName}__clear-item`>
-              ${isFn(i18n) ? i18n(label) : label}
+              ${isFunction(i18n) ? i18n(label) : label}
             </marko-web-search-set-filter-value-link>
           </else>
         </marko-web-element>

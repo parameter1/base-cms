@@ -6,7 +6,7 @@ import { isFunction } from '@parameter1/base-cms-utils';
 $ const { $markoWebSearch: search, i18n } = out.global;
 
 $ const blockName = "marko-web-search-sort-by";
-$ const options = isFn(i18n) ? [
+$ const options = isFunction(i18n) ? [
   { id: 'PUBLISHED', label: `${i18n("Sort")}: ${i18n("Published")}` },
   { id: 'SCORE', label: `${i18n("Sort")}: ${i18n("Relevancy")}` },
 ] : [
