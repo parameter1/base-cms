@@ -13,6 +13,10 @@ export default {
       type: String,
       default: '.page-contents__content-body',
     },
+    linkSelector: {
+      type: String,
+      default: null,
+    },
     linkType: {
       type: String,
       default: 'external',
@@ -31,13 +35,14 @@ export default {
     if (!window.p1events) return;
     window.p1events('trackLinks', {
       ancestor: this.selector,
+      selector: this.linkSelector,
       linkType: this.linkType,
       handler: ({ element }) => {
         const url = element.getAttribute('href');
         if (!url) return null;
         return {
-          action: 'Click',
-          category: 'In-Body Content Link',
+          action: this.action,
+          category: this.category,
           entity: this.entity,
           props: { url },
         };
