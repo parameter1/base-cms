@@ -8,7 +8,6 @@ $ const { contentTypes, assignedToWebsiteSectionIds } = search.input;
 $ const { contentTypeObjectMap } = search.config;
 $ const i18nIsFunction = isFunction(i18n);
 $ const typePrefix = i18nIsFunction ? i18n("Type") : "Type";
-$ const typeLabel = i18nIsFunction? i18n(contentType.label) : contentType.label;
 $ const sectionPrefix = i18nIsFunction? i18n("Section") : "Section";
 
 $ const queryFragment = gql`
@@ -25,6 +24,7 @@ $ const hasFilters = !search.isDefaultInputValueFor("contentTypes") || assignedT
     <if(!search.isDefaultInputValueFor("contentTypes"))>
       <for|contentTypeId| of=contentTypes>
         $ const contentType = contentTypeObjectMap.get(contentTypeId);
+        $ const typeLabel = i18nIsFunction? i18n(contentType.label) : contentType.label;
         <marko-web-search-selected-filter
           prefix=typePrefix
           filter-key="contentTypes"
