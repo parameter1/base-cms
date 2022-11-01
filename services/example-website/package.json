@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-example-website",
-  "version": "3.10.6",
+  "version": "3.11.0",
   "description": "Example BaseCMS website.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
@@ -18,9 +18,9 @@
   },
   "dependencies": {
     "@parameter1/base-cms-marko-core": "^3.3.1",
-    "@parameter1/base-cms-marko-web": "^3.8.0",
+    "@parameter1/base-cms-marko-web": "^3.11.0",
     "@parameter1/base-cms-marko-web-auth0-identity-x": "^3.10.6",
-    "@parameter1/base-cms-marko-web-contact-us": "^3.8.0",
+    "@parameter1/base-cms-marko-web-contact-us": "^3.11.0",
     "@parameter1/base-cms-marko-web-deferred-script-loader": "^3.7.1",
     "@parameter1/base-cms-marko-web-gtm": "^3.7.3",
     "@parameter1/base-cms-marko-web-identity-x": "^3.10.6",
@@ -29,13 +29,13 @@
     "@parameter1/base-cms-marko-web-native-x": "^3.7.3",
     "@parameter1/base-cms-marko-web-omeda": "^3.7.3",
     "@parameter1/base-cms-marko-web-omeda-identity-x": "^3.10.6",
-    "@parameter1/base-cms-marko-web-p1-events": "^3.7.1",
+    "@parameter1/base-cms-marko-web-p1-events": "^3.11.0",
     "@parameter1/base-cms-marko-web-social-sharing": "^3.0.0",
     "@parameter1/base-cms-marko-web-theme-default": "^3.9.1",
-    "@parameter1/base-cms-marko-web-theme-monorail": "^3.10.6",
+    "@parameter1/base-cms-marko-web-theme-monorail": "^3.11.0",
     "@parameter1/base-cms-object-path": "^3.0.0",
     "@parameter1/base-cms-utils": "^3.0.0",
-    "@parameter1/base-cms-web-cli": "^3.8.0",
+    "@parameter1/base-cms-web-cli": "^3.11.0",
     "graphql": "^14.7.0",
     "graphql-tag": "^2.12.5"
   }
