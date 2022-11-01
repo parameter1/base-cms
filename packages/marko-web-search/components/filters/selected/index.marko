@@ -1,10 +1,14 @@
 import gql from "graphql-tag";
 import { get, getAsArray, getAsObject } from "@parameter1/base-cms-object-path";
+import { isFunction } from '@parameter1/base-cms-utils';
 
 $ const { $markoWebSearch: search, i18n } = out.global;
 $ const blockName = "marko-web-search-selected-filters";
 $ const { contentTypes, assignedToWebsiteSectionIds } = search.input;
 $ const { contentTypeObjectMap } = search.config;
+$ const typePrefix = isFn(i18n) ? i18n("Type") : "Type";
+$ const typeLabel = isFn(i18n) ? i18n(contentType.label) : contentType.label;
+$ const sectionPrefix = isFn(i18n) ? i18n("Section") : "Section";
 
 $ const queryFragment = gql`
   fragment MarkoWebSearchSelectedWebsiteSectionFragment on WebsiteSection {
@@ -21,9 +25,9 @@ $ const hasFilters = !search.isDefaultInputValueFor("contentTypes") || assignedT
       <for|contentTypeId| of=contentTypes>
         $ const contentType = contentTypeObjectMap.get(contentTypeId);
         <marko-web-search-selected-filter
-          prefix=`${i18n("Type")}`
+          prefix=typePrefix
           filter-key="contentTypes"
-          label=`${i18n(contentType.label)}`
+          label=typeLabel
           />
       </for>
     </if>
@@ -35,7 +39,7 @@ $ const hasFilters = !search.isDefaultInputValueFor("contentTypes") || assignedT
       >
         <for|section| of=nodes>
           <marko-web-search-selected-filter
-            prefix=`${i18n("Section")}`
+            prefix=sectionPrefix
             filter-key="assignedToWebsiteSectionIds"
             label=section.fullName
           />

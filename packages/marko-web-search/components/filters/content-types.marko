@@ -1,8 +1,12 @@
+import { isFunction } from '@parameter1/base-cms-utils';
+
 $ const { $markoWebSearch: search, i18n } = out.global;
+
+$ const title = isFn(i18n) ? i18n("Content Types") : "Content Types";
 
 <marko-web-search-filter-block
   filter-key="contentTypes"
   items=search.config.contentTypeObjects
 >
-  <@title value=`${i18n("Content Types")}` />
+  <@title value=title />
 </marko-web-search-filter-block>
