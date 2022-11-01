@@ -25,11 +25,15 @@ class PageNode {
       const { queryFragment, variables, resultField } = this;
       const path = `data.${resultField}`;
       const query = this.queryFactory({ queryFragment, queryName: 'PageNode' });
-      // Ensure there is a sideloadDataFn set, if not return empty object.
-      if (!isFn(this.sideloadDataFn)) this.sideloadDataFn = () => {};
       const [r, sideloadedData] = await Promise.all([
         this.apolloClient.query({ query, variables }),
-        this.sideloadDataFn(),
+        (async () => {
+          if (isFn(this.sideloadDataFn)) {
+            this.sideloadDataFn.bind(this);
+            return this.sideloadDataFn();
+          }
+          return undefined;
+        })(),
       ]);
       this.promise = createNode(getAsObject(r, path));
       this.sideloadedData = sideloadedData;
