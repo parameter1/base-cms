@@ -1,5 +1,6 @@
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 import { get } from "@parameter1/base-cms-object-path";
+import { isFunction } from '@parameter1/base-cms-utils';
 
 $ const { $markoWebSearch: search, i18n } = out.global;
 $ const totalCount = defaultValue(input.totalCount, 0);
@@ -23,7 +24,12 @@ $ const blockName = "marko-web-search-pagination-controls";
       </if>
       <else>
         <!-- default rendering -->
-        ${i18n("Page")} ${currentPage} ${i18n("of")} ${totalPages}
+        <if(isFn(i18n))>
+          ${i18n("Page")} ${currentPage} ${i18n("of")} ${totalPages}
+        </if>
+        <else>
+          Page ${currentPage} of ${totalPages}
+        </else>
       </else>
     </marko-web-element>
 

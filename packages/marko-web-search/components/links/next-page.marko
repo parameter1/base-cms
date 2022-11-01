@@ -1,3 +1,5 @@
+import { isFunction } from '@parameter1/base-cms-utils';
+
 $ const { $markoWebSearch: search, i18n } = out.global;
 
 $ const nextPage = search.getNextPage(input.totalCount);
@@ -15,7 +17,7 @@ $ const nextPage = search.getNextPage(input.totalCount);
       <${input.renderBody} />
     </if>
     <else>
-      ${i18n("Next Page")}
+      ${isFn(i18n) ? i18n("Next Page") : "Next Page"}
     </else>
   </marko-web-search-link>
 </if>
