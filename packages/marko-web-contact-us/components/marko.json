@@ -4,6 +4,9 @@
     "@config-name": {
       "type": "string",
       "required": true
+    },
+    "@title": {
+      "type": "string"
     }
   }
 }
