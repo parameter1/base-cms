@@ -1247,6 +1247,9 @@ module.exports = {
         { 'relatedTo.$id': companyId },
       ];
 
+      const includeSponsored = (getAsArray(query, 'type.$in').includes('Event') || getAsArray(query, 'type.$in').includes('Webinar'));
+      if (includeSponsored) query.$or.push({ sponsors: companyId });
+
       if (includeLabels.length && excludeLabels.length) {
         query.labels = { $in: includeLabels, $nin: excludeLabels };
       } else {
