@@ -25,6 +25,7 @@ $ const additionalEventData = defaultValue(input.additionalEventData, {});
       appContextId: identityX.config.get("appContextId"),
       regionalConsentPolicies: get(application, "organization.regionalConsentPolicies"),
       returnTo: query.returnTo,
+      enableChangeEmail: identityX.config.get("enableChangeEmail"),
     };
     <if(isEnabled)>
       <marko-web-browser-component name="IdentityXProfile" props=props />

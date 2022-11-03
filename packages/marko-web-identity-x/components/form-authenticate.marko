@@ -14,9 +14,9 @@ $ const additionalEventData = defaultValue(input.additionalEventData, {});
       redirectTo: query.redirectTo,
       requiredServerFields: identityX.config.getRequiredServerFields(),
       requiredClientFields: identityX.config.getRequiredClientFields(),
-      defaultCountryCode: identityX.config.get('defaultCountryCode'),
+      defaultCountryCode: identityX.config.get("defaultCountryCode"),
       defaultFieldLabels: identityX.config.get("defaultFieldLabels"),
-      booleanQuestionsLabel: identityX.config.get('booleanQuestionsLabel'),
+      booleanQuestionsLabel: identityX.config.get("booleanQuestionsLabel"),
       hiddenFields: identityX.config.getHiddenFields(),
       endpoints: identityX.config.getEndpoints(),
       callToAction: input.callToAction,
@@ -24,6 +24,7 @@ $ const additionalEventData = defaultValue(input.additionalEventData, {});
       consentPolicy: get(application, "organization.consentPolicy"),
       emailConsentRequest: get(application, "organization.emailConsentRequest"),
       regionalConsentPolicies: get(application, "organization.regionalConsentPolicies"),
+      enableChangeEmail: identityX.config.get("enableChangeEmail")
     };
     <marko-web-browser-component name="IdentityXAuthenticate" props=props />
   </marko-web-identity-x-context>
