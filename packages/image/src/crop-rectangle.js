@@ -55,6 +55,16 @@ module.exports = ({ width, height, cropDimensions }) => {
     return { ...o, [key]: v };
   }, {});
 
+  if (!x1 || !x2 || !y1 || !y2) {
+    return new CropRectangle({
+      x: 0,
+      y: 0,
+      width,
+      height,
+      cropped: false,
+    });
+  }
+
   return new CropRectangle({
     x: x1,
     y: y1,
