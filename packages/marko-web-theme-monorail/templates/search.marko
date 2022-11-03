@@ -1,5 +1,6 @@
 import queryFragment from "../graphql/fragments/section-feed-block";
 import { get } from '@parameter1/base-cms-object-path';
+import { isFunction } from '@parameter1/base-cms-utils';
 
 $ const {
   config,
@@ -10,8 +11,9 @@ $ const {
 } = out.global;
 
 $ const type = "search";
-$ const title = i18n("Search");
-$ const description = `${i18n("Search")} ${config.siteName()}`;
+$ const i18nIsFunction = isFunction(i18n);
+$ const title = i18nIsFunction ? i18n("Search") : "Search";
+$ const description = i18nIsFunction ? `${i18n("Search")} ${config.siteName()}` : `Search ${config.siteName()}`;
 
 $ const currentPage = search.getCurrentPage();
 
