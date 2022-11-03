@@ -158,6 +158,14 @@
           <button type="submit" class="btn btn-primary">
             {{ buttonLabel }}
           </button>
+          <a
+            v-if="enableChangeEmail"
+            :href="endpoints.changeEmail"
+            class="ml-3 btn btn-secondary"
+            title="Change your login email address"
+          >
+            Change email
+          </a>
           <span v-if="didSubmit" class="ml-2">
             {{ submitMessage }}
           </span>
@@ -312,6 +320,10 @@ export default {
     returnTo: {
       type: String,
       default: null,
+    },
+    enableChangeEmail: {
+      type: Boolean,
+      default: false,
     },
   },
 

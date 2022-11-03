@@ -32,6 +32,7 @@ class IdentityXConfiguration {
     this.appId = appId;
     this.apiToken = apiToken;
     this.options = {
+      enableChangeEmail: false,
       requiredServerFields,
       requiredClientFields,
       defaultFieldLabels,
@@ -48,7 +49,14 @@ class IdentityXConfiguration {
       ...rest,
     };
 
-    this.endpointTypes = ['authenticate', 'login', 'logout', 'register', 'profile'];
+    this.endpointTypes = [
+      'authenticate',
+      'changeEmail',
+      'login',
+      'logout',
+      'register',
+      'profile',
+    ];
     this.hooks = validHooks.reduce((o, name) => ({ ...o, [name]: [] }), {});
   }
 

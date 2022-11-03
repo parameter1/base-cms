@@ -23,6 +23,7 @@
       :button-label="buttonLabel"
       :call-to-action="callToAction"
       :default-field-labels="defaultFieldLabels"
+      :enable-change-email="enableChangeEmail"
       @profile-updated="redirect"
     />
   </div>
@@ -127,6 +128,10 @@ export default {
     booleanQuestionsLabel: {
       type: String,
       default: null,
+    },
+    enableChangeEmail: {
+      type: Boolean,
+      default: false,
     },
   },
 
