@@ -748,6 +748,7 @@ input ContentBodyInput {
     fit: "max",
     auto: "format,compress"
   }
+  useLinkInjectedBody: Boolean = false
 }
 
 input EmbeddedImageAttrsInput {

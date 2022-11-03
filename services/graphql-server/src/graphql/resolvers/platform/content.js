@@ -533,6 +533,10 @@ module.exports = {
       const mutated = get(content, `mutations.${mutation}.body`);
 
       let value = mutation ? mutated || body : body;
+      if (input.useLinkInjectedBody) {
+        value = `${content.linkInjectedBody || ''}`.trim() || value;
+      }
+
       // Use site image host otherwise fallback to global default.
       const imageHost = site.get('imageHost', defaults.imageHost);
       // Convert image tags to include image attributes (src, alt, caption, credit).
