@@ -21,14 +21,8 @@ class IdentityX {
   } = {}) {
     this.req = req;
     this.res = res;
-    this.token = tokenCookie.getFrom(req);
     this.config = config;
-    this.client = createClient({
-      req,
-      token: this.token,
-      appId: config.getAppId(),
-      config,
-    });
+    this.setToken(tokenCookie.getFrom(req));
   }
 
   /**
@@ -128,6 +122,22 @@ class IdentityX {
     return data.addAppUserExternalId;
   }
 
+  /**
+   *
+   * @param {*} param0
+   */
+  setToken(token) {
+    this.token = token;
+
+    // Re-init the client if the token changed
+    this.client = createClient({
+      req: this.req,
+      token,
+      appId: this.config.getAppId(),
+      config: this.config,
+    });
+  }
+
   async impersonateAppUser({ userId }) {
     const apiToken = this.config.getApiToken();
     if (!apiToken) throw new Error('Unable to add external ID: No API token has been configured.');
@@ -139,15 +149,7 @@ class IdentityX {
     });
     const { token } = data.impersonateAppUser;
     tokenCookie.setTo(this.res, token.value);
-    this.token = token;
-
-    // Re-init the client because the token changed
-    this.client = createClient({
-      req: this.req,
-      token,
-      appId: this.config.getAppId(),
-      config: this.config,
-    });
+    this.setToken(token);
   }
 
   async logoutAppUser() {
