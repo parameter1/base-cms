@@ -31,7 +31,7 @@ interface Content @requiresProject(fields: ["type"]) {
   # fields from platform.trait::Content\BodyFields
   # @todo Add truncate support!
   teaser(input: ContentTeaserInput = {}): String @projection(localField: "teaser", needs: ["teaserFallback", "mutations.Website.teaser", "mutations.Email.teaser", "mutations.Magazine.teaser"])
-  body(input: ContentBodyInput = {}): String @projection(localField: "body", needs: ["mutations.Website.body", "mutations.Email.body", "mutations.Magazine.body"])
+  body(input: ContentBodyInput = {}): String @projection(localField: "body", needs: ["mutations.Website.body", "mutations.Email.body", "mutations.Magazine.body", "linkInjectedBody"])
   notes: String @projection
 
   # fields from platform.trait::Taggable
