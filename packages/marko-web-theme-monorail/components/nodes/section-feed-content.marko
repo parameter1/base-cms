@@ -62,7 +62,7 @@ $ const blockName = "section-feed-content-node";
           <marko-web-content-end-date tag="span" block-name=blockName obj=content />
         </div>
         <if(content.linkUrl)>
-          <default-theme-content-link-url
+          <theme-content-link-url
             obj=content
             label=(isUpcoming ? `${i18n("Register for Webinar")}` : `${i18n("View Webinar")}`)
             target="_blank"

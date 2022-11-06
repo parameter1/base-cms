@@ -62,7 +62,7 @@ $ const displayPublishedDate = ["event", "webinar", "contact", "company"].includ
 
         $ const isSponsored = getAsArray(content, "labels").includes("Sponsored");
 
-        <default-theme-page-contents|{ blockName: contentsBlock }|>
+        <theme-page-contents|{ blockName: contentsBlock }|>
           <if(displayPrimaryImage)>
             <div class="mb-block">
               <marko-web-node-element name="header" block-name=cardBlock>
@@ -89,7 +89,7 @@ $ const displayPublishedDate = ["event", "webinar", "contact", "company"].includ
           <if(isSponsored)>
             <div class=`${cardBlock}__sponsored-content`>Sponsored Content</div>
           </if>
-          <default-theme-website-section-breadcrumbs
+          <theme-website-section-breadcrumbs
             section=primarySection
             display-home=false
             modifiers=[cardBlock]
@@ -134,8 +134,8 @@ $ const displayPublishedDate = ["event", "webinar", "contact", "company"].includ
               </if>
 
               <if(type !== "contact")>
-                <default-theme-content-attribution obj=content />
-                <default-theme-page-dates|{ blockName }|>
+                <theme-content-attribution obj=content />
+                <theme-page-dates|{ blockName }|>
                   <if(type === "event")>
                     <marko-web-content-start-date block-name=blockName obj=content />
                     <marko-web-content-end-date block-name=blockName obj=content />
@@ -146,12 +146,12 @@ $ const displayPublishedDate = ["event", "webinar", "contact", "company"].includ
                   <if(displayPublishedDate)>
                     <marko-web-content-published block-name=blockName obj=content />
                   </if>
-                </default-theme-page-dates>
+                </theme-page-dates>
               </if>
 
               <hr>
 
-              <default-theme-content-contact-details obj=content />
+              <theme-content-contact-details obj=content />
               <marko-web-content-body block-name=contentsBlock obj=content>
                 <@embed-options lazyload-images=false />
               </marko-web-content-body>
@@ -163,7 +163,7 @@ $ const displayPublishedDate = ["event", "webinar", "contact", "company"].includ
               </div>
             </else>
           </marko-web-identity-x-access>
-        </default-theme-page-contents>
+        </theme-page-contents>
       </marko-web-resolve-page>
     </div>
   </@above-container>

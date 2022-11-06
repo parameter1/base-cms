@@ -31,14 +31,14 @@ $ const { primarySection } = content;
 
       <@section>
         <div class="content-page-body" id="native-x-story-body">
-          <default-theme-page-contents|{ blockName }|>
+          <theme-page-contents|{ blockName }|>
             <theme-primary-image-block obj=content.primaryImage />
             <marko-web-content-body block-name=blockName obj=content />
             <marko-web-social-sharing
               url=content.siteContext.canonicalUrl
               providers=["facebook", "linkedin", "twitter", "pinterest"]
             />
-          </default-theme-page-contents>
+          </theme-page-contents>
         </div>
       </@section>
 
