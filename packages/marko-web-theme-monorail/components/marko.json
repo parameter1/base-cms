@@ -4,6 +4,7 @@
     "./breadcrumbs/marko.json",
     "./blocks/marko.json",
     "./client-side-blocks/marko.json",
+    "./content/marko.json",
     "./content-attribution/marko.json",
     "./directory-facets/marko.json",
     "./flows/marko.json",
@@ -12,8 +13,10 @@
     "./native-x/marko.json",
     "./nodes/marko.json",
     "./page/marko.json",
+    "./site-footer/marko.json",
     "./site-menu/marko.json",
-    "./site-navbar/marko.json"
+    "./site-navbar/marko.json",
+    "./social/marko.json"
   ],
   "<theme-client-side-block-loader>": {
     "template": "./client-side-block-loader.marko"

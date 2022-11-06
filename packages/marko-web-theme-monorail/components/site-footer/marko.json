@@ -1,0 +1,14 @@
+{
+  "<theme-site-footer>": {
+    "template": "./index.marko"
+  },
+  "<theme-site-footer-container>": {
+    "template": "./container.marko"
+  },
+  "<theme-site-footer-copyright>": {
+    "template": "./copyright.marko"
+  },
+  "<theme-site-footer-social-icons>": {
+    "template": "./social-icons.marko"
+  }
+}
