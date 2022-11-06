@@ -18,7 +18,7 @@ $ const blockName = "section-card-deck-featured";
       ${i18n("Featured")}
     </marko-web-element>
   </marko-web-block>
-  <default-theme-card-deck-flow cols=3 nodes=nodes modifiers=[blockName]>
+  <theme-card-deck-flow cols=3 nodes=nodes modifiers=[blockName]>
     <@slot|{ node }|>
       <theme-content-node
         image-position="top"
@@ -33,5 +33,5 @@ $ const blockName = "section-card-deck-featured";
         <@image ar="3:2" fluid=true />
       </theme-content-node>
     </@slot>
-  </default-theme-card-deck-flow>
+  </theme-card-deck-flow>
 </marko-web-query>

@@ -1,0 +1,24 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+import { asObject } from "@parameter1/base-cms-utils";
+
+$ const blockName = input.blockName || "site-footer";
+$ const items = getAsArray(input, "items");
+
+<if(items.length)>
+  <marko-web-element
+    block-name=blockName
+    name="social-icons"
+    tag=input.tag
+    modifiers=input.modifiers
+  >
+    <for|item| of=items>
+      $ const link = asObject(item);
+      <theme-social-icon-link
+        provider=link.provider
+        href=link.href
+        modifiers=input.iconModifiers
+        target=link.target
+      />
+    </for>
+  </marko-web-element>
+</if>

@@ -1,0 +1,23 @@
+import { warn } from "@parameter1/base-cms-utils";
+
+$ const blockName = input.blockName || "content-download";
+$ const { userName, surveyId, target } = input;
+$ const props = {
+  userName,
+  formHash: surveyId,
+  target,
+  label: input.label,
+  height: input.height,
+};
+
+<if(userName && surveyId)>
+  <marko-web-element block-name=blockName name="wufoo-form">
+    <marko-web-browser-component
+      name="WufooGatedDownload"
+      props=props
+    />
+  </marko-web-element>
+</if>
+<else>
+  $ warn('Unable to create Wufoo download form: a username and survey ID are required.');
+</else>

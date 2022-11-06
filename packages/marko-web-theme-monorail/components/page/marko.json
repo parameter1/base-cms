@@ -5,6 +5,46 @@
   "<theme-default-page>": {
     "template": "./default.marko"
   },
+  "<theme-page-contents>": {
+    "template": "./contents.marko",
+    "@tag": {
+      "type": "string",
+      "default-value": "div"
+    },
+    "@class": "string",
+    "@modifiers": "@array",
+    "@attrs": "object"
+  },
+  "<theme-page-dates>": {
+    "template": "./dates.marko",
+    "@tag": {
+      "type": "string",
+      "default-value": "div"
+    },
+    "@class": "string",
+    "@modifiers": "@array",
+    "@attrs": "object"
+  },
+  "<theme-page-attribution>": {
+    "template": "./attribution.marko",
+    "@tag": {
+      "type": "string",
+      "default-value": "div"
+    },
+    "@class": "string",
+    "@modifiers": "@array",
+    "@attrs": "object"
+  },
+  "<theme-page-contact-details>": {
+    "template": "./contact-details.marko",
+    "@tag": {
+      "type": "string",
+      "default-value": "div"
+    },
+    "@class": "string",
+    "@modifiers": "@array",
+    "@attrs": "object"
+  },
   "<theme-website-section-page>": {
     "template": "./website-section.marko"
   }

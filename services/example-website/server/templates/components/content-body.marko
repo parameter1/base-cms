@@ -56,11 +56,11 @@ $ const displaySocialShare = defaultValue(input.displaySocialShare, true);
       <!-- <marko-web-leaders-featured-companies content=content /> -->
     </if>
 
-    <default-theme-content-download obj=content>
+    <theme-content-download obj=content>
       <!-- @todo retrieve from site config? -->
       <@wufoo user-name="parameter1" />
       <@link class="btn btn-primary" />
-    </default-theme-content-download>
+    </theme-content-download>
 
     <if(displayInlineAuthorBio && content.type !== "contact")>
       <for|author| of=authors>

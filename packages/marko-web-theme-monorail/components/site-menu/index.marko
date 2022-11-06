@@ -29,7 +29,7 @@ $ const attrs = {
         <!-- user section || IDX_NAV_ENABLE -->
         <if(site.getAsArray("navigation.desktopMenu.user"))>
           <!-- user section -->
-            <default-theme-site-menu-section
+            <theme-site-menu-section
             tag="nav"
             block-name=blockName
             label="Account"
@@ -43,7 +43,7 @@ $ const attrs = {
         <!-- social -->
         <social-icons block-name=blockName />
         <!-- about section -->
-        <default-theme-site-menu-section
+        <theme-site-menu-section
           tag="nav"
           block-name=blockName
           label="About"
@@ -56,7 +56,7 @@ $ const attrs = {
       </div>
       <div class="col-6 col-md-4 col-lg-3">
         <!-- sections -->
-        <default-theme-site-menu-section
+        <theme-site-menu-section
           tag="nav"
           block-name=blockName
           label="Sections"
@@ -80,7 +80,7 @@ $ const attrs = {
     <!-- user section || IDX_NAV_ENABLE -->
     <if(site.getAsArray("navigation.mobileMenu.user"))>
       <!-- user section -->
-        <default-theme-site-menu-section
+        <theme-site-menu-section
         tag="nav"
         block-name=blockName
         label="Account"
@@ -94,7 +94,7 @@ $ const attrs = {
     <!-- social -->
     <social-icons block-name=blockName />
     <!-- primary section -->
-    <default-theme-site-menu-section
+    <theme-site-menu-section
       tag="nav"
       block-name=blockName
       items=site.getAsArray("navigation.mobileMenu.primary")
@@ -104,7 +104,7 @@ $ const attrs = {
       attrs={ "aria-label": "About Menu (Mobile)" }
     />
     <!-- secondary section -->
-    <default-theme-site-menu-section
+    <theme-site-menu-section
       tag="nav"
       block-name=blockName
       items=site.getAsArray("navigation.mobileMenu.secondary")
