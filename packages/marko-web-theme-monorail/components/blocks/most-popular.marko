@@ -62,7 +62,7 @@ $ const buildContentQuery = () => {
           <marko-web-element block-name=blockName name="header">
             ${i18n("Most Popular")}
           </marko-web-element>
-          <default-theme-card-deck-flow
+          <theme-card-deck-flow
             modifiers=[blockName]
             cols=3
             nodes=ordered
@@ -81,7 +81,7 @@ $ const buildContentQuery = () => {
                 />
               </marko-web-element>
             </@slot>
-          </default-theme-card-deck-flow>
+          </theme-card-deck-flow>
         </marko-web-block>
       </if>
     </marko-web-resolve>

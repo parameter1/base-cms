@@ -6,7 +6,7 @@ $ const nativeX = getAsObject(input, "nativeX");
 $ const cols = defaultValue(input.cols, 4);
 $ const nodeImageInput = getAsObject(input, "node.image");
 
-<default-theme-card-deck-flow cols=cols nodes=input.nodes modifiers=input.modifiers>
+<theme-card-deck-flow cols=cols nodes=input.nodes modifiers=input.modifiers>
   <@slot|{ node, index }|>
     <if(nxConfig)>
       <marko-web-native-x-render|{ node: nxNode, linkAttrs, containerAttrs }|
@@ -46,4 +46,4 @@ $ const nodeImageInput = getAsObject(input, "node.image");
       </theme-content-node>
     </else>
   </@slot>
-</default-theme-card-deck-flow>
+</theme-card-deck-flow>

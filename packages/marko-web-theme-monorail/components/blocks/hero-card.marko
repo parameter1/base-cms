@@ -36,7 +36,7 @@ $ const blockName = "hero-card";
     </marko-web-element>
     <div class="row">
       <div class="col-md col-md-9">
-        <default-theme-card-deck-flow
+        <theme-card-deck-flow
           cols=1
           nodes=nodes.slice(0,1)
           modifiers=[blockName, "hero"]
@@ -55,10 +55,10 @@ $ const blockName = "hero-card";
               <@image fluid=true width=790 ar="16:9" />
             </theme-content-node>
           </@slot>
-        </default-theme-card-deck-flow>
+        </theme-card-deck-flow>
       </div>
       <div class="col-md col-md-3">
-        <default-theme-card-deck-flow
+        <theme-card-deck-flow
           cols=1
           nodes=nodes.slice(1)
           modifiers=[blockName]
@@ -77,7 +77,7 @@ $ const blockName = "hero-card";
               <@image fluid=true width=240 ar="16:9" />
             </theme-content-node>
           </@slot>
-        </default-theme-card-deck-flow>
+        </theme-card-deck-flow>
       </div>
     </div>
     <if(section)>

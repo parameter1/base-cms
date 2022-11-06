@@ -14,7 +14,7 @@ $ const blockName = "opinion";
 <marko-web-query|{ nodes, section }| name="website-scheduled-content" params=queryParams>
   <marko-web-block name=blockName>
     <marko-web-website-section-name obj=section link=true block-name=blockName class=`${blockName}__header` />
-    <default-theme-card-deck-flow
+    <theme-card-deck-flow
       cols=3
       nodes=nodes
       modifiers=[blockName]
@@ -29,6 +29,6 @@ $ const blockName = "opinion";
           with-attribution=true
         />
       </@slot>
-    </default-theme-card-deck-flow>
+    </theme-card-deck-flow>
   </marko-web-block>
 </marko-web-query>
