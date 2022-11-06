@@ -1,4 +1,4 @@
-@import "../../node_modules/@parameter1/base-cms-marko-web-theme-default/scss/functions";
+@import "./theme-default/functions";
 
 @function map-deep-get($map, $keys...) {
   @each $key in $keys {
