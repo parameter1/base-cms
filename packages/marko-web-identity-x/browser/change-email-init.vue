@@ -54,7 +54,6 @@
 <script>
 import Email from './form/fields/email.vue';
 
-import cleanPath from './utils/clean-path';
 import post from './utils/post';
 import cookiesEnabled from './utils/cookies-enabled';
 import FormError from './errors/form';
@@ -132,13 +131,6 @@ export default {
     /**
      *
      */
-    authUrl() {
-      return `${window.location.origin}/${cleanPath(this.endpoints.authenticate)}`;
-    },
-
-    /**
-     *
-     */
     hasActiveUser() {
       return this.activeUser && this.activeUser.email;
     },
@@ -169,7 +161,6 @@ export default {
         this.loading = true;
         const res = await post('/change-email', {
           email: this.email,
-          authUrl: this.authUrl,
           appContextId: this.appContextId,
         });
         const data = await res.json();
