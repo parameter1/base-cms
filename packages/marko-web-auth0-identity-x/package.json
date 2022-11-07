@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-auth0-identity-x",
-  "version": "3.12.3",
+  "version": "3.13.3",
   "author": "Josh Worden <josh@parameter1.com>",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-auth0-identity-x",
   "license": "MIT",
@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@parameter1/base-cms-marko-web-auth0": "^3.7.4",
-    "@parameter1/base-cms-marko-web-identity-x": "^3.12.3",
+    "@parameter1/base-cms-marko-web-identity-x": "^3.13.3",
     "@parameter1/base-cms-utils": "3.0.0",
     "@parameter1/joi": "^1.2.10",
     "jsonwebtoken": "^8.5.1"
