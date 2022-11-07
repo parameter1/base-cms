@@ -159,7 +159,7 @@ export default {
       try {
         this.error = null;
         this.loading = true;
-        const res = await post('/change-email', {
+        const res = await post('/change-email/initiate', {
           email: this.email,
           appContextId: this.appContextId,
         });

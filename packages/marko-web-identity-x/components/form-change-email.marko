@@ -16,7 +16,11 @@ $ const { identityX } = req;
       token: get(req, "query.token"),
     };
     <if(isEnabled)>
-      <marko-web-browser-component name="IdentityXChangeEmail" props=props />
+      <if(props.token)>
+      </if>
+      <else>
+        <marko-web-browser-component name="IdentityXChangeEmailInit" props=props />
+      </else>
     </if>
   </marko-web-identity-x-context>
 </if>
