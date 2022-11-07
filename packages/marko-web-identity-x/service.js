@@ -1,4 +1,4 @@
-const { get } = require('@parameter1/base-cms-object-path');
+const { get, getAsObject } = require('@parameter1/base-cms-object-path');
 const createClient = require('./utils/create-client');
 const getActiveContext = require('./api/queries/get-active-context');
 const checkContentAccess = require('./api/queries/check-content-access');
@@ -157,12 +157,14 @@ class IdentityX {
     const { token } = this;
     const input = { token };
     const variables = { input };
-    const { data } = await this.client.mutate({ mutation: logoutAppUser, variables });
+    const user = getAsObject({
+      ...(token && await this.client.mutate({ mutation: logoutAppUser, variables })),
+    }, 'data.logoutAppUserWithData');
     tokenCookie.removeFrom(this.res);
     await callHooksFor(this, 'onLogout', {
       req: this.req,
       res: this.res,
-      user: data.logoutAppUserWithData,
+      user,
     });
     this.token = null;
   }
