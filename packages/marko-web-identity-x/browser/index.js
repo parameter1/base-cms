@@ -9,12 +9,14 @@ const CommentStream = () => import(/* webpackChunkName: "identity-x-comment-stre
 
 export default (Browser, {
   CustomAuthenticateComponent,
+  CustomChangeEmailComponent,
   CustomCommentStreamComponent,
   CustomLoginComponent,
   CustomLogoutComponent,
   CustomProfileComponent,
 } = {}) => {
   const AuthenticateComponent = CustomAuthenticateComponent || Authenticate;
+  const ChangeEmailComponent = CustomChangeEmailComponent || ChangeEmail;
   const CommentStreamComponent = CustomCommentStreamComponent || CommentStream;
   const LoginComponent = CustomLoginComponent || Login;
   const LogoutComponent = CustomLogoutComponent || Logout;
@@ -24,6 +26,7 @@ export default (Browser, {
 
   const { EventBus } = Browser;
   Browser.register('IdentityXAuthenticate', AuthenticateComponent, { provide: { EventBus } });
+  Browser.register('IdentityXChangeEmail', ChangeEmailComponent, { provide: { EventBus } });
   Browser.register('IdentityXCommentStream', CommentStreamComponent, { provide: { EventBus } });
   Browser.register('IdentityXLogin', LoginComponent, { provide: { EventBus } });
   Browser.register('IdentityXLogout', LogoutComponent, { provide: { EventBus } });

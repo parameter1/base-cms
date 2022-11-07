@@ -4,6 +4,7 @@ const getActiveContext = require('./api/queries/get-active-context');
 const checkContentAccess = require('./api/queries/check-content-access');
 const addExternalUserId = require('./api/mutations/add-external-user-id');
 const impersonateAppUser = require('./api/mutations/impersonate-app-user');
+const sendChangeEmailLinkMutation = require('./api/mutations/send-change-email-link');
 const sendLoginLinkMutation = require('./api/mutations/send-login-link');
 const createAppUser = require('./api/mutations/create-app-user');
 const logoutAppUser = require('./api/mutations/logout-app-user');
@@ -177,6 +178,18 @@ class IdentityX {
       variables: { email },
     });
     return data.createAppUser;
+  }
+
+  /**
+   * Sends a change email link to an existing user
+   */
+  async sendChangeEmailLink({ email }) {
+    const authUrl = `${this.req.protocol}://${this.req.get('host')}${this.config.getEndpointFor('changeEmail')}`;
+    await this.client.mutate({
+      mutation: sendChangeEmailLinkMutation,
+      variables: { input: { email, authUrl, appContextId: this.config.get('appContextId') } },
+    });
+    await callHooksFor(this, 'onChangeEmailLinkSent', { email });
   }
 
   /**
