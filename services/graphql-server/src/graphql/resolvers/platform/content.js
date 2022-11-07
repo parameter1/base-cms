@@ -1249,6 +1249,7 @@ module.exports = {
       query.$or = [
         { company: companyId },
         { 'relatedTo.$id': companyId },
+        { sponsors: companyId },
       ];
 
       if (includeLabels.length && excludeLabels.length) {
