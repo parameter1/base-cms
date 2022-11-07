@@ -1,9 +1,15 @@
+import getNavItems from "@parameter1/base-cms-marko-web-theme-monorail/components/site-navbar/utils/get-nav-items";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import { getAsObject } from "@parameter1/base-cms-object-path";
+import { asObject } from "@parameter1/base-cms-utils";
 
-$ const { config, site } = out.global;
-
+$ const { config, site, i18n } = out.global;
+$ const newsletterSignupConfigName = defaultValue(input.newsletterSignupConfigName, "signupFooter");
+$ const newsletterBlockProps = getAsObject(input, "newsletterBlockProps");
+$ const newsletterConfig = site.getAsObject(`newsletter.${newsletterSignupConfigName}`);
 $ const blockName = input.blockName || "site-footer";
-$ const showCopyright = defaultValue(input.showCopyright, true)
+$ const tagline = site.get("tagline");
+$ const useIdxNewsletterSignup = defaultValue(input.useIdxNewsletterSignup, true);
 
 <marko-web-block
   name=blockName
@@ -12,41 +18,113 @@ $ const showCopyright = defaultValue(input.showCopyright, true)
   modifiers=input.modifiers
   attrs=input.attrs
 >
-  <theme-site-footer-container block-name=blockName modifiers=["secondary"]>
-    <theme-site-navbar-brand block-name=blockName title=`${config.website("name")} Homepage`>
-      <theme-site-navbar-logo
-        block-name=blockName
-        alt=config.website("name")
-        src=site.get("logos.footer.src")
-        srcset=site.getAsArray("logos.footer.srcset").join(",")
-        lazyload=true
-      />
-    </theme-site-navbar-brand>
-  </theme-site-footer-container>
-  <theme-site-footer-container block-name=blockName modifiers=["primary"]>
-    <theme-site-footer-social-icons
-      block-name=blockName
-      items=site.getAsArray('socialMediaLinks')
-      icon-modifiers=["light", "xl", "shadow"]
-    />
-    <theme-site-navbar-items
-      block-name=blockName
-      items=site.getAsArray("navigation.footer.items")
-      reg-enabled=input.regEnabled
-      has-user=input.hasUser
-    />
-    <if(showCopyright)>
-      <if(site.get("customCopyright"))>
-        <theme-site-footer-copyright>
-          ${site.get("customCopyright")}
-        </theme-site-footer-copyright>
-      </if>
-      <else>
-        <theme-site-footer-copyright
-          company=site.get("company")
-          notice=site.get("copyrightNotice")
+  <theme-site-footer-container block-name=blockName modifiers=["secondary"] attrs={ "aria-label": "Footer Secondary Navigation" }>
+    <marko-web-element block-name=blockName name="inner-container">
+
+      <theme-site-navbar-brand block-name=blockName title=`${config.website("name")} Homepage`>
+        <theme-site-navbar-logo
+          block-name=blockName
+          alt=config.website("name")
+          src=site.get("logos.footer.src")
+          srcset=site.getAsArray("logos.footer.srcset").join(", ")
+          width=site.get("logos.navbar.width")
+          height=site.get("logos.navbar.height")
+          lazyload=true
         />
-      </else>
-    </if>
+      </theme-site-navbar-brand>
+
+      <if(tagline)>
+        <marko-web-element block-name=blockName name="tagline" modifiers="tagline">${tagline}</marko-web-element>
+      </if>
+
+      <div class="row">
+        <marko-web-element block-name=blockName name="section" attrs={ "aria-label": "Newsletter Sign-Up Form Footer"}>
+          <if(!newsletterConfig.disabled && useIdxNewsletterSignup)>
+            <identity-x-newsletter-form-footer config-name=newsletterSignupConfigName ...newsletterBlockProps />
+          </if>
+          <else-if(!newsletterConfig.disabled && newsletterConfig.action)>
+            <theme-newsletter-signup-banner-external-block
+              block-name="site-footer-newsletter"
+              config-name=newsletterSignupConfigName
+              ...input.newsletterBlockProps
+            />
+          </else-if>
+        </marko-web-element>
+        <marko-web-element block-name=blockName name="section" attrs={ "aria-label": "Social Media Links" }>
+          <theme-social-follow dark=false modifiers=["site-footer"] />
+        </marko-web-element>
+        <marko-web-element block-name=blockName name="section" attrs={ "aria-label": "Footer Site Section Navigation"}>
+
+          <div class="row">
+            $ const navBlockName = "site-footer-nav";
+            <marko-web-block name=navBlockName class="col-6">
+              $ const topics = site.getAsArray("navigation.footer.topics");
+              <if(topics.length)>
+                <theme-site-menu-section
+                  tag="nav"
+                  block-name=navBlockName
+                  label=`${i18n("Topics")}`
+                  items=topics
+                  reg-enabled=false
+                  has-user=false
+                  attrs={ "aria-label": "Site Footer Navigation Topics Section" }
+                />
+              </if>
+            </marko-web-block>
+            <marko-web-block name=navBlockName class="col-6">
+              $ const more = site.getAsArray("navigation.footer.more");
+              <if(more.length)>
+                <theme-site-menu-section
+                  tag="nav"
+                  block-name=navBlockName
+                  label=`${i18n("More")}`
+                  items=more
+                  reg-enabled=false
+                  has-user=false
+                  attrs={ "aria-label": "Site Footer Navigation More Section" }
+                />
+              </if>
+            </marko-web-block>
+          </div>
+
+        </marko-web-element>
+      </div>
+
+    </marko-web-element>
+  </theme-site-footer-container>
+  <theme-site-footer-container block-name=blockName modifiers=["primary"] attrs={ "aria-label": "Footer Primary Navigation" }>
+    <marko-web-element block-name=blockName name="inner-container">
+      $ const corporateSrc = site.get("logos.corporate.src");
+      $ const corporateSrcset = site.getAsArray("logos.corporate.srcset");
+      $ const corporateHref = site.get("logos.corporate.href");
+      $ const corporateAlt = site.get("logos.corporate.alt") || site.get("company");
+      <if(corporateSrc)>
+        <marko-web-img
+          alt=corporateAlt
+          src=corporateSrc
+          srcset=corporateSrcset
+          link={ href: corporateHref, class: `${blockName}__corporate-link`, target: '_blank' }
+          class=`${blockName}__corporate-logo lazyload`
+          attrs={ width: site.get("logos.corporate.width"), height: site.get("logos.corporate.height") }
+        />
+      </if>
+
+      $ const footerItems = site.getAsArray("navigation.footer.items");
+      <theme-breadcrumbs modifiers=["site-footer"] aria-label="Site Footer Breadcrumbs">
+        <for|item| of=getNavItems({ items: footerItems, hasUser: input.hasUser, regEnabled: input.regEnabled })>
+          <@item>
+            $ const obj = asObject(item);
+            <marko-web-link href=obj.href title=obj.title target=obj.target>
+              $!{obj.label}
+            </marko-web-link>
+          </@item>
+        </for>
+      </theme-breadcrumbs>
+
+      <theme-site-footer-copyright
+        company=site.get("company")
+        notice=site.get("copyrightNotice")
+      />
+    </marko-web-element>
   </theme-site-footer-container>
 </marko-web-block>
