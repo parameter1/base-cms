@@ -4,29 +4,29 @@ const jsonErrorHandler = require('../utils/json-error-handler');
 const authenticate = require('./authenticate');
 const commentCount = require('./comment-count');
 const comments = require('./comments');
+const countries = require('./countries');
 const createComment = require('./create-comment');
 const flagComment = require('./flag-comment');
 const login = require('./login');
 const loginFields = require('./login-fields');
 const logout = require('./logout');
 const profile = require('./profile');
-const countries = require('./countries');
 const regions = require('./regions');
 
 const router = Router();
 
 router.use(json());
-router.post('/authenticate', authenticate);
-router.post('/login', login);
-router.post('/login-fields', loginFields);
-router.post('/logout', logout);
-router.post('/profile', profile);
+router.get('/comment-count/:identifier', commentCount);
+router.get('/comments/:identifier', comments);
 router.get('/countries', countries);
 router.get('/regions', regions);
-router.get('/comments/:identifier', comments);
+router.post('/authenticate', authenticate);
 router.post('/comment', createComment);
 router.post('/comment/flag/:id', flagComment);
-router.get('/comment-count/:identifier', commentCount);
+router.post('/login-fields', loginFields);
+router.post('/login', login);
+router.post('/logout', logout);
+router.post('/profile', profile);
 router.use(jsonErrorHandler());
 
 module.exports = router;
