@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-example-export",
-  "version": "3.13.0",
+  "version": "3.13.4",
   "description": "Example BaseCMS export.",
   "main": "src/index.js",
   "author": "Josh Worden <josh@parameter1.com>",
@@ -17,6 +17,6 @@
   },
   "dependencies": {
     "@parameter1/base-cms-export-cli": "^3.0.0",
-    "@parameter1/base-cms-export-framework": "^3.13.0"
+    "@parameter1/base-cms-export-framework": "^3.13.4"
   }
 }
