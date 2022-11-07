@@ -55,7 +55,12 @@ module.exports = ({ width, height, cropDimensions }) => {
     return { ...o, [key]: v };
   }, {});
 
-  if (Number.isNaN(x1) || Number.isNaN(x2) || Number.isnNaN(y1) || Number.isNaN(y2)) {
+  if (
+    typeof x1 !== 'number'
+    || typeof x2 !== 'number'
+    || typeof y1 !== 'number'
+    || typeof y2 !== 'number'
+  ) {
     return new CropRectangle({
       x: 0,
       y: 0,
