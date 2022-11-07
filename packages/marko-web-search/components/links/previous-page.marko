@@ -1,4 +1,6 @@
-$ const { $markoWebSearch: search } = out.global;
+import { isFunction } from '@parameter1/base-cms-utils';
+
+$ const { $markoWebSearch: search, i18n } = out.global;
 
 $ const previousPage = search.getPrevPage();
 
@@ -15,7 +17,7 @@ $ const previousPage = search.getPrevPage();
       <${input.renderBody} />
     </if>
     <else>
-      Previous Page
+      ${isFunction(i18n) ? i18n("Previous Page") : "Previous Page"}
     </else>
   </marko-web-search-link>
 </if>

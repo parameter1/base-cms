@@ -6,7 +6,7 @@
       :selected="option.id === selectedId"
       :value="option.id"
     >
-      Sort: {{ option.label }}
+      {{ option.label }}
     </option>
   </select>
 </template>

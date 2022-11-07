@@ -1,8 +1,9 @@
 import { get, getAsArray, getAsObject } from "@parameter1/base-cms-object-path";
 import { dasherize } from "@parameter1/base-cms-inflector";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import { isFunction } from '@parameter1/base-cms-utils';
 
-$ const { $markoWebSearch: search } = out.global;
+$ const { $markoWebSearch: search, i18n } = out.global;
 
 $ const blockName = "marko-web-search-filter";
 $ const items = getAsArray(input.items);
@@ -48,14 +49,14 @@ $ const titleModifier = dasherize(filterKey);
               node=node
               block-name=blockName
               id=id
-              label=label
+              label=`${isFunction(i18n) ? i18n(label) : label}`
               is-selected=isSelected
             />
           </if>
           <else>
             <!-- default item rendering -->
             <marko-web-search-set-filter-value-link name=filterKey value=id reset-class=`${blockName}__clear-item`>
-              ${label}
+              ${isFunction(i18n) ? i18n(label) : label}
             </marko-web-search-set-filter-value-link>
           </else>
         </marko-web-element>
