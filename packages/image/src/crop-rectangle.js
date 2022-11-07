@@ -55,12 +55,8 @@ module.exports = ({ width, height, cropDimensions }) => {
     return { ...o, [key]: v };
   }, {});
 
-  if (
-    typeof x1 !== 'number'
-    || typeof x2 !== 'number'
-    || typeof y1 !== 'number'
-    || typeof y2 !== 'number'
-  ) {
+  const dimExists = dimension => (typeof dimension !== 'undefined' && dimension !== null && !Number.isNaN(Number(dimension)));
+  if (!dimExists(x1) || !dimExists(x2) || !dimExists(y1) || !dimExists(y2)) {
     return new CropRectangle({
       x: 0,
       y: 0,
