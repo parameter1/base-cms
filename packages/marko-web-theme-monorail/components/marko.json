@@ -27,14 +27,8 @@
   "<theme-pagination-controls>": {
     "template": "./pagination-controls.marko"
   },
-  "<theme-site-footer>": {
-    "template": "./site-footer.marko"
-  },
   "<theme-site-header>": {
     "template": "./site-header.marko"
-  },
-  "<theme-site-menu>": {
-    "template": "./site-menu/index.marko"
   },
   "<theme-site-newsletter-menu>": {
     "template": "./site-newsletter-menu.marko"
