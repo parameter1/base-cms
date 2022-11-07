@@ -43,20 +43,9 @@ module.exports = ({ width, height, cropDimensions }) => {
       cropped: false,
     });
   }
-  // @see Cygnus\ApplicationBundle\Apps\Management\Controller::cropImageAction
-  const scale = width / 640;
-  const {
-    x1,
-    x2,
-    y1,
-    y2,
-  } = ['x1', 'x2', 'y1', 'y2'].reduce((o, key) => {
-    const v = Math.round(cropDimensions[key] * scale);
-    return { ...o, [key]: v };
-  }, {});
 
-  const dimExists = dimension => (typeof dimension !== 'undefined' && dimension !== null && !Number.isNaN(Number(dimension)));
-  if (!dimExists(x1) || !dimExists(x2) || !dimExists(y1) || !dimExists(y2)) {
+  const coords = ['x1', 'x2', 'y1', 'y2'];
+  if (coords.some(key => cropDimensions[key] == null || Number.isNaN(cropDimensions[key]))) {
     return new CropRectangle({
       x: 0,
       y: 0,
@@ -65,6 +54,19 @@ module.exports = ({ width, height, cropDimensions }) => {
       cropped: false,
     });
   }
+
+  // @see Cygnus\ApplicationBundle\Apps\Management\Controller::cropImageAction
+  const scale = width / 640;
+  const {
+    x1,
+    x2,
+    y1,
+    y2,
+  } = coords.reduce((o, key) => {
+    const v = Math.round(cropDimensions[key] * scale);
+    return { ...o, [key]: v };
+  }, {});
+
 
   return new CropRectangle({
     x: x1,
