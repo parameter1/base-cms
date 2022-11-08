@@ -1,0 +1,27 @@
+import { get } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { req } = out.global;
+$ const { identityX } = req;
+
+<if(Boolean(identityX))>
+  <marko-web-identity-x-context|{ user, isEnabled, application }|>
+    $ const props = {
+      actionText: input.actionText,
+      activeUser: user,
+      endpoints: identityX.config.getEndpoints(),
+      buttonLabels: input.buttonLabels,
+      consentPolicy: get(application, "organization.consentPolicy"),
+      appContextId: identityX.config.get("appContextId"),
+      token: get(req, "query.token"),
+    };
+    <if(isEnabled)>
+      <if(props.token)>
+        <marko-web-browser-component name="IdentityXChangeEmailConfirm" props=props />
+      </if>
+      <else>
+        <marko-web-browser-component name="IdentityXChangeEmailInit" props=props />
+      </else>
+    </if>
+  </marko-web-identity-x-context>
+</if>

@@ -1,7 +1,8 @@
 module.exports = [
   'onAuthenticationSuccess',
-  'onUserProfileUpdate',
+  'onChangeEmailLinkSent',
   'onLoadActiveContext',
   'onLoginLinkSent',
   'onLogout',
+  'onUserProfileUpdate',
 ];

@@ -18,6 +18,11 @@
     "@call-to-action": "string",
     "@button-label": "string"
   },
+  "<marko-web-identity-x-form-change-email>": {
+    "template": "./form-change-email.marko",
+    "@action-text": "string",
+    "@button-labels": "object"
+  },
   "<marko-web-identity-x-form-login>": {
     "template": "./form-login.marko",
     "@additional-event-data": "object",

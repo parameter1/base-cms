@@ -1,9 +1,10 @@
-const { get } = require('@parameter1/base-cms-object-path');
+const { get, getAsObject } = require('@parameter1/base-cms-object-path');
 const createClient = require('./utils/create-client');
 const getActiveContext = require('./api/queries/get-active-context');
 const checkContentAccess = require('./api/queries/check-content-access');
 const addExternalUserId = require('./api/mutations/add-external-user-id');
 const impersonateAppUser = require('./api/mutations/impersonate-app-user');
+const sendChangeEmailLinkMutation = require('./api/mutations/send-change-email-link');
 const sendLoginLinkMutation = require('./api/mutations/send-login-link');
 const createAppUser = require('./api/mutations/create-app-user');
 const logoutAppUser = require('./api/mutations/logout-app-user');
@@ -156,12 +157,14 @@ class IdentityX {
     const { token } = this;
     const input = { token };
     const variables = { input };
-    const { data } = await this.client.mutate({ mutation: logoutAppUser, variables });
+    const user = getAsObject({
+      ...(token && await this.client.mutate({ mutation: logoutAppUser, variables })),
+    }, 'data.logoutAppUserWithData');
     tokenCookie.removeFrom(this.res);
     await callHooksFor(this, 'onLogout', {
       req: this.req,
       res: this.res,
-      user: data.logoutAppUserWithData,
+      user,
     });
     this.token = null;
   }
@@ -177,6 +180,18 @@ class IdentityX {
       variables: { email },
     });
     return data.createAppUser;
+  }
+
+  /**
+   * Sends a change email link to an existing user
+   */
+  async sendChangeEmailLink({ email }) {
+    const authUrl = `${this.req.protocol}://${this.req.get('host')}${this.config.getEndpointFor('changeEmail')}`;
+    await this.client.mutate({
+      mutation: sendChangeEmailLinkMutation,
+      variables: { input: { email, authUrl, appContextId: this.config.get('appContextId') } },
+    });
+    await callHooksFor(this, 'onChangeEmailLinkSent', { email });
   }
 
   /**
