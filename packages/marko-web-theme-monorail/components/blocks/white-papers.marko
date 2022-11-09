@@ -1,5 +1,6 @@
 import { get } from "@parameter1/base-cms-object-path";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import shuffleArray from "../../utils/shuffle-array";
 import queryFragment from "../../graphql/fragments/white-papers-block";
 import sectionFragment from "../../graphql/fragments/section-info";
 
@@ -7,19 +8,23 @@ $ const { i18n } = out.global;
 
 $ const sectionAlias = defaultValue(input.sectionAlias, "white-papers");
 $ const contentTypes = defaultValue(input.contentTypes, ["Whitepaper"]);
+$ const shuffle = defaultValue(input.shuffle, false);
+$ const defaultLimit = (shuffle) ? 20 : 1;
+$ const limit = defaultValue(input.limit, defaultLimit);
 
 $ const queryParams = {
   sectionAlias,
   includeContentTypes: contentTypes,
   ...input.queryParams,
-  limit: 1,
+  limit,
   queryFragment,
   sectionFragment,
 };
 
 <marko-web-query|{ nodes, section }| name="website-scheduled-content" params=queryParams>
+
   <if(nodes.length)>
-    $ const node = nodes[0];
+    $ const node = (shuffle) ? shuffleArray(nodes)[0]: nodes[0];
     $ const blockName = "white-papers";
 
     <marko-web-block name=blockName>
