@@ -9,6 +9,7 @@ extend type Query {
 type ContentPodcast implements Content & Authorable & Media @applyInterfaceFields {
   # fields directly on platform.model::Content\Podcast
   duration: Int @projection
+  transcript: String @projection
 }
 
 type ContentPodcastConnection {
