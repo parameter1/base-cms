@@ -49,6 +49,7 @@ module.exports = (node) => {
       uploadDate: publishedISOString,
       contentUrl: get(node, 'siteContext.canonicalUrl'),
       embedUrl: get(node, 'embedSrc'),
+      ...(get(node, 'metadata.transcript') && { transcript: get(node, 'metadata.transcript') }),
     });
   }
 
@@ -66,6 +67,7 @@ module.exports = (node) => {
       '@type': 'PodcastEpisode',
       headline: get(node, 'metadata.title'),
       ...(associatedMedia && { associatedMedia }),
+      ...(get(node, 'metadata.transcript') && { transcript: get(node, 'metadata.transcript') }),
     });
   }
 
