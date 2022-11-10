@@ -25,7 +25,7 @@ $ const additionalEventData = defaultValue(input.additionalEventData, {});
       emailConsentRequest: get(application, "organization.emailConsentRequest"),
       appContextId: identityX.config.get("appContextId"),
       regionalConsentPolicies: get(application, "organization.regionalConsentPolicies"),
-      returnTo: query.returnTo,
+      returnTo: query.returnTo || identityX.config.get("defaultProfileReturnTo"),
       enableChangeEmail: identityX.config.get("enableChangeEmail"),
     };
     <if(isEnabled)>

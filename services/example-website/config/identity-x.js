@@ -9,6 +9,7 @@ module.exports = new IdentityXConfiguration({
   requiredClientFields: ['regionCode', 'countryCode'],
   booleanQuestionsLabel: 'Choose your subscriptions:',
   enableChangeEmail: true,
+  defaultProfileReturnTo: '/',
   defaultFieldLabels: {
     phoneNumber: 'Mobile Phone',
     organization: 'Company Name',
