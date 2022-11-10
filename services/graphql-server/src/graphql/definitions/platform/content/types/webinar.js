@@ -10,6 +10,7 @@ type ContentWebinar implements Content & Media @applyInterfaceFields {
   # fields directly on platform.model::Content\Webinar
   startDate: Date @projection
   duration: Int @projection
+  transcript: String @projection
   linkUrl: String @projection
   sponsors(input: ContentWebinarSponsorsInput = {}): ContentCompanyConnection! @projection @refMany(model: "platform.Content" criteria: "contentCompany")
 
