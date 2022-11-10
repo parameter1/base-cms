@@ -60,7 +60,7 @@ interface Content @requiresProject(fields: ["type"]) {
   estimatedReadingTime(input: ContentEstimatedReadingTimeInput = {}): ContentEstimatedReadingTime @projection(localField: "body", needs: ["mutations.Website.body", "mutations.Email.body", "mutations.Magazine.body"])
 
   statusText: String! @projection(localField: "status", needs: ["published", "unpublished"])
-  metadata: ContentMetadata! @projection(localField: "name", needs: ["type", "company", "primaryImage", "mutations.Website.name", "mutations.Website.seoTitle", "teaser", "mutations.Website.teaser", "mutations.Website.seoDescription", "published", "updated", "unpublished", "transcript"])
+  metadata: ContentMetadata! @projection(localField: "name", needs: ["type", "company", "primaryImage", "mutations.Website.name", "mutations.Website.seoTitle", "teaser", "mutations.Website.teaser", "mutations.Website.seoDescription", "published", "updated", "unpublished"])
   createdDate(input: FormatDate = {}): String @projection(localField: "created") @momentFormat(localField: "created")
   updatedDate(input: FormatDate = {}): String @projection(localField: "updated") @momentFormat(localField: "updated")
   publishedDate(input: FormatDate = {}): String @projection(localField: "published") @momentFormat(localField: "published")
