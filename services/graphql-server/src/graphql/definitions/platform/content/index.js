@@ -226,7 +226,6 @@ type ContentEdge {
 type ContentMetadata {
   title: String
   description: String
-  transcript: String
   publishedDate(input: FormatDate = {}): String @momentFormat(localField: "published")
   updatedDate(input: FormatDate = {}): String @momentFormat(localField: "updated")
   expiresDate(input: FormatDate = {}): String @momentFormat(localField: "unpublished")
