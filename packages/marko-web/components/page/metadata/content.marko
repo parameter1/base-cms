@@ -33,10 +33,21 @@ fragment ContentPageMetadataFragment on Content {
   }
   ... on ContentVideo {
     embedSrc
+    metadata {
+      transcript
+    }
+  }
+  ... on ContentWebinar {
+    metadata {
+      transcript
+    }
   }
   ... on ContentPodcast {
     fileSrc
     fileName
+    metadata {
+      transcript
+    }
   }
   ... on Authorable {
     authors {
@@ -93,17 +104,28 @@ $ const buildStructuredData = isFunction(input.buildStructuredData) ? input.buil
       canonicalUrl: get(node, "siteContext.canonicalUrl"),
       noIndex: get(node, "siteContext.noIndex"),
       imageSrc: get(node, "metadata.image.src"),
+      transcript: get(node, "metadata.transcript"),
     };
     $ const publishedDate = get(node, "metadata.publishedDate");
     $ const updatedDate = get(node, "metadata.updatedDate");
     $ const expiresDate = get(node, "metadata.expiresDate");
+    $ const transcript = get(node, "metadata.transcript");
 
     <common ...metadata />
+    <if(node.type === "podcast" && transcript)>
+      <meta property="video:transcript" content=publishedDate />
+    </if>
     <if(node.type === "video")>
       <meta property="og:type" content="video.other" />
       <if(publishedDate)>
         <meta property="video:release_date" content=publishedDate />
       </if>
+      <if(transcript)>
+        <meta property="video:transcript" content=publishedDate />
+      </if>
+    </if>
+    <if(node.type === "webinar" && transcript)>
+      <meta property="video:transcript" content=publishedDate />
     </if>
     <else>
       <meta property="og:type" content="article" />
