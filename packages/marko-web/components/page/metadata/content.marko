@@ -40,6 +40,9 @@ fragment ContentPageMetadataFragment on Content {
     fileName
     transcript
   }
+  ... on ContentWebinar {
+    transcript
+  }
   ... on Authorable {
     authors {
       edges {
