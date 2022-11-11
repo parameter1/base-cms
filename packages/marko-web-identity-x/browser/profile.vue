@@ -177,14 +177,14 @@
       </p>
     </form>
     <div v-else>
-      <div class="text-success">
-        <div class="text-success__title">
+      <div class="success-message">
+        <div class="success-message__title">
           Your profile has been saved.
         </div>
-        <div v-if="returnTo" class="text-success__message">
+        <div v-if="returnTo" class="success-message__message">
           If you are not automatically redirected <a :href="returnTo">click here</a> to continue.
         </div>
-        <div v-else class="text-success__message">
+        <div v-else class="success-message__message">
           <span class="btn-link" @click="handleReload()">Click here</span> to continue modiying your profile
           or <a href="/">click here</a> to return to the home page.
         </div>
