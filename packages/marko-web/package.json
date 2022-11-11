@@ -26,7 +26,7 @@
     "@parameter1/base-cms-tenant-context": "^3.0.0",
     "@parameter1/base-cms-utils": "^3.0.0",
     "@parameter1/base-cms-web-common": "^3.3.1",
-    "cheerio": "^0.22.0",
+    "cheerio": "^1.0.0-rc.10",
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "express-http-proxy": "^1.6.2",
