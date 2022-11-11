@@ -2,7 +2,7 @@ const objectPath = require('@parameter1/base-cms-object-path');
 const cheerio = require('cheerio');
 
 const convertHtmlToString = (value) => {
-  if (!value) return;
+  if (!value) return null;
   const $ = cheerio.load(value);
   return $.text();
 };
