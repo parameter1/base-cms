@@ -1,7 +1,7 @@
 <template>
   <div v-if="hasActiveUser">
-    <p>{{ callToAction }}</p>
-    <form @submit.prevent="handleSubmit">
+    <p v-if="!didSubmit">{{ callToAction }}</p>
+    <form v-if="!didSubmit" @submit.prevent="handleSubmit">
       <fieldset :disabled="isLoading">
         <div class="row">
           <div
@@ -176,6 +176,20 @@
         An error occurred: {{ error }}
       </p>
     </form>
+    <div v-else>
+      <div class="success-message">
+        <div class="success-message__title">
+          Your profile has been saved.
+        </div>
+        <div v-if="returnTo" class="success-message__message">
+          If you are not automatically redirected <a :href="returnTo">click here</a> to continue.
+        </div>
+        <div v-else class="success-message__message">
+          <a href="#" @click="handleReload()">Click here</a> to continue modiying your profile
+          or <a href="/">click here</a> to return to the home page.
+        </div>
+      </div>
+    </div>
   </div>
   <div v-else>
     <p>You must be logged-in to modify your user profile.</p>
@@ -321,6 +335,10 @@ export default {
     returnTo: {
       type: String,
       default: null,
+    },
+    returnToDelay: {
+      type: Number,
+      default: 5000,
     },
     enableChangeEmail: {
       type: Boolean,
@@ -560,6 +578,11 @@ export default {
       if (ids.length) answers.push(...ids.map(id => ({ id })));
     },
 
+    async handleReload() {
+      this.isReloadingPage = true;
+      window.location.reload(true);
+    },
+
     /**
      *
      */
@@ -585,7 +608,9 @@ export default {
 
         if (this.returnTo) {
           this.isRedirectingPage = true;
-          window.location = this.returnTo;
+          setTimeout(() => {
+            window.location.href = this.returnTo;
+          }, this.returnToDelay);
         }
 
         if (this.reloadPageOnSubmit) {
