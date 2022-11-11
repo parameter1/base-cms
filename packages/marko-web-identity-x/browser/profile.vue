@@ -1,5 +1,5 @@
 <template>
-  <div v-if="hasActiveUser">
+  <div id="profile-form-wrapper" v-if="hasActiveUser">
     <p v-if="!didSubmit">{{ callToAction }}</p>
     <form v-if="!didSubmit" @submit.prevent="handleSubmit">
       <fieldset :disabled="isLoading">
@@ -167,9 +167,6 @@
           >
             Change email
           </a>
-          <span v-if="didSubmit" class="ml-2">
-            {{ submitMessage }}
-          </span>
         </div>
       </fieldset>
       <p v-if="error" class="mt-3 text-danger">
@@ -398,13 +395,6 @@ export default {
       return user.countryCode;
     },
 
-    submitMessage() {
-      const message = 'Profile updated.';
-      if (this.isReloadingPage) return `${message} Reloading page...`;
-      if (this.isRedirectingPage) return `${message} Redirecting page...`;
-      return message;
-    },
-
     regionalPolicyFields() {
       const { regionalConsentPolicies, countryCode } = this;
       if (!regionalConsentPolicies.length || !countryCode) return [];
@@ -606,6 +596,8 @@ export default {
 
         this.user = data.user;
         this.didSubmit = true;
+        // force scroll to top of page when form and success message toggle
+        window.scrollTo(0, 0);
 
         this.emit('profile-updated');
 
