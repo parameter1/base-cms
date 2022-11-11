@@ -14,6 +14,7 @@ type ContentVideo implements Content & Authorable & Media @applyInterfaceFields 
   embedCode: String @projection
   sourceId: String @projection
   sourceThumbnail: String @projection
+  transcript: String @projection
 
   # graphql only fields
   embedSrc: String @projection(localField: "embedCode")

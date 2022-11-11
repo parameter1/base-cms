@@ -93,9 +93,23 @@
 
 .page-contents {
   $self: &;
+  .btn-transcript,
+  .btn-transcript:hover {
+    background-color: $gray-100;
+    border-radius: 10px;
+  }
+
+  &__content-transcript-title {
+    @include skin-typography($style: "article-text", $link-style: "content-body");
+    font-weight: 700;
+    margin-top: map-get($spacers, 2);
+    margin-bottom: map-get($spacers, 2);
+  }
+
   &__content-body,
   &__content-profile,
-  &__content-sidebar {
+  &__content-sidebar,
+  &__content-transcript {
     padding-bottom: map-get($spacers, block);
     @include skin-typography($style: "article-text", $link-style: "content-body");
 
@@ -115,6 +129,12 @@
         color: map-deep-get($skin-buttons, "secondary", "hover-color");
         text-decoration: none;
       }
+    }
+    > .btn-transcript,
+    > .btn-transcript:hover {
+      background: transparent !important;
+      background-color: transparent;
+      font-weight: $font-weight-bold;
     }
     .node-list {
       &--gray-background {
@@ -150,6 +170,10 @@
       display: block;
       clear: both;
     }
+  }
+
+  > #{ $self }__content-transcript {
+    border-top: solid 3px $gray-200;
   }
   &__content-body p {
 

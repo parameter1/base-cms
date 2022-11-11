@@ -1,4 +1,11 @@
 const objectPath = require('@parameter1/base-cms-object-path');
+const cheerio = require('cheerio');
+
+const convertHtmlToString = (value) => {
+  if (!value) return null;
+  const $ = cheerio.load(value);
+  return $.text();
+};
 
 const { getAsArray } = objectPath;
 
@@ -49,6 +56,7 @@ module.exports = (node) => {
       uploadDate: publishedISOString,
       contentUrl: get(node, 'siteContext.canonicalUrl'),
       embedUrl: get(node, 'embedSrc'),
+      ...(get(node, 'transcript') && convertHtmlToString(get(node, 'transcript')) && { transcript: convertHtmlToString(get(node, 'transcript')) }),
     });
   }
 
@@ -66,6 +74,7 @@ module.exports = (node) => {
       '@type': 'PodcastEpisode',
       headline: get(node, 'metadata.title'),
       ...(associatedMedia && { associatedMedia }),
+      ...(get(node, 'transcript') && convertHtmlToString('     ') && { transcript: convertHtmlToString('    ') }),
     });
   }
 

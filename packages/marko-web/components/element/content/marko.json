@@ -20,6 +20,17 @@
     "@attrs": "object",
     "@link": "expression"
   },
+  "<marko-web-content-transcript>": {
+    "template": "./transcript.marko",
+    "<embed-options>": {},
+    "@block-name": "string",
+    "@obj": "object",
+    "@tag": "string",
+    "@class": "string",
+    "@modifiers": "string",
+    "@attrs": "object",
+    "@link": "expression"
+  },
   "<marko-web-content-byline>": {
     "template": "./byline.marko",
     "@block-name": "string",

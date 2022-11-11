@@ -33,10 +33,15 @@ fragment ContentPageMetadataFragment on Content {
   }
   ... on ContentVideo {
     embedSrc
+    transcript
   }
   ... on ContentPodcast {
     fileSrc
     fileName
+    transcript
+  }
+  ... on ContentWebinar {
+    transcript
   }
   ... on Authorable {
     authors {

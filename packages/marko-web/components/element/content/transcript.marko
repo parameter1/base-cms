@@ -1,0 +1,22 @@
+import { get, getAsObject } from "@parameter1/base-cms-object-path";
+import extractRender from "../extract-render";
+
+$ const transcript = get(input.obj, "transcript");
+$ const v = transcript == null ? "" : `${transcript}`.trim();
+$ const obj = { transcript: v };
+
+<if(v)>
+  <marko-web-obj-text
+    type="content"
+    block-name=input.blockName
+    obj=obj
+    field="transcript"
+    html=true
+    tag=input.tag
+    class=input.class
+    modifiers=input.modifiers
+    attrs=input.attrs
+    link=input.link
+    ...extractRender(input)
+  />
+</if>
