@@ -35,8 +35,7 @@
     }
   }
   &--profile {
-    .success-message {
-      color: pink;
+    .text-success {
       @include skin-typography($style: "article-text", $link-style: "content-body");
       &__title {
         @include skin-typography($style: "header-2", $link-style: "primary");
