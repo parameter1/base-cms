@@ -179,7 +179,8 @@
           Your profile has been saved.
         </div>
         <div v-if="returnTo" class="success-message__message">
-          If you are not automatically redirected <a :href="returnTo">click here</a> to continue.
+          You will be automatically redirected in {{ returnToDelay / 1000 }} seconds.
+          <a :href="returnTo">Click here</a> to continue.
         </div>
         <div v-else class="success-message__message">
           <span class="btn-link" @click="handleReload()">
@@ -338,7 +339,7 @@ export default {
     },
     returnToDelay: {
       type: Number,
-      default: 5000,
+      default: 3000,
     },
     enableChangeEmail: {
       type: Boolean,
