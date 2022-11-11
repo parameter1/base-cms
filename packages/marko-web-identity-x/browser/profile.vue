@@ -185,8 +185,11 @@
           If you are not automatically redirected <a :href="returnTo">click here</a> to continue.
         </div>
         <div v-else class="success-message__message">
-          <span class="btn-link" @click="handleReload()">Click here</span> to continue modiying your profile
-          or <a href="/">click here</a> to return to the home page.
+          <span class="btn-link" @click="handleReload()">
+            Click here
+          </span> to continue modiying your profile or <a href="/">
+            click here
+          </a> to return to the home page.
         </div>
       </div>
     </div>
