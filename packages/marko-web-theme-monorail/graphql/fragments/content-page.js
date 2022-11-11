@@ -57,6 +57,10 @@ fragment ContentPageFragment on Content {
   }
   ... on ContentVideo {
     embedCode
+    transcript
+  }
+  ... on ContentPodcast {
+    transcript
   }
   ... on ContentNews {
     source
@@ -76,6 +80,7 @@ fragment ContentPageFragment on Content {
   ... on ContentWebinar {
     linkUrl
     starts
+    transcript
     sponsors {
       edges {
         node {
