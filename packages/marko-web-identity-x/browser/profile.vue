@@ -606,16 +606,16 @@ export default {
 
         this.emit('profile-updated');
 
+        if (this.reloadPageOnSubmit) {
+          this.isReloadingPage = true;
+          window.location.reload(true);
+        }
+
         if (this.returnTo) {
           this.isRedirectingPage = true;
           setTimeout(() => {
             window.location.href = this.returnTo;
           }, this.returnToDelay);
-        }
-
-        if (this.reloadPageOnSubmit) {
-          this.isReloadingPage = true;
-          window.location.reload(true);
         }
       } catch (e) {
         this.error = e;
