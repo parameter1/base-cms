@@ -1,7 +1,7 @@
 <template>
-  <div v-if="hasActiveUser">
-    <p>{{ callToAction }}</p>
-    <form @submit.prevent="handleSubmit">
+  <div id="profile-form-wrapper" v-if="hasActiveUser">
+    <p v-if="!didSubmit">{{ callToAction }}</p>
+    <form v-if="!didSubmit" @submit.prevent="handleSubmit">
       <fieldset :disabled="isLoading">
         <div class="row">
           <div
@@ -167,15 +167,29 @@
           >
             Change email
           </a>
-          <span v-if="didSubmit" class="ml-2">
-            {{ submitMessage }}
-          </span>
         </div>
       </fieldset>
       <p v-if="error" class="mt-3 text-danger">
         An error occurred: {{ error }}
       </p>
     </form>
+    <div v-else>
+      <div class="success-message">
+        <div class="success-message__title">
+          Your profile has been saved.
+        </div>
+        <div v-if="returnTo" class="success-message__message">
+          You will be automatically redirected in {{ returnToDelay / 1000 }} seconds.
+          <a :href="returnTo">Click here</a> to continue.
+        </div>
+        <div v-else class="success-message__message">
+          <button class="btn btn-link p-0" type="button" @click="handleReload()">
+            Click here
+          </button> to continue modiying your profile or
+          <a href="/">click here</a> to return to the home page.
+        </div>
+      </div>
+    </div>
   </div>
   <div v-else>
     <p>You must be logged-in to modify your user profile.</p>
@@ -322,6 +336,10 @@ export default {
       type: String,
       default: null,
     },
+    returnToDelay: {
+      type: Number,
+      default: 3000,
+    },
     enableChangeEmail: {
       type: Boolean,
       default: false,
@@ -375,13 +393,6 @@ export default {
       const { user } = this;
       if (!user) return null;
       return user.countryCode;
-    },
-
-    submitMessage() {
-      const message = 'Profile updated.';
-      if (this.isReloadingPage) return `${message} Reloading page...`;
-      if (this.isRedirectingPage) return `${message} Redirecting page...`;
-      return message;
     },
 
     regionalPolicyFields() {
@@ -560,6 +571,11 @@ export default {
       if (ids.length) answers.push(...ids.map(id => ({ id })));
     },
 
+    async handleReload() {
+      this.isReloadingPage = true;
+      window.location.reload(true);
+    },
+
     /**
      *
      */
@@ -580,17 +596,21 @@ export default {
 
         this.user = data.user;
         this.didSubmit = true;
+        // force scroll to top of page when form and success message toggle
+        window.scrollTo(0, 0);
 
         this.emit('profile-updated');
-
-        if (this.returnTo) {
-          this.isRedirectingPage = true;
-          window.location = this.returnTo;
-        }
 
         if (this.reloadPageOnSubmit) {
           this.isReloadingPage = true;
           window.location.reload(true);
+        }
+
+        if (this.returnTo) {
+          this.isRedirectingPage = true;
+          setTimeout(() => {
+            window.location.href = this.returnTo;
+          }, this.returnToDelay);
         }
       } catch (e) {
         this.error = e;

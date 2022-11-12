@@ -34,4 +34,14 @@
       border-radius: 4px;
     }
   }
+  &--profile {
+    .success-message {
+      @include skin-typography($style: "article-text", $link-style: "content-body");
+      &__title {
+        @include skin-typography($style: "header-2", $link-style: "primary");
+        margin-top: map-get($spacers, 2);
+        margin-bottom: map-get($spacers, 2);
+      }
+    }
+  }
 }

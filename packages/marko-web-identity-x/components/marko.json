@@ -55,6 +55,7 @@
     },
     "@call-to-action": "string",
     "@reload-page-on-submit": "boolean",
+    "@return-to-delay": "number",
     "@button-label": "string"
   },
   "<marko-web-identity-x-comment-stream>": {
