@@ -179,14 +179,24 @@
           Your profile has been saved.
         </div>
         <div v-if="returnTo" class="success-message__message">
-          You will be automatically redirected in {{ returnToDelay / 1000 }} seconds.
-          <a :href="returnTo">Click here</a> to continue.
+          <p>
+            You will be automatically redirected in {{ returnToDelay / 1000 }} seconds.
+          </p>
+          <p>
+            To continue now,
+            <a :href="returnTo">click here</a>.
+          </p>
         </div>
         <div v-else class="success-message__message">
-          <button class="btn btn-link p-0" type="button" @click="handleReload()">
-            Click here
-          </button> to continue modiying your profile or
-          <a href="/">click here</a> to return to the home page.
+          <p>
+            To continue modifying your profile,
+            <button class="" type="button" @click="handleReload()">
+              click here
+            </button>.
+          </p>
+          <p>
+            To return to the home page, <a href="/">click here</a>.
+          </p>
         </div>
       </div>
     </div>
