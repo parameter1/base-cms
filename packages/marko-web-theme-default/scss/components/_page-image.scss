@@ -92,7 +92,9 @@
 }
 
 [data-embed-type="image"] {
-  > :last-child:not(img) {
-    border-bottom: 1px solid #ccc;
+  picture {
+    > :last-child:not(img) {
+      border-bottom: 1px solid #ccc;
+    }
   }
 }
