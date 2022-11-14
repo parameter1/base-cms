@@ -183,10 +183,15 @@
           <a :href="returnTo">Click here</a> to continue.
         </div>
         <div v-else class="success-message__message">
-          <button class="btn btn-link p-0" type="button" @click="handleReload()">
-            Click here
-          </button> to continue modiying your profile or
-          <a href="/">click here</a> to return to the home page.
+          <p>
+            To continue modifying your profile,
+            <button class="" type="button" @click="handleReload()">
+              click here
+            </button>.
+          </p>
+          <p>
+            <a href="/">Click here</a> to return to the home page.
+          </p>
         </div>
       </div>
     </div>
