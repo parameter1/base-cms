@@ -63,7 +63,7 @@ const retrieveYoutubePlaylistId = async ({ youtube }) => {
   }
 };
 
-const convertEmptyHtmlToNull = async (html) => {
+const convertEmptyHtmlToNull = (html) => {
   if (!html) return null;
   const $ = cheerio.load(html);
   if (!$.text().trim()) return null;
@@ -816,30 +816,21 @@ module.exports = {
 
       return null;
     },
-    transcript: async (content) => {
-      const transcript = await convertEmptyHtmlToNull(content.transcript);
-      return transcript;
-    },
+    transcript: ({ transcript }) => convertEmptyHtmlToNull(transcript),
   },
 
   /**
    *
    */
   ContentPodcast: {
-    transcript: async (content) => {
-      const transcript = await convertEmptyHtmlToNull(content.transcript);
-      return transcript;
-    },
+    transcript: ({ transcript }) => convertEmptyHtmlToNull(transcript),
   },
 
   /**
    *
    */
   ContentWebinar: {
-    transcript: async (content) => {
-      const transcript = await convertEmptyHtmlToNull(content.transcript);
-      return transcript;
-    },
+    transcript: ({ transcript }) => convertEmptyHtmlToNull(transcript),
   },
 
   ContentCompanyYoutube: {
