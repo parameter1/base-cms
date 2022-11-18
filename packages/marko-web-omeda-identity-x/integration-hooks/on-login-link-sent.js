@@ -24,6 +24,7 @@ module.exports = async (params = {}) => {
     omedaPromoCodeDefault,
     promoCode: hookDataPromoCode,
     req,
+    source,
     service: identityX,
     user,
   } = validate(Joi.object({
@@ -39,6 +40,7 @@ module.exports = async (params = {}) => {
     omedaPromoCodeDefault: Joi.string(),
     promoCode: Joi.string(),
     req: Joi.object().required(),
+    source: Joi.string().required(),
     service: Joi.object().required(),
     user: Joi.object().required(),
   }).unknown(), params);
@@ -54,6 +56,7 @@ module.exports = async (params = {}) => {
     getOmedaLinkedFields({ identityX, brandKey }),
     idxOmedaRapidIdentify(await formatter({
       req,
+      source,
       payload: {
         user: user.verified ? user : { id: user.id, email: user.email },
         behavior,

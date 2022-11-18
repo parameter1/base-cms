@@ -219,6 +219,7 @@ class IdentityX {
     await callHooksFor(this, 'onLoginLinkSent', {
       ...(additionalEventData || {}),
       req: this.req,
+      source,
       user: appUser,
     });
   }
