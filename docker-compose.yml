@@ -336,6 +336,9 @@ services:
       HOST: www-p1-sandbox.dev.parameter1.com
       SITE_ID: ${EXAMPLE_SITE_ID-5ed294c6c13a4626008b4568}
 
+      # Debug logging
+      DEBUG: ${DEBUG-defer,p1events}
+
       GRAPHQL_URI: ${GRAPHQL_URI-http://graphql-server-tauron}
       OEMBED_URI: ${OEMBED_URI-https://oembed}
       RSS_URI: ${RSS_URI-http://rss-tauron}
