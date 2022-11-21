@@ -6,7 +6,7 @@ import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 
 $ const { GAM, req } = out.global;
 
-$ const adUnit = GAM.getAdUnit({ name: input.name, aliases: input.aliases });
+$ const adUnit = GAM ? GAM.getAdUnit({ name: input.name, aliases: input.aliases }) : {};
 $ const { templateName } = adUnit;
 $ const showLabel = defaultValue(input.showLabel, true);
 $ const targeting = defaultValue(input.targeting, {});
