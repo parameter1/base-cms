@@ -6,6 +6,7 @@ import Inquiry from '@parameter1/base-cms-marko-web-inquiry/browser';
 import NativeX from '@parameter1/base-cms-marko-web-native-x/browser';
 import IdentityX from '@parameter1/base-cms-marko-web-identity-x/browser';
 import OmedaIdentityX from '@parameter1/base-cms-marko-web-omeda-identity-x/browser';
+import P1Events from '@parameter1/base-cms-marko-web-p1-events/browser';
 import IdentityXNewsletterForms from './idx-newsletter-form/index';
 
 const CommentToggleButton = () => import(/* webpackChunkName: "theme-comment-toggle-button" */ './comment-toggle-button.vue');
@@ -35,6 +36,10 @@ export default (Browser, config = {
   const { EventBus } = Browser;
   const { enableOmedaIdentityX } = config;
   const idxArgs = config.idxArgs || {};
+
+  if (config.withP1Events) {
+    P1Events(Browser);
+  }
 
   if (enableOmedaIdentityX) {
     EventBus.$on('omeda-identity-x-authenticated', ({ brandKey, encryptedId }) => {
