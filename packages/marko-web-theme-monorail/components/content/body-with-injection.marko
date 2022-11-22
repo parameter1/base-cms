@@ -11,16 +11,22 @@ $ const aliases = getAsArray(input, 'aliases');
 $ const bodyId = `content-body-${content.id}`;
 
 <!-- Default Ad Injection of desktip and mobile inline-content-desktip & inline-content-mobile -->
-$ const adInjectionConfig = defaultValue(input.adInjectionConfig, [
+$ const injections = defaultValue(input.adInjectionConfig, [
   {
-    name: 'inline-content-desktop',
-    modifiers: ["margin-auto-x",  "inline-content", "inline-content-desktop"],
     counts: [1000, 2750, 4500, 6250, 8000, 9750, 11500, 13250, 15000, 16750, 18500],
+    html: GAMDefineDisplayAd.renderToString({
+      name: 'inline-content-desktop',
+      modifiers: ["margin-auto-x",  "inline-content", "inline-content-desktop"],
+      $global
+    })
   },
   {
-    name: 'inline-content-mobile',
-    modifiers: ["margin-auto-x",  "inline-content", "inline-content-mobile"],
     counts: [250, 900, 1650, 2950, 4250, 5550, 6850, 8150, 9450, 10750, 12050, 13350, 14650, 15950, 17250],
+    html: GAMDefineDisplayAd.renderToString({
+      name: 'inline-content-mobile',
+      modifiers: ["margin-auto-x",  "inline-content", "inline-content-mobile"],
+      $global
+    })
   }
 ]);
 
@@ -30,16 +36,12 @@ $ const adInjectionConfig = defaultValue(input.adInjectionConfig, [
 >
   <@component-input block-name=blockName obj=content attrs={ id: bodyId } />
   <if(!preventHTMLInjection)>
-    <for|ad| of=adInjectionConfig>
-      $ const { counts, name, modifiers } = ad;
-      <for|count| of=ad.counts>
+    <for|injection| of=injections>
+      $ const { counts, html } = injection;
+      <for|count| of=injection.counts>
         <@inject
           at=count
-          html=GAMDefineDisplayAd.renderToString({
-            name,
-            modifiers,
-            $global
-          })
+          html=html
         />
       </for>
     </for>
