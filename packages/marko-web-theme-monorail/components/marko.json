@@ -38,5 +38,13 @@
   },
   "<theme-query-total-count>": {
     "template": "./query-total-count.marko"
+  },
+  "<global-ssr-html-inject>": {
+    "template": "./ssr-html-inject.marko",
+    "<component-input>": {},
+    "@inject <inject>[]": {},
+    "@selector": "string",
+    "@to-render": "expression",
+    "@ad-inject-config": "array"
   }
 }

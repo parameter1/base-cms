@@ -1,0 +1,47 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import MarkoWebContentBody from "@parameter1/base-cms-marko-web/components/element/content/body";
+import GAMDefineDisplayAd from "@parameter1/base-cms-marko-web-theme-monorail/components/gam/define-display-ad";
+
+$ const { global: $global } = out;
+$ const { content } = input;
+$ const preventHTMLInjection = getAsArray(content, "labels").some( l => ["Sponsored", "Product Spotlight"].indexOf(l) >= 0) || input.preventHTMLInjection;
+$ const blockName = defaultValue(input.blockName, 'page-contents');
+$ const aliases = getAsArray(input, 'aliases');
+$ const bodyId = `content-body-${content.id}`;
+
+<!-- Default Ad Injection of desktip and mobile inline-content-desktip & inline-content-mobile -->
+$ const adInjectionConfig = defaultValue(input.adInjectionConfig, [
+  {
+    name: 'inline-content-desktop',
+    modifiers: ["margin-auto-x",  "inline-content", "inline-content-desktop"],
+    counts: [1000, 2750, 4500, 6250, 8000, 9750, 11500, 13250, 15000, 16750, 18500],
+  },
+  {
+    name: 'inline-content-mobile',
+    modifiers: ["margin-auto-x",  "inline-content", "inline-content-mobile"],
+    counts: [250, 900, 1650, 2950, 4250, 5550, 6850, 8150, 9450, 10750, 12050, 13350, 14650, 15950, 17250],
+  }
+]);
+
+<theme-ssr-html-inject
+  to-render=MarkoWebContentBody
+  selector=`#${bodyId}`
+>
+  <@component-input block-name=blockName obj=content attrs={ id: bodyId } />
+  <if(!preventHTMLInjection)>
+    <for|ad| of=adInjectionConfig>
+      $ const { counts, name, modifiers } = ad;
+      <for|count| of=ad.counts>
+        <@inject
+          at=count
+          html=GAMDefineDisplayAd.renderToString({
+            name,
+            modifiers,
+            $global
+          })
+        />
+      </for>
+    </for>
+  </if>
+</theme-ssr-html-inject>

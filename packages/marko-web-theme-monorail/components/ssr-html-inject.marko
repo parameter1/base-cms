@@ -1,0 +1,96 @@
+import cheerio from "cheerio";
+import { getAsArray } from "@parameter1/base-cms-object-path";
+
+$ const { toRender, componentInput } = input;
+$ const html = toRender.renderToString({ ...componentInput, $global: out.global });
+
+$ const inject = getAsArray(input, "inject").filter(o => o && o.at);
+$ const toInject = inject.reduce((o, i) => {
+  return { ...o, [i.at]: i.html };
+}, {});
+
+$ const targetLengths = Object.keys(toInject).map(n => parseInt(n, 10)).filter(n => n && n >= 1);
+
+$ const hasInjectedContent = {};
+$ const canInject = ({
+  targetLength,
+  totalLength,
+  childLength,
+  childIndex,
+  childrenLength,
+} = {}) => {
+  const hasInjected = hasInjectedContent[targetLength];
+  if (hasInjected || !targetLength) return false;
+  return totalLength <= targetLength
+    && totalLength + childLength >= targetLength
+    && childIndex + 1 !== childrenLength;
+};
+
+$ const childSelector = 'p';
+$ let totalLength = 0;
+$ const $ = cheerio.load(html);
+$ const $children = $(`${input.selector} > ${childSelector}`);
+$ $children.each(function injectAds(index) {
+  const $child = $(this);
+  const { length } = $child.text().trim();
+  if (length === 0) return;
+  const $nextChild = $(this).next(childSelector);
+
+  targetLengths.forEach((targetLength) => {
+    if (canInject({
+      targetLength,
+      totalLength,
+      childLength: length,
+      childIndex: index,
+      childrenLength: $children.length,
+    })) {
+      const contents = toInject[targetLength];
+      if (contents) {
+        const headlineTags = 'h1,h2,h3,h4,h5,h6';
+        if ($nextChild.text().length <= 1) {
+          $child.nextAll(childSelector).each(function handleBefore() {
+            if ($(this).text().length > 1) {
+              const $previous = $(this).prev();
+              if ($previous.text().trim().length === 0) {
+                $(this).after(contents);
+              } else if ($previous.is(headlineTags)) {
+                $previous.before(contents);
+              } else if ($previous.attr('data-embed-type')) {
+                $(this).after(contents);
+              } else {
+                $(this).before(contents);
+              }
+              return false;
+            }
+          });
+        } else {
+          const $next = $(this).next();
+          if ($next.attr('data-embed-type')) {
+            if ($child.prev().is(headlineTags)) {
+              $child.prev().before(contents);
+            } else {
+              $child.before(contents);
+            }
+          } else if ($child.is(headlineTags)) {
+            $child.before(contents);
+          } else if (!$next.hasClass('ad-container')) {
+            $child.after(contents);
+          } else {
+            const r = $.parseHTML(contents);
+            const [toInsert] = $.parseHTML(contents);
+            if (!toInsert) return;
+            if ($(toInsert).data() && $(toInsert).data().bamZoneAlias && $(toInsert).data().bamZoneAlias === $next.data().bamZoneAlias) return;
+            $child.after(contents);
+          }
+        }
+      }
+      hasInjectedContent[targetLength] = true;
+    }
+  });
+  totalLength += length;
+});
+
+$ const injectedHtml = $('body').html();
+<if(true)>
+  $!{injectedHtml}
+</if>
