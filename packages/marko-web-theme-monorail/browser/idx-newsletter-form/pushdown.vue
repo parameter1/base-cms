@@ -34,6 +34,8 @@
             :action-text="actionText"
             :login-email-label="translateEmail"
             @login-link-sent="handleLoginLinkSent"
+            @login-errored="handleError"
+            @focus="$emit('focus')"
           />
         </div>
         <div :class="element('close-container', ['d-none', 'd-md-flex', 'col-md-1', 'col-lg-3'])">
@@ -215,6 +217,10 @@ export default {
     },
     handleLoginLinkSent() {
       this.submitted = true;
+      this.$emit('submit', { type: this.type });
+    },
+    handleError(error) {
+      this.$emit('error', { type: this.type, error });
     },
   },
 };
