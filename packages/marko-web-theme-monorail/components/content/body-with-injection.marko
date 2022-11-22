@@ -10,8 +10,8 @@ $ const blockName = defaultValue(input.blockName, 'page-contents');
 $ const aliases = getAsArray(input, 'aliases');
 $ const bodyId = `content-body-${content.id}`;
 
-<!-- Default Ad Injection of desktip and mobile inline-content-desktip & inline-content-mobile -->
-$ const injections = defaultValue(input.injections, [
+<!-- only set default injection for GAM if GAM is configured -->
+$ const defaultInjection = ($global.GAM) ? [
   {
     counts: [1000, 2750, 4500, 6250, 8000, 9750, 11500, 13250, 15000, 16750, 18500],
     html: GAMDefineDisplayAd.renderToString({
@@ -28,7 +28,10 @@ $ const injections = defaultValue(input.injections, [
       $global
     })
   }
-]);
+] : [];
+
+<!-- Default Ad Injection of desktip and mobile inline-content-desktip & inline-content-mobile -->
+$ const injections = defaultValue(input.injections, defaultInjection);
 
 <theme-ssr-html-inject
   to-render=MarkoWebContentBody
