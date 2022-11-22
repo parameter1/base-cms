@@ -26,7 +26,6 @@ export default (Browser) => {
       },
       focus: data => emitNewsletterEvent({ type: 'Pushdown', action: 'Focus', data }),
       submit: data => emitNewsletterEvent({ type: 'Pushdown', action: 'Submit', data }),
-      // subscribe: ({ newsletter }) => emitNewsletterSubscription({ type: 'Pushdown', newsletter })
       error: data => emitNewsletterEvent({ type: 'Pushdown', action: 'Error', data: { ...data, error: data.error.message } }),
     },
   });
@@ -38,7 +37,6 @@ export default (Browser) => {
       view: data => emitNewsletterEvent({ type: 'Inline', action: 'View', data }),
       focus: data => emitNewsletterEvent({ type: 'Inline', action: 'Focus', data }),
       submit: data => emitNewsletterEvent({ type: 'Inline', action: 'Submit', data }),
-      // subscribe: ({ newsletter }) => emitNewsletterSubscription({ type: 'Pushdown', newsletter })
       error: data => emitNewsletterEvent({ type: 'Inline', action: 'Error', data: { ...data, error: data.error.message } }),
     },
   });
@@ -50,7 +48,6 @@ export default (Browser) => {
       view: data => emitNewsletterEvent({ type: 'Inline', action: 'View', data }),
       focus: data => emitNewsletterEvent({ type: 'Inline', action: 'Focus', data }),
       submit: data => emitNewsletterEvent({ type: 'Inline', action: 'Submit', data }),
-      // subscribe: ({ newsletter }) => emitNewsletterSubscription({ type: 'Pushdown', newsletter })
       error: data => emitNewsletterEvent({ type: 'Inline', action: 'Error', data: { ...data, error: data.error.message } }),
     },
   });
