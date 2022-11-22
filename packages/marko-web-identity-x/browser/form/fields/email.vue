@@ -12,6 +12,7 @@
       :disabled="disabled"
       :placeholder="placeholder"
       autocomplete="email"
+      @focus="$emit('focus')"
     >
   </form-group>
 </template>

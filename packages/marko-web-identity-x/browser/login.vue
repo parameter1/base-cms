@@ -35,6 +35,7 @@
         :placeholder="loginEmailPlaceholder"
         :disabled="loading"
         :label="loginEmailLabel"
+        @focus="$emit('focus')"
       />
 
       <small
