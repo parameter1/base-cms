@@ -1,7 +1,6 @@
 import { getAsArray } from "@parameter1/base-cms-object-path";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 import MarkoWebContentBody from "@parameter1/base-cms-marko-web/components/element/content/body";
-import GAMDefineDisplayAd from "@parameter1/base-cms-marko-web-theme-monorail/components/gam/define-display-ad";
 
 $ const { global: $global } = out;
 $ const { content } = input;
@@ -9,29 +8,7 @@ $ const preventHTMLInjection = getAsArray(content, "labels").some( l => ["Sponso
 $ const blockName = defaultValue(input.blockName, 'page-contents');
 $ const aliases = getAsArray(input, 'aliases');
 $ const bodyId = `content-body-${content.id}`;
-
-<!-- only set default injection for GAM if GAM is configured -->
-$ const defaultInjection = ($global.GAM) ? [
-  {
-    counts: [1000, 2750, 4500, 6250, 8000, 9750, 11500, 13250, 15000, 16750, 18500],
-    html: GAMDefineDisplayAd.renderToString({
-      name: 'inline-content-desktop',
-      modifiers: ["margin-auto-x",  "inline-content", "inline-content-desktop"],
-      $global
-    })
-  },
-  {
-    counts: [250, 900, 1650, 2950, 4250, 5550, 6850, 8150, 9450, 10750, 12050, 13350, 14650, 15950, 17250],
-    html: GAMDefineDisplayAd.renderToString({
-      name: 'inline-content-mobile',
-      modifiers: ["margin-auto-x",  "inline-content", "inline-content-mobile"],
-      $global
-    })
-  }
-] : [];
-
-<!-- Default Ad Injection of desktip and mobile inline-content-desktip & inline-content-mobile -->
-$ const injections = defaultValue(input.injections, defaultInjection);
+$ const injections = getAsArray(input, 'injections');
 
 <theme-ssr-html-inject
   to-render=MarkoWebContentBody
@@ -45,6 +22,7 @@ $ const injections = defaultValue(input.injections, defaultInjection);
         <@inject
           at=count
           html=html
+          dataPropToPrevetDups=injection.dataPropToPrevetDups
         />
       </for>
     </for>
