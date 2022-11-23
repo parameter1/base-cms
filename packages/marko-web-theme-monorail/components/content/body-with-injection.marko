@@ -14,7 +14,6 @@ $ const injections = getAsArray(input, 'injections');
   to-render=MarkoWebContentBody
   selector=`#${bodyId}`
 >
-
   <@component-input block-name=blockName obj=content attrs={ id: bodyId } />
   <if(!preventHTMLInjection)>
     <for|injection| of=injections>
