@@ -1,14 +1,55 @@
 import { getAsArray } from "@parameter1/base-cms-object-path";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 import MarkoWebContentBody from "@parameter1/base-cms-marko-web/components/element/content/body";
+import GAMDefineDisplayAd from "@parameter1/base-cms-marko-web-theme-monorail/components/gam/define-display-ad";
 
 $ const { global: $global } = out;
+$ const { GAM } = $global;
 $ const { content } = input;
 $ const preventHTMLInjection = getAsArray(content, "labels").some( l => ["Sponsored", "Product Spotlight"].indexOf(l) >= 0) || input.preventHTMLInjection;
 $ const blockName = defaultValue(input.blockName, 'page-contents');
 $ const aliases = getAsArray(input, 'aliases');
 $ const bodyId = `content-body-${content.id}`;
-$ const injections = getAsArray(input, 'injections');
+
+<!-- Desktop Inline Ad props -->
+$ const desktopAdCounts = defaultValue(input.desktopAdCounts, [1000, 2750, 4500, 6250, 8000, 9750, 11500, 13250, 15000, 16750, 18500]);
+$ const desktopAdName = defaultValue(input.desktopAdName, "inline-content-desktop");
+$ const desktopAdModifiers = defaultValue(input.desktopAdModifiers, ["margin-auto-x",  "inline-content", "inline-content-desktop"]);
+$ const desktopAdDataPropToPrevetDups = defaultValue(input.desktopAdDataPropToPrevetDups, "gamTemplateName");
+
+<!-- Mobile Inline Ad props -->
+$ const mobileAdCounts = defaultValue(input.mobileAdCounts, [900, 1650, 2950, 4250, 5550, 6850, 8150, 9450, 10750, 12050, 13350, 14650, 15950, 17250]);
+$ const mobileAdName = defaultValue(input.mobileAdName, "inline-content-mobile");
+$ const mobileAdModifiers = defaultValue(input.mobileAdModifiers, ["margin-auto-x",  "inline-content", "inline-content-mobile"]);
+$ const mobileAdDataPropToPrevetDups = defaultValue(input.mobileAdDataPropToPrevetDups, "gamTemplateName");
+
+<!-- Mobile Leaderboard Ad props || fallback set to 250 & mobileAdProps -->
+$ const mobileLeaderboardAdCounts = defaultValue(input.mobileLeaderboardAdCounts, [250]);
+$ const mobileLeaderboardAdName = defaultValue(input.mobileLeaderboardAdName, mobileAdName);
+$ const mobileLeaderboardAdModifiers = defaultValue(input.mobileLeaderboardAdModifiers, mobileAdModifiers);
+$ const mobileLeaderboardAdDataPropToPrevetDups = defaultValue(input.mobileLeaderboarAdDataPropToPrevetDups, mobileAdDataPropToPrevetDups);
+
+<!-- Only set GAM defaults if GAM is present on out.global -->
+$ const gamAdInjection = (GAM) ? [
+  {
+    counts: desktopAdCounts,
+    name: desktopAdName,
+    modifiers: desktopAdModifiers,
+    dataPropToPrevetDups: desktopAdDataPropToPrevetDups
+  },
+  {
+    counts: mobileLeaderboardAdCounts,
+    name: mobileLeaderboardAdName,
+    modifiers: mobileLeaderboardAdModifiers,
+    dataPropToPrevetDups: mobileLeaderboardAdDataPropToPrevetDups
+  },
+  {
+    counts: mobileAdCounts,
+    name: mobileAdName,
+    modifiers: mobileAdModifiers,
+    dataPropToPrevetDups: mobileAdDataPropToPrevetDups
+  }
+] : [];
 
 <theme-ssr-html-inject
   to-render=MarkoWebContentBody
@@ -16,15 +57,21 @@ $ const injections = getAsArray(input, 'injections');
 >
   <@component-input block-name=blockName obj=content attrs={ id: bodyId } />
   <if(!preventHTMLInjection)>
-    <for|injection| of=injections>
-      $ const { counts, html } = injection;
-      <for|count| of=injection.counts>
-        <@inject
-          at=count
-          html=html
-          dataPropToPrevetDups=injection.dataPropToPrevetDups
-        />
-      </for>
+    <for|adInjection| of=gamAdInjection>
+      $ const { counts, name, modifiers } = adInjection;
+      <if(adInjection.counts.length)>
+        <for|count| of=adInjection.counts>
+          <@inject
+            at=count
+            html=GAMDefineDisplayAd.renderToString({
+              name,
+              modifiers,
+              $global
+            })
+            dataPropToPrevetDups=adInjection.dataPropToPrevetDups
+          />
+        </for>
+      </if>
     </for>
   </if>
 </theme-ssr-html-inject>
