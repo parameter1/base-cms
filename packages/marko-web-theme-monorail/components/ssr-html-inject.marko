@@ -6,7 +6,7 @@ $ const html = toRender.renderToString({ ...componentInput, $global: out.global 
 
 $ const inject = getAsArray(input, "inject").filter(o => o && o.at);
 $ const toInject = inject.reduce((o, i) => {
-  return { ...o, [i.at]: { html: i.html, dataPropToPrevetDups: i.dataPropToPrevetDups } };
+  return { ...o, [i.at]: { html: i.html, dataPropToPreventDupes: i.dataPropToPreventDupes } };
 }, {});
 
 $ const targetLengths = Object.keys(toInject).map(n => parseInt(n, 10)).filter(n => n && n >= 1);
@@ -44,7 +44,7 @@ $ $children.each(function injectAds(index) {
       childIndex: index,
       childrenLength: $children.length,
     })) {
-      const { html: contents, dataPropToPrevetDups} = toInject[targetLength];
+      const { html: contents, dataPropToPreventDupes} = toInject[targetLength];
       if (contents) {
         const headlineTags = 'h1,h2,h3,h4,h5,h6';
         if ($nextChild.text().length <= 1) {
@@ -75,12 +75,12 @@ $ $children.each(function injectAds(index) {
             $child.before(contents);
           } else if (!$next.hasClass('ad-container')) {
             $child.after(contents);
-          } else if (dataPropToPrevetDups) {
+          } else if (dataPropToPreventDupes) {
             const r = $.parseHTML(contents);
             const [toInsert] = $.parseHTML(contents);
             if (!toInsert) return;
 
-            if ($(toInsert).data() && $(toInsert).data(`${dataPropToPrevetDups}`) && $(toInsert).data(`${dataPropToPrevetDups}`) === $next.data(`${dataPropToPrevetDups}`)) return;
+            if ($(toInsert).data() && $(toInsert).data(`${dataPropToPreventDupes}`) && $(toInsert).data(`${dataPropToPreventDupes}`) === $next.data(`${dataPropToPreventDupes}`)) return;
             $child.after(contents);
           } else {
             const r = $.parseHTML(contents);

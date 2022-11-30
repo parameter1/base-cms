@@ -15,19 +15,19 @@ $ const bodyId = `content-body-${content.id}`;
 $ const desktopAdCounts = defaultValue(input.desktopAdCounts, [1000, 2750, 4500, 6250, 8000, 9750, 11500, 13250, 15000, 16750, 18500]);
 $ const desktopAdName = defaultValue(input.desktopAdName, "inline-content-desktop");
 $ const desktopAdModifiers = defaultValue(input.desktopAdModifiers, ["margin-auto-x",  "inline-content", "inline-content-desktop"]);
-$ const desktopAdDataPropToPrevetDups = defaultValue(input.desktopAdDataPropToPrevetDups, "gamTemplateName");
+$ const desktopAdDataPropToPreventDupes = defaultValue(input.desktopAdDataPropToPreventDupes, "gamTemplateName");
 
 <!-- Mobile Inline Ad props -->
 $ const mobileAdCounts = defaultValue(input.mobileAdCounts, [900, 1650, 2950, 4250, 5550, 6850, 8150, 9450, 10750, 12050, 13350, 14650, 15950, 17250]);
 $ const mobileAdName = defaultValue(input.mobileAdName, "inline-content-mobile");
 $ const mobileAdModifiers = defaultValue(input.mobileAdModifiers, ["margin-auto-x",  "inline-content", "inline-content-mobile"]);
-$ const mobileAdDataPropToPrevetDups = defaultValue(input.mobileAdDataPropToPrevetDups, "gamTemplateName");
+$ const mobileAdDataPropToPreventDupes = defaultValue(input.mobileAdDataPropToPreventDupes, "gamTemplateName");
 
 <!-- Mobile Leaderboard Ad props || fallback set to 250 & mobileAdProps -->
 $ const mobileLeaderboardAdCounts = defaultValue(input.mobileLeaderboardAdCounts, [250]);
 $ const mobileLeaderboardAdName = defaultValue(input.mobileLeaderboardAdName, mobileAdName);
 $ const mobileLeaderboardAdModifiers = defaultValue(input.mobileLeaderboardAdModifiers, mobileAdModifiers);
-$ const mobileLeaderboardAdDataPropToPrevetDups = defaultValue(input.mobileLeaderboarAdDataPropToPrevetDups, mobileAdDataPropToPrevetDups);
+$ const mobileLeaderboardAdDataPropToPreventDupes = defaultValue(input.mobileLeaderboarAdDataPropToPreventDupes, mobileAdDataPropToPreventDupes);
 
 <!-- Only set GAM defaults if GAM is present on out.global -->
 $ const gamAdInjection = (GAM) ? [
@@ -35,19 +35,19 @@ $ const gamAdInjection = (GAM) ? [
     counts: desktopAdCounts,
     name: desktopAdName,
     modifiers: desktopAdModifiers,
-    dataPropToPrevetDups: desktopAdDataPropToPrevetDups
+    dataPropToPreventDupes: desktopAdDataPropToPreventDupes
   },
   {
     counts: mobileLeaderboardAdCounts,
     name: mobileLeaderboardAdName,
     modifiers: mobileLeaderboardAdModifiers,
-    dataPropToPrevetDups: mobileLeaderboardAdDataPropToPrevetDups
+    dataPropToPreventDupes: mobileLeaderboardAdDataPropToPreventDupes
   },
   {
     counts: mobileAdCounts,
     name: mobileAdName,
     modifiers: mobileAdModifiers,
-    dataPropToPrevetDups: mobileAdDataPropToPrevetDups
+    dataPropToPreventDupes: mobileAdDataPropToPreventDupes
   }
 ] : [];
 
@@ -68,7 +68,7 @@ $ const gamAdInjection = (GAM) ? [
               modifiers,
               $global
             })
-            dataPropToPrevetDups=adInjection.dataPropToPrevetDups
+            dataPropToPreventDupes=adInjection.dataPropToPreventDupes
           />
         </for>
       </if>
