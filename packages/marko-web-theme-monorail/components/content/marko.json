@@ -3,5 +3,8 @@
     "./contact-details/marko.json",
     "./download/marko.json",
     "./link-url/marko.json"
-  ]
+  ],
+  "<theme-body-with-injection>": {
+    "template": "./body-with-injection.marko"
+  }
 }

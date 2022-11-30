@@ -16,13 +16,13 @@ $ const { recaptcha } = out.global;
         <div class="col-md-8">
           <div class="content-page-body">
             <theme-page-contents|{ blockName }| attrs={ "data-gallery-id": id }>
-              <content-body content=content block-name=blockName>
-                <@after-body|{ context }|>
-                  <if(context.canAccess)>
-                    <comment-stream content=content />
-                  </if>
-                </@after-body>
-              </content-body>
+              <theme-body-with-injection
+                content=content
+                aliases=[]
+                block-name=blockName
+                preventHTMLInjection=false
+              />
+              <theme-identity-x-comment-stream content=content />
             </theme-page-contents>
           </div>
         </div>
