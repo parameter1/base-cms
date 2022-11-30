@@ -11,9 +11,9 @@
   "dependencies": {
     "@parameter1/base-cms-object-path": "^3.0.0",
     "@parameter1/base-cms-utils": "^3.0.0",
+    "dayjs": "^1.11.6",
     "graphql": "^14.5.4",
-    "graphql-tag": "^2.12.5",
-    "moment": "^2.29.1"
+    "graphql-tag": "^2.12.5"
   },
   "peerDependencies": {
     "@parameter1/base-cms-marko-core": "^2.0.0",
