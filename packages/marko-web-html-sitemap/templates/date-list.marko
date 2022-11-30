@@ -1,5 +1,21 @@
-import moment from "moment";
-$ const { config } = out.global;
+import dayjs from "../dayjs";
+import { getAsObject } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import { isFunction } from '@parameter1/base-cms-utils';
+
+$ const { config, i18n } = out.global;
+$ const dateConfig = getAsObject(out.global, "markoCoreDate");
+$ const locale = defaultValue(dateConfig.locale, "en");
+
+$ switch (locale) {
+  case 'es':
+    require("dayjs/locale/es");
+    dayjs.locale(locale);
+    break;
+  default:
+    dayjs.locale("en");
+}
+
 $ const {
   nodes,
   displayType,
@@ -11,7 +27,7 @@ $ const {
 
 $ const type = "sitemap";
 $ const pageNode = {
-  title: "Site Map",
+  title: `${ isFunction(i18n) ? i18n("Site Map") : "Site Map"}`,
 };
 $ switch (displayType) {
   case "day":
@@ -47,7 +63,7 @@ $ switch (displayType) {
                 <marko-web-link href=`${node.alias}` >
                   <if(displayType === 'month')>
                     $ const d = new Date(`${node.year}/${node.month}`)
-                    ${moment(d).format("MMMM")}
+                    ${dayjs(d).format("MMMM")}
                   </if>
                   <else>
                     ${node[displayType]}
