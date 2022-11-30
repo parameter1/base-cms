@@ -14,7 +14,7 @@ $ switch (locale) {
     dayjs.locale(locale);
     break;
   default:
-    dayjs.locale(locale);
+    dayjs.locale("en");
 }
 
 $ const date = defaultValue(input.value, null, v => dayjs(v).tz(timezone));
