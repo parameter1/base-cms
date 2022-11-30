@@ -1,4 +1,6 @@
-import moment from "moment";
+import dayjs from "../dayjs";
+import { getAsObject } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 
 $ const {
   pageNode,
@@ -7,6 +9,18 @@ $ const {
   month,
   day,
 } = input;
+
+$ const dateConfig = getAsObject(out.global, "markoCoreDate");
+$ const locale = defaultValue(dateConfig.locale, "en");
+
+$ switch (locale) {
+  case 'es':
+    require("dayjs/locale/es");
+    dayjs.locale(locale);
+    break;
+  default:
+    dayjs.locale("en");
+}
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
@@ -18,11 +32,11 @@ $ const {
               ${year}
             </marko-web-link>
           </li>
+          $ const d = new Date(`${year}/${month}`);
           <if(day)>
             <li class="breadcrumb-item">
-              $ const d = new Date(`${year}/${month}`)
-              <marko-web-link href=`${mountPoint}/${year}/${moment(d).format("MM")}`>
-                ${month}
+              <marko-web-link href=`${mountPoint}/${year}/${dayjs(d).format("MM")}`>
+                ${dayjs(d).format("MMMM")}
               </marko-web-link>
             </li>
             <li class="breadcrumb-item">
@@ -31,7 +45,7 @@ $ const {
           </if>
           <else>
             <li class="breadcrumb-item">
-              ${month}
+              ${dayjs(d).format("MMMM")}
             </li>
           </else>
         </if>
