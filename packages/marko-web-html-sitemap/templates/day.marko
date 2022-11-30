@@ -1,6 +1,7 @@
 import queryFragment from "../graphql/fragments/sitemap-published-content";
+import { isFunction } from '@parameter1/base-cms-utils';
 
-$ const { config, htmlSitemapPagination: p, req } = out.global;
+$ const { config, htmlSitemapPagination: p, req, i18n } = out.global;
 $ const {
   ending,
   after,
@@ -14,7 +15,7 @@ $ const perPage = 1000;
 $ const type = "sitemap";
 $ const date = `${month} ${day}, ${year}`;
 $ const pageNode = {
-  title: "Site Map",
+  title: `${ isFunction(i18n) ? i18n("Site Map") : "Site Map"}`,
   description: `All ${config.siteName()} stories published on ${date}`,
 };
 <marko-web-default-page-layout type=type title=pageNode.title description=pageNode.description>
