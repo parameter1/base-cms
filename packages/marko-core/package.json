@@ -12,12 +12,11 @@
     "test": "yarn compile && yarn lint"
   },
   "dependencies": {
+    "@parameter1/base-cms-dayjs": "^3.3.1",
     "@parameter1/base-cms-object-path": "^3.0.0",
     "@parameter1/base-cms-utils": "^3.0.0",
     "@parameter1/base-cms-web-common": "^3.3.1",
     "marko": "~4.20.0",
-    "moment": "^2.29.1",
-    "moment-timezone": "^0.5.33",
     "pretty": "^2.0.0"
   },
   "publishConfig": {
