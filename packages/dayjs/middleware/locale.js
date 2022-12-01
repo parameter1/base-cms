@@ -1,4 +1,4 @@
-const dayjs = require('../dayjs');
+const dayjs = require('../index');
 
 module.exports = () => (req, _, next) => {
   // NOTE: This middleware must be placed following a middleware that sets this objects values
