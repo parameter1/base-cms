@@ -16,6 +16,7 @@
   "dependencies": {
     "@godaddy/terminus": "^4.9.0",
     "@parameter1/base-cms-apollo-ssr": "^3.0.0",
+    "@parameter1/base-cms-dayjs": "^3.3.1",
     "@parameter1/base-cms-embedded-media": "^3.13.5",
     "@parameter1/base-cms-express-apollo": "^3.0.0",
     "@parameter1/base-cms-graphql-fragment-types": "^3.0.0",
