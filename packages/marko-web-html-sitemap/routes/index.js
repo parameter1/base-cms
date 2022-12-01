@@ -2,7 +2,7 @@
 const { getAsArray } = require('@parameter1/base-cms-object-path');
 const gql = require('graphql-tag');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
-const dayjs = require('../dayjs');
+const dayjs = require('@parameter1/base-cms-dayjs');
 const dateListTemplate = require('../templates/date-list');
 const dayTemplate = require('../templates/day');
 
