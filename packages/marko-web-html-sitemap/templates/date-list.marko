@@ -1,20 +1,7 @@
-import dayjs from "../dayjs";
-import { getAsObject } from "@parameter1/base-cms-object-path";
-import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import dayjs from "@parameter1/base-cms-dayjs";
 import { isFunction } from '@parameter1/base-cms-utils';
 
 $ const { config, i18n } = out.global;
-$ const dateConfig = getAsObject(out.global, "markoCoreDate");
-$ const locale = defaultValue(dateConfig.locale, "en");
-
-$ switch (locale) {
-  case 'es':
-    require("dayjs/locale/es");
-    dayjs.locale(locale);
-    break;
-  default:
-    dayjs.locale("en");
-}
 
 $ const {
   nodes,
