@@ -1,8 +1,8 @@
 
 const { getAsArray } = require('@parameter1/base-cms-object-path');
-const moment = require('moment');
 const gql = require('graphql-tag');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
+const dayjs = require('@parameter1/base-cms-dayjs');
 const dateListTemplate = require('../templates/date-list');
 const dayTemplate = require('../templates/day');
 
@@ -38,15 +38,15 @@ module.exports = (app, { mountPoint } = { mountPoint: '/site-map' }) => {
 
     // Validate date
     const dateString = `${year}-${month}-${day}`;
-    const date = moment(dateString, FORMAT);
+    const date = dayjs(dateString, FORMAT);
     if (!date.isValid()) throw invalidDate();
-    const now = moment().endOf('day');
+    const now = dayjs().endOf('day');
     if (date > now) throw dateNotFound();
 
     // Set page data
-    const ending = moment(dateString).endOf('day');
-    const after = moment(dateString).startOf('day');
-    const displayMonth = moment(dateString).format('MMMM');
+    const ending = dayjs(dateString).endOf('day');
+    const after = dayjs(dateString).startOf('day');
+    const displayMonth = dayjs(dateString).format('MMMM');
     return res.marko(
       dayTemplate,
       {
@@ -62,10 +62,10 @@ module.exports = (app, { mountPoint } = { mountPoint: '/site-map' }) => {
 
   app.get(`${mountPoint}/:year(\\d{4})/:month(\\d{2})`, asyncRoute(async (req, res) => {
     const { year, month } = req.params;
-    const startOfMonth = moment(`${year}-${month}-01`, FORMAT);
+    const startOfMonth = dayjs(`${year}-${month}-01`, FORMAT);
     if (!startOfMonth.isValid()) throw invalidDate();
     const endOfMonth = startOfMonth.clone().endOf('month');
-    const now = moment().endOf('day');
+    const now = dayjs().endOf('day');
     const after = startOfMonth.format(FORMAT);
     if (startOfMonth > now) throw dateNotFound();
     const before = (endOfMonth > now ? now : endOfMonth).format(FORMAT);
@@ -95,7 +95,7 @@ module.exports = (app, { mountPoint } = { mountPoint: '/site-map' }) => {
 
   app.get(`${mountPoint}/:year(\\d{4})`, asyncRoute(async (req, res) => {
     const { year } = req.params;
-    const now = moment().endOf('day');
+    const now = dayjs().endOf('day');
     if (year > now.format('year')) throw dateNotFound();
     const nowFormatted = now.format(FORMAT);
     const end = `${year}-12-31`;
@@ -125,8 +125,8 @@ module.exports = (app, { mountPoint } = { mountPoint: '/site-map' }) => {
   }));
 
   app.get(`${mountPoint}`, asyncRoute(async (req, res) => {
-    const now = moment().endOf('day');
-    const year = moment().format('YYYY');
+    const now = dayjs().endOf('day');
+    const year = dayjs().format('YYYY');
     const nowFormatted = now.format(FORMAT);
     const end = `${year}-12-31`;
     const before = nowFormatted < end ? nowFormatted : end;
