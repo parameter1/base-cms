@@ -1,5 +1,3 @@
-
-
 .magazine-issues {
   $self: &;
   margin-right: $marko-web-page-wrapper-padding * -1;
@@ -87,6 +85,11 @@
   }
 }
 
+.node__text--magazine-publication-links {
+  display: flex;
+  flex-direction: column;
+}
+
 
 .magazine-publication-buttons {
   $self: &;
@@ -152,32 +155,30 @@
       }
     }
   }
-  // &--magazine-issue {
-    .magazine-publication-card-block {
-      &__body {
-        padding-right: 10px;
-        padding-left: 10px;
+  .magazine-publication-card-block {
+    &__body {
+      padding-right: 10px;
+      padding-left: 10px;
+    }
+    .node {
+      &__title {
+        @include skin-typography($style: "section-header");
+        text-transform: none;
       }
-      .node {
-        &__title {
-          @include skin-typography($style: "section-header");
-          text-transform: none;
-        }
-        &__footer-left {
-          display: flex;
-          justify-content: space-between;
-          @include marko-web-node-list-border(border-top);
-          width: 100%;
-          padding-top: 1rem;
-          font-weight: $font-weight-bold;
-          .btn {
-            padding: 12px;
-            font-size: 12px;
-          }
+      &__footer-left {
+        display: flex;
+        justify-content: space-between;
+        @include marko-web-node-list-border(border-top);
+        width: 100%;
+        padding-top: 1rem;
+        font-weight: $font-weight-bold;
+        .btn {
+          padding: 12px;
+          font-size: 12px;
         }
       }
     }
-  // }
+  }
 }
 .node-list {
   $self: &;
@@ -211,5 +212,12 @@
         border-bottom: none;
       }
     }
+  }
+}
+
+// add margin to top of ad below paginated content results
+.page--magazine-issue {
+  .pagination-controls + .ad-container--inter-block {
+    margin-top: map-get($spacers, block);
   }
 }

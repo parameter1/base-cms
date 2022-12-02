@@ -1,7 +1,8 @@
 import { getAsObject } from "@parameter1/base-cms-object-path";
 import issueFragment from "../graphql/fragments/magazine-issue-archive";
+import contentListFragment from "../graphql/fragments/magazine-content-feed-block";
 
-$ const { site } = out.global;
+$ const { site, pagination: p, } = out.global;
 $ const { id, pageNode } = data;
 
 <marko-web-magazine-issue-page-layout id=id>
@@ -11,20 +12,20 @@ $ const { id, pageNode } = data;
     </marko-web-gtm-magazine-issue-context>
   </@head>
   <@page>
-    <marko-web-page-wrapper class="mb-block">
-      <@section|{ aliases }|>
-        <theme-gam-define-display-ad
-          name="rotation"
-          position="magazine_page"
-          aliases=aliases
-          modifiers=["inter-block"]
-        />
-      </@section>
+    <marko-web-resolve-page|{ data: issue }| node=pageNode>
+      <marko-web-page-wrapper class="mb-block">
+        <@section|{ aliases }|>
+          <theme-gam-define-display-ad
+            name="rotation"
+            position="magazine_page"
+            aliases=aliases
+            modifiers=["inter-block"]
+          />
+        </@section>
 
-      <@section>
-        <div class="row">
-          <div class="col">
-            <marko-web-resolve-page|{ data: issue }| node=pageNode>
+        <@section>
+          <div class="row">
+            <div class="col">
               <theme-breadcrumbs modifiers=["website-section"]>
                 <@item><marko-web-link href="/magazine">Magazine</marko-web-link></@item>
                 <@item><marko-web-magazine-publication-name tag=null obj=issue.publication link=true /></@item>
@@ -32,7 +33,7 @@ $ const { id, pageNode } = data;
               <div class="magazine-publication-card-block">
                 <div class="magazine-publication-card-block__body">
                   <div class="row">
-                    <div class="col-lg-8 pl-0">
+                    <div class="col-lg-4 pl-0">
                       <marko-web-node image-position="left" modifiers=["flush"] flush=false>
                         <@image
                           src=issue.coverImage.src
@@ -42,6 +43,10 @@ $ const { id, pageNode } = data;
                           width=300
                           options={ fit: "max" }
                         />
+                      </marko-web-node>
+                    </div>
+                    <div class="col-lg-8 pl-0">
+                      <marko-web-node image-position="left" modifiers=["flush"] flush=false>
                         <@body>
                           <@title tag="h1">
                             <marko-web-magazine-issue-name tag=null obj=issue />
@@ -49,55 +54,109 @@ $ const { id, pageNode } = data;
                           <@text modifiers=["teaser"]>
                             <marko-web-magazine-issue-description tag=null obj=issue />
                           </@text>
-                          <@footer>
-                            <@left>
-                              <theme-magazine-publication-buttons issue=issue />
-                            </@left>
-                          </@footer>
+                          <@text modifiers=["magazine-publication-links"]>
+                            <theme-magazine-publication-links issue=issue />
+                          </@text>
                         </@body>
                       </marko-web-node>
                     </div>
-                    <marko-web-query|{ nodes: issues }| name="magazine-active-issues"
-                      params={
-                        publicationId: issue.publication.id,
-                        excludeIssueIds: [issue.id],
-                        queryFragment: issueFragment,
-                        limit: 9,
-                        requiresCoverImage: true
-                      }
-                    >
-                      <div class="col-lg-4">
-                        <div class="row">
-                          <for|issue| of=issues>
-                            <div class="col-4 issue-archive-cover">
-                              <marko-web-node
-                                image-position="top"
-                                card=true
-                                flush=true
-                                full-height=true
-                              >
-                                <@image
-                                  src=issue.coverImage.src
-                                  alt=(issue.coverImage.alt || issue.name)
-                                  fluid=true
-                                  ar="3:4"
-                                  width=190
-                                  link={ href: issue.canonicalPath, title: issue.name }
-                                  options={ fit: "max" }
-                                />
-                              </marko-web-node>
-                            </div>
-                          </for>
-                        </div>
-                      </div>
-                    </marko-web-query>
+                    <!-- <div class="col-lg-4 pl-0">
+                      <marko-web-node image-position="left" modifiers=["flush"] flush=false>
+                        <@body>
+                          <@title tag="h1">
+                            <marko-web-magazine-issue-name tag=null obj=issue />
+                          </@title>
+                          <@text modifiers=["teaser"]>
+                            <marko-web-magazine-issue-description tag=null obj=issue />
+                          </@text>
+                        </@body>
+                      </marko-web-node>
+                    </div>
+                    <div class="col-lg-4 pl-0">
+                      <marko-web-node image-position="left" modifiers=["flush"] flush=false>
+                        <@body>
+                          <@title tag="h2">
+                            Magazine Resources
+                          </@title>
+                          <@text modifiers=["magazine-publication-links"]>
+                            <theme-magazine-publication-links issue=issue />
+                          </@text>
+                        </@body>
+                      </marko-web-node>
+                    </div> -->
                   </div>
                 </div>
               </div>
-            </marko-web-resolve-page>
+            </div>
           </div>
-        </div>
-      </@section>
-    </marko-web-page-wrapper>
+        </@section>
+
+        <@section|{ aliases }|>
+          $ const contentQueryName = "magazine-scheduled-content";
+          $ const contentQueryParams = { issueId: id, queryFragment: contentListFragment };
+          <theme-section-feed-block query-name=contentQueryName query-params=contentQueryParams>
+            <@header>
+              In This Issue <if(p.page !== 1)>(Page ${p.page})</if>
+            </@header>
+            <@after>
+              <theme-section-feed-block|{ totalCount }| alias=`/magazine/${issue.id}` count-only=true query-name=contentQueryName query-params=contentQueryParams>
+                <theme-pagination-controls
+                  per-page=12
+                  total-count=totalCount
+                  path=`/magazine/${issue.id}`
+                />
+              </theme-section-feed-block>
+              <theme-gam-define-display-ad
+                name="rotation"
+                position="magazine_page"
+                aliases=aliases
+                modifiers=["inter-block"]
+              />
+            </@after>
+          </theme-section-feed-block>
+        </@section>
+
+        <@section>
+          <marko-web-query|{ nodes }| name="magazine-active-issues"
+            params={
+              publicationId: issue.publication.id,
+              excludeIssueIds: [issue.id],
+              queryFragment: issueFragment,
+              limit: 12,
+              requiresCoverImage: true
+            }
+          >
+          <marko-web-node-list
+            inner-justified=true
+            flush-x=true
+            flush-y=false
+            modifiers=["issue-archives"]
+            collapsible=false
+          >
+            <@header>
+              Past Issues
+            </@header>
+            <@body>
+              <theme-magazine-issue-archive-flow nodes=nodes flush=true />
+            </@body>
+            <@footer>
+              <marko-web-magazine-publication-name tag=null obj=issue.publication link={ class: "btn btn-primary" }>
+                View All Past Issues
+              </marko-web-magazine-publication-name>
+            </@footer>
+          </marko-web-node-list>
+          </marko-web-query>
+        </@section>
+
+        <@section|{ aliases }|>
+          <theme-gam-define-display-ad
+            name="rotation"
+            position="magazine_page"
+            aliases=aliases
+            modifiers=["inter-block"]
+          />
+        </@section>
+      </marko-web-page-wrapper>
+    </marko-web-resolve-page>
   </@page>
 </marko-web-magazine-issue-page-layout>

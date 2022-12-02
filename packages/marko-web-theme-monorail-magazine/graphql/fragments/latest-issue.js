@@ -15,6 +15,8 @@ fragment MagazinePublicationCardLatestIssueFragment on MagazineIssue {
     id
     name
     subscribeUrl
+    cancelUrl
+    changeAddressUrl
     renewalUrl
     reprintsUrl
     einquiryUrl

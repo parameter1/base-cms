@@ -6,5 +6,8 @@
   ],
   "<theme-magazine-publication-buttons>": {
     "template": "./publication-buttons.marko"
+  },
+  "<theme-magazine-publication-links>": {
+    "template": "./publication-links.marko"
   }
 }

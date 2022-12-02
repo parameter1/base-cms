@@ -5,6 +5,7 @@ module.exports = gql`
 fragment MagazineCurrentIssueFragment on MagazineIssue {
   id
   name
+  description
   digitalEditionUrl
   canonicalPath
   coverImage {
@@ -14,7 +15,13 @@ fragment MagazineCurrentIssueFragment on MagazineIssue {
   publication {
     id
     name
+    description
     subscribeUrl
+    cancelUrl
+    changeAddressUrl
+    renewalUrl
+    reprintsUrl
+    einquiryUrl
     canonicalPath
   }
 }
