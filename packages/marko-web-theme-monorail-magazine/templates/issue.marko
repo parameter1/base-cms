@@ -94,14 +94,16 @@ $ const { id, pageNode } = data;
         <@section|{ aliases }|>
           $ const contentQueryName = "magazine-scheduled-content";
           $ const contentQueryParams = { issueId: id, queryFragment: contentListFragment };
+          $ const perPage = 12;
           <theme-section-feed-block query-name=contentQueryName query-params=contentQueryParams>
+            <@query-params ...contentQueryParams limit=perPage skip=p.skip({ perPage }) />
             <@header>
               In This Issue <if(p.page !== 1)>(Page ${p.page})</if>
             </@header>
             <@after>
               <theme-section-feed-block|{ totalCount }| alias=`/magazine/${issue.id}` count-only=true query-name=contentQueryName query-params=contentQueryParams>
                 <theme-pagination-controls
-                  per-page=12
+                  per-page=perPage
                   total-count=totalCount
                   path=`/magazine/${issue.id}`
                 />
