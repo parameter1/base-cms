@@ -92,15 +92,6 @@ $ const { id, pageNode } = data;
         </@section>
 
         <@section|{ aliases }|>
-          <theme-gam-define-display-ad
-            name="rotation"
-            position="magazine_page"
-            aliases=aliases
-            modifiers=["inter-block"]
-          />
-        </@section>
-
-        <@section|{ aliases }|>
           $ const contentQueryName = "magazine-scheduled-content";
           $ const contentQueryParams = { issueId: id, queryFragment: contentListFragment };
           <theme-section-feed-block query-name=contentQueryName query-params=contentQueryParams>
