@@ -44,9 +44,9 @@ module.exports = (app, { mountPoint } = { mountPoint: '/site-map' }) => {
     if (date > now) throw dateNotFound();
 
     // Set page data
-    const ending = dayjs(dateString).endOf('day');
-    const after = dayjs(dateString).startOf('day');
-    const displayMonth = dayjs(dateString).format('MMMM');
+    const ending = date.endOf('day');
+    const after = date.startOf('day');
+    const displayMonth = date.format('MMMM');
     return res.marko(
       dayTemplate,
       {
