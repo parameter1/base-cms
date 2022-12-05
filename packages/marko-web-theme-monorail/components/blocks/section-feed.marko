@@ -20,9 +20,9 @@ $ const withSection = defaultValue(input.withSection, true);
 $ const { nativeX: nxConfig } = out.global;
 $ const nativeX = getAsObject(input, "nativeX");
 $ const withNativeXSection = defaultValue(input.withNativeXSection, true);
-$ const setWithSection = (node, nxNode, withNativeXSection = true) => {
-  if (node.withSection) return true;
-  if (!withNativeXSection) return false
+$ const setWithSection = (node, nxNode, withNativeXSection = true, nodeInput = {}) => {
+  if (nodeInput.withSection) return true;
+  if (!withNativeXSection) return false;
   return node.id !== nxNode.id;
 };
 
@@ -54,8 +54,9 @@ $ const setWithSection = (node, nxNode, withNativeXSection = true) => {
               config=nxConfig
             >
               <theme-section-feed-content-node
+                ...input.node
                 display-image=input.displayImage
-                with-section=setWithSection(node, nxNode, withNativeXSection)
+                with-section=setWithSection(node, nxNode, withNativeXSection, input.node)
                 lazyload=lazyload
                 node=nxNode
                 attrs=containerAttrs
@@ -65,6 +66,7 @@ $ const setWithSection = (node, nxNode, withNativeXSection = true) => {
           </if>
           <else>
             <theme-section-feed-content-node
+              ...input.node
               node=node
               display-image=input.displayImage
               with-section=withSection
