@@ -5,11 +5,11 @@ import GAMDefineDisplayAd from "@parameter1/base-cms-marko-web-theme-monorail/co
 
 $ const { global: $global } = out;
 $ const { GAM } = $global;
-$ const { content } = input;
+$ const { content, modifiers } = input;
 $ const preventHTMLInjection = getAsArray(content, "labels").some( l => ["Sponsored", "Product Spotlight"].indexOf(l) >= 0) || input.preventHTMLInjection;
 $ const blockName = defaultValue(input.blockName, 'page-contents');
 $ const aliases = getAsArray(input, 'aliases');
-$ const bodyId = `content-body-${content.id}`;
+$ const selector = defaultValue(input.selector, `content-body-${content.id}`);
 
 <!-- Desktop Inline Ad props -->
 $ const desktopAdCounts = defaultValue(input.desktopAdCounts, [350, 1500, 2750, 4500, 6250, 8000, 9750, 11500, 13250, 15000, 16750, 18500]);
@@ -53,9 +53,9 @@ $ const gamAdInjection = (GAM) ? [
 
 <theme-ssr-html-inject
   to-render=MarkoWebContentBody
-  selector=`#${bodyId}`
+  selector=`#${selector}`
 >
-  <@component-input block-name=blockName obj=content attrs={ id: bodyId } />
+  <@component-input block-name=blockName modifiers=modifiers obj=content attrs={ id: selector } />
   <if(!preventHTMLInjection)>
     <for|adInjection| of=gamAdInjection>
       $ const { counts, name, modifiers } = adInjection;
