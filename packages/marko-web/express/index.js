@@ -6,7 +6,6 @@ const marko = require('marko/express');
 const path = require('path');
 const helmet = require('helmet');
 const cleanMarkoResponse = require('@parameter1/base-cms-marko-core/middleware/clean-marko-response');
-const dayjsLocale = require('@parameter1/base-cms-dayjs/middleware/locale');
 const apollo = require('./apollo');
 const graphqlProxy = require('./graphql-proxy');
 const embeddedMedia = require('./embedded-media');
@@ -110,9 +109,6 @@ module.exports = (config = {}) => {
 
   // Set website context.
   app.use(websiteContext(app.locals.config));
-
-  // Set Dayjs locale
-  app.use(dayjsLocale());
 
   // Register the Marko middleware.
   app.use(marko());
