@@ -50,7 +50,7 @@ $ switch (displayType) {
                 <marko-web-link href=`${node.alias}` >
                   <if(displayType === 'month')>
                     $ const d = dayjs(`${node.year}/${node.month}`);
-                    ${dayjs(d).format("MMMM")}
+                    ${d.format("MMMM")}
                   </if>
                   <else>
                     ${node[displayType]}
