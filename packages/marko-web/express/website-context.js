@@ -17,8 +17,6 @@ module.exports = coreConfig => asyncRoute(async (req, res, next) => {
   };
   switch (locale) {
     case 'es':
-      // eslint-disable-next-line global-require
-      require('dayjs/locale/es');
       dayjs.locale(locale);
       break;
     default:
