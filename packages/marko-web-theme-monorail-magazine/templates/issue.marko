@@ -52,7 +52,13 @@ $ const { id, pageNode } = data;
                             <marko-web-magazine-issue-name tag=null obj=issue />
                           </@title>
                           <@text modifiers=["teaser"]>
-                            <marko-web-magazine-issue-description tag=null obj=issue />
+                            <if(issue.description)>
+                              <marko-web-magazine-issue-description tag=null obj=issue />
+                            </if>
+                            <else>
+                              <marko-web-magazine-publication-description tag=null obj=issue.publication />
+                            </else>
+
                           </@text>
                           <@text modifiers=["magazine-publication-links"]>
                             <theme-magazine-publication-links issue=issue />
@@ -60,30 +66,6 @@ $ const { id, pageNode } = data;
                         </@body>
                       </marko-web-node>
                     </div>
-                    <!-- <div class="col-lg-4 pl-0">
-                      <marko-web-node image-position="left" modifiers=["flush"] flush=false>
-                        <@body>
-                          <@title tag="h1">
-                            <marko-web-magazine-issue-name tag=null obj=issue />
-                          </@title>
-                          <@text modifiers=["teaser"]>
-                            <marko-web-magazine-issue-description tag=null obj=issue />
-                          </@text>
-                        </@body>
-                      </marko-web-node>
-                    </div>
-                    <div class="col-lg-4 pl-0">
-                      <marko-web-node image-position="left" modifiers=["flush"] flush=false>
-                        <@body>
-                          <@title tag="h2">
-                            Magazine Resources
-                          </@title>
-                          <@text modifiers=["magazine-publication-links"]>
-                            <theme-magazine-publication-links issue=issue />
-                          </@text>
-                        </@body>
-                      </marko-web-node>
-                    </div> -->
                   </div>
                 </div>
               </div>
