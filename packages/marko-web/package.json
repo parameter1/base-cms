@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web",
-  "version": "3.14.0",
+  "version": "3.17.0",
   "description": "Core Marko+Express components for BaseCMS websites",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "main": "index.js",
@@ -16,7 +16,7 @@
   "dependencies": {
     "@godaddy/terminus": "^4.9.0",
     "@parameter1/base-cms-apollo-ssr": "^3.0.0",
-    "@parameter1/base-cms-dayjs": "^3.0.0",
+    "@parameter1/base-cms-dayjs": "^3.17.0",
     "@parameter1/base-cms-embedded-media": "^3.13.5",
     "@parameter1/base-cms-express-apollo": "^3.0.0",
     "@parameter1/base-cms-graphql-fragment-types": "^3.0.0",
