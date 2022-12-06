@@ -9,6 +9,7 @@
     "test": "yarn lint"
   },
   "dependencies": {
+    "@parameter1/base-cms-dayjs": "3.17.0",
     "@parameter1/base-cms-image": "^3.13.5",
     "@parameter1/base-cms-inflector": "^3.0.0",
     "@parameter1/base-cms-marko-core": "^3.17.0",
