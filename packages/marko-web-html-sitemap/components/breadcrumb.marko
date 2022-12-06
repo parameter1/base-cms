@@ -18,7 +18,7 @@ $ const {
               ${year}
             </marko-web-link>
           </li>
-          $ const d = dayjs(`${year}-${month}`, "YYYY-MM");
+          $ const d = dayjs(`${month} ${year}`, "MMMM YYYY");
           <if(day)>
             <li class="breadcrumb-item">
               <marko-web-link href=`${mountPoint}/${d.format("YYYY/MM")}`>
