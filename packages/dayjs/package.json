@@ -1,0 +1,20 @@
+{
+  "name": "@parameter1/base-cms-dayjs",
+  "version": "3.0.0",
+  "description": "Pre-configured Dayjs with plugins and associated logic",
+  "author": "Jake Collins <jake.collins@parameter1.com>",
+  "main": "index.js",
+  "license": "MIT",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/dayjs",
+  "scripts": {
+    "lint": "eslint --ext .js --max-warnings 5 ./",
+    "compile": "basecms-marko-compile compile --dir ./ --silent true",
+    "test": "yarn compile && yarn lint"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.6"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

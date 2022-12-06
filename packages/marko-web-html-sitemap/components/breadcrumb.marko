@@ -1,4 +1,4 @@
-import moment from "moment";
+import dayjs from "@parameter1/base-cms-dayjs";
 
 $ const {
   pageNode,
@@ -18,11 +18,11 @@ $ const {
               ${year}
             </marko-web-link>
           </li>
+          $ const d = dayjs(`${month} ${year}`, "MMMM YYYY");
           <if(day)>
             <li class="breadcrumb-item">
-              $ const d = new Date(`${year}/${month}`)
-              <marko-web-link href=`${mountPoint}/${year}/${moment(d).format("MM")}`>
-                ${month}
+              <marko-web-link href=`${mountPoint}/${d.format("YYYY/MM")}`>
+                ${d.format("MMMM")}
               </marko-web-link>
             </li>
             <li class="breadcrumb-item">
@@ -31,7 +31,7 @@ $ const {
           </if>
           <else>
             <li class="breadcrumb-item">
-              ${month}
+              ${d.format("MMMM")}
             </li>
           </else>
         </if>
