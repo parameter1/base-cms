@@ -49,7 +49,7 @@ $ switch (displayType) {
               <div class=`col__date col__date--${displayType}`>
                 <marko-web-link href=`${node.alias}` >
                   <if(displayType === 'month')>
-                    $ const d = dayjs(`${node.month} ${node.year}`, "M YYYY");
+                    $ const d = dayjs(`${node.year}-${node.month}`, "YYYY-M");
                     ${d.format("MMMM")}
                   </if>
                   <else>
