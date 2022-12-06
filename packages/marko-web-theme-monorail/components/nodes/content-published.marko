@@ -1,4 +1,4 @@
-import moment from "moment-timezone";
+import dayjs from "@parameter1/base-cms-dayjs";
 import { getAsObject } from "@parameter1/base-cms-object-path";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 
@@ -11,10 +11,8 @@ $ const { obj, blockName } = input;
 $ const format = defaultValue(input.format, "MMM D, YYYY");
 $ const timezone = defaultValue(input.timezone, config.timezone || "America/Chicago");
 $ const locale = defaultValue(input.locale, config.locale);
-$ if (locale) moment.locale(locale);
-
-$ const publishedDate = defaultValue(obj.published, null, v => moment(v).tz(timezone));
-$ const updatedDate = defaultValue(obj.updated, null, v => moment(v).tz(timezone));
+$ const publishedDate = defaultValue(obj.published, null, v => dayjs(v, 'MMM Do, YYYY').tz(timezone));
+$ const updatedDate = defaultValue(obj.updated, null, v => dayjs(v, 'MMM Do, YYYY').tz(timezone));
 $ const displayUpdatedDate = defaultValue(input.displayUpdatedDate, true);
 
 <marko-web-obj-date|{ value }|
