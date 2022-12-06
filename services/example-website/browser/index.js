@@ -37,6 +37,8 @@ const { log } = console;
   'identity-x-login-errored',
   'identity-x-logout-errored',
   'identity-x-profile-errored',
-].forEach(event => EventBus.$on(event, args => log('Intercepted event', event, args)));
+  // Newsletter forms (Monorail)
+  'identity-x-newsletter-form-action',
+].forEach(event => EventBus.$on(event, args => log('Emitted event', event, args)));
 
 export default Browser;

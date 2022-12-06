@@ -29,6 +29,8 @@
             :login-email-label="translateEmail"
             success-message-type="newsletter-signup"
             @login-link-sent="handleLoginLinkSent"
+            @login-errored="handleError"
+            @focus="$emit('focus', { type })"
           />
         </div>
       </div>
@@ -184,9 +186,10 @@ export default {
   },
 
   mounted() {
-    this.$emit('load', { step: 1 });
+    this.$emit('load', { step: 1, type: this.type });
     this.$refs.lazyload.addEventListener('lazybeforeunveil', () => {
       this.didView = true;
+      this.$emit('view', { type: this.type });
     });
   },
 
@@ -199,6 +202,10 @@ export default {
     },
     handleLoginLinkSent() {
       this.submitted = true;
+      this.$emit('submit', { type: this.type });
+    },
+    handleError(error) {
+      this.$emit('error', { type: this.type, error });
     },
   },
 };

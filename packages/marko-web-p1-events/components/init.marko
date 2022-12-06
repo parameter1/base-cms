@@ -3,7 +3,8 @@ import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 $ const { site, config: core } = out.global;
 $ const { enabled, tenant, cookieDomain } = site.getAsObject("p1events");
 $ const realm = core.website("id");
-$ const { NODE_ENV } = process.env;
+$ const { NODE_ENV, DEBUG } = process.env;
+$ const debug = `${DEBUG}`.includes('p1events');
 
 $ const { on } = input;
 $ const scriptSrc = defaultValue(input.scriptSrc, "https://cdn.parameter1.com/p1-events/232c605c.js");
@@ -32,5 +33,5 @@ $ const identityQueryBuilder = `identityQueryBuilder: function(query, cookies) {
       })(window, document, 'script', '${scriptSrc}', 'p1events');
     </script>
   </else>
-  <script>p1events('init', { tenant: '${tenant}', realm: '${realm}', env: '${NODE_ENV}', debug: ${NODE_ENV === 'development' ? true : false}, uri: '${uri}', cookieDomain: '${cookieDomain}', ${identityQueryBuilder} });</script>
+  <script>p1events('init', { tenant: '${tenant}', realm: '${realm}', env: '${NODE_ENV}', debug: ${debug}, uri: '${uri}', cookieDomain: '${cookieDomain}', ${identityQueryBuilder} });</script>
 </if>

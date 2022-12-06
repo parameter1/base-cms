@@ -336,6 +336,9 @@ services:
       HOST: www-p1-sandbox.dev.parameter1.com
       SITE_ID: ${EXAMPLE_SITE_ID-5ed294c6c13a4626008b4568}
 
+      # Debug logging
+      DEBUG: ${DEBUG-defer,p1events}
+
       GRAPHQL_URI: ${GRAPHQL_URI-http://graphql-server-tauron}
       OEMBED_URI: ${OEMBED_URI-https://oembed}
       RSS_URI: ${RSS_URI-http://rss-tauron}
@@ -345,6 +348,7 @@ services:
       IDENTITYX_APP_ID: ${EXAMPLE_IDENTITYX_APP_ID-5d1b86070ce467bff670a052}
       IDENTITYX_API_TOKEN: ${EXAMPLE_IDENTITYX_API_TOKEN-}
 
+      OMEDA_ENABLED: ${EXAMPLE_OMEDA_ENABLED-0}
       OMEDA_CLIENT_KEY: ${EXAMPLE_OMEDA_CLIENT_KEY-client_acbm}
       OMEDA_GRAPHQL_URI: ${EXAMPLE_OMEDA_GRAPHQL_URI-}
       OMEDA_BRAND_KEY: ${EXAMPLE_OMEDA_BRAND_KEY-hcl}
