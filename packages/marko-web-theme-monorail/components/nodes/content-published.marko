@@ -11,8 +11,8 @@ $ const { obj, blockName } = input;
 $ const format = defaultValue(input.format, "MMM D, YYYY");
 $ const timezone = defaultValue(input.timezone, config.timezone || "America/Chicago");
 $ const locale = defaultValue(input.locale, config.locale);
-$ const publishedDate = defaultValue(obj.published, null, v => dayjs(v, 'MMM Do, YYYY').tz(timezone));
-$ const updatedDate = defaultValue(obj.updated, null, v => dayjs(v, 'MMM Do, YYYY').tz(timezone));
+$ const publishedDate = defaultValue(obj.published, null, v => dayjs(v).tz(timezone));
+$ const updatedDate = defaultValue(obj.updated, null, v => dayjs(v).tz(timezone));
 $ const displayUpdatedDate = defaultValue(input.displayUpdatedDate, true);
 
 <marko-web-obj-date|{ value }|
