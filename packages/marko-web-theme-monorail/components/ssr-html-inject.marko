@@ -26,7 +26,7 @@ $ const canInject = ({
     && childIndex + 1 !== childrenLength;
 };
 
-$ const childSelector = 'p';
+$ const childSelector = 'p:not(:has(span[data-embed-type]:last-child))';
 $ let totalLength = 0;
 $ const $ = cheerio.load(html);
 $ const $children = $(`${input.selector} > ${childSelector}`);
