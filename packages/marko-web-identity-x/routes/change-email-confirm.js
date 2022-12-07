@@ -1,4 +1,6 @@
 const gql = require('graphql-tag');
+const jwt = require('jsonwebtoken');
+const { get } = require('@parameter1/base-cms-object-path');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 const tokenCookie = require('../utils/token-cookie');
 const contextCookie = require('../utils/context-cookie');
@@ -31,6 +33,12 @@ module.exports = asyncRoute(async (req, res) => {
   const variables = { input };
   const { data = {} } = await identityX.client.mutate({ mutation, variables });
   const { token: authToken, user } = data.changeAppUserEmail;
+
+  const decoded = await jwt.decode(token);
+  await callHooksFor(identityX, 'onChangeEmailSuccess', {
+    user,
+    oldEmail: get(decoded, 'data.email'),
+  });
 
   // call authentication hooks
   await callHooksFor(identityX, 'onAuthenticationSuccess', {

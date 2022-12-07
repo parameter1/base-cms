@@ -23,6 +23,7 @@
     "dayjs": "^1.11.2",
     "express": "^4.17.1",
     "graphql-tag": "^2.12.5",
+    "jsonwebtoken": "^8.5.1",
     "node-fetch": "^2.6.5"
   },
   "peerDependencies": {
