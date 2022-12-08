@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-core",
-  "version": "3.17.0",
+  "version": "3.17.3",
   "description": "Core BaseCMS Marko components.",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "main": "index.js",
@@ -12,7 +12,7 @@
     "test": "yarn compile && yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-dayjs": "^3.17.0",
+    "@parameter1/base-cms-dayjs": "^3.17.3",
     "@parameter1/base-cms-object-path": "^3.0.0",
     "@parameter1/base-cms-utils": "^3.0.0",
     "@parameter1/base-cms-web-common": "^3.3.1",

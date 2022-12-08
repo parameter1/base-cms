@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-dayjs",
-  "version": "3.17.0",
+  "version": "3.17.3",
   "description": "Pre-configured Dayjs with plugins and associated logic",
   "author": "Jake Collins <jake.collins@parameter1.com>",
   "main": "index.js",
