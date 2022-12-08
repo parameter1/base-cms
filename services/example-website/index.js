@@ -65,5 +65,13 @@ module.exports = startServer({
       basicIdentityX(app, idxConfig, { templates: idxRouteTemplates });
       log('Enabled IdentityX');
     }
+
+    idxConfig.addHook({
+      name: 'onChangeEmailSuccess',
+      shouldAwait: true,
+      fn: async ({ user, oldEmail }) => {
+        log(`User ${user.id} email was changed from ${oldEmail} to ${user.email}!`);
+      },
+    });
   },
 }).then(() => log('Website started!')).catch(e => setImmediate(() => { throw e; }));
