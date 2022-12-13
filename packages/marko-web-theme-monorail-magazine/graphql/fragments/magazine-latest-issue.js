@@ -7,6 +7,7 @@ fragment MagazineCurrentIssueFragment on MagazineIssue {
   name
   digitalEditionUrl
   canonicalPath
+  fileSrc
   coverImage {
     id
     src(input: { options: { auto: "format,compress", q: 70 } })
