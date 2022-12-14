@@ -55,4 +55,21 @@ exports.config = {
       'response.headers.x*',
     ],
   },
+
+  transaction_events: {
+    max_samples_stored: parseInt(process.env.NEW_RELIC_TRANSACTION_EVENTS_MAX_SAMPLES_STORED, 10)
+      || 10000,
+  },
+
+  custom_insights_events: {
+    enabled: ['0', 'false', 0, false].includes(process.env.NEW_RELIC_CUSTOM_INSIGHTS_EVENTS_ENABLED)
+      ? false : true, // eslint-disable-line no-unneeded-ternary
+  },
+
+  plugins: {
+    native_metrics: {
+      enabled: ['0', 'false', 0, false].includes(process.env.NEW_RELIC_PLUGINS_NATIVE_METRICS_ENABLED)
+        ? false : true, // eslint-disable-line no-unneeded-ternary
+    },
+  },
 };
