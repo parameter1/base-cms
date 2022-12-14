@@ -62,14 +62,12 @@ exports.config = {
   },
 
   custom_insights_events: {
-    enabled: ['0', 'false', 0, false].includes(process.env.NEW_RELIC_CUSTOM_INSIGHTS_EVENTS_ENABLED)
-      ? false : true, // eslint-disable-line no-unneeded-ternary
+    enabled: !['0', 'false', 0, false].includes(process.env.NEW_RELIC_CUSTOM_INSIGHTS_EVENTS_ENABLED),
   },
 
   plugins: {
     native_metrics: {
-      enabled: ['0', 'false', 0, false].includes(process.env.NEW_RELIC_PLUGINS_NATIVE_METRICS_ENABLED)
-        ? false : true, // eslint-disable-line no-unneeded-ternary
+      enabled: !['0', 'false', 0, false].includes(process.env.NEW_RELIC_PLUGINS_NATIVE_METRICS_ENABLED),
     },
   },
 };
