@@ -27,7 +27,7 @@ $ const blockName = "section-card-list";
       ${section.name}
     </marko-web-element>
     <marko-web-element block-name=blockName name="description">
-      ${section.description || input.defaultDescription}
+      ${input.description || section.description || input.defaultDescription}
     </marko-web-element>
 
     <marko-web-element block-name=blockName name="row">
