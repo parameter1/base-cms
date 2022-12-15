@@ -202,7 +202,7 @@
     </div>
   </div>
   <div v-else>
-    <p>You must be logged-in to modify your user profile.</p>
+    <p>You must be logged in to modify your user profile.</p>
     <login
       :additional-event-data="additionalEventData"
       :source="loginSource"
