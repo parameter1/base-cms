@@ -7,6 +7,7 @@ fragment MagazinePublicationCardLatestIssueFragment on MagazineIssue {
   name
   digitalEditionUrl
   canonicalPath
+  fileSrc
   coverImage {
     id
     src
