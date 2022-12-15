@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-example-website",
-  "version": "3.17.3",
+  "version": "3.17.5",
   "description": "Example BaseCMS website.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
@@ -31,7 +31,7 @@
     "@parameter1/base-cms-marko-web-omeda-identity-x": "^3.17.3",
     "@parameter1/base-cms-marko-web-p1-events": "^3.17.0",
     "@parameter1/base-cms-marko-web-social-sharing": "^3.0.0",
-    "@parameter1/base-cms-marko-web-theme-monorail": "^3.17.3",
+    "@parameter1/base-cms-marko-web-theme-monorail": "^3.17.5",
     "@parameter1/base-cms-object-path": "^3.0.0",
     "@parameter1/base-cms-utils": "^3.0.0",
     "@parameter1/base-cms-web-cli": "^3.17.3",
