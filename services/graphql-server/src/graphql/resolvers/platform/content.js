@@ -862,7 +862,6 @@ module.exports = {
    */
   ContentSitemapUrl: {
     loc: (content, _, ctx) => createSitemapLoc(content, ctx),
-    images: (content, _, { basedb }) => loadSitemapImages({ content, basedb }),
   },
 
   /**
@@ -1157,10 +1156,29 @@ module.exports = {
         sort,
       });
       const docs = [];
+      const imageIds = [];
       await cursor.forEach((doc) => {
         docs.push({ ...doc, changefreq, priority });
+        imageIds.push(...getAsArray(doc, 'images'));
       });
-      return docs;
+
+      const imageCursor = await basedb.findCursor('platform.Asset', {
+        ...criteriaFor('assetImage'), _id: { $in: imageIds },
+      }, {
+        projection: {
+          name: 1,
+          caption: 1,
+          filePath: 1,
+          fileName: 1,
+          cropDimensions: 1,
+        },
+      });
+
+      const imageMap = new Map(await imageCursor.map(image => [`${image._id}`, image]).toArray());
+      return docs.map(doc => ({
+        ...doc,
+        images: getAsArray(doc, 'images').map(imageId => imageMap.get(`${imageId}`)).filter(v => v),
+      }));
     },
 
     contentSitemapNewsUrls: async (_, { input }, { basedb, site }) => {
