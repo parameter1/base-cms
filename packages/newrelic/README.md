@@ -1,2 +1,1 @@
-# BaseCMS Async
-Promisified wrappers for the `async` library.
+# BaseCMS New Relic
