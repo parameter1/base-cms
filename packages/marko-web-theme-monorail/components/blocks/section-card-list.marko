@@ -11,6 +11,7 @@ $ const queryParams = {
   sectionFragment,
 };
 $ const blockName = "section-card-list";
+$ const buttonClass = input.buttonClass || "btn btn-secondary";
 
 <marko-web-query|{ nodes, section }| name="website-scheduled-content" params=queryParams>
   $ const heroNode = nodes.slice(0, 1)[0];
@@ -76,7 +77,7 @@ $ const blockName = "section-card-list";
           </@nodes>
         </marko-web-node-list>
         <marko-web-element block-name=blockName name="btn-wrapper">
-          <marko-web-link href=section.canonicalPath class="btn btn-secondary">
+          <marko-web-link href=section.canonicalPath class=buttonClass>
             ${i18n("More")} ${section.name}
           </marko-web-link>
         </marko-web-element>
