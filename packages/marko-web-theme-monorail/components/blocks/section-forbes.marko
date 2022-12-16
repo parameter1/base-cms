@@ -1,0 +1,86 @@
+import { defaultValue } from "@parameter1/base-cms-marko-web/utils";
+import queryFragment from "../../graphql/fragments/content-card-deck-block";
+import sectionFragment from "../../graphql/fragments/section-info";
+
+$ const { i18n } = out.global;
+
+$ const viewMore = defaultValue(input.viewMore, true);
+$ const withNativeX = defaultValue(input.withNativeX, false);
+$ const nativeX = {
+  name: "default",
+  index: 3,
+  sectionName: `${i18n("Sponsor Content")}`,
+  ...input.nativeX,
+};
+
+$ const queryParams = {
+  sectionAlias: input.alias,
+  requiresImage: true,
+  limit: 7,
+  ...input.queryParams,
+  queryFragment,
+  sectionFragment,
+};
+
+$ const cols = input.cols || queryParams.limit;
+$ const blockName = "section-forbes";
+
+$ const rowStyle = (input.reverse) ? "flex-direction: row-reverse" : "";
+
+<marko-web-query|{ nodes, section: querySection }| name="website-scheduled-content" params=queryParams>
+  <marko-web-element tag="h1" block-name="top-stories" name="header">
+    ${i18n(querySection.name)}
+  </marko-web-element>
+  <div class="row section-forbes" style=rowStyle>
+    <div class="col-lg-8">
+      $ const heroNode = nodes.slice(0, 1)[0];
+      $ const heroImageNode = {
+        id: heroNode.id,
+        type: heroNode.type,
+        siteContext: heroNode.siteContext,
+        primaryImage: heroNode.primaryImage,
+      };
+      <marko-web-element block-name="top-story" name="row">
+        <marko-web-element block-name="top-story" name="col" modifiers=["hero"]>
+          <theme-content-node
+            image-position="top"
+            card=true
+            flush=true
+            image-only=true
+            modifiers=["top-story-hero-image"]
+            node=heroImageNode
+          >
+            <@image fluid=true width=685 ar="3:2" lazyload=false />
+          </theme-content-node>
+        </marko-web-element>
+        <marko-web-element block-name="top-story" name="col" modifiers=["list"]>
+          <theme-content-node
+            full-height=true
+            card=true
+            display-image=false
+            flush=true
+            with-dates=false
+            modifiers=["top-story-hero"]
+            node=heroNode
+          />
+        </marko-web-element>
+      </marko-web-element>
+      <div class="row">
+        <div class="col-lg-6 first">
+          $ const leftNodes = nodes.slice(1, 3);
+          <theme-latest-content-list-block nodes=leftNodes title="" />
+        </div>
+        <div class="col-lg-6">
+          $ const rightNodes = nodes.slice(3, 5);
+          <theme-latest-content-list-block nodes=rightNodes title="" />
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      $ const cardNodes = nodes.slice(5, 7);
+      <theme-content-card-deck-col-flow nodes=cardNodes modifiers=[blockName] cols=1>
+        <@node withSection=false />
+      </theme-content-card-deck-col-flow>
+    </div>
+  </div>
+</marko-web-query>
