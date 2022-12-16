@@ -18,7 +18,7 @@ import IconLinkedin from '@parameter1/base-cms-marko-web-icons/browser/linkedin.
 import IconPinterest from '@parameter1/base-cms-marko-web-icons/browser/pinterest.vue';
 import IconTwitter from '@parameter1/base-cms-marko-web-icons/browser/twitter.vue';
 import IconOther from '@parameter1/base-cms-marko-web-icons/browser/link-external.vue';
-import IconPodcast from '@parameter1/base-cms-marko-web-icons/browser/podcast.vue';
+import IconAnchor from '@parameter1/base-cms-marko-web-icons/browser/anchor.vue';
 import IconYoutube from '@parameter1/base-cms-marko-web-icons/browser/youtube.vue';
 
 export default {
@@ -28,7 +28,7 @@ export default {
     IconLinkedin,
     IconOther,
     IconPinterest,
-    IconPodcast,
+    IconAnchor,
     IconTwitter,
     IconYoutube,
   },
