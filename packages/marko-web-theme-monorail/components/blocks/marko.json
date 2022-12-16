@@ -143,6 +143,9 @@
     },
     "@with-native-x-section": "boolean"
   },
+  "<theme-section-forbes-block>": {
+    "template": "./section-forbes.marko"
+  },
   "<theme-section-list-deck-block>": {
     "template": "./section-list-deck.marko"
   },
