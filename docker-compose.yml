@@ -9,6 +9,7 @@ x-env-defaults: &env
 x-env-newrelic: &env-newrelic
   NEW_RELIC_ENABLED: ${NEW_RELIC_ENABLED-0}
   NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY-(unset)}
+  NEW_RELIC_TURN_OFF_SAMPLER: ${NEW_RELIC_TURN_OFF_SAMPLER-}
 
 x-env-mongo: &env-mongo
   MONGO_DSN: ${MONGO_DSN-mongodb://mongodb:27017}
