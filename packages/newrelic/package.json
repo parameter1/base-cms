@@ -1,0 +1,19 @@
+{
+  "name": "@parameter1/base-cms-newrelic",
+  "version": "3.0.0",
+  "description": "Utilities for the newrelic library.",
+  "main": "src/index.js",
+  "author": "Jacob Bare <jacob@parameter1.com>",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/newrelic",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint --ext .js --max-warnings 5 ./",
+    "test": "yarn lint"
+  },
+  "peerDependencies": {
+    "newrelic": "^6"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
