@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-rss",
-  "version": "3.3.1",
+  "version": "3.19.1",
   "description": "The BaseCMS RSS service",
   "main": "src/index.js",
   "author": "Josh Worden <josh@parameter1.com>",
