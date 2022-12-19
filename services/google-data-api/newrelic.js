@@ -57,4 +57,9 @@ exports.config = {
       'response.headers.x*',
     ],
   },
+
+  transaction_events: {
+    max_samples_stored: parseInt(process.env.NEW_RELIC_TRANSACTION_EVENTS_MAX_SAMPLES_STORED, 10)
+      || 10000,
+  },
 };
