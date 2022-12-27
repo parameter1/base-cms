@@ -11,6 +11,7 @@ $ const lang = site.config.lang || "en";
   <div class="idx-comment-stream-wrapper">
     <marko-web-identity-x-comment-stream
       identifier=`${content.id}`
+      additional-event-data=input.additionalEventData
       title=content.name
       description=content.teaser
       url=content.siteContext.canonicalUrl
