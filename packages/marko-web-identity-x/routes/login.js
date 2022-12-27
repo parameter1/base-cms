@@ -1,6 +1,7 @@
 const gql = require('graphql-tag');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 const userFragment = require('../api/fragments/active-user');
+const sourceCookie = require('../utils/source-cookie');
 
 const buildQuery = () => gql`
   query LoginCheckAppUser($email: String!) {
@@ -46,6 +47,8 @@ module.exports = asyncRoute(async (req, res) => {
       variables: { input: { id } },
     });
   }
+
+  sourceCookie.setTo(req, source);
 
   // Send login link.
   await identityX.sendLoginLink({
