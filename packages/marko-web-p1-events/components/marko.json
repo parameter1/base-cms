@@ -31,6 +31,9 @@
     "@action": "string",
     "@category": "string"
   },
+  "<marko-web-p1-events-track-identity-x-actions>": {
+    "template": "./track-identity-x-actions.marko"
+  },
   "<marko-web-p1-events-track-inquiry-submission>": {
     "template": "./track-inquiry-submission.marko",
     "<content>": {
