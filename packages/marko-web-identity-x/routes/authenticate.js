@@ -2,6 +2,7 @@ const gql = require('graphql-tag');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 const tokenCookie = require('../utils/token-cookie');
 const contextCookie = require('../utils/context-cookie');
+const sourceCookie = require('../utils/source-cookie');
 const callHooksFor = require('../utils/call-hooks-for');
 const userFragment = require('../api/fragments/active-user');
 
@@ -42,5 +43,6 @@ module.exports = asyncRoute(async (req, res) => {
   });
   tokenCookie.setTo(res, authToken.value);
   contextCookie.setTo(res, { loginSource });
+  if (!sourceCookie.parseFrom(req) && loginSource) sourceCookie.setTo(res, loginSource);
   res.json({ ok: true, user });
 });
