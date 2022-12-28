@@ -43,6 +43,7 @@ module.exports = asyncRoute(async (req, res) => {
   });
   tokenCookie.setTo(res, authToken.value);
   contextCookie.setTo(res, { loginSource });
-  if (!sourceCookie.parseFrom(req) && loginSource) sourceCookie.setTo(res, loginSource);
+  const source = sourceCookie.parseFrom(req);
+  if (loginSource && loginSource !== source) sourceCookie.setTo(res, loginSource);
   res.json({ ok: true, user });
 });
