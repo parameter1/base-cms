@@ -16,22 +16,22 @@ const parseFrom = (req) => {
   return clean(value);
 };
 
-const clearFrom = (req) => {
-  const dotDomain = getDotDomainFrom(req);
-  req.res.clearCookie(COOKIE_NAME);
-  req.res.clearCookie(COOKIE_NAME, { domain: dotDomain });
+const clearFrom = (res) => {
+  const dotDomain = getDotDomainFrom(res.req);
+  res.clearCookie(COOKIE_NAME);
+  res.clearCookie(COOKIE_NAME, { domain: dotDomain });
 };
 
-const setTo = (req, value) => {
+const setTo = (res, value) => {
   const cleaned = clean(value);
   if (!cleaned) return false;
   const options = {
     maxAge: 60 * 60 * 24 * 365,
     httpOnly: false,
   };
-  const dotDomain = getDotDomainFrom(req);
-  req.res.cookie(COOKIE_NAME, cleaned, options);
-  req.res.cookie(COOKIE_NAME, cleaned, { ...options, domain: dotDomain });
+  const dotDomain = getDotDomainFrom(res.req);
+  res.cookie(COOKIE_NAME, cleaned, options);
+  res.cookie(COOKIE_NAME, cleaned, { ...options, domain: dotDomain });
   return true;
 };
 

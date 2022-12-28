@@ -48,7 +48,7 @@ module.exports = asyncRoute(async (req, res) => {
     });
   }
 
-  sourceCookie.setTo(req, source);
+  sourceCookie.setTo(res, source);
 
   // Send login link.
   await identityX.sendLoginLink({
