@@ -27,6 +27,18 @@ fragment SectionFeedBlockContentFragment on Content {
   ... on ContentWebinar {
     linkUrl
     startDate
+    transcript
+    sponsors {
+      edges {
+        node {
+          id
+          name
+          siteContext {
+            path
+          }
+        }
+      }
+    }
   }
   ... on ContentEvent {
     startDate
