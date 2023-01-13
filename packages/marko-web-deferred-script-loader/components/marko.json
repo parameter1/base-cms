@@ -34,7 +34,7 @@
       "type": "string",
       "required": true
     },
-    "@delay": "number",
+    "@delay-ms": "number",
     "@on": "string",
     "@target-tag": "string",
     "@request-frame": "boolean",

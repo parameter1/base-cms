@@ -6,7 +6,7 @@
     "@target-tag": "string",
     "@request-frame": "boolean",
     "@init-only": "boolean",
-    "@delay": "number"
+    "@delay-ms": "number"
   },
   "<marko-web-gam-head>": {
     "template": "./head.marko",

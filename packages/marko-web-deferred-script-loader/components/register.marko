@@ -16,7 +16,7 @@ $ const {
   },
 });
 
-$ const delay = defaultValue(input.delay, 0);
+$ const delayMs = parseInt(input.delayMs, 10) || undefined;
 $ const init = `function() { ${input.init || ''} }`;
 $ const initOnly = defaultValue(input.initOnly, false);
 $ const onScriptBuild = `function(script) { ${input.onScriptBuild || ''} }`;
@@ -34,6 +34,7 @@ $ const attrs = JSON.stringify(getAsObject(input, "attrs"));
     initOnly: ${initOnly},
     onScriptBuild: ${onScriptBuild},
     onScriptLoad: ${onScriptLoad},
-    attrs: ${attrs}
+    attrs: ${attrs},
+    delayMs: ${delayMs},
   });
 </script>
