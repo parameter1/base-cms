@@ -15,14 +15,22 @@ $ const withDates = defaultValue(input.withDates, true);
 $ const isUpcoming = content.startDate > Date.now();
 $ const withSection = defaultValue(input.withSection, true);
 $ const withTeaser = defaultValue(input.withTeaser, true);
+$ const imageFit = defaultValue(input.imageFit, "crop");
 $ const displayImage = defaultValue(input.displayImage, true);
 $ const lazyload = defaultValue(input.lazyload, true);
 
 $ const imageOptions = {
   w: 250,
   h: 167,
-  fit: "crop",
+  fit: imageFit,
+  // account for and apply fill & fill color of transparent if fit is fill.
+  ...((imageFit === 'fill' || imageFit === 'fill-max') && { fill: "solid", "fill-color": "transparent" }),
 };
+$ const mobileImageOptions = {
+  ...imageOptions,
+  w: 112,
+  h: 112,
+}
 
 $ const blockName = "section-feed-content-node";
 
@@ -76,20 +84,15 @@ $ const blockName = "section-feed-content-node";
           format="MMMM D, YYYY"
         />
       </else-if>
-      <if(sponsor)>
-        <marko-web-content-sponsors|{ node }| block-name=blockName obj=content>
-          Sponsored By: <marko-web-content-name tag="span" block-name=blockName obj=node link=true />
-        </marko-web-content-sponsors>
-      </if>
     </marko-web-element>
   </marko-web-element>
   <if(displayImage)>
     <marko-web-element block-name=blockName name="image-wrapper">
       <if(primaryImage.src)>
-        $ const src = buildImgixUrl(primaryImage.src, { w: 250, h: 167, fit: "crop" }, null, get(primaryImage, 'isLogo'));
+        $ const src = buildImgixUrl(primaryImage.src, imageOptions, null, get(primaryImage, 'isLogo'));
         $ const srcset = [src, `${buildImgixUrl(src, { dpr: 2 })} 2x`];
 
-        $ const srcMobile = buildImgixUrl(primaryImage.src, { w: 112, h: 112, fit: "crop" }, null, get(primaryImage, 'isLogo'));
+        $ const srcMobile = buildImgixUrl(primaryImage.src, mobileImageOptions, null, get(primaryImage, 'isLogo'));
         $ const srcsetMobile = [srcMobile, `${buildImgixUrl(srcMobile, { dpr: 2 })} 2x`];
 
         <marko-web-picture>
