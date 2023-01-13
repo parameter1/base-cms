@@ -20,6 +20,14 @@ $ const { nativeX } = out.global;
       identity-query-builder=createOmedaIdentityBuilder(omedaConfig.brandKey)
     />
 
+    <!-- init gam -->
+    <marko-web-gam-init
+      request-frame=true
+      target-tag="body"
+      on="load"
+      delay-ms=500
+    />
+
     <!-- init gtm -->
     <marko-web-gtm-init
       container-id="GTM-T9BBXZK"
@@ -38,6 +46,8 @@ $ const { nativeX } = out.global;
     />
 
     <${input.head} />
+
+    <marko-web-gam-enable />
   </@head>
   <@above-wrapper>
     <marko-web-gtm-noscript container-id="GTM-T9BBXZK" />
