@@ -22,6 +22,7 @@
     "@parameter1/base-cms-marko-web-auth0-identity-x": "^3.18.0",
     "@parameter1/base-cms-marko-web-contact-us": "^3.17.3",
     "@parameter1/base-cms-marko-web-deferred-script-loader": "^3.17.0",
+    "@parameter1/base-cms-marko-web-gam": "^3.17.0",
     "@parameter1/base-cms-marko-web-gtm": "^3.17.0",
     "@parameter1/base-cms-marko-web-identity-x": "^3.18.0",
     "@parameter1/base-cms-marko-web-inquiry": "^3.0.0",
