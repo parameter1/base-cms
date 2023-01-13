@@ -23,13 +23,13 @@ $ const imageOptions = {
   h: 167,
   fit: "crop",
   // account for and apply fill & fill color of transparent if fit is fill.
-  ...(input.imageOptions && { ...input.imageOptions }),
+  ...(input.imageOptions && { ...getAsObject(input, "imageOptions") }),
 };
 $ const mobileImageOptions = {
   ...imageOptions,
   w: 112,
   h: 112,
-  ...(input.mobileImageOptions && { ...input.mobileImageOptions }),
+  ...(input.mobileImageOptions && { ...getAsObject(input, "mobileImageOptions") }),
 }
 
 $ const blockName = "section-feed-content-node";
@@ -84,11 +84,9 @@ $ const blockName = "section-feed-content-node";
           format="MMMM D, YYYY"
         />
       </else-if>
-      <if(sponsor)>
-        <marko-web-content-sponsors|{ node }| block-name=blockName obj=content>
-          Sponsored By: <marko-web-content-name tag="span" block-name=blockName obj=node link=true />
-        </marko-web-content-sponsors>
-      </if>
+      <marko-web-content-sponsors|{ node }| block-name=blockName obj=content>
+        Sponsored By: <marko-web-content-name tag="span" block-name=blockName obj=node link=true />
+      </marko-web-content-sponsors>
     </marko-web-element>
   </marko-web-element>
   <if(displayImage)>
