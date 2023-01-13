@@ -16,8 +16,9 @@ $ const {
   },
 });
 
+$ const delay = defaultValue(input.delay, 0);
 $ const init = `function() { ${input.init || ''} }`;
-$ const initOnly = defaultValue(input.initOnly, false);
+$ const initOnly = delay && delay > 0 ? true : defaultValue(input.initOnly, false);
 $ const onScriptBuild = `function(script) { ${input.onScriptBuild || ''} }`;
 $ const onScriptLoad = `function() { ${input.onScriptLoad || ''} }`;
 $ const attrs = JSON.stringify(getAsObject(input, "attrs"));
@@ -37,3 +38,10 @@ $ const attrs = JSON.stringify(getAsObject(input, "attrs"));
   });
 </script>
 
+<if(delay && delay > 0)>
+  <script>
+    setTimeout(function() {
+      deferScript('load', { name: '${input.name}' });
+    }, ${delay});
+  </script>
+</if>
