@@ -15,21 +15,21 @@ $ const withDates = defaultValue(input.withDates, true);
 $ const isUpcoming = content.startDate > Date.now();
 $ const withSection = defaultValue(input.withSection, true);
 $ const withTeaser = defaultValue(input.withTeaser, true);
-$ const imageFit = defaultValue(input.imageFit, "crop");
 $ const displayImage = defaultValue(input.displayImage, true);
 $ const lazyload = defaultValue(input.lazyload, true);
 
 $ const imageOptions = {
   w: 250,
   h: 167,
-  fit: imageFit,
+  fit: "crop",
   // account for and apply fill & fill color of transparent if fit is fill.
-  ...((imageFit === 'fill' || imageFit === 'fill-max') && { fill: "solid", "fill-color": "transparent" }),
+  ...(input.imageOptions && { ...input.imageOptions }),
 };
 $ const mobileImageOptions = {
   ...imageOptions,
   w: 112,
   h: 112,
+  ...(input.mobileImageOptions && { ...input.mobileImageOptions }),
 }
 
 $ const blockName = "section-feed-content-node";
