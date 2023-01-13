@@ -84,6 +84,11 @@ $ const blockName = "section-feed-content-node";
           format="MMMM D, YYYY"
         />
       </else-if>
+      <if(sponsor)>
+        <marko-web-content-sponsors|{ node }| block-name=blockName obj=content>
+          Sponsored By: <marko-web-content-name tag="span" block-name=blockName obj=node link=true />
+        </marko-web-content-sponsors>
+      </if>
     </marko-web-element>
   </marko-web-element>
   <if(displayImage)>
