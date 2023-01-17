@@ -11,7 +11,14 @@
     "@default-description": "string",
     "@query-params": "object",
     "@section": "object",
-    "@view-more": "boolean"
+    "@view-more": "boolean",
+    "<native-x>": {
+      "@index": "number",
+      "@indexes": "array",
+      "@name": "string",
+      "@aliases": "array"
+    },
+    "@with-native-x": "boolean"
   },
   "<theme-company-inquiry-form-block>": {
     "template": "./company-inquiry-form.marko",
