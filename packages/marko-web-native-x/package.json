@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-native-x",
-  "version": "3.17.0",
+  "version": "3.20.0",
   "description": "NativeX Marko components for BaseCMS websites",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
@@ -11,8 +11,8 @@
     "test": "yarn compile && yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-marko-web-deferred-script-loader": "^3.17.0",
-    "@parameter1/base-cms-marko-web-gtm": "^3.17.0",
+    "@parameter1/base-cms-marko-web-deferred-script-loader": "^3.20.0",
+    "@parameter1/base-cms-marko-web-gtm": "^3.20.0",
     "@parameter1/base-cms-object-path": "^3.0.0",
     "@parameter1/base-cms-utils": "^3.0.0",
     "@parameter1/base-cms-web-common": "^3.3.1",
