@@ -9,6 +9,11 @@ $ const description = `Complete your ${config.siteName()} user profile`;
     <marko-web-page-wrapper>
       <@section>
         <h1 class="page-wrapper__title">${description}</h1>
+        <marko-web-identity-x-context|{ user, hasUser }|>
+          <if(hasUser)>
+            <pre class="my-3 border p-3">${JSON.stringify({ customAttributes: user.customAttributes || {} }, null, 2)}</pre>
+          </if>
+        </marko-web-identity-x-context>
         <marko-web-identity-x-form-profile
           additional-event-data={
             foo: "bar",

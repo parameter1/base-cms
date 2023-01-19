@@ -45,7 +45,9 @@ class IdentityX {
   async loadActiveContext({ forceQuery = false } = {}) {
     // Only run the active context query once
     if (!this.activeContextQuery || forceQuery) {
-      this.activeContextQuery = this.client.query({ query: getActiveContext });
+      const { activeUserFragment, activeUserFragmentName } = this.config.options;
+      const query = getActiveContext({ activeUserFragment, activeUserFragmentName });
+      this.activeContextQuery = this.client.query({ query });
     }
     const { data = {} } = await this.activeContextQuery;
     const activeContext = data.activeAppContext || {};

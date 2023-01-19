@@ -1,4 +1,5 @@
 const IdentityXConfiguration = require('@parameter1/base-cms-marko-web-identity-x/config');
+const activeUserFragment = require('../graphql/fragments/identity-x-app-user');
 
 const { log } = console;
 
@@ -17,4 +18,6 @@ module.exports = new IdentityXConfiguration({
   onHookError: (e) => {
     log('IDENTITY-X HOOK ERROR!', e);
   },
+  activeUserFragmentName: 'IdentityXAppUser',
+  activeUserFragment,
 });
