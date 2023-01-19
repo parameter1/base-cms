@@ -1,8 +1,14 @@
-$ const { config } = out.global;
+$ const { config, res } = out.global;
+$ const { identityX } = res.locals;
 
 $ const type = "profile";
 $ const title = "User profile";
 $ const description = `Complete your ${config.siteName()} user profile`;
+
+$ const pushUserAttribute = user => identityX.setAppUserCustomAttributes({
+  userId: user.id,
+  attributes: { seen: (user.customAttributes.seen || 0) + 1 },
+});
 
 <marko-web-default-page-layout type=type title=title description=description>
   <@page>
@@ -11,7 +17,20 @@ $ const description = `Complete your ${config.siteName()} user profile`;
         <h1 class="page-wrapper__title">${description}</h1>
         <marko-web-identity-x-context|{ user, hasUser }|>
           <if(hasUser)>
-            <pre class="my-3 border p-3">${JSON.stringify({ customAttributes: user.customAttributes || {} }, null, 2)}</pre>
+            <await(pushUserAttribute(user))>
+              <@placeholder>
+                Updating user attributes...
+              </@placeholder>
+              <@then|updated|>
+                <pre class="my-3 border p-3">${JSON.stringify({ customAttributes: updated.customAttributes || {} }, null, 2)}</pre>
+              </@then>
+              <@catch|e|>
+                <div class="my-3 border p-3 text-danger border-danger">
+                  <h3>Error: ${e.name}</h3>
+                  <p>${e.message}</p>
+                </div>
+              </@catch>
+            </await>
           </if>
         </marko-web-identity-x-context>
         <marko-web-identity-x-form-profile
