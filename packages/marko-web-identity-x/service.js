@@ -3,6 +3,7 @@ const createClient = require('./utils/create-client');
 const getActiveContext = require('./api/queries/get-active-context');
 const checkContentAccess = require('./api/queries/check-content-access');
 const addExternalUserId = require('./api/mutations/add-external-user-id');
+const setCustomAttributes = require('./api/mutations/set-custom-attributes');
 const impersonateAppUser = require('./api/mutations/impersonate-app-user');
 const sendChangeEmailLinkMutation = require('./api/mutations/send-change-email-link');
 const sendLoginLinkMutation = require('./api/mutations/send-login-link');
@@ -182,6 +183,19 @@ class IdentityX {
       variables: { email },
     });
     return data.createAppUser;
+  }
+
+  /**
+   * Sets custom key-value data on the user.
+   */
+  async setAppUserCustomAttributes({ userId, attributes = {} } = {}) {
+    const { activeUserFragment, activeUserFragmentName } = this.config.options;
+    const { data: { updateOwnAppUserCustomAttributes: user } } = await this.client.mutate({
+      mutation: setCustomAttributes({ activeUserFragment, activeUserFragmentName }),
+      variables: { input: { id: userId, attributes } },
+    });
+    await callHooksFor(this, 'onUserProfileUpdate', { req: this.req, user });
+    return user;
   }
 
   /**
