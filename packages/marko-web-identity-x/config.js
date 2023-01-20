@@ -32,7 +32,6 @@ class IdentityXConfiguration {
     this.appId = appId;
     this.apiToken = apiToken;
     this.options = {
-      activeUserFragmentName: 'ActiveAppUserFragment',
       enableChangeEmail: false,
       requiredServerFields,
       requiredClientFields,

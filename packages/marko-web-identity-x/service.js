@@ -46,9 +46,7 @@ class IdentityX {
   async loadActiveContext({ forceQuery = false } = {}) {
     // Only run the active context query once
     if (!this.activeContextQuery || forceQuery) {
-      const { activeUserFragment, activeUserFragmentName } = this.config.options;
-      const query = getActiveContext({ activeUserFragment, activeUserFragmentName });
-      this.activeContextQuery = this.client.query({ query });
+      this.activeContextQuery = this.client.query({ query: getActiveContext });
     }
     const { data = {} } = await this.activeContextQuery;
     const activeContext = data.activeAppContext || {};
@@ -188,13 +186,12 @@ class IdentityX {
   /**
    * Sets custom key-value data on the user.
    */
-  async setAppUserCustomAttributes({ userId, attributes = {} } = {}) {
-    const { activeUserFragment, activeUserFragmentName } = this.config.options;
+  async setAppUserCustomAttributes({ userId, attributes = {}, dispatch = true } = {}) {
     const { data: { updateOwnAppUserCustomAttributes: user } } = await this.client.mutate({
-      mutation: setCustomAttributes({ activeUserFragment, activeUserFragmentName }),
+      mutation: setCustomAttributes,
       variables: { input: { id: userId, attributes } },
     });
-    await callHooksFor(this, 'onUserProfileUpdate', { req: this.req, user });
+    if (dispatch) await callHooksFor(this, 'onUserProfileUpdate', { req: this.req, user });
     return user;
   }
 
