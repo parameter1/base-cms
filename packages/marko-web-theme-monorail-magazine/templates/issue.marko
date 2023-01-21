@@ -14,15 +14,6 @@ $ const { id, pageNode } = data;
   <@page>
     <marko-web-resolve-page|{ data: issue }| node=pageNode>
       <marko-web-page-wrapper class="mb-block">
-        <@section|{ aliases }|>
-          <theme-gam-define-display-ad
-            name="rotation"
-            position="magazine_page"
-            aliases=aliases
-            modifiers=["inter-block"]
-          />
-        </@section>
-
         <@section>
           <div class="row">
             <div class="col">
@@ -90,12 +81,6 @@ $ const { id, pageNode } = data;
                   path=`/magazine/${issue.id}`
                 />
               </theme-section-feed-block>
-              <theme-gam-define-display-ad
-                name="rotation"
-                position="magazine_page"
-                aliases=aliases
-                modifiers=["inter-block"]
-              />
             </@after>
           </theme-section-feed-block>
         </@section>
@@ -130,15 +115,6 @@ $ const { id, pageNode } = data;
             </@footer>
           </marko-web-node-list>
           </marko-web-query>
-        </@section>
-
-        <@section|{ aliases }|>
-          <theme-gam-define-display-ad
-            name="rotation"
-            position="magazine_page"
-            aliases=aliases
-            modifiers=["inter-block"]
-          />
         </@section>
       </marko-web-page-wrapper>
     </marko-web-resolve-page>
