@@ -5,7 +5,7 @@ $ const { publicationId } = input;
 
 <marko-web-query|{ node: issue }|
   name="magazine-latest-issue"
-  params={ publicationId, queryFragment: latestIssueFragment, requiresImage: true  }
+  params={ publicationId, queryFragment: latestIssueFragment, requiresCoverImage: true  }
 >
   <marko-web-node-list
     inner-justified=true
