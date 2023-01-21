@@ -164,6 +164,15 @@
       &__title {
         @include skin-typography($style: "section-header");
         text-transform: none;
+        margin-bottom: 24px;
+      }
+      &__text {
+        &--magazine-publication-links {
+          flex-direction: row;
+          .btn {
+            margin-right: 1rem;
+          }
+        }
       }
       &__footer-left {
         display: flex;
@@ -180,6 +189,7 @@
     }
   }
 }
+
 .node-list {
   $self: &;
   &--latest-issue {
@@ -199,7 +209,7 @@
     }
     .btn  {
       padding: 12px;
-      font-size: 12px;
+      font-size: 14px;
     }
     .node-list {
       &__node:first-child {
@@ -219,5 +229,8 @@
 .page--magazine-issue {
   .pagination-controls + .ad-container--inter-block {
     margin-top: map-get($spacers, block);
+  }
+  .section-feed-content-node {
+    flex-direction: row;
   }
 }

@@ -5,18 +5,18 @@ const publicationFragment = require('../graphql/fragments/magazine-publication-p
 const issue = require('../templates/issue');
 const issueFragment = require('../graphql/fragments/magazine-issue-page');
 
-module.exports = (app) => {
+module.exports = (app, templates = {}, fragments = {}) => {
   app.get('/magazine', (req, res) => {
-    res.marko(index);
+    res.marko(templates.index || index);
   });
 
   app.get('/magazine/:id([a-fA-F0-9]{24})', withMagazinePublication({
-    template: publication,
-    queryFragment: publicationFragment,
+    template: templates.publication || publication,
+    queryFragment: fragments.publicationFragment || publicationFragment,
   }));
 
   app.get('/magazine/:id(\\d+)', withMagazineIssue({
-    template: issue,
-    queryFragment: issueFragment,
+    template: templates.issue || issue,
+    queryFragment: fragments.issueFragment || issueFragment,
   }));
 };
