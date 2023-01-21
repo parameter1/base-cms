@@ -6,6 +6,7 @@ $ const publication = getAsObject(issue, "publication");
 $ const coverImage = getAsObject(issue, "coverImage");
 $ const linkTitle = `${publication.name} ${issue.name}`;
 $ const flush = defaultValue(input.flush, true);
+$ const withTitle = defaultValue(input.withTitle, true);
 
 <marko-web-node image-position="top" flush=flush>
   <@image
@@ -18,9 +19,11 @@ $ const flush = defaultValue(input.flush, true);
     options={ fit: "max" }
   />
   <@body>
-    <@title tag="h5">
-      <marko-web-magazine-issue-name tag=null obj=issue link={ title: linkTitle } />
-    </@title>
+    <if(withTitle)>
+      <@title tag="h5">
+        <marko-web-magazine-issue-name tag=null obj=issue link={ title: linkTitle } />
+      </@title>
+    </if>
     <@footer>
       <@left>
         <theme-magazine-publication-buttons publication=publication issue=issue />
