@@ -1,6 +1,6 @@
-import { getAsObject } from "@parameter1/base-cms-object-path";
 import issueFragment from "../graphql/fragments/magazine-issue-archive";
 import contentListFragment from "../graphql/fragments/magazine-content-feed-block";
+import { get, getAsObject } from "@parameter1/base-cms-object-path";
 
 $ const { site, pagination: p, } = out.global;
 $ const { id, pageNode } = data;
@@ -21,68 +21,42 @@ $ const { id, pageNode } = data;
                 <@item><marko-web-link href="/magazine">Magazine</marko-web-link></@item>
                 <@item><marko-web-magazine-publication-name tag=null obj=issue.publication link=true /></@item>
               </theme-breadcrumbs>
-              <div class="magazine-publication-card-block">
-                <div class="magazine-publication-card-block__body">
-                  <div class="row">
-                    <div class="col-lg-4 pl-0">
-                      <marko-web-node image-position="left" modifiers=["flush"] flush=false>
-                        <@image
-                          src=issue.coverImage.src
-                          alt=(issue.coverImage.alt || issue.name)
-                          fluid=false
-                          ar="3:4"
-                          width=300
-                          options={ fit: "max" }
-                        />
-                      </marko-web-node>
-                    </div>
-                    <div class="col-lg-8 pl-0">
-                      <marko-web-node image-position="left" modifiers=["flush"] flush=false>
-                        <@body>
-                          <@title tag="h1">
-                            <marko-web-magazine-issue-name tag=null obj=issue />
-                          </@title>
-                          <@text modifiers=["teaser"]>
-                            <if(issue.description)>
-                              <marko-web-magazine-issue-description tag=null obj=issue />
-                            </if>
-                            <else>
-                              <marko-web-magazine-publication-description tag=null obj=issue.publication />
-                            </else>
-
-                          </@text>
-                          <@text modifiers=["magazine-publication-links"]>
-                            <theme-magazine-publication-links issue=issue />
-                          </@text>
-                        </@body>
-                      </marko-web-node>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <h1 class="page-wrapper__title">
+                ${issue.name}
+              </h1>
+              <if(issue.description)>
+                <p class="page-wrapper__deck">${issue.description}</p>
+              </if>
             </div>
           </div>
         </@section>
 
         <@section|{ aliases }|>
-          $ const contentQueryName = "magazine-scheduled-content";
-          $ const contentQueryParams = { issueId: id, queryFragment: contentListFragment };
-          $ const perPage = 12;
-          <theme-section-feed-block query-name=contentQueryName query-params=contentQueryParams>
-            <@query-params ...contentQueryParams limit=perPage skip=p.skip({ perPage }) />
-            <@header>
-              In This Issue <if(p.page !== 1)>(Page ${p.page})</if>
-            </@header>
-            <@after>
-              <theme-section-feed-block|{ totalCount }| alias=`/magazine/${issue.id}` count-only=true query-name=contentQueryName query-params=contentQueryParams>
-                <theme-pagination-controls
-                  per-page=perPage
-                  total-count=totalCount
-                  path=`/magazine/${issue.id}`
-                />
+          <div class="row">
+            <div class="col-lg-4" style="padding-top: 11px;">
+              <theme-magazine-latest-issue-block node=issue with-title=false class="sticky-top" />
+            </div>
+            <div class="col-lg-8">
+              $ const contentQueryName = "magazine-scheduled-content";
+              $ const contentQueryParams = { issueId: id, queryFragment: contentListFragment };
+              $ const perPage = 12;
+              <theme-section-feed-block query-name=contentQueryName query-params=contentQueryParams>
+                <@query-params ...contentQueryParams limit=perPage skip=p.skip({ perPage }) />
+                <@header>
+                  In This Issue <if(p.page !== 1)>(Page ${p.page})</if>
+                </@header>
+                <@after>
+                  <theme-section-feed-block|{ totalCount }| alias=`/magazine/${issue.id}` count-only=true query-name=contentQueryName query-params=contentQueryParams>
+                    <theme-pagination-controls
+                      per-page=perPage
+                      total-count=totalCount
+                      path=`/magazine/${issue.id}`
+                    />
+                  </theme-section-feed-block>
+                </@after>
               </theme-section-feed-block>
-            </@after>
-          </theme-section-feed-block>
+            </div>
+          </div>
         </@section>
 
         <@section>
