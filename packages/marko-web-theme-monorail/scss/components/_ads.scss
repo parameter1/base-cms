@@ -13,6 +13,8 @@
   $leaderboard-min-height-desktop: 90px !default;
   $billboard-min-height-mobile: 210px !default;
   $billboard-min-height-desktop: 596px !default;
+  $superstitial-min-height-mobile: 210px !default;
+  $superstitial-min-height-desktop: 596px !default;
   $rotation-min-height-mobile: 50px !default;
   $rotation-min-height-desktop: 90px !default;
 
@@ -165,6 +167,13 @@
     min-height: $billboard-min-height-mobile + $container-height;
     @media (min-width: 780px) {
       min-height: $billboard-min-height-desktop + $container-height;
+    }
+  }
+
+  &--template-superstitial {
+    min-height: $superstitial-min-height-mobile + $container-height;
+    @media (min-width: 780px) {
+      min-height: $superstitial-min-height-desktop + $container-height;
     }
   }
 
