@@ -25,7 +25,6 @@ $ const queryParams = {
 $ const cols = input.cols || queryParams.limit;
 $ const blockName = "content-card-deck";
 $ const linkHeader = input.linkHeader || false;
-$ const alias = input.alias || "";
 
 <marko-web-query|{ nodes, section: querySection }| name="website-scheduled-content" params=queryParams>
   $ const section = { ...querySection, ...input.section };
@@ -36,8 +35,8 @@ $ const alias = input.alias || "";
       <marko-web-element block-name=blockName name="header">
         <marko-web-element block-name=blockName name="header-left">
           <marko-web-element block-name=blockName name="title">
-            <if(linkHeader)>
-              <marko-web-link href=`${alias}`>
+            <if(linkHeader && input.alias)>
+              <marko-web-link href=`${input.alias}`>
                 ${title}
               </marko-web-link>
             </if>
