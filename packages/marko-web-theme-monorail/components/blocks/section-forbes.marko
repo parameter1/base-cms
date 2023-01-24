@@ -24,12 +24,21 @@ $ const queryParams = {
 
 $ const cols = input.cols || queryParams.limit;
 $ const blockName = "section-forbes";
+$ const linkHeader = input.linkHeader || false;
+$ const alias = input.alias || "";
 
 $ const rowStyle = (input.reverse) ? "flex-direction: row-reverse" : "";
 
 <marko-web-query|{ nodes, section: querySection }| name="website-scheduled-content" params=queryParams>
   <marko-web-element tag="h1" block-name="top-stories" name="header">
-    ${i18n(querySection.name)}
+    <if(linkHeader)>
+      <marko-web-link href=`${alias}`>
+        ${i18n(querySection.name)}
+      </marko-web-link>
+    </if>
+    <else>
+      ${i18n(querySection.name)}
+    </else>
   </marko-web-element>
   <div class="row section-forbes" style=rowStyle>
     <div class="col-lg-8">

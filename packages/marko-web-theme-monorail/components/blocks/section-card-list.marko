@@ -12,6 +12,8 @@ $ const queryParams = {
 };
 $ const blockName = "section-card-list";
 $ const buttonClass = input.buttonClass || "btn btn-secondary";
+$ const linkHeader = input.linkHeader || false;
+$ const alias = input.alias || "";
 
 <marko-web-query|{ nodes, section }| name="website-scheduled-content" params=queryParams>
   $ const heroNode = nodes.slice(0, 1)[0];
@@ -25,7 +27,14 @@ $ const buttonClass = input.buttonClass || "btn btn-secondary";
 
   <marko-web-block name=blockName>
     <marko-web-element block-name=blockName name="header">
-      ${section.name}
+      <if(linkHeader)>
+        <marko-web-link href=`${alias}`>
+          ${section.name}
+        </marko-web-link>
+      </if>
+      <else>
+        ${section.name}
+      </else>
     </marko-web-element>
     <marko-web-element block-name=blockName name="description">
       ${input.description || section.description || input.defaultDescription}
