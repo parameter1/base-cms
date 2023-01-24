@@ -5,10 +5,10 @@ $ const { site } = out.global;
 $ const { publicationId } = input;
 $ const blockName = "magazine-issues"
 $ const linkHeader = input.linkHeader || false;
-$ const alias = input.alias || "";
 
 <marko-web-query|{ nodes }| name="magazine-active-issues"
   params={
+    sectionAlias: input.alias,
     publicationId,
     queryFragment,
     limit: 4,
@@ -19,8 +19,8 @@ $ const alias = input.alias || "";
     <marko-web-element block-name=blockName name="wrapper">
       <marko-web-element block-name=blockName name="contents">
         <marko-web-element block-name=blockName name="header">
-          <if(linkHeader)>
-            <marko-web-link href=`${alias}`>
+          <if(linkHeader && input.alias)>
+            <marko-web-link href=`${input.alias}`>
               In Print
             </marko-web-link>
           </if>
