@@ -1,11 +1,11 @@
 <template>
   <button
-    class="site-navbar__idx-newsletter-toggler"
+    :class="buttonClass"
     type="button"
     aria-label="Newsletter Menu Toggle"
     @click="toggle"
   >
-    <component :is="icon" :modifiers="['lg']" />
+    <component :is="icon" :modifiers="iconModifiers" />
   </button>
 </template>
 
@@ -26,6 +26,14 @@ export default {
       type: String,
       default: 'mail',
       validator: validateIcon,
+    },
+    iconModifiers: {
+      type: Array,
+      default: () => ['lg'],
+    },
+    buttonClass: {
+      type: String,
+      default: 'site-navbar__idx-newsletter-toggler',
     },
   },
 
