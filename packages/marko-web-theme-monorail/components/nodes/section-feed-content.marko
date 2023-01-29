@@ -19,7 +19,7 @@ $ const displayImage = defaultValue(input.displayImage, true);
 $ const lazyload = defaultValue(input.lazyload, true);
 
 $ const pastLabel = defaultValue(input.pastLabel, "View Webinar");
-$ const upcomingLabel = defaultValue(input.pastLabel, "Register for Webinar");
+$ const upcomingLabel = defaultValue(input.upcomingLabel, "Register for Webinar");
 $ const { surveyType, surveyId } = getAsObject(content, "gating")
 $ const linkToWebinarFormAnchor = (surveyType && surveyId) ? defaultValue(input.linkToWebinarFormAnchor, false) : false;
 
