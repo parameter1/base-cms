@@ -85,6 +85,12 @@
       content: "Date: ";
     }
   }
+  &__content-sponsors {
+    &::before {
+      font-weight: $font-weight-bold;
+      content: "Sponsored by: ";
+    }
+  }
   &__content-start-date + #{ $self }__content-end-date {
     &::before {
       font-weight: $font-weight-normal;

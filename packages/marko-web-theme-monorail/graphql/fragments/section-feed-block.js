@@ -28,6 +28,10 @@ fragment SectionFeedBlockContentFragment on Content {
     linkUrl
     startDate
     transcript
+    gating {
+      surveyType
+      surveyId
+    }
     sponsors {
       edges {
         node {
@@ -35,6 +39,12 @@ fragment SectionFeedBlockContentFragment on Content {
           name
           siteContext {
             path
+          }
+          primaryImage {
+            id
+            src(input: { options: { auto: "format,compress" } })
+            alt
+            isLogo
           }
         }
       }

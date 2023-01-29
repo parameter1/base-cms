@@ -18,6 +18,12 @@ $ const withTeaser = defaultValue(input.withTeaser, true);
 $ const displayImage = defaultValue(input.displayImage, true);
 $ const lazyload = defaultValue(input.lazyload, true);
 
+$ const pastLabel = defaultValue(input.pastLabel, "View Webinar");
+$ const upcomingLabel = defaultValue(input.pastLabel, "Register for Webinar");
+$ const { surveyType, surveyId } = getAsObject(content, "gating")
+$ const linkToWebinarFormAnchor = (surveyType && surveyId) ? defaultValue(input.linkToWebinarFormAnchor, false) : false;
+
+
 $ const imageOptions = {
   w: 250,
   h: 167,
@@ -69,13 +75,25 @@ $ const blockName = "section-feed-content-node";
           <marko-web-content-start-date tag="span" block-name=blockName obj=content />
           <marko-web-content-end-date tag="span" block-name=blockName obj=content />
         </div>
-        <if(content.linkUrl)>
+
+        <if(linkToWebinarFormAnchor)>
+          $ const cta = (isUpcoming) ? `${i18n(upcomingLabel)}` : `${i18n(pastLabel)}`;
+          <marko-web-link
+            class="btn btn-primary btn-lg"
+            title=`${cta}: ${content.name}`
+            href=`${get(content, "siteContext.path")}#webinar-form`
+            target="_blank"
+          >
+            ${cta}
+          </marko-web-link>
+        </if>
+        <else-if(content.linkUrl)>
           <theme-content-link-url
             obj=content
-            label=(isUpcoming ? `${i18n("Register for Webinar")}` : `${i18n("View Webinar")}`)
+            label=(isUpcoming ? `${i18n(upcomingLabel)}` : `${i18n(pastLabel)}`)
             target="_blank"
           />
-        </if>
+        </else-if>
       </if>
       <else-if(withDates)>
         <marko-web-content-published
@@ -84,9 +102,34 @@ $ const blockName = "section-feed-content-node";
           format="MMMM D, YYYY"
         />
       </else-if>
-      <marko-web-content-sponsors|{ node }| block-name=blockName obj=content>
-        Sponsored By: <marko-web-content-name tag="span" block-name=blockName obj=node link=true />
-      </marko-web-content-sponsors>
+      <if(content.sponsors)>
+          <marko-web-content-sponsors|{ node }| block-name=blockName obj=content>
+            <if(node.primaryImage && node.primaryImage.src)>
+              $ const sponsoreImgOptions = {
+                h: 112,
+                w: 112,
+                fit: 'fill-max',
+              }
+              $ const src = buildImgixUrl(node.primaryImage.src, sponsoreImgOptions, null, get(node.primaryImage, 'isLogo'));
+              $ const srcset = [src, `${buildImgixUrl(src, { dpr: 2 })} 2x`];
+
+              <marko-web-picture>
+                <@link href=get(content, "siteContext.path") attrs=linkAttrs />
+                <@image
+                  src=src
+                  srcset=srcset
+                  class=[`${blockName}__image--sponsore`]
+                  alt=node.primaryImage.alt
+                  lazyload=lazyload
+                  attrs={ width: "112", height: "112" }
+                />
+              </marko-web-picture>
+            </if>
+            <else>
+              <marko-web-content-name tag="span" block-name=blockName obj=node link=true />
+            </else>
+          </marko-web-content-sponsors>
+      </if>
     </marko-web-element>
   </marko-web-element>
   <if(displayImage)>
