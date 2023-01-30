@@ -35,7 +35,7 @@ $ const linkHeader = input.linkHeader || false;
       <marko-web-element block-name=blockName name="header">
         <marko-web-element block-name=blockName name="header-left">
           <marko-web-element block-name=blockName name="title">
-            <if(linkHeader && input.alias)>
+            <if(linkHeader && input.alias || input.title)>
               <marko-web-link href=`${input.alias}`>
                 ${title}
               </marko-web-link>
