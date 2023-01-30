@@ -5,7 +5,22 @@
     "@slots <slot>[]": {}
   },
   "<theme-content-card-deck-block>": {
-    "template": "./content-card-deck.marko"
+    "template": "./content-card-deck.marko",
+    "<node>": {},
+    "@alias" : "string",
+    "@default-description": "string",
+    "@query-params": "object",
+    "@section": "object",
+    "@view-more": "boolean",
+    "<native-x>": {
+      "@index": "number",
+      "@indexes": "array",
+      "@name": "string",
+      "@aliases": "array"
+    },
+    "@with-native-x": "boolean",
+    "@link-header": "boolean",
+    "@title": "string"
   },
   "<theme-company-inquiry-form-block>": {
     "template": "./company-inquiry-form.marko",
