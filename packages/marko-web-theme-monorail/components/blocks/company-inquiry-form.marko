@@ -3,7 +3,7 @@ import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 $ const { content, consentCheckboxes } = input;
 $ const initiallyExpanded = defaultValue(input.initiallyExpanded, true);
 $ const modifiers = defaultValue(input.modifiers, []);
-$ if (initiallyExpanded) modifers.push["open"];
+$ if (initiallyExpanded) modifiers.push["open"];
 
 <marko-web-node-list class="node-list" block-name="inquiry-form" modifiers=modifiers collapsible=false>
   <@header>
