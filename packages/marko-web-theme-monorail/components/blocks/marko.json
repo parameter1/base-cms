@@ -20,7 +20,8 @@
     },
     "@with-native-x": "boolean",
     "@link-header": "boolean",
-    "@title": "string"
+    "@title": "string",
+    "<link>": {}
   },
   "<theme-company-inquiry-form-block>": {
     "template": "./company-inquiry-form.marko",
