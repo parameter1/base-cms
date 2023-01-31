@@ -86,7 +86,7 @@ enum GateableSurveyProvider {
   app_form_com
   idx
   alchemer
-  bobitconnect
+  formcms
 }
 
 enum ContentMutation {
