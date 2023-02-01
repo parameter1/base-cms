@@ -13,5 +13,8 @@ fragment ContentMeterFragment on Content {
     id
     alias
   }
+  userRegistration {
+    isCurrentlyRequired
+  }
 }
 `;
