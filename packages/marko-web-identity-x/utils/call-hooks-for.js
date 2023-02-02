@@ -15,7 +15,12 @@ module.exports = async (service, name, params = {}) => {
   const promises = { wait: [], skip: [] };
   getAsArray(service, `config.hooks.${name}`).forEach(({ fn, shouldAwait }) => {
     const key = shouldAwait ? 'wait' : 'skip';
-    const maybePromise = fn({ ...params, service });
+    const additionalEventData = params.additionalEventData || {};
+    const maybePromise = fn({
+      ...params,
+      additionalEventData,
+      service,
+    });
     if (maybePromise.catch) maybePromise.catch(onHookError);
     promises[key].push(maybePromise);
   });
