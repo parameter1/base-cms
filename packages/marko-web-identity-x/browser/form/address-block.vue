@@ -1,7 +1,7 @@
 <template>
   <fieldset v-if="showBlock" class="px-3 border mb-3 address-block">
     <legend class="h6 w-auto">
-      Address
+      {{ blockLabel }}
     </legend>
 
     <div v-if="street.visible" class="row">
@@ -122,6 +122,9 @@ export default {
       const { user } = this;
       if (!user) return null;
       return user.countryCode;
+    },
+    blockLabel() {
+      return this.defaultFieldLabels.addressBlockLabel || 'Address';
     },
   },
 };
