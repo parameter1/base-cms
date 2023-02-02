@@ -54,5 +54,5 @@ module.exports = asyncRoute(async (req, res) => {
     redirectTo,
     additionalEventData,
   });
-  return res.json({ ok: true });
+  return res.json({ ok: true, additionalEventData });
 });

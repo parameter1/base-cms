@@ -116,5 +116,5 @@ module.exports = asyncRoute(async (req, res) => {
     req,
     user,
   });
-  res.json({ ok: true, user });
+  res.json({ ok: true, user, additionalEventData });
 });
