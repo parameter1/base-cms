@@ -43,5 +43,10 @@ module.exports = asyncRoute(async (req, res) => {
   });
   tokenCookie.setTo(res, authToken.value);
   contextCookie.setTo(res, { loginSource });
-  res.json({ ok: true, user, additionalEventData });
+  res.json({
+    ok: true,
+    user,
+    loginSource,
+    additionalEventData,
+  });
 });
