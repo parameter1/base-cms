@@ -38,6 +38,7 @@ module.exports = async (params = {}) => {
   });
 
   const payload = await formatter({
+    ...params, // Pass all params through to the formatter
     req,
     payload: {
       user,

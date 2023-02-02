@@ -55,6 +55,7 @@ module.exports = async (params = {}) => {
   const [omedaLinkedFields, { encryptedCustomerId }] = await Promise.all([
     getOmedaLinkedFields({ identityX, brandKey }),
     idxOmedaRapidIdentify(await formatter({
+      ...params, // Pass all params through to the formatter
       req,
       source,
       payload: {
