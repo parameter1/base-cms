@@ -24,7 +24,7 @@ const loginAppUser = gql`
 
 module.exports = asyncRoute(async (req, res) => {
   const { identityX, body } = req;
-  const { token } = body;
+  const { token, additionalEventData } = body;
   if (!token) throw new Error('No login token was provided.');
 
   const input = { token };
@@ -39,8 +39,9 @@ module.exports = asyncRoute(async (req, res) => {
     user,
     authToken,
     loginSource,
+    additionalEventData,
   });
   tokenCookie.setTo(res, authToken.value);
   contextCookie.setTo(res, { loginSource });
-  res.json({ ok: true, user });
+  res.json({ ok: true, user, additionalEventData });
 });
