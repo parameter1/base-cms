@@ -228,7 +228,7 @@ export default {
           isProfileComplete: this.isProfileComplete,
           requiresCustomFieldAnswers: this.requiresCustomFieldAnswers,
           additionalEventData: {
-            ...additionalEventData,
+            ...(this.additionalEventData || {}),
             ...(data.additionalEventData || {}),
           },
         });

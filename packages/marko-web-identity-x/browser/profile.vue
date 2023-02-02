@@ -611,7 +611,12 @@ export default {
         // force scroll to top of page when form and success message toggle
         window.scrollTo(0, 0);
 
-        this.emit('profile-updated');
+        this.emit('profile-updated', {
+          additionalEventData: {
+            ...(this.additionalEventData || {}),
+            ...(data.additionalEventData || {}),
+          },
+        });
 
         if (this.reloadPageOnSubmit) {
           this.isReloadingPage = true;
