@@ -110,8 +110,14 @@ module.exports = {
   ],
 
   // onLoginLinkSentFormatter: (async ({ payload }) => ({ ...payload })),
-  onAuthenticationSuccessFormatter: (async ({ payload }) => ({ ...payload, promoCode: 'ExampleWebsiteOnAuthSuccessPromo' })),
-  onUserProfileUpdateFormatter: (async ({ req, payload }) => {
+  onAuthenticationSuccessFormatter: async ({ payload, additionalEventData }) => {
+    // eslint-disable-next-line no-param-reassign
+    additionalEventData.somethingHappened = true;
+    return { ...payload, promoCode: 'ExampleWebsiteOnAuthSuccessPromo' };
+  },
+  onUserProfileUpdateFormatter: async ({ req, payload, additionalEventData }) => {
+    // eslint-disable-next-line no-param-reassign
+    additionalEventData.profileUpdated = true;
     // BAIL if omedaGraphQLCLient isnt available return payload.
     if (!req.$omedaGraphQLClient) return payload;
 
@@ -153,7 +159,7 @@ module.exports = {
       }
     }
     return payload;
-  }),
+  },
 
   /**
    * Customize Omeda+IdentityX payload

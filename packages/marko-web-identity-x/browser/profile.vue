@@ -1,6 +1,8 @@
 <template>
-  <div id="profile-form-wrapper" v-if="hasActiveUser">
-    <p v-if="!didSubmit">{{ callToAction }}</p>
+  <div v-if="hasActiveUser" id="profile-form-wrapper">
+    <p v-if="!didSubmit">
+      {{ callToAction }}
+    </p>
     <form v-if="!didSubmit" @submit.prevent="handleSubmit">
       <fieldset :disabled="isLoading">
         <div class="row">
@@ -609,7 +611,12 @@ export default {
         // force scroll to top of page when form and success message toggle
         window.scrollTo(0, 0);
 
-        this.emit('profile-updated');
+        this.emit('profile-updated', {
+          additionalEventData: {
+            ...(this.additionalEventData || {}),
+            ...(data.additionalEventData || {}),
+          },
+        });
 
         if (this.reloadPageOnSubmit) {
           this.isReloadingPage = true;

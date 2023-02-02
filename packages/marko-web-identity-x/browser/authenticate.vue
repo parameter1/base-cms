@@ -207,10 +207,10 @@ export default {
     async authenticate() {
       this.isLoading = true;
       try {
-        const { token } = this;
+        const { token, additionalEventData } = this;
         if (!token) throw new Error('No login token was provided.');
 
-        const res = await post('/authenticate', { token });
+        const res = await post('/authenticate', { token, additionalEventData });
         const data = await res.json();
 
         if (!res.ok) throw new AuthenticationError(data.message, res.status);
@@ -227,6 +227,10 @@ export default {
           mustReVerifyProfile: this.mustReVerifyProfile,
           isProfileComplete: this.isProfileComplete,
           requiresCustomFieldAnswers: this.requiresCustomFieldAnswers,
+          additionalEventData: {
+            ...(this.additionalEventData || {}),
+            ...(data.additionalEventData || {}),
+          },
         });
 
         if (!this.showProfileForm) this.redirect();

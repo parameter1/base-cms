@@ -112,9 +112,10 @@ module.exports = asyncRoute(async (req, res) => {
   const { data } = await identityX.client.mutate({ mutation, variables: { input } });
   const { updateOwnAppUser: user } = data;
   await callHooksFor(identityX, 'onUserProfileUpdate', {
+    additionalEventData,
     ...(additionalEventData || {}),
     req,
     user,
   });
-  res.json({ ok: true, user });
+  res.json({ ok: true, user, additionalEventData });
 });
