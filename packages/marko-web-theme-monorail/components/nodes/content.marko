@@ -34,6 +34,8 @@ $ if (withSection && alias && withPrimarySectionModifier) {
 
 $ const imageLink = primaryImage.src ? { href: content.siteContext.path, attrs: linkAttrs } : false;
 
+$ const withSponsored = primarySection && primarySection.name === 'Sponsored' && input.withSponsored;
+
 <marko-web-node
   type=`${content.type}-content`
   image-position=defaultValue(input.imagePosition, "left")
@@ -59,10 +61,10 @@ $ const imageLink = primaryImage.src ? { href: content.siteContext.path, attrs: 
   </if>
   <if(!imageOnly)>
     <@body>
-      <if(withSection || isEvent)>
+      <if(withSection || isEvent || withSponsored)>
         <@header attrs=headerAttributes>
           <@left|{ blockName }|>
-            <if(withSection)>
+            <if(withSection || withSponsored)>
               <section-sponsor block-name=blockName section=primarySection labels=content.labels />
             </if>
             <else-if(isEvent)>
