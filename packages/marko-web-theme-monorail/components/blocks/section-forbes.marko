@@ -1,4 +1,5 @@
 import { defaultValue } from "@parameter1/base-cms-marko-web/utils";
+import { getAsArray } from "@parameter1/base-cms-object-path";
 import queryFragment from "../../graphql/fragments/content-card-deck-block";
 import sectionFragment from "../../graphql/fragments/section-info";
 
@@ -12,6 +13,8 @@ $ const nativeX = {
   sectionName: `${i18n("Sponsor Content")}`,
   ...input.nativeX,
 };
+
+$ const withSponsored = defaultValue(input.withSponsored, false);
 
 $ const queryParams = {
   sectionAlias: input.alias,
@@ -27,7 +30,15 @@ $ const blockName = "section-forbes";
 
 $ const rowStyle = (input.reverse) ? "flex-direction: row-reverse" : "";
 
-<marko-web-query|{ nodes, section: querySection }| name="website-scheduled-content" params=queryParams>
+<marko-web-query|{ nodes: returnedNodes, section: querySection }| name="website-scheduled-content" params=queryParams>
+  $ const nodes = withSponsored ? returnedNodes.map((node) => {
+      const { primarySection, ...rest } = node;
+      const generatedPrimarySection = getAsArray(node, "labels").includes("Sponsored") ? {
+        ...primarySection, name: "Sponsored"
+      } : primarySection;
+      const parsedNode = generatedPrimarySection.name === "Sponsored" ? { ...rest, primarySection: generatedPrimarySection, withSection: true } : node;
+      return parsedNode;
+    }) : returnedNodes;
   <marko-web-element tag="h1" block-name="top-stories" name="header">
     ${i18n(querySection.name)}
   </marko-web-element>
@@ -79,7 +90,7 @@ $ const rowStyle = (input.reverse) ? "flex-direction: row-reverse" : "";
     <div class="col-lg-4">
       $ const cardNodes = nodes.slice(5, 7);
       <theme-content-card-deck-col-flow nodes=cardNodes modifiers=[blockName] cols=1>
-        <@node withSection=false />
+        <@node withSection=false withSponsored=withSponsored />
       </theme-content-card-deck-col-flow>
     </div>
   </div>
