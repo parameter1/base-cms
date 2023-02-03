@@ -5,6 +5,7 @@ $ const { site } = out.global;
 $ const { publicationId } = input;
 $ const blockName = "magazine-issues"
 $ const linkHeader = input.linkHeader || false;
+$ const title = input.title || "In Print";
 
 <marko-web-query|{ nodes }| name="magazine-active-issues"
   params={
@@ -21,11 +22,11 @@ $ const linkHeader = input.linkHeader || false;
         <marko-web-element block-name=blockName name="header">
           <if(linkHeader && input.alias)>
             <marko-web-link href=`${input.alias}`>
-              In Print
+              ${title}
             </marko-web-link>
           </if>
           <else>
-            In Print
+            ${title}
           </else>
         </marko-web-element>
         <theme-magazine-issue-archive-flow nodes=nodes with-title=input.withTitle flush=true />
