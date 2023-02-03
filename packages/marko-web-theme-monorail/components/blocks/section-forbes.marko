@@ -2,6 +2,7 @@ import { defaultValue } from "@parameter1/base-cms-marko-web/utils";
 import { getAsArray } from "@parameter1/base-cms-object-path";
 import queryFragment from "../../graphql/fragments/content-card-deck-block";
 import sectionFragment from "../../graphql/fragments/section-info";
+import setSectionNameFromLabel from "../../utils/set-section-name-from-label"
 
 $ const { i18n } = out.global;
 
@@ -31,14 +32,11 @@ $ const blockName = "section-forbes";
 $ const rowStyle = (input.reverse) ? "flex-direction: row-reverse" : "";
 
 <marko-web-query|{ nodes: returnedNodes, section: querySection }| name="website-scheduled-content" params=queryParams>
-  $ const nodes = withSponsored ? returnedNodes.map((node) => {
-      const { primarySection, ...rest } = node;
-      const generatedPrimarySection = getAsArray(node, "labels").includes("Sponsored") ? {
-        ...primarySection, name: "Sponsored"
-      } : primarySection;
-      const parsedNode = generatedPrimarySection.name === "Sponsored" ? { ...rest, primarySection: generatedPrimarySection, withSection: true } : node;
-      return parsedNode;
-    }) : returnedNodes;
+  $ const nodes = withSponsored ? setSectionNameFromLabel({
+    nodes: returnedNodes,
+    labelToSearchFor: "Sponsored",
+    sectionNameToSet: "Sponsored"
+  }) : returnedNodes;
   <marko-web-element tag="h1" block-name="top-stories" name="header">
     ${i18n(querySection.name)}
   </marko-web-element>

@@ -1,6 +1,7 @@
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 import { getAsObject, getAsArray } from "@parameter1/base-cms-object-path";
 import queryFragment from "../../graphql/fragments/section-feed-block";
+import setSectionNameFromLabel from "../../utils/set-section-name-from-label";
 
 $ const queryName = input.queryName ? input.queryName : "website-scheduled-content";
 $ const queryParams = {
@@ -34,13 +35,10 @@ $ const setWithSection = (node, nxNode, withNativeXSection = true, nodeInput = {
 </if>
 <else>
   <marko-web-query|{ nodes: returnedNodes }| name=queryName params=queryParams>
-    $ const nodes = withSponsored ? returnedNodes.map((node) => {
-      const { primarySection, ...rest } = node;
-      const generatedPrimarySection = getAsArray(node, "labels").includes("Sponsored") ? {
-        ...primarySection, name: "Sponsored"
-      } : primarySection;
-      const parsedNode = generatedPrimarySection.name === "Sponsored" ? { ...rest, primarySection: generatedPrimarySection, withSection: true } : node;
-      return parsedNode;
+    $ const nodes = withSponsored ? setSectionFromLabel({
+      nodes: returnedNodes,
+      labelToSearchFor: "Sponsored",
+      sectionNameToSet: "Sponsored"
     }) : returnedNodes;
     <if(input.before)>
       <${input.before.renderBody} />
