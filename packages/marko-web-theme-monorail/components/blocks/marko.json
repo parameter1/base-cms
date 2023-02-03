@@ -18,7 +18,10 @@
       "@name": "string",
       "@aliases": "array"
     },
-    "@with-native-x": "boolean"
+    "@with-native-x": "boolean",
+    "@link-header": "boolean",
+    "@title": "string",
+    "<link>": {}
   },
   "<theme-company-inquiry-form-block>": {
     "template": "./company-inquiry-form.marko",

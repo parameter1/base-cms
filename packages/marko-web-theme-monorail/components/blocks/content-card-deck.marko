@@ -1,4 +1,5 @@
 import { defaultValue } from "@parameter1/base-cms-marko-web/utils";
+import { getAsObject } from "@parameter1/base-cms-object-path";
 import queryFragment from "../../graphql/fragments/content-card-deck-block";
 import sectionFragment from "../../graphql/fragments/section-info";
 
@@ -24,6 +25,8 @@ $ const queryParams = {
 
 $ const cols = input.cols || queryParams.limit;
 $ const blockName = "content-card-deck";
+$ const linkHeader = input.linkHeader || false;
+$ const link = getAsObject(input, "link");
 
 <marko-web-query|{ nodes, section: querySection }| name="website-scheduled-content" params=queryParams>
   $ const section = { ...querySection, ...input.section };
@@ -34,7 +37,14 @@ $ const blockName = "content-card-deck";
       <marko-web-element block-name=blockName name="header">
         <marko-web-element block-name=blockName name="header-left">
           <marko-web-element block-name=blockName name="title">
-            ${title}
+            <if(linkHeader && input.alias || input.title)>
+              <marko-web-link href=`${input.alias}` ...link>
+                ${title}
+              </marko-web-link>
+            </if>
+            <else>
+              ${title}
+            </else>
           </marko-web-element>
           <if(description)>
             <marko-web-element block-name=blockName name="description">

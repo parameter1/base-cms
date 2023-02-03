@@ -4,9 +4,12 @@ import queryFragment from "../../graphql/fragments/magazine-latest-issue";
 $ const { site } = out.global;
 $ const { publicationId } = input;
 $ const blockName = "magazine-issues"
+$ const linkHeader = input.linkHeader || false;
+$ const title = input.title || "In Print";
 
 <marko-web-query|{ nodes }| name="magazine-active-issues"
   params={
+    sectionAlias: input.alias,
     publicationId,
     queryFragment,
     limit: 4,
@@ -17,7 +20,14 @@ $ const blockName = "magazine-issues"
     <marko-web-element block-name=blockName name="wrapper">
       <marko-web-element block-name=blockName name="contents">
         <marko-web-element block-name=blockName name="header">
-          In Print
+          <if(linkHeader && input.alias)>
+            <marko-web-link href=`${input.alias}`>
+              ${title}
+            </marko-web-link>
+          </if>
+          <else>
+            ${title}
+          </else>
         </marko-web-element>
         <theme-magazine-issue-archive-flow nodes=nodes with-title=input.withTitle flush=true />
       </marko-web-element>
