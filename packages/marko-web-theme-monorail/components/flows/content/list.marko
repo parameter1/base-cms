@@ -7,6 +7,7 @@ $ const nativeX = getAsObject(input, "nativeX");
 $ const withNativeXSection = defaultValue(input.withNativeXSection, true);
 $ const setWithSection = (node, nxNode, withNativeXSection = true, nodeInput = {}) => {
   if (nodeInput.withSection) return true;
+  if (node.withSection) return true;
   if (!withNativeXSection) return false;
   return node.id !== nxNode.id;
 };

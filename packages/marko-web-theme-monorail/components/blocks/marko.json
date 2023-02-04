@@ -143,6 +143,7 @@
     "@count-only": "boolean",
     "@display-image": "boolean",
     "@with-section": "boolean",
+    "@with-sponsored": "boolean",
     "@lazyload": "boolean",
     "@modifiers": "array",
     "@query-name": "string",

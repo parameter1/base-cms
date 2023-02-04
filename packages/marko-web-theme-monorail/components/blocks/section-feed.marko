@@ -1,6 +1,7 @@
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 import { getAsObject } from "@parameter1/base-cms-object-path";
 import queryFragment from "../../graphql/fragments/section-feed-block";
+import setSectionNameFromLabel from "../../utils/set-section-name-from-label";
 
 $ const queryName = input.queryName ? input.queryName : "website-scheduled-content";
 $ const queryParams = {
@@ -16,6 +17,7 @@ $ const countOnly = defaultValue(input.countOnly, false);
 $ const modifiers = defaultValue(input.modifiers, []);
 $ const lazyload = defaultValue(input.lazyload, true);
 $ const withSection = defaultValue(input.withSection, true);
+$ const withSponsored = defaultValue(input.withSponsored, false);
 
 $ const { nativeX: nxConfig } = out.global;
 $ const nativeX = getAsObject(input, "nativeX");
@@ -32,7 +34,12 @@ $ const setWithSection = (node, nxNode, withNativeXSection = true, nodeInput = {
   </theme-query-total-count>
 </if>
 <else>
-  <marko-web-query|{ nodes }| name=queryName params=queryParams>
+  <marko-web-query|{ nodes: returnedNodes }| name=queryName params=queryParams>
+    $ const nodes = withSponsored ? setSectionFromLabel({
+      nodes: returnedNodes,
+      label: "Sponsored",
+      sectionName: "Sponsored"
+    }) : returnedNodes;
     <if(input.before)>
       <${input.before.renderBody} />
     </if>
