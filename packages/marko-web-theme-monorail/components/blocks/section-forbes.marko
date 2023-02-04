@@ -33,8 +33,8 @@ $ const rowStyle = (input.reverse) ? "flex-direction: row-reverse" : "";
 <marko-web-query|{ nodes: returnedNodes, section: querySection }| name="website-scheduled-content" params=queryParams>
   $ const nodes = withSponsored ? setSectionNameFromLabel({
     nodes: returnedNodes,
-    labelToSearchFor: "Sponsored",
-    sectionNameToSet: "Sponsored"
+    label: "Sponsored",
+    sectionName: "Sponsored"
   }) : returnedNodes;
   <marko-web-element tag="h1" block-name="top-stories" name="header">
     ${i18n(querySection.name)}
