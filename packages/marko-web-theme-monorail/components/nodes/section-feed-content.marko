@@ -17,6 +17,14 @@ $ const withSection = defaultValue(input.withSection, true);
 $ const withTeaser = defaultValue(input.withTeaser, true);
 $ const displayImage = defaultValue(input.displayImage, true);
 $ const lazyload = defaultValue(input.lazyload, true);
+// linkOffsite is an object like the following:
+/**
+  {
+    webinar: 'linkUrl',
+    event: 'website'
+  }
+  Keys are content types (all lowercase), values are the field to use when available on that type.
+**/
 $ const linkOffsite = getAsObject(site, 'config.linkOffsite');
 $ const linkField = get(linkOffsite, get(content, 'type'));
 
