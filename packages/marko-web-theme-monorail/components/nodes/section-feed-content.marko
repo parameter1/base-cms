@@ -2,7 +2,7 @@ import { getAsObject, get } from "@parameter1/base-cms-object-path";
 import { buildImgixUrl } from "@parameter1/base-cms-image";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 
-$ const { i18n } = out.global;
+$ const { site, i18n } = out.global;
 
 $ const content = getAsObject(input, "node");
 $ const primaryImage = getAsObject(content, "primaryImage");
@@ -17,6 +17,8 @@ $ const withSection = defaultValue(input.withSection, true);
 $ const withTeaser = defaultValue(input.withTeaser, true);
 $ const displayImage = defaultValue(input.displayImage, true);
 $ const lazyload = defaultValue(input.lazyload, true);
+$ const linkOffsite = getAsObject(site, 'config.linkOffsite');
+$ const linkField = get(linkOffsite, get(content, 'type'));
 
 $ const imageOptions = {
   w: 250,
@@ -49,13 +51,13 @@ $ const blockName = "section-feed-content-node";
         tag="h5"
         block-name=blockName
         obj=content
-        link={ attrs: linkAttrs }
+        link={ field: linkField, attrs: linkAttrs }
       />
       <if(withTeaser)>
         <marko-web-content-teaser
           block-name=blockName
           obj=content
-          link={ attrs: linkAttrs }
+          link={ field: linkField, attrs: linkAttrs }
         />
       </if>
       <if(withBody)>
@@ -97,9 +99,9 @@ $ const blockName = "section-feed-content-node";
 
         $ const srcMobile = buildImgixUrl(primaryImage.src, mobileImageOptions, null, get(primaryImage, 'isLogo'));
         $ const srcsetMobile = [srcMobile, `${buildImgixUrl(srcMobile, { dpr: 2 })} 2x`];
-
+        $ const link = linkField && get(content, linkField) ? get(content, linkField) : get(content, "siteContext.path");
         <marko-web-picture>
-          <@link href=get(content, "siteContext.path") attrs=linkAttrs />
+          <@link href=link attrs=linkAttrs />
           <@source srcset=srcset media="(min-width: 768px)" width=250 height=167 />
           <@image
             src=srcMobile
