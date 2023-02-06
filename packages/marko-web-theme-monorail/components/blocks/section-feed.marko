@@ -35,7 +35,7 @@ $ const setWithSection = (node, nxNode, withNativeXSection = true, nodeInput = {
 </if>
 <else>
   <marko-web-query|{ nodes: returnedNodes }| name=queryName params=queryParams>
-    $ const nodes = withSponsored ? setSectionFromLabel({
+    $ const nodes = withSponsored ? setSectionNameFromLabel({
       nodes: returnedNodes,
       label: "Sponsored",
       sectionName: "Sponsored"
