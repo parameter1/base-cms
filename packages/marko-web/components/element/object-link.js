@@ -39,7 +39,7 @@ module.exports = (linkInput, obj) => {
   }
   // Return the customized input
   return {
-    href: field ? get(obj, field) : defaultHref(obj),
+    href: field && get(obj, field) ? get(obj, field) : defaultHref(obj),
     target,
     rel,
     title,
