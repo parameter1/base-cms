@@ -8,9 +8,11 @@
     "template": "./content-card-deck.marko",
     "<node>": {},
     "@alias" : "string",
+    "@cols": "number",
     "@default-description": "string",
     "@query-params": "object",
     "@section": "object",
+    "@title": "string",
     "@view-more": "boolean",
     "<native-x>": {
       "@index": "number",
