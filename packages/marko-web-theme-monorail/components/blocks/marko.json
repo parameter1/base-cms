@@ -10,20 +10,19 @@
     "@alias" : "string",
     "@cols": "number",
     "@default-description": "string",
+    "@link-header": "boolean",
     "@query-params": "object",
     "@section": "object",
     "@title": "string",
     "@view-more": "boolean",
+    "@with-native-x": "boolean",
+    "<link>": {},
     "<native-x>": {
       "@index": "number",
       "@indexes": "array",
       "@name": "string",
       "@aliases": "array"
-    },
-    "@with-native-x": "boolean",
-    "@link-header": "boolean",
-    "@title": "string",
-    "<link>": {}
+    }
   },
   "<theme-company-inquiry-form-block>": {
     "template": "./company-inquiry-form.marko",
