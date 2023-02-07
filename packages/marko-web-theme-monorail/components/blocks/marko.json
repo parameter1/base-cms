@@ -22,7 +22,6 @@
     },
     "@with-native-x": "boolean",
     "@link-header": "boolean",
-    "@title": "string",
     "<link>": {}
   },
   "<theme-company-inquiry-form-block>": {
