@@ -110,7 +110,7 @@
     }
   }
 
-  &__copyright {
+  &__copyright, &__copyright a {
     font-size: $theme-site-footer-copyright-font-size;
     font-weight: $theme-site-footer-copyright-font-weight;
     line-height: $theme-site-footer-copyright-line-height;
