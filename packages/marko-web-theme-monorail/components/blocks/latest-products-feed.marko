@@ -1,6 +1,7 @@
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 import queryFragment from "../../graphql/fragments/latest-products-feed-block";
 
+$ const queryName = input.queryName ? input.queryName : "website-scheduled-content";
 $ const queryParams = {
   ...input.queryParams,
   sectionAlias: input.alias,
@@ -11,12 +12,12 @@ $ const blockName = "latest-products-feed";
 $ const countOnly = defaultValue(input.countOnly, false);
 
 <if(countOnly)>
-  <theme-query-total-count|data| name="website-scheduled-content" params=queryParams>
+  <theme-query-total-count|data| name=queryName params=queryParams>
     <${input.renderBody} ...data />
   </theme-query-total-count>
 </if>
 <else>
-  <marko-web-query|{ nodes }| name="website-scheduled-content" params=queryParams>
+  <marko-web-query|{ nodes }| name=queryName params=queryParams>
     <marko-web-node-list
       inner-justified=false
       flush-x=true
