@@ -12,6 +12,9 @@ $ const company = input.company ? `${input.company}.` : "";
   <if(input.renderBody)>
     <${input.renderBody} />
   </if>
+  <else-if(input.href)>
+    <a href=input.href target="_blank">&copy; ${year} ${company} ${notice}</a>
+  </else-if>
   <else>
     &copy; ${year} ${company} ${notice}
   </else>
