@@ -12,10 +12,16 @@ $ const aliases = getAsArray(input, 'aliases');
 $ const selector = defaultValue(input.selector, `content-body-${content.id}`);
 
 <!-- Desktop Inline Ad props -->
-$ const desktopAdCounts = defaultValue(input.desktopAdCounts, [350, 1500, 2750, 4500, 6250, 8000, 9750, 11500, 13250, 15000, 16750, 18500]);
+$ const desktopAdCounts = defaultValue(input.desktopAdCounts, [1500, 2750, 4500, 6250, 8000, 9750, 11500, 13250, 15000, 16750, 18500]);
 $ const desktopAdName = defaultValue(input.desktopAdName, "inline-content-desktop");
 $ const desktopAdModifiers = defaultValue(input.desktopAdModifiers, ["margin-auto-x",  "inline-content", "inline-content-desktop"]);
 $ const desktopAdDataPropToPreventDupes = defaultValue(input.desktopAdDataPropToPreventDupes, "gamTemplateName");
+
+<!-- Desktop Leaderboard Ad props -->
+$ const desktopLeaderboardAdCounts = defaultValue(input.desktopLeaderboardAdCounts, [350]);
+$ const desktopLeaderboardAdName = defaultValue(input.desktopLeaderboardAdName, desktopAdName);
+$ const desktopLeaderboardAdModifiers = defaultValue(input.desktopLeaderboardAdModifiers, desktopAdModifiers);
+$ const desktopLeaderboardAdDataPropToPreventDupes = defaultValue(input.desktopLeaderboardAdDataPropToPreventDupes, desktopAdDataPropToPreventDupes);
 
 <!-- Mobile Inline Ad props -->
 $ const mobileAdCounts = defaultValue(input.mobileAdCounts, [900, 1650, 2950, 4250, 5550, 6850, 8150, 9450, 10750, 12050, 13350, 14650, 15950, 17250]);
@@ -31,6 +37,12 @@ $ const mobileLeaderboardAdDataPropToPreventDupes = defaultValue(input.mobileLea
 
 <!-- Only set GAM defaults if GAM is present on out.global -->
 $ const gamAdInjection = (GAM) ? [
+  {
+    counts: desktopLeaderboardAdCounts,
+    name: desktopLeaderboardAdName,
+    modifiers: desktopLeaderboardAdModifiers,
+    dataPropToPreventDupes: desktopLeaderboardAdDataPropToPreventDupes
+  },
   {
     counts: desktopAdCounts,
     name: desktopAdName,
