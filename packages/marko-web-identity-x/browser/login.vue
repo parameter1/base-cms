@@ -193,7 +193,7 @@ export default {
         <p>
           Nota: por favor revise sus carpetas de spam/basura.
           Si no recibe este correo electrónico, es probable que su firewall o ISP lo haya bloqueado.
-          Agregue${this.senderEmailAddress} a su lista blanca e intente registrarse nuevamente.
+          Agregue ${this.senderEmailAddress} a su lista blanca e intente registrarse nuevamente.
         </p>`;
       }
       return `<h4>Almost Done!</h4>
