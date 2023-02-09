@@ -14,7 +14,7 @@ $ const blockName = defaultValue(input.blockName, "newsletter-signup-banner-larg
       $!{newsletterConfig.description}
     </marko-web-element>
   </if>
-  <form class=`${blockName}__form` action=newsletterConfig.action method="GET">
+  <form class=`${blockName}__form` action=newsletterConfig.action method="GET" target="_blank">
     <label for=`${blockName}-email` class="sr-only">${i18n("Email")}</label>
     <input
       id=`${blockName}-email`
