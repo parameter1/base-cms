@@ -9,6 +9,7 @@ $ const queryParams = {
   sectionAlias: input.alias,
   queryFragment,
   sectionFragment,
+  ...input.queryParams,
 };
 $ const blockName = "section-card-list";
 $ const buttonClass = input.buttonClass || "btn btn-secondary";
