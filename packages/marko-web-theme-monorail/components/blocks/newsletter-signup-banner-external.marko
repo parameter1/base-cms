@@ -5,7 +5,7 @@ $ const configName = defaultValue(input.configName, "signupBannerExternal");
 $ const newsletterConfig = site.getAsObject(`newsletter.${configName}`);
 $ const blockName = defaultValue(input.blockName, "newsletter-signup-banner-large");
 
-<marko-web-block name=blockName>
+<marko-web-block name=blockName class=input.class modifiers=input.modifires>
   $ const nameClass = (newsletterConfig.description) ? "" : "mb-3";
   <marko-web-element block-name=blockName name="name" class=nameClass>
     $!{newsletterConfig.name}
