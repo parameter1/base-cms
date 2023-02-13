@@ -37,6 +37,7 @@ module.exports = asyncRoute(async (req, res) => {
   if (!appUser) {
     // Create the user.
     appUser = await identityX.createAppUser({ email });
+    additionalEventData.createdNewUser = true;
   }
 
   if (forceProfileReVerification) {
@@ -54,5 +55,5 @@ module.exports = asyncRoute(async (req, res) => {
     redirectTo,
     additionalEventData,
   });
-  return res.json({ ok: true, additionalEventData });
+  return res.json({ ok: true, additionalEventData, appUser });
 });
