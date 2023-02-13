@@ -80,6 +80,9 @@
   "<theme-most-popular-block>": {
     "template": "./most-popular.marko"
   },
+  "<theme-most-popular-list-block>": {
+    "template": "./most-popular-list.marko"
+  },
   "<theme-native-x-card-deck-block>": {
     "template": "./native-x-card-deck.marko"
   },
