@@ -36,6 +36,7 @@ $ const blockName = "resource-library";
 
       <marko-web-element block-name=blockName name="row">
         <for|node| of=nodes>
+          $ const imageLink = node.primaryImage.src ? { href: node.siteContext.path } : false;
           <marko-web-element block-name=blockName name="col">
             <marko-web-node
               type=`${node.type}-content`
@@ -51,7 +52,7 @@ $ const blockName = "resource-library";
                 ar="3:4"
                 src=node.primaryImage.src
                 alt=node.primaryImage.alt
-                link=true
+                link=imageLink
               >
                 <@body>
                   <@title tag="h5">
