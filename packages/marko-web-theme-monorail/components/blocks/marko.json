@@ -11,6 +11,7 @@
     "@cols": "number",
     "@default-description": "string",
     "@link-header": "boolean",
+    "@query-name": "string",
     "@query-params": "object",
     "@section": "object",
     "@title": "string",
