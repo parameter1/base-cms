@@ -18,7 +18,7 @@ $ const issue = getAsObject(input, "issue");
       Subscribe
     </marko-web-magazine-publication-subscribe-url>
   </if>
-  <if(button === "renew")>
+  <if(button === "renewal")>
     <marko-web-magazine-publication-renewal-url tag=null obj=issue.publication link=targetBlankLink>
       Renew
     </marko-web-magazine-publication-renewal-url>
@@ -47,5 +47,10 @@ $ const issue = getAsObject(input, "issue");
     <marko-web-magazine-publication-einquiry-url tag=null obj=issue.publication link=targetBlankLink>
       E-Inquiry
     </marko-web-magazine-publication-einquiry-url>
+  </if>
+  <if(button === "change-address")>
+    <marko-web-magazine-publication-change-address-url tag=null obj=issue.publication link=targetBlankLink>
+      Change Address
+    </marko-web-magazine-publication-change-address-url>
   </if>
 </for>
