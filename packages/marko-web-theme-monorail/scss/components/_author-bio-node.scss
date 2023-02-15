@@ -23,11 +23,12 @@
     @include skin-typography($style: "author-content-page", $link-style: "primary");
   }
 
-  &__content-updated {
-    &::before {
-      content: " | ";
+  &__content-teaser {
+    @include media-breakpoint-down(md) {
+      display: none;
     }
   }
+
   &__cta {
     margin-top: map-get($spacers, 2);
   }
