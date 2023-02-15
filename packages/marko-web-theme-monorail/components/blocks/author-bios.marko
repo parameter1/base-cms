@@ -1,0 +1,28 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { authors } = input;
+$ const title = defaultValue(input.title, "About the Author");
+$ const pluralTitle = defaultValue(input.pluralTitle, "About the Authors");
+
+<if(authors)>
+  <marko-web-node-list
+      inner-justified=true
+      flush-x=true
+      flush-y=false
+      modifiers=["author-bios"]
+    >
+      <@header>
+          <if(authors.lenngth > 1)>
+            ${pluralTitle}
+          </if>
+          <else>
+            ${title}
+          </else>
+      </@header>
+      <@nodes nodes=authors>
+        <@slot|{ node }|>
+          <theme-author-bio-node node=node />
+        </@slot>
+      </@nodes>
+    </marko-web-node-list>
+  </if>
