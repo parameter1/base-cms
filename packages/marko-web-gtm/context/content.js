@@ -31,6 +31,7 @@ module.exports = ({ obj, req }) => {
       type: content.type,
       name: content.name,
       published: content.published ? new Date(content.published).toISOString() : undefined,
+      labels: getAsArray(content, 'labels'),
     },
     created_by: {
       id: createdBy.id,
