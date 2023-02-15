@@ -1,5 +1,8 @@
 {
   "taglib-imports": [],
+  "<theme-author-bios-block>": {
+    "template": "./author-bios.marko"
+  },
   "<theme-callout-cards-block>": {
     "template": "./callout-cards.marko",
     "@slots <slot>[]": {}

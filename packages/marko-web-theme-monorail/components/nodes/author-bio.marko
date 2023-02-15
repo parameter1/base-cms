@@ -1,0 +1,39 @@
+import { buildImgixUrl } from "@parameter1/base-cms-image";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import { getAsObject } from "@parameter1/base-cms-object-path";
+
+$ const node = getAsObject(input, "node");
+$ const blockName = defaultValue(input.blockName, "author-bio-node");
+$ const cta = defaultValue(input.cta, "View Bio");
+
+<marko-web-block name=blockName>
+  $ const { primaryImage } = node;
+  <if(primaryImage && primaryImage.src)>
+    $ const src = buildImgixUrl(primaryImage.src, {
+      w: 96,
+      h: 96,
+      crop: "faces",
+      fit: "crop",
+    });
+    $ const srcset = [`${buildImgixUrl(src, { dpr: 2 })} 2x`];
+    <marko-web-img
+      src=src
+      srcset=srcset
+      alt=primaryImage.alt
+      class="author-bio-node__image"
+      link={ href: node.siteContext.path }
+    />
+  </if>
+  <marko-web-element block-name=blockName name="details">
+    <marko-web-content-name block-name=blockName obj=node link=true />
+    <marko-web-content-title block-name=blockName obj=node />
+    <marko-web-content-teaser block-name=blockName obj=node />
+    <marko-web-link
+      class=`${blockName}__cta btn btn-primary`
+      href=node.siteContext.path
+      title=`View ${node.name}'s Bio`
+    >
+      ${cta}
+    </marko-web-link>
+  </marko-web-element>
+</marko-web-block>
