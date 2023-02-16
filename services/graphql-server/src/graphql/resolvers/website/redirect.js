@@ -51,6 +51,8 @@ module.exports = {
         $or: [
           { siteId: { [siteOp]: siteId }, from },
           { siteId: { [siteOp]: siteId }, from: from.toLowerCase() },
+          { siteId: { [siteOp]: siteId }, from: `${from}?${queryParams}` },
+          { siteId: { [siteOp]: siteId }, from: `${from.toLowerCase()}?${queryParams}` },
         ],
       };
       const redirect = await basedb.findOne('website.Redirects', query);
