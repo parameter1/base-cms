@@ -74,12 +74,11 @@ module.exports = cwd => (cb) => {
                 require.resolve('@babel/preset-env'),
                 {
                   targets: {
-                    chrome: '49',
-                    firefox: '45',
-                    safari: '10',
-                    edge: '12',
-                    ie: '11',
-                    ios: '10',
+                    chrome: '64',
+                    firefox: '67',
+                    safari: '11.1',
+                    edge: '79',
+                    ios: '12',
                   },
                   useBuiltIns: 'usage',
                   corejs: '3.18',
