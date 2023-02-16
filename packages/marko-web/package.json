@@ -42,7 +42,7 @@
     "whatwg-fetch": "^3.6.1"
   },
   "peerDependencies": {
-    "@parameter1/base-cms-marko-core": "^2.0.0"
+    "@parameter1/base-cms-marko-core": "^3.0.0"
   },
   "publishConfig": {
     "access": "public"
