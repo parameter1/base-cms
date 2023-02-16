@@ -81,7 +81,7 @@ module.exports = cwd => (cb) => {
                     ios: '12',
                   },
                   useBuiltIns: 'usage',
-                  corejs: '3.18',
+                  corejs: '3.28',
                   debug: false,
                 },
               ],
