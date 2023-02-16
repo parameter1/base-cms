@@ -33,7 +33,9 @@
     "@action-text": "string",
     "@button-labels": "object",
     "@login-email-placeholder": "string",
-    "@redirect": "string"
+    "@redirect": "string",
+    "@login-email-label": "string",
+    "@lang": "string"
   },
   "<marko-web-identity-x-form-logout>": {
     "template": "./form-logout.marko",

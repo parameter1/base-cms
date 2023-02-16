@@ -33,6 +33,7 @@
             :app-context-id="appContextId"
             :action-text="actionText"
             :login-email-label="translateEmail"
+            :lang="lang"
             @login-link-sent="handleLoginLinkSent"
             @login-errored="handleError"
             @focus="$emit('focus')"

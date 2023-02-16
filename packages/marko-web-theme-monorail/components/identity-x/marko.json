@@ -18,7 +18,10 @@
     "@additional-event-data": "object",
     "@content-gate-type": "string",
     "@login-event-name": "string",
-    "@profile-event-name": "string"
+    "@profile-event-name": "string",
+    "@button-labels": "object",
+    "@login-email-label": "string",
+    "@action-text": "string"
   },
   "<identity-x-newsletter-form-pushdown>": {
     "template": "./newsletter-pushdown.marko"
