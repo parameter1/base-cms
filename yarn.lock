@@ -3068,27 +3068,6 @@
   resolved "https://registry.yarnpkg.com/@panva/asn1.js/-/asn1.js-1.0.0.tgz#dd55ae7b8129e02049f009408b97c61ccf9032f6"
   integrity sha512-UdkG3mLEqXgnlKsWanWcgb6dOjUzJ+XC5f+aWw30qrtjxeNUSfKX1cd5FBzOaXQumoe9nIqeZUvrRJS03HCCtw==
 
-"@parameter1/base-cms-marko-web-reveal-ad@^2.75.1":
-  version "2.75.1"
-  resolved "https://registry.yarnpkg.com/@parameter1/base-cms-marko-web-reveal-ad/-/base-cms-marko-web-reveal-ad-2.75.1.tgz#6df390011c4d6d109d86645ccca5d768a9ec0f46"
-  integrity sha512-wcT2R0HE84QZs6x18j5Fi0GgPL0wrX9McskGPnsEUveCwI22FTMY045N2BZS/+9MDy52FE0L9UBk173Yeg4+Mw==
-  dependencies:
-    "@parameter1/base-cms-object-path" "^2.75.1"
-    "@parameter1/base-cms-utils" "^2.75.1"
-
-"@parameter1/base-cms-object-path@^2.75.1":
-  version "2.75.1"
-  resolved "https://registry.yarnpkg.com/@parameter1/base-cms-object-path/-/base-cms-object-path-2.75.1.tgz#169c55bc7199954e46ff48e298cf5073468e2ed6"
-  integrity sha512-v9+QjzBAjqZMxdjpmZLcKukmokMxJPE1o/AOt12RWaxkvThyiHG/kqctuZjA20Eoi3DGvX5xepl1KrggH5oZiQ==
-  dependencies:
-    "@parameter1/base-cms-utils" "^2.75.1"
-    object-path "^0.11.8"
-
-"@parameter1/base-cms-utils@^2.75.1":
-  version "2.75.1"
-  resolved "https://registry.yarnpkg.com/@parameter1/base-cms-utils/-/base-cms-utils-2.75.1.tgz#1a630b97cfa8362eb47c99459407e735aac65b71"
-  integrity sha512-i2oeoufTx6CRga00pGIwQAI4A8R6VwDLQokv6MasbAEorIKYegbPVaUEPZg8XOBMnEyzKlSJaGfCX58Zt3dNkA==
-
 "@parameter1/joi@^1.2.10":
   version "1.2.10"
   resolved "https://registry.yarnpkg.com/@parameter1/joi/-/joi-1.2.10.tgz#d5ea00deffa8c48fd1d707eb39858b69aa5bfdb4"
