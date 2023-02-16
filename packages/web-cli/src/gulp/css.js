@@ -17,17 +17,12 @@ module.exports = cwd => (cb) => {
     postcss([
       autoprefixer({
         overrideBrowserslist: [
-          '>= 1%',
-          'not dead',
-          'last 1 major version',
-          'Chrome >= 45',
-          'Firefox >= 38',
-          'Edge >= 12',
-          'Explorer >= 11',
-          'iOS >= 9',
-          'Safari >= 9',
-          'Android >= 4.4',
-          'Opera >= 30',
+          'Chrome >= 64',
+          'Firefox >= 67',
+          'Edge >= 79',
+          'iOS >= 12',
+          'Safari >= 11.1',
+          'Opera >= 51',
         ],
       }),
       cssnano(),
