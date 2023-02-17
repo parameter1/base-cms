@@ -1,8 +1,13 @@
 $ const src = input.src || "https://cdn.parameter1.com/deferred-script-loader/v1.0.0/lib.min.js";
+$ const { preloadOnly } = input;
+$ const { res } = out.global;
 
-<if(input.preloadOnly)>
+<if(preloadOnly && !res.locals.p1deferPreload)>
   <link rel="modulepreload" href=src as="script" />
+  $ res.locals.p1deferPreload = true;
 </if>
-<else>
+
+<if(!preloadOnly && !res.locals.p1deferLoad)>
   <script type="module" src=src async defer></script>
-</else>
+  $ res.locals.p1deferLoad = true;
+</if>
