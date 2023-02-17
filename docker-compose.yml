@@ -21,7 +21,7 @@ x-env-elastic: &env-elastic
 x-node-defaults: &node
   tty: true
   init: true
-  image: node:10.24
+  image: node:14.21
   entrypoint: ["node"]
   working_dir: /base-cms
   volumes:
