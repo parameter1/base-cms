@@ -5,3 +5,5 @@ $ const debug = `${DEBUG}`.includes('defer');
 (function (i,r) { i['__p1defer'] = r; i[r] = i[r] || function () { var args = arguments; (i[r].q = i[r].q || []).push(args); if (args[0] === 'register' && args[1] && args[1].init) args[1].init(); } })(window, 'deferScript');
 deferScript('init', { debug: ${debug} });
 </script>
+<!-- preload the module -->
+<marko-web-deferred-script-loader-load preload-only=true />
