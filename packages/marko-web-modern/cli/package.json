@@ -1,0 +1,24 @@
+{
+  "name": "@parameter1/base-cms-marko-web-modern-cli",
+  "version": "0.0.0",
+  "description": "A Marko CLI for managing websites.",
+  "author": "Jacob Bare <jacob@parameter1.com>",
+  "homepage": "https://github.com/parameter1/base-cms/tree/main/packages/marko-web-modern/cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/parameter1/base-cms.git",
+    "directory": "packages/marko-web-modern/cli"
+  },
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint --ext .js ./",
+    "test": "yarn lint"
+  },
+  "dependencies": {
+
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

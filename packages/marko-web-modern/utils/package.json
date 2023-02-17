@@ -1,0 +1,24 @@
+{
+  "name": "@parameter1/base-cms-marko-web-modern-utils",
+  "version": "0.0.0",
+  "description": "BaseCMS + Marko website utility functions and components.",
+  "author": "Jacob Bare <jacob@parameter1.com>",
+  "homepage": "https://github.com/parameter1/base-cms/tree/main/packages/marko-web-modern/utils#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/parameter1/base-cms.git",
+    "directory": "packages/marko-web-modern/utils"
+  },
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint --ext .js ./",
+    "test": "yarn lint"
+  },
+  "dependencies": {
+
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
