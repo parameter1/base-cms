@@ -17,7 +17,6 @@ $ const wrapper = getAsObject(input, "bodyWrapper");
     <marko-web-deferred-script-loader-init />
 
     <for|src| of=config.sources()>
-      <!-- @todo verify if these should run as esm or regular? -->
       <marko-web-deferred-script-loader-register
         name="marko-web-core"
         src=src
