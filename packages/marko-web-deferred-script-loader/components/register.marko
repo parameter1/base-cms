@@ -23,4 +23,4 @@ $ const onScriptBuild = `function(script) { ${input.onScriptBuild || ''} }`;
 $ const onScriptLoad = `function() { ${input.onScriptLoad || ''} }`;
 $ const attrs = JSON.stringify(getAsObject(input, "attrs"));
 
-<script>deferScript('register', { name: '${input.name}', src: '${input.src}', on: '${on}', requestFrame: ${requestFrame}, targetTag: '${targetTag}', init: ${init}, initOnly: ${initOnly}, onScriptBuild: ${onScriptBuild}, onScriptLoad: ${onScriptLoad}, attrs: ${attrs}, delayMs: ${delayMs} });</script>
+<script>deferScript('register', { name: '${input.name}', src: '${input.src}', esm: ${input.esm}, on: '${on}', requestFrame: ${requestFrame}, targetTag: '${targetTag}', init: ${init}, initOnly: ${initOnly}, onScriptBuild: ${onScriptBuild}, onScriptLoad: ${onScriptLoad}, attrs: ${attrs}, delayMs: ${delayMs} });</script>

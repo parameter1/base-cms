@@ -34,6 +34,7 @@
       "type": "string",
       "required": true
     },
+    "@esm": "boolean",
     "@delay-ms": "number",
     "@on": "string",
     "@target-tag": "string",
