@@ -38,8 +38,7 @@
     "jquery": "^3.6.0",
     "marko": "~4.20.0",
     "vue": "^2.7.14",
-    "vue-server-renderer": "^2.7.14",
-    "whatwg-fetch": "^3.6.1"
+    "vue-server-renderer": "^2.7.14"
   },
   "peerDependencies": {
     "@parameter1/base-cms-marko-core": "^3.0.0"
