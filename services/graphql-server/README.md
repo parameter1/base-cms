@@ -190,3 +190,5 @@ Content queries frequently request `primarySection`, `primaryImage` and `company
 - Imports would need to account for the new embedded fields when onboarding new websites.
 
 In addition, the `website.SectionQuery` collection could be written directly onto content itself.
+
+<!-- touch for patch -->
