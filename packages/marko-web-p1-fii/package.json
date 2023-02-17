@@ -13,7 +13,7 @@
   "dependencies": {
     "@parameter1/base-cms-object-path": "^3.0.0",
     "@parameter1/base-cms-utils": "^3.0.0",
-    "express-http-proxy": "^1.6.2"
+    "express-http-proxy": "^1.6.3"
   },
   "peerDependencies": {
     "@parameter1/base-cms-marko-core": "^3.0.0",

@@ -22,7 +22,7 @@
     "gulp-eslint": "^5.0.0",
     "gulp-livereload": "^4.0.2",
     "pump": "^3.0.0",
-    "yargs": "^14.2.3"
+    "yargs": "^15.4.1"
   },
   "publishConfig": {
     "access": "public"

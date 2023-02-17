@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "html-entities": "^1.4.0",
-    "html2plaintext": "^2.1.2",
+    "html2plaintext": "^2.1.4",
     "striptags": "^3.2.0"
   },
   "publishConfig": {

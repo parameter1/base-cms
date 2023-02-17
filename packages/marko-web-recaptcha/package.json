@@ -11,8 +11,8 @@
     "test": "yarn lint"
   },
   "dependencies": {
-    "http-errors": "^1.8.0",
-    "node-fetch": "^2.6.1"
+    "http-errors": "^1.8.1",
+    "node-fetch": "^2.6.9"
   },
   "publishConfig": {
     "access": "public"

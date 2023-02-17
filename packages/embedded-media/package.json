@@ -14,7 +14,7 @@
     "@parameter1/base-cms-html": "^3.0.0",
     "@parameter1/base-cms-image": "^3.13.5",
     "@parameter1/base-cms-inflector": "^3.0.0",
-    "cheerio": "^1.0.0-rc.10",
+    "cheerio": "^1.0.0-rc.12",
     "escape-string-regexp": "^1.0.5"
   },
   "publishConfig": {

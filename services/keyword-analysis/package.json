@@ -29,10 +29,10 @@
     "dataloader": "^1.4.0",
     "elasticsearch": "^15.5.0",
     "figlet": "^1.5.2",
-    "html2plaintext": "^2.1.2",
+    "html2plaintext": "^2.1.4",
     "inquirer": "^6.5.2",
     "js-yaml": "^3.14.1",
-    "mongodb": "^3.7.2",
+    "mongodb": "^3.7.3",
     "progress": "^2.0.3"
   }
 }
