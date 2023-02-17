@@ -13,7 +13,7 @@ const loadWorkspaceDirs = require('./load-workspace-dirs');
 
 const { isArray } = Array;
 
-const execute = async ({ dir, forceLatest }) => {
+const execute = async ({ dir, forceLatest, prereleases }) => {
   const pkg = loadPackage({ dir });
   log(chalk`Loaded package {magenta ${pkg.name}}`);
   const baseDepMap = exractDeps(pkg);
@@ -23,7 +23,9 @@ const execute = async ({ dir, forceLatest }) => {
   const packageVersionMap = new Map();
   await Promise.all([...names].map(async (name) => {
     const { versions } = await loadVersionInfo(name);
-    const latest = versions.filter(v => !semver.prerelease(v)).pop();
+    const latest = prereleases
+      ? [...versions].pop()
+      : versions.filter(v => !semver.prerelease(v)).pop();
     packageVersionMap.set(name, { versions, latest });
   }));
 
@@ -60,11 +62,11 @@ const execute = async ({ dir, forceLatest }) => {
   }
 };
 
-module.exports = ({ path, latest: forceLatest = false }) => {
+module.exports = ({ path, latest: forceLatest = false, prereleases = false }) => {
   const dir = cwd(path);
   logCmd('upgrade', dir);
 
-  execute({ dir, forceLatest }).then(() => {
+  execute({ dir, forceLatest, prereleases }).then(() => {
     exit(chalk`{green Upgrade complete!}`, 0);
   }).catch((e) => {
     exit(e.message);
