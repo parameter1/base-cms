@@ -4,7 +4,7 @@ const getOperationName = (string) => {
   return undefined;
 };
 
-const { error } = console;
+const { warn } = console;
 
 const sha1 = async (string) => {
   try {
@@ -18,7 +18,7 @@ const sha1 = async (string) => {
     }
     return hexCodes.join('');
   } catch (e) {
-    error('Unable to create SHA1 - GraphQL cache will be disabled.', e);
+    warn('Unable to create SHA1 - GraphQL cache will be disabled.', e.message);
     return null;
   }
 };
