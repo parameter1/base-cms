@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-newsletters-gam",
-  "version": "3.0.0",
+  "version": "4.0.0-alpha.0",
   "description": "GAM/DFP Marko components for BaseCMS newsletters.",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",

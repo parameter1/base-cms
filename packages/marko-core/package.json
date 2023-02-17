@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-core",
-  "version": "3.17.3",
+  "version": "4.0.0-alpha.0",
   "description": "Core BaseCMS Marko components.",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "main": "index.js",
@@ -15,7 +15,7 @@
     "@parameter1/base-cms-dayjs": "^3.17.3",
     "@parameter1/base-cms-object-path": "^3.0.0",
     "@parameter1/base-cms-utils": "^3.0.0",
-    "@parameter1/base-cms-web-common": "^3.3.1",
+    "@parameter1/base-cms-web-common": "^4.0.0-alpha.0",
     "marko": "~4.20.0",
     "pretty": "^2.0.0"
   },
