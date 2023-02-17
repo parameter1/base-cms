@@ -1,4 +1,4 @@
-import { createGraphQLClient } from '@parameter1/base-cms-leaders-program';
+import createGraphQLClient from './create-graphql-client';
 
 const LeadersProgram = () => import(/* webpackChunkName: "leaders-program" */ '@parameter1/base-cms-leaders-program');
 const LeadersCompanyWebsiteLink = () => import(/* webpackChunkName: "leaders-company-website-link" */ './company-website-link.vue');
