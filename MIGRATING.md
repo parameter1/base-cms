@@ -1,9 +1,13 @@
 # Migrating from 3.x to 4.x
 - Ensure you have the latest 3.x version of the dependency upgrade tool installed globally
   - `yarn global add @parameter1/base-cms-dependency-tool@v3.27.0`
-- Run the dependency tool and force the `--latest` version
-  - `p1-basecms-dependencies upgrade --latest`
-- Run yarn install _in the docker image_ via `./scripts/yarn.sh` or by `docker-compose run --rm --entrypoint yarn commands` from the project root
-- Once the new packages are installed, some Babel versions may be mismatched -- delete all entries in `yarn.lock` that match regex `/^@babel\//` then re-run yarn install above
+- Update _all_ website `docker-compose.yml` and `Dockerfile` files to use `node:14.21` image
+  - For GitHub actions, update the `node-version` in `.github/workflows/node-ci.yml` to `14.21`
+- Run the dependency tool using the latest flag: `p1-basecms-dependencies upgrade --latest`
+  - If trying to upgrade to a pre-release, also include the `--prereleases` flag
+- Optional: you may want to clear your `node_modules` before running yarn: run `rm -rf node_modules` from the website root
+- Run yarn install _in the new node:14 docker image_ via `./scripts/yarn.sh` or by `docker-compose run --rm --entrypoint yarn commands` from the project root
+  - `node-sass` may hang or error when compiling binaries in the final stage of the install. if this happens, delete any `yarn.lock` entries where `node-sass@` is less than 4.14.1 and re-install
+- Once the new packages are installed, some Babel versions may be mismatched -- delete all entries in `yarn.lock` that match regex `/^"@babel\//` then re-run yarn install above
 - Update browserslist entries via `npx browserslist@latest --update-db`
 - Remove any references to components `<marko-web-deferred-script-loader-init />` and `<marko-web-deferred-script-loader-load />`. These are now included in core and do not need to be in the websites.
