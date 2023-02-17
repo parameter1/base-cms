@@ -16,7 +16,18 @@
     "test": "yarn lint"
   },
   "dependencies": {
-
+    "autoprefixer": "^10.4.13",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.7.3",
+    "css-minimizer-webpack-plugin": "^4.2.2",
+    "cssnano": "^5.1.15",
+    "cssnano-preset-default": "^5.2.14",
+    "mini-css-extract-plugin": "^2.7.2",
+    "postcss": "^8.4.21",
+    "postcss-loader": "^7.0.2",
+    "sass-loader": "^13.2.0",
+    "webpack": "^5.75.0",
+    "webpack-manifest-plugin": "^5.0.0"
   },
   "publishConfig": {
     "access": "public"

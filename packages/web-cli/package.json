@@ -24,7 +24,7 @@
     "babel-loader": "^8.3.0",
     "chalk": "^2.4.2",
     "core-js": "^3.28.0",
-    "css-loader": "^5.2.7",
+    "css-loader": "^6.7.3",
     "cssnano": "^5.1.15",
     "del": "^4.1.1",
     "eslint": "^5.16.0",
@@ -55,7 +55,7 @@
     "webpack": "^5.75.0",
     "webpack-bundle-analyzer": "^4.8.0",
     "webpack-config-utils": "^2.3.1",
-    "webpack-manifest-plugin": "^3.2.0",
+    "webpack-manifest-plugin": "^5.0.0",
     "webpack-stream": "^6.1.2",
     "yargs": "^15.4.1"
   },
