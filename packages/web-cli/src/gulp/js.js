@@ -10,6 +10,7 @@ const { getIfUtils } = require('webpack-config-utils');
 const { existsSync } = require('fs');
 const { join } = require('path');
 const completeTask = require('@parameter1/base-cms-cli-utils/task-callback');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const absoluteRuntime = path.dirname(require.resolve('@babel/runtime/package.json'));
 
@@ -42,13 +43,16 @@ module.exports = cwd => (cb) => {
     cache: ifNotProduction(),
     devtool: 'source-map',
     output: {
-      library: 'CMSBrowserComponents',
-      libraryExport: 'default',
-      libraryTarget: 'umd',
-      filename: 'index.[contenthash:8].js',
-      chunkFilename: '[name].[contenthash:8].js',
+      library: {
+        name: 'CMSBrowserComponents',
+        type: 'umd',
+        export: 'default',
+      },
+      filename: 'index.[contenthash:7].modern.js',
+      chunkFilename: '[name].[contenthash:7].js',
       publicPath: '/dist/js/',
     },
+    optimization: { minimize: true },
     module: {
       rules: [
         {
@@ -69,27 +73,46 @@ module.exports = cwd => (cb) => {
             && !/\.vue\.js/.test(file)
           ),
           options: {
+            configFile: false,
+            babelrc: false,
+            cacheDirectory: false,
             presets: [
               [
                 require.resolve('@babel/preset-env'),
                 {
+                  ignoreBrowserslistConfig: true,
                   targets: {
-                    chrome: '64',
-                    firefox: '67',
-                    safari: '11.1',
-                    edge: '79',
-                    ios: '12',
+                    chrome: '83',
+                    edge: '80',
+                    safari: '14',
+                    firefox: '78',
+                    opera: '69',
+                    ios: '14',
                   },
+                  bugfixes: true,
                   useBuiltIns: 'usage',
-                  corejs: '3.28',
+                  corejs: { version: '3' },
+                  loose: false,
                   debug: false,
+                  modules: false,
+                  exclude: [
+                    '@babel/plugin-proposal-class-properties',
+                    '@babel/plugin-proposal-private-methods',
+                    '@babel/plugin-proposal-private-property-in-object',
+                  ],
                 },
               ],
             ],
             plugins: [
               [
                 require.resolve('@babel/plugin-transform-runtime'),
-                { absoluteRuntime },
+                {
+                  absoluteRuntime,
+                  regenerator: false,
+                  corejs: false,
+                  helpers: true,
+                  useESModules: true,
+                },
               ],
             ],
           },
@@ -117,6 +140,7 @@ module.exports = cwd => (cb) => {
         publicPath: '',
         filter: ({ name }) => !imagePattern.test(name),
       }),
+      new BundleAnalyzerPlugin({ analyzerMode: 'static', reportFilename: 'dist/analyzer-report.html' }),
     ],
   };
   if (configCallback) baseConfig = configCallback({ baseConfig, ifProduction, ifNotProduction });
