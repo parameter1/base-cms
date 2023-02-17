@@ -17,10 +17,38 @@ $ const {
 });
 
 $ const delayMs = parseInt(input.delayMs, 10) || undefined;
+$ const esm = defaultValue(input.esm, false);
 $ const init = `function() { ${input.init || ''} }`;
 $ const initOnly = defaultValue(input.initOnly, false);
 $ const onScriptBuild = `function(script) { ${input.onScriptBuild || ''} }`;
 $ const onScriptLoad = `function() { ${input.onScriptLoad || ''} }`;
 $ const attrs = JSON.stringify(getAsObject(input, "attrs"));
+$ const { name, src } = input;
 
-<script>deferScript('register', { name: '${input.name}', src: '${input.src}', esm: ${input.esm}, on: '${on}', requestFrame: ${requestFrame}, targetTag: '${targetTag}', init: ${init}, initOnly: ${initOnly}, onScriptBuild: ${onScriptBuild}, onScriptLoad: ${onScriptLoad}, attrs: ${attrs}, delayMs: ${delayMs} });</script>
+<!-- while the DSL handles this on the client-side, we need to parse the query string to get the correct state for preloading -->
+$ const { query } = out.global.req;
+$ const resolvedOn = query[`defer.${name}.on`] || query['defer.on'] || on;
+<!-- handle script pre-loading -->
+<!-- @todo determine if there is a way to detect modulepreload support so modules can fall back to preload -->
+<if(!["immediate", "never"].includes(resolvedOn))>
+  <link
+    rel=(esm ? "modulepreload" : "preload")
+    href=src
+    as="script"
+    data-dsl-name=name
+  />
+</if>
+
+<!-- register the script -->
+<script>deferScript('register', { name: '${name}', src: '${src}', esm: ${esm}, on: '${on}', requestFrame: ${requestFrame}, targetTag: '${targetTag}', init: ${init}, initOnly: ${initOnly}, onScriptBuild: ${onScriptBuild}, onScriptLoad: ${onScriptLoad}, attrs: ${attrs}, delayMs: ${delayMs} });</script>
+
+<!-- if the incoming script is _not_ esm, add the nomodule fallback since dsl _is_ a module -->
+<if(!esm)>
+  <script
+    nomodule
+    src=src
+    data-dsl-name=name
+    async
+    defer
+  />
+</if>

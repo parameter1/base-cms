@@ -13,10 +13,6 @@ $ const identityQueryBuilder = `identityQueryBuilder: function(query, cookies) {
 
 <if(enabled && tenant)>
   <if(on)>
-    <if(on !== "immediate")>
-      <!-- preload the module -->
-      <link rel="modulepreload" href=src as="script" />
-    </if>
     <marko-web-deferred-script-loader-register
       name="p1events"
       src=scriptSrc
