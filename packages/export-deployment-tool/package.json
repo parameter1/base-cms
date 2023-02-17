@@ -9,7 +9,7 @@
   "dependencies": {
     "@endeavorb2b/rancher2cli": "^1.0.5",
     "envalid": "^6.0.2",
-    "node-fetch": "^2.6.6",
+    "node-fetch": "^2.6.9",
     "yargs": "^15.4.1"
   },
   "bin": {

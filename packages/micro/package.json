@@ -11,15 +11,15 @@
     "test": "yarn lint"
   },
   "devDependencies": {
-    "micro": "^9.3.4"
+    "micro": "^9.4.1"
   },
   "peerDependencies": {
     "micro": "^9.3.0"
   },
   "dependencies": {
-    "@godaddy/terminus": "^4.9.0",
+    "@godaddy/terminus": "^4.11.2",
     "@parameter1/base-cms-object-path": "^3.0.0",
-    "node-fetch": "^2.6.5"
+    "node-fetch": "^2.6.9"
   },
   "publishConfig": {
     "access": "public"

@@ -32,13 +32,13 @@
     "@parameter1/base-cms-object-path": "^3.0.0",
     "@parameter1/base-cms-utils": "^3.0.0",
     "@parameter1/base-cms-web-common": "^3.3.1",
-    "@trevoreyre/autocomplete-vue": "^2.2.0",
+    "@trevoreyre/autocomplete-vue": "^2.4.1",
     "bootstrap": "4.3.1",
-    "cheerio": "^1.0.0-rc.10",
-    "graphql-tag": "^2.12.5",
-    "http-errors": "^1.7.3",
+    "cheerio": "^1.0.0-rc.12",
+    "graphql-tag": "^2.12.6",
+    "http-errors": "^1.8.1",
     "moment": "^2.29.1",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.9"
   },
   "publishConfig": {
     "access": "public"

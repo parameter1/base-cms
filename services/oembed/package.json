@@ -12,15 +12,15 @@
     "test": "yarn lint"
   },
   "dependencies": {
-    "@godaddy/terminus": "^4.9.0",
+    "@godaddy/terminus": "^4.11.2",
     "@parameter1/base-cms-embedly": "^3.0.0",
     "@parameter1/base-cms-tooling": "^3.0.0",
     "@parameter1/base-cms-utils": "^3.0.0",
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.1",
     "cors": "^2.8.5",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "helmet": "^3.23.3",
-    "ioredis": "^4.27.10",
+    "ioredis": "^4.28.5",
     "newrelic": "^6.14.0"
   }
 }
