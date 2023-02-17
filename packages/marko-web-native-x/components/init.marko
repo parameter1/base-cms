@@ -6,6 +6,10 @@ $ const src = "https://cdn.parameter1.com/native-x/v1.0.0/lib.min.js";
 <if(uri)>
   <if(enabled)>
     <if(on)>
+      <if(on !== "immediate")>
+        <!-- preload the module -->
+        <link rel="modulepreload" href=src as="script" />
+      </if>
       <marko-web-deferred-script-loader-register
         name="fortnight"
         src=src

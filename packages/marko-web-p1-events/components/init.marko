@@ -13,7 +13,10 @@ $ const identityQueryBuilder = `identityQueryBuilder: function(query, cookies) {
 
 <if(enabled && tenant)>
   <if(on)>
-    <!-- NOTE: when using deferred loader, the scriptSource should be preloaded using `modulepreload` -->
+    <if(on !== "immediate")>
+      <!-- preload the module -->
+      <link rel="modulepreload" href=src as="script" />
+    </if>
     <marko-web-deferred-script-loader-register
       name="p1events"
       src=scriptSrc
@@ -33,7 +36,7 @@ $ const identityQueryBuilder = `identityQueryBuilder: function(query, cookies) {
         }
       })(window, 'p1events');
     </script>
-    <script type="module" src=scriptSrc></script>
+    <script type="module" src=scriptSrc async defer></script>
   </else>
   <script>p1events('init', { tenant: '${tenant}', realm: '${realm}', env: '${NODE_ENV}', debug: ${debug}, uri: '${uri}', cookieDomain: '${cookieDomain}', ${identityQueryBuilder} });</script>
 </if>
