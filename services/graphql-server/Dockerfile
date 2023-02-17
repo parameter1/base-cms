@@ -1,4 +1,4 @@
-FROM node:10.24
+FROM node:14.21
 ENV NODE_ENV production
 ADD ./ /base-cms
 WORKDIR /base-cms
