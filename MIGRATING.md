@@ -1,6 +1,6 @@
 # Migrating from 3.x to 4.x
 - Ensure you have the latest 3.x version of the dependency upgrade tool installed globally
-  - `yarn global add @parameter1/base-cms-dependency-tool@v3.28.0`
+  - `yarn global add @parameter1/base-cms-dependency-tool@v3.28.1`
 - Update _all_ website `docker-compose.yml` and `Dockerfile` files to use `node:14.21` image
   - For GitHub actions, update the `node-version` in `.github/workflows/node-ci.yml` to `14.21`
 - Run the dependency tool using the latest flag: `p1-basecms-dependencies upgrade --latest`
