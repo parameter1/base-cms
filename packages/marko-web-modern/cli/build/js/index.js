@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const log = require('fancy-log');
-const { browser } = require('./webpack.config');
+const browser = require('./webpack.config');
 
 const { emitWarning } = process;
 

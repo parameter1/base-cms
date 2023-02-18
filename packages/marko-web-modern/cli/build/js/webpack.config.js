@@ -10,7 +10,7 @@ const imagePattern = /\.(png|svg|jpg|gif|webp)$/;
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-const browser = ({ cwd, entry }) => ({
+module.exports = ({ cwd, entry }) => ({
   mode: isProduction ? 'production' : 'development',
   cache: !isProduction,
   context: cwd,
@@ -164,5 +164,3 @@ const browser = ({ cwd, entry }) => ({
     ],
   },
 });
-
-module.exports = { browser };
