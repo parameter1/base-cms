@@ -6,7 +6,7 @@
 - Run the dependency tool using the latest flag: `p1-basecms-dependencies upgrade --latest`
   - If trying to upgrade to a pre-release, also include the `--prereleases` flag
 - Optional: you may want to clear your `node_modules` before running yarn: run `rm -rf node_modules` from the website root
-- Run yarn install _in the new node:14 docker image_ via `./scripts/yarn.sh` or by `docker-compose run --rm --entrypoint yarn commands` from the project root
+- Run yarn install _in the new node:14 docker image_ via `./scripts/yarn.sh` or by `docker-compose run --rm --entrypoint yarn terminal` from the project root
   - `node-sass` may hang or error when compiling binaries in the final stage of the install. if this happens, delete any `yarn.lock` entries where `node-sass@` is less than 4.14.1 and re-install
 - Once the new packages are installed, some Babel versions may be mismatched -- delete all entries in `yarn.lock` that match regex `/^"@babel\//` then re-run yarn install above
 - Update browserslist entries via `npx browserslist@latest --update-db`
