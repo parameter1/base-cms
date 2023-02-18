@@ -58,7 +58,11 @@ const execute = async ({ dir, forceLatest, prereleases }) => {
   if (isArray(pkg.workspaces)) {
     log(chalk`Workspaces detected. Will upgrade recursively: {gray ${JSON.stringify(pkg.workspaces)}}`);
     const workspaceDirs = loadWorkspaceDirs(dir, pkg.workspaces);
-    await Promise.all(workspaceDirs.map(async wsDir => execute({ dir: wsDir, forceLatest })));
+    await Promise.all(workspaceDirs.map(async wsDir => execute({
+      dir: wsDir,
+      forceLatest,
+      prereleases,
+    })));
   }
 };
 
