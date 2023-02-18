@@ -16,9 +16,9 @@ module.exports = ({ cwd, entry }) => {
     entry,
     devtool: 'source-map',
     output: {
-      path: path.resolve(cwd, 'modern/dist/css'),
+      path: path.resolve(cwd, 'dist/modern/css'),
       filename: 'js/[name].js', // for the default index output (will be deleted)
-      publicPath: '/modern/dist/css/',
+      publicPath: '/dist/modern/css/',
     },
     plugins: [
       new MiniCssExtractPlugin({
