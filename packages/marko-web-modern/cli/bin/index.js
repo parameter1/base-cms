@@ -15,7 +15,7 @@ const exit = (message, code = 0) => {
 const fileExists = async (...paths) => {
   const loc = path.resolve(...paths);
   try {
-    const stat = await fs.stat(loc);
+    await fs.stat(loc);
     return true;
   } catch (e) {
     if (e.code === 'ENOENT') return false;
