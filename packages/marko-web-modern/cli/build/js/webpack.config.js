@@ -34,7 +34,7 @@ const browser = ({ cwd, entry }) => ({
       publicPath: '',
       filter: ({ name }) => !imagePattern.test(name),
     }),
-    new BundleAnalyzerPlugin({ analyzerMode: 'static', reportFilename: 'dist/modern/analyzer-report.html' }),
+    new BundleAnalyzerPlugin({ analyzerMode: 'static', reportFilename: '../analyzer-report.html' }),
   ],
   optimization: { minimize: true },
   module: {
