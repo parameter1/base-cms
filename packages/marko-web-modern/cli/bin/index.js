@@ -12,8 +12,9 @@ const exit = (message, code = 0) => {
   process.exit(code);
 };
 
+const defaultCompileDirs = ['../packages', '../node_modules/@parameter1'];
 
-const commands = new Set(['build:css', 'build:js', 'dev']);
+const commands = new Set(['build', 'build:css', 'build:js', 'build:ssr', 'dev']);
 (async () => {
   const argv = minimist(process.argv.slice(2));
   const [command, ...rest] = argv._;
@@ -38,6 +39,25 @@ const commands = new Set(['build:css', 'build:js', 'dev']);
   log(`running '${blue(command)}' command in '${gray(cwd)}'`);
 
   if (!commands.has(command)) throw new Error(`The command ${command} was not found.`);
+
+  if (command === 'build') {
+    const build = require('../build');
+    const opts = {
+      cwd,
+      entries: {
+        server: argv.server || './index.js',
+        browser: argv.browser || './browser/index.js',
+        ssr: argv.ssr || './browser/ssr.js',
+        styles: argv.styles || './server/styles/index.scss',
+      },
+      // defaults to what the site repos normally use.
+      compileDirs: getArrayValuesFor('compile-dir', defaultCompileDirs),
+      cleanCompiledFiles: Boolean(argv['clean-compiled-files']),
+    };
+    log(`beginning '${blue('build')}' server with options`, opts);
+    await build(opts);
+    return exit(`command '${blue(command)}' ${green('complete')}`);
+  }
 
   if (command === 'build:css') {
     const [entry = './server/styles/index.scss'] = rest;
@@ -74,7 +94,7 @@ const commands = new Set(['build:css', 'build:js', 'dev']);
         styles: argv.styles || './server/styles/index.scss',
       },
       // defaults to what the site repos normally use.
-      compileDirs: getArrayValuesFor('compile-dir', ['../packages', '../node_modules/@parameter1']),
+      compileDirs: getArrayValuesFor('compile-dir', defaultCompileDirs),
       cleanCompiledFiles: Boolean(argv['clean-compiled-files']),
       // defaults to what the site repos normally use.
       additionalWatchDirs: getArrayValuesFor('watch-dir', ['../packages']),
