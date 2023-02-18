@@ -3,6 +3,7 @@ const log = require('fancy-log');
 const chalk = require('chalk');
 const path = require('path');
 const fs = require('fs');
+const { mkdirp } = require('mkdirp');
 const ssr = require('./webpack.config');
 
 const { emitWarning } = process;
@@ -14,11 +15,13 @@ module.exports = async ({
   onFileChange,
 } = {}) => {
   const entryResolved = path.resolve(cwd, entry);
-  const destination = path.resolve(cwd, 'dist', 'ssr.js');
+  const distPath = path.resolve(cwd, 'dist');
+  const destination = path.resolve(distPath, 'ssr.js');
 
   if (!fs.existsSync(entryResolved)) {
     // ssr is optional but should warn when not found;
     log(chalk.yellow('WARNING:'), 'no ssr entry was found. writing an empty file...');
+    await mkdirp(distPath);
     fs.writeFileSync(destination, 'module.exports = {};');
     log('empty ssr file written.');
     return;
