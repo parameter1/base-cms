@@ -11,6 +11,7 @@
     "test": "yarn lint"
   },
   "dependencies": {
+    "@parameter1/base-cms-marko-web-modern-lib": "^0.0.0",
     "marko": "~4.20.0",
     "resolve-from": "^2.0.0"
   }
