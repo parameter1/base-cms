@@ -1,22 +1,14 @@
 const { getProfileMS } = require('@parameter1/base-cms-marko-web-modern-utils');
 const log = require('fancy-log');
 const ForkServer = require('./fork-server');
-const compileMarkoFiles = require('./compile-marko-files');
+const build = require('../build');
 const watchFiles = require('./watch');
 const createLivereload = require('./create-livereload');
-const buildCSS = require('../build/css');
-const buildJS = require('../build/js');
-const buildSSR = require('../build/ssr');
 const formatWebsiteInfo = require('./format-website-info');
 
 module.exports = async ({
   cwd,
-  entries = {
-    server: './index.js',
-    browser: './browser/index.js',
-    ssr: './browser/ssr.js',
-    styles: './server/styles/index.scss',
-  },
+  entries,
   compileDirs,
   cleanCompiledFiles = false,
   additionalWatchDirs = [],
@@ -29,31 +21,14 @@ module.exports = async ({
   if (forceRequirePrebuiltTemplates) process.env.MARKO_REQUIRE_PREBUILT_TEMPLATES = true;
   const livereload = createLivereload();
 
-  await Promise.all([
-    // compile any uncompiled or out-of-date marko templates before starting the server instance
-    compileMarkoFiles({ cwd, dirs: compileDirs, clean: cleanCompiledFiles }),
-    // build css
-    buildCSS({
-      cwd,
-      entry: entries.styles,
-      watch: true,
-      onFileChange: () => livereload.refresh('/'),
-    }),
-    // build js
-    buildJS({
-      cwd,
-      entry: entries.browser,
-      watch: true,
-      onFileChange: () => livereload.refresh('/'),
-    }),
-    // build ssr
-    buildSSR({
-      cwd,
-      entry: entries.ssr,
-      watch: true,
-      onFileChange: () => livereload.refresh('/'),
-    }),
-  ]);
+  await build({
+    cwd,
+    entries,
+    compileDirs,
+    cleanCompiledFiles,
+    watch: true,
+    onFileChange: () => livereload.refresh('/'),
+  });
 
   // fork and start the server instance
   log('starting forked server...');
