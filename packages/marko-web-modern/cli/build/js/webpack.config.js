@@ -12,17 +12,20 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 const browser = ({ cwd, entry }) => ({
   mode: isProduction ? 'production' : 'development',
+  cache: !isProduction,
   context: cwd,
   entry,
   devtool: isProduction ? 'source-map' : 'eval',
   output: {
-    path: path.resolve(cwd, 'dist/js'),
-    library: 'CMSBrowserComponents',
-    libraryExport: 'default',
-    libraryTarget: 'umd',
-    filename: 'index.[contenthash:8].js',
-    chunkFilename: '[name].[contenthash:8].js',
-    publicPath: '/dist/js/',
+    library: {
+      name: 'CMSBrowserComponents',
+      type: 'umd',
+      export: 'default',
+    },
+    path: path.resolve(cwd, 'dist/modern/js'),
+    filename: 'index.[contenthash:7].js',
+    chunkFilename: '[name].[contenthash:7].js',
+    publicPath: '/dist/modern/js/',
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -50,32 +53,49 @@ const browser = ({ cwd, entry }) => ({
         test: /\.js$/,
         loader: require.resolve('babel-loader'),
         exclude: f => (
-          /node_modules\/(?!@parameter1\/base-web-marko.*?\/browser)/.test(f)
+          /node_modules\/(?!@parameter1\/base-cms-marko-web.*?\/browser)/.test(f)
           && !/\.vue\.js/.test(f)
         ),
         options: {
+          configFile: false,
+          babelrc: false,
+          cacheDirectory: false,
           presets: [
             [
               require.resolve('@babel/preset-env'),
               {
                 targets: {
-                  chrome: '49',
-                  firefox: '45',
-                  safari: '10',
-                  edge: '12',
-                  ie: '11',
-                  ios: '10',
+                  chrome: '83',
+                  edge: '80',
+                  safari: '14',
+                  firefox: '78',
+                  opera: '69',
+                  ios: '14',
                 },
+                bugfixes: true,
                 useBuiltIns: 'usage',
-                corejs: '3.19',
+                corejs: { version: '3' },
+                loose: false,
                 debug: false,
+                modules: false,
+                exclude: [
+                  '@babel/plugin-proposal-class-properties',
+                  '@babel/plugin-proposal-private-methods',
+                  '@babel/plugin-proposal-private-property-in-object',
+                ],
               },
             ],
           ],
           plugins: [
             [
               require.resolve('@babel/plugin-transform-runtime'),
-              { absoluteRuntime },
+              {
+                absoluteRuntime,
+                regenerator: false,
+                corejs: false,
+                helpers: true,
+                useESModules: true,
+              },
             ],
           ],
         },
@@ -109,17 +129,12 @@ const browser = ({ cwd, entry }) => ({
                     require.resolve('autoprefixer'),
                     {
                       overrideBrowserslist: [
-                        '>= 1%',
-                        'not dead',
-                        'last 1 major version',
-                        'Chrome >= 45',
-                        'Firefox >= 38',
-                        'Edge >= 12',
-                        'Explorer >= 11',
-                        'iOS >= 9',
-                        'Safari >= 9',
-                        'Android >= 4.4',
-                        'Opera >= 30',
+                        'Chrome >= 64',
+                        'Firefox >= 67',
+                        'Edge >= 79',
+                        'iOS >= 12',
+                        'Safari >= 11.1',
+                        'Opera >= 51',
                       ],
                     },
                   ],
