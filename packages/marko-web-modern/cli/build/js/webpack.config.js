@@ -31,6 +31,7 @@ const browser = ({ cwd, entry }) => ({
       filter: ({ name }) => !imagePattern.test(name),
     }),
   ],
+  optimization: { minimize: true },
   module: {
     rules: [
       {
