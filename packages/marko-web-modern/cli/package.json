@@ -31,6 +31,8 @@
     "@babel/plugin-transform-runtime": "^7.19.6",
     "@babel/preset-env": "^7.20.2",
     "@babel/runtime": "^7.20.13",
+    "@parameter1/base-cms-marko-web-modern-lib": "^0.0.0",
+    "@parameter1/base-cms-marko-web-modern-utils": "^0.0.0",
     "autoprefixer": "^10.4.13",
     "babel-loader": "^9.1.2",
     "chokidar": "^3.5.3",
