@@ -44,5 +44,16 @@ const fileExists = async (...paths) => {
     return exit('Command complete');
   }
 
+  if (command === 'build:js') {
+    const [entry = './browser/index.js'] = rest;
+    if (!entry) return exit('An entrypoint is requred.', 1);
+    const exists = await fileExists(cwd, entry);
+    if (!exists) return exit(`No entry file was found for ${path.resolve(cwd, entry)}`, 1);
+
+    const builder = require('../build/js');
+    await builder({ cwd, entry, watch: argv.watch });
+    return exit('Command complete');
+  }
+
   return exit(`The command ${command} was not found.`, 1);
 })().catch(e => setImmediate(() => { throw e; }));
