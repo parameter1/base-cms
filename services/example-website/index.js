@@ -74,4 +74,4 @@ module.exports = startServer({
       },
     });
   },
-}).then(() => log('Website started!')).catch(e => setImmediate(() => { throw e; }));
+}).catch(e => setImmediate(() => { throw e; }));
