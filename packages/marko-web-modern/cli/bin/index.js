@@ -69,7 +69,7 @@ const commands = new Set(['build:css', 'build:js', 'dev']);
       entries: {
         server: argv.server || './index.js',
         browser: argv.browser || './browser/index.js',
-        ssr: argv.ssr || './browser.ssr.js',
+        ssr: argv.ssr || './browser/ssr.js',
         styles: argv.styles || './server/styles/index.scss',
       },
       compileDirs: getArrayValuesFor('compile-dir'),
