@@ -17,13 +17,13 @@ export default Browser;
 3. Include the styles.
 ```scss
 // your-site/server/styles/index.scss
-@import "../../node_modules/@parameter1/base-cms-marko-web-photoswipe/scss/main";
+@import "@parameter1/base-cms-marko-web-photoswipe/scss/main";
 ```
 
 4. If you're using the default theme (or something similar) you'll need to adjust the photoswipe z-index:
 ```scss
 $pswp__root-z-index: $theme-site-header-z-index + 1 !default;
-@import "../../node_modules/@parameter1/base-cms-marko-web-photoswipe/scss/main";
+@import "@parameter1/base-cms-marko-web-photoswipe/scss/main";
 ```
 
 ## Usage
