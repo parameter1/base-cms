@@ -16,7 +16,9 @@
     "test": "yarn lint"
   },
   "dependencies": {
-
+    "@parameter1/base-cms-marko-web-modern-utils": "^0.0.0",
+    "fast-glob": "^3.2.12",
+    "marko": "~4.20.0"
   },
   "publishConfig": {
     "access": "public"
