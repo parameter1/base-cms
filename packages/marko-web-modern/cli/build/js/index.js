@@ -1,7 +1,7 @@
 const webpack = require('webpack');
+const log = require('fancy-log');
 const { browser } = require('./webpack.config');
 
-const { log } = console;
 const { emitWarning } = process;
 
 module.exports = async ({
@@ -14,7 +14,7 @@ module.exports = async ({
   const compiler = webpack(browser({ cwd, entry }));
   if (watch) {
     await new Promise((resolve, reject) => {
-      log('Beginning transpiled browser script build and watch...');
+      log('beginning browser script build and watch...');
       compiler.watch({
         ignored: /node_modules/,
       }, (err, stats) => {
@@ -22,7 +22,7 @@ module.exports = async ({
           reject(err || stats.toJson().errors);
         } else {
           const s = stats.toJson('minimal');
-          log(`Transpiled browser scripts built in ${s.time}ms to ${s.assetsByChunkName.main}`);
+          log(`browser scripts built in ${s.time}ms to ${s.assetsByChunkName.main}`);
 
           if (watchStarted) {
             if (typeof onFileChange === 'function') onFileChange();

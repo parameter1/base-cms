@@ -2,10 +2,11 @@
 
 /* eslint-disable global-require */
 const minimist = require('minimist');
+const log = require('fancy-log'); // @todo upgrade this!
+const { blue, gray, green } = require('chalk'); // @todo upgrade this!
 
-const { log } = console;
 const { isArray } = Array;
-log('CLI starting...');
+log('cli starting...');
 const exit = (message, code = 0) => {
   log(message);
   process.exit(code);
@@ -31,23 +32,26 @@ const commands = new Set(['build:css', 'build:js', 'dev']);
 
   const cwd = argv.cwd || process.cwd();
 
-  if (!command) return exit('A CLI command must be provided.', 1);
+  if (!command) throw new Error('A CLI command must be provided.');
 
-  log(`Running command ${command}...`);
-  if (!commands.has(command)) return exit(`The command ${command} was not found.`, 1);
+  log(`running '${blue(command)}' command in '${gray(cwd)}'`);
+
+  if (!commands.has(command)) throw new Error(`The command ${command} was not found.`);
 
   if (command === 'build:css') {
     const [entry = './server/styles/index.scss'] = rest;
-    if (!entry) return exit('An entrypoint is requred.', 1);
+    if (!entry) throw new Error('An entrypoint is requred.');
     const builder = require('../build/css');
     await builder({ cwd, entry, watch: argv.watch });
+    return exit(`command '${blue(command)}' ${green('complete')}`);
   }
 
   if (command === 'build:js') {
     const [entry = './browser/index.js'] = rest;
-    if (!entry) return exit('An entrypoint is requred.', 1);
+    if (!entry) throw new Error('An entrypoint is requred.');
     const builder = require('../build/js');
     await builder({ cwd, entry, watch: argv.watch });
+    return exit(`command '${blue(command)}' ${green('complete')}`);
   }
 
   if (command === 'dev') {
@@ -66,9 +70,8 @@ const commands = new Set(['build:css', 'build:js', 'dev']);
       abortOnInstanceError: Boolean(argv['abort-on-error']),
       showWatchedFiles: Boolean(argv['show-watched-files']),
     };
-    log('Beginning dev server with options', opts);
+    log(`beginning '${blue('dev')}' server with options`, opts);
     await serve(opts);
   }
-
-  return exit('Command complete');
+  return null;
 })().catch(e => setImmediate(() => { throw e; }));

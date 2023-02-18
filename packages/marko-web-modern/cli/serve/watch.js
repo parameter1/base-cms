@@ -1,10 +1,11 @@
 const path = require('path');
 const chokidar = require('chokidar');
+const log = require('fancy-log');
+const { blue, grey } = require('chalk');
 const compile = require('@parameter1/base-cms-marko-web-modern-lib/compile');
 const { deleteCompiledFor } = require('@parameter1/base-cms-marko-web-modern-lib/utils');
 const { getProfileMS } = require('@parameter1/base-cms-marko-web-modern-utils');
-
-const { log } = console;
+const formatWebsiteInfo = require('./format-website-info');
 
 const extensions = [
   '**/*.marko',
@@ -28,7 +29,7 @@ module.exports = async ({
   ignore = [],
 } = {}) => {
   const start = process.hrtime();
-  log('Starting file watcher...');
+  log('starting file watcher...');
 
   const watchGlobs = additonalDirs.reduce((a, dir) => {
     extensions.forEach(ext => a.push(path.join(dir, ext)));
@@ -51,9 +52,10 @@ module.exports = async ({
 
   const restart = async () => {
     const s = process.hrtime();
-    log('Restarting server...');
-    await server.restart({ rejectOnNonZeroExit });
-    log(`Server restarted in ${getProfileMS(s)}ms`);
+    log('restarting server...');
+    const message = await server.restart({ rejectOnNonZeroExit });
+    log(`server restarted in ${getProfileMS(s)}ms`);
+    log(formatWebsiteInfo(message));
   };
 
   const handleEvent = async ({ event, file }) => {
@@ -77,7 +79,7 @@ module.exports = async ({
   watcher.on('all', async (event, filePath) => {
     try {
       const file = path.resolve(cwd, filePath);
-      log(`Watch event '${event}' detected in file ${file}`);
+      log(`watch event '${blue(event)}' detected in file ${grey(file)}`);
       await handleEvent({ event, file });
     } catch (e) {
       // on error, ensure forked server is killed.
@@ -90,6 +92,6 @@ module.exports = async ({
     watcher.on('ready', resolve);
   }));
 
-  log(`File watcher started in ${getProfileMS(start)}ms`);
+  log(`file watcher started in ${getProfileMS(start)}ms`);
   if (showFiles) log(watcher.getWatched());
 };

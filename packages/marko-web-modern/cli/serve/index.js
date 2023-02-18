@@ -1,19 +1,19 @@
 const { getProfileMS } = require('@parameter1/base-cms-marko-web-modern-utils');
+const log = require('fancy-log');
 const ForkServer = require('./fork-server');
 const compileMarkoFiles = require('./compile-marko-files');
 const watchFiles = require('./watch');
 const createLivereload = require('./create-livereload');
 const buildCSS = require('../build/css');
 const buildJS = require('../build/js');
-
-const { log } = console;
+const formatWebsiteInfo = require('./format-website-info');
 
 module.exports = async ({
   cwd,
   entries = {
     server: './index.js',
     browser: './browser/index.js',
-    styles: './server/styles/index.js',
+    styles: './server/styles/index.scss',
   },
   compileDirs,
   cleanCompiledFiles = false,
@@ -47,15 +47,15 @@ module.exports = async ({
   ]);
 
   // fork and start the server instance
-  log('Starting forked server...');
+  log('starting forked server...');
   const serverStart = process.hrtime();
   const server = ForkServer({
     cwd,
     entry: entries.server,
     onReady: () => livereload.refresh('/'),
   });
-  await server.listen({ rejectOnNonZeroExit: abortOnInstanceError });
-  log(`Server fork started in ${getProfileMS(serverStart)}ms`);
+  const message = await server.listen({ rejectOnNonZeroExit: abortOnInstanceError });
+  log(`server fork started in ${getProfileMS(serverStart)}ms`);
 
   // enable file watching
   await watchFiles({
@@ -66,5 +66,6 @@ module.exports = async ({
     rejectOnNonZeroExit: abortOnInstanceError,
     ignore: watchIgnore,
   });
-  log(`READY in ${getProfileMS(start)}ms`);
+  log(`done in ${getProfileMS(start)}ms`);
+  log(formatWebsiteInfo(message));
 };

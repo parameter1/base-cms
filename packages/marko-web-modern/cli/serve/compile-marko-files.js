@@ -1,8 +1,7 @@
 const { getProfileMS } = require('@parameter1/base-cms-marko-web-modern-utils');
 const compile = require('@parameter1/base-cms-marko-web-modern-lib/compile');
 const { deleteCompiledFiles } = require('@parameter1/base-cms-marko-web-modern-lib/utils');
-
-const { log } = console;
+const log = require('fancy-log');
 
 /**
  *
@@ -16,12 +15,12 @@ const { log } = console;
  */
 module.exports = async ({ cwd, dirs, clean } = {}) => {
   if (clean) {
-    log('Deleting all compiled Marko templates...');
+    log('deleting all compiled Marko templates...');
     await deleteCompiledFiles(cwd, { dirs });
-    log('Compiled templates deleted');
+    log('compiled templates deleted');
   }
-  log('Compiling Marko templates...');
+  log('compiling marko templates...');
   const start = process.hrtime();
   await compile.all(cwd, { dirs });
-  log(`Marko templates compiled in ${getProfileMS(start)}ms`);
+  log(`marko templates compiled in ${getProfileMS(start)}ms`);
 };

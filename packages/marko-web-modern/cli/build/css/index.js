@@ -1,7 +1,7 @@
 const webpack = require('webpack');
+const log = require('fancy-log');
 const sass = require('./webpack.config');
 
-const { log } = console;
 const { emitWarning } = process;
 
 module.exports = async ({
@@ -14,7 +14,7 @@ module.exports = async ({
   const compiler = webpack(sass({ cwd, entry }));
   if (watch) {
     await new Promise((resolve, reject) => {
-      log('Beginning style build and watch...');
+      log('beginning style build and watch...');
       compiler.watch({
         ignored: /node_modules/,
       }, (err, stats) => {
@@ -22,7 +22,7 @@ module.exports = async ({
           reject(err || stats.toJson().errors);
         } else {
           const s = stats.toJson('minimal');
-          log(`Styles built in ${s.time}ms to ${s.assetsByChunkName.main}`);
+          log(`styles built in ${s.time}ms to ${s.assetsByChunkName.main}`);
 
           if (watchStarted) {
             if (typeof onFileChange === 'function') onFileChange();
