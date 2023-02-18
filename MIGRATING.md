@@ -16,3 +16,5 @@
   - note: the number of relative parent paths does not matter... so `../` and `../../` and `../../../` etc all need to be removed.
   - the quickest way to fix this is with a find and replace in `.scss` files with the following regex: `@import ".*\/node_modules\/` and replace with an empty string.
 - Remove any references to components `<marko-web-deferred-script-loader-init />` and `<marko-web-deferred-script-loader-load />`. These are now included in core and do not need to be in the websites.
+- The `yarn build` script should be upgraded to appropriately handle `.marko` file compiling with the new cli. The script needs to account for compiling marko files in `node_modules` and any support packages. For example (assuming in `sites` folder): `basecms-website dev --compile-dir ../node_modules/@parameter1 --compile-dir ../packages`
+  - You can also watch for _changes_ to your support packages by adding `--watch-dir ../packages`
