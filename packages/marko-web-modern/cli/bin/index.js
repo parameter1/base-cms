@@ -18,7 +18,7 @@ const commands = new Set(['build:css', 'build:js', 'dev']);
   const argv = minimist(process.argv.slice(2));
   const [command, ...rest] = argv._;
 
-  const getArrayValuesFor = (key) => {
+  const getArrayValuesFor = (key, def) => {
     const value = argv[key];
     let values = [];
     if (isArray(value)) {
@@ -26,6 +26,7 @@ const commands = new Set(['build:css', 'build:js', 'dev']);
     } else if (value) {
       values = [value];
     }
+    if (def && !values.length) return def;
     return values;
   };
 
@@ -72,9 +73,11 @@ const commands = new Set(['build:css', 'build:js', 'dev']);
         ssr: argv.ssr || './browser/ssr.js',
         styles: argv.styles || './server/styles/index.scss',
       },
-      compileDirs: getArrayValuesFor('compile-dir'),
+      // defaults to what the site repos normally use.
+      compileDirs: getArrayValuesFor('compile-dir', ['../packages', '../node_modules/@parameter1']),
       cleanCompiledFiles: Boolean(argv['clean-compiled-files']),
-      additionalWatchDirs: getArrayValuesFor('watch-dir'),
+      // defaults to what the site repos normally use.
+      additionalWatchDirs: getArrayValuesFor('watch-dir', ['../packages']),
       watchIgnore: getArrayValuesFor('watch-ignore'),
       abortOnInstanceError: Boolean(argv['abort-on-error']),
       showWatchedFiles: Boolean(argv['show-watched-files']),
