@@ -21,6 +21,6 @@ module.exports = async ({ cwd, dirs, clean } = {}) => {
   }
   log('compiling marko templates...');
   const start = process.hrtime();
-  await compile.all(cwd, { dirs });
+  await compile.all(cwd, { dirs, debug: true });
   log(`marko templates compiled in ${getProfileMS(start)}ms`);
 };

@@ -7,7 +7,7 @@ module.exports = async (cwd, {
   debug,
   compilerOptions,
 }) => {
-  const entries = await findFiles(cwd, { dirs, compiled: false });
+  const entries = await findFiles(cwd, { dirs, compiled: false, debug });
   await compileMany(entries.map(({ path }) => path), {
     force,
     debug,

@@ -1,4 +1,6 @@
 const fg = require('fast-glob');
+const log = require('fancy-log');
+const path = require('path');
 
 const extensionPattern = '**/*.marko';
 
@@ -18,6 +20,7 @@ module.exports = async (cwd, {
   stats = false,
   compiled = false,
   ignorePackages = [],
+  debug,
   ...rest
 } = {}) => {
   const suffix = compiled ? `${extensionPattern}.js` : extensionPattern;
@@ -25,6 +28,9 @@ module.exports = async (cwd, {
     `./${suffix}`,
     ...dirs.map(dir => `${dir}/${suffix}`),
   ];
+  if (debug) {
+    log('searching for marko files using patterns', patterns.map(pattern => path.resolve(cwd, pattern)));
+  }
   const entries = await fg(patterns, {
     ...rest,
     cwd,
@@ -38,5 +44,6 @@ module.exports = async (cwd, {
   if (entries.some(({ dirent }) => dirent.isDirectory())) {
     throw new Error('Directories are not supported.');
   }
+  if (debug) log(`found ${entries.length} marko files to compile`);
   return entries;
 };
