@@ -6,6 +6,7 @@ const watchFiles = require('./watch');
 const createLivereload = require('./create-livereload');
 const buildCSS = require('../build/css');
 const buildJS = require('../build/js');
+const buildSSR = require('../build/ssr');
 const formatWebsiteInfo = require('./format-website-info');
 
 module.exports = async ({
@@ -13,6 +14,7 @@ module.exports = async ({
   entries = {
     server: './index.js',
     browser: './browser/index.js',
+    ssr: './browser/ssr.js',
     styles: './server/styles/index.scss',
   },
   compileDirs,
@@ -41,6 +43,13 @@ module.exports = async ({
     buildJS({
       cwd,
       entry: entries.browser,
+      watch: true,
+      onFileChange: () => livereload.refresh('/'),
+    }),
+    // build ssr
+    buildSSR({
+      cwd,
+      entry: entries.ssr,
       watch: true,
       onFileChange: () => livereload.refresh('/'),
     }),

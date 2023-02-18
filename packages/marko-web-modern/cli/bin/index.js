@@ -54,6 +54,14 @@ const commands = new Set(['build:css', 'build:js', 'dev']);
     return exit(`command '${blue(command)}' ${green('complete')}`);
   }
 
+  if (command === 'build:ssr') {
+    const [entry = './browser/ssr.js'] = rest;
+    if (!entry) throw new Error('An entrypoint is requred.');
+    const builder = require('../build/ssr');
+    await builder({ cwd, entry, watch: argv.watch });
+    return exit(`command '${blue(command)}' ${green('complete')}`);
+  }
+
   if (command === 'dev') {
     const serve = require('../serve');
     const opts = {
@@ -61,6 +69,7 @@ const commands = new Set(['build:css', 'build:js', 'dev']);
       entries: {
         server: argv.server || './index.js',
         browser: argv.browser || './browser/index.js',
+        ssr: argv.ssr || './browser.ssr.js',
         styles: argv.styles || './server/styles/index.scss',
       },
       compileDirs: getArrayValuesFor('compile-dir'),
