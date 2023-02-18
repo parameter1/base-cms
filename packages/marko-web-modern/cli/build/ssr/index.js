@@ -1,3 +1,4 @@
+const { getProfileMS } = require('@parameter1/base-cms-marko-web-modern-utils');
 const webpack = require('webpack');
 const log = require('fancy-log');
 const chalk = require('chalk');
@@ -51,6 +52,8 @@ module.exports = async ({
       });
     });
   } else {
+    const start = process.hrtime();
+    log('building ssr...');
     await new Promise((resolve, reject) => {
       compiler.run((err, stats) => {
         if (err || stats.hasErrors()) {
@@ -61,5 +64,6 @@ module.exports = async ({
         }
       });
     });
+    log(`ssr finished in ${getProfileMS(start)}ms`);
   }
 };
