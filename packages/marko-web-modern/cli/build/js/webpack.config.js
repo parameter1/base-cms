@@ -22,10 +22,10 @@ const browser = ({ cwd, entry }) => ({
       type: 'umd',
       export: 'default',
     },
-    path: path.resolve(cwd, 'dist/modern/js'),
+    path: path.resolve(cwd, 'dist/js'),
     filename: 'index.[contenthash:7].js',
     chunkFilename: '[name].[contenthash:7].js',
-    publicPath: '/dist/modern/js/',
+    publicPath: '/dist/js/',
   },
   plugins: [
     new CleanWebpackPlugin(),
