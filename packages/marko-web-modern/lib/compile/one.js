@@ -1,11 +1,12 @@
 const path = require('path');
 const { readFile, writeFile, rename } = require('fs').promises;
+const { grey } = require('chalk');
+const log = require('fancy-log');
 const { getProfileMS } = require('@parameter1/base-cms-marko-web-modern-utils');
 const runCompile = require('./run');
 const stat = require('../utils/stat');
 
 const encoding = 'utf8';
-const { log } = console;
 
 const needsCompilation = async ({ templateFile, compiledFile, force }) => {
   if (force) return true;
@@ -43,5 +44,5 @@ module.exports = async (templateFile, {
   } else {
     await writeFile(compiledFile, compiled.code, { encoding });
   }
-  if (debug) log(`Compiled Marko template ${templateFile} in ${getProfileMS(start)}ms`);
+  if (debug) log(`compiled marko template ${grey(templateFile)} in ${getProfileMS(start)}ms`);
 };
