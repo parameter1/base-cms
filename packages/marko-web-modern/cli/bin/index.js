@@ -34,6 +34,7 @@ const fileExists = async (...paths) => {
   log(`Running command ${command}...`);
 
   if (command === 'build:css') {
+    const [entry = './server/styles/index.scss'] = rest;
     if (!entry) return exit('An entrypoint is requred.', 1);
     const exists = await fileExists(cwd, entry);
     if (!exists) return exit(`No entry file was found for ${path.resolve(cwd, entry)}`, 1);
