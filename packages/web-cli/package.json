@@ -21,7 +21,7 @@
     "@parameter1/base-cms-cli-utils": "^4.0.0-alpha.0",
     "autoprefixer": "^10.4.13",
     "babel-eslint": "^10.1.0",
-    "babel-loader": "^8.3.0",
+    "babel-loader": "^9.1.2",
     "chalk": "^2.4.2",
     "core-js": "^3.28.0",
     "css-loader": "^6.7.3",
