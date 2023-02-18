@@ -24,7 +24,7 @@
   "dependencies": {
     "@parameter1/base-cms-tooling": "^4.0.0-alpha.0",
     "async": "^2.6.3",
-    "chalk": "^2.4.2",
+    "chalk": "^4.1.2",
     "clear": "^0.1.0",
     "dataloader": "^1.4.0",
     "elasticsearch": "^15.5.0",
