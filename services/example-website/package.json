@@ -15,7 +15,8 @@
     "lint:js": "eslint --ext .js --ext .vue --max-warnings 5 --ignore-path ../../.eslintignore ./",
     "lint:css": "stylelint ./**/*.scss --max-warnings 5",
     "test": "yarn lint && yarn compile && yarn build",
-    "build:modern:css": "marko-web-modern build:css"
+    "build:modern:css": "marko-web-modern build:css",
+    "build:modern:js": "marko-web-modern build:js"
   },
   "dependencies": {
     "@parameter1/base-cms-marko-core": "^4.0.0-alpha.0",
