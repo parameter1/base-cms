@@ -2,8 +2,8 @@
 
 /* eslint-disable global-require */
 const minimist = require('minimist');
-const log = require('fancy-log'); // @todo upgrade this!
-const { blue, gray, green } = require('chalk'); // @todo upgrade this!
+const log = require('fancy-log');
+const { blue, gray, green } = require('chalk');
 
 const { isArray } = Array;
 log('cli starting...');
