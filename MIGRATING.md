@@ -10,4 +10,9 @@
   - `node-sass` may hang or error when compiling binaries in the final stage of the install. if this happens, delete any `yarn.lock` entries where `node-sass@` is less than 4.14.1 and re-install
 - Once the new packages are installed, some Babel versions may be mismatched -- delete all entries in `yarn.lock` that match regex `/^"@babel\//` then re-run yarn install above
 - Update browserslist entries via `npx browserslist@latest --update-db`
+- Update relative node_module `@import` declarations in `.scss` files to their absolute counterparts. For example:
+  - `@import "../../node_modules/bootstrap/scss/mixins"` would become `@import "bootstrap/scss/mixins";`
+  - `@import "../../node_modules/@parameter1/base-cms-marko-web-theme-monorail/scss/core";` would become `@import "@parameter1/base-cms-marko-web-theme-monorail/scss/core";`
+  - note: the number of relative parent paths does not matter... so `../` and `../../` and `../../../` etc all need to be removed.
+  - the quickest way to fix this is with a find and replace in `.scss` files with the following regex: `@import ".*\/node_modules\/` and replace with an empty string.
 - Remove any references to components `<marko-web-deferred-script-loader-init />` and `<marko-web-deferred-script-loader-load />`. These are now included in core and do not need to be in the websites.
