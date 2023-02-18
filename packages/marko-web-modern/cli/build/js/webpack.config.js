@@ -3,6 +3,7 @@ const { VueLoaderPlugin } = require('vue-loader');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const sass = require('node-sass');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const absoluteRuntime = path.dirname(require.resolve('@babel/runtime/package.json'));
 const imagePattern = /\.(png|svg|jpg|gif|webp)$/;
@@ -30,6 +31,7 @@ const browser = ({ cwd, entry }) => ({
       publicPath: '',
       filter: ({ name }) => !imagePattern.test(name),
     }),
+    new BundleAnalyzerPlugin({ analyzerMode: 'static', reportFilename: 'dist/modern/analyzer-report.html' }),
   ],
   optimization: { minimize: true },
   module: {
