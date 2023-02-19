@@ -20,12 +20,13 @@ module.exports = {
         max: 1,
       },
     }],
+    'vue/multi-word-component-names': 'off',
     'vue/no-v-html': 'off',
   },
-  parser: '@babel/eslint-parser',
+  parser: 'vue-eslint-parser',
   parserOptions: {
-    babelOptions: {
-      configFile: path.resolve(__dirname, './babel.config.js'),
-    },
+    configFile: path.resolve(__dirname, './babel.config.js'),
+    parser: '@babel/eslint-parser',
+    requireConfigFile: false,
   },
 };

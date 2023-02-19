@@ -70,14 +70,15 @@ In addition, the web, newsletter, and export CLIs no longer provides a `lint` co
       parser: 'babel-eslint',
     },
     ```
-  - With this (**Note** the move of `parser` to the root config)
+  - With this (**Note** the move of `parser` to the root config, which uses the vue parser first)
     ```js
-    parser: '@babel/eslint-parser',
+    parser: 'vue-eslint-parser',
     parserOptions: {
+      parser: '@babel/eslint-parser',
       requireConfigFile: false,
     },
     ```
-4. The `vue/max-attributes-per-line` rule options changed in the latest version and needs to be updated
+4. The `vue/max-attributes-per-line` rule options changed in the latest version and needs to be updated. Additionally, the `vue/multi-word-component-names` should be turned off.
   - Replace
     ```js
     'vue/max-attributes-per-line': ['error', {
@@ -98,6 +99,7 @@ In addition, the web, newsletter, and export CLIs no longer provides a `lint` co
         max: 1,
       },
     }],
+    'vue/multi-word-component-names': 'off',
     ```
 
 5. Once the new devDependencies are added, run `./scripts/yarn.sh`

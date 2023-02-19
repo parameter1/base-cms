@@ -15,9 +15,11 @@ module.exports = {
         max: 1,
       },
     }],
+    'vue/multi-word-component-names': 'off',
   },
-  parser: '@babel/eslint-parser',
+  parser: 'vue-eslint-parser',
   parserOptions: {
+    parser: '@babel/eslint-parser',
     requireConfigFile: false,
   },
 };
