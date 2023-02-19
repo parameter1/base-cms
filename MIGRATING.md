@@ -65,7 +65,7 @@ The `marko-web-deferred-script-loader` is now loaded into core. As such, certain
 1. Remove any references to components `<marko-web-deferred-script-loader-init />` and `<marko-web-deferred-script-loader-load />`. These normally occur in the site or global `document.marko` file.
 
 ## Improved CLI and Build/Serve Commands
-While the CLI was significantly improved for performance, each website's `yarn dev` and `yarn build` scripts _should_ still work as expected. This due to the new CLI assuming that `../packages` (relative from the `sites` directory) has Marko templates that need compiling. If this needs to be adjusted, change the site's `dev` script `--compile-dir` option
+While the CLI was significantly improved for performance, each website's `yarn dev` and `yarn build` scripts _should_ still work as expected. This due to the new CLI assuming that `../../packages` (relative from the `sites` directory) has Marko templates that need compiling. If this needs to be adjusted, change the site's `dev` script `--compile-dir` option
 
 Note: Marko files from `@parameter1/base-cms-*` packages (found in `node_modules`) are now compiled on build/publish. As such the compiled files will already exist in `node_modules` when they are installed, and are not automatically compiled by the new CLI. The drawback to this is that you can no longer directly change `.marko` files found in `node_modules` without re-compiling manually. More to follow on this topic at a later time.
 
