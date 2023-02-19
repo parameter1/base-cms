@@ -1,14 +1,19 @@
 {
   "name": "@parameter1/base-cms-web-cli",
-  "version": "4.0.0-alpha.0",
-  "description": "Command line interface for BaseCMS+Marko websites",
+  "version": "0.0.0",
+  "description": "A Marko CLI for managing websites.",
   "author": "Jacob Bare <jacob@parameter1.com>",
-  "main": "src/index.js",
-  "bin": {
-    "basecms-website": "bin/cli.js"
+  "homepage": "https://github.com/parameter1/base-cms/tree/main/packages/marko-web-modern/cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/parameter1/base-cms.git",
+    "directory": "packages/marko-web-modern/cli"
   },
   "license": "MIT",
-  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/web-cli",
+  "main": "index.js",
+  "bin": {
+    "basecms-website": "bin/index.js"
+  },
   "engines": {
     "node": ">=14.15"
   },
@@ -18,7 +23,7 @@
     "win32"
   ],
   "scripts": {
-    "lint": "eslint --ext .js --max-warnings 5 ./",
+    "lint": "eslint --ext .js ./",
     "test": "yarn lint"
   },
   "dependencies": {
@@ -26,43 +31,34 @@
     "@babel/plugin-transform-runtime": "^7.19.6",
     "@babel/preset-env": "^7.20.2",
     "@babel/runtime": "^7.20.13",
-    "@parameter1/base-cms-cli-utils": "^4.0.0-alpha.0",
+    "@parameter1/base-cms-marko-compiler": "^4.0.0-alpha.0",
+    "@parameter1/base-cms-utils": "^3.0.0",
     "autoprefixer": "^10.4.13",
-    "babel-eslint": "^10.1.0",
     "babel-loader": "^9.1.2",
     "chalk": "^4.1.2",
-    "core-js": "^3.28.0",
+    "chokidar": "^3.5.3",
+    "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.3",
+    "css-minimizer-webpack-plugin": "^4.2.2",
     "cssnano": "^5.1.15",
-    "del": "^4.1.1",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.2.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-vue": "^5.2.3",
+    "cssnano-preset-default": "^5.2.14",
     "fancy-log": "^2.0.0",
-    "figlet": "^1.5.2",
     "file-loader": "^6.2.0",
-    "gulp": "^4.0.2",
-    "gulp-cached": "^1.1.1",
-    "gulp-eslint": "^5.0.0",
-    "gulp-livereload": "^4.0.2",
-    "gulp-postcss": "^9.0.1",
-    "gulp-rev-all": "^2.0.3",
-    "gulp-rev-delete-original": "^0.2.3",
-    "gulp-sass": "^5.1.0",
-    "gulp-sourcemaps": "^2.6.5",
+    "livereload": "^0.9.3",
+    "mini-css-extract-plugin": "^2.7.2",
+    "minimist": "^1.2.8",
+    "mkdirp": "^2.1.3",
     "node-sass": "^4.14.1",
     "postcss": "^8.4.21",
-    "pump": "^3.0.0",
+    "postcss-loader": "^7.0.2",
+    "sass-loader": "^13.2.0",
+    "style-loader": "^3.3.1",
     "vue-loader": "^15.10.1",
     "vue-style-loader": "^4.1.3",
     "vue-template-compiler": "^2.7.14",
     "webpack": "^5.75.0",
     "webpack-bundle-analyzer": "^4.8.0",
-    "webpack-config-utils": "^2.3.1",
-    "webpack-manifest-plugin": "^5.0.0",
-    "webpack-stream": "^6.1.2",
-    "yargs": "^15.4.1"
+    "webpack-manifest-plugin": "^5.0.0"
   },
   "publishConfig": {
     "access": "public"
