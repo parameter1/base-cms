@@ -10,6 +10,6 @@ module.exports = ({
 } = {}) => {
   if (!enabled) return '';
   const opts = { fetchMarginPercent, renderMarginPercent, mobileScaling };
-  const optStr = Object.keys(opts).map(prop => `${prop}: ${opts[prop]}`).join(', ');
+  const optStr = Object.keys(opts).map((prop) => `${prop}: ${opts[prop]}`).join(', ');
   return `googletag.pubads().enableLazyLoad({ ${optStr} });`;
 };

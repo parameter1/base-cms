@@ -8,6 +8,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "lint:fix": "yarn lint --fix",
     "dev": "basecms-website dev --compile-dir ../../packages --watch-dir ../../packages",
     "build": "basecms-website build --compile-dir ../../packages",
     "build:css": "basecms-website build:css",

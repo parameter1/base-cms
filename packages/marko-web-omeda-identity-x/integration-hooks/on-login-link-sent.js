@@ -70,9 +70,10 @@ module.exports = async (params = {}) => {
   ]);
 
   const answers = getAnsweredQuestionMap(user);
-  const hasAllDemos = omedaLinkedFields.demographic.every(field => answers.has(field.id));
-  const hasAllDeployments = omedaLinkedFields.deploymentType.every(field => answers.has(field.id));
-  const hasAllProducts = omedaLinkedFields.product.every(field => answers.has(field.id));
+  const hasAllDemos = omedaLinkedFields.demographic.every((field) => answers.has(field.id));
+  const hasAllDeployments = omedaLinkedFields.deploymentType
+    .every((field) => answers.has(field.id));
+  const hasAllProducts = omedaLinkedFields.product.every((field) => answers.has(field.id));
   const hasAnsweredAllOmedaQuestions = hasAllDemos && hasAllDeployments && hasAllProducts;
 
   // If the user is verified and has answered all Omeda questions, do nothing.

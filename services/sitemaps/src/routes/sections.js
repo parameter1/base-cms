@@ -40,7 +40,7 @@ module.exports = asyncRoute(async (req, res) => {
     .setAttr('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9')
     .setAttr('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance')
     .setAttr('xsi:schemaLocation', 'http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd')
-    .setUrls(websiteSectionSitemapUrls.map(url => createUrl(url)));
+    .setUrls(websiteSectionSitemapUrls.map((url) => createUrl(url)));
 
   res.end(urlset.build());
 });

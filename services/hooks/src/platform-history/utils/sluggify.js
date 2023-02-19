@@ -1,3 +1,3 @@
 const slugFn = require('slug');
 
-module.exports = value => slugFn(value).toLowerCase();
+module.exports = (value) => slugFn(value).toLowerCase();

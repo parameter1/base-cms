@@ -13,7 +13,6 @@ const createSeoTitle = (doc) => {
   return stripTags(title || '').trim();
 };
 
-
 const createTitleCompany = async (doc, { load }) => {
   const id = BaseDB.extractRefId(doc.company);
   if (!id) return null;

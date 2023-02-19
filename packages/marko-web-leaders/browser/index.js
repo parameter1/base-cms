@@ -6,7 +6,6 @@ const LeadersCompanySocialLink = () => import(/* webpackChunkName: "leaders-comp
 const LeadersGTMTracker = () => import(/* webpackChunkName: "leaders-gtm-tracker" */ './gtm-tracker.vue');
 const LeadersP1EventsTracker = () => import(/* webpackChunkName: "leaders-p1-event-tracker" */ './p1events-tracker.vue');
 
-
 export default (Browser, { withGTM = true, withP1Events = true } = {}) => {
   const { EventBus } = Browser;
   if (withGTM) Browser.register('LeadersGTMTracker', LeadersGTMTracker, { provide: { EventBus } });

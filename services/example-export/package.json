@@ -8,6 +8,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "lint:fix": "yarn lint --fix",
     "dev": "basecms-exports dev index.js",
     "build": "basecms-exports build",
     "lint": "yarn lint:js",

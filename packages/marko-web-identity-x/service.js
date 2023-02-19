@@ -12,8 +12,8 @@ const logoutAppUser = require('./api/mutations/logout-app-user');
 const tokenCookie = require('./utils/token-cookie');
 const callHooksFor = require('./utils/call-hooks-for');
 
-const isEmpty = v => v == null || v === '';
-const isFn = v => typeof v === 'function';
+const isEmpty = (v) => v == null || v === '';
+const isFn = (v) => typeof v === 'function';
 
 class IdentityX {
   constructor({
@@ -75,7 +75,7 @@ class IdentityX {
       // Check if the user requires additonal input.
       const { user, application } = await this.loadActiveContext();
 
-      access.requiresUserInput = user ? requiredFields.some(key => isEmpty(user[key])) : false;
+      access.requiresUserInput = user ? requiredFields.some((key) => isEmpty(user[key])) : false;
       if (user && !access.requiresUserInput) {
         access.requiresUserInput = Boolean(user.mustReVerifyProfile);
       }
@@ -88,13 +88,13 @@ class IdentityX {
       if (user && !access.requiresUserInput) {
         const { regionalConsentPolicies } = application.organization;
         const matchingPolicies = regionalConsentPolicies.filter((policy) => {
-          const countryCodes = policy.countries.map(country => country.id);
+          const countryCodes = policy.countries.map((country) => country.id);
           return countryCodes.includes(user.countryCode);
         });
         const policiesAnswered = user.regionalConsentAnswers
           .reduce((o, answer) => ({ [answer.id]: true }), {});
         const hasRequiredAnswers = matchingPolicies.length
-          ? matchingPolicies.every(policy => policiesAnswered[policy.id])
+          ? matchingPolicies.every((policy) => policiesAnswered[policy.id])
           : true;
         access.requiresUserInput = !hasRequiredAnswers;
       }

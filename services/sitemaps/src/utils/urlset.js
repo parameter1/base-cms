@@ -12,7 +12,7 @@ class URLSet {
   }
 
   setUrls(values) {
-    if (isArray(values)) values.forEach(v => this.addUrl(v));
+    if (isArray(values)) values.forEach((v) => this.addUrl(v));
     return this;
   }
 

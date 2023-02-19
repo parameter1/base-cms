@@ -35,17 +35,17 @@ module.exports = async ({ html, tenantKey, urls = [] } = {}) => {
       return { ...url, contentId };
     }
     return url;
-  }).filter(url => url.contentId);
+  }).filter((url) => url.contentId);
 
-  const contentIds = [...new Set([...contentUrls.map((url => url.contentId))])];
+  const contentIds = [...new Set([...contentUrls.map(((url) => url.contentId))])];
   if (!contentIds.length) return html;
 
   const { data } = await graphql.query({ query, variables: { ids: contentIds } });
   const types = ['text-ad', 'promotion'];
   // only include text ad or promotion nodes that have a company
   const nodeMap = getAsArray(data, 'allContent.edges')
-    .map(edge => edge.node)
-    .filter(node => types.includes(node.type) && node.company && node.company.name)
+    .map((edge) => edge.node)
+    .filter((node) => types.includes(node.type) && node.company && node.company.name)
     .reduce((map, node) => {
       map.set(node.id, node);
       return map;

@@ -27,7 +27,7 @@ const isIntrospectionQuery = (requestContext) => {
  *
  * @param {object} obj The object to use to generate the key.
  */
-const stringifyCacheKey = obj => createHash('sha256').update(JSON.stringify(obj)).digest('hex');
+const stringifyCacheKey = (obj) => createHash('sha256').update(JSON.stringify(obj)).digest('hex');
 
 /**
  *

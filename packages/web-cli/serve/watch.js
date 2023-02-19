@@ -32,10 +32,10 @@ module.exports = async ({
   log('starting file watcher...');
 
   const watchGlobs = additonalDirs.reduce((a, dir) => {
-    extensions.forEach(ext => a.push(path.join(dir, ext)));
+    extensions.forEach((ext) => a.push(path.join(dir, ext)));
     return a;
   }, [...extensions]);
-  watchGlobs.map(glob => log(`- ${path.join(cwd, glob)}`));
+  watchGlobs.map((glob) => log(`- ${path.join(cwd, glob)}`));
 
   const watcher = chokidar.watch(watchGlobs, {
     ignoreInitial: true,
@@ -43,7 +43,7 @@ module.exports = async ({
     ignored: [
       /(^|[/\\])\../, // dot files
       ...additonalDirs.reduce((a, dir) => {
-        ignored.forEach(ext => a.push(path.join(dir, ext)));
+        ignored.forEach((ext) => a.push(path.join(dir, ext)));
         return a;
       }, [...ignored]),
       ...ignore,

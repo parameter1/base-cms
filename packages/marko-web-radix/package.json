@@ -5,6 +5,7 @@
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-radix",
   "license": "MIT",
   "scripts": {
+    "lint:fix": "yarn lint --fix",
     "lint": "yarn lint:js",
     "lint:js": "eslint --ext .js --ext .vue --max-warnings 5 ./",
     "compile": "basecms-marko-compile compile",

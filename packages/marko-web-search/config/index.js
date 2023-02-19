@@ -38,7 +38,8 @@ class MarkoWebSearchConfig {
       }).default(),
 
       contentTypes: Joi.array().items(Joi.alternatives().try(
-        Joi.string().trim().allow(...defaultContentTypes), Joi.object({
+        Joi.string().trim().allow(...defaultContentTypes),
+        Joi.object({
           type: Joi.string().trim().allow(...defaultContentTypes),
           label: Joi.string().trim(),
         }),
@@ -49,7 +50,7 @@ class MarkoWebSearchConfig {
       ).default([]),
     }).default(), params);
 
-    this.contentTypeObjects = contentTypes.sort().map(type => (type.label ? ({
+    this.contentTypeObjects = contentTypes.sort().map((type) => (type.label ? ({
       id: underscore(type.type).toUpperCase(),
       label: type.label,
     }) : ({

@@ -22,7 +22,7 @@ const run = async () => {
       { 'mutations.Website.primarySection.$id': { $exists: false } },
     ],
   }, { projection: { _id: 1 } }).toArray();
-  const contentIds = docs.map(doc => doc._id);
+  const contentIds = docs.map((doc) => doc._id);
 
   const { dbName } = sectionColl.s;
   const { result = {} } = await contentColl.updateMany({
@@ -42,4 +42,4 @@ const run = async () => {
   await basedb.close();
 };
 
-run().catch(e => setImmediate(() => { throw e; }));
+run().catch((e) => setImmediate(() => { throw e; }));

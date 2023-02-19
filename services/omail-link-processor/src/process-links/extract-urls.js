@@ -1,5 +1,6 @@
 const { isURL } = require('validator');
 
+// eslint-disable-next-line
 const matchPattern = new RegExp('(<a[^>]+href=[\'"])(\\s{0,}http.*?)(["\'][^>]*>.*?</a>)', 'igs');
 
 module.exports = (html) => {

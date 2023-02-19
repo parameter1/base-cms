@@ -52,7 +52,7 @@ module.exports = ({ cwd, entry }) => ({
       {
         test: /\.js$/,
         loader: require.resolve('babel-loader'),
-        exclude: f => (
+        exclude: (f) => (
           /node_modules\/(?!@parameter1\/base-cms-marko-web.*?\/browser)/.test(f)
           && !/\.vue\.js/.test(f)
         ),

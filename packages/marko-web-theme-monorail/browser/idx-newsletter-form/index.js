@@ -24,38 +24,38 @@ export default (Browser) => {
         emitNewsletterEvent({ type: 'Pushdown', action: 'Load', data });
         emitNewsletterEvent({ type: 'Pushdown', action: 'View', data });
       },
-      focus: data => emitNewsletterEvent({ type: 'Pushdown', action: 'Focus', data }),
-      submit: data => emitNewsletterEvent({ type: 'Pushdown', action: 'Submit', data }),
-      error: data => emitNewsletterEvent({ type: 'Pushdown', action: 'Error', data: { ...data, error: data.error.message } }),
+      focus: (data) => emitNewsletterEvent({ type: 'Pushdown', action: 'Focus', data }),
+      submit: (data) => emitNewsletterEvent({ type: 'Pushdown', action: 'Submit', data }),
+      error: (data) => emitNewsletterEvent({ type: 'Pushdown', action: 'Error', data: { ...data, error: data.error.message } }),
     },
   });
 
   Browser.register('IdentityXNewsletterFormInline', Inline, {
     provide: { EventBus },
     on: {
-      load: data => emitNewsletterEvent({ type: 'Inline', action: 'Load', data }),
-      view: data => emitNewsletterEvent({ type: 'Inline', action: 'View', data }),
-      focus: data => emitNewsletterEvent({ type: 'Inline', action: 'Focus', data }),
-      submit: data => emitNewsletterEvent({ type: 'Inline', action: 'Submit', data }),
-      error: data => emitNewsletterEvent({ type: 'Inline', action: 'Error', data: { ...data, error: data.error.message } }),
+      load: (data) => emitNewsletterEvent({ type: 'Inline', action: 'Load', data }),
+      view: (data) => emitNewsletterEvent({ type: 'Inline', action: 'View', data }),
+      focus: (data) => emitNewsletterEvent({ type: 'Inline', action: 'Focus', data }),
+      submit: (data) => emitNewsletterEvent({ type: 'Inline', action: 'Submit', data }),
+      error: (data) => emitNewsletterEvent({ type: 'Inline', action: 'Error', data: { ...data, error: data.error.message } }),
     },
   });
 
   Browser.register('IdentityXNewsletterFormFooter', Inline, {
     provide: { EventBus },
     on: {
-      load: data => emitNewsletterEvent({ type: 'Inline', action: 'Load', data }),
-      view: data => emitNewsletterEvent({ type: 'Inline', action: 'View', data }),
-      focus: data => emitNewsletterEvent({ type: 'Inline', action: 'Focus', data }),
-      submit: data => emitNewsletterEvent({ type: 'Inline', action: 'Submit', data }),
-      error: data => emitNewsletterEvent({ type: 'Inline', action: 'Error', data: { ...data, error: data.error.message } }),
+      load: (data) => emitNewsletterEvent({ type: 'Inline', action: 'Load', data }),
+      view: (data) => emitNewsletterEvent({ type: 'Inline', action: 'View', data }),
+      focus: (data) => emitNewsletterEvent({ type: 'Inline', action: 'Focus', data }),
+      submit: (data) => emitNewsletterEvent({ type: 'Inline', action: 'Submit', data }),
+      error: (data) => emitNewsletterEvent({ type: 'Inline', action: 'Error', data: { ...data, error: data.error.message } }),
     },
   });
 
   Browser.register('IdentityXNewsletterToggleButton', NewsletterToggleButton, {
     provide: { EventBus },
     on: {
-      'idx-newsletter-menu-expanded': data => emitNewsletterEvent({ type: 'Menu', action: 'Expand', data }),
+      'idx-newsletter-menu-expanded': (data) => emitNewsletterEvent({ type: 'Menu', action: 'Expand', data }),
     },
   });
 };

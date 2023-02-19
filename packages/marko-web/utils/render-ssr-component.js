@@ -9,7 +9,7 @@ module.exports = async (Component, { id, props } = {}) => {
   if (get(Component, 'props.id')) throw new Error('The provided component has an `id` prop which is incompatible with SSR rendering.');
   const app = new Vue({
     provide: { EventBus },
-    render: h => h(Component, { attrs: { id }, props }),
+    render: (h) => h(Component, { attrs: { id }, props }),
   });
   return renderer.renderToString(app);
 };

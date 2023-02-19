@@ -21,7 +21,7 @@ const { log } = console;
 const useAuth0 = Boolean(process.env.AUTH0_ENABLED === '1');
 const useOmeda = Boolean(process.env.OMEDA_ENABLED === '1');
 
-const routes = config => (app) => {
+const routes = (config) => (app) => {
   // Handle submissions on /__inquiry
   loadInquiry(app);
   // Handle Omeda Newsletter Sign Ups
@@ -74,4 +74,4 @@ module.exports = startServer({
       },
     });
   },
-}).catch(e => setImmediate(() => { throw e; }));
+}).catch((e) => setImmediate(() => { throw e; }));

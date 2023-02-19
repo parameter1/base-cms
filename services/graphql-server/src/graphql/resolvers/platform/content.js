@@ -194,7 +194,7 @@ const updateContentMutationHandler = ({
   const type = `platform/content/${dasherize(doc.type)}`;
   const body = new Base4RestPayload({ type });
   const payload = buildPayload(input);
-  Object.keys(payload).forEach(k => body.set(k, payload[k]));
+  Object.keys(payload).forEach((k) => body.set(k, payload[k]));
   body.set('id', id);
   await base4rest.updateOne({ model: type, id, body });
   const projection = buildProjection({ info, type: `Content${doc.type}` });
@@ -311,7 +311,7 @@ module.exports = {
    */
   ContentMetadata: {
     title: (content, _, ctx) => createTitle(content, ctx),
-    description: content => createDescription(content),
+    description: (content) => createDescription(content),
   },
 
   /**
@@ -344,7 +344,7 @@ module.exports = {
         query: { ...criteriaFor('websiteSite'), ...formatStatus('active') },
       });
       const projection = getProjection(schema, returnType, fieldNodes[0].selectionSet, fragments);
-      return Promise.all(siteIds.map(id => load('platformProduct', id, projection, query)));
+      return Promise.all(siteIds.map((id) => load('platformProduct', id, projection, query)));
     },
   },
 
@@ -404,7 +404,6 @@ module.exports = {
             site: new SiteContext(owningSite),
           }, { enableLinkUrl });
 
-
           const origin = `https://${owningSite.host}`;
           return `${origin}/${cleanPath(canonicalPath)}`;
         },
@@ -457,7 +456,6 @@ module.exports = {
       const { sectionQuery } = await load('platformContent', content._id, { sectionQuery: 1 });
       return isArray(sectionQuery) ? sectionQuery : [];
     },
-
 
     magazineSchedules: ({ _id }, _, { basedb }) => basedb.find('magazine.Schedule', { 'content.$id': _id }),
 
@@ -532,7 +530,7 @@ module.exports = {
       return contentTeaser.generateTeaser(teaser, teaserFallback, input) || null;
     },
 
-    taxonomyIds: content => getAsArray(content, 'taxonomy').map(t => parseInt(t.oid, 10)).filter(id => id),
+    taxonomyIds: (content) => getAsArray(content, 'taxonomy').map((t) => parseInt(t.oid, 10)).filter((id) => id),
 
     body: async (content, { input }, { site, basedb }) => {
       const { mutation, imageAttrs } = input;
@@ -570,7 +568,6 @@ module.exports = {
       const { body } = content;
       const mutated = get(content, `mutations.${mutation}.body`);
 
-
       const value = mutation ? mutated || body : body;
 
       if (!value) return null;
@@ -579,7 +576,6 @@ module.exports = {
 
       return readingTime(trimmed, { wordsPerMinute });
     },
-
 
     userRegistration: (content) => {
       const bypassGating = get(content, 'mutations.Website.bypassGating');
@@ -608,7 +604,7 @@ module.exports = {
       return userRegistration;
     },
 
-    metadata: content => content,
+    metadata: (content) => content,
 
     customAttribute: (content, { input }) => {
       const { path } = input;
@@ -722,7 +718,7 @@ module.exports = {
       const now = new Date();
       const $elemMatch = {
         sectionId: descendantIds.length ? { $in: descendantIds } : section._id,
-        optionId: { $in: options.map(opt => opt._id) },
+        optionId: { $in: options.map((opt) => opt._id) },
         start: { $lte: now },
         $and: [
           {
@@ -750,7 +746,7 @@ module.exports = {
         const value = await prepareSidebarBody(body, { site, imageAttrs, basedb });
         return value;
       }));
-      return bodies.filter(v => v);
+      return bodies.filter((v) => v);
     },
   },
 
@@ -804,7 +800,7 @@ module.exports = {
         if (!$video) return null;
         const data = $video.data();
         if (!data) return null;
-        if (!['videoId', 'account', 'player', 'embed'].every(key => data[key])) return null;
+        if (!['videoId', 'account', 'player', 'embed'].every((key) => data[key])) return null;
         return `https://players.brightcove.net/${data.account}/${data.player}_${data.embed}/index.html?videoId=${data.videoId}`;
       };
 
@@ -834,7 +830,7 @@ module.exports = {
   },
 
   ContentCompanyYoutube: {
-    videos: ({ videos = [] } = {}) => videos.filter(v => v),
+    videos: ({ videos = [] } = {}) => videos.filter((v) => v),
     url: (youtube) => {
       const { playlistId, channelId, username } = asObject(youtube);
       switch (true) {
@@ -869,7 +865,7 @@ module.exports = {
    */
   ContentSitemapNewsUrl: {
     loc: (content, _, ctx) => createSitemapLoc(content, ctx),
-    title: content => BaseDB.fillMutation(content, 'Website', 'name'),
+    title: (content) => BaseDB.fillMutation(content, 'Website', 'name'),
     publication: (content, _, { site }) => {
       if (!site.exists()) throw new UserInputError('A website context must be set to generate the `ContentSitemapNewsUrl.publication` field.');
       return site.obj();
@@ -890,8 +886,8 @@ module.exports = {
       const imageHost = site.get('imageHost', defaults.imageHost);
       return encodeURI(sitemap.escape(createSrcFor(imageHost, image, {})));
     },
-    caption: image => sitemap.escape(createCaptionFor(image.caption)),
-    title: image => sitemap.escape(image.name),
+    caption: (image) => sitemap.escape(createCaptionFor(image.caption)),
+    title: (image) => sitemap.escape(image.name),
   },
 
   ContentStubSidebar: {
@@ -912,14 +908,14 @@ module.exports = {
   },
 
   MostPopularContent: {
-    id: row => row.content._id,
+    id: (row) => row.content._id,
   },
 
   QueryMostPopularContentConnection: {
     startsAt: ({ startsAt }) => (startsAt ? new Date(startsAt) : null),
     endsAt: ({ endsAt }) => (endsAt ? new Date(endsAt) : null),
     updatedAt: ({ updatedAt }) => (updatedAt ? new Date(updatedAt) : null),
-    edges: results => results.data.map(node => ({ node })),
+    edges: (results) => results.data.map((node) => ({ node })),
   },
 
   /**
@@ -1091,7 +1087,7 @@ module.exports = {
       const cursor = await basedb.aggregate('platform.content-published-dates', pipeline);
       const results = await cursor.toArray();
       return results.map((r) => {
-        const id = [r.year, r.month, r.day].filter(v => v).join('-');
+        const id = [r.year, r.month, r.day].filter((v) => v).join('-');
         return { ...r, id };
       });
     },
@@ -1174,10 +1170,10 @@ module.exports = {
         },
       });
 
-      const imageMap = new Map(await imageCursor.map(image => [`${image._id}`, image]).toArray());
-      return docs.map(doc => ({
+      const imageMap = new Map(await imageCursor.map((image) => [`${image._id}`, image]).toArray());
+      return docs.map((doc) => ({
         ...doc,
-        images: getAsArray(doc, 'images').map(imageId => imageMap.get(`${imageId}`)).filter(v => v),
+        images: getAsArray(doc, 'images').map((imageId) => imageMap.get(`${imageId}`)).filter((v) => v),
       }));
     },
 
@@ -1339,8 +1335,8 @@ module.exports = {
         ]);
         idQuery.section = {
           ...(sectionId && { $eq: sectionId }),
-          ...(include.length && { $in: include.map(section => section._id) }),
-          ...(exclude.length && { $nin: exclude.map(section => section._id) }),
+          ...(include.length && { $in: include.map((section) => section._id) }),
+          ...(exclude.length && { $nin: exclude.map((section) => section._id) }),
         };
       }
       const ids = await basedb.distinct('magazine.Schedule', 'content.$id', idQuery);
@@ -1401,7 +1397,7 @@ module.exports = {
       ]);
 
       const $elemMatch = {
-        ...(optionId.length && { optionId: { $in: options.map(opt => opt._id) } }),
+        ...(optionId.length && { optionId: { $in: options.map((opt) => opt._id) } }),
         $and: [],
       };
       if (before) $elemMatch.$and.push({ end: { $lte: before } });
@@ -1496,7 +1492,7 @@ module.exports = {
       const now = since || new Date();
       const $elemMatch = {
         sectionId: sectionFilter,
-        optionId: { $in: options.map(opt => opt._id) },
+        optionId: { $in: options.map((opt) => opt._id) },
         start: {
           $lte: now,
           ...(after && { $gte: after }),
@@ -1597,7 +1593,7 @@ module.exports = {
         sort: scheduleSort,
         projection: { 'content.$id': 1 },
       });
-      const contentIds = schedules.map(schedule => BaseDB.extractRefId(schedule.content));
+      const contentIds = schedules.map((schedule) => BaseDB.extractRefId(schedule.content));
 
       if (!contentIds.length) return [];
 
@@ -1612,7 +1608,7 @@ module.exports = {
 
       // map and resort to match schedule order
       const contentMap = mapArray(content, '_id');
-      return contentIds.map(id => contentMap.get(`${id}`)).filter(v => v);
+      return contentIds.map((id) => contentMap.get(`${id}`)).filter((v) => v);
     },
 
     /**
@@ -1793,7 +1789,7 @@ module.exports = {
       const { id, payload } = input;
       const keys = Object.keys(payload);
       const body = new Base4RestPayload({ type });
-      keys.forEach(k => body.set(k, payload[k]));
+      keys.forEach((k) => body.set(k, payload[k]));
       body.set('id', id);
       await base4rest.updateOne({ model: type, id, body });
       const projection = buildProjection({ info, type: 'ContentCompany' });
@@ -1811,7 +1807,7 @@ module.exports = {
       const { images, primaryImage } = payload;
       const body = new Base4RestPayload({ type: company });
       if (primaryImage) body.setLink('primaryImage', { id: primaryImage, type: image });
-      if (images) body.setLinks('images', images.map(imgId => ({ id: imgId, type: image })));
+      if (images) body.setLinks('images', images.map((imgId) => ({ id: imgId, type: image })));
       body.set('id', id);
       await base4rest.updateOne({ model: company, id, body });
       const projection = buildProjection({ info, type: 'ContentCompany' });
@@ -1898,7 +1894,7 @@ module.exports = {
       if (!attributes.length) throw new UserInputError('No custom attributes were provided.');
 
       const body = new Base4RestPayload({ type });
-      attributes.forEach(attr => body.set(`customAttributes.${attr.key}`, attr.value));
+      attributes.forEach((attr) => body.set(`customAttributes.${attr.key}`, attr.value));
       body.set('id', id);
       await base4rest.updateOne({ model: type, id, body });
       const projection = buildProjection({ info, type: 'ContentCompany' });
@@ -1947,14 +1943,14 @@ module.exports = {
       }
 
       // Validate taxonomy ids
-      const ids = [...addIds, ...removeIds, ...getAsArray(content, 'taxonomy').map(r => r.oid)];
+      const ids = [...addIds, ...removeIds, ...getAsArray(content, 'taxonomy').map((r) => r.oid)];
       const query = { status: 1, _id: { $in: ids } };
       const docs = await basedb.find('platform.Taxonomy', query, { projection: { type: 1 } });
       const taxonomyMap = docs.reduce((map, term) => {
         map.set(term._id, `platform/content/${dasherize(term.type)}`);
         return map;
       }, new Map());
-      removeIds.forEach(tid => taxonomyMap.delete(tid));
+      removeIds.forEach((tid) => taxonomyMap.delete(tid));
 
       const body = new Base4RestPayload({ type: contentType });
       body.set('id', contentId);
@@ -2019,7 +2015,7 @@ module.exports = {
       const body = new Base4RestPayload({ type });
       body.setLink('primarySiteWebsite', { id: primarySiteId, type: 'website/product/site' });
       body.setLink('primarySectionWebsite', { id: primarySectionId, type: 'website/section' });
-      keys.forEach(k => body.set(k, payload[k]));
+      keys.forEach((k) => body.set(k, payload[k]));
       const { data } = await base4rest.insertOne({ model: type, body });
       const projection = buildProjection({ info, type: 'ContentContact' });
       return basedb.findOne('platform.Content', { _id: data.id }, { projection });
@@ -2033,7 +2029,7 @@ module.exports = {
       const type = 'platform/content/contact';
       const { id, payload } = input;
       const body = new Base4RestPayload({ type });
-      Object.keys(payload).forEach(k => body.set(k, payload[k]));
+      Object.keys(payload).forEach((k) => body.set(k, payload[k]));
       body.set('id', id);
       await base4rest.updateOne({ model: type, id, body });
       const projection = buildProjection({ info, type: 'ContentContact' });
@@ -2051,7 +2047,7 @@ module.exports = {
       const { imageIds, primaryImageId } = payload;
       const body = new Base4RestPayload({ type: contact });
       if (primaryImageId) body.setLink('primaryImage', { id: primaryImageId, type: image });
-      if (imageIds) body.setLinks('images', imageIds.map(imgId => ({ id: imgId, type: image })));
+      if (imageIds) body.setLinks('images', imageIds.map((imgId) => ({ id: imgId, type: image })));
       body.set('id', id);
       await base4rest.updateOne({ model: contact, id, body });
       const projection = buildProjection({ info, type: 'ContentContact' });
@@ -2073,7 +2069,7 @@ module.exports = {
       if (companyId) body.setLink('company', { id: companyId, type: 'platform/content/company' });
       body.setLink('primarySiteWebsite', { id: primarySiteId, type: 'website/product/site' });
       body.setLink('primarySectionWebsite', { id: primarySectionId, type: 'website/section' });
-      keys.forEach(k => body.set(k, payload[k]));
+      keys.forEach((k) => body.set(k, payload[k]));
       const { data } = await base4rest.insertOne({ model: type, body });
       const projection = buildProjection({ info, type: 'ContentPromotion' });
       return basedb.findOne('platform.Content', { _id: data.id }, { projection });
@@ -2087,7 +2083,7 @@ module.exports = {
       const type = 'platform/content/promotion';
       const { id, payload } = input;
       const body = new Base4RestPayload({ type });
-      Object.keys(payload).forEach(k => body.set(k, payload[k]));
+      Object.keys(payload).forEach((k) => body.set(k, payload[k]));
       body.set('id', id);
       await base4rest.updateOne({ model: type, id, body });
       const projection = buildProjection({ info, type: 'ContentPromotion' });
@@ -2105,7 +2101,7 @@ module.exports = {
       const { imageIds, primaryImageId } = payload;
       const body = new Base4RestPayload({ type });
       if (primaryImageId) body.setLink('primaryImage', { id: primaryImageId, type: image });
-      if (imageIds) body.setLinks('images', imageIds.map(imgId => ({ id: imgId, type: image })));
+      if (imageIds) body.setLinks('images', imageIds.map((imgId) => ({ id: imgId, type: image })));
       body.set('id', id);
       await base4rest.updateOne({ model: type, id, body });
       const projection = buildProjection({ info, type: 'ContentPromotion' });
@@ -2121,7 +2117,7 @@ module.exports = {
       const { id, payload: { contactIds } } = input;
       const body = new Base4RestPayload({ type: 'platform/content/company' });
       body.set('id', id);
-      body.setLinks('publicContacts', contactIds.map(i => ({ id: i, type })));
+      body.setLinks('publicContacts', contactIds.map((i) => ({ id: i, type })));
       await base4rest.updateOne({ model: 'platform/content/company', id, body });
       const projection = buildProjection({ info, type: 'ContentCompany' });
       return basedb.findOne('platform.Content', { _id: id }, { projection });

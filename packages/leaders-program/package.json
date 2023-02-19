@@ -7,6 +7,7 @@
   "main": "src/index.js",
   "license": "MIT",
   "scripts": {
+    "lint:fix": "yarn lint --fix",
     "serve": "vue-cli-service serve src/dev.js",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",

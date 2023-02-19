@@ -13,10 +13,10 @@
 import IconMail from '@parameter1/base-cms-marko-web-icons/browser/mail.vue';
 
 export default {
-  inject: ['EventBus'],
   components: {
     IconMail,
   },
+  inject: ['EventBus'],
 
   data: () => ({
     expanded: false,

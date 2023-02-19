@@ -1,8 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const vue = ({ name, contents }) => `
-<template>
+const vue = ({ name, contents }) => `<template>
   <icon-wrapper
     name="${name}"
     :tag="tag"

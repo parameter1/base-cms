@@ -23,6 +23,7 @@
     "win32"
   ],
   "scripts": {
+    "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .js ./",
     "test": "yarn lint"
   },

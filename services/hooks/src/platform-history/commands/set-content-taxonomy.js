@@ -23,4 +23,4 @@ const run = async () => {
 };
 
 process.on('unhandledRejection', (e) => { throw e; });
-run().then(() => log('DONE!')).catch(e => setImmediate(() => { throw e; }));
+run().then(() => log('DONE!')).catch((e) => setImmediate(() => { throw e; }));

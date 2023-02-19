@@ -23,7 +23,7 @@ const joinModifiers = (...args) => args.reduce((arr, v) => {
 }, []);
 
 const buildForContent = (block, obj, modifiers) => {
-  const mods = joinModifiers(['id', 'type'].map(p => get(obj, p)), modifiers);
+  const mods = joinModifiers(['id', 'type'].map((p) => get(obj, p)), modifiers);
   return build(block, 'content', mods);
 };
 

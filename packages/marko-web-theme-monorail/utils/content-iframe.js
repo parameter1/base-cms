@@ -2,7 +2,7 @@ const { buildImgixUrl } = require('@parameter1/base-cms-image');
 const cheerio = require('cheerio');
 const { URL, URLSearchParams } = require('url');
 
-const supportedUrl = src => /vimeo\.com|youtu\.be|youtube\.com/.test(src);
+const supportedUrl = (src) => /vimeo\.com|youtu\.be|youtube\.com/.test(src);
 
 const autoplayUrl = (src) => {
   const url = new URL(src);

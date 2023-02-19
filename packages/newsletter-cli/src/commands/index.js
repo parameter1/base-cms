@@ -1,5 +1,5 @@
 /* eslint-disable global-require */
-const devOptions = yargs => yargs
+const devOptions = (yargs) => yargs
   .option('file', {
     describe: 'The root newsletter server file to execute.',
     type: 'string',
@@ -12,5 +12,5 @@ const devOptions = yargs => yargs
  */
 module.exports = (program) => {
   program
-    .command('dev <file>', 'Start the BaseCMS website development server', devOptions, argv => require('./dev')(argv));
+    .command('dev <file>', 'Start the BaseCMS website development server', devOptions, (argv) => require('./dev')(argv));
 };

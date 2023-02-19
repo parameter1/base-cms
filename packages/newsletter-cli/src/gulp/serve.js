@@ -40,7 +40,7 @@ module.exports = (cwd, serverFile) => () => {
     },
     server(serverFile),
   );
-  watcher.on('add', path => log(`File ${green(path)} was ${green('added')}`));
-  watcher.on('change', path => log(`File ${green(path)} was ${cyan('changed')}`));
-  watcher.on('unlink', path => log(`File ${green(path)} was ${red('removed')}.`));
+  watcher.on('add', (path) => log(`File ${green(path)} was ${green('added')}`));
+  watcher.on('change', (path) => log(`File ${green(path)} was ${cyan('changed')}`));
+  watcher.on('unlink', (path) => log(`File ${green(path)} was ${red('removed')}.`));
 };

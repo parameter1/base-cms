@@ -7,7 +7,7 @@ module.exports = ({
   type,
   idType,
   valueMatcher,
-} = {}) => asArray(externalIds.filter(externalId => isOmedaNamespace({
+} = {}) => asArray(externalIds.filter((externalId) => isOmedaNamespace({
   externalId,
   brandKey,
   type,

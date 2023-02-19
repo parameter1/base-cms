@@ -54,7 +54,7 @@ module.exports = asyncRoute(async (req, res) => {
       description: channel.description || createDescription(section, website),
       language: website.language.code,
       mountHref,
-      items: edges.map(edge => createItem(edge.node, website)),
+      items: edges.map((edge) => createItem(edge.node, website)),
     }),
     '</rss>',
   ];

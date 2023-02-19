@@ -5,4 +5,4 @@ const fields = [
   'fileName',
 ];
 
-module.exports = field => fields.includes(field);
+module.exports = (field) => fields.includes(field);

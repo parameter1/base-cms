@@ -10,6 +10,7 @@
   "license": "MIT",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/dependency-tool",
   "scripts": {
+    "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .js --max-warnings 5 ./",
     "test": "yarn lint"
   },

@@ -4,5 +4,5 @@ module.exports = ({ externalId, brandKey } = {}) => isOmedaNamespace({
   externalId,
   brandKey,
   type: 'demographic',
-  valueMatcher: id => parseInt(id, 10),
+  valueMatcher: (id) => parseInt(id, 10),
 });

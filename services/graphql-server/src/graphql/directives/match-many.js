@@ -48,19 +48,19 @@ const buildRegex = (term, position, match) => {
 
   if (position === 'starts') {
     // /^tax|^tag|^foo/i
-    if (match === 'any') return new RegExp(`${tokens.map(t => `^${t}`).join('|')}`, 'i');
+    if (match === 'any') return new RegExp(`${tokens.map((t) => `^${t}`).join('|')}`, 'i');
     // /^tax tag foo/i
     return new RegExp(`^${tokens.join(' ')}`, 'i');
   }
   if (position === 'ends') {
     // /tax$|tag$|foo$/i
-    if (match === 'any') return new RegExp(`${tokens.map(t => `${t}$`).join('|')}`, 'i');
+    if (match === 'any') return new RegExp(`${tokens.map((t) => `${t}$`).join('|')}`, 'i');
     // /tax tag foo$/i
     return new RegExp(`${tokens.join(' ')}$`, 'i');
   }
   if (position === 'exact') {
     // /^tax$|^tag$|^foo$/i
-    if (match === 'any') return new RegExp(`${tokens.map(t => `^${t}$`).join('|')}`, 'i');
+    if (match === 'any') return new RegExp(`${tokens.map((t) => `^${t}$`).join('|')}`, 'i');
     // /^tax tag foo$/i
     return new RegExp(`^${tokens.join(' ')}$`, 'i');
   }
@@ -69,7 +69,7 @@ const buildRegex = (term, position, match) => {
   // /tax|tag|foo/i
   if (match === 'any') return new RegExp(`${tokens.join('|')}`, 'i');
   // /(?=.*tax)(?=.*tag)(?=.*foo)/i
-  return new RegExp(`${tokens.map(t => `(?=.*${t})`).join('')}`, 'i');
+  return new RegExp(`${tokens.map((t) => `(?=.*${t})`).join('')}`, 'i');
 };
 
 class MatchManyDirective extends SchemaDirectiveVisitor {

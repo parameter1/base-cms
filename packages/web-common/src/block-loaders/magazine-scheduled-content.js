@@ -42,7 +42,7 @@ module.exports = async (apolloClient, {
   if (!data || !data.magazineScheduledContent) return { nodes: [], pageInfo: {} };
   const { pageInfo } = data.magazineScheduledContent;
   const nodes = data.magazineScheduledContent.edges
-    .map(edge => (edge && edge.node ? edge.node : null))
-    .filter(c => c);
+    .map((edge) => (edge && edge.node ? edge.node : null))
+    .filter((c) => c);
   return { nodes, pageInfo };
 };

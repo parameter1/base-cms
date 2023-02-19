@@ -14,7 +14,6 @@ const run = async () => {
     basedb.collection('platform', 'Content'),
   ]);
 
-
   log('Retrieving aggregated schedules...');
   const maxDate = moment('2038-01-01T00:00:00Z').toDate();
   const cursor = await scheduleColl.aggregate([
@@ -85,7 +84,7 @@ const run = async () => {
   log(`Found ${docs.length} content items with schedules.`);
   log('Beginning bulk write process...');
 
-  const bulkOps = docs.map(doc => ({
+  const bulkOps = docs.map((doc) => ({
     updateOne: {
       filter: { _id: doc.contentId },
       update: { $set: { sectionQuery: doc.schedules } },
@@ -107,4 +106,4 @@ const run = async () => {
   await basedb.close();
 };
 
-run().catch(e => setImmediate(() => { throw e; }));
+run().catch((e) => setImmediate(() => { throw e; }));

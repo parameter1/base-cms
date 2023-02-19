@@ -42,7 +42,7 @@ module.exports = (schema, returnType, selectionSet, fragments) => {
   const selected = getFields(schema, type, selectionSet, fragments);
   const { requiresProject } = type;
   const fields = isArray(requiresProject)
-    ? selected.concat(requiresProject.map(value => ({ type, value })))
+    ? selected.concat(requiresProject.map((value) => ({ type, value })))
     : selected;
   return fields.reduce((o, field) => {
     const map = field.type.getFields();

@@ -1,7 +1,7 @@
 const { AuthenticationError } = require('apollo-server-express');
 const UserContext = require('./context');
 
-const expression = new RegExp(/^Bearer (?<token>.+)/);
+const expression = /^Bearer (?<token>.+)/;
 
 module.exports = async ({ req, userService }) => {
   const authorization = req.get('authorization');

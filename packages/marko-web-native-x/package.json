@@ -6,7 +6,8 @@
   "license": "MIT",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-native-x",
   "scripts": {
-    "lint": "eslint --ext .js --max-warnings 5 ./",
+    "lint:fix": "yarn lint --fix",
+    "lint": "eslint --ext .js --ext .vue --max-warnings 5 ./",
     "compile": "basecms-marko-compile compile",
     "prepublish": "yarn compile",
     "test": "yarn compile --no-clean && yarn lint"

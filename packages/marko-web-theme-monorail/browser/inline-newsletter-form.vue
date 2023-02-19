@@ -67,7 +67,7 @@ export default {
     defaultNewsletter: {
       type: Object,
       required: true,
-      validate: o => (o && o.name && o.deploymentTypeId),
+      validate: (o) => (o && o.name && o.deploymentTypeId),
     },
     newsletters: {
       type: Array,

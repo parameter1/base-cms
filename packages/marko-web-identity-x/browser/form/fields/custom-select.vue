@@ -139,7 +139,7 @@ export default {
     },
 
     selectedOptionIds() {
-      return this.selected.map(item => item.id);
+      return this.selected.map((item) => item.id);
     },
 
     selectedOptionId() {
@@ -153,14 +153,14 @@ export default {
       return this.options.reduce((arr, option) => ([
         ...arr,
         ...(sids.includes(option.id) ? [option] : []),
-        ...(option.options ? option.options.filter(opt => sids.includes(opt.id)) : []),
+        ...(option.options ? option.options.filter((opt) => sids.includes(opt.id)) : []),
       ]), []);
     },
 
     canWriteIn() {
       const { selectedOptions } = this;
       if (selectedOptions.length) {
-        const canWriteIn = selectedOptions.find(o => o.canWriteIn);
+        const canWriteIn = selectedOptions.find((o) => o.canWriteIn);
         return Boolean(canWriteIn);
       }
       return false;
@@ -168,7 +168,7 @@ export default {
     writeInAnswer() {
       const { selectedOptions, selected: answers } = this;
       return answers.find((a) => {
-        const opt = selectedOptions.find(o => o.id === a.id);
+        const opt = selectedOptions.find((o) => o.id === a.id);
         return opt && opt.canWriteIn;
       });
     },
@@ -176,14 +176,14 @@ export default {
       return this.selected && this.canWriteIn;
     },
     writeInLabel() {
-      const selected = this.selectedOptions.find(option => option.canWriteIn);
+      const selected = this.selectedOptions.find((option) => option.canWriteIn);
       return selected && selected.label;
     },
   },
 
   methods: {
     clearWriteIn(optionId) {
-      const selected = this.selected.filter(item => item.id !== optionId);
+      const selected = this.selected.filter((item) => item.id !== optionId);
       this.$emit('change', selected);
     },
   },

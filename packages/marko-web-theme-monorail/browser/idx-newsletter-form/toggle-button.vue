@@ -13,14 +13,14 @@
 import IconMail from '@parameter1/base-cms-marko-web-icons/browser/mail.vue';
 import IconPerson from '@parameter1/base-cms-marko-web-icons/browser/person.vue';
 
-const validateIcon = v => ['mail', 'person'].includes(v);
+const validateIcon = (v) => ['mail', 'person'].includes(v);
 
 export default {
-  inject: ['EventBus'],
   components: {
     IconMail,
     IconPerson,
   },
+  inject: ['EventBus'],
   props: {
     iconName: {
       type: String,

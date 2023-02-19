@@ -7,6 +7,7 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
+    "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .js --ext .vue --max-warnings 5 --ignore-path ../../.eslintignore ./",
     "compile": "basecms-marko-compile compile",
     "prepublish": "yarn compile",

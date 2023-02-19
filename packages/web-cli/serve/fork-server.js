@@ -1,7 +1,7 @@
 const path = require('path');
 const { fork } = require('child_process');
 
-const isFn = v => typeof v === 'function';
+const isFn = (v) => typeof v === 'function';
 
 module.exports = ({
   cwd,

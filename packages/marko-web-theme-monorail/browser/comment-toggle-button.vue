@@ -79,7 +79,7 @@ export default {
       // @todo to move this component/functionality to the marko-web-identity-x package
       EventBus.$emit('identity-x-comments-expanded', this.expanded);
       const elements = document.querySelectorAll(this.targets.join(','));
-      Array.prototype.forEach.call(elements, el => el.classList.toggle(this.toggleClass));
+      Array.prototype.forEach.call(elements, (el) => el.classList.toggle(this.toggleClass));
     },
     translate(key) {
       return i18n(this.lang, key);

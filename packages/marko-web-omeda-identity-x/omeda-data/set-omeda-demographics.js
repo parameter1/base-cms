@@ -75,7 +75,7 @@ module.exports = async ({
         fieldId,
         optionIds,
         ...(value.writeInDesc && {
-          writeInValues: optionIds.map(id => ({
+          writeInValues: optionIds.map((id) => ({
             optionId: id,
             value: value.writeInDesc,
           })),

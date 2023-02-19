@@ -6,7 +6,7 @@ const { get } = require('@parameter1/base-cms-object-path');
  * Content uses the former, other models use the latter.
  * This should be made consistent across all types at some point.
  */
-const defaultHref = obj => get(obj, 'siteContext.path', get(obj, 'canonicalPath'));
+const defaultHref = (obj) => get(obj, 'siteContext.path', get(obj, 'canonicalPath'));
 
 /**
  * Converts `marko-web-obj` link input into "standard" `marko-web-link` input.

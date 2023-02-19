@@ -35,14 +35,14 @@ module.exports = {
       return createSrcFor(host, { fileName, filePath }, opts, {});
     },
     alt: (image, { input = {} }) => createAltFor({ ...image, ...input }),
-    caption: image => createCaptionFor(image.caption),
+    caption: (image) => createCaptionFor(image.caption),
     cropRectangle: async (image, _, { site, basedb }) => {
       const host = site.get('imageHost', defaults.imageHost);
       const { width, height } = await getImageDimensions({ image, host, basedb });
       const { cropDimensions } = image;
       return cropRectangle({ width, height, cropDimensions });
     },
-    primaryImageDisplay: image => image.primaryImageDisplay || 'center',
+    primaryImageDisplay: (image) => image.primaryImageDisplay || 'center',
   },
 
   /**
@@ -58,7 +58,7 @@ module.exports = {
       const { id, payload } = input;
       const keys = Object.keys(payload);
       const body = new Base4RestPayload({ type });
-      keys.forEach(k => body.set(k, payload[k]));
+      keys.forEach((k) => body.set(k, payload[k]));
       body.set('id', id);
       await base4rest.updateOne({ model: type, id, body });
       const projection = buildProjection({ info, type: 'AssetImage' });

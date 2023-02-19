@@ -25,7 +25,7 @@ module.exports = asyncRoute(async (req, res) => {
   const input = {
     ...values,
     regionalConsentAnswers: regionalConsentAnswers
-      .map(answer => ({ policyId: answer.id, given: answer.given })),
+      .map((answer) => ({ policyId: answer.id, given: answer.given })),
     email,
   };
   await identityX.client.mutate({ mutation, variables: { input } });

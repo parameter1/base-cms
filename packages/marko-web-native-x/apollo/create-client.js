@@ -6,7 +6,7 @@ const getOperationName = (string) => {
   return undefined;
 };
 
-module.exports = uri => Object.create({
+module.exports = (uri) => Object.create({
   query: async ({ query, variables, headers }) => {
     const body = JSON.stringify({
       operationName: getOperationName(query),

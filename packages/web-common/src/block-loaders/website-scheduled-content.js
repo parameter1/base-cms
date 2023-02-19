@@ -1,6 +1,6 @@
 const buildQuery = require('../gql/query-factories/block-website-scheduled-content');
 
-const date = v => (v instanceof Date ? v.valueOf() : v);
+const date = (v) => (v instanceof Date ? v.valueOf() : v);
 
 /**
  * @param {ApolloClient} apolloClient The Apollo GraphQL client that will perform the query.
@@ -84,7 +84,7 @@ module.exports = async (apolloClient, {
   if (!data || !data.websiteScheduledContent) return { nodes: [], pageInfo: {} };
   const { pageInfo, section } = data.websiteScheduledContent;
   const nodes = data.websiteScheduledContent.edges
-    .map(edge => (edge && edge.node ? edge.node : null))
-    .filter(c => c);
+    .map((edge) => (edge && edge.node ? edge.node : null))
+    .filter((c) => c);
   return { nodes, pageInfo, section };
 };

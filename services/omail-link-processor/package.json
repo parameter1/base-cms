@@ -6,6 +6,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .js --ignore-path ../../.eslintignore ./",
     "test": "yarn lint"
   },

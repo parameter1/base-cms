@@ -21,7 +21,7 @@ const questions = [
       }
       return true;
     },
-    filter: v => parseInt(v, 10),
+    filter: (v) => parseInt(v, 10),
   },
   {
     type: 'confirm',

@@ -14,7 +14,9 @@ if (!process.env.EXPOSED_HOST) process.env.EXPOSED_HOST = env.HOST || 'localhost
 
 process.on('unhandledRejection', (e) => { throw e; });
 
-const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+const wait = (ms) => new Promise((resolve) => {
+  setTimeout(resolve, ms);
+});
 
 module.exports = async ({
   rootDir,
@@ -148,5 +150,5 @@ module.exports = async ({
         }
       }
     });
-  }).catch(e => setImmediate(() => { throw e; }));
+  }).catch((e) => setImmediate(() => { throw e; }));
 };

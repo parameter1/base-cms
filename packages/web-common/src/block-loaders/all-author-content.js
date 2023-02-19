@@ -1,7 +1,6 @@
-
 const buildQuery = require('../gql/query-factories/block-all-author-content');
 
-const date = v => (v instanceof Date ? v.valueOf() : v);
+const date = (v) => (v instanceof Date ? v.valueOf() : v);
 
 /**
  * @param {ApolloClient} apolloClient The Apollo GraphQL client that will perform the query.
@@ -61,7 +60,7 @@ module.exports = async (apolloClient, {
   if (!data || !data.allAuthorContent) return { nodes: [], pageInfo: {} };
   const { pageInfo } = data.allAuthorContent;
   const nodes = data.allAuthorContent.edges
-    .map(edge => (edge && edge.node ? edge.node : null))
-    .filter(c => c);
+    .map((edge) => (edge && edge.node ? edge.node : null))
+    .filter((c) => c);
   return { nodes, pageInfo };
 };

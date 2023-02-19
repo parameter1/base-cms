@@ -45,4 +45,4 @@ const run = async () => {
   await basedb.close();
 };
 
-run().catch(e => setImmediate(() => { throw e; }));
+run().catch((e) => setImmediate(() => { throw e; }));

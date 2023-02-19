@@ -31,7 +31,6 @@ const commands = new Set(['build', 'build:css', 'build:js', 'build:ssr', 'dev'])
     return values;
   };
 
-
   const cwd = argv.cwd || process.cwd();
 
   if (!command) throw new Error('A CLI command must be provided.');
@@ -107,4 +106,4 @@ const commands = new Set(['build', 'build:css', 'build:js', 'build:ssr', 'dev'])
     await serve(opts);
   }
   return null;
-})().catch(e => setImmediate(() => { throw e; }));
+})().catch((e) => setImmediate(() => { throw e; }));

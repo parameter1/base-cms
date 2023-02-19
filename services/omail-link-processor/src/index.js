@@ -13,7 +13,9 @@ const {
 } = require('./env');
 
 const { log } = console;
-const wait = ms => new Promise(resolve => setTimeout(resolve, parseInt(ms, 10)));
+const wait = (ms) => new Promise((resolve) => {
+  setTimeout(resolve, parseInt(ms, 10));
+});
 
 process.on('unhandledRejection', (e) => {
   newrelic.noticeError(e);
@@ -43,7 +45,7 @@ const run = async () => {
 
 run()
   .then(() => log(`${pkg.name} v${pkg.version} running on http://${EXPOSED_HOST}:${EXPOSED_PORT}`))
-  .catch(e => setImmediate(() => {
+  .catch((e) => setImmediate(() => {
     newrelic.noticeError(e);
     throw e;
   }));

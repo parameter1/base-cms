@@ -6,6 +6,7 @@
   "author": "Josh Worden <josh@parameter1.com>",
   "license": "MIT",
   "scripts": {
+    "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .js --ext .vue --max-warnings 5 ./",
     "compile": "basecms-marko-compile compile",
     "prepublish": "yarn compile",

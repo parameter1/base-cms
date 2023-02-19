@@ -7,6 +7,7 @@
   "license": "MIT",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-node-require",
   "scripts": {
+    "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .js --max-warnings 5 --ignore-path ../../.eslintignore ./",
     "test": "yarn lint"
   },

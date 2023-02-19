@@ -45,10 +45,10 @@ import LoginForm from '@parameter1/base-cms-marko-web-identity-x/browser/login.v
 import i18n from '../i18n-vue';
 
 export default {
-  inject: ['EventBus'],
   components: {
     LoginForm,
   },
+  inject: ['EventBus'],
 
   props: {
     type: {
@@ -77,7 +77,7 @@ export default {
     modifiers: {
       type: Array,
       default: () => ['large'],
-      validator: v => v.every(val => ['large', 'footer'].includes(val)),
+      validator: (v) => v.every((val) => ['large', 'footer'].includes(val)),
     },
     disabled: {
       type: Boolean,
@@ -203,7 +203,7 @@ export default {
     bem(name) {
       const target = name ? `${this.blockName}__${name}` : this.blockName;
       const classes = [target];
-      this.modifiers.forEach(m => classes.push(`${target}--${m}`));
+      this.modifiers.forEach((m) => classes.push(`${target}--${m}`));
       return classes;
     },
     handleLoginLinkSent() {

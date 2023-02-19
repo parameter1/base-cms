@@ -35,7 +35,7 @@ module.exports = async (apolloClient, params) => {
   if (length >= limit) return { ...optioned, optionDepleted: false };
 
   // Retrieve scheduled content, excluding the option and any found content.
-  const ids = optioned.nodes.map(node => node.id);
+  const ids = optioned.nodes.map((node) => node.id);
   const excludeContentIds = isArray(params.excludeContentIds)
     ? [...ids, ...params.excludeContentIds] : ids;
   const scheduled = await websiteScheduledContent(apolloClient, {

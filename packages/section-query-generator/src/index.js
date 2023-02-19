@@ -100,7 +100,7 @@ module.exports = async ({
   logger(`Found ${docs.length} content items with schedules.`);
   logger('Beginning bulk write process...');
 
-  const bulkOps = docs.map(doc => ({
+  const bulkOps = docs.map((doc) => ({
     updateOne: {
       filter: { _id: doc.contentId },
       update: { $set: { sectionQuery: doc.schedules } },

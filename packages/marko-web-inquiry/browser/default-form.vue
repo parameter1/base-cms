@@ -139,8 +139,8 @@
         <div class="form-group">
           <input
             :id="consent.key"
-            :value="consent.key"
             v-model="checkedConsents"
+            :value="consent.key"
             :required="consent.required"
             type="checkbox"
           >
@@ -178,10 +178,10 @@ import i18n from '../i18n';
 
 export default {
   components: { CountryField, FormLabel },
-  inject: ['EventBus'],
   mixins: [
     FormMixin,
   ],
+  inject: ['EventBus'],
   props: {
     formClass: {
       type: String,
