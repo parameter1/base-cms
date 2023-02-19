@@ -25,7 +25,7 @@ const devOptions = yargs => yargs
  */
 module.exports = (program) => {
   program
-    .command('lint [path]', 'Lint JavaScript and SASS within the BaseCMS project', lintOptions, argv => require('./lint')(argv))
+    .command('lint [path]', 'Lint JavaScript within the BaseCMS project', lintOptions, argv => require('./lint')(argv))
     .command('build [path]', 'Build BaseCMS assets and save them to the dist folder', buildOptions, argv => require('./build')(argv))
     .command('dev <file>', 'Start the BaseCMS website development server', devOptions, argv => require('./dev')(argv));
 };

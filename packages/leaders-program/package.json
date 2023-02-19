@@ -29,8 +29,6 @@
     "eslint-plugin-vue": "^5.0.0",
     "node-sass": "^4.14.1",
     "sass-loader": "^13.2.0",
-    "stylelint": "^10.1.0",
-    "stylelint-config-twbs-bootstrap": "0.4.0",
     "vue-template-compiler": "^2.7.14"
   },
   "publishConfig": {

@@ -6,9 +6,7 @@
   "license": "MIT",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-icons",
   "scripts": {
-    "lint": "yarn lint:js && yarn lint:css",
-    "lint:js": "eslint --ext .js --ext .vue --max-warnings 5 ./",
-    "lint:css": "stylelint ./**/*.scss --max-warnings 5",
+    "lint": "eslint --ext .js --ext .vue --max-warnings 5 ./",
     "compile": "basecms-marko-compile compile",
     "prepublish": "yarn compile",
     "test": "yarn compile --no-clean && yarn lint"

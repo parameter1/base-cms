@@ -19,10 +19,17 @@
 - Each website's `yarn dev` and `yarn build` scripts _should_ still work as expected, as the new CLI assumes that marko templates need to be compiled from `../packages` (assuming a standard site working directory of `sites/domain.com`). If this needs to be adjusted, change the site's `dev` script `--compile-dir` option
 - Marko files from `@parameter1 `packages (found in `node_modules`) are now compiled on build/publish. As such the compiled files will already exist in `node_modules`. As such, there's not need to watch or compile `node_modules` packages. The drawback is that you _cannot_ directly change `.marko` files found in `node_modules` without re-compiling the changed file.
 
-## CLI Timings
+## Stylelint
+Linting styles via `stylelint` has been removed. The reasons are varied, but primarily version 10 is _really_ old and the bootstrap config preset isn't well-supported anymore.
+
+### Action Items
+1. If any of the websites or global/core packages in your repository have a `lint:css` script or `.stylelintrs.js`/`.stylelintignore` files, the scripts should be removed/updated and the files should be deleted. This will prevent linting errors now that stylelint is removed.
+2. If you also have `stylelint` installed as a dependency in your repository (either in the root monorepo `package.json` file or in any sites/packages) please remove the dependency and re-run `./scripts/yarn.sh`
+
+# CLI Timings
 Tested inside Docker container on Mac using example website.
 
-### Dev Server
+## Dev Server
 - Initial boot
   - Legacy: ~1 minute
   - New: ~40 seconds
@@ -39,7 +46,7 @@ Tested inside Docker container on Mac using example website.
   - Legacy: ~32 seconds
   - New: ~3 seconds
 
-### Production Build
+## Production Build
 - Legacy: ~34 seconds
 - New: ~57 seconds
   - this will be _much_ faster in an actual website, since the example site needs to delete and re-compile _all_ marko templates in the entire base-cms repo, which wouldn't happen in a site repo.
