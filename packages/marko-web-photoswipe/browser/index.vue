@@ -151,11 +151,11 @@ export default {
     },
 
     getUnloadedThumbnails() {
-      return this.getThumbnailElements().filter(el => !el.hasAttribute(this.thumbnailReadyAttr));
+      return this.getThumbnailElements().filter((el) => !el.hasAttribute(this.thumbnailReadyAttr));
     },
 
     getLoadedThumbnails() {
-      return this.getThumbnailElements().filter(el => el.hasAttribute(this.thumbnailReadyAttr));
+      return this.getThumbnailElements().filter((el) => el.hasAttribute(this.thumbnailReadyAttr));
     },
 
     addThumbnailListeners() {
@@ -169,7 +169,7 @@ export default {
 
     removeThumbnailListeners() {
       const elements = this.getLoadedThumbnails();
-      elements.forEach(el => el.removeEventListener('click', this.handleThumbnailClick));
+      elements.forEach((el) => el.removeEventListener('click', this.handleThumbnailClick));
     },
 
     handleThumbnailClick(event) {

@@ -1,6 +1,6 @@
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 
-const isEmpty = v => v == null || v === '';
+const isEmpty = (v) => v == null || v === '';
 
 /**
  * Determines if user input is required.
@@ -14,7 +14,7 @@ const isInputRequired = async (service) => {
 
   // Check that all requires fields (from IdentityX config) are set
   const requiredFields = service.config.getRequiredServerFields();
-  const requiresUserInput = requiredFields.some(key => isEmpty(user[key]));
+  const requiresUserInput = requiredFields.some((key) => isEmpty(user[key]));
   if (requiresUserInput) return true;
 
   // Check that the user does not need to reverify their profile
@@ -24,13 +24,13 @@ const isInputRequired = async (service) => {
   // Check that all regional consent policies are agreed to
   const { regionalConsentPolicies } = application.organization;
   const matchingPolicies = regionalConsentPolicies.filter((policy) => {
-    const countryCodes = policy.countries.map(country => country.id);
+    const countryCodes = policy.countries.map((country) => country.id);
     return countryCodes.includes(user.countryCode);
   });
   const policiesAnswered = user.regionalConsentAnswers
     .reduce((o, answer) => ({ ...o, [answer.id]: true }), {});
   const hasRequiredAnswers = matchingPolicies.length
-    ? matchingPolicies.every(policy => policiesAnswered[policy.id])
+    ? matchingPolicies.every((policy) => policiesAnswered[policy.id])
     : true;
 
   return !hasRequiredAnswers;

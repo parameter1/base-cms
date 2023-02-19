@@ -7,11 +7,12 @@
   "license": "MIT",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-node-require",
   "scripts": {
-    "lint": "eslint --ext .js --ext .vue --max-warnings 5 --ignore-path ../../.eslintignore ./",
+    "lint:fix": "yarn lint --fix",
+    "lint": "eslint --ext .js --max-warnings 5 --ignore-path ../../.eslintignore ./",
     "test": "yarn lint"
   },
   "dependencies": {
-    "marko": "~4.20.0",
-    "resolve-from": "^2.0.0"
+    "@parameter1/base-cms-marko-compiler": "^4.0.0-alpha.0",
+    "marko": "~4.20.0"
   }
 }

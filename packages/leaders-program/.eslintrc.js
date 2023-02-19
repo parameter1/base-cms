@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   root: true,
   env: {
@@ -11,15 +13,20 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'vue/max-attributes-per-line': ['error', {
-      singleline: 3,
+      singleline: {
+        max: 3,
+      },
       multiline: {
         max: 1,
-        allowFirstLine: false,
       },
     }],
-    'vue/no-v-html': 'off'
+    'vue/multi-word-component-names': 'off',
+    'vue/no-v-html': 'off',
   },
+  parser: 'vue-eslint-parser',
   parserOptions: {
-    parser: 'babel-eslint',
+    configFile: path.resolve(__dirname, './babel.config.js'),
+    parser: '@babel/eslint-parser',
+    requireConfigFile: false,
   },
 };

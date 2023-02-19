@@ -123,7 +123,6 @@
   </div>
 </template>
 
-
 <script>
 import recaptchaGetToken from '@parameter1/base-cms-marko-web-recaptcha/browser/get-token';
 
@@ -162,7 +161,7 @@ export default {
     defaultNewsletter: {
       type: Object,
       required: true,
-      validate: o => (o && o.name && o.deploymentTypeId),
+      validate: (o) => (o && o.name && o.deploymentTypeId),
     },
     newsletters: {
       type: Array,
@@ -171,7 +170,7 @@ export default {
     demographic: {
       type: Object,
       required: true,
-      validate: demo => (demo && demo.id && demo.label && demo.values),
+      validate: (demo) => (demo && demo.id && demo.label && demo.values),
     },
     asCard: {
       type: Boolean,
@@ -231,7 +230,7 @@ export default {
         this.selectedNewsletters.push(newsletter);
       } else {
         this.selectedNewsletters = this.selectedNewsletters
-          .filter(nl => nl.deploymentTypeId !== newsletter.deploymentTypeId);
+          .filter((nl) => nl.deploymentTypeId !== newsletter.deploymentTypeId);
       }
     },
 
@@ -247,7 +246,7 @@ export default {
           email,
           companyName: this.companyName,
           postalCode: this.postalCode,
-          deploymentTypeIds: selectedNewsletters.map(nl => nl.deploymentTypeId),
+          deploymentTypeIds: selectedNewsletters.map((nl) => nl.deploymentTypeId),
           demographics: [
             { id: this.demographic.id, values: [this.demographicValue] },
           ],

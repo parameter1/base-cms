@@ -1,1 +1,1 @@
-module.exports = v => typeof v === 'function';
+module.exports = (v) => typeof v === 'function';

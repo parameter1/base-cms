@@ -1,3 +1,3 @@
 const { pluralize } = require('inflected');
 
-module.exports = value => pluralize(value);
+module.exports = (value) => pluralize(value);

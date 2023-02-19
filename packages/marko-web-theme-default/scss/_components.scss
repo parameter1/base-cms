@@ -1,15 +1,15 @@
 @import "bootstrap/components";
 
 // Marko Web core components
-@import "../../node_modules/@parameter1/base-cms-marko-web/scss/document";
-@import "../../node_modules/@parameter1/base-cms-marko-web/scss/load-more";
-@import "../../node_modules/@parameter1/base-cms-marko-web/scss/node";
-@import "../../node_modules/@parameter1/base-cms-marko-web/scss/node-list";
-@import "../../node_modules/@parameter1/base-cms-marko-web/scss/page-image";
-@import "../../node_modules/@parameter1/base-cms-marko-web/scss/carousel";
+@import "@parameter1/base-cms-marko-web/scss/document";
+@import "@parameter1/base-cms-marko-web/scss/load-more";
+@import "@parameter1/base-cms-marko-web/scss/node";
+@import "@parameter1/base-cms-marko-web/scss/node-list";
+@import "@parameter1/base-cms-marko-web/scss/page-image";
+@import "@parameter1/base-cms-marko-web/scss/carousel";
 
 // Marko Web icon components
-@import "../../node_modules/@parameter1/base-cms-marko-web-icons/scss/icons";
+@import "@parameter1/base-cms-marko-web-icons/scss/icons";
 
 // Theme components
 @import "components/ad-container";

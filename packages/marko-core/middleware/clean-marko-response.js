@@ -1,4 +1,3 @@
-const { getAsObject } = require('@parameter1/base-cms-object-path');
 const pretty = require('pretty');
 const cleanChunk = require('../utils/clean-marko-chunk');
 const buildMarkoGlobal = require('../utils/build-marko-global');
@@ -17,8 +16,8 @@ module.exports = ({ enabled = true, prettyQueryParam = 'pretty', prettyEnvVar = 
       if (typeof template === 'string') {
         throw new Error('The Marko template cannot be a string.');
       }
-      const $global = buildMarkoGlobal(this);
-      const d = { ...data, $global: { ...$global, ...getAsObject(data, '$global') } };
+      const $global = buildMarkoGlobal(this, data);
+      const d = { ...(data || {}), $global };
       this.set({ 'content-type': 'text/html; charset=utf-8' });
       const out = template.createOut();
       template.render(d, out);
@@ -43,5 +42,6 @@ module.exports = ({ enabled = true, prettyQueryParam = 'pretty', prettyEnvVar = 
       write.apply(this, cleanedArgs);
     }
   };
+
   return next();
 };

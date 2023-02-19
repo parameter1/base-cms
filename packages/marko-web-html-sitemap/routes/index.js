@@ -1,4 +1,3 @@
-
 const { getAsArray } = require('@parameter1/base-cms-object-path');
 const gql = require('graphql-tag');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
@@ -18,7 +17,7 @@ const invalidDate = () => {
   return error;
 };
 
-const getTwoCharNum = number => number.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false });
+const getTwoCharNum = (number) => number.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false });
 
 const ALL_PUBLISHED_CONTENT_DATES = gql`
   query AllPublishedContentDates($input: AllPublishedContentDatesQueryInput = {}) {
@@ -77,7 +76,7 @@ module.exports = (app, { mountPoint } = { mountPoint: '/site-map' }) => {
     const variables = { input };
     const { data } = await req.apollo.query({ query: ALL_PUBLISHED_CONTENT_DATES, variables });
     const alias = `${mountPoint}/${year}/${getTwoCharNum(month)}`;
-    const nodes = getAsArray(data, 'allPublishedContentDates').map(node => ({
+    const nodes = getAsArray(data, 'allPublishedContentDates').map((node) => ({
       ...node,
       alias: `${alias}/${getTwoCharNum(node.day)}`,
     }));
@@ -109,7 +108,7 @@ module.exports = (app, { mountPoint } = { mountPoint: '/site-map' }) => {
     const variables = { input };
     const { data } = await req.apollo.query({ query: ALL_PUBLISHED_CONTENT_DATES, variables });
     const alias = `${mountPoint}/${year}`;
-    const nodes = getAsArray(data, 'allPublishedContentDates').map(node => ({
+    const nodes = getAsArray(data, 'allPublishedContentDates').map((node) => ({
       ...node,
       alias: `${alias}/${getTwoCharNum(node.month)}`,
     }));
@@ -136,7 +135,7 @@ module.exports = (app, { mountPoint } = { mountPoint: '/site-map' }) => {
     };
     const variables = { input };
     const { data } = await req.apollo.query({ query: ALL_PUBLISHED_CONTENT_DATES, variables });
-    const nodes = getAsArray(data, 'allPublishedContentDates').map(node => ({
+    const nodes = getAsArray(data, 'allPublishedContentDates').map((node) => ({
       ...node,
       alias: `${mountPoint}/${node.year}`,
     }));

@@ -9,8 +9,7 @@ const onWindowLoad = (callback) => {
   }
 };
 
-
-const loadScript = siteKey => new Promise(((resolve, reject) => {
+const loadScript = (siteKey) => new Promise(((resolve, reject) => {
   const callback = () => {
     window.onRecaptchaLoadCallback = resolve;
     const body = document.getElementsByTagName('body')[0];

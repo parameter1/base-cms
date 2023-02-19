@@ -30,7 +30,7 @@ const makeUniquePhrases = async (phrases) => {
   const tokenizedPhrases = [];
   await eachSeriesPromise(phrases, async (phrase) => {
     const { tokens } = await elastic.analyze(ELASTIC_INDEX, { text: phrase });
-    const tokenizedPhrase = tokens.map(t => t.token).join(' ');
+    const tokenizedPhrase = tokens.map((t) => t.token).join(' ');
     if (tokenizedPhrase) tokenizedPhrases.push(tokenizedPhrase);
   });
   return [...new Set(tokenizedPhrases)];

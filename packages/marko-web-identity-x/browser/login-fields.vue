@@ -151,7 +151,7 @@ export default {
      * Returns fields that have a matching, loopable component.
      */
     componentFields() {
-      return this.fields.filter(field => this.components[field]);
+      return this.fields.filter((field) => this.components[field]);
     },
 
     /**
@@ -184,7 +184,7 @@ export default {
       const { countryCode } = this.values;
       if (!regionalConsentPolicies.length || !countryCode) return [];
       return regionalConsentPolicies.filter((policy) => {
-        const countryCodes = policy.countries.map(country => country.id);
+        const countryCodes = policy.countries.map((country) => country.id);
         return countryCodes.includes(countryCode);
       });
     },
@@ -192,7 +192,7 @@ export default {
 
   methods: {
     getRegionalPolicyAnswer(policyId) {
-      return this.values.regionalConsentAnswers.find(a => a.id === policyId);
+      return this.values.regionalConsentAnswers.find((a) => a.id === policyId);
     },
 
     getRegionalPolicyAnswerValue(policyId) {

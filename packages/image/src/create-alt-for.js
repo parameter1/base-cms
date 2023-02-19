@@ -15,7 +15,7 @@ const altFrom = (value = '') => {
   return v;
 };
 
-const strip = v => htmlEntities.encode(stripHtml(v));
+const strip = (v) => htmlEntities.encode(stripHtml(v));
 
 const clean = (v, { prepend, append }) => {
   const values = [];

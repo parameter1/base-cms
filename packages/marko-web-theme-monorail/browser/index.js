@@ -94,23 +94,23 @@ export default (Browser, config = {
         emitNewsletterEvent({ type: 'Pushdown', action: 'Load', data });
         emitNewsletterEvent({ type: 'Pushdown', action: 'View', data });
       },
-      focus: data => emitNewsletterEvent({ type: 'Pushdown', action: 'Focus', data }),
-      submit: data => emitNewsletterEvent({ type: 'Pushdown', action: 'Submit', data }),
+      focus: (data) => emitNewsletterEvent({ type: 'Pushdown', action: 'Focus', data }),
+      submit: (data) => emitNewsletterEvent({ type: 'Pushdown', action: 'Submit', data }),
       subscribe: ({ newsletter }) => emitNewsletterSubscription({ type: 'Pushdown', newsletter }),
-      error: data => emitNewsletterEvent({ type: 'Pushdown', action: 'Error', data: { ...data, error: data.error.message } }),
+      error: (data) => emitNewsletterEvent({ type: 'Pushdown', action: 'Error', data: { ...data, error: data.error.message } }),
     },
   });
   Browser.register('ThemeInlineNewsletterForm', InlineNewsletterForm, {
     on: {
-      load: data => emitNewsletterEvent({ type: 'Inline', action: 'Load', data }),
-      view: data => emitNewsletterEvent({ type: 'Inline', action: 'View', data }),
-      focus: data => emitNewsletterEvent({ type: 'Inline', action: 'Focus', data }),
+      load: (data) => emitNewsletterEvent({ type: 'Inline', action: 'Load', data }),
+      view: (data) => emitNewsletterEvent({ type: 'Inline', action: 'View', data }),
+      focus: (data) => emitNewsletterEvent({ type: 'Inline', action: 'Focus', data }),
       submit: (data) => {
         emitNewsletterEvent({ type: 'Inline', action: 'Submit', data });
         if (window.olytics) window.olytics.confirm(data.encryptedCustomerId);
       },
       subscribe: ({ newsletter }) => emitNewsletterSubscription({ type: 'Pushdown', newsletter }),
-      error: data => emitNewsletterEvent({ type: 'Inline', action: 'Error', data: { ...data, error: data.error.message } }),
+      error: (data) => emitNewsletterEvent({ type: 'Inline', action: 'Error', data: { ...data, error: data.error.message } }),
     },
   });
 

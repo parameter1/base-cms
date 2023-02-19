@@ -49,7 +49,7 @@ class Base4RestApiClient {
 
   async insertMany({ model, bodies, options } = {}) {
     if (!isArray(bodies)) throw new Error('An array of request bodies is required to insertMany.');
-    return Promise.all(bodies.map(body => this.insertOne({ model, body, options })));
+    return Promise.all(bodies.map((body) => this.insertOne({ model, body, options })));
   }
 
   async updateOne({

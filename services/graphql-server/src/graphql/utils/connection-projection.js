@@ -10,8 +10,8 @@ module.exports = ({
   let projection;
   const { projectUsing } = returnType.ofType || returnType;
   if (projectUsing) {
-    const edges = getAsArray(fieldNodes[0], 'selectionSet.selections').find(s => s.name.value === 'edges');
-    const node = getAsArray(edges, 'selectionSet.selections').find(s => s.name.value === 'node');
+    const edges = getAsArray(fieldNodes[0], 'selectionSet.selections').find((s) => s.name.value === 'edges');
+    const node = getAsArray(edges, 'selectionSet.selections').find((s) => s.name.value === 'node');
     if (node) {
       // Project based on the node's selectionSet
       projection = getProjection(

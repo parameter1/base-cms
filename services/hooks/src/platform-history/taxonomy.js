@@ -42,7 +42,6 @@ const updateChildren = async (tree, taxonomy, db, projection, status, data = [])
   return data;
 };
 
-
 const update = async (db, id, { status } = {}) => {
   const projection = {
     _id: 1,
@@ -68,13 +67,13 @@ const updateContent = async (db, content) => {
   const { _id } = content;
   const taxIds = BaseDB.extractRefIds(content.taxonomy);
   const taxonomies = taxIds.length ? await db.find('platform.Taxonomy', { _id: { $in: taxIds }, status: 1 }, { projection: { alias: 1 } }) : [];
-  const taxonomyAliases = taxonomies.map(t => t.alias).filter(v => v);
+  const taxonomyAliases = taxonomies.map((t) => t.alias).filter((v) => v);
   await db.updateOne('platform.Content', { _id }, { $set: { taxonomyAliases } });
   return { id: _id, taxonomyAliases };
 };
 
 const updateRelatedContent = async (db, taxonomy) => {
-  const taxIds = taxonomy.map(row => row.id);
+  const taxIds = taxonomy.map((row) => row.id);
   const content = await db.find('platform.Content', { 'taxonomy.$id': { $in: taxIds } }, { projection: { _id: 1, taxonomy: 1 } });
   const data = [];
   await Promise.all(content.map(async (c) => {

@@ -26,7 +26,7 @@ import IconThreeBars from '@parameter1/base-cms-marko-web-icons/browser/three-ba
 import IconX from '@parameter1/base-cms-marko-web-icons/browser/x.vue';
 import EventBus from '@parameter1/base-cms-marko-web/browser/event-bus';
 
-const validateIcon = v => ['chevron-down', 'chevron-up', 'chevron-right', 'dash', 'mail', 'plus', 'three-bars', 'x'].includes(v);
+const validateIcon = (v) => ['chevron-down', 'chevron-up', 'chevron-right', 'dash', 'mail', 'plus', 'three-bars', 'x'].includes(v);
 
 export default {
   components: {
@@ -143,7 +143,7 @@ export default {
       this.expanded = !this.expanded;
       EventBus.$emit('site-menu-expanded', this.expanded);
       const elements = document.querySelectorAll(this.targets.join(','));
-      Array.prototype.forEach.call(elements, el => el.classList.toggle(this.toggleClass));
+      Array.prototype.forEach.call(elements, (el) => el.classList.toggle(this.toggleClass));
     },
   },
 };

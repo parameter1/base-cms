@@ -18,7 +18,7 @@ const logger = () => {
     totalDbTime += time;
 
     log('');
-    Object.keys(obj).forEach(key => log(`${key}:`, inspect(obj[key], { colors: true, depth: 10 })));
+    Object.keys(obj).forEach((key) => log(`${key}:`, inspect(obj[key], { colors: true, depth: 10 })));
     log('');
     log({
       queries,

@@ -22,7 +22,7 @@ const load = async ({
   if (!shouldRender) return;
   const component = new Vue({
     provide: providers[name],
-    render: h => h(Component, { props, on: { ...on, ...listeners[name] } }),
+    render: (h) => h(Component, { props, on: { ...on, ...listeners[name] } }),
   });
   component.$mount(el, hydrate);
 };

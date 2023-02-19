@@ -27,7 +27,7 @@ export default {
     type: {
       type: String,
       default: 'primary',
-      validator: v => ['primary', 'accent'].includes(v),
+      validator: (v) => ['primary', 'accent'].includes(v),
     },
     block: {
       type: Boolean,

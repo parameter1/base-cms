@@ -6,5 +6,5 @@ module.exports = ({ externalId, brandKey } = {}) => isOmedaNamespace({
   brandKey,
   type: 'customer',
   idType: 'encrypted',
-  valueMatcher: id => olyticsCookie.clean(id),
+  valueMatcher: (id) => olyticsCookie.clean(id),
 });

@@ -9,6 +9,7 @@
     "website-release-notes": "bin/release.js"
   },
   "scripts": {
+    "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .js --max-warnings 5 --ignore-path ../../.eslintignore ./",
     "test": "yarn lint"
   },

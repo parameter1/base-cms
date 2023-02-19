@@ -1,11 +1,11 @@
 const { buildRequestHeaders } = require('@parameter1/base-cms-tenant-context');
 const createApolloClient = require('@parameter1/base-cms-apollo-ssr');
+const cleanMarkoResponse = require('@parameter1/base-cms-marko-core/middleware/clean-marko-response');
 const cookieParser = require('cookie-parser');
 const express = require('express');
-const marko = require('marko/express');
 const path = require('path');
 const helmet = require('helmet');
-const cleanMarkoResponse = require('@parameter1/base-cms-marko-core/middleware/clean-marko-response');
+const markoMiddleware = require('./marko');
 const apollo = require('./apollo');
 const graphqlProxy = require('./graphql-proxy');
 const embeddedMedia = require('./embedded-media');
@@ -111,7 +111,7 @@ module.exports = (config = {}) => {
   app.use(websiteContext(app.locals.config));
 
   // Register the Marko middleware.
-  app.use(marko());
+  app.use(markoMiddleware());
   app.use(cleanMarkoResponse());
 
   // Serve static assets

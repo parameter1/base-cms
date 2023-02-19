@@ -16,7 +16,7 @@
 3. Include the styles
   ```scss
   // your-site/server/styles/index.scss
-  @import "../../node_modules/@parameter1/base-cms-marko-web-reveal-ad/scss/reveal-ad";
+  @import "@parameter1/base-cms-marko-web-reveal-ad/scss/reveal-ad";
   ```
 
 4. Load the listener component on all pages, as close to the opening `<body>` tag as possible. This is usually handled in a common site `document.marko` component

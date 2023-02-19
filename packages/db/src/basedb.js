@@ -495,7 +495,7 @@ class BaseDB {
     const { context } = this;
     const { comment } = options;
     const comments = [context ? JSON.stringify(context) : null, comment];
-    return { ...options, comment: comments.filter(v => v).join('\n') || undefined };
+    return { ...options, comment: comments.filter((v) => v).join('\n') || undefined };
   }
 
   /**
@@ -543,7 +543,7 @@ class BaseDB {
    */
   static extractRefIds(refs) {
     if (!isArray(refs) || !refs.length) return [];
-    return refs.map(ref => BaseDB.extractRefId(ref)).filter(id => id);
+    return refs.map((ref) => BaseDB.extractRefId(ref)).filter((id) => id);
   }
 
   /**

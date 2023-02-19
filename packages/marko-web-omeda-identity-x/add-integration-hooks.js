@@ -59,7 +59,7 @@ module.exports = (params = {}) => {
   idxConfig.addHook({
     name: 'onLoginLinkSent',
     shouldAwait: false,
-    fn: async args => onLoginLinkSent({
+    fn: async (args) => onLoginLinkSent({
       ...args,
       brandKey,
       idxOmedaRapidIdentify: get(args, `req.${idxOmedaRapidIdentifyProp}`),
@@ -79,7 +79,7 @@ module.exports = (params = {}) => {
   idxConfig.addHook({
     name: 'onAuthenticationSuccess',
     shouldAwait: true,
-    fn: async args => onAuthenticationSuccess({
+    fn: async (args) => onAuthenticationSuccess({
       ...args,
       brandKey,
       idxOmedaRapidIdentify: get(args, `req.${idxOmedaRapidIdentifyProp}`),
@@ -98,7 +98,7 @@ module.exports = (params = {}) => {
   idxConfig.addHook({
     name: 'onUserProfileUpdate',
     shouldAwait: false,
-    fn: async args => onUserProfileUpdate({
+    fn: async (args) => onUserProfileUpdate({
       ...args,
       idxOmedaRapidIdentify: get(args, `req.${idxOmedaRapidIdentifyProp}`),
       omedaPromoCodeCookieName,

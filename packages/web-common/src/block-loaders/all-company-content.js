@@ -1,7 +1,6 @@
-
 const buildQuery = require('../gql/query-factories/block-all-company-content');
 
-const date = v => (v instanceof Date ? v.valueOf() : v);
+const date = (v) => (v instanceof Date ? v.valueOf() : v);
 
 /**
  * @param {ApolloClient} apolloClient The Apollo GraphQL client that will perform the query.
@@ -66,7 +65,7 @@ module.exports = async (apolloClient, {
   if (!data || !data.allCompanyContent) return { nodes: [], pageInfo: {} };
   const { pageInfo } = data.allCompanyContent;
   const nodes = data.allCompanyContent.edges
-    .map(edge => (edge && edge.node ? edge.node : null))
-    .filter(c => c);
+    .map((edge) => (edge && edge.node ? edge.node : null))
+    .filter((c) => c);
   return { nodes, pageInfo };
 };

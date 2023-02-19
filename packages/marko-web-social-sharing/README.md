@@ -17,7 +17,7 @@ export default Browser;
 
 3. Include the default styles:
 ```scss
-@import "../../node_modules/@parameter1/base-cms-marko-web-social-sharing/scss/buttons";
+@import "@parameter1/base-cms-marko-web-social-sharing/scss/buttons";
 ```
 
 ## Usage

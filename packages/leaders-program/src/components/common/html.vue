@@ -1,4 +1,5 @@
 <template>
+  <!-- eslint-disable-next-line -->
   <component :is="tag" v-if="canDisplay" v-html="value" />
 </template>
 

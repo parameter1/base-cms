@@ -25,7 +25,7 @@ service.jsonServer({
   onError: newrelic.noticeError,
   port: PORT,
   exposedPort: EXPOSED_PORT,
-}).catch(e => setImmediate(() => {
+}).catch((e) => setImmediate(() => {
   newrelic.noticeError(e);
   throw e;
 }));

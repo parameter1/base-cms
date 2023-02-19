@@ -32,7 +32,7 @@ export default {
   computed: {
     value() {
       const { prefix, label } = this;
-      return [prefix, label].filter(v => v).join(' ');
+      return [prefix, label].filter((v) => v).join(' ');
     },
   },
 

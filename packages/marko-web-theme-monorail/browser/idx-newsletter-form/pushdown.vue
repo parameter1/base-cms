@@ -57,11 +57,11 @@ import CloseButton from '../newsletter-close-button.vue';
 import i18n from '../i18n-vue';
 
 export default {
-  inject: ['EventBus'],
   components: {
     CloseButton,
     LoginForm,
   },
+  inject: ['EventBus'],
 
   props: {
     siteName: {

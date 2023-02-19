@@ -2,22 +2,22 @@ const MarkoWebSearchQueryParam = require('./param');
 
 const { isArray } = Array;
 
-const unqArray = array => [...new Set(array)];
+const unqArray = (array) => [...new Set(array)];
 
 const toArrayInput = (str, mapFunc) => {
   if (!str) return undefined;
   const trimmed = str.trim();
   if (!trimmed) return undefined;
-  return unqArray(trimmed.split(',').map(mapFunc).filter(v => v));
+  return unqArray(trimmed.split(',').map(mapFunc).filter((v) => v));
 };
 
 const fromArrayInput = (arr) => {
   if (!isArray(arr) || !arr.length) return null;
-  return unqArray(arr.sort().filter(i => i)).join(',');
+  return unqArray(arr.sort().filter((i) => i)).join(',');
 };
 
-const toIntArrayInput = arr => toArrayInput(arr, v => parseInt(v, 10));
-const toStringArrayInput = arr => toArrayInput(arr, v => v.trim());
+const toIntArrayInput = (arr) => toArrayInput(arr, (v) => parseInt(v, 10));
+const toStringArrayInput = (arr) => toArrayInput(arr, (v) => v.trim());
 
 const sortFieldSet = new Set(['PUBLISHED', 'SCORE']);
 const sortOrderSet = new Set(['DESC', 'ASC']);
@@ -38,8 +38,8 @@ class MarkoWebSearchQueryParamConfig {
       .add('limit', {
         type: Number,
         defaultValue: resultsPerPage.default,
-        validator: v => (v >= resultsPerPage.min && v <= resultsPerPage.max),
-        toInput: v => parseInt(v, 10),
+        validator: (v) => (v >= resultsPerPage.min && v <= resultsPerPage.max),
+        toInput: (v) => parseInt(v, 10),
       })
       .add('page', {
         type: Number,
@@ -49,7 +49,7 @@ class MarkoWebSearchQueryParamConfig {
           const limit = search.getInputValueFor('limit');
           return ((v * limit) <= 10000);
         },
-        toInput: v => parseInt(v, 10),
+        toInput: (v) => parseInt(v, 10),
       })
       .add('searchQuery', {
         type: String,
@@ -58,8 +58,8 @@ class MarkoWebSearchQueryParamConfig {
       .add('contentTypes', {
         type: Array,
         defaultValue: () => contentTypeIds.slice(),
-        filter: types => types.filter(type => contentTypeIdMap.has(type)),
-        validator: types => types.every(type => contentTypeIdMap.has(type)),
+        filter: (types) => types.filter((type) => contentTypeIdMap.has(type)),
+        validator: (types) => types.every((type) => contentTypeIdMap.has(type)),
         toInput: toStringArrayInput,
         fromInput: fromArrayInput,
       })
@@ -72,12 +72,12 @@ class MarkoWebSearchQueryParamConfig {
       .add('sortField', {
         type: String,
         defaultValue: 'PUBLISHED',
-        validator: v => sortFieldSet.has(v),
+        validator: (v) => sortFieldSet.has(v),
       })
       .add('sortOrder', {
         type: String,
         defaultValue: 'DESC',
-        validator: v => sortOrderSet.has(v),
+        validator: (v) => sortOrderSet.has(v),
       });
   }
 

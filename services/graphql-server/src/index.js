@@ -32,8 +32,9 @@ const run = async () => {
     },
     beforeShutdown: () => {
       log(`> Delaying shutdown by ${beforeShutdownTimeout}ms...`);
-      return new Promise(resolve => setTimeout(resolve, beforeShutdownTimeout))
-        .then(() => log('> Shutdown delay complete.'));
+      return new Promise((resolve) => {
+        setTimeout(resolve, beforeShutdownTimeout);
+      }).then(() => log('> Shutdown delay complete.'));
     },
     onShutdown: () => log('> Cleanup finished. Shutting down.'),
   });
@@ -49,7 +50,7 @@ process.on('unhandledRejection', (e) => {
 });
 
 log(`> Booting ${pkg.name} v${pkg.version}...`);
-run().catch(e => setImmediate(() => {
+run().catch((e) => setImmediate(() => {
   newrelic.noticeError(e);
   throw e;
 }));

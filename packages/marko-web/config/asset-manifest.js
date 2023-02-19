@@ -16,7 +16,7 @@ class AssetManifest {
   css() {
     if (!this.stylesheets) {
       const { css } = this.load();
-      this.stylesheets = [css['index.css']];
+      this.stylesheets = [css['main.css']];
     }
     return this.stylesheets;
   }

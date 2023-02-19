@@ -44,11 +44,11 @@ import Step1 from './site-newsletter-menu/step1.vue';
 import Step2 from './newsletter-signup-form/step2.vue';
 
 export default {
-  inject: ['EventBus'],
   components: {
     Step1,
     Step2,
   },
+  inject: ['EventBus'],
 
   props: {
     siteName: {
@@ -70,7 +70,7 @@ export default {
     defaultNewsletter: {
       type: Object,
       required: true,
-      validate: o => (o && o.name && o.deploymentTypeId),
+      validate: (o) => (o && o.name && o.deploymentTypeId),
     },
     newsletters: {
       type: Array,

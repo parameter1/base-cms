@@ -3,7 +3,7 @@ const getCookie = (key) => {
   const cookies = document.cookie.split(';').reduce((obj, cookie) => {
     const trimmed = cookie.trim();
     if (!trimmed) return obj;
-    const [name, value] = trimmed.split('=').map(v => decodeURIComponent(v.trim()));
+    const [name, value] = trimmed.split('=').map((v) => decodeURIComponent(v.trim()));
     return { ...obj, [name]: value };
   }, {});
   return cookies[key];

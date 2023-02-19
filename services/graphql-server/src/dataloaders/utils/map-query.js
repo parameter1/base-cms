@@ -28,7 +28,7 @@ const { keys } = Object;
   }
   ```
  */
-module.exports = map => keys(map).reduce((o, id) => {
+module.exports = (map) => keys(map).reduce((o, id) => {
   const { _id, set, queries } = map[id];
   const fields = set ? [...set] : [];
   const key = fields.join('|');

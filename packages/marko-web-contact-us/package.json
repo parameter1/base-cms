@@ -5,11 +5,11 @@
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-contact-us",
   "license": "MIT",
   "scripts": {
-    "lint": "yarn lint:js && yarn lint:css",
-    "lint:js": "eslint --ext .js --ext .vue --max-warnings 5 ./",
-    "lint:css": "stylelint ./**/*.scss --max-warnings 5",
-    "compile": "basecms-marko-compile compile --dir ./ --silent true",
-    "test": "yarn compile && yarn lint"
+    "lint:fix": "yarn lint --fix",
+    "lint": "eslint --ext .js --ext .vue --max-warnings 5 ./",
+    "compile": "basecms-marko-compile compile",
+    "prepublish": "yarn compile",
+    "test": "yarn compile --no-clean && yarn lint"
   },
   "dependencies": {
     "@parameter1/base-cms-env": "^4.0.0-alpha.0",

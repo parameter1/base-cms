@@ -12,7 +12,7 @@ module.exports = {
    */
   MagazineIssue: {
     canonicalPath: (issue, _, ctx) => canonicalPathFor(issue, ctx),
-    metadata: issue => ({
+    metadata: (issue) => ({
       title: () => createTitle(issue),
       description: () => createDescription(issue),
     }),

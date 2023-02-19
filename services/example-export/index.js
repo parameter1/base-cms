@@ -8,6 +8,6 @@ module.exports = startServer({
   rootDir: __dirname,
   coreConfig,
   customConfig,
-  onStart: app => app.set('trust proxy', 'loopback, linklocal, uniquelocal'),
+  onStart: (app) => app.set('trust proxy', 'loopback, linklocal, uniquelocal'),
   onAsyncBlockError: log,
-}).then(() => log('Exports started!')).catch(e => setImmediate(() => { throw e; }));
+}).then(() => log('Exports started!')).catch((e) => setImmediate(() => { throw e; }));

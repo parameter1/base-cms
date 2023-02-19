@@ -2,7 +2,7 @@ const { getDomain } = require('tldjs');
 
 const COOKIE_NAME = 'oly_enc_id';
 
-const getDotDomainFrom = req => `.${getDomain(req.hostname)}`;
+const getDotDomainFrom = (req) => `.${getDomain(req.hostname)}`;
 
 const clean = (value) => {
   if (!value || value === 'null') return null;

@@ -6,6 +6,11 @@
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/website-deployment-tool",
   "author": "Josh Worden <josh@parameter1.com>",
   "license": "MIT",
+  "scripts": {
+    "lint:fix": "yarn lint --fix",
+    "lint": "eslint --ext .js --max-warnings 5 ./",
+    "test": "yarn lint"
+  },
   "dependencies": {
     "@endeavorb2b/rancher2cli": "^1.0.5",
     "envalid": "^6.0.2",
@@ -14,11 +19,6 @@
   },
   "bin": {
     "deploy": "./src/index.js"
-  },
-  "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.2.0",
-    "eslint-plugin-import": "^2.27.5"
   },
   "publishConfig": {
     "access": "public"

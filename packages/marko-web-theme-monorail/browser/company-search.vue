@@ -19,8 +19,8 @@ import Autocomplete from '@trevoreyre/autocomplete-vue';
 const path = '/__company-search?searchQuery=';
 
 export default {
-  inject: ['EventBus'],
   components: { Autocomplete },
+  inject: ['EventBus'],
 
   data: () => ({
     errorClass: '',

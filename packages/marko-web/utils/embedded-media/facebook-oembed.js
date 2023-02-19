@@ -12,7 +12,7 @@ const buildFacebookElement = ({
     ...(width && { width }),
     ...(showText && { 'show-text': true }),
   };
-  const data = Object.keys(params).map(key => `data-${key}="${params[key]}"`);
+  const data = Object.keys(params).map((key) => `data-${key}="${params[key]}"`);
   return `<div class="fb-post" ${data.join(' ')}></div><script async defer src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>`;
 };
 
@@ -38,7 +38,6 @@ const facebook = (url) => {
   // return facebook div element
   return buildFacebookElement({ href, showText: true });
 };
-
 
 /**
  *

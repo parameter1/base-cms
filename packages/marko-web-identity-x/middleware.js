@@ -6,7 +6,7 @@ const IdentityX = require('./service');
  * @param {IdentityXConfiguration} config The IdentityX config object
  * @returns {function} The middleware function
  */
-module.exports = config => (req, res, next) => {
+module.exports = (config) => (req, res, next) => {
   const service = new IdentityX({ req, res, config });
   req.identityX = service;
   res.locals.identityX = service;

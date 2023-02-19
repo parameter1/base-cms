@@ -15,7 +15,7 @@ const createProjectLoader = ({ basedb, modelName }) => new DataLoader(async (key
   return returnResults(resultSets, keys);
 }, { cacheKeyFn: projectCacheKey });
 
-module.exports = basedb => ({
+module.exports = (basedb) => ({
   platformAsset: createProjectLoader({ basedb, modelName: 'platform.Asset' }),
   platformContent: createProjectLoader({ basedb, modelName: 'platform.Content' }),
   platformEntity: createProjectLoader({ basedb, modelName: 'platform.Entity' }),

@@ -1,4 +1,3 @@
-
 const { isURL } = require('validator');
 const { makeValidator } = require('envalid');
 

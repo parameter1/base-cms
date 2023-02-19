@@ -27,6 +27,7 @@
       <p v-if="flagged" :class="element('flagged')">
         This comment has been reported.
       </p>
+      <!-- eslint-disable-next-line -->
       <div v-html="bodyHtml" />
     </div>
   </div>

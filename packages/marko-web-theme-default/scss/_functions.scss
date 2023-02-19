@@ -1,4 +1,4 @@
-@import "../../node_modules/bootstrap/scss/functions";
+@import "bootstrap/scss/functions";
 
 @function get-line-height($font-size-px, $line-height-px) {
   @if $line-height-px < $font-size-px {

@@ -106,7 +106,7 @@ export default {
     },
     listener(event) {
       const payload = parseJson(event.data);
-      if (['adImagePath', 'adTitle', 'backgroundImagePath', 'adClickUrl'].every(k => payload[k])) {
+      if (['adImagePath', 'adTitle', 'backgroundImagePath', 'adClickUrl'].every((k) => payload[k])) {
         if (document.readyState === 'loading') {
           document.addEventListener('DOMContentLoaded', () => this.execute(payload));
         } else {

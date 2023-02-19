@@ -46,4 +46,4 @@ const run = async () => {
   log('DONE!');
 };
 
-run().catch(e => setImmediate(() => { throw e; }));
+run().catch((e) => setImmediate(() => { throw e; }));

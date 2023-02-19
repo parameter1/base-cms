@@ -159,7 +159,7 @@ export default {
   },
 
   methods: {
-    bem: (name, mod = []) => [block, `${block}__${name}`, ...mod.map(m => `${block}__${name}--${m}`)],
+    bem: (name, mod = []) => [block, `${block}__${name}`, ...mod.map((m) => `${block}__${name}--${m}`)],
     async loadRecaptcha() {
       try {
         this.recaptcha.loading = true;

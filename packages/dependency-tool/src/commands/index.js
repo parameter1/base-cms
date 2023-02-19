@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 
-const upgradeOptions = yargs => yargs
+const upgradeOptions = (yargs) => yargs
   .option('path', {
     describe: 'A path (relative to the CWD) to execute the command in.',
     type: 'string',
@@ -13,5 +13,5 @@ const upgradeOptions = yargs => yargs
  */
 module.exports = (program) => {
   program
-    .command(['upgrade [path]', '$0'], 'Upgrade @parameter1/base-cms dependencies in the specified folder/project', upgradeOptions, argv => require('./upgrade')(argv));
+    .command(['upgrade [path]', '$0'], 'Upgrade @parameter1/base-cms dependencies in the specified folder/project', upgradeOptions, (argv) => require('./upgrade')(argv));
 };

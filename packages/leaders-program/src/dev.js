@@ -29,7 +29,7 @@ const loadComponent = ({
         headers: { 'x-tenant-key': tenant, 'x-site-id': siteId },
       }),
     },
-    render: h => h(Component, { props, on }),
+    render: (h) => h(Component, { props, on }),
   });
 };
 

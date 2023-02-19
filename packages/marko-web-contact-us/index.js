@@ -40,8 +40,7 @@ const send = async (res, domain, payload) => {
   });
 };
 
-
-const validatePayload = (payload = {}) => ['name', 'phone', 'email', 'comments'].every(k => payload[k]);
+const validatePayload = (payload = {}) => ['name', 'phone', 'email', 'comments'].every((k) => payload[k]);
 
 module.exports = (app, siteConfig) => {
   app.post('/__contact-us', bodyParser.json(), asyncRoute(async (req, res) => {

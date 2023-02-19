@@ -3,7 +3,7 @@
  * @param {string[]} phrases
  */
 module.exports = (phrases) => {
-  const should = phrases.map(phrase => ({
+  const should = phrases.map((phrase) => ({
     multi_match: {
       query: phrase,
       fields: ['taxonomy^1.8', 'name^1.5', 'teaser^1.2', 'body'],

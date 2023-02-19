@@ -24,7 +24,7 @@ $spacers: (
   block: $block-spacer
 ) !default;
 
-@import "../../../../node_modules/bootstrap/scss/variables";
+@import "bootstrap/scss/variables";
 
 // Generic
 $theme-box-shadow-sm:   0 1px 7px rgba(0, 0, 0, .05) !default;

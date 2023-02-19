@@ -26,7 +26,7 @@ module.exports = async ({
 
   const answeredQuestionMap = getAnsweredQuestionMap(user);
   const answerMap = fields
-    .filter(field => isOmedaProductId({ externalId: field.externalId, brandKey }))
+    .filter((field) => isOmedaProductId({ externalId: field.externalId, brandKey }))
     .reduce((map, field) => {
       // Only set values that haven't already been answered.
       if (answeredQuestionMap.has(field.id)) return map;

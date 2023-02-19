@@ -202,7 +202,7 @@ export default {
 
     buildPopupFeatures() {
       const { features } = this.popup;
-      return Object.keys(features).map(key => `${key}=${features[key]}`).join(',');
+      return Object.keys(features).map((key) => `${key}=${features[key]}`).join(',');
     },
 
     /**

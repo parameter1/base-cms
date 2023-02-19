@@ -1,22 +1,11 @@
+const root = require('../../../eslintrc.browser');
+
 module.exports = {
-  extends: [
-    'airbnb-base',
-    'plugin:vue/recommended',
-  ],
-  env: {
-    browser: true,
-  },
+  ...root,
   rules: {
-    'vue/max-attributes-per-line': ['error', {
-      singleline: 3,
-      multiline: {
-        max: 1,
-        allowFirstLine: false,
-      },
-    }],
+    ...root.rules,
     'vue/no-v-html': 'off',
-  },
-  parserOptions: {
-    parser: 'babel-eslint',
+    // @todo this should NOT stay on, only added because some form fields were handled wrong
+    'vue/no-mutating-props': 'off',
   },
 };

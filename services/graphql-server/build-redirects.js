@@ -98,7 +98,7 @@ const buildSectionRedirects = async (sectionColl) => {
   const docs = await cursor.toArray();
 
   log(`Found ${docs.length} section redirects.`);
-  return Promise.all(docs.filter(doc => typeof doc === 'object').map(async ({ alias, redirects }) => {
+  return Promise.all(docs.filter((doc) => typeof doc === 'object').map(async ({ alias, redirects }) => {
     const from = redirects;
     const to = alias;
     return { from, to };
@@ -115,7 +115,7 @@ const buildIssueRedirects = async (issueColl) => {
   const docs = await cursor.toArray();
 
   log(`Found ${docs.length} issue redirects.`);
-  return Promise.all(docs.filter(doc => typeof doc === 'object').map(async ({ _id, redirects }) => {
+  return Promise.all(docs.filter((doc) => typeof doc === 'object').map(async ({ _id, redirects }) => {
     const from = redirects;
     const to = `/magazine/${_id}`;
     return { from, to };
@@ -228,4 +228,4 @@ const run = async () => {
   await basedb.close();
 };
 
-run().catch(e => setImmediate(() => { throw e; }));
+run().catch((e) => setImmediate(() => { throw e; }));

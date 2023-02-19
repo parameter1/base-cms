@@ -16,7 +16,7 @@ const parseJSON = (value) => {
 const parseMessagePayload = (event) => {
   const obj = parseJSON(event.data);
   if (!obj) return null;
-  if (['adImagePath', 'adTitle', 'backgroundImagePath', 'adClickUrl'].every(k => obj[k])) {
+  if (['adImagePath', 'adTitle', 'backgroundImagePath', 'adClickUrl'].every((k) => obj[k])) {
     return obj;
   }
   return null;

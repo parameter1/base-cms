@@ -1,8 +1,8 @@
 $pswp__assets-path: "/dist/assets/" !default;
 $pswp__background-color: rgba(0, 0, 0, .9) !default;
 
-@import "../../node_modules/photoswipe/src/css/main";
-@import "../../node_modules/photoswipe/src/css/default-skin/default-skin";
+@import "photoswipe/src/css/main";
+@import "photoswipe/src/css/default-skin/default-skin";
 
 .pswp {
   &__counter {

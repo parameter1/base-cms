@@ -7,10 +7,10 @@
           :key="index"
         >
           <nav-link
+            v-slot="{ isActive }"
             tag="button"
             :index="index"
             :active-index="activeIndex"
-            #default="{ isActive }"
             @focusin="onLinkFocus"
             @pointer-enter="onLinkEnter"
             @pointer-end="onLinkEnd"
@@ -113,17 +113,17 @@ export default {
     open: {
       type: String,
       default: 'below',
-      validator: v => ['above', 'below', 'left', 'right', 'auto', null].includes(v),
+      validator: (v) => ['above', 'below', 'left', 'right', 'auto', null].includes(v),
     },
     closeTimeoutMS: {
       type: Number,
       default: 250,
-      validator: v => v > 0,
+      validator: (v) => v > 0,
     },
     openTimeoutMS: {
       type: Number,
       default: 50,
-      validator: v => v > 0,
+      validator: (v) => v > 0,
     },
     offsetBottom: {
       type: Number,

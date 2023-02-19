@@ -3,4 +3,4 @@ const { LEONIS_DSN } = require('../env');
 
 const client = createMongoClient(LEONIS_DSN);
 
-module.exports = tenant => createBaseDB({ tenant, client });
+module.exports = (tenant) => createBaseDB({ tenant, client });

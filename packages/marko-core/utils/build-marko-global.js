@@ -1,12 +1,17 @@
-const { assign } = Object;
-
 /**
- * Generates the marko `$global` template property in the same way
- * as the Express middleware does.
+ * Generates the marko `$global` template property.
  *
  * @param {object} res The Express response object.
+ * @param {object} [data]
  */
-module.exports = (res) => {
+module.exports = (res, data) => {
   const { req, app } = res;
-  return assign({ app, req, res }, app.locals, res.locals);
+  const $global = {
+    app,
+    req,
+    res,
+    ...app.locals,
+    ...res.locals,
+  };
+  return { ...$global, ...(data && data.$global) };
 };

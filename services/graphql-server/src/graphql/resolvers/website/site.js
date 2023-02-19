@@ -30,7 +30,7 @@ module.exports = {
       return `${primary}-${subCode.toLowerCase()}`;
     },
 
-    primaryCode: language => language.primaryCode.toLowerCase(),
+    primaryCode: (language) => language.primaryCode.toLowerCase(),
 
     subCode: (language) => {
       if (!language.subCode) return null;

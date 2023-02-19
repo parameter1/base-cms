@@ -25,8 +25,8 @@ const buildDefineSlot = ({
 module.exports = (slots) => {
   if (!isObject(slots)) return [];
   return Object.keys(slots)
-    .map(id => ({ ...slots[id], id }))
-    .filter(slot => slot.path && isArray(slot.size))
+    .map((id) => ({ ...slots[id], id }))
+    .filter((slot) => slot.path && isArray(slot.size))
     .map(({
       id,
       path,
@@ -47,5 +47,5 @@ module.exports = (slots) => {
       buildSizeMapping(sizeMapping),
       buildCollapse(collapse, collapseBeforeAdFetch),
       'addService(googletag.pubads());',
-    ].filter(v => v).join('.'));
+    ].filter((v) => v).join('.'));
 };

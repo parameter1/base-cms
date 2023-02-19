@@ -41,5 +41,5 @@ module.exports = async (content, _, { basedb }) => {
     ],
   };
   const results = await basedb.find('platform.Content', { _id: { $in: contactIds }, ...emails }, { projection: { email: 1, publicEmail: 1 } });
-  return results.map(({ email, publicEmail }) => publicEmail || email).filter(v => v);
+  return results.map(({ email, publicEmail }) => publicEmail || email).filter((v) => v);
 };

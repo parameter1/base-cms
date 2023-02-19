@@ -110,7 +110,7 @@ export default {
         this.city,
         this.regionCode,
         this.postalCode,
-      ].some(v => v.visible);
+      ].some((v) => v.visible);
     },
     classNames() {
       const classNames = ['form-group'];

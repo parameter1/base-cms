@@ -1,7 +1,7 @@
 const { get } = require('@parameter1/base-cms-object-path');
 const { stripHtml } = require('@parameter1/base-cms-html');
 
-const cleanTeaser = value => String(value || '').trim();
+const cleanTeaser = (value) => String(value || '').trim();
 
 const getTeaser = (mutation, content) => {
   const teaser = cleanTeaser(get(content, 'teaser', ''));
@@ -17,7 +17,7 @@ const truncateTeaser = (value, { maxLength, truncatedSuffix }) => {
   if (stripped.replace(' ', '').length <= maxLength) return value;
 
   let truncated = '';
-  const words = stripped.split(' ').filter(v => v);
+  const words = stripped.split(' ').filter((v) => v);
   words.forEach((word) => {
     if (!truncated) {
       truncated = word;

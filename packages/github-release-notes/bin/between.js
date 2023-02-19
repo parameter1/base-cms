@@ -15,4 +15,4 @@ require('../src/between')({
   repo,
   base,
   head,
-}).catch(e => setImmediate(() => { throw e; }));
+}).catch((e) => setImmediate(() => { throw e; }));

@@ -19,7 +19,7 @@ class ResolvedNode {
   }
 
   getEdgeNodesFor(path) {
-    return this.getAsArray(`${path}.edges`).map(edge => asObject(edge).node);
+    return this.getAsArray(`${path}.edges`).map((edge) => asObject(edge).node);
   }
 }
 

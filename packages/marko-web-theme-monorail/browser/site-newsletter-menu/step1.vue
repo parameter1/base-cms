@@ -80,7 +80,7 @@ export default {
     newsletter: {
       type: Object,
       required: true,
-      validate: o => (o && o.name && o.deploymentTypeId),
+      validate: (o) => (o && o.name && o.deploymentTypeId),
     },
     recaptchaSiteKey: {
       type: String,

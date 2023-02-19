@@ -6,7 +6,7 @@ const { keys } = Object;
 module.exports = (toChange, pkg) => {
   depTypes.forEach((depType) => {
     keys(getAsObject(pkg, depType))
-      .filter(name => /^@parameter1\/base-cms-/.test(name))
+      .filter((name) => /^@parameter1\/base-cms-/.test(name))
       .forEach((name) => {
         const v = pkg[depType][name];
         const key = `${name}@${v}`;

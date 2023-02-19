@@ -6,11 +6,11 @@
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
   "scripts": {
-    "lint": "yarn lint:js && yarn lint:css",
-    "lint:js": "eslint --ext .js --ext .vue --max-warnings 5 ./",
-    "lint:css": "stylelint ./**/*.scss --max-warnings 5",
-    "compile": "basecms-marko-compile compile --dir ./ --silent true",
-    "test": "yarn compile && yarn lint"
+    "lint:fix": "yarn lint --fix",
+    "lint": "eslint --ext .js --ext .vue --max-warnings 5 ./",
+    "compile": "basecms-marko-compile compile",
+    "prepublish": "yarn compile",
+    "test": "yarn compile --no-clean && yarn lint"
   },
   "dependencies": {
     "@parameter1/base-cms-leaders-program": "^4.0.0-alpha.0",
@@ -19,7 +19,7 @@
     "object-path": "^0.11.8"
   },
   "peerDependencies": {
-    "@parameter1/base-cms-marko-web": "^3.0.0"
+    "@parameter1/base-cms-marko-web": "^4.0.0"
   },
   "publishConfig": {
     "access": "public"
