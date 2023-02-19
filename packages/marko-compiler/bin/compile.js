@@ -46,4 +46,4 @@ const commands = new Set(['compile']);
     return process.exit(0);
   }
   return null;
-})().catch(e => setImmediate(() => { throw e; }));
+})().catch((e) => setImmediate(() => { throw e; }));

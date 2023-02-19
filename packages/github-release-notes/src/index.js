@@ -8,7 +8,7 @@ module.exports = async ({ owner, repo }) => {
     repo,
   });
 
-  const tags = data.map(t => t.name);
+  const tags = data.map((t) => t.name);
   if (!tags.length) throw new Error('No tags were found.');
 
   const base = tags[1] || 'master';

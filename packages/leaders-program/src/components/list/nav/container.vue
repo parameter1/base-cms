@@ -14,7 +14,7 @@ export default {
     direction: {
       type: String,
       default: 'horizontal',
-      validator: v => ['horizontal', 'vertical'].includes(v),
+      validator: (v) => ['horizontal', 'vertical'].includes(v),
     },
   },
 

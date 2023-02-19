@@ -111,5 +111,5 @@ module.exports = async ({
         }
       }
     });
-  }).catch(e => setImmediate(() => { throw e; }));
+  }).catch((e) => setImmediate(() => { throw e; }));
 };

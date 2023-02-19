@@ -1,7 +1,7 @@
 module.exports = {
   extends: 'airbnb-base',
   plugins: [
-    'import'
+    'import',
   ],
   rules: {
     'import/extensions': ['error', 'ignorePackages', { js: 'never', marko: 'never', json: 'always' }],

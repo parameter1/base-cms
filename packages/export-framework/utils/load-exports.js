@@ -12,7 +12,7 @@ const load = async ({ rootDir, exportPath, coreConfig }) => {
   const fileMatch = new RegExp(`/.*.(${extensions.join('|')}).js$`);
 
   const files = await readdir(exportDir);
-  const filtered = files.filter(filename => fileMatch.test(filename));
+  const filtered = files.filter((filename) => fileMatch.test(filename));
 
   return filtered.map((filename) => {
     const { groups: { filepath, format } } = /(?<filepath>.*)\.(?<format>.*)\.js/.exec(filename);

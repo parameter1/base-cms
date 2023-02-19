@@ -6,7 +6,7 @@ module.exports = async (files = [], {
   tempFile = false,
   compilerOptions,
 } = {}) => {
-  await Promise.all(files.map(file => compile(file, {
+  await Promise.all(files.map((file) => compile(file, {
     force,
     debug,
     tempFile,

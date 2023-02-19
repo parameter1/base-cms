@@ -8,7 +8,6 @@
   </span>
 </template>
 
-
 <script>
 import FilterNoneIcon from '../../icons/filter-none.vue';
 import VideocamIcon from '../../icons/videocam.vue';

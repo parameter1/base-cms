@@ -1,5 +1,3 @@
-const { assign } = Object;
-
 class Limit {
   /**
    * Contructor.
@@ -32,7 +30,7 @@ class Limit {
    * @return {object}
    */
   get options() {
-    return assign({}, this.opts);
+    return { ...this.opts };
   }
 
   /**

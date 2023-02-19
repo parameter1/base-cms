@@ -26,10 +26,10 @@ module.exports = async (cwd, {
   const suffix = compiled ? `${extensionPattern}.js` : extensionPattern;
   const patterns = [
     `./${suffix}`,
-    ...dirs.map(dir => `${dir}/${suffix}`),
+    ...dirs.map((dir) => `${dir}/${suffix}`),
   ];
   if (debug) {
-    log('searching for marko files using patterns', patterns.map(pattern => path.resolve(cwd, pattern)));
+    log('searching for marko files using patterns', patterns.map((pattern) => path.resolve(cwd, pattern)));
   }
   const entries = await fg(patterns, {
     ...rest,
@@ -38,7 +38,7 @@ module.exports = async (cwd, {
     stats,
     objectMode: true,
     ignore: [
-      ...ignorePackages.map(name => `**/${name}/${suffix}`),
+      ...ignorePackages.map((name) => `**/${name}/${suffix}`),
     ],
   });
   if (entries.some(({ dirent }) => dirent.isDirectory())) {

@@ -1,6 +1,6 @@
 const { exec } = require('child_process');
 
-module.exports = name => new Promise((resolve, reject) => {
+module.exports = (name) => new Promise((resolve, reject) => {
   const cmd = `yarn info ${name} versions --json`;
   exec(cmd, (err, stdout, stderr) => {
     if (err) {

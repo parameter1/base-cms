@@ -1,3 +1,3 @@
 const { underscore } = require('inflected');
 
-module.exports = value => underscore(value);
+module.exports = (value) => underscore(value);

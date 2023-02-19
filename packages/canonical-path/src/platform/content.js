@@ -4,9 +4,9 @@ const { BaseDB } = require('@parameter1/base-cms-db');
 const { dasherize } = require('@parameter1/base-cms-inflector');
 
 const pathResolvers = {
-  id: content => content._id,
-  slug: content => get(content, 'mutations.Website.slug'),
-  type: content => dasherize(content.type),
+  id: (content) => content._id,
+  slug: (content) => get(content, 'mutations.Website.slug'),
+  type: (content) => dasherize(content.type),
   sectionAlias: async (content, { load, site }) => {
     const ref = BaseDB.get(content, 'mutations.Website.primarySection');
     const id = BaseDB.extractRefId(ref);
@@ -44,7 +44,7 @@ const pathResolvers = {
 };
 
 const dynamicPageResolvers = {
-  alias: content => get(content, 'mutations.Website.alias'),
+  alias: (content) => get(content, 'mutations.Website.alias'),
 };
 
 const handleDynamicPage = async (content, context) => {
@@ -57,7 +57,7 @@ const handleDynamicPage = async (content, context) => {
     return isFn(fn) ? fn(content, context) : content[key];
   }));
 
-  const path = cleanPath(values.filter(v => v).map(v => String(v).trim()).join('/'));
+  const path = cleanPath(values.filter((v) => v).map((v) => String(v).trim()).join('/'));
 
   if (!path) return '';
   if (prefix) return `/${cleanPath(prefix)}/page/${path}`;
@@ -87,7 +87,7 @@ module.exports = async (content, context, { enableLinkUrl = true } = {}) => {
     return isFn(fn) ? fn(content, context) : content[key];
   }));
 
-  const path = cleanPath(values.filter(v => v).map(v => String(v).trim()).join('/'));
+  const path = cleanPath(values.filter((v) => v).map((v) => String(v).trim()).join('/'));
 
   if (!path) return '';
   if (prefix) return `/${cleanPath(prefix)}/${path}`;

@@ -47,16 +47,16 @@ module.exports = async (apollo, { templates }) => {
 
   const allNewsletters = getAsArray(data, 'emailNewsletters.edges').map((edge) => {
     const node = { ...edge.node };
-    node.templates = templates.filter(t => t.alias === node.alias).map(t => t.key);
-    node.campaigns = getAsArray(node, 'campaigns.edges').map(campaignEdge => ({ ...campaignEdge.node }));
+    node.templates = templates.filter((t) => t.alias === node.alias).map((t) => t.key);
+    node.campaigns = getAsArray(node, 'campaigns.edges').map((campaignEdge) => ({ ...campaignEdge.node }));
     [node.latestCampaign] = node.campaigns;
     return node;
   });
-  const newsletters = allNewsletters.filter(newsletter => newsletter.site);
-  const invalidNewsletters = allNewsletters.filter(newsletter => !newsletter.site);
+  const newsletters = allNewsletters.filter((newsletter) => newsletter.site);
+  const invalidNewsletters = allNewsletters.filter((newsletter) => !newsletter.site);
 
-  const aliases = newsletters.map(n => n.alias);
-  const staticTemplates = templates.filter(t => !aliases.includes(t.alias)).map(t => t.key);
+  const aliases = newsletters.map((n) => n.alias);
+  const staticTemplates = templates.filter((t) => !aliases.includes(t.alias)).map((t) => t.key);
 
   invalidNewsletters.forEach((newsletter) => {
     process.emitWarning(`No site ID is assigned to ${newsletter.name} (${newsletter.id})`);

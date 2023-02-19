@@ -1,1 +1,1 @@
-module.exports = input => ({ renderBody: input.renderBody });
+module.exports = (input) => ({ renderBody: input.renderBody });

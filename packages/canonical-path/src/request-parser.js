@@ -9,7 +9,7 @@ const buildParts = ({
   def,
 }) => {
   if (!isArray(parts) || !parts.length) return def;
-  return parts.filter(v => allowed.includes(v));
+  return parts.filter((v) => allowed.includes(v));
 };
 
 const buildContentParts = (parts) => {

@@ -23,10 +23,9 @@ const execute = async ({ dir, forceLatest }) => {
   const packageVersionMap = new Map();
   await Promise.all([...names].map(async (name) => {
     const { versions } = await loadVersionInfo(name);
-    const latest = versions.filter(v => !semver.prerelease(v)).pop();
+    const latest = versions.filter((v) => !semver.prerelease(v)).pop();
     packageVersionMap.set(name, { versions, latest });
   }));
-
 
   const toChange = new Map();
   baseDepMap.forEach(({ name, v: range }, key) => {
@@ -56,7 +55,7 @@ const execute = async ({ dir, forceLatest }) => {
   if (isArray(pkg.workspaces)) {
     log(chalk`Workspaces detected. Will upgrade recursively: {gray ${JSON.stringify(pkg.workspaces)}}`);
     const workspaceDirs = loadWorkspaceDirs(dir, pkg.workspaces);
-    await Promise.all(workspaceDirs.map(async wsDir => execute({ dir: wsDir, forceLatest })));
+    await Promise.all(workspaceDirs.map(async (wsDir) => execute({ dir: wsDir, forceLatest })));
   }
 };
 

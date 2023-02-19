@@ -3,7 +3,7 @@ const numeral = require('numeral');
 const octokit = require('./octokit');
 const codename = require('./codename');
 
-const s = v => (v > 1 ? 's' : '');
+const s = (v) => (v > 1 ? 's' : '');
 
 module.exports = async ({
   owner,
@@ -63,7 +63,7 @@ module.exports = async ({
       user,
     } = pull;
     const labels = Array.isArray(pull.labels)
-      ? pull.labels.map(l => createLabel({ name: l.name })) : [];
+      ? pull.labels.map((l) => createLabel({ name: l.name })) : [];
 
     const labelText = labels.length ? `\n  ${labels.join('\n  ')}` : '';
     return `- #${number} ${title} @${user.login}${labelText}`;

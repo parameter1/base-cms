@@ -57,12 +57,13 @@ import getEdgeNodes from '../utils/get-edge-nodes';
 import getAsObject from '../utils/get-as-object';
 
 export default {
-  inject: ['$graphql'],
   components: {
     Loading,
     LeadersHeader,
     LeadersSectionsWrapper,
   },
+
+  inject: ['$graphql'],
 
   props: {
     sectionAlias: {
@@ -100,7 +101,7 @@ export default {
     mediaQueries: {
       type: Array,
       default: () => [],
-      validator: values => values.every((value) => {
+      validator: (values) => values.every((value) => {
         if (!value || typeof value !== 'object') return false;
         const props = ['open', 'columns', 'expanded', 'displayHeader', 'displayCallout', 'offsetTop', 'offsetBottom'];
         if (!props.includes(value.prop)) return false;
@@ -175,7 +176,7 @@ export default {
     iconStyle: {
       type: String,
       default: 'plus-minus',
-      validator: v => ['plus-minus', 'chevron'].includes(v),
+      validator: (v) => ['plus-minus', 'chevron'].includes(v),
     },
   },
 
@@ -277,7 +278,7 @@ export default {
         const variables = { sectionIds };
         const r = await this.$graphql.query({ query: fromIdsQuery, variables });
         const sections = getEdgeNodes(r, 'data.websiteSections')
-          .filter(s => s.hierarchy.some(({ alias }) => alias === this.sectionAlias));
+          .filter((s) => s.hierarchy.some(({ alias }) => alias === this.sectionAlias));
         if (sections.length) return sections;
       }
       // Look up leadership sections by related IDs
@@ -285,7 +286,7 @@ export default {
         const variables = { relatedSectionIds, taxonomyIds: [] };
         const r = await this.$graphql.query({ query: fromContentQuery, variables });
         const sections = getEdgeNodes(r, 'data.websiteSections')
-          .filter(s => s.hierarchy.some(({ alias }) => alias === this.sectionAlias));
+          .filter((s) => s.hierarchy.some(({ alias }) => alias === this.sectionAlias));
         if (sections.length) return sections;
       }
       // Look up leadership sections by content taxonomy, scheduling, and primary section
@@ -301,7 +302,7 @@ export default {
       if (!this.contentId) return [];
       const variables = { contentId: this.contentId };
       const r1 = await this.$graphql.query({ query: contentQuery, variables });
-      const taxonomyIds = getEdgeNodes(r1, 'data.content.taxonomy').map(t => t.id);
+      const taxonomyIds = getEdgeNodes(r1, 'data.content.taxonomy').map((t) => t.id);
       const sectionIds = [];
       this.taxonomyIds = taxonomyIds;
       if (this.useContentPrimarySection) {
@@ -313,7 +314,7 @@ export default {
       const r2 = await this.$graphql.query({ query: fromContentQuery, variables: v2 });
       const sections = getEdgeNodes(r2, 'data.websiteSections');
       return sections
-        .filter(s => s.hierarchy.some(({ alias }) => alias === this.sectionAlias));
+        .filter((s) => s.hierarchy.some(({ alias }) => alias === this.sectionAlias));
     },
 
     async loadAllSections() {
