@@ -1,4 +1,4 @@
-const { getProfileMS } = require('@parameter1/base-cms-marko-web-modern-utils');
+const { getProfileMS } = require('@parameter1/base-cms-utils');
 const compile = require('@parameter1/base-cms-marko-web-modern-lib/compile');
 const { deleteCompiledFiles } = require('@parameter1/base-cms-marko-web-modern-lib/utils');
 const log = require('fancy-log');

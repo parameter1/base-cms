@@ -2,7 +2,7 @@ const path = require('path');
 const { readFile, writeFile, rename } = require('fs').promises;
 const { grey } = require('chalk');
 const log = require('fancy-log');
-const { getProfileMS } = require('@parameter1/base-cms-marko-web-modern-utils');
+const { getProfileMS } = require('@parameter1/base-cms-utils');
 const runCompile = require('./run');
 const stat = require('../utils/stat');
 

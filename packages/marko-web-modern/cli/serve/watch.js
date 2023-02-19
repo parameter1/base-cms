@@ -4,7 +4,7 @@ const log = require('fancy-log');
 const { blue, grey } = require('chalk');
 const compile = require('@parameter1/base-cms-marko-web-modern-lib/compile');
 const { deleteCompiledFor } = require('@parameter1/base-cms-marko-web-modern-lib/utils');
-const { getProfileMS } = require('@parameter1/base-cms-marko-web-modern-utils');
+const { getProfileMS } = require('@parameter1/base-cms-utils');
 const formatWebsiteInfo = require('./format-website-info');
 
 const extensions = [

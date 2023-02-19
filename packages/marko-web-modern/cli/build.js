@@ -1,4 +1,4 @@
-const { getProfileMS } = require('@parameter1/base-cms-marko-web-modern-utils');
+const { getProfileMS } = require('@parameter1/base-cms-utils');
 const log = require('fancy-log');
 const css = require('./build/css');
 const js = require('./build/js');
