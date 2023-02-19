@@ -12,7 +12,7 @@ const exit = (message, code = 0) => {
   process.exit(code);
 };
 
-const defaultCompileDirs = ['../packages', '../node_modules/@parameter1'];
+const defaultCompileDirs = ['../packages'];
 
 const commands = new Set(['build', 'build:css', 'build:js', 'build:ssr', 'dev']);
 (async () => {
@@ -42,6 +42,7 @@ const commands = new Set(['build', 'build:css', 'build:js', 'build:ssr', 'dev'])
 
   if (command === 'build') {
     const build = require('../build');
+    const clean = argv['clean-compiled-files'];
     const opts = {
       cwd,
       entries: {
@@ -52,7 +53,7 @@ const commands = new Set(['build', 'build:css', 'build:js', 'build:ssr', 'dev'])
       },
       // defaults to what the site repos normally use.
       compileDirs: getArrayValuesFor('compile-dir', defaultCompileDirs),
-      cleanCompiledFiles: Boolean(argv['clean-compiled-files']),
+      cleanCompiledFiles: clean == null ? true : clean,
     };
     log(`beginning '${blue('build')}' server with options`, opts);
     await build(opts);
