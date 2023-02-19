@@ -33,7 +33,27 @@ yarn global add @parameter1/base-cms-dependency-tool@v3.28.1
 docker-compose down
 ```
 
+3. It's **highly recommended** that you recursively delete _all_ `node_modules` folders
+```bash
+find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +
+```
 
+## Upgrade Docker Node images from 10 to 14
+
+### Action Items
+1. References to `node:10` images (specifically, `node:10.24`) should be changed to `node:14.21` in _all_ files named
+- `docker-compose.yml`
+- `Dockerfile`
+
+2. If GitHub actions are used by the repo, the `node-version` value must be changed to `14.21` in the `.github/workflows/node-ci.yml` file. If TravisCI is still used, check the `.travis` file in the root of the project and update the node version.
+
+## Lerna
+
+### Action Items
+Upgrade `lerna` to the latest major version in your root `package.json` file
+```json
+"lerna": "^6.5.1"
+```
 
 ## Stylelint
 Linting styles via `stylelint` has been removed. The reasons are varied, but primarily version 10 is _really_ old and the bootstrap config preset isn't well-supported anymore.
