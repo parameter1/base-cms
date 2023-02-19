@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 require('marko');
-const buildGlobal = require('../build-global');
+const buildGlobal = require('@parameter1/base-cms-marko-core/utils/build-marko-global');
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 const express = module.main ? module.main.require('express') : require('express');

@@ -1,3 +1,17 @@
-const buildGlobal = require('@parameter1/base-cms-marko-web-modern-lib/express/build-global');
-
-module.exports = buildGlobal;
+/**
+ * Generates the marko `$global` template property.
+ *
+ * @param {object} res The Express response object.
+ * @param {object} [data]
+ */
+module.exports = (res, data) => {
+  const { req, app } = res;
+  const $global = {
+    app,
+    req,
+    res,
+    ...app.locals,
+    ...res.locals,
+  };
+  return { ...$global, ...(data && data.$global) };
+};

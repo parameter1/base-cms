@@ -33,7 +33,6 @@
     "@parameter1/base-cms-inflector": "^3.0.0",
     "@parameter1/base-cms-marko-node-require": "^3.0.0",
     "@parameter1/base-cms-marko-web-deferred-script-loader": "^4.0.0-alpha.0",
-    "@parameter1/base-cms-marko-web-modern-lib": "^0.0.0",
     "@parameter1/base-cms-object-path": "^3.0.0",
     "@parameter1/base-cms-tenant-context": "^3.0.0",
     "@parameter1/base-cms-utils": "^3.0.0",
