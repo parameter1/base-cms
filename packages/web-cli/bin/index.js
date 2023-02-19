@@ -12,7 +12,7 @@ const exit = (message, code = 0) => {
   process.exit(code);
 };
 
-const defaultCompileDirs = ['../packages'];
+const defaultCompileDirs = ['../../packages'];
 
 const commands = new Set(['build', 'build:css', 'build:js', 'build:ssr', 'dev']);
 (async () => {
@@ -97,7 +97,7 @@ const commands = new Set(['build', 'build:css', 'build:js', 'build:ssr', 'dev'])
       compileDirs: getArrayValuesFor('compile-dir', defaultCompileDirs),
       cleanCompiledFiles: Boolean(argv['clean-compiled-files']),
       // defaults to what the site repos normally use.
-      additionalWatchDirs: getArrayValuesFor('watch-dir', ['../packages']),
+      additionalWatchDirs: getArrayValuesFor('watch-dir', ['../../packages']),
       watchIgnore: getArrayValuesFor('watch-ignore'),
       abortOnInstanceError: Boolean(argv['abort-on-error']),
       showWatchedFiles: Boolean(argv['show-watched-files']),
