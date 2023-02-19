@@ -10,7 +10,7 @@
     "basecms-marko-compile": "bin/compile.js"
   },
   "engines": {
-    "node": ">=14.0"
+    "node": ">=14.15"
   },
   "os": [
     "darwin",

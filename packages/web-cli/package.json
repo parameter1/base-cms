@@ -9,6 +9,14 @@
   },
   "license": "MIT",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/web-cli",
+  "engines": {
+    "node": ">=14.15"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
   "scripts": {
     "lint": "eslint --ext .js --max-warnings 5 ./",
     "test": "yarn lint"
