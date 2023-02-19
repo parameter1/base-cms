@@ -81,16 +81,16 @@ Linting styles via `stylelint` has been removed. The reasons are varied, but pri
 2. If you also have `stylelint` installed as a dependency in your repository (either in the root monorepo `package.json` file or in any sites/packages) please remove the dependency and re-run `./scripts/yarn.sh`
 
 ## ESLint
-The internal `eslint` version was upgrade from v5 to v8 -- quite a large jump -- and supporting the support `eslint-plugin-import` and `eslint-config-airbnb-base` were also uopgraded. As such, if you were relying on the eslint version provided by `base-cms` (most likely), you'll need to update your code to fix any lint errors.
+The internal `eslint` version was upgrade from v5 to v8 -- quite a large jump -- and the supporting `eslint-plugin-import` and `eslint-config-airbnb-base` were also upgraded. As such, if you were relying on the eslint version provided by `base-cms` (most likely), you'll need to update your code to fix any lint errors.
 
-In addition, the web, newsletter, and export CLIs no longer provides a `lint` command. Most commands were _not_ using this command directly, and instead were running `eslint` directly in their package.json `lint` scripts. But this will need to be verified
+In addition, the web, newsletter, and export CLIs no longer provide a `lint` command. Most websites were _not_ using this command directly, and instead were running `eslint` directly in their package.json `lint` scripts. But this will need to be verified
 
 ### Action Items
 1. Verify that none of your package.json `lint` scripts reference the `basecms-website lint` comamnd. If they do, change them appropriately, usually `eslint --ext .js --ext .vue --max-warnings 5 --ignore-path ../../.eslintignore ./`
 - Also note the stylelint changes above -- `lint:css` scripts should be removed and the old `lint:js` script should _become_ the new `lint` script with the eslint command above.
 
-2. Install `eslint` (along with plugins and configs) in the monorepo root. Existing core configurations and browser config files should still work and do not need to change.
-- In the root `package.json` add or update the following devDependencies: (**note:** newsletter and export repos do _not_ need `babel-eslint` or `eslint-plugin-vue`)
+2. Install `eslint` (along with plugins and configs) in the monorepo root. Existing core configurations should still work and do not need to change. That said, browser/vue configurations will need some changes (more on that below.)
+- In the root `package.json` add or update the following devDependencies: (**note:** newsletter and export repos do _not_ need `@babel/eslint-parser` or `eslint-plugin-vue`)
   ```json
   "@babel/eslint-parser": "^7.19.1",
   "eslint": "^8.34.0",
@@ -181,4 +181,3 @@ Tested inside Docker container on Mac using example website.
 - Legacy: ~34 seconds
 - New: ~57 seconds
   - this will be _much_ faster in an actual website, since the example site needs to delete and re-compile _all_ marko templates in the entire base-cms repo, which wouldn't happen in a site repo.
-
