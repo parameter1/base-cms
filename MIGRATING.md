@@ -136,6 +136,14 @@ In addition, the web, newsletter, and export CLIs no longer provides a `lint` co
     'vue/multi-word-component-names': 'off',
     ```
 
+5. Because the new version of the vue plugin can support Vue3, we should also instruct any plugins as to our target Vue version. In the root of the repo create a `jsconfig.json` (if it doesn't exist) and add:
+    ```json
+    {
+      "vueCompilerOptions": {
+        "target": 2.7
+      }
+    }
+    ```
 5. Once the new devDependencies are added, run `./scripts/yarn.sh`
 6. Restart VSCode so the new eslint library will load
 7. Run the global `lint` command and fix any new lint errors. Generally you'll find errors related to missing parenthesis around function args, but there will be others.
