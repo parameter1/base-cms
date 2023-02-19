@@ -63,16 +63,19 @@ In addition, the web, newsletter, and export CLIs no longer provides a `lint` co
 - You must remove _all_ `babel-eslint` packages, since `@babel/eslint-parser` is now used.
 - Double-check your website and global package files and ensure there aren't any references to eslint or any of it's plugins - this way only the root versions will be used.
 
-3. Update `babel-eslint` references on `.eslintrc.js` config files. The fastest way is to search for `parser: 'babel-eslint'`
+3. Update `babel-eslint` references on `.eslintrc.js` config files. The fastest way is to search for `parser: 'babel-eslint'`. If your repo isn't already using a common/shared browser eslint file that's imported into each `browser` we recommend creating one.
   - Replace
     ```js
     parserOptions: {
       parser: 'babel-eslint',
     },
     ```
-  - With this (**Note** the removal of `parserOptions`)
+  - With this (**Note** the move of `parser` to the root config)
     ```js
     parser: '@babel/eslint-parser',
+    parserOptions: {
+      requireConfigFile: false,
+    },
     ```
 4. The `vue/max-attributes-per-line` rule options changed in the latest version and needs to be updated
   - Replace

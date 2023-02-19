@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   root: true,
   env: {
@@ -18,7 +20,12 @@ module.exports = {
         max: 1,
       },
     }],
-    'vue/no-v-html': 'off'
+    'vue/no-v-html': 'off',
   },
   parser: '@babel/eslint-parser',
+  parserOptions: {
+    babelOptions: {
+      configFile: path.resolve(__dirname, './babel.config.js'),
+    },
+  },
 };
