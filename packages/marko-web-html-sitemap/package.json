@@ -18,7 +18,7 @@
     "graphql-tag": "^2.12.6"
   },
   "peerDependencies": {
-    "@parameter1/base-cms-marko-core": "^3.0.0",
-    "@parameter1/base-cms-marko-web": "^3.0.0"
+    "@parameter1/base-cms-marko-core": "^4.0.0",
+    "@parameter1/base-cms-marko-web": "^4.0.0"
   }
 }
