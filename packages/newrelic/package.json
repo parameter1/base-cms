@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-newrelic",
-  "version": "3.19.0",
+  "version": "4.0.0-alpha.3",
   "description": "Utilities for the newrelic library.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",

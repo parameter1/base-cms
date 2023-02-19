@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-web-cli",
-  "version": "4.0.0-alpha.0",
+  "version": "4.0.0-alpha.3",
   "description": "A Marko CLI for managing websites.",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "homepage": "https://github.com/parameter1/base-cms/tree/main/packages/marko-web-modern/cli#readme",
@@ -32,8 +32,8 @@
     "@babel/plugin-transform-runtime": "^7.19.6",
     "@babel/preset-env": "^7.20.2",
     "@babel/runtime": "^7.20.13",
-    "@parameter1/base-cms-marko-compiler": "^4.0.0-alpha.0",
-    "@parameter1/base-cms-utils": "^3.0.0",
+    "@parameter1/base-cms-marko-compiler": "^4.0.0-alpha.3",
+    "@parameter1/base-cms-utils": "^4.0.0-alpha.3",
     "autoprefixer": "^10.4.13",
     "babel-loader": "^9.1.2",
     "chalk": "^4.1.2",
