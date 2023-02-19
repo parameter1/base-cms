@@ -1,15 +1,12 @@
 module.exports = {
-  root: true,
-  env: {
-    node: true,
-  },
   extends: [
+    'airbnb-base',
     'plugin:vue/recommended',
-    '@vue/airbnb',
   ],
+  env: {
+    browser: true,
+  },
   rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'vue/max-attributes-per-line': ['error', {
       singleline: {
         max: 3,
@@ -18,7 +15,6 @@ module.exports = {
         max: 1,
       },
     }],
-    'vue/no-v-html': 'off'
   },
   parser: '@babel/eslint-parser',
 };
