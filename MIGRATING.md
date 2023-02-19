@@ -69,6 +69,10 @@ While the CLI was significantly improved for performance, each website's `yarn d
 
 Note: Marko files from `@parameter1/base-cms-*` packages (found in `node_modules`) are now compiled on build/publish. As such the compiled files will already exist in `node_modules` when they are installed, and are not automatically compiled by the new CLI. The drawback to this is that you can no longer directly change `.marko` files found in `node_modules` without re-compiling manually. More to follow on this topic at a later time.
 
+### Action Items
+1. It is recommended to change `package.json` compile scripts to `"compile": "basecms-marko-compile compile"`. While the old scripts will still work, this will cleanup cli options that are no longer used.
+2. It is recommended to update any `package.json` test sripts that include `yarn compile` to add the `--no-clean` option. This will make test runs faster since the marko file will not be deleted before compiling. For example `"test": "yarn compile --no-clean && yarn lint"`
+
 ## Stylelint
 Linting styles via `stylelint` has been removed. The reasons are varied, but primarily version 10 is _really_ old and the bootstrap config preset isn't well-supported anymore.
 
