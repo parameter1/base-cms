@@ -1,11 +1,10 @@
 const log = require('fancy-log');
-const { watch, parallel } = require('gulp');
+const { watch } = require('gulp');
 const {
   cyan,
   green,
   red,
 } = require('chalk');
-const lint = require('./lint');
 const server = require('./server');
 
 module.exports = (cwd, serverFile) => () => {
@@ -25,7 +24,7 @@ module.exports = (cwd, serverFile) => () => {
         useFsEvents: false,
       }),
     },
-    parallel(lint(cwd), server(serverFile)),
+    server(serverFile),
   );
   watcher.on('add', path => log(`File ${green(path)} was ${green('added')}`));
   watcher.on('change', path => log(`File ${green(path)} was ${cyan('changed')}`));
