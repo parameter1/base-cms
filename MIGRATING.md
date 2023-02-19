@@ -18,3 +18,29 @@
 - Remove any references to components `<marko-web-deferred-script-loader-init />` and `<marko-web-deferred-script-loader-load />`. These are now included in core and do not need to be in the websites.
 - Each website's `yarn dev` and `yarn build` scripts _should_ still work as expected, as the new CLI assumes that marko templates need to be compiled from `../packages` (assuming a standard site working directory of `sites/domain.com`). If this needs to be adjusted, change the site's `dev` script `--compile-dir` option
 - Marko files from `@parameter1 `packages (found in `node_modules`) are now compiled on build/publish. As such the compiled files will already exist in `node_modules`. As such, there's not need to watch or compile `node_modules` packages. The drawback is that you _cannot_ directly change `.marko` files found in `node_modules` without re-compiling the changed file.
+
+## CLI Timings
+Tested inside Docker container on Mac using example website.
+
+### Dev Server
+- Initial boot
+  - Legacy: ~1 minute
+  - New: ~40 seconds
+- Restart time after save of marko file
+  - Legacy: ~34 seconds
+  - New: ~9 seconds
+- Restart time after save of browser JS file
+  - Legacy: ~32 seconds
+  - New: ~2 seconds
+- Restart time after save of SSR file
+  - Legacy: ~30 seconds
+  - New: ~4 seconds
+- Restart time after save of SCSS file
+  - Legacy: ~32 seconds
+  - New: ~3 seconds
+
+### Production Build
+- Legacy: ~34 seconds
+- New: ~57 seconds
+  - this will be _much_ faster in an actual website, since the example site needs to delete and re-compile _all_ marko templates in the entire base-cms repo, which wouldn't happen in a site repo.
+
