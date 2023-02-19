@@ -7,8 +7,9 @@
   "scripts": {
     "lint": "yarn lint:js",
     "lint:js": "eslint --ext .js --ext .vue --max-warnings 5 ./",
-    "compile": "basecms-marko-compile compile --dir ./ --silent true",
-    "test": "yarn compile && yarn lint"
+    "compile": "basecms-marko-compile compile",
+    "prepublish": "yarn compile",
+    "test": "yarn compile --no-clean && yarn lint"
   },
   "peerDependencies": {
     "@parameter1/base-cms-marko-core": "^3.0.0",

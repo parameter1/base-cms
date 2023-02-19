@@ -7,8 +7,9 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ext .js --ext .vue --max-warnings 5 ./",
-    "compile": "basecms-marko-compile compile --dir ./ --silent true",
-    "test": "yarn compile && yarn lint"
+    "compile": "basecms-marko-compile compile",
+    "prepublish": "yarn compile",
+    "test": "yarn compile --no-clean && yarn lint"
   },
   "dependencies": {
     "@parameter1/base-cms-marko-web-identity-x": "^4.0.0-alpha.0",

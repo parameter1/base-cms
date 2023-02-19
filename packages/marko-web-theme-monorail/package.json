@@ -6,7 +6,9 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ext .js --ext .vue --max-warnings 5 --ignore-path ../../.eslintignore ./",
-    "test": "yarn lint"
+    "compile": "basecms-marko-compile compile",
+    "prepublish": "yarn compile",
+    "test": "yarn compile --no-clean && yarn lint"
   },
   "dependencies": {
     "@parameter1/base-cms-dayjs": "^3.17.3",

@@ -10,10 +10,9 @@
   "scripts": {
     "dev": "basecms-exports dev index.js",
     "build": "basecms-exports build",
-    "compile": "basecms-marko-compile compile --dir ./ --silent true",
     "lint": "yarn lint:js",
     "lint:js": "eslint --ext .js --ext .vue --max-warnings 5 --ignore-path ../../.eslintignore ./",
-    "test": "yarn lint && yarn compile && yarn build"
+    "test": "yarn lint && yarn build"
   },
   "dependencies": {
     "@parameter1/base-cms-export-cli": "^4.0.0-alpha.0",

@@ -8,8 +8,9 @@
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-core",
   "scripts": {
     "lint": "eslint --ext .js --max-warnings 5 ./",
-    "compile": "basecms-marko-compile compile --dir ./ --silent true",
-    "test": "yarn compile && yarn lint"
+    "compile": "basecms-marko-compile compile",
+    "prepublish": "yarn compile",
+    "test": "yarn compile --no-clean && yarn lint"
   },
   "dependencies": {
     "@parameter1/base-cms-dayjs": "^3.17.3",

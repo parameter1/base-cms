@@ -6,8 +6,9 @@
   "license": "MIT",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-newsletters-omail",
   "scripts": {
-    "compile": "basecms-marko-compile compile --dir ./ --silent true",
-    "test": "yarn compile"
+    "compile": "basecms-marko-compile compile",
+    "prepublish": "yarn compile",
+    "test": "yarn compile --no-clean && yarn lint"
   },
   "peerDependencies": {
     "@parameter1/base-cms-marko-core": "^3.0.0"

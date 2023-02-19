@@ -8,7 +8,9 @@
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/export-framework",
   "scripts": {
     "lint": "eslint --ext .js --max-warnings 5 ./",
-    "test": "yarn lint"
+    "compile": "basecms-marko-compile compile",
+    "prepublish": "yarn compile",
+    "test": "yarn compile --no-clean && yarn lint"
   },
   "dependencies": {
     "@godaddy/terminus": "^4.11.2",
