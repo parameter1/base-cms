@@ -206,7 +206,8 @@ In addition, the web, newsletter, and export CLIs no longer provide a `lint` com
 ## Global Package Upgrade & Final Items
 1. Once all of the tasks above have been completed, run `./scripts/yarn.sh upgrade` to ensure all semver versions get normalized.
 2. Run `yarn test` in the project root to ensure tests pass
-3. Then start a website container and ensure it builds, boots, and serves.
+    - All marko files are compiled during testing. As such, if any components/templates contain references to missing components, you'll need to fix those errors before the tests will pass. For example, some sites had `spec-guide` templates pasted in from other repos that aren't actively used, etc.
+4. Then start a website container and ensure it builds, boots, and serves.
 
 # CLI Timings
 Tested inside Docker container on Mac using example website.
