@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-utils",
-  "version": "4.0.0-alpha.3",
+  "version": "3.0.0",
   "description": "Utility functions for JavaScript projects.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
