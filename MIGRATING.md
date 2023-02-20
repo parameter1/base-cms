@@ -41,13 +41,14 @@ All core `@parameter1/base-cms-*` dependencies will need to be upgraded to the l
 ### Action Items
 1. Upgrade all BaseCMS dependencies to v4.x by running the below in the project root
     ```bash
-    p1-basecms-dependencies upgrade --latest --prelreases
+    p1-basecms-dependencies upgrade --latest --prereleases
     ```
 
 2. Once completed, _do not_ run a `yarn install` yet. We'll save that to the very end. :)
 3. Delete references to `@babel/*` dependencies in the `yarn.lock` file. The easiest way to do this is to search in the file using regex `^"@babel\/` and then delete all entries. There may be _alot_ of these, and that's okay :)
 4. Delete references to `node-sass` in the `yarn.lock` file. Search using regex `^node-sass` and any entries
 4. Now run `./scripts/yarn.sh` -- this should run in the new Node14 Docker container (which may need to be downloaded). **MAKE SURE YOU RUN THE INSTALL USING THE SCRIPT** This ensures the install runs in the proper version of Node.
+    - Note: if you're doing this migration while 4.x is still in pre-release, you'll likely see Yarn wranings about incorrect peer dependencies (e.g. `has incorrect peer dependency "@parameter1/base-cms-marko-web@^4.0.0"`) -- this is fine and will be resolved the packages are at `4.0.0`.
 
 ## SASS/SCSS Updates
 The new build process will no longer resolve relative `@import` statements to files located in `node_modules`. The good news, however, is that it _can_ import using standard package names.
@@ -56,7 +57,7 @@ The new build process will no longer resolve relative `@import` statements to fi
 1. Update relative node_module `@import` declarations in `.scss` files to their absolute counterparts. For example:
     - `@import "../../node_modules/bootstrap/scss/mixins"` would become `@import "bootstrap/scss/mixins";`
     - the number of relative parent paths does not matter... so `../` and `../../` and `../../../` etc all need to be removed.
-2. The quickest way to change the import statements is to search all `.scss` files using regex `@import ".*\/node_modules\/` and replacing the matched entries with an empty string.
+2. The quickest way to change the import statements is to search all `.scss` files using regex `@import ".*\/node_modules\/` and replacing the matched entries with `@import "` (note the ending double-quote -- that should be there)
 
 ## Component Changes
 The `marko-web-deferred-script-loader` is now loaded into core. As such, certain component calls can be removed.
@@ -65,7 +66,7 @@ The `marko-web-deferred-script-loader` is now loaded into core. As such, certain
 1. Remove any references to components `<marko-web-deferred-script-loader-init />` and `<marko-web-deferred-script-loader-load />`. These normally occur in the site or global `document.marko` file.
 
 ## Improved CLI
-The CLI was significantly improved for performance and build time speed. While the CLI commands are still named the same (except for dropping `lint` -- see the `ESLint` and `Stylelint` sections below) their arguments need to be adjusted to ensure proper dev server operation, production build, and testing functions.
+The CLI was significantly improved for performance and build time speed. While the CLI commands are still named the same (except for dropping `lint` -- see [ESLint](#eslint) and [Stylelint](#stylelint) sections) their arguments need to be adjusted to ensure proper dev server operation, production build, and testing functions.
 
 **Note on Marko Files** All `.marko` files from `@parameter1/base-cms-*` packages (found in `node_modules`) are now compiled when the package is built and _published_ to NPM. Because of this, the compiled `.marko.js` files will already exist in `node_modules` when the packages are installed. These files are _not_ automatically compiled by the new CLI (nor generally should they be). The drawback is that you can no longer modify `.marko` files found in `node_modules` without re-compiling manually. More to follow on this topic at a later time.
 
@@ -103,13 +104,23 @@ The CLI was significantly improved for performance and build time speed. While t
       "test": "lerna run test"
     }
     ```
-4. The root `Dockerfile` will need updates to properly build the sites in production. In additon to changing the Node version to `14.24` ([see the section concerning Node versions above](#upgrade-docker-node-images-from-10-to-14)) the build commands should be adjusted as follows:
+4. The root `Dockerfile` will need updated to properly build the sites in production. In additon to changing the Node version to `14.24` ([see the section concerning Node versions above](#upgrade-docker-node-images-from-10-to-14)) the build commands should be adjusted as follows:
     ```diff
     - WORKDIR /root/sites/$SITE
     - RUN node_modules/.bin/basecms-website build
     + RUN yarn build
     ```
     - This will run the `build` script found in each website (js/css/ssr/marko) and each package (compiles Marko files)
+
+5. Verify that the sites in `docker-compose.yml` are using `yarn dev` as their entrypoint and command. Some sites run the `basecms-website` command directly. For example, change the following:
+    ```diff
+    x-site-command: &site-cmd
+      <<: *node
+      - entrypoint: ["node_modules/.bin/basecms-website"]
+      + entrypoint: ["yarn"]
+      - command: ["dev", "index.js"]
+      + command: ["dev"]
+    ```
 
 ## Stylelint
 Linting styles via `stylelint` has been removed. The reasons are varied, but primarily version 10 is _really_ old and the bootstrap config preset isn't well-supported anymore.
@@ -192,8 +203,10 @@ In addition, the web, newsletter, and export CLIs no longer provide a `lint` com
     - ProTip: add a `"lint:fix": "yarn lint --fix"` script to each website and global package's `package.json` file. Then add `"lint:fix": "lerna run lint:fix"` to the root package.json. That way, you can run `yarn lint:fix` from the root, which will lint and also try to fix all errors for you! [See the the complete list of new package.json scripts in the Improved CLI section](#improved-cli)
     - If the lint fixer does encounter errors, you'll need to manually fix those, then run `yarn lint:fix` again.
 
-## Global Package Upgrade
-Once all of the tasks above have been completed, run `./scripts/yarn.sh upgrade` to ensure all semver versions get normalized.
+## Global Package Upgrade & Final Items
+1. Once all of the tasks above have been completed, run `./scripts/yarn.sh upgrade` to ensure all semver versions get normalized.
+2. Run `yarn test` in the project root to ensure tests pass
+3. Then start a website container and ensure it builds, boots, and serves.
 
 # CLI Timings
 Tested inside Docker container on Mac using example website.
