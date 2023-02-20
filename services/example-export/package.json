@@ -8,12 +8,11 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "dev": "basecms-exports dev --compile-dir ../../packages --watch-dir ../../packages",
+    "compile": "basecms-marko-compile compile",
+    "lint": "eslint --ext .js --ext .vue --max-warnings 5 --ignore-path ../../.eslintignore ./",
     "lint:fix": "yarn lint --fix",
-    "dev": "basecms-exports dev index.js",
-    "build": "basecms-exports build",
-    "lint": "yarn lint:js",
-    "lint:js": "eslint --ext .js --ext .vue --max-warnings 5 --ignore-path ../../.eslintignore ./",
-    "test": "yarn lint && yarn build"
+    "test": "yarn lint && yarn compile --no-clean"
   },
   "dependencies": {
     "@parameter1/base-cms-export-cli": "^4.0.0-alpha.0",

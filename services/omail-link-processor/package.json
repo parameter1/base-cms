@@ -27,8 +27,6 @@
     "validator": "^13.9.0"
   },
   "devDependencies": {
-    "gulp": "^4.0.2",
-    "gulp-cached": "^1.1.1",
-    "gulp-eslint": "^6.0.0"
+    "gulp": "^4.0.2"
   }
 }

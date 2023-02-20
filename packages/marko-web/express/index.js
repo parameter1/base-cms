@@ -1,11 +1,10 @@
 const { buildRequestHeaders } = require('@parameter1/base-cms-tenant-context');
 const createApolloClient = require('@parameter1/base-cms-apollo-ssr');
-const cleanMarkoResponse = require('@parameter1/base-cms-marko-core/middleware/clean-marko-response');
+const { cleanMarkoResponse, markoMiddleware } = require('@parameter1/base-cms-marko-express/middleware');
 const cookieParser = require('cookie-parser');
 const express = require('express');
 const path = require('path');
 const helmet = require('helmet');
-const markoMiddleware = require('./marko');
 const apollo = require('./apollo');
 const graphqlProxy = require('./graphql-proxy');
 const embeddedMedia = require('./embedded-media');

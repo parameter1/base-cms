@@ -1,0 +1,18 @@
+{
+  "name": "@parameter1/base-cms-marko-express",
+  "version": "0.0.0",
+  "description": "Common Marko+Express middleware.",
+  "author": "Jacob Bare <jacob@parameter1.com>",
+  "main": "index.js",
+  "license": "MIT",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-express",
+  "scripts": {
+    "lint:fix": "yarn lint --fix",
+    "lint": "eslint --ext .js --max-warnings 5 --ignore-path ../../.eslintignore ./",
+    "test": "yarn lint"
+  },
+  "dependencies": {
+    "marko": "~4.20.0",
+    "pretty": "^2.0.0"
+  }
+}
