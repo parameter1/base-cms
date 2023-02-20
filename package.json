@@ -29,7 +29,6 @@
     "graphql": "^14.7.0",
     "graphql-tag": "^2.12.6",
     "gulp": "^4.0.2",
-    "gulp-cached": "^1.1.1",
     "lerna": "^6.5.1",
     "mocha": "^6.2.3",
     "rimraf": "^2.7.1"
