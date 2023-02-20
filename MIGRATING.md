@@ -27,13 +27,17 @@ Before following the migration steps, make sure the following have been complete
 
 2. If GitHub actions are used by the repo, the `node-version` value must be changed to `14.21` in the `.github/workflows/node-ci.yml` file. If TravisCI is still used, check the `.travis` file in the root of the project and update the node version.
 
-## Lerna
+## Upgrade Support Dependencies
 
 ### Action Items
-Upgrade `lerna` to the latest major version in your root `package.json` file
-```json
-"lerna": "^6.5.1"
-```
+1. Upgrade `lerna` to the latest major version in your root `package.json` file
+    ```json
+    "lerna": "^6.5.1"
+    ```
+2. Upgrade `newrelic` to the latest major version whereever present in your `package.json` files - usually in the `packages/global` package.
+    ```json
+    "newrelic": "^9.10.1"
+    ```
 
 ## BaseCMS Dependencies
 All core `@parameter1/base-cms-*` dependencies will need to be upgraded to the latest versions. Additionally, because lower-level dependencies (such as `@babel/*` and `node-sass`) had significant version adjustments, references to these should be deleted from the `yarn.lock` before running an install.

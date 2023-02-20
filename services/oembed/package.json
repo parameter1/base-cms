@@ -22,6 +22,6 @@
     "express": "^4.18.2",
     "helmet": "^3.23.3",
     "ioredis": "^4.28.5",
-    "newrelic": "^6.14.0"
+    "newrelic": "^9.10.1"
   }
 }
