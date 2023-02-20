@@ -2,15 +2,18 @@
 
 /* eslint-disable global-require */
 const minimist = require('minimist');
-const log = require('fancy-log');
 const { blue, gray, green } = require('chalk');
+const createLogger = require('../utils/create-logger');
 
 const { isArray } = Array;
-log('cli starting...');
 
 const commands = new Set(['compile']);
 (async () => {
   const argv = minimist(process.argv.slice(2));
+  const debug = !argv.silent;
+  const log = createLogger({ debug });
+
+  log('cli starting...');
   const [command] = argv._;
 
   const getArrayValuesFor = (key, def) => {
@@ -39,6 +42,7 @@ const commands = new Set(['compile']);
       cwd,
       dirs: getArrayValuesFor('dir'),
       clean: argv.clean == null ? true : argv.clean,
+      debug,
     };
     log(`beginning '${blue('compile')}' with options`, opts);
     await compile(opts);

@@ -1,9 +1,9 @@
 const path = require('path');
 const { readFile, writeFile, rename } = require('fs').promises;
 const { grey } = require('chalk');
-const log = require('fancy-log');
 const { getProfileMS } = require('@parameter1/base-cms-utils');
 const runCompile = require('./run');
+const createLogger = require('../utils/create-logger');
 const stat = require('../utils/stat');
 
 const encoding = 'utf8';
@@ -28,6 +28,7 @@ module.exports = async (templateFile, {
   compilerOptions,
 } = {}) => {
   let start;
+  const log = createLogger({ debug });
   if (debug) start = process.hrtime();
   if (!path.isAbsolute(templateFile)) throw new Error('Marko template files must be absolute.');
   const compiledFile = `${templateFile}.js`;

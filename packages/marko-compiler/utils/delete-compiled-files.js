@@ -7,7 +7,7 @@ const findFiles = require('./find-files');
  * @param {object} options
  * @param {string[]} [options.dirs=[]] Additional directories to remove files from
  */
-module.exports = async (cwd, { dirs = [] }) => {
-  const entries = await findFiles(cwd, { dirs, compiled: true });
+module.exports = async (cwd, { dirs = [], debug }) => {
+  const entries = await findFiles(cwd, { dirs, compiled: true, debug });
   await Promise.all(entries.map(({ path }) => unlink(path)));
 };
