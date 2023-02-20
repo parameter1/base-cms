@@ -15,7 +15,7 @@
     "build:js": "basecms-website build:js",
     "compile": "basecms-marko-compile compile",
     "lint": "eslint --ext .js --ext .vue --max-warnings 5 --ignore-path ../../.eslintignore ./",
-    "test": "yarn lint && yarn compile"
+    "test": "yarn lint && yarn compile --no-clean"
   },
   "dependencies": {
     "@parameter1/base-cms-marko-core": "^4.0.0-alpha.0",
