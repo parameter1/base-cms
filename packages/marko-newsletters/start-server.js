@@ -1,4 +1,4 @@
-require('marko/node-require');
+require('@parameter1/base-cms-marko-node-require');
 const http = require('http');
 const path = require('path');
 const { createTerminus } = require('@godaddy/terminus');
