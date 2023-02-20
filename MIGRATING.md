@@ -48,7 +48,7 @@ All core `@parameter1/base-cms-*` dependencies will need to be upgraded to the l
 3. Delete references to `@babel/*` dependencies in the `yarn.lock` file. The easiest way to do this is to search in the file using regex `^"@babel\/` and then delete all entries. There may be _alot_ of these, and that's okay :)
 4. Delete references to `node-sass` in the `yarn.lock` file. Search using regex `^node-sass` and any entries
 4. Now run `./scripts/yarn.sh` -- this should run in the new Node14 Docker container (which may need to be downloaded). **MAKE SURE YOU RUN THE INSTALL USING THE SCRIPT** This ensures the install runs in the proper version of Node.
-    - Note: if you're doing this migration while 4.x is still in pre-release, you'll likely see Yarn wranings about incorrect peer dependencies (e.g. `has incorrect peer dependency "@parameter1/base-cms-marko-web@^4.0.0"`) -- this is fine and will be resolved the packages are at `4.0.0`.
+    - Note: if you're doing this migration while 4.x is still in pre-release, you'll likely see Yarn wranings about incorrect peer dependencies (e.g. `has incorrect peer dependency "@parameter1/base-cms-marko-web@^4.0.0"`) -- this is fine and will be resolved once the packages are out of pre-release.
 
 ## SASS/SCSS Updates
 The new build process will no longer resolve relative `@import` statements to files located in `node_modules`. The good news, however, is that it _can_ import using standard package names.
