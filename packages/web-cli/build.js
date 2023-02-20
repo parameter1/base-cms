@@ -22,7 +22,12 @@ module.exports = async ({
 
   await Promise.all([
     // compile any uncompiled or out-of-date marko templates before starting the server instance
-    marko({ cwd, dirs: compileDirs, clean: cleanCompiledFiles }),
+    marko({
+      cwd,
+      dirs: compileDirs,
+      clean: cleanCompiledFiles,
+      debug: true,
+    }),
     css({
       cwd,
       entry: entries.styles,
