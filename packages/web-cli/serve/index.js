@@ -4,7 +4,7 @@ const ForkServer = require('./fork-server');
 const build = require('../build');
 const watchFiles = require('./watch');
 const createLivereload = require('./create-livereload');
-const formatWebsiteInfo = require('./format-website-info');
+const formatServerMessage = require('./format-website-info');
 
 module.exports = async ({
   cwd,
@@ -21,13 +21,18 @@ module.exports = async ({
   if (forceRequirePrebuiltTemplates) process.env.MARKO_REQUIRE_PREBUILT_TEMPLATES = true;
   const livereload = createLivereload();
 
+  let serverInfo;
+
   await build({
     cwd,
     entries,
     compileDirs,
     cleanCompiledFiles,
     watch: true,
-    onFileChange: () => livereload.refresh('/'),
+    onFileChange: () => {
+      if (serverInfo) log(serverInfo);
+      livereload.refresh('/');
+    },
   });
 
   // fork and start the server instance
@@ -39,6 +44,7 @@ module.exports = async ({
     onReady: () => livereload.refresh('/'),
   });
   const message = await server.listen({ rejectOnNonZeroExit: abortOnInstanceError });
+  serverInfo = formatServerMessage(message);
   log(`server fork started in ${getProfileMS(serverStart)}ms`);
 
   // enable file watching
@@ -51,5 +57,5 @@ module.exports = async ({
     ignore: watchIgnore,
   });
   log(`done in ${getProfileMS(start)}ms`);
-  log(formatWebsiteInfo(message));
+  log(serverInfo);
 };
