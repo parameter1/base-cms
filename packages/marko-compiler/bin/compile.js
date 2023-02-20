@@ -37,7 +37,7 @@ const commands = new Set(['compile']);
     const compile = require('../index');
     const opts = {
       cwd,
-      dirs: getArrayValuesFor('dir', ['../../packages']),
+      dirs: getArrayValuesFor('dir'),
       clean: argv.clean == null ? true : argv.clean,
     };
     log(`beginning '${blue('compile')}' with options`, opts);
