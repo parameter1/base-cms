@@ -1,6 +1,6 @@
 const fg = require('fast-glob');
-const log = require('fancy-log');
 const path = require('path');
+const createLogger = require('./create-logger');
 
 const extensionPattern = '**/*.marko';
 
@@ -23,6 +23,7 @@ module.exports = async (cwd, {
   debug,
   ...rest
 } = {}) => {
+  const log = createLogger({ debug });
   const suffix = compiled ? `${extensionPattern}.js` : extensionPattern;
   const patterns = [
     `./${suffix}`,

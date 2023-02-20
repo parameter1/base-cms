@@ -1,7 +1,11 @@
 const { getProfileMS } = require('@parameter1/base-cms-utils');
-const log = require('fancy-log');
+const fancy = require('fancy-log');
 const compile = require('./compile');
 const { deleteCompiledFiles } = require('./utils');
+
+const logger = ({ debug }) => (...args) => {
+  if (debug) fancy(...args);
+};
 
 /**
  *
@@ -13,14 +17,20 @@ const { deleteCompiledFiles } = require('./utils');
  *                                 a global package existed in `packages/global` you would add an
  *                                 `../packages/global` entry
  */
-module.exports = async ({ cwd, dirs, clean } = {}) => {
+module.exports = async ({
+  cwd,
+  dirs,
+  clean,
+  debug,
+} = {}) => {
+  const log = logger({ debug });
   if (clean) {
     log('deleting all compiled Marko templates...');
-    await deleteCompiledFiles(cwd, { dirs });
+    await deleteCompiledFiles(cwd, { dirs, debug });
     log('compiled templates deleted');
   }
   log('compiling marko templates...');
   const start = process.hrtime();
-  await compile.all(cwd, { dirs, debug: true });
+  await compile.all(cwd, { dirs, debug });
   log(`marko templates compiled in ${getProfileMS(start)}ms`);
 };

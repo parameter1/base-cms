@@ -12,8 +12,6 @@ const exit = (message, code = 0) => {
   process.exit(code);
 };
 
-const defaultCompileDirs = ['../../packages'];
-
 const commands = new Set(['build', 'build:css', 'build:js', 'build:ssr', 'dev']);
 (async () => {
   const argv = minimist(process.argv.slice(2));
@@ -51,7 +49,7 @@ const commands = new Set(['build', 'build:css', 'build:js', 'build:ssr', 'dev'])
         styles: argv.styles || './server/styles/index.scss',
       },
       // defaults to what the site repos normally use.
-      compileDirs: getArrayValuesFor('compile-dir', defaultCompileDirs),
+      compileDirs: getArrayValuesFor('compile-dir'),
       cleanCompiledFiles: clean == null ? true : clean,
     };
     log(`beginning '${blue('build')}' server with options`, opts);
@@ -93,11 +91,9 @@ const commands = new Set(['build', 'build:css', 'build:js', 'build:ssr', 'dev'])
         ssr: argv.ssr || './browser/ssr.js',
         styles: argv.styles || './server/styles/index.scss',
       },
-      // defaults to what the site repos normally use.
-      compileDirs: getArrayValuesFor('compile-dir', defaultCompileDirs),
+      compileDirs: getArrayValuesFor('compile-dir'),
       cleanCompiledFiles: Boolean(argv['clean-compiled-files']),
-      // defaults to what the site repos normally use.
-      additionalWatchDirs: getArrayValuesFor('watch-dir', ['../../packages']),
+      additionalWatchDirs: getArrayValuesFor('watch-dir'),
       watchIgnore: getArrayValuesFor('watch-ignore'),
       abortOnInstanceError: Boolean(argv['abort-on-error']),
       showWatchedFiles: Boolean(argv['show-watched-files']),

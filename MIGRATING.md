@@ -18,12 +18,12 @@ Before following the migration steps, make sure the following have been complete
     find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +
     ```
 
-## Upgrade Docker Node images from 10 to 14
+## Upgrade Docker Node Images from 10 to 14
 
 ### Action Items
 1. References to `node:10` images (specifically, `node:10.24`) should be changed to `node:14.21` in _all_ files named
-- `docker-compose.yml`
-- `Dockerfile`
+    - `docker-compose.yml`
+    - `Dockerfile`
 
 2. If GitHub actions are used by the repo, the `node-version` value must be changed to `14.21` in the `.github/workflows/node-ci.yml` file. If TravisCI is still used, check the `.travis` file in the root of the project and update the node version.
 
@@ -54,8 +54,8 @@ The new build process will no longer resolve relative `@import` statements to fi
 
 ### Action Items
 1. Update relative node_module `@import` declarations in `.scss` files to their absolute counterparts. For example:
-  - `@import "../../node_modules/bootstrap/scss/mixins"` would become `@import "bootstrap/scss/mixins";`
-  - the number of relative parent paths does not matter... so `../` and `../../` and `../../../` etc all need to be removed.
+    - `@import "../../node_modules/bootstrap/scss/mixins"` would become `@import "bootstrap/scss/mixins";`
+    - the number of relative parent paths does not matter... so `../` and `../../` and `../../../` etc all need to be removed.
 2. The quickest way to change the import statements is to search all `.scss` files using regex `@import ".*\/node_modules\/` and replacing the matched entries with an empty string.
 
 ## Component Changes
@@ -64,20 +64,58 @@ The `marko-web-deferred-script-loader` is now loaded into core. As such, certain
 ### Action Items
 1. Remove any references to components `<marko-web-deferred-script-loader-init />` and `<marko-web-deferred-script-loader-load />`. These normally occur in the site or global `document.marko` file.
 
-## Improved CLI and Build/Serve Commands
-While the CLI was significantly improved for performance, each website's `yarn dev` and `yarn build` scripts _should_ still work as expected. This due to the new CLI assuming that `../../packages` (relative from the `sites` directory) has Marko templates that need compiling. If this needs to be adjusted, change the site's `dev` script `--compile-dir` option
+## Improved CLI
+The CLI was significantly improved for performance and build time speed. While the CLI commands are still named the same (except for dropping `lint` -- see the `ESLint` and `Stylelint` sections below) their arguments need to be adjusted to ensure proper dev server operation, production build, and testing functions.
 
-Note: Marko files from `@parameter1/base-cms-*` packages (found in `node_modules`) are now compiled on build/publish. As such the compiled files will already exist in `node_modules` when they are installed, and are not automatically compiled by the new CLI. The drawback to this is that you can no longer directly change `.marko` files found in `node_modules` without re-compiling manually. More to follow on this topic at a later time.
+**Note on Marko Files** All `.marko` files from `@parameter1/base-cms-*` packages (found in `node_modules`) are now compiled when the package is built and _published_ to NPM. Because of this, the compiled `.marko.js` files will already exist in `node_modules` when the packages are installed. These files are _not_ automatically compiled by the new CLI (nor generally should they be). The drawback is that you can no longer modify `.marko` files found in `node_modules` without re-compiling manually. More to follow on this topic at a later time.
 
 ### Action Items
-1. It is recommended to change `package.json` compile scripts to `"compile": "basecms-marko-compile compile"`. While the old scripts will still work, this will cleanup cli options that are no longer used.
-2. It is recommended to update any `package.json` test sripts that include `yarn compile` to add the `--no-clean` option. This will make test runs faster since the marko file will not be deleted before compiling. For example `"test": "yarn compile --no-clean && yarn lint"`
+1. Update the website scripts found in `./sites/*/package.json` files with the following:
+    ```json
+    "scripts": {
+      "dev": "basecms-website dev --compile-dir ../../packages --watch-dir ../../packages",
+      "build": "basecms-website build",
+      "compile": "basecms-marko-compile compile",
+      "lint": "eslint --ext .js --ext .vue --max-warnings 5 --ignore-path ../../.eslintignore ./",
+      "lint:fix": "yarn lint --fix",
+      "test": "yarn lint && yarn compile --no-clean"
+    }
+    ```
+
+2. Update the package scripts found in `./packages/*/package.json` files with the following:
+    ```json
+    "scripts": {
+      "compile": "basecms-marko-compile compile",
+      "build": "yarn compile",
+      "lint": "eslint --ext .js --ext .vue --max-warnings 5 --ignore-path ../../.eslintignore ./",
+      "lint:fix": "yarn lint --fix",
+      "test": "yarn lint && yarn compile --no-clean"
+    },
+    ```
+
+3. Update the core/root scripts found in `./package.json` files with the following:
+    ```json
+    "scripts": {
+      "build": "lerna run build",
+      "compile": "lerna run compile",
+      "lint": "lerna run lint",
+      "lint:fix": "lerna run lint:fix",
+      "test": "lerna run test"
+    }
+    ```
+4. The root `Dockerfile` will need updates to properly build the sites in production. In additon to changing the Node version to `14.24` ([see the section concerning Node versions above](#upgrade-docker-node-images-from-10-to-14)) the build commands should be adjusted as follows:
+    ```diff
+    - WORKDIR /root/sites/$SITE
+    - RUN node_modules/.bin/basecms-website build
+    + RUN yarn build
+    ```
+    - This will run the `build` script found in each website (js/css/ssr/marko) and each package (compiles Marko files)
 
 ## Stylelint
 Linting styles via `stylelint` has been removed. The reasons are varied, but primarily version 10 is _really_ old and the bootstrap config preset isn't well-supported anymore.
 
 ### Action Items
-1. If any of the websites or global/core packages in your repository have a `lint:css` script or `.stylelintrs.js`/`.stylelintignore` files, the scripts should be removed/updated and the files should be deleted. This will prevent linting errors now that stylelint is removed.
+1. If any of the websites or global/core packages in your repository have a `lint:css` script or `.stylelintrs.js`/`.stylelintignore` files, the scripts should be removed/updated and the files should be deleted. This will prevent linting errors now that stylelint is removed. [See the the complete list of new package.json scripts in the Improved CLI section](#improved-cli)
 2. If you also have `stylelint` installed as a dependency in your repository (either in the root monorepo `package.json` file or in any sites/packages) please remove the dependency and re-run `./scripts/yarn.sh`
 
 ## ESLint
@@ -87,58 +125,58 @@ In addition, the web, newsletter, and export CLIs no longer provide a `lint` com
 
 ### Action Items
 1. Verify that none of your package.json `lint` scripts reference the `basecms-website lint` comamnd. If they do, change them appropriately, usually `eslint --ext .js --ext .vue --max-warnings 5 --ignore-path ../../.eslintignore ./`
-- Also note the stylelint changes above -- `lint:css` scripts should be removed and the old `lint:js` script should _become_ the new `lint` script with the eslint command above.
+    - Also note the stylelint changes above -- `lint:css` scripts should be removed and the old `lint:js` script should _become_ the new `lint` script with the eslint command above. [See the the complete list of new package.json scripts in the Improved CLI section](#improved-cli)
 
-2. Install `eslint` (along with plugins and configs) in the monorepo root. Existing core configurations should still work and do not need to change. That said, browser/vue configurations will need some changes (more on that below.)
-- In the root `package.json` add or update the following devDependencies: (**note:** newsletter and export repos do _not_ need `@babel/eslint-parser` or `eslint-plugin-vue`)
-  ```json
-  "@babel/eslint-parser": "^7.19.1",
-  "eslint": "^8.34.0",
-  "eslint-config-airbnb-base": "^15.0.0",
-  "eslint-plugin-import": "^2.27.5",
-  "eslint-plugin-vue": "^9.9.0",
-  ```
-- You must remove _all_ `babel-eslint` packages, since `@babel/eslint-parser` is now used.
-- Double-check your website and global package files and ensure there aren't any references to eslint or any of it's plugins - this way only the root versions will be used.
+2. Install `eslint` (along with plugins and configs) in the monorepo root. Existing core configurations should still work and do not need to change. That said, browser/vue configurations _will_ need changes.
+    - In the root `package.json` add or update the following devDependencies: (**note:** newsletter and export repos do _not_ need `@babel/eslint-parser` or `eslint-plugin-vue`)
+    ```json
+    "@babel/eslint-parser": "^7.19.1",
+    "eslint": "^8.34.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-vue": "^9.9.0",
+    ```
+    - You must remove _all_ `babel-eslint` packages, since `@babel/eslint-parser` is now used.
+    - Double-check your website and global package files and ensure there aren't any references to eslint or any of it's plugins - this way only the root versions will be used.
 
 3. Update `babel-eslint` references on `.eslintrc.js` config files. The fastest way is to search for `parser: 'babel-eslint'`. If your repo isn't already using a common/shared browser eslint file that's imported into each `browser` we recommend creating one.
-  - Replace
-    ```js
-    parserOptions: {
-      parser: 'babel-eslint',
-    },
-    ```
-  - With this (**Note** the move of `parser` to the root config, which uses the vue parser first)
-    ```js
-    parser: 'vue-eslint-parser',
-    parserOptions: {
-      parser: '@babel/eslint-parser',
-      requireConfigFile: false,
-    },
-    ```
+    - Replace
+      ```js
+      parserOptions: {
+        parser: 'babel-eslint',
+      },
+      ```
+    - With this (**Note** the move of `parser` to the root config, which uses the vue parser first)
+      ```js
+      parser: 'vue-eslint-parser',
+      parserOptions: {
+        parser: '@babel/eslint-parser',
+        requireConfigFile: false,
+      },
+      ```
 4. The `vue/max-attributes-per-line` rule options changed in the latest version and needs to be updated. Additionally, the `vue/multi-word-component-names` should be turned off.
-  - Replace
-    ```js
-    'vue/max-attributes-per-line': ['error', {
-      singleline: 3,
-      multiline: {
-        max: 1,
-        allowFirstLine: false,
-      },
-    }],
-    ```
-  - With this
-    ```js
-    'vue/max-attributes-per-line': ['error', {
-      singleline: {
-        max: 3,
-      },
-      multiline: {
-        max: 1,
-      },
-    }],
-    'vue/multi-word-component-names': 'off',
-    ```
+    - Replace
+      ```js
+      'vue/max-attributes-per-line': ['error', {
+        singleline: 3,
+        multiline: {
+          max: 1,
+          allowFirstLine: false,
+        },
+      }],
+      ```
+    - With this
+      ```js
+      'vue/max-attributes-per-line': ['error', {
+        singleline: {
+          max: 3,
+        },
+        multiline: {
+          max: 1,
+        },
+      }],
+      'vue/multi-word-component-names': 'off',
+      ```
 
 5. Because the new version of the vue plugin can support Vue3, we should also instruct any plugins as to our target Vue version. In the root of the repo create a `jsconfig.json` (if it doesn't exist) and add:
     ```json
@@ -151,8 +189,8 @@ In addition, the web, newsletter, and export CLIs no longer provide a `lint` com
 5. Once the new devDependencies are added, run `./scripts/yarn.sh`
 6. Restart VSCode so the new eslint library will load
 7. Run the global `lint` command and fix any new lint errors. Generally you'll find errors related to missing parenthesis around function args, but there will be others.
-  - ProTip: add a `"lint:fix": "yarn lint --fix"` script to each website and global package's `package.json` file. Then add `"lint:fix": "lerna run lint:fix"` to the root package.json. That way, you can run `yarn lint:fix` from the root, which will lint and also try to fix all errors for you!
-  - If the lint fixer does encounter errors, you'll need to manually fix those, then run `yarn lint:fix` again.
+    - ProTip: add a `"lint:fix": "yarn lint --fix"` script to each website and global package's `package.json` file. Then add `"lint:fix": "lerna run lint:fix"` to the root package.json. That way, you can run `yarn lint:fix` from the root, which will lint and also try to fix all errors for you! [See the the complete list of new package.json scripts in the Improved CLI section](#improved-cli)
+    - If the lint fixer does encounter errors, you'll need to manually fix those, then run `yarn lint:fix` again.
 
 ## Global Package Upgrade
 Once all of the tasks above have been completed, run `./scripts/yarn.sh upgrade` to ensure all semver versions get normalized.

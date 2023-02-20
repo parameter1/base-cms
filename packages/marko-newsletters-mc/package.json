@@ -9,7 +9,7 @@
     "lint": "eslint",
     "lint:fix": "yarn lint --fix",
     "compile": "basecms-marko-compile compile",
-    "prepublish": "yarn compile",
+    "prepublish": "yarn compile --silent",
     "test": "yarn compile --no-clean && yarn lint"
   },
   "peerDependencies": {
