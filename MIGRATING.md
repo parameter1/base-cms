@@ -3,9 +3,9 @@
 ## Prerequisites
 Before following the migration steps, make sure the following have been completed.
 
-1. Ensure you have the latest _3.x_ depenency tool installed _globally_. To do so, run the following command:
+1. Ensure you have the latest depenency tool installed _globally_. To do so, run the following command:
     ```bash
-    yarn global add @parameter1/base-cms-dependency-tool@v3.28.1
+    yarn global add @parameter1/base-cms-dependency-tool@v4.0.0-rc.0
     ```
 
 2. Down any running Docker containers in your project by running the following from the project root
@@ -209,7 +209,8 @@ In addition, the web, newsletter, and export CLIs no longer provide a `lint` com
 
 ## Global Package Upgrade & Final Items
 1. Once all of the tasks above have been completed, run `./scripts/yarn.sh upgrade` to ensure all semver versions get normalized.
-2. Run `yarn test` in the project root to ensure tests pass
+2. Run `yarn compile` from the project root to re-compile all marko templates
+3. Run `yarn test` from the project root to ensure tests pass
     - All marko files are compiled during testing. As such, if any components/templates contain references to missing components, you'll need to fix those errors before the tests will pass. For example, some sites had `spec-guide` templates pasted in from other repos that aren't actively used, etc.
 4. Then start a website container and ensure it builds, boots, and serves.
 
