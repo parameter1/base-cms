@@ -147,8 +147,9 @@ In addition, the web, newsletter, and export CLIs no longer provide a `lint` com
     - Also note the stylelint changes above -- `lint:css` scripts should be removed and the old `lint:js` script should _become_ the new `lint` script with the eslint command above. [See the the complete list of new package.json scripts in the Improved CLI section](#improved-cli)
 
 2. Install `eslint` (along with plugins and configs) in the monorepo root. Existing core configurations should still work and do not need to change. That said, browser/vue configurations _will_ need changes.
-    - In the root `package.json` add or update the following devDependencies: (**note:** newsletter and export repos do _not_ need `@babel/eslint-parser` or `eslint-plugin-vue`)
+    - In the root `package.json` add or update the following devDependencies: (**note:** newsletter and export repos do _not_ need `@babel/core`, `@babel/eslint-parser` or `eslint-plugin-vue`)
     ```json
+    "@babel/core": "^7.21.0",
     "@babel/eslint-parser": "^7.19.1",
     "eslint": "^8.34.0",
     "eslint-config-airbnb-base": "^15.0.0",
