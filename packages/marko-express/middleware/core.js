@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+process.env.MARKO_DEBUG = false;
 require('marko');
 const buildGlobal = require('../utils/build-global');
 
