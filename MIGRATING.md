@@ -147,16 +147,16 @@ If the website's dev server is running, this will _not_ automatically restart th
       command: ["dev"]
     ```
  
- 6. Add `context: .` under `with` of the Build dokcer image step. For example:
+ 6. Update the `.github/workflows/deploy-production.yml` and `.github/workflows/deploy-staging.yml` files and add `context: .` under `with` of the "Build docker image" step. For example:
     ```yml
     - name: Build docker image
-    uses: docker/build-push-action@v2
-    with:
-      context: .
-      push: true
-      build-args: |
-        SITE=${{ matrix.site }}
-      tags: ${{ env.ECR_REGISTRY }}/${{ env.IMG_PREFIX }}-${{ matrix.site }}:${{ needs.vars.outputs.version }}
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        push: true
+        build-args: |
+          SITE=${{ matrix.site }}
+        tags: ${{ env.ECR_REGISTRY }}/${{ env.IMG_PREFIX }}-${{ matrix.site }}:${{ needs.vars.outputs.version }}
     ```
 
 ## Stylelint
