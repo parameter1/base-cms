@@ -206,10 +206,8 @@ In addition, the web, newsletter, and export CLIs no longer provide a `lint` com
     }
     ```
 5. Once the new devDependencies are added, run `./scripts/yarn.sh`
-6. Restart VSCode so the new eslint library will load
-7. Run the global `lint` command and fix any new lint errors. Generally you'll find errors related to missing parenthesis around function args, but there will be others.
-    - ProTip: add a `"lint:fix": "yarn lint --fix"` script to each website and global package's `package.json` file. Then add `"lint:fix": "lerna run lint:fix"` to the root package.json. That way, you can run `yarn lint:fix` from the root, which will lint and also try to fix all errors for you! [See the the complete list of new package.json scripts in the Improved CLI section](#improved-cli)
-    - If the lint fixer does encounter errors, you'll need to manually fix those, then run `yarn lint:fix` again.
+6. Restart VSCode (via `Cmd+Q`) so the new eslint library will load
+7. Run the global `lint:fix` command and fix any new lint errors. If the lint fixer does encounter errors, you'll need to manually fix those, then run `yarn lint:fix` again.
 
 ## Global Package Upgrade & Final Items
 1. Once all of the tasks above have been completed, run `./scripts/yarn.sh upgrade` to ensure all semver versions get normalized.
