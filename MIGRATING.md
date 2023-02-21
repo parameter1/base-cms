@@ -76,7 +76,11 @@ The `marko-web-deferred-script-loader` is now loaded into core. As such, certain
 ## Improved CLI
 The CLI was significantly improved for performance and build time speed. While the CLI commands are still named the same (except for dropping `lint` -- see [ESLint](#eslint) and [Stylelint](#stylelint) sections) their arguments need to be adjusted to ensure proper dev server operation, production build, and testing functions.
 
-**Note on Marko Files** All `.marko` files from `@parameter1/base-cms-*` packages (found in `node_modules`) are now compiled when the package is built and _published_ to NPM. Because of this, the compiled `.marko.js` files will already exist in `node_modules` when the packages are installed. These files are _not_ automatically compiled by the new CLI (nor generally should they be). The drawback is that you can no longer modify `.marko` files found in `node_modules` without re-compiling manually. More to follow on this topic at a later time.
+**NOTE ON @PARAMETER1/BASE-CMS MARKO FILES:** All `.marko` files inside `@parameter1/base-cms-*` packages (found in `node_modules`) are now compiled when the package is built and _published_ to NPM. Because of this, the compiled `.marko.js` files will already exist in `node_modules` when the packages are installed. These files are _not_ automatically compiled by the new CLI. The drawback is that you can no longer modify `.marko` files found in `node_modules` without re-compiling manually. If you make changes to a `.marko` file within `node_modules`, you'll need to re-compile by running the below from the root of your project:
+```bash
+yarn basecms-marko-compile compile --cwd ./node_modules/@parameter1/base-cms-marko-web-[name-of-package] --no-clean
+```
+If the website's dev server is running, this will _not_ automatically restart the server and you'll need to save a file within the site folder to trigger the restart.
 
 ### Action Items
 1. Update the website scripts found in `./sites/*/package.json` files with the following:
@@ -120,14 +124,12 @@ The CLI was significantly improved for performance and build time speed. While t
     ```
     - This will run the `build` script found in each website (js/css/ssr/marko) and each package (compiles Marko files)
 
-5. Verify that the sites in `docker-compose.yml` are using `yarn dev` as their entrypoint and command. Some sites run the `basecms-website` command directly. For example, change the following:
-    ```diff
+5. Verify that the sites in `docker-compose.yml` are using `yarn dev` as their entrypoint and command. Some sites run the `basecms-website` command directly. Replace the `x-site-command` entry with the following:
+    ```Dockerfile
     x-site-command: &site-cmd
       <<: *node
-      - entrypoint: ["node_modules/.bin/basecms-website"]
-      + entrypoint: ["yarn"]
-      - command: ["dev", "index.js"]
-      + command: ["dev"]
+      entrypoint: ["yarn"]
+      command: ["dev"]
     ```
 
 ## Stylelint
@@ -208,7 +210,7 @@ In addition, the web, newsletter, and export CLIs no longer provide a `lint` com
     ```
 5. Once the new devDependencies are added, run `./scripts/yarn.sh`
 6. Restart VSCode (via `Cmd+Q`) so the new eslint library will load
-7. Run the global `lint:fix` command and fix any new lint errors. If the lint fixer does encounter errors, you'll need to manually fix those, then run `yarn lint:fix` again.
+7. Open to Docker terminal via `./scripts/terminal.sh` and then run `yarn lint:fix` from the root. This will attempt to fix lint errors automatically. If the lint fixer does encounter errors, you'll need to manually fix those, then run `yarn lint:fix` again.
 
 ## Global Package Upgrade & Final Items
 1. Once all of the tasks above have been completed, run `./scripts/yarn.sh upgrade` to ensure all semver versions get normalized.
