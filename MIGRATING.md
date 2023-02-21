@@ -49,7 +49,7 @@ All core `@parameter1/base-cms-*` dependencies will need to be upgraded to the l
 ### Action Items
 1. Upgrade all BaseCMS dependencies to v4.x by running the below in the project root
     ```bash
-    p1-basecms-dependencies upgrade --latest --prereleases
+    p1-basecms-dependencies upgrade --latest
     ```
 
 2. Once completed, _do not_ run a `yarn install` yet. We'll save that to the very end. :)
