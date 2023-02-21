@@ -118,6 +118,9 @@ If the website's dev server is running, this will _not_ automatically restart th
     ```
 4. The root `Dockerfile` will need updated to properly build the sites in production. In additon to changing the Node version to `14.24` ([see the section concerning Node versions above](#upgrade-docker-node-images-from-10-to-14)) the build commands should be adjusted as follows:
     ```diff
+    - RUN yarn --production --pure-lockfile
+    + RUN yarn --pure-lockfile
+    
     - WORKDIR /root/sites/$SITE
     - RUN node_modules/.bin/basecms-website build
     + RUN yarn build
