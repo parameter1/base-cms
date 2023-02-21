@@ -3,17 +3,21 @@
 ## Prerequisites
 Before following the migration steps, make sure the following have been completed.
 
-1. Ensure you have the latest depenency tool installed _globally_. To do so, run the following command:
+1. Select the target website or newsletter repo to upgrade and pull all latest changes from `master`/`main`.
+2. Create a new branch called `4.x` and push it to your fork. This is where all changes will be pushed to.
+3. Ensure you're only loading _one_ repo into VSCode at a time.
+
+4. Ensure you have the latest depenency tool installed _globally_. To do so, run the following command:
     ```bash
     yarn global add @parameter1/base-cms-dependency-tool@v4.0.0
     ```
 
-2. Down any running Docker containers in your project by running the following from the project root
+5. Down any running Docker containers in your project by running the following from the project root
     ```bash
     docker-compose down
     ```
 
-3. It's **highly recommended** that you recursively delete _all_ `node_modules` folders
+6. It's **highly recommended** that you recursively delete _all_ `node_modules` folders
     ```bash
     find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +
     ```
