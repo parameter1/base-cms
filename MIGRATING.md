@@ -116,14 +116,26 @@ If the website's dev server is running, this will _not_ automatically restart th
       "test": "lerna run test"
     }
     ```
-4. The root `Dockerfile` will need updated to properly build the sites in production. In additon to changing the Node version to `14.24` ([see the section concerning Node versions above](#upgrade-docker-node-images-from-10-to-14)) the build commands should be adjusted as follows:
-    ```diff
-    - RUN yarn --production --pure-lockfile
-    + RUN yarn --pure-lockfile
-    
-    - WORKDIR /root/sites/$SITE
-    - RUN node_modules/.bin/basecms-website build
-    + RUN yarn build
+4. The root `Dockerfile` will need updated to properly build the sites in production. Replace the contents of the file with the following:
+    ```Dockerfile
+    FROM node:14.21 as build
+    WORKDIR /root
+    ARG SITE
+
+    ADD package.json yarn.lock lerna.json /root/
+    ADD packages /root/packages
+    ADD sites/$SITE /root/sites/$SITE
+    RUN yarn --pure-lockfile
+    RUN yarn build
+
+    FROM node:14.21-alpine
+    ENV NODE_ENV production
+    ENV PORT 80
+    ARG SITE
+    COPY --from=build /root /root
+    WORKDIR /root/sites/$SITE
+    ENTRYPOINT [ "node", "index.js" ]
+
     ```
     - This will run the `build` script found in each website (js/css/ssr/marko) and each package (compiles Marko files)
 
@@ -133,6 +145,18 @@ If the website's dev server is running, this will _not_ automatically restart th
       <<: *node
       entrypoint: ["yarn"]
       command: ["dev"]
+    ```
+ 
+ 6. Add `context: .` under `with` of the Build dokcer image step. For example:
+    ```yml
+    - name: Build docker image
+    uses: docker/build-push-action@v2
+    with:
+      context: .
+      push: true
+      build-args: |
+        SITE=${{ matrix.site }}
+      tags: ${{ env.ECR_REGISTRY }}/${{ env.IMG_PREFIX }}-${{ matrix.site }}:${{ needs.vars.outputs.version }}
     ```
 
 ## Stylelint
