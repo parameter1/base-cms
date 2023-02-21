@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@parameter1/base-cms-env": "^4.0.0",
+    "@parameter1/base-cms-marko-core": "^4.0.0",
+    "@parameter1/base-cms-marko-web": "^4.0.0",
     "@parameter1/base-cms-marko-web-recaptcha": "^4.0.0",
     "@parameter1/base-cms-utils": "^4.0.0",
     "@sendgrid/mail": "^6.4.0",
