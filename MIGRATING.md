@@ -136,19 +136,14 @@ If the website's dev server is running, this will _not_ automatically restart th
 Linting styles via `stylelint` has been removed. The reasons are varied, but primarily version 10 is _really_ old and the bootstrap config preset isn't well-supported anymore.
 
 ### Action Items
-1. If any of the websites or global/core packages in your repository have a `lint:css` script or `.stylelintrs.js`/`.stylelintignore` files, the scripts should be removed/updated and the files should be deleted. This will prevent linting errors now that stylelint is removed. [See the the complete list of new package.json scripts in the Improved CLI section](#improved-cli)
-2. If you also have `stylelint` installed as a dependency in your repository (either in the root monorepo `package.json` file or in any sites/packages) please remove the dependency and re-run `./scripts/yarn.sh`
+1. Delete any `.stylelintrc.js`/`.stylelintignore` files -- these are normally in the root of the repository, but ensure no other files exist in site or package folders.
+2. Check to see if you have `stylelint` installed as a dependency by searching the project for `"stylelint"`. If it appears in any of your project's `package.json` files, please remove the dependency and re-run `./scripts/yarn.sh`
 
 ## ESLint
 The internal `eslint` version was upgrade from v5 to v8 -- quite a large jump -- and the supporting `eslint-plugin-import` and `eslint-config-airbnb-base` were also upgraded. As such, if you were relying on the eslint version provided by `base-cms` (most likely), you'll need to update your code to fix any lint errors.
 
-In addition, the web, newsletter, and export CLIs no longer provide a `lint` command. Most websites were _not_ using this command directly, and instead were running `eslint` directly in their package.json `lint` scripts. But this will need to be verified
-
 ### Action Items
-1. Verify that none of your package.json `lint` scripts reference the `basecms-website lint` comamnd. If they do, change them appropriately, usually `eslint --ext .js --ext .vue --max-warnings 5 --ignore-path ../../.eslintignore ./`
-    - Also note the stylelint changes above -- `lint:css` scripts should be removed and the old `lint:js` script should _become_ the new `lint` script with the eslint command above. [See the the complete list of new package.json scripts in the Improved CLI section](#improved-cli)
-
-2. Install `eslint` (along with plugins and configs) in the monorepo root. Existing core configurations should still work and do not need to change. That said, browser/vue configurations _will_ need changes.
+1. Install `eslint` (along with plugins and configs) in the monorepo root. Existing core configurations should still work and do not need to change. That said, browser/vue configurations _will_ need changes.
     - In the root `package.json` add or update the following devDependencies: (**note:** newsletter and export repos do _not_ need `@babel/core`, `@babel/eslint-parser` or `eslint-plugin-vue`)
     ```json
     "@babel/core": "^7.21.0",
@@ -161,7 +156,7 @@ In addition, the web, newsletter, and export CLIs no longer provide a `lint` com
     - You must remove _all_ `babel-eslint` packages, since `@babel/eslint-parser` is now used.
     - Double-check your website and global package files and ensure there aren't any references to eslint or any of it's plugins - this way only the root versions will be used.
 
-3. Update `babel-eslint` references on `.eslintrc.js` config files. The fastest way is to search for `parser: 'babel-eslint'`. If your repo isn't already using a common/shared browser eslint file that's imported into each `browser` we recommend creating one.
+2. Update `babel-eslint` references on `.eslintrc.js` config files. The fastest way is to search for `parser: 'babel-eslint'`. If your repo isn't already using a common/shared browser eslint file that's imported into each `browser` we recommend creating one.
     - Replace
       ```js
       parserOptions: {
@@ -176,7 +171,7 @@ In addition, the web, newsletter, and export CLIs no longer provide a `lint` com
         requireConfigFile: false,
       },
       ```
-4. The `vue/max-attributes-per-line` rule options changed in the latest version and needs to be updated. Additionally, the `vue/multi-word-component-names` should be turned off.
+3. The `vue/max-attributes-per-line` rule options changed in the latest version and needs to be updated. Additionally, the `vue/multi-word-component-names` should be turned off.
     - Replace
       ```js
       'vue/max-attributes-per-line': ['error', {
@@ -200,7 +195,7 @@ In addition, the web, newsletter, and export CLIs no longer provide a `lint` com
       'vue/multi-word-component-names': 'off',
       ```
 
-5. Because the new version of the vue plugin can support Vue3, we should also instruct any plugins as to our target Vue version. In the root of the repo create a `jsconfig.json` (if it doesn't exist) and add:
+4. Because the new version of the vue plugin can support Vue3, we should also instruct any plugins as to our target Vue version. In the root of the repo create a `jsconfig.json` (if it doesn't exist) and add:
     ```json
     {
       "vueCompilerOptions": {
