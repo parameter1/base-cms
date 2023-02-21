@@ -1,3 +1,4 @@
+process.env.MARKO_DEBUG = false;
 const compiler = require('marko/compiler');
 
 module.exports = ({
