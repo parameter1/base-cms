@@ -126,6 +126,7 @@ If the website's dev server is running, this will _not_ automatically restart th
     ADD packages /root/packages
     ADD sites/$SITE /root/sites/$SITE
     RUN yarn --pure-lockfile
+    ENV NODE_ENV production
     RUN yarn build
 
     FROM node:14.21-alpine
@@ -135,7 +136,6 @@ If the website's dev server is running, this will _not_ automatically restart th
     COPY --from=build /root /root
     WORKDIR /root/sites/$SITE
     ENTRYPOINT [ "node", "index.js" ]
-
     ```
     - This will run the `build` script found in each website (js/css/ssr/marko) and each package (compiles Marko files)
 
