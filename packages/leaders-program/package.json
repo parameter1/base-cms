@@ -4,35 +4,34 @@
   "description": "Leaders Program Vue components",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/leaders-program",
   "author": "Jacob Bare <jacob@parameter1.com>",
-  "main": "src/index.js",
+  "main": "./dist/leaders.umd.cjs",
+  "module": "./dist/leaders.js",
+  "exports": {
+    ".": {
+      "import": "./dist/leaders.js",
+      "require": "./dist/leaders.umd.cjs"
+    }
+  },
   "license": "MIT",
   "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "prepublish": "yarn build",
+    "lint": "eslint --ext .js --ext .vue --max-warnings 5 ./",
     "lint:fix": "yarn lint --fix",
-    "serve": "vue-cli-service serve src/dev.js",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
     "test": "yarn lint"
   },
   "dependencies": {
-    "core-js": "^3.28.0",
     "object-path": "^0.11.8",
     "portal-vue": "^2.1.7",
     "vue": "^2.7.14"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.19.1",
-    "@parameter1/base-cms-graphql-fragment-types": "^4.0.2",
-    "@vue/cli-plugin-babel": "^5.0.8",
-    "@vue/cli-plugin-eslint": "^5.0.8",
-    "@vue/cli-service": "^4.5.19",
-    "@vue/eslint-config-airbnb": "^6.0.0",
-    "eslint": "^8.34.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-vue": "^9.9.0",
-    "eslint-plugin-vuejs-accessibility": "^1.1.0",
-    "node-sass": "^4.14.1",
-    "sass-loader": "^13.2.0",
-    "vue-template-compiler": "^2.7.14"
+    "@vitejs/plugin-vue2": "^2.2.0",
+    "graphql-tag": "^2.12.6",
+    "terser": "^5.16.4",
+    "vite": "^4.1.4"
   },
   "publishConfig": {
     "access": "public"
