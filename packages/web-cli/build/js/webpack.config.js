@@ -79,6 +79,7 @@ module.exports = ({ cwd, entry }) => ({
                 debug: false,
                 modules: false,
                 exclude: [
+                  'es.array.includes',
                   '@babel/plugin-proposal-class-properties',
                   '@babel/plugin-proposal-private-methods',
                   '@babel/plugin-proposal-private-property-in-object',
