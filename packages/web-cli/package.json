@@ -34,6 +34,7 @@
     "@babel/runtime": "^7.21.0",
     "@parameter1/base-cms-marko-compiler": "^4.0.2",
     "@parameter1/base-cms-utils": "^4.0.2",
+    "@parameter1/browserslist-config-base-cms": "^0.0.0",
     "autoprefixer": "^10.4.13",
     "babel-loader": "^9.1.2",
     "chalk": "^4.1.2",
