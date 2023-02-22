@@ -146,16 +146,279 @@ If the website's dev server is running, this will _not_ automatically restart th
       command: ["dev"]
     ```
 
- 6. Update the `.github/workflows/deploy-production.yml` and `.github/workflows/deploy-staging.yml` files and add `context: .` under `with` of the "Build docker image" step. For example:
+## GitHub Actions / Production Builds
+Note: all of the below files are located in the `.github/workflows` folder.
+
+### Action Items
+1. Update the `node-ci.yml` file to the following:
     ```yml
-    - name: Build docker image
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        push: true
-        build-args: |
-          SITE=${{ matrix.site }}
-        tags: ${{ env.ECR_REGISTRY }}/${{ env.IMG_PREFIX }}-${{ matrix.site }}:${{ needs.vars.outputs.version }}
+    name: Node.js CI
+
+    on:
+      push:
+        branches: ["*"]
+      pull_request:
+        branches: ["*"]
+
+    jobs:
+      build:
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v3
+
+        - uses: actions/setup-node@v3
+          with:
+            node-version: 14.21
+
+        - uses: actions/cache@v3
+          id: yarn-cache
+          with:
+            path: '**/node_modules'
+            key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+        - name: Install dependencies
+          if: steps.yarn-cache.outputs.cache-hit != 'true'
+          run: yarn install --pure-lockfile
+
+        - run: yarn test
+    ```
+
+2. Create the `integration-tests.yml` file with the contents below. **NOTE** you must update the site configs found within the comments to match the current repo
+    ```yml
+    name: Integration Tests
+
+    on:
+      push:
+        branches: ["*"]
+      pull_request:
+        branches: ["*"]
+
+    jobs:
+      build-and-test-image:
+        uses: parameter1/actions/.github/workflows/website-build-push-test.yml@main
+        strategy:
+          matrix:
+            ###############################################
+            #v# Make sure this matches the site matrix! #v#
+            ###############################################
+            tenant_key: [abmedia_all]
+            image_prefix: [ab-media]
+            site:
+              - { id: 60f6ec0bd28860bc3384daa1, stack: virgon, host: athleticbusiness.com }
+              - { id: 60f6ec3bd28860bc3384e784, stack: virgon, host: woodfloorbusiness.com }
+              - { id: 60f6ec34d28860bc3384e447, stack: virgon, host: aquamagazine.com }
+            ###############################################
+            #^# Make sure this matches the site matrix! #^#
+            ###############################################
+        with:
+          docker_image: website-${{ matrix.site.host }}
+          site_id: ${{ matrix.site.id }}
+          site_host: ${{ matrix.site.host }}
+          infra_stack: ${{ matrix.site.stack }}
+          tenant_key: ${{ matrix.tenant_key }}
+          ecr_registry: ${{ vars.AWS_ECR_REGISTRY }}
+    ```
+
+3. Update the `deploy-staging.yml` file:
+    ```yml
+    name: Deploy sites (staging)
+
+    on:
+      push:
+        tags:
+          - '*'
+
+    jobs:
+      version:
+        runs-on: ubuntu-latest
+        steps:
+        - id: tag_version
+          run: |
+            REF=$(echo $GITHUB_REF | cut -d / -f 3)
+            [[ "$GITHUB_REF" =~ ^refs/tags.*$ ]] && VERSION="$REF" || VERSION="${REF}-${GITHUB_SHA::7}"
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+        outputs:
+          version: ${{ steps.tag_version.outputs.version }}
+
+      notify-start:
+        needs: [version]
+        uses: parameter1/actions/.github/workflows/notify-start.yml@main
+        secrets: inherit
+        with:
+          version: ${{ needs.version.outputs.version }}
+
+      post-deploy-failure:
+        if: failure()
+        needs: [notify-start, deploy-sites]
+        uses: parameter1/actions/.github/workflows/notify-fail.yml@main
+        secrets: inherit
+        with:
+          slack-thread: ${{ needs.notify-start.outputs.slack-thread }}
+
+      post-deploy-complete:
+        if: success()
+        needs: [notify-start, deploy-sites]
+        uses: parameter1/actions/.github/workflows/notify-complete.yml@main
+        secrets: inherit
+        with:
+          slack-thread: ${{ needs.notify-start.outputs.slack-thread }}
+
+      ######################
+      # Add websites here! #
+      ######################
+
+      build-sites:
+        needs: [version]
+        uses: parameter1/actions/.github/workflows/website-build-push-test.yml@main
+        strategy:
+          matrix:
+            ###############################################
+            #v# Make sure this matches the site matrix! #v#
+            ###############################################
+            tenant_key: [abmedia_all]
+            image_prefix: [ab-media]
+            site:
+              - { id: 60f6ec0bd28860bc3384daa1, stack: virgon, host: athleticbusiness.com }
+              - { id: 60f6ec3bd28860bc3384e784, stack: virgon, host: woodfloorbusiness.com }
+              - { id: 60f6ec34d28860bc3384e447, stack: virgon, host: aquamagazine.com }
+            ###############################################
+            #^# Make sure this matches the site matrix! #^#
+            ###############################################
+        with:
+          ecr_registry: ${{ vars.AWS_ECR_REGISTRY }}
+          docker_image: ${{ vars.AWS_ECR_REGISTRY }}/${{ matrix.image_prefix }}-${{ matrix.site.host }}:${{ needs.version.outputs.version }}
+          site_id: ${{ matrix.site.id }}
+          site_host: ${{ matrix.site.host }}
+          infra_stack: ${{ matrix.site.stack }}
+          tenant_key: ${{ matrix.tenant_key }}
+          push: true
+        secrets: inherit
+
+      deploy-sites:
+        needs: [version, build-sites]
+        uses: parameter1/actions/.github/workflows/website-deploy-staging.yml@main
+        strategy:
+          matrix:
+            ###############################################
+            #v# Make sure this matches the site matrix! #v#
+            ###############################################
+            tenant_key: [abmedia_all]
+            image_prefix: [ab-media]
+            site:
+              - { id: 60f6ec0bd28860bc3384daa1, stack: virgon, host: athleticbusiness.com }
+              - { id: 60f6ec3bd28860bc3384e784, stack: virgon, host: woodfloorbusiness.com }
+              - { id: 60f6ec34d28860bc3384e447, stack: virgon, host: aquamagazine.com }
+            ###############################################
+            #^# Make sure this matches the site matrix! #^#
+            ###############################################
+        with:
+          docker_image: ${{ vars.AWS_ECR_REGISTRY }}/${{ matrix.image_prefix }}-${{ matrix.site.host }}:${{ needs.version.outputs.version }}
+          infra_stack: ${{ matrix.site.stack }}
+          rancher_label_key: basecms-website
+          rancher_label_val: ${{ matrix.image_prefix }}-${{ matrix.site.host }}
+        secrets: inherit
+
+    ```
+
+4. Update the `deploy-production.yml` file:
+    ```yml
+    name: Deploy sites (production)
+
+    on:
+      push:
+        tags:
+          - 'v[0-9]+.[0-9]+.[0-9]+'
+
+    jobs:
+      version:
+        runs-on: ubuntu-latest
+        steps:
+        - id: tag_version
+          run: |
+            REF=$(echo $GITHUB_REF | cut -d / -f 3)
+            [[ "$GITHUB_REF" =~ ^refs/tags.*$ ]] && VERSION="$REF" || VERSION="${REF}-${GITHUB_SHA::7}"
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+        outputs:
+          version: ${{ steps.tag_version.outputs.version }}
+
+      notify-start:
+        needs: [version]
+        uses: parameter1/actions/.github/workflows/notify-start.yml@main
+        secrets: inherit
+        with:
+          version: ${{ needs.version.outputs.version }}
+
+      post-deploy-failure:
+        if: failure()
+        needs: [notify-start, deploy-sites]
+        uses: parameter1/actions/.github/workflows/notify-fail.yml@main
+        secrets: inherit
+        with:
+          slack-thread: ${{ needs.notify-start.outputs.slack-thread }}
+
+      post-deploy-complete:
+        if: success()
+        needs: [notify-start, deploy-sites]
+        uses: parameter1/actions/.github/workflows/notify-complete.yml@main
+        secrets: inherit
+        with:
+          slack-thread: ${{ needs.notify-start.outputs.slack-thread }}
+
+      ######################
+      # Add websites here! #
+      ######################
+
+      build-sites:
+        needs: [version]
+        uses: parameter1/actions/.github/workflows/website-build-push-test.yml@main
+        strategy:
+          matrix:
+            ###############################################
+            #v# Make sure this matches the site matrix! #v#
+            ###############################################
+            tenant_key: [abmedia_all]
+            image_prefix: [ab-media]
+            site:
+              - { id: 60f6ec0bd28860bc3384daa1, stack: virgon, host: athleticbusiness.com }
+              - { id: 60f6ec3bd28860bc3384e784, stack: virgon, host: woodfloorbusiness.com }
+              - { id: 60f6ec34d28860bc3384e447, stack: virgon, host: aquamagazine.com }
+            ###############################################
+            #^# Make sure this matches the site matrix! #^#
+            ###############################################
+        with:
+          ecr_registry: ${{ vars.AWS_ECR_REGISTRY }}
+          docker_image: ${{ vars.AWS_ECR_REGISTRY }}/${{ matrix.image_prefix }}-${{ matrix.site.host }}:${{ needs.version.outputs.version }}
+          site_id: ${{ matrix.site.id }}
+          site_host: ${{ matrix.site.host }}
+          infra_stack: ${{ matrix.site.stack }}
+          tenant_key: ${{ matrix.tenant_key }}
+          push: true
+        secrets: inherit
+
+      deploy-sites:
+        needs: [version, build-sites]
+        uses: parameter1/actions/.github/workflows/website-deploy-production.yml@main
+        strategy:
+          matrix:
+            ###############################################
+            #v# Make sure this matches the site matrix! #v#
+            ###############################################
+            tenant_key: [abmedia_all]
+            image_prefix: [ab-media]
+            site:
+              - { id: 60f6ec0bd28860bc3384daa1, stack: virgon, host: athleticbusiness.com }
+              - { id: 60f6ec3bd28860bc3384e784, stack: virgon, host: woodfloorbusiness.com }
+              - { id: 60f6ec34d28860bc3384e447, stack: virgon, host: aquamagazine.com }
+            ###############################################
+            #^# Make sure this matches the site matrix! #^#
+            ###############################################
+        with:
+          docker_image: ${{ vars.AWS_ECR_REGISTRY }}/${{ matrix.image_prefix }}-${{ matrix.site.host }}:${{ needs.version.outputs.version }}
+          infra_stack: ${{ matrix.site.stack }}
+          rancher_label_key: basecms-website
+          rancher_label_val: ${{ matrix.image_prefix }}-${{ matrix.site.host }}
+        secrets: inherit
     ```
 
 ## Stylelint
