@@ -24,6 +24,7 @@
     "chai": "^4.3.7",
     "eslint": "^8.34.0",
     "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-compat": "4.1.1",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-vue": "^9.9.0",
     "graphql": "^14.7.0",
@@ -37,5 +38,8 @@
     "endpoint": "http://graphql-server/graphql",
     "logo": "<h3 class='slds-text-heading--medium'><a href='/'>GraphQL Schema NPM_VERSION</a></h3>"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "browserslist": [
+    "extends @parameter1/browserslist-config-base-cms"
+  ]
 }

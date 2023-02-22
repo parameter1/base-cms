@@ -2,6 +2,10 @@ module.exports = {
   extends: [
     'airbnb-base',
     'plugin:vue/recommended',
+    'plugin:compat/recommended',
+  ],
+  plugins: [
+    'compat',
   ],
   env: {
     browser: true,
