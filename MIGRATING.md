@@ -9,7 +9,7 @@ Before following the migration steps, make sure the following have been complete
 
 4. Ensure you have the latest depenency tool installed _globally_. To do so, run the following command:
     ```bash
-    yarn global add @parameter1/base-cms-dependency-tool@v4.0.0
+    yarn global add @parameter1/base-cms-dependency-tool@v4.1.0
     ```
 
 5. Down any running Docker containers in your project by running the following from the project root
@@ -56,7 +56,6 @@ All core `@parameter1/base-cms-*` dependencies will need to be upgraded to the l
 3. Delete references to `@babel/*` dependencies in the `yarn.lock` file. The easiest way to do this is to search in the file using regex `^"@babel\/` and then delete all entries. There may be _alot_ of these, and that's okay :)
 4. Delete references to `node-sass` in the `yarn.lock` file. Search using regex `^node-sass` and any entries
 4. Now run `./scripts/yarn.sh` -- this should run in the new Node14 Docker container (which may need to be downloaded). **MAKE SURE YOU RUN THE INSTALL USING THE SCRIPT** This ensures the install runs in the proper version of Node.
-    - Note: if you're doing this migration while 4.x is still in pre-release, you'll likely see Yarn wranings about incorrect peer dependencies (e.g. `has incorrect peer dependency "@parameter1/base-cms-marko-web@^4.0.0"`) -- this is fine and will be resolved once the packages are out of pre-release.
 
 ## SASS/SCSS Updates
 The new build process will no longer resolve relative `@import` statements to files located in `node_modules`. The good news, however, is that it _can_ import using standard package names.
@@ -119,13 +118,13 @@ If the website's dev server is running, this will _not_ automatically restart th
 4. The root `Dockerfile` will need updated to properly build the sites in production. Replace the contents of the file with the following:
     ```Dockerfile
     FROM node:14.21 as build
-    WORKDIR /root
+    WORKDIR /repo
     ARG SITE
 
-    ADD package.json yarn.lock lerna.json /root/
-    ADD packages /root/packages
-    ADD sites/$SITE /root/sites/$SITE
-    RUN yarn --pure-lockfile
+    ADD package.json yarn.lock lerna.json /repo/
+    ADD packages /repo/packages
+    ADD sites/$SITE /repo/sites/$SITE
+    RUN --mount=type=cache,target=/repo/.yarn YARN_CACHE_FOLDER=/repo/.yarn yarn install --frozen-lockfile
     ENV NODE_ENV production
     RUN yarn build
 
@@ -133,8 +132,8 @@ If the website's dev server is running, this will _not_ automatically restart th
     ENV NODE_ENV production
     ENV PORT 80
     ARG SITE
-    COPY --from=build /root /root
-    WORKDIR /root/sites/$SITE
+    COPY --from=build /repo /repo
+    WORKDIR /repo/sites/$SITE
     ENTRYPOINT [ "node", "index.js" ]
     ```
     - This will run the `build` script found in each website (js/css/ssr/marko) and each package (compiles Marko files)
@@ -146,17 +145,280 @@ If the website's dev server is running, this will _not_ automatically restart th
       entrypoint: ["yarn"]
       command: ["dev"]
     ```
- 
- 6. Update the `.github/workflows/deploy-production.yml` and `.github/workflows/deploy-staging.yml` files and add `context: .` under `with` of the "Build docker image" step. For example:
+
+## GitHub Actions / Production Builds
+Note: all of the below files are located in the `.github/workflows` folder.
+
+### Action Items
+1. Update the `node-ci.yml` file to the following:
     ```yml
-    - name: Build docker image
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        push: true
-        build-args: |
-          SITE=${{ matrix.site }}
-        tags: ${{ env.ECR_REGISTRY }}/${{ env.IMG_PREFIX }}-${{ matrix.site }}:${{ needs.vars.outputs.version }}
+    name: Node.js CI
+
+    on:
+      push:
+        branches: ["*"]
+      pull_request:
+        branches: ["*"]
+
+    jobs:
+      build:
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v3
+
+        - uses: actions/setup-node@v3
+          with:
+            node-version: 14.21
+
+        - uses: actions/cache@v3
+          id: yarn-cache
+          with:
+            path: '**/node_modules'
+            key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+        - name: Install dependencies
+          if: steps.yarn-cache.outputs.cache-hit != 'true'
+          run: yarn install --pure-lockfile
+
+        - run: yarn test
+    ```
+
+2. Create the `integration-tests.yml` file with the contents below. **NOTE** you must update the site configs found within the comments to match the current repo
+    ```yml
+    name: Integration Tests
+
+    on:
+      push:
+        branches: ["*"]
+      pull_request:
+        branches: ["*"]
+
+    jobs:
+      build-and-test-image:
+        uses: parameter1/actions/.github/workflows/website-build-push-test.yml@main
+        strategy:
+          matrix:
+            ###############################################
+            #v# Make sure this matches the site matrix! #v#
+            ###############################################
+            tenant_key: [abmedia_all]
+            image_prefix: [ab-media]
+            site:
+              - { id: 60f6ec0bd28860bc3384daa1, stack: virgon, host: athleticbusiness.com }
+              - { id: 60f6ec3bd28860bc3384e784, stack: virgon, host: woodfloorbusiness.com }
+              - { id: 60f6ec34d28860bc3384e447, stack: virgon, host: aquamagazine.com }
+            ###############################################
+            #^# Make sure this matches the site matrix! #^#
+            ###############################################
+        with:
+          docker_image: website-${{ matrix.site.host }}
+          site_id: ${{ matrix.site.id }}
+          site_host: ${{ matrix.site.host }}
+          infra_stack: ${{ matrix.site.stack }}
+          tenant_key: ${{ matrix.tenant_key }}
+          ecr_registry: ${{ vars.AWS_ECR_REGISTRY }}
+    ```
+
+3. Update the `deploy-staging.yml` file:
+    ```yml
+    name: Deploy sites (staging)
+
+    on:
+      push:
+        tags:
+          - '*'
+
+    jobs:
+      version:
+        runs-on: ubuntu-latest
+        steps:
+        - id: tag_version
+          run: |
+            REF=$(echo $GITHUB_REF | cut -d / -f 3)
+            [[ "$GITHUB_REF" =~ ^refs/tags.*$ ]] && VERSION="$REF" || VERSION="${REF}-${GITHUB_SHA::7}"
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+        outputs:
+          version: ${{ steps.tag_version.outputs.version }}
+
+      notify-start:
+        needs: [version]
+        uses: parameter1/actions/.github/workflows/notify-start.yml@main
+        secrets: inherit
+        with:
+          version: ${{ needs.version.outputs.version }}
+
+      post-deploy-failure:
+        if: failure()
+        needs: [notify-start, deploy-sites]
+        uses: parameter1/actions/.github/workflows/notify-fail.yml@main
+        secrets: inherit
+        with:
+          slack-thread: ${{ needs.notify-start.outputs.slack-thread }}
+
+      post-deploy-complete:
+        if: success()
+        needs: [notify-start, deploy-sites]
+        uses: parameter1/actions/.github/workflows/notify-complete.yml@main
+        secrets: inherit
+        with:
+          slack-thread: ${{ needs.notify-start.outputs.slack-thread }}
+
+      ######################
+      # Add websites here! #
+      ######################
+
+      build-sites:
+        needs: [version]
+        uses: parameter1/actions/.github/workflows/website-build-push-test.yml@main
+        strategy:
+          matrix:
+            ###############################################
+            #v# Make sure this matches the site matrix! #v#
+            ###############################################
+            tenant_key: [abmedia_all]
+            image_prefix: [ab-media]
+            site:
+              - { id: 60f6ec0bd28860bc3384daa1, stack: virgon, host: athleticbusiness.com }
+              - { id: 60f6ec3bd28860bc3384e784, stack: virgon, host: woodfloorbusiness.com }
+              - { id: 60f6ec34d28860bc3384e447, stack: virgon, host: aquamagazine.com }
+            ###############################################
+            #^# Make sure this matches the site matrix! #^#
+            ###############################################
+        with:
+          ecr_registry: ${{ vars.AWS_ECR_REGISTRY }}
+          docker_image: ${{ vars.AWS_ECR_REGISTRY }}/${{ matrix.image_prefix }}-${{ matrix.site.host }}:${{ needs.version.outputs.version }}
+          site_id: ${{ matrix.site.id }}
+          site_host: ${{ matrix.site.host }}
+          infra_stack: ${{ matrix.site.stack }}
+          tenant_key: ${{ matrix.tenant_key }}
+          push: true
+        secrets: inherit
+
+      deploy-sites:
+        needs: [version, build-sites]
+        uses: parameter1/actions/.github/workflows/website-deploy-staging.yml@main
+        strategy:
+          matrix:
+            ###############################################
+            #v# Make sure this matches the site matrix! #v#
+            ###############################################
+            tenant_key: [abmedia_all]
+            image_prefix: [ab-media]
+            site:
+              - { id: 60f6ec0bd28860bc3384daa1, stack: virgon, host: athleticbusiness.com }
+              - { id: 60f6ec3bd28860bc3384e784, stack: virgon, host: woodfloorbusiness.com }
+              - { id: 60f6ec34d28860bc3384e447, stack: virgon, host: aquamagazine.com }
+            ###############################################
+            #^# Make sure this matches the site matrix! #^#
+            ###############################################
+        with:
+          docker_image: ${{ vars.AWS_ECR_REGISTRY }}/${{ matrix.image_prefix }}-${{ matrix.site.host }}:${{ needs.version.outputs.version }}
+          infra_stack: ${{ matrix.site.stack }}
+          rancher_label_key: basecms-website
+          rancher_label_val: ${{ matrix.image_prefix }}-${{ matrix.site.host }}
+        secrets: inherit
+
+    ```
+
+4. Update the `deploy-production.yml` file:
+    ```yml
+    name: Deploy sites (production)
+
+    on:
+      push:
+        tags:
+          - 'v[0-9]+.[0-9]+.[0-9]+'
+
+    jobs:
+      version:
+        runs-on: ubuntu-latest
+        steps:
+        - id: tag_version
+          run: |
+            REF=$(echo $GITHUB_REF | cut -d / -f 3)
+            [[ "$GITHUB_REF" =~ ^refs/tags.*$ ]] && VERSION="$REF" || VERSION="${REF}-${GITHUB_SHA::7}"
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+        outputs:
+          version: ${{ steps.tag_version.outputs.version }}
+
+      notify-start:
+        needs: [version]
+        uses: parameter1/actions/.github/workflows/notify-start.yml@main
+        secrets: inherit
+        with:
+          version: ${{ needs.version.outputs.version }}
+
+      post-deploy-failure:
+        if: failure()
+        needs: [notify-start, deploy-sites]
+        uses: parameter1/actions/.github/workflows/notify-fail.yml@main
+        secrets: inherit
+        with:
+          slack-thread: ${{ needs.notify-start.outputs.slack-thread }}
+
+      post-deploy-complete:
+        if: success()
+        needs: [notify-start, deploy-sites]
+        uses: parameter1/actions/.github/workflows/notify-complete.yml@main
+        secrets: inherit
+        with:
+          slack-thread: ${{ needs.notify-start.outputs.slack-thread }}
+
+      ######################
+      # Add websites here! #
+      ######################
+
+      build-sites:
+        needs: [version]
+        uses: parameter1/actions/.github/workflows/website-build-push-test.yml@main
+        strategy:
+          matrix:
+            ###############################################
+            #v# Make sure this matches the site matrix! #v#
+            ###############################################
+            tenant_key: [abmedia_all]
+            image_prefix: [ab-media]
+            site:
+              - { id: 60f6ec0bd28860bc3384daa1, stack: virgon, host: athleticbusiness.com }
+              - { id: 60f6ec3bd28860bc3384e784, stack: virgon, host: woodfloorbusiness.com }
+              - { id: 60f6ec34d28860bc3384e447, stack: virgon, host: aquamagazine.com }
+            ###############################################
+            #^# Make sure this matches the site matrix! #^#
+            ###############################################
+        with:
+          ecr_registry: ${{ vars.AWS_ECR_REGISTRY }}
+          docker_image: ${{ vars.AWS_ECR_REGISTRY }}/${{ matrix.image_prefix }}-${{ matrix.site.host }}:${{ needs.version.outputs.version }}
+          site_id: ${{ matrix.site.id }}
+          site_host: ${{ matrix.site.host }}
+          infra_stack: ${{ matrix.site.stack }}
+          tenant_key: ${{ matrix.tenant_key }}
+          push: true
+        secrets: inherit
+
+      deploy-sites:
+        needs: [version, build-sites]
+        uses: parameter1/actions/.github/workflows/website-deploy-production.yml@main
+        strategy:
+          matrix:
+            ###############################################
+            #v# Make sure this matches the site matrix! #v#
+            ###############################################
+            tenant_key: [abmedia_all]
+            image_prefix: [ab-media]
+            site:
+              - { id: 60f6ec0bd28860bc3384daa1, stack: virgon, host: athleticbusiness.com }
+              - { id: 60f6ec3bd28860bc3384e784, stack: virgon, host: woodfloorbusiness.com }
+              - { id: 60f6ec34d28860bc3384e447, stack: virgon, host: aquamagazine.com }
+            ###############################################
+            #^# Make sure this matches the site matrix! #^#
+            ###############################################
+        with:
+          docker_image: ${{ vars.AWS_ECR_REGISTRY }}/${{ matrix.image_prefix }}-${{ matrix.site.host }}:${{ needs.version.outputs.version }}
+          infra_stack: ${{ matrix.site.stack }}
+          rancher_label_key: basecms-website
+          rancher_label_val: ${{ matrix.image_prefix }}-${{ matrix.site.host }}
+        secrets: inherit
     ```
 
 ## Stylelint
@@ -170,59 +432,33 @@ Linting styles via `stylelint` has been removed. The reasons are varied, but pri
 The internal `eslint` version was upgrade from v5 to v8 -- quite a large jump -- and the supporting `eslint-plugin-import` and `eslint-config-airbnb-base` were also upgraded. As such, if you were relying on the eslint version provided by `base-cms` (most likely), you'll need to update your code to fix any lint errors.
 
 ### Action Items
-1. Install `eslint` (along with plugins and configs) in the monorepo root. Existing core configurations should still work and do not need to change. That said, browser/vue configurations _will_ need changes.
+1. Install the `@parameter1/base-cms-eslint` wrapper package in the monorepo root.
     - In the root `package.json` add or update the following devDependencies: (**note:** newsletter and export repos do _not_ need `@babel/core`, `@babel/eslint-parser` or `eslint-plugin-vue`)
     ```json
-    "@babel/core": "^7.21.0",
-    "@babel/eslint-parser": "^7.19.1",
-    "eslint": "^8.34.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-vue": "^9.9.0",
+    "@parameter1/base-cms-eslint": "^4.1.0",
     ```
-    - You must remove _all_ `babel-eslint` packages, since `@babel/eslint-parser` is now used.
-    - Double-check your website and global package files and ensure there aren't any references to eslint or any of it's plugins - this way only the root versions will be used.
+    - You must **remove** _all_ `babel-eslint` packages, since `@babel/eslint-parser` is now used under the hood
+    - Double-check your website and global package files and ensure there aren't any references to eslint or any of it's plugins - this way only the root version will be used.
 
-2. Update `babel-eslint` references on `.eslintrc.js` config files. The fastest way is to search for `parser: 'babel-eslint'`. If your repo isn't already using a common/shared browser eslint file that's imported into each `browser` we recommend creating one.
-    - Replace
-      ```js
-      parserOptions: {
-        parser: 'babel-eslint',
-      },
-      ```
-    - With this (**Note** the move of `parser` to the root config, which uses the vue parser first)
-      ```js
-      parser: 'vue-eslint-parser',
-      parserOptions: {
-        parser: '@babel/eslint-parser',
-        requireConfigFile: false,
-      },
-      ```
-3. The `vue/max-attributes-per-line` rule options changed in the latest version and needs to be updated. Additionally, the `vue/multi-word-component-names` should be turned off.
-    - Replace
-      ```js
-      'vue/max-attributes-per-line': ['error', {
-        singleline: 3,
-        multiline: {
-          max: 1,
-          allowFirstLine: false,
-        },
-      }],
-      ```
-    - With this
-      ```js
-      'vue/max-attributes-per-line': ['error', {
-        singleline: {
-          max: 3,
-        },
-        multiline: {
-          max: 1,
-        },
-      }],
-      'vue/multi-word-component-names': 'off',
-      ```
+2. Add the shared `browserslist` config to the root `package.json` file:
+    ```json
+    "browserslist": [
+      "extends @parameter1/browserslist-config-base-cms"
+    ]
+    ```
 
-4. Because the new version of the vue plugin can support Vue3, we should also instruct any plugins as to our target Vue version. In the root of the repo create a `jsconfig.json` (if it doesn't exist) and add:
+3. Update all server `.eslintrc.js` files (_not_ the `.eslintrc.js` file found in `browser` folders) to use the common server config. Replace with:
+    ```js
+    module.exports = require('@parameter1/base-cms-eslint/eslintrc.server');
+    ```
+
+4. Update the root `eslint.browser.js` file to use the common browser config. Replace with:
+    ```js
+    // eslint-disable-next-line
+    module.exports = require('@parameter1/base-cms-eslint/eslintrc.browser');
+    ```
+
+5. Because the new version of the vue plugin can support Vue3, we should also instruct any plugins as to our target Vue version. In the root of the repo create a `jsconfig.json` (if it doesn't exist) and add:
     ```json
     {
       "vueCompilerOptions": {
@@ -230,9 +466,9 @@ The internal `eslint` version was upgrade from v5 to v8 -- quite a large jump --
       }
     }
     ```
-5. Once the new devDependencies are added, run `./scripts/yarn.sh`
-6. Restart VSCode (via `Cmd+Q`) so the new eslint library will load
-7. Open to Docker terminal via `./scripts/terminal.sh` and then run `yarn lint:fix` from the root. This will attempt to fix lint errors automatically. If the lint fixer does encounter errors, you'll need to manually fix those, then run `yarn lint:fix` again.
+6. Once the new devDependencies are added, run `./scripts/yarn.sh`
+7. Restart VSCode (via `Cmd+Q`) so the new eslint library will load
+8. Open to Docker terminal via `./scripts/terminal.sh` and then run `yarn lint:fix` from the root. This will attempt to fix lint errors automatically. If the lint fixer does encounter errors, you'll need to manually fix those, then run `yarn lint:fix` again.
 
 ## Global Package Upgrade & Final Items
 1. Once all of the tasks above have been completed, run `./scripts/yarn.sh upgrade` to ensure all semver versions get normalized.

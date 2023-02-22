@@ -4,6 +4,7 @@ const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const sass = require('node-sass');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const targets = require('@parameter1/browserslist-config-base-cms/core-js-build');
 
 const absoluteRuntime = path.dirname(require.resolve('@babel/runtime/package.json'));
 const imagePattern = /\.(png|svg|jpg|gif|webp)$/;
@@ -64,14 +65,7 @@ module.exports = ({ cwd, entry }) => ({
             [
               require.resolve('@babel/preset-env'),
               {
-                targets: {
-                  chrome: '83',
-                  edge: '80',
-                  safari: '14',
-                  firefox: '78',
-                  opera: '69',
-                  ios: '14',
-                },
+                targets,
                 bugfixes: true,
                 useBuiltIns: 'usage',
                 corejs: { version: '3' },

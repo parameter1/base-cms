@@ -3,8 +3,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
-// @todo update this from 4 to 8? must test in legacy build as well
 const sass = require('node-sass');
+const targets = require('@parameter1/browserslist-config-base-cms');
 
 const stylePattern = /\.(s[ac]ss|css)$/i;
 
@@ -61,14 +61,7 @@ module.exports = ({ cwd, entry }) => {
                     [
                       require.resolve('autoprefixer'),
                       {
-                        overrideBrowserslist: [
-                          'Chrome >= 64',
-                          'Firefox >= 67',
-                          'Edge >= 79',
-                          'iOS >= 12',
-                          'Safari >= 11.1',
-                          'Opera >= 51',
-                        ],
+                        overrideBrowserslist: targets,
                       },
                     ],
                   ],

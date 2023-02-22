@@ -1,0 +1,26 @@
+{
+  "name": "@parameter1/base-cms-eslint",
+  "version": "0.0.0",
+  "description": "Configuration settings for eslint within BaseCMS.",
+  "main": "src/index.js",
+  "author": "Jacob Bare <jacob@parameter1.com>",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/eslint",
+  "license": "MIT",
+  "scripts": {
+    "lint:fix": "yarn lint --fix",
+    "lint": "eslint --ext .js --max-warnings 5 ./",
+    "test": "yarn lint"
+  },
+  "dependencies": {
+    "@babel/core": "^7.21.0",
+    "@babel/eslint-parser": "^7.19.1",
+    "eslint": "^8.34.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-compat": "4.1.1",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-vue": "^9.9.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
