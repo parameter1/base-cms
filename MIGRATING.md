@@ -89,7 +89,7 @@ If the website's dev server is running, this will _not_ automatically restart th
       "dev": "basecms-website dev --compile-dir ../../packages --watch-dir ../../packages",
       "build": "basecms-website build",
       "compile": "basecms-marko-compile compile",
-      "lint": "eslint --ext .js --ext .vue --max-warnings 5 --ignore-path ../../.eslintignore ./",
+      "lint": "eslint --ext .js --ext .vue --max-warnings 5 --config ../../.eslintrc.js --ignore-path ../../.eslintignore ./",
       "lint:fix": "yarn lint --fix",
       "test": "yarn lint && yarn compile --no-clean"
     }
@@ -100,7 +100,7 @@ If the website's dev server is running, this will _not_ automatically restart th
     "scripts": {
       "compile": "basecms-marko-compile compile",
       "build": "yarn compile",
-      "lint": "eslint --ext .js --ext .vue --max-warnings 5 --ignore-path ../../.eslintignore ./",
+      "lint": "eslint --ext .js --ext .vue --max-warnings 5 --config ../../.eslintrc.js --ignore-path ../../.eslintignore ./",
       "lint:fix": "yarn lint --fix",
       "test": "yarn lint && yarn compile --no-clean"
     },
