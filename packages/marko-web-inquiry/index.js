@@ -1,6 +1,6 @@
 const router = require('./routers');
-const defaultNotificationTemplate = require('./templates/notification.marko');
-const defaultSubmissionTemplate = require('./templates/confirmation.marko');
+const defaultNotificationTemplate = require('./templates/notification');
+const defaultSubmissionTemplate = require('./templates/confirmation');
 const defaultQueryFragment = require('./default-fragment');
 
 const { log } = console;
