@@ -1,10 +1,12 @@
+@use "sass:math";
+
 @import "bootstrap/scss/functions";
 
 @function get-line-height($font-size-px, $line-height-px) {
   @if $line-height-px < $font-size-px {
     @return 1;
   }
-  @return $line-height-px / $font-size-px;
+  @return math.div($line-height-px, $font-size-px);
 }
 
 @function navbar-link-color($navbar-type, $color-type) {

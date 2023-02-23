@@ -659,7 +659,7 @@ $theme-site-navbar-link-transition: color ease 300ms, text-decoration ease 300ms
 
 $theme-site-navbar-logo-drop-shadow:   1px 1px 1px rgba(0, 0, 0, .35) !default;
 $theme-site-navbar-logo-height:        60px !default;
-$theme-site-navbar-logo-height-sm:     $theme-site-navbar-logo-height / 2 !default;
+$theme-site-navbar-logo-height-sm:     $theme-site-navbar-logo-height * 0.5 !default;
 
 $theme-site-navbar-icon-transition:  fill ease 300ms !default;
 
@@ -701,7 +701,7 @@ $theme-site-footer-copyright-line-height: get-line-height($theme-site-footer-cop
 
 $theme-site-footer-logo-box-shadow: 2px 2px 2px rgba(0, 0, 0, .5) !default;
 $theme-site-footer-logo-height:     60px !default;
-$theme-site-footer-logo-height-sm:  $theme-site-footer-logo-height / 2 !default;
+$theme-site-footer-logo-height-sm:  $theme-site-footer-logo-height * 0.5 !default;
 
 $theme-site-footer-primary-bg-color:    $theme-site-navbar-primary-bg-color !default;
 $theme-site-footer-primary-type:        dark !default;

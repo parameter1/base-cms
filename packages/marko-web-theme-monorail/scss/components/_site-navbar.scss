@@ -12,8 +12,8 @@
     &__brand {
       @media (max-width: map-get($theme-site-header-breakpoints, small-logo)) {
         // reduce padding on small logo
-        margin-right: $theme-site-navbar-brand-margin-x / 2;
-        margin-left: $theme-site-navbar-brand-margin-x / 2;
+        margin-right: $theme-site-navbar-brand-margin-x * 0.5;
+        margin-left: $theme-site-navbar-brand-margin-x * 0.5;
       }
       &:first-child {
         margin-left: $marko-web-page-wrapper-padding;
