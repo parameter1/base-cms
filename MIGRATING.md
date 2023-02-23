@@ -439,7 +439,7 @@ The internal `eslint` version was upgrade from v5 to v8 -- quite a large jump --
 
 ### Action Items
 1. Install the `@parameter1/base-cms-eslint` wrapper package and the browserslist config in the monorepo root.
-    - In the root `package.json` add or update the following devDependencies: (**note:** newsletter and export repos do _not_ need `@babel/core`, `@babel/eslint-parser` or `eslint-plugin-vue`)
+    - In the root `package.json` add or update the following devDependencies:
     ```json
     "@parameter1/base-cms-eslint": "^4.1.0",
     "@parameter1/browserslist-config-base-cms": "^4.1.0",
