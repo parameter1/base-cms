@@ -1,6 +1,6 @@
 const { get } = require('@parameter1/base-cms-object-path');
 const AbstractConfig = require('./abstract-config');
-const AssetManifest = require('./asset-manifest');
+const distLoader = require('./dist-loader');
 
 class CoreConfig extends AbstractConfig {
   /**
@@ -9,7 +9,11 @@ class CoreConfig extends AbstractConfig {
    */
   constructor(config) {
     super(config);
-    this.assets = new AssetManifest({ distDir: this.get('distDir') });
+    const distDir = this.get('distDir');
+    this.assetLoader = {
+      js: distLoader({ distDir, type: 'js', entry: 'browser/index.js' }),
+      css: distLoader({ distDir, type: 'css', entry: 'server/styles/index.scss' }),
+    };
   }
 
   setWebsiteContext(context) {
@@ -55,11 +59,13 @@ class CoreConfig extends AbstractConfig {
   }
 
   sources() {
-    return this.assets.js();
+    const js = this.assetLoader.js();
+    return [js];
   }
 
   styles() {
-    return this.assets.css();
+    const css = this.assetLoader.css();
+    return [css];
   }
 }
 
