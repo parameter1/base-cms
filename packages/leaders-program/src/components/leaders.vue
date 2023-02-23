@@ -10,6 +10,8 @@
       :display="getResponsiveValue('displayHeader')"
       :img-src="headerImgSrc"
       :img-alt="headerImgAlt"
+      :img-width="headerImgWidth"
+      :img-height="headerImgHeight"
       :display-callout="getResponsiveValue('displayCallout')"
       :callout-prefix="calloutPrefix"
       :callout-value="calloutValue"
@@ -128,6 +130,14 @@ export default {
     headerImgAlt: {
       type: String,
       default: null,
+    },
+    headerImgWidth: {
+      type: String,
+      default: '300',
+    },
+    headerImgHeight: {
+      type: String,
+      default: '90',
     },
     displayCallout: {
       type: Boolean,
