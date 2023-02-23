@@ -2,6 +2,7 @@
   <div v-if="display" class="leaders__header">
     <div v-if="imgSrc" class="leaders__header-image">
       <img
+        class="lazyload"
         :src="imgSrc"
         :srcset="`${imgSrc}&dpr=2 2x`"
         :alt="imgAlt"
