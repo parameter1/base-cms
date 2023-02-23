@@ -150,7 +150,13 @@ If the website's dev server is running, this will _not_ automatically restart th
 Note: all of the below files are located in the `.github/workflows` folder.
 
 ### Action Items
-1. Update the `node-ci.yml` file to the following:
+0. Create the `tests/integration.js` file in the root of the repository with the following contents
+    ```js
+    // eslint-disable-next-line
+    require('@parameter1/base-cms-marko-web/integration/test-website-boot');
+    
+    ```
+2. Update the `node-ci.yml` file to the following:
     ```yml
     name: Node.js CI
 
@@ -436,7 +442,7 @@ The internal `eslint` version was upgrade from v5 to v8 -- quite a large jump --
     - In the root `package.json` add or update the following devDependencies: (**note:** newsletter and export repos do _not_ need `@babel/core`, `@babel/eslint-parser` or `eslint-plugin-vue`)
     ```json
     "@parameter1/base-cms-eslint": "^4.1.0",
-     "@parameter1/browserslist-config-base-cms": "^4.1.0",
+    "@parameter1/browserslist-config-base-cms": "^4.1.0",
     ```
     - You must **remove** _all_ `babel-eslint` packages, since `@babel/eslint-parser` is now used under the hood
     - Double-check your website and global package files and ensure there aren't any references to eslint or any of it's plugins - this way only the root version will be used.
