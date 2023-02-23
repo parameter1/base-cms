@@ -13,6 +13,13 @@ setInterval(async () => {
       if (!found) {
         error('Unable to find closing HTML tags!');
         process.exit(1);
+        return;
+      }
+      // now check for any server errors
+      if (/data-marko-error="true"/g.test(html)) {
+        error('An in-page server-side Marko error was encountered!');
+        process.exit(1);
+        return;
       }
       log('Integration tests passed!');
       process.exit(0);
