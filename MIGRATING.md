@@ -432,10 +432,11 @@ Linting styles via `stylelint` has been removed. The reasons are varied, but pri
 The internal `eslint` version was upgrade from v5 to v8 -- quite a large jump -- and the supporting `eslint-plugin-import` and `eslint-config-airbnb-base` were also upgraded. As such, if you were relying on the eslint version provided by `base-cms` (most likely), you'll need to update your code to fix any lint errors.
 
 ### Action Items
-1. Install the `@parameter1/base-cms-eslint` wrapper package in the monorepo root.
+1. Install the `@parameter1/base-cms-eslint` wrapper package and the browserslist config in the monorepo root.
     - In the root `package.json` add or update the following devDependencies: (**note:** newsletter and export repos do _not_ need `@babel/core`, `@babel/eslint-parser` or `eslint-plugin-vue`)
     ```json
     "@parameter1/base-cms-eslint": "^4.1.0",
+     "@parameter1/browserslist-config-base-cms": "^4.1.0",
     ```
     - You must **remove** _all_ `babel-eslint` packages, since `@babel/eslint-parser` is now used under the hood
     - Double-check your website and global package files and ensure there aren't any references to eslint or any of it's plugins - this way only the root version will be used.
