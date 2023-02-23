@@ -9,7 +9,7 @@
   "private": true,
   "scripts": {
     "lint:fix": "yarn lint --fix",
-    "dev": "basecms-website dev --compile-dir ../../packages --watch-dir ../../packages",
+    "dev": "basecms-website dev --compile-dir ../../packages --watch-dir ../../packages --watch-ignore ../../packages/marko-web/integration --watch-ignore ../../packages/web-cli",
     "build": "basecms-website build --compile-dir ../../packages",
     "build:css": "basecms-website build:css",
     "build:js": "basecms-website build:js",
