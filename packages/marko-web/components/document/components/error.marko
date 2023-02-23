@@ -14,7 +14,7 @@ $ const error = input.error || {};
     <@page for="error">
       <marko-web-page-wrapper>
         <@section>
-          <h3>${input.statusCode} ${input.statusMessage}</h3>
+          <h3 data-marko-error="true">${input.statusCode} ${input.statusMessage}</h3>
           <h4>${error.message}</h4>
           <if(isDev)>
             <pre>${error.stack}</pre>
