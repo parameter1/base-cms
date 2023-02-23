@@ -20,6 +20,7 @@
   <div v-else>
     <form @submit.prevent="handleSubmit">
       <email
+        :id="loginEmailId"
         v-model="email"
         :placeholder="loginEmailPlaceholder"
         :disabled="loading"
@@ -134,6 +135,10 @@ export default {
     actionText: {
       type: String,
       default: 'logging in',
+    },
+    loginEmailId: {
+      type: String,
+      default: 'sign-on-email',
     },
     loginEmailLabel: {
       type: String,

@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import elementId from '@parameter1/base-cms-marko-web/browser/components/element-id';
 import FormGroup from '../common/form-group.vue';
 import FormLabel from '../common/form-label.vue';
 
@@ -28,6 +27,10 @@ export default {
     FormLabel,
   },
   props: {
+    id: {
+      type: String,
+      default: 'sign-on-email',
+    },
     disabled: {
       type: Boolean,
       default: false,
@@ -46,9 +49,6 @@ export default {
     },
   },
   computed: {
-    id() {
-      return elementId('identity-x-email-field');
-    },
     email: {
       get() {
         return this.value || '';

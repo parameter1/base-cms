@@ -62,20 +62,22 @@ const methods = {
 };
 
 let initialized = false;
-const init = () => {
-  if (initialized) return;
-  const { markoCompQueue } = window;
-  if (!markoCompQueue) throw new Error('Unable to load Marko Web components queue!');
+if (window && window.markoCompQueue) {
+  window.markoCompQueue.flush = () => {
+    if (initialized) return;
+    const { markoCompQueue } = window;
+    if (!markoCompQueue) throw new Error('Unable to load Marko Web components queue!');
 
-  for (let i = 0; i < markoCompQueue.length; i += 1) {
-    const [method, args] = markoCompQueue[i];
-    if (methods[method]) methods[method](...args);
-  }
-  initialized = true;
-};
+    for (let i = 0; i < markoCompQueue.length; i += 1) {
+      const [method, args] = markoCompQueue[i];
+      if (methods[method]) methods[method](...args);
+    }
+    window.CMSBrowserComponents = methods;
+    initialized = true;
+  };
+}
 
 export default {
   ...methods,
-  init,
   EventBus,
 };

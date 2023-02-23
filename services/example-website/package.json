@@ -13,6 +13,8 @@
     "build": "basecms-website build --compile-dir ../../packages",
     "build:css": "basecms-website build:css",
     "build:js": "basecms-website build:js",
+    "build:vite": "basecms-website build:vite",
+    "build:ssr": "basecms-website build:ssr",
     "compile": "basecms-marko-compile compile",
     "lint": "eslint --ext .js --ext .vue --max-warnings 5 --ignore-path ../../.eslintignore ./",
     "test": "yarn lint && yarn compile --no-clean"

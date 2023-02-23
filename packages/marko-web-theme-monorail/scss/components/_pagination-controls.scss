@@ -17,7 +17,7 @@
     .btn {
       margin-bottom: 12px;
       &:first-child {
-        margin-right: map-get($spacers, block) / 2;
+        margin-right: map-get($spacers, block) * 0.5;
       }
     }
   }
@@ -26,7 +26,7 @@
     .btn {
       margin-bottom: 12px;
       &:first-child {
-        margin-right: map-get($spacers, block) / 2;
+        margin-right: map-get($spacers, block) * 0.5;
       }
     }
   }

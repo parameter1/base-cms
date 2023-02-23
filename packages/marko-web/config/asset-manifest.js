@@ -8,7 +8,7 @@ class AssetManifest {
   js() {
     if (!this.scripts) {
       const { js } = this.load();
-      this.scripts = [js['main.js']];
+      this.scripts = [js['browser/index.js']];
     }
     return this.scripts;
   }
@@ -16,7 +16,7 @@ class AssetManifest {
   css() {
     if (!this.stylesheets) {
       const { css } = this.load();
-      this.stylesheets = [css['main.css']];
+      this.stylesheets = [css['server/styles/index.scss']];
     }
     return this.stylesheets;
   }
@@ -36,7 +36,7 @@ class AssetManifest {
     const distFolder = distDir.split('/').pop();
     // eslint-disable-next-line global-require, import/no-dynamic-require
     const json = require(join(distDir, type, 'manifest.json'));
-    return Object.keys(json).reduce((o, k) => ({ ...o, [k]: join('/', distFolder, type, json[k]) }), {});
+    return Object.keys(json).reduce((o, k) => ({ ...o, [k]: join('/', distFolder, type, json[k].file) }), {});
   }
 }
 

@@ -1,4 +1,6 @@
 
+@use "sass:math";
+
 $marko-web-node-image-aspect-ratios: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
 $marko-web-node-image-aspect-ratios: join(
@@ -38,7 +40,7 @@ $marko-web-node-placeholder-image-opacity:      .2 !default;
     display: block;
     content: "";
     @if $ratio-y and $ratio-x {
-      padding-top: percentage($ratio-y / $ratio-x);
+      padding-top: percentage(math.div($ratio-y, $ratio-x));
     }
   }
 }
