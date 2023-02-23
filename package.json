@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@2fd/graphdoc": "^2.4.0",
-    "@parameter1/base-cms-eslint": "^0.0.0",
+    "@parameter1/base-cms-eslint": "^4.0.0",
     "@parameter1/base-cms-marko-compiler": "^4.0.0-alpha.0",
     "apollo-client": "^2.6.10",
     "chai": "^4.3.7",
