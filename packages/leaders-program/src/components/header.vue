@@ -3,7 +3,7 @@
     <div v-if="imgSrc" class="leaders__header-image">
       <img
         :src="imgSrc"
-        :srcet="`${imgSrc}&dpr=2 2x`"
+        :srscet="`${imgSrc}&dpr=2 2x`"
         :alt="imgAlt"
         :width="imgWidth"
         :height="imgHeight"
