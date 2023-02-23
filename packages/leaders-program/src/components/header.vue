@@ -38,7 +38,7 @@ export default {
     },
     imgWidth: {
       type: String,
-      default: '300',
+      default: '256',
     },
     imgHeight: {
       type: String,

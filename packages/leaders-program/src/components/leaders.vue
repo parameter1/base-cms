@@ -133,7 +133,7 @@ export default {
     },
     headerImgWidth: {
       type: String,
-      default: '300',
+      default: '256',
     },
     headerImgHeight: {
       type: String,
