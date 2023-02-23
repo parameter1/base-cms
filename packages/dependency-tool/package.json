@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-dependency-tool",
-  "version": "4.0.2",
+  "version": "4.1.0",
   "description": "Command line tool for managing BaseCMS project dependencies.",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "main": "src/index.js",

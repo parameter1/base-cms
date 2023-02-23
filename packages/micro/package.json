@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-micro",
-  "version": "4.0.2",
+  "version": "4.1.0",
   "description": "Service registration and client library for Micro(services).",
   "main": "src/index.js",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/micro",

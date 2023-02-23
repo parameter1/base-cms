@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-export-framework",
-  "version": "4.0.2",
+  "version": "4.1.0",
   "description": "Core framework for BaseCMS Exports.",
   "author": "Josh Worden <josh@parameter1.com>",
   "main": "src/index.js",
