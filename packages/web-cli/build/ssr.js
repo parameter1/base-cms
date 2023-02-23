@@ -44,6 +44,9 @@ module.exports = async ({
       outDir: './dist/',
       watch: watch ? {} : false,
     },
+    ssr: {
+      noExternal: true,
+    },
   });
   await handleWatch({ watch, maybeWatcher, onFileChange });
 };
