@@ -7,10 +7,6 @@
   "main": "./src/main.js",
   "license": "MIT",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "serve": "vite preview",
-    "prepublish": "yarn build",
     "lint": "eslint --ext .js --ext .vue --max-warnings 5 ./",
     "lint:fix": "yarn lint --fix",
     "test": "yarn lint"
