@@ -15,8 +15,6 @@
     "@parameter1/base-cms-dayjs": "^4.0.2",
     "@parameter1/base-cms-image": "^4.0.2",
     "@parameter1/base-cms-inflector": "^4.0.2",
-    "@parameter1/base-cms-marko-core": "^4.1.0",
-    "@parameter1/base-cms-marko-web": "^4.1.0",
     "@parameter1/base-cms-marko-web-deferred-script-loader": "^4.1.0",
     "@parameter1/base-cms-marko-web-gam": "^4.1.0",
     "@parameter1/base-cms-marko-web-gtm": "^4.1.0",
@@ -42,6 +40,10 @@
     "http-errors": "^1.8.1",
     "moment": "^2.29.1",
     "node-fetch": "^2.6.9"
+  },
+  "peerDependencies": {
+    "@parameter1/base-cms-marko-core": "^4.0.0",
+    "@parameter1/base-cms-marko-web": "^4.0.0"
   },
   "publishConfig": {
     "access": "public"

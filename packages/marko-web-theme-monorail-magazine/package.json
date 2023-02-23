@@ -14,8 +14,6 @@
     "test": "yarn compile --no-clean && yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-marko-core": "^4.1.0",
-    "@parameter1/base-cms-marko-web": "^4.1.0",
     "@parameter1/base-cms-marko-web-gtm": "^4.1.0",
     "@parameter1/base-cms-object-path": "^4.0.2",
     "@parameter1/base-cms-utils": "^4.0.2",
@@ -25,6 +23,8 @@
     "object-path": "^0.11.8"
   },
   "peerDependencies": {
+    "@parameter1/base-cms-marko-core": "^4.0.0",
+    "@parameter1/base-cms-marko-web": "^4.0.0",
     "@parameter1/base-cms-marko-web-theme-monorail": "^4.0.0"
   },
   "publishConfig": {
