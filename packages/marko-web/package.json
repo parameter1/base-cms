@@ -47,6 +47,7 @@
     "http-errors": "^1.8.1",
     "jquery": "^3.6.3",
     "marko": "~4.20.0",
+    "node-fetch": "^2.6.9",
     "vue": "^2.7.14",
     "vue-server-renderer": "^2.7.14"
   },
