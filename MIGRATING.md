@@ -54,7 +54,6 @@ All core `@parameter1/base-cms-*` dependencies will need to be upgraded to the l
 
 2. Once completed, _do not_ run a `yarn install` yet. We'll save that to the very end. :)
 3. Delete references to `@babel/*` dependencies in the `yarn.lock` file. The easiest way to do this is to search in the file using regex `^"@babel\/` and then delete all entries. There may be _alot_ of these, and that's okay :)
-4. Delete references to `node-sass` in the `yarn.lock` file. Search using regex `^node-sass` and any entries
 4. Now run `./scripts/yarn.sh` -- this should run in the new Node14 Docker container (which may need to be downloaded). **MAKE SURE YOU RUN THE INSTALL USING THE SCRIPT** This ensures the install runs in the proper version of Node.
 
 ## SASS/SCSS Updates
@@ -65,6 +64,7 @@ The new build process will no longer resolve relative `@import` statements to fi
     - `@import "../../node_modules/bootstrap/scss/mixins"` would become `@import "bootstrap/scss/mixins";`
     - the number of relative parent paths does not matter... so `../` and `../../` and `../../../` etc all need to be removed.
 2. The quickest way to change the import statements is to search all `.scss` files using regex `@import ".*\/node_modules\/` and replacing the matched entries with `@import "` (note the ending double-quote -- that should be there)
+3. To avoid possible deprecation errors when building, run `yarn global add sass-migrator` and then run `sass-migrator division **/*.scss` from the project root. This should replace instances where deprecated division (`/`) operators are being used.
 
 ## Component Changes
 The `marko-web-deferred-script-loader` is now loaded into core. As such, certain component calls can be removed.
