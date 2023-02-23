@@ -34,7 +34,7 @@ $leaders-nav-link-max-width: $leaders-nav-link-width;
   &__header-image {
     margin: auto;
     > img {
-      max-width: $leaders-header-image-max-width - ($leaders-header-padding * 2);
+      max-width: $leaders-header-image-max-width;
     }
   }
 
