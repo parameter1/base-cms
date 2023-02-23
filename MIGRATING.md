@@ -447,7 +447,7 @@ The internal `eslint` version was upgrade from v5 to v8 -- quite a large jump --
     ]
     ```
 
-3. Update all server `.eslintrc.js` files (_not_ the `.eslintrc.js` file found in `browser` folders) to use the common server config. Replace with:
+3. Update the  `.eslintrc.js` found in the project root to use the common server config. Replace with:
     ```js
     module.exports = require('@parameter1/base-cms-eslint/eslintrc.server');
     ```
