@@ -115,7 +115,7 @@ If the website's dev server is running, this will _not_ automatically restart th
       "test": "lerna run test"
     }
     ```
-4. The root `Dockerfile` will need updated to properly build the sites in production. Replace the contents of the file with the following:
+4. The root `Dockerfile` will need updating to properly build the sites in production. Replace the contents of the file with the following:
     ```Dockerfile
     FROM node:14.21 as build
     WORKDIR /repo
