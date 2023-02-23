@@ -4,19 +4,11 @@
   "description": "Leaders Program Vue components",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/leaders-program",
   "author": "Jacob Bare <jacob@parameter1.com>",
-  "main": "./dist/leaders.umd.js",
-  "module": "./dist/leaders.min.mjs",
-  "exports": {
-    ".": {
-      "import": "./dist/leaders.min.mjs",
-      "require": "./dist/leaders.umd.js"
-    }
-  },
+  "main": "./src/main.js",
   "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "postbuild": "terser -c --module ./dist/leaders.mjs > ./dist/leaders.min.mjs",
     "serve": "vite preview",
     "prepublish": "yarn build",
     "lint": "eslint --ext .js --ext .vue --max-warnings 5 ./",
@@ -27,11 +19,6 @@
     "object-path": "^0.11.8",
     "portal-vue": "^2.1.7",
     "vue": "^2.7.14"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue2": "^2.2.0",
-    "terser": "^5.16.4",
-    "vite": "^4.1.4"
   },
   "publishConfig": {
     "access": "public"
