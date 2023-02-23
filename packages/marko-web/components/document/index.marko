@@ -16,14 +16,16 @@ $ const wrapper = getAsObject(input, "bodyWrapper");
 
     <marko-web-deferred-script-loader-init />
 
-    <marko-web-deferred-script-loader-register
-      name="marko-web-core"
-      src="/dist/vite/js/assets/index-645f2d7c.js"
-      esm=true
-      on="ready"
-      init="var w = window; w.markoCompQueue = w.markoCompQueue || []; var name = 'CMSBrowserComponents', methods = ['load', 'loadComponent'], queue = function(method) { return function() { w.markoCompQueue.push([method, arguments]) } }; w[name] = w[name] || {}; for (var i = 0; i < methods.length; i++) { var method = methods[i]; w[name][method] = w[name][method] || queue(method); }"
-      on-script-load="window.markoCompQueue.flush();"
-    />
+    <for|src| of=config.sources()>
+      <marko-web-deferred-script-loader-register
+        name="marko-web-core"
+        src=src
+        esm=true
+        on="ready"
+        init="var w = window; w.markoCompQueue = w.markoCompQueue || []; var name = 'CMSBrowserComponents', methods = ['load', 'loadComponent'], queue = function(method) { return function() { w.markoCompQueue.push([method, arguments]) } }; w[name] = w[name] || {}; for (var i = 0; i < methods.length; i++) { var method = methods[i]; w[name][method] = w[name][method] || queue(method); }"
+        on-script-load="window.markoCompQueue.flush();"
+      />
+    </for>
 
     <marko-web-deferred-script-loader-register
       name="lazysizes"
