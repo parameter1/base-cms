@@ -27,6 +27,7 @@ $ const lazyload = defaultValue(input.lazyload, true);
 **/
 $ const linkOffsite = getAsObject(site, 'config.linkOffsite');
 $ const linkField = get(linkOffsite, get(content, 'type'));
+$ const linkTarget = linkField && get(content, linkField) ? defaultValue(get(linkOffsite, 'target'), '') : '';
 
 $ const imageOptions = {
   w: 250,
@@ -59,13 +60,13 @@ $ const blockName = "section-feed-content-node";
         tag="h5"
         block-name=blockName
         obj=content
-        link={ field: linkField, attrs: linkAttrs }
+        link={ field: linkField, target: linkTarget, attrs: linkAttrs }
       />
       <if(withTeaser)>
         <marko-web-content-teaser
           block-name=blockName
           obj=content
-          link={ field: linkField, attrs: linkAttrs }
+          link={ field: linkField, target: linkTarget, attrs: linkAttrs }
         />
       </if>
       <if(withBody)>
@@ -109,7 +110,7 @@ $ const blockName = "section-feed-content-node";
         $ const srcsetMobile = [srcMobile, `${buildImgixUrl(srcMobile, { dpr: 2 })} 2x`];
         $ const link = linkField && get(content, linkField) ? get(content, linkField) : get(content, "siteContext.path");
         <marko-web-picture>
-          <@link href=link attrs=linkAttrs />
+          <@link href=link target=linkTarget attrs=linkAttrs />
           <@source srcset=srcset media="(min-width: 768px)" width=250 height=167 />
           <@image
             src=srcMobile
