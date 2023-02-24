@@ -1,6 +1,6 @@
 # BaseCMS GraphQL Server
 
-The BaseCMS GraphQL server using Apollo and Express.
+The BaseCMS GraphQL server using Apollo and Express!
 
 ## Creating a New Content Type
 1. Create the GraphQL definition in `graphql/definitions/platform/content/types`

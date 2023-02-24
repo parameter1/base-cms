@@ -2,7 +2,7 @@ const { ApolloServer } = require('apollo-server-express');
 const { get } = require('@parameter1/base-cms-object-path');
 const { getFromRequest } = require('@parameter1/base-cms-tenant-context');
 const { Router } = require('express');
-const { isObject, parseBooleanHeader } = require('@parameter1/base-cms-utils');
+const { isObject } = require('@parameter1/base-cms-utils');
 const { requestParser: canonicalRules } = require('@parameter1/base-cms-canonical-path');
 const ApolloNewrelicExtension = require('apollo-newrelic-extension');
 const createAuthContext = require('../auth-context/create');
@@ -59,7 +59,7 @@ const server = new ApolloServer({
       siteId,
       basedb,
       tenant,
-      enableCache: parseBooleanHeader(req.get('x-cache-site-context')),
+      enableCache: req.get('x-cache-site-context') !== 'false',
     });
 
     // Load the (optional) Base4 REST API client.

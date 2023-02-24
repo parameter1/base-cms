@@ -1,5 +1,8 @@
 {
   "taglib-imports": [],
+  "<theme-author-bios-block>": {
+    "template": "./author-bios.marko"
+  },
   "<theme-callout-cards-block>": {
     "template": "./callout-cards.marko",
     "@slots <slot>[]": {}
@@ -8,20 +11,22 @@
     "template": "./content-card-deck.marko",
     "<node>": {},
     "@alias" : "string",
+    "@cols": "number",
     "@default-description": "string",
+    "@link-header": "boolean",
+    "@query-name": "string",
     "@query-params": "object",
     "@section": "object",
+    "@title": "string",
     "@view-more": "boolean",
+    "@with-native-x": "boolean",
+    "<link>": {},
     "<native-x>": {
       "@index": "number",
       "@indexes": "array",
       "@name": "string",
       "@aliases": "array"
-    },
-    "@with-native-x": "boolean",
-    "@link-header": "boolean",
-    "@title": "string",
-    "<link>": {}
+    }
   },
   "<theme-company-inquiry-form-block>": {
     "template": "./company-inquiry-form.marko",
@@ -78,6 +83,9 @@
   },
   "<theme-most-popular-block>": {
     "template": "./most-popular.marko"
+  },
+  "<theme-most-popular-list-block>": {
+    "template": "./most-popular-list.marko"
   },
   "<theme-native-x-card-deck-block>": {
     "template": "./native-x-card-deck.marko"

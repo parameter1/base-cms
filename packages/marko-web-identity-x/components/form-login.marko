@@ -15,11 +15,13 @@ $ const additionalEventData = defaultValue(input.additionalEventData, {});
       endpoints: identityX.config.getEndpoints(),
       buttonLabels: input.buttonLabels,
       redirect: input.redirect,
+      loginEmailLabel: input.loginEmailLabel,
       loginEmailPlaceholder: input.loginEmailPlaceholder,
       consentPolicy: get(application, "organization.consentPolicy"),
       emailConsentRequest: get(application, "organization.emailConsentRequest"),
       regionalConsentPolicies: get(application, "organization.regionalConsentPolicies"),
       appContextId: identityX.config.get("appContextId"),
+      lang: defaultValue(input.lang, "en"),
     };
     <if(isEnabled)>
       <marko-web-browser-component name="IdentityXLogin" props=props />

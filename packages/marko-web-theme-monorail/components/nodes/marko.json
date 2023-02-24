@@ -2,6 +2,9 @@
   "<theme-author-node>": {
     "template": "./author.marko"
   },
+  "<theme-author-bio-node>": {
+    "template": "./author-bio.marko"
+  },
   "<theme-author-published-node>": {
     "template": "./author-published.marko"
   },

@@ -27,6 +27,8 @@
             :regional-consent-policies="regionalConsentPolicies"
             :app-context-id="appContextId"
             :login-email-label="translateEmail"
+            :lang="lang"
+            :action-text="actionText"
             success-message-type="newsletter-signup"
             @login-link-sent="handleLoginLinkSent"
             @login-errored="handleError"
@@ -154,6 +156,10 @@ export default {
     regionalConsentPolicies: {
       type: Array,
       default: () => [],
+    },
+    actionText: {
+      type: String,
+      default: 'signing up to receive your email notifications',
     },
   },
 

@@ -12,6 +12,9 @@ $ const {
   requiresUserInput,
   profileCallToAction,
   profileButtonLabel,
+  buttonLabels,
+  loginEmailLabel,
+  actionText
 } = input;
 $ const messages = getAsObject(input, "messages");
 $ const title = defaultValue(input.title, "Log in to view the full article");
@@ -51,6 +54,10 @@ $ const additionalEventData = {
         <marko-web-identity-x-form-login
           additional-event-data=additionalEventData
           source="contentGate"
+          login-email-label=loginEmailLabel
+          button-labels=buttonLabels
+          action-text=actionText
+          lang=defaultValue(site.config.lang, "en")
         />
       </marko-web-element>
     </else>

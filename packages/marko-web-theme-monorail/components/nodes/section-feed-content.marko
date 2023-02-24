@@ -100,28 +100,26 @@ $ const blockName = "section-feed-content-node";
       </marko-web-content-sponsors>
     </marko-web-element>
   </marko-web-element>
-  <if(displayImage)>
+  <if(displayImage && primaryImage.src)>
     <marko-web-element block-name=blockName name="image-wrapper">
-      <if(primaryImage.src)>
-        $ const src = buildImgixUrl(primaryImage.src, imageOptions, null, get(primaryImage, 'isLogo'));
-        $ const srcset = [src, `${buildImgixUrl(src, { dpr: 2 })} 2x`];
+      $ const src = buildImgixUrl(primaryImage.src, imageOptions, null, get(primaryImage, 'isLogo'));
+      $ const srcset = [src, `${buildImgixUrl(src, { dpr: 2 })} 2x`];
 
-        $ const srcMobile = buildImgixUrl(primaryImage.src, mobileImageOptions, null, get(primaryImage, 'isLogo'));
-        $ const srcsetMobile = [srcMobile, `${buildImgixUrl(srcMobile, { dpr: 2 })} 2x`];
-        $ const link = linkField && get(content, linkField) ? get(content, linkField) : get(content, "siteContext.path");
-        <marko-web-picture>
-          <@link href=link target=linkTarget attrs=linkAttrs />
-          <@source srcset=srcset media="(min-width: 768px)" width=250 height=167 />
-          <@image
-            src=srcMobile
-            srcset=srcsetMobile
-            class=[`${blockName}__image`]
-            alt=primaryImage.alt
-            lazyload=lazyload
-            attrs={ width: "112", height: "112" }
-          />
-        </marko-web-picture>
-      </if>
+      $ const srcMobile = buildImgixUrl(primaryImage.src, mobileImageOptions, null, get(primaryImage, 'isLogo'));
+      $ const srcsetMobile = [srcMobile, `${buildImgixUrl(srcMobile, { dpr: 2 })} 2x`];
+      $ const link = linkField && get(content, linkField) ? get(content, linkField) : get(content, "siteContext.path");
+      <marko-web-picture>
+        <@link href=link target=linkTarget attrs=linkAttrs />
+        <@source srcset=srcset media="(min-width: 768px)" width=250 height=167 />
+        <@image
+          src=srcMobile
+          srcset=srcsetMobile
+          class=[`${blockName}__image`]
+          alt=primaryImage.alt
+          lazyload=lazyload
+          attrs={ width: "112", height: "112" }
+        />
+      </marko-web-picture>
     </marko-web-element>
   </if>
 </marko-web-block>

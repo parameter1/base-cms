@@ -7,6 +7,7 @@ $ const { i18n } = out.global;
 
 $ const viewMore = defaultValue(input.viewMore, true);
 $ const withNativeX = defaultValue(input.withNativeX, false);
+$ const queryName = defaultValue(input.queryName, "website-scheduled-content");
 $ const nativeX = {
   name: "default",
   index: 3,
@@ -28,7 +29,7 @@ $ const blockName = "content-card-deck";
 $ const linkHeader = input.linkHeader || false;
 $ const link = getAsObject(input, "link");
 
-<marko-web-query|{ nodes, section: querySection }| name="website-scheduled-content" params=queryParams>
+<marko-web-query|{ nodes, section: querySection }| name=queryName params=queryParams>
   $ const section = { ...querySection, ...input.section };
   $ const title = input.title || section && section.name;
   $ const description = input.description || section && section.description || input.defaultDescription;
@@ -37,7 +38,7 @@ $ const link = getAsObject(input, "link");
       <marko-web-element block-name=blockName name="header">
         <marko-web-element block-name=blockName name="header-left">
           <marko-web-element block-name=blockName name="title">
-            <if(linkHeader && input.alias || input.title)>
+            <if(linkHeader && (input.alias || input.title))>
               <marko-web-link href=`${input.alias}` ...link>
                 ${title}
               </marko-web-link>

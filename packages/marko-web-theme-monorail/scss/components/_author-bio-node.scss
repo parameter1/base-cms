@@ -1,0 +1,47 @@
+.node-list {
+  &--author-bios {
+    background-color: $gray-200;
+    padding-left: map-get($spacers, block);
+    padding-right: map-get($spacers, block);
+    margin-bottom: map-get($spacers, block);
+  }
+}
+.author-bio-node {
+  display: flex;
+  align-items: center;
+  margin-top: 17px;
+
+  &__image {
+    $size: 96px;
+    width: $size;
+    height: $size;
+    margin-right: 10px;
+    border-radius: $size;
+  }
+
+  &__content-name {
+    @include skin-typography($style: "author-content-page", $link-style: "primary");
+  }
+
+  &__content-teaser {
+    @include media-breakpoint-down(md) {
+      display: none;
+    }
+  }
+
+  &__cta {
+    margin-top: map-get($spacers, 2);
+  }
+}
+
+.inline-author-bio {
+  &__content-body {
+    margin-bottom: 18px;
+    font-size: 16px;
+    font-style: italic;
+
+    @include media-breakpoint-up(md) {
+      font-size: 18px;
+    }
+  }
+}

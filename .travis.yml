@@ -8,7 +8,7 @@ _production-job: &production-job
   script: scripts/deploy.js SERVICE_NAME
   install: skip
   env:
-    - "ENVIRONMENT=production RANCHER_CLUSTERID=c-njflm"
+    - "ENVIRONMENT=production RANCHER_CLUSTERID=c-7p6pt"
 
 stages:
   - name: test
