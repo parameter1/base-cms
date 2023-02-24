@@ -22,7 +22,7 @@ setInterval(async () => {
       });
       if (errors.length) {
         error('In-page, server-side Marko error(s) were encountered!', errors);
-        process.exit(0);
+        process.exit(1);
       }
 
       // if not in-body errors, ensure page rendered.
