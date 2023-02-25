@@ -3,6 +3,7 @@ const http = require('http');
 const path = require('path');
 const { createTerminus } = require('@godaddy/terminus');
 const { isFunction: isFn, parseBooleanHeader } = require('@parameter1/base-cms-utils');
+const { asObject } = require('@parameter1/base-cms-utils');
 const errorHandlers = require('./express/error-handlers');
 const express = require('./express');
 const loadMore = require('./express/load-more');
@@ -20,6 +21,7 @@ const wait = (ms) => new Promise((resolve) => {
 
 module.exports = async ({
   rootDir,
+  website,
   siteConfig,
   coreConfig,
   helmetConfig,
@@ -28,9 +30,6 @@ module.exports = async ({
   exposedPort = env.EXPOSED_PORT || env.PORT || 4008,
   exposedHost = env.EXPOSED_HOST,
   routes,
-  graphqlUri = env.GRAPHQL_URI,
-  tenantKey = env.TENANT_KEY,
-  siteId = env.SITE_ID,
   errorTemplate,
   document, // custom marko-web-document component
   components, // components to register globally (e.g. for load more, etc)
@@ -58,6 +57,19 @@ module.exports = async ({
   beforeShutdown,
   onHealthCheck,
 } = {}) => {
+  // set config from `website` option but allow env values to override.
+  const site = asObject(website);
+  if (!process.env.TENANT_KEY && site.tenant) process.env.TENANT_KEY = site.tenant;
+  if (!process.env.SITE_ID && site.id) process.env.SITE_ID = site.id;
+  if (!process.env.GRAPHQL_URI && site.stack) process.env.GRAPHQL_URI = `https://graphql.${site.stack}.base.parameter1.com`;
+  if (!process.env.OEMBED_URI && site.stack) process.env.OEMBED_URI = `https://oembed.${site.stack}.base.parameter1.com`;
+  if (!process.env.RSS_URI && site.stack) process.env.RSS_URI = `https://rss.${site.stack}.base.parameter1.com`;
+  if (!process.env.SITEMAPS_URI && site.stack) process.env.SITEMAPS_URI = `https://sitemaps.${site.stack}.base.parameter1.com`;
+
+  const graphqlUri = process.env.GRAPHQL_URI;
+  const siteId = process.env.SITE_ID;
+  const tenantKey = process.env.TENANT_KEY;
+
   if (!rootDir) throw new Error('The root project directory is required.');
   if (!graphqlUri) throw new Error('The GraphQL API URL is required.');
   if (!siteId) throw new Error('A site ID is required.');
