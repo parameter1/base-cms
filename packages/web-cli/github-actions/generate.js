@@ -24,7 +24,7 @@ const merge = (from, into) => [].reduce((o, k) => {
   return { ...o, [k]: v };
 }, into);
 
-const buildMatrix = (sites) => `site:\n${sites.map((site) => `          - { id: ${site.id}, dir: ${site.dir}, stack: ${site.stack}, account: ${site.account}, tenant: ${site.tenant}, rancher_label: ${site.rancherLabel} }`).join('\n')}`;
+const buildMatrix = (sites) => `site:\n${sites.map((site) => `          - { dir: ${site.dir}, stack: ${site.stack}, id: ${site.id}, account: ${site.account}, tenant: ${site.tenant}, rancher_label: ${site.rancherLabel} }`).join('\n')}`;
 
 module.exports = ({ cwd }) => {
   mkdir(cwd); // make the workflow directory.
