@@ -67,7 +67,6 @@ module.exports = async ({
 
   // ensure core envs are set.
   ['TENANT_KEY', 'SITE_ID', 'GRAPHQL_URI', 'OEMBED_URI', 'RSS_URI', 'SITEMAPS_URI'].forEach((key) => {
-    console.log({ [key]: process.env[key] });
     if (!process.env[key]) throw new Error(`The ${key} value must be set either from env or via the website package config.`);
   });
 
