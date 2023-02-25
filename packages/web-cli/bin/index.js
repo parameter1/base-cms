@@ -12,7 +12,7 @@ const exit = (message, code = 0) => {
   process.exit(code);
 };
 
-const commands = new Set(['build', 'build:css', 'build:js', 'build:ssr', 'dev']);
+const commands = new Set(['build', 'build:css', 'build:js', 'build:ssr', 'dev', 'generate-gha-workflows']);
 (async () => {
   const argv = minimist(process.argv.slice(2));
   const [command, ...rest] = argv._;
@@ -100,6 +100,12 @@ const commands = new Set(['build', 'build:css', 'build:js', 'build:ssr', 'dev'])
     };
     log(`beginning '${blue('dev')}' server with options`, opts);
     await serve(opts);
+  }
+
+  if (command === 'generate-gha-workflows') {
+    const generate = require('../github-actions/generate');
+    generate({ cwd });
+    return exit(`command '${blue(command)}' ${green('complete')}`);
   }
   return null;
 })().catch((e) => setImmediate(() => { throw e; }));
