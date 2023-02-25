@@ -1,13 +1,10 @@
+/* eslint-disable import/no-dynamic-require, global-require */
 require('@parameter1/base-cms-marko-node-require');
 const http = require('http');
 const path = require('path');
 const { createTerminus } = require('@godaddy/terminus');
 const { isFunction: isFn, parseBooleanHeader } = require('@parameter1/base-cms-utils');
-const { asObject } = require('@parameter1/base-cms-utils');
-const errorHandlers = require('./express/error-handlers');
-const express = require('./express');
-const loadMore = require('./express/load-more');
-const disabledFeatures = require('./middleware/disabled-features');
+const { getAsObject } = require('@parameter1/base-cms-object-path');
 
 const { env } = process;
 if (!process.env.LIVERELOAD_PORT) process.env.LIVERELOAD_PORT = 4010;
@@ -21,7 +18,6 @@ const wait = (ms) => new Promise((resolve) => {
 
 module.exports = async ({
   rootDir,
-  website,
   siteConfig,
   coreConfig,
   helmetConfig,
@@ -57,8 +53,11 @@ module.exports = async ({
   beforeShutdown,
   onHealthCheck,
 } = {}) => {
-  // set config from `website` option but allow env values to override.
-  const site = asObject(website);
+  if (!rootDir) throw new Error('The root project directory is required.');
+  // load the site package file.
+  const sitePackage = require(path.resolve(rootDir, 'package.json'));
+  // load config from package `website` option but allow env values to override.
+  const site = getAsObject(sitePackage, 'website');
   if (!process.env.TENANT_KEY && site.tenant) process.env.TENANT_KEY = site.tenant;
   if (!process.env.SITE_ID && site.id) process.env.SITE_ID = site.id;
   if (!process.env.GRAPHQL_URI && site.stack) process.env.GRAPHQL_URI = `https://graphql.${site.stack}.base.parameter1.com`;
@@ -66,17 +65,21 @@ module.exports = async ({
   if (!process.env.RSS_URI && site.stack) process.env.RSS_URI = `https://rss.${site.stack}.base.parameter1.com`;
   if (!process.env.SITEMAPS_URI && site.stack) process.env.SITEMAPS_URI = `https://sitemaps.${site.stack}.base.parameter1.com`;
 
+  // ensure core envs are set.
+  ['TENANT_KEY', 'SITE_ID', 'GRAPHQL_URI', 'OEMBED_URI', 'RSS_URI', 'SITEMAPS_URI'].forEach((key) => {
+    console.log({ [key]: process.env[key] });
+    if (!process.env[key]) throw new Error(`The ${key} value must be set either from env or via the website package config.`);
+  });
+
   const graphqlUri = process.env.GRAPHQL_URI;
   const siteId = process.env.SITE_ID;
   const tenantKey = process.env.TENANT_KEY;
 
-  if (!rootDir) throw new Error('The root project directory is required.');
-  if (!graphqlUri) throw new Error('The GraphQL API URL is required.');
-  if (!siteId) throw new Error('A site ID is required.');
-
-  // Load the site package file.
-  // eslint-disable-next-line import/no-dynamic-require, global-require
-  const sitePackage = require(path.resolve(rootDir, 'package.json'));
+  // require core packages after env values have been processed so they are set when imported
+  const errorHandlers = require('./express/error-handlers');
+  const express = require('./express');
+  const loadMore = require('./express/load-more');
+  const disabledFeatures = require('./middleware/disabled-features');
 
   const app = express({
     rootDir,
