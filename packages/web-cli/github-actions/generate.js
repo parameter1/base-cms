@@ -30,10 +30,16 @@ module.exports = ({ cwd }) => {
   mkdir(cwd); // make the workflow directory.
 
   const write = (sites, file, template) => {
-    if (!sites.length) return;
+    const loc = path.resolve(cwd, folder, file);
+    if (!sites.length) {
+      if (fs.existsSync(loc)) {
+        fs.unlinkSync(loc);
+        log(`deleted file ${path.relative(cwd, loc)} as no more sites qualify`);
+      }
+      return;
+    }
     const matrix = buildMatrix(sites);
     const contents = template.replace(/{{{ INSERT MATRIX HERE }}}/g, matrix);
-    const loc = path.resolve(cwd, folder, file);
     fs.writeFileSync(loc, contents);
     log(`wrote file ${path.relative(cwd, loc)} with ${sites.length} website(s)`);
   };
@@ -74,7 +80,8 @@ module.exports = ({ cwd }) => {
     if (deploy.staging === true) {
       // staging
       staging.push(site);
-    } else if (deploy.staging != null && deploy.staging.enabled !== false) {
+    } else if (deploy.staging != null
+      && deploy.staging !== false && deploy.staging.enabled !== false) {
       // staging, with merged settings
       staging.push(merge(deploy.staging, site));
     }
@@ -82,7 +89,8 @@ module.exports = ({ cwd }) => {
     if (deploy.production === true) {
       // production
       production.push(site);
-    } else if (deploy.production != null && deploy.production.enabled !== false) {
+    } else if (deploy.production != null
+      && deploy.production !== false && deploy.production.enabled !== false) {
       // production, with merged settings
       production.push(merge(deploy.production, site));
     }
