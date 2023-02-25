@@ -58,10 +58,12 @@ jobs:
         ###############################################
     with:
       ecr_registry: \${{ vars.AWS_ECR_REGISTRY }}
+      docker_image: \${{ vars.AWS_ECR_REGISTRY }}/base-cms-websites:\${{ matrix.site.account }}-\${{ matrix.site.dir }}-\${{ needs.version.outputs.version }}
+      site_id: \${{ matrix.site.id }}
+      site_host: \${{ matrix.site.dir }}
+      infra_stack: \${{ matrix.site.stack }}
+      tenant_key: \${{ matrix.tenant }}
       push: true
-      site_account: \${{ matrix.site.account }}
-      site_dir: \${{ matrix.site.dir }}
-      site_version: \${{ needs.version.outputs.version }}
     secrets: inherit
 
   deploy-sites:
@@ -77,11 +79,9 @@ jobs:
         #^# Make sure this matches the site matrix! #^#
         ###############################################
     with:
-      ecr_registry: \${{ vars.AWS_ECR_REGISTRY }}
-      rancher_label: \${{ matrix.site.rancher_label }}
-      site_account: \${{ matrix.site.account }}
-      site_dir: \${{ matrix.site.dir }}
-      site_stack: \${{ matrix.site.stack }}
-      site_version: \${{ needs.version.outputs.version }}
+      docker_image: \${{ vars.AWS_ECR_REGISTRY }}/base-cms-websites:\${{ matrix.site.account }}-\${{ matrix.site.dir }}-\${{ needs.version.outputs.version }}
+      infra_stack: \${{ matrix.site.stack }}
+      rancher_label_key: basecms-website
+      rancher_label_val: \${{ matrix.site.rancher_label }}
     secrets: inherit
 `;
