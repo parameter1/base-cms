@@ -74,7 +74,8 @@ module.exports = ({ cwd }) => {
     if (deploy.staging === true) {
       // staging
       staging.push(site);
-    } else if (deploy.staging != null && deploy.staging.enabled !== false) {
+    } else if (deploy.staging != null
+      && deploy.staging !== false && deploy.staging.enabled !== false) {
       // staging, with merged settings
       staging.push(merge(deploy.staging, site));
     }
@@ -82,7 +83,8 @@ module.exports = ({ cwd }) => {
     if (deploy.production === true) {
       // production
       production.push(site);
-    } else if (deploy.production != null && deploy.production.enabled !== false) {
+    } else if (deploy.production != null
+      && deploy.production !== false && deploy.production.enabled !== false) {
       // production, with merged settings
       production.push(merge(deploy.production, site));
     }
