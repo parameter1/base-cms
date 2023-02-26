@@ -68,7 +68,7 @@ module.exports = async ({
   });
 
   // base browse (optional)
-  if (!process.env.BASE_BROWSE_GRAPHQL_URI && site.stack) process.env.BASE_BROWSE_GRAPHQL_URI = `https://base-browse.${site.stack}.base.parameter1.com`;
+  if (!process.env.BASE_BROWSE_GRAPHQL_URI && site.stack) process.env.BASE_BROWSE_GRAPHQL_URI = `https://base-browse.${site.stack}.base.parameter1.com/graphql`;
 
   const graphqlUri = process.env.GRAPHQL_URI;
   const siteId = process.env.SITE_ID;
