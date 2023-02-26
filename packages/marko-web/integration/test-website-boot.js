@@ -87,9 +87,9 @@ const testPage = async ({ path, retryAttempts = 3, serverErrorsOnly = true } = {
     html = await res.text();
 
     // first ensure the entire page rendered. if it didn't a fatal backened error occurred
-    // that prevented rendering.
+    // that prevented rendering, or some kind of timeout occurred. this can be retried.
     const found = /.*<\/head>.*<\/body>.*<\/html>.*/is.test(html);
-    if (!found) throw new Error(`The page at path ${path} did not completely render.`);
+    if (!found) return; // exit out so it can be retried.
 
     // then check for in-body errors. this means an async internal block failed
     // but the page could fully render.
@@ -103,7 +103,7 @@ const testPage = async ({ path, retryAttempts = 3, serverErrorsOnly = true } = {
       // if all the errors were timeout errors, let's try again.
       if (errors.every((msg) => retryableMarkoErrors.has(msg))) {
         log(`all errors for page path ${path} were flagged as retryable. retrying...`);
-        return;
+        return; // exit out so it can be retried.
       }
       // otherwise error.
       log({ path, errors });
