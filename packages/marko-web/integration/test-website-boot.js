@@ -19,7 +19,8 @@ const fetchResponse = async ({
   const opts = { method: 'get', redirect: 'manual' };
   if (!catchErrors) return fetch(url, opts);
   try {
-    return fetch(url, opts);
+    const res = await fetch(url, opts);
+    return res;
   } catch (e) {
     return null;
   }
