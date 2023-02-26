@@ -27,6 +27,11 @@ const fetchResponse = async ({
   }
 };
 
+const retryableMarkoErrors = new Set([
+  'Network error: Unexpected token < in JSON at position 0',
+  'Timed out after 10000ms',
+]);
+
 const checkReadiness = async ({
   path = '/_health',
   startAfter = 5000,
@@ -96,8 +101,8 @@ const testPage = async ({ path, retryAttempts = 3, allowNotFound = false } = {})
     });
     if (errors.length) {
       // if all the errors were timeout errors, let's try again.
-      if (errors.every((msg) => msg === 'Timed out after 10000ms')) {
-        log(`all errors for page path ${path} were timeout errors. retrying...`);
+      if (errors.every((msg) => msg === retryableMarkoErrors.has(msg))) {
+        log(`all errors for page path ${path} were flagged as retryable. retrying...`);
         return;
       }
       // otherwise error.
