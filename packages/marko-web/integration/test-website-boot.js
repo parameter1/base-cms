@@ -67,11 +67,18 @@ const testPage = async ({
   retryAttempts = 3,
   serverErrorsOnly = true,
   followRedirects = false,
+  checkInterval = 500,
 } = {}) => {
   let timesChecked = 0;
   let finished = false;
   let html;
   const report = { path, error: null, checks: [] };
+
+  const waitThenRetry = async () => {
+    log(`waiting ${checkInterval}ms to retry ${path}`);
+    await wait(checkInterval);
+  };
+
   await whilst(async () => !finished, async () => {
     const check = {};
     report.checks.push(check);
@@ -80,7 +87,7 @@ const testPage = async ({
       // max times reach, append error to report.
       report.error = new Error(`The test runner for page path ${path} has reached its maximum check limit.`);
       finished = true;
-      return;
+      return true;
     }
     const res = await fetchResponse({ path, followRedirects });
     check.statusCode = res.status;
@@ -88,11 +95,11 @@ const testPage = async ({
       if (serverErrorsOnly && res.status < 500) {
         check.message = `received a ${res.status} from path ${path} but treating as passing since it was not a server error (>= 500).`;
         finished = true;
-        return;
+        return true;
       }
       // received a 500, append the message and retry
       check.message = `received an error response from path page ${path} with status ${res.status} ${res.statusText}`;
-      return;
+      return waitThenRetry();
     }
     html = await res.text();
 
@@ -102,7 +109,7 @@ const testPage = async ({
     if (!found) {
       // no render, append the message and retry.
       check.message = `unable to detect a full page render for path ${path} retrying...`;
-      return;
+      return waitThenRetry();
     }
 
     // then check for in-body errors. this means an async internal block failed
@@ -115,10 +122,11 @@ const testPage = async ({
     });
     if (check.inPageErrors.length) {
       // in-page errors occurred. exit and retry
-      return;
+      return waitThenRetry();
     }
     // otherwise, mark as finished.
     finished = true;
+    return true;
   });
   return { html, report };
 };
