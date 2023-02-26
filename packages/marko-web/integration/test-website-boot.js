@@ -76,7 +76,7 @@ const testPage = async ({ path, retryAttempts = 3, allowNotFound = false } = {})
         passed = true;
         return;
       }
-      throw new Error(`Received a non-ok response from path page ${path}`, res.status, res.statusText);
+      throw new Error(`Received a non-ok response from path page ${path} - ${res.status} ${res.statusText}`);
     }
     html = await res.text();
 
