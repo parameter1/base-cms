@@ -29,7 +29,7 @@ const checkReadiness = async ({
   path = '/_health',
   startAfter = 5000,
   checkInterval = 1000,
-  unhealthAfter = 5,
+  unhealthyAfter = 5,
 } = {}) => {
   log('checking readiness...');
   log(`initially waiting for ${startAfter}ms before checking...`);
@@ -39,7 +39,7 @@ const checkReadiness = async ({
   let booted = false;
   await whilst(async () => !booted, async () => {
     timesChecked += 1;
-    if (timesChecked > unhealthAfter) {
+    if (timesChecked > unhealthyAfter) {
       throw new Error('The readiness probe has reached its maximum check limit.');
     }
     log(`pinging health check, attempt number ${timesChecked}...`);
