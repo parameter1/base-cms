@@ -118,6 +118,7 @@ const run = async () => {
 
   const toTest = new Map([
     ['/search', { allowNotFound: true }],
+    ['/site-map', { allowNotFound: true }],
   ]);
   const contentToTest = new Map();
 
