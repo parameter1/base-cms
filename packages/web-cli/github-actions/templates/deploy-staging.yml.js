@@ -63,7 +63,7 @@ jobs:
       site_host: \${{ matrix.site.dir }}
       infra_stack: \${{ matrix.site.stack }}
       tenant_key: \${{ matrix.site.tenant }}
-    push: true
+      push: true
     secrets: inherit
 
   deploy-sites:
