@@ -2,6 +2,7 @@ const { htmlEntities } = require('@parameter1/base-cms-html');
 const { sleep: wait, cleanPath } = require('@parameter1/base-cms-utils');
 const whilst = require('async/whilst');
 const fetch = require('node-fetch');
+const cheerio = require('cheerio');
 
 const { log } = console;
 
@@ -28,7 +29,7 @@ const fetchResponse = async ({
 const checkReadiness = async ({
   path = '/_health',
   startAfter = 5000,
-  checkInterval = 1000,
+  checkInterval = 2000,
   unhealthyAfter = 5,
 } = {}) => {
   log('checking readiness...');
@@ -57,19 +58,27 @@ const checkReadiness = async ({
   log('container is ready.');
 };
 
-const testPage = async ({ path, retryAttempts = 3 } = {}) => {
+const testPage = async ({ path, retryAttempts = 3, allowNotFound = false } = {}) => {
   log(`testing page path ${path}`);
 
   let timesChecked = 0;
   let passed = false;
+  let html;
   await whilst(async () => !passed, async () => {
     timesChecked += 1;
     if (timesChecked > retryAttempts) {
       throw new Error(`The test runner for page path ${path} has reached its maximum check limit.`);
     }
     const res = await fetchResponse({ path });
-    if (!res.ok) throw new Error(`Received a non-ok response from path page ${path}`, res.status, res.statusText);
-    const html = await res.text();
+    if (!res.ok) {
+      if (allowNotFound && res.status === 404) {
+        log(`received a 404 not found from path ${path} but was set as allowed for this test. treating as passing.`);
+        passed = true;
+        return;
+      }
+      throw new Error(`Received a non-ok response from path page ${path}`, res.status, res.statusText);
+    }
+    html = await res.text();
 
     // first ensure the entire page rendered. if it didn't a fatal backened error occurred
     // that prevented rendering.
@@ -91,17 +100,40 @@ const testPage = async ({ path, retryAttempts = 3 } = {}) => {
         return;
       }
       // otherwise error.
-      log({ errors });
+      log({ path, errors });
       throw new Error(`Encountered server-side Marko error(s) at page path ${path}`);
     }
     passed = true;
   });
   log(`page path ${path} passed tests.`);
+  return html;
 };
 
 const run = async () => {
   await checkReadiness();
-  await testPage({ path: '/' });
+
+  // test homepage first, and get html.
+  const html = await testPage({ path: '/' });
+
+  const toTest = new Map([
+    ['/search', { allowNotFound: true }],
+  ]);
+
+  const $ = cheerio.load(html);
+  const $a = $('a[href^="/"]');
+
+  $a.each(function getHref() {
+    const href = $(this).attr('href');
+    if (toTest.has(href) || href === '/') return;
+    if (toTest.size === 10) return;
+    toTest.set(href, { allowNotFound: true });
+  });
+
+  // now test all extracted pages.
+  await Promise.all([...toTest].map(async ([path, opts]) => testPage({
+    ...opts,
+    path,
+  })));
 };
 
 run().catch((e) => setImmediate(() => { throw e; }));
