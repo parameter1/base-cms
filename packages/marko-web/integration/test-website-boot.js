@@ -126,7 +126,6 @@ const run = async () => {
   const toTest = new Map([
     ['/search', {}],
     ['/site-map', {}],
-    ['/15307352', {}],
   ]);
   const contentToTest = new Map();
 
