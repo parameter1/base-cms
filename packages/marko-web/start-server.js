@@ -36,9 +36,6 @@ module.exports = async ({
   redirectHandler,
   sitemapsHeaders,
 
-  // Base browse (optional)
-  baseBrowseGraphqlUri = env.BASE_BROWSE_GRAPHQL_URI,
-
   // Cache settings.
   gqlCacheResponses = parseBooleanHeader(env.CACHE_GQL_RESPONSES),
   gqlCacheSiteContext = parseBooleanHeader(env.CACHE_GQL_SITE_CONTEXT),
@@ -70,9 +67,13 @@ module.exports = async ({
     if (!process.env[key]) throw new Error(`The ${key} value must be set either from env or via the website package config.`);
   });
 
+  // base browse (optional)
+  if (!process.env.BASE_BROWSE_GRAPHQL_URI && site.stack) process.env.BASE_BROWSE_GRAPHQL_URI = `https://base-browse.${site.stack}.base.parameter1.com`;
+
   const graphqlUri = process.env.GRAPHQL_URI;
   const siteId = process.env.SITE_ID;
   const tenantKey = process.env.TENANT_KEY;
+  const baseBrowseGraphqlUri = process.env.BASE_BROWSE_GRAPHQL_URI;
 
   // require core packages after env values have been processed so they are set when imported
   const errorHandlers = require('./express/error-handlers');
