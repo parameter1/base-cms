@@ -4,6 +4,7 @@ const whilst = require('async/whilst');
 const eachLimit = require('async/eachLimit');
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
+const { inspect } = require('util');
 
 const { log } = console;
 
@@ -12,25 +13,17 @@ const origin = process.env.MARKO_WEB_INTEGRATION_TEST_URL || 'http://localhost:8
 const fetchResponse = async ({
   path = '/',
   catchErrors = false,
-  returnNullWhenNotOk = false,
 } = {}) => {
   const url = `${cleanPath(origin)}/${cleanPath(path)}`;
   log(`fetching ${url}`);
-  const opts = { method: 'get' };
+  const opts = { method: 'get', redirect: 'manual' };
   if (!catchErrors) return fetch(url, opts);
   try {
-    const res = await fetch(url, opts);
-    if (returnNullWhenNotOk && !res.ok) return null;
-    return res;
+    return fetch(url, opts);
   } catch (e) {
     return null;
   }
 };
-
-const retryableMarkoErrors = new Set([
-  'Network error: Unexpected token < in JSON at position 0',
-  'Timed out after 10000ms',
-]);
 
 const checkReadiness = async ({
   path = '/_health',
@@ -65,65 +58,75 @@ const checkReadiness = async ({
 };
 
 const testPage = async ({ path, retryAttempts = 3, serverErrorsOnly = true } = {}) => {
-  log(`testing page path ${path}`);
-
   let timesChecked = 0;
-  let passed = false;
+  let finished = false;
   let html;
-  await whilst(async () => !passed, async () => {
+  const report = {
+    path,
+    error: null,
+    checks: [],
+  };
+  await whilst(async () => !finished, async () => {
+    const check = {};
+    report.checks.push(check);
     timesChecked += 1;
     if (timesChecked > retryAttempts) {
-      throw new Error(`The test runner for page path ${path} has reached its maximum check limit.`);
+      // max times reach, append error to report.
+      report.error = new Error(`The test runner for page path ${path} has reached its maximum check limit.`);
+      finished = true;
+      return;
     }
     const res = await fetchResponse({ path });
+    check.statusCode = res.status;
     if (!res.ok) {
       if (serverErrorsOnly && res.status < 500) {
-        log(`received a ${res.status} from path ${path} but treating as passing since it was not a server error (>= 500).`);
-        passed = true;
+        check.message = `received a ${res.status} from path ${path} but treating as passing since it was not a server error (>= 500).`;
+        finished = true;
         return;
       }
-      throw new Error(`Received an error response from path page ${path} with status ${res.status} ${res.statusText}`);
+      // received a 500, append the message and retry
+      check.message = `received an error response from path page ${path} with status ${res.status} ${res.statusText}`;
+      return;
     }
     html = await res.text();
 
     // first ensure the entire page rendered. if it didn't a fatal backened error occurred
     // that prevented rendering, or some kind of timeout occurred. this can be retried.
     const found = /.*<\/head>.*<\/body>.*<\/html>.*/is.test(html);
-    if (!found) return; // exit out so it can be retried.
+    if (!found) {
+      // no render, append the message and retry.
+      check.message = `unable to detect a full page render for path ${path} retrying...`;
+      return;
+    }
 
     // then check for in-body errors. this means an async internal block failed
     // but the page could fully render.
     const matches = [...html.matchAll(/data-marko-error="(.*?)"/g)];
-    const errors = [];
+    check.inPageErrors = [];
     matches.forEach((values) => {
       const value = values[1];
-      errors.push(htmlEntities.decode(value));
+      check.inPageErrors.push(htmlEntities.decode(value));
     });
-    if (errors.length) {
-      // if all the errors were timeout errors, let's try again.
-      if (errors.every((msg) => retryableMarkoErrors.has(msg))) {
-        log(`all errors for page path ${path} were flagged as retryable. retrying...`);
-        return; // exit out so it can be retried.
-      }
-      // otherwise error.
-      log({ path, errors });
-      throw new Error(`Encountered server-side Marko error(s) at page path ${path}`);
+    if (check.inPageErrors.length) {
+      // in-page errors occurred. exit and retry
+      return;
     }
-    passed = true;
+    // otherwise, mark as finished.
+    finished = true;
   });
-  log(`page path ${path} passed tests.`);
-  return html;
+  return { html, report };
 };
 
 const run = async () => {
   await checkReadiness();
 
   // test homepage first, and get html.
-  const html = await testPage({ path: '/', serverErrorsOnly: false });
+  const { html, report: initialReport } = await testPage({ path: '/', serverErrorsOnly: false });
 
   const toTest = new Map([
     ['/search', {}],
     ['/site-map', {}],
+    ['/15307352', {}],
   ]);
   const contentToTest = new Map();
 
@@ -146,22 +149,33 @@ const run = async () => {
 
   // now test all extracted pages.
   const errors = [];
+  const reports = [initialReport];
   await eachLimit([...toTest, ...contentToTest], 2, async ([path, opts]) => {
     // catch all errors so they can be reported on at once.
+    // these should be internal at this point.
     try {
-      await testPage({ ...opts, path });
+      const { report } = await testPage({ ...opts, path });
+      reports.push(report);
     } catch (e) {
       errors.push(e);
     }
   });
 
   if (errors.length) {
-    log('TEST PAGE ERRORS ENCOUNTERED');
+    log('INTERNAL TESTING ERRORS ENCOUNTERED');
     errors.forEach((error) => {
       log(error);
     });
-    throw new Error('Page testing errors were encountered.');
+    throw new Error('Internal testing errors were encountered.');
   }
+
+  const errorReports = reports.filter((report) => report.error);
+  if (errorReports.length) {
+    log('PAGE ERRORS ENCOUNTERED');
+    errorReports.forEach((report) => log(report));
+    throw new Error('Page errors were encountered.');
+  }
+  log('test results', inspect(reports, { colors: true, depth: null }));
 };
 
 run().catch((e) => setImmediate(() => { throw e; }));
