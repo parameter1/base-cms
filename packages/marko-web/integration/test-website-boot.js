@@ -1,6 +1,7 @@
 const { htmlEntities } = require('@parameter1/base-cms-html');
 const { sleep: wait, cleanPath } = require('@parameter1/base-cms-utils');
 const whilst = require('async/whilst');
+const eachLimit = require('async/eachLimit');
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 
@@ -118,6 +119,7 @@ const run = async () => {
   const toTest = new Map([
     ['/search', { allowNotFound: true }],
   ]);
+  const contentToTest = new Map();
 
   const $ = cheerio.load(html);
   const $a = $('a[href^="/"]');
@@ -125,15 +127,35 @@ const run = async () => {
   $a.each(function getHref() {
     const href = $(this).attr('href');
     if (toTest.has(href) || href === '/') return;
+    if (/\/\d{8}\//.test(href)) {
+      // content page
+      if (contentToTest.size === 5) return;
+      contentToTest.set(href, {});
+      return;
+    }
+    // non content pages
     if (toTest.size === 10) return;
     toTest.set(href, { allowNotFound: true });
   });
 
   // now test all extracted pages.
-  await Promise.all([...toTest].map(async ([path, opts]) => testPage({
-    ...opts,
-    path,
-  })));
+  const errors = [];
+  await eachLimit([...toTest, ...contentToTest], 2, async ([path, opts]) => {
+    // catch all errors so they can be reported on at once.
+    try {
+      await testPage({ ...opts, path });
+    } catch (e) {
+      errors.push(e);
+    }
+  });
+
+  if (errors.length) {
+    log('TEST PAGE ERRORS ENCOUNTERED');
+    errors.forEach((error) => {
+      log(error);
+    });
+    throw new Error('Page testing errors were encountered.');
+  }
 };
 
 run().catch((e) => setImmediate(() => { throw e; }));
