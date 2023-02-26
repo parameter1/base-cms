@@ -78,7 +78,7 @@ const testPage = async ({ path, retryAttempts = 3, serverErrorsOnly = true } = {
     const res = await fetchResponse({ path });
     if (!res.ok) {
       if (serverErrorsOnly && res.status < 500) {
-        log(`received a ${res.status} from path ${path} but was set as allowed since it was not a server error (>= 500). treating as passing.`);
+        log(`received a ${res.status} from path ${path} but treating as passing since it was not a server error (>= 500).`);
         passed = true;
         return;
       }
@@ -119,7 +119,7 @@ const run = async () => {
   await checkReadiness();
 
   // test homepage first, and get html.
-  const html = await testPage({ path: '/' });
+  const html = await testPage({ path: '/', serverErrorsOnly: false });
 
   const toTest = new Map([
     ['/search', {}],
