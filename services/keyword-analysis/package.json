@@ -1,7 +1,7 @@
 {
   "name": "@parameter1/base-cms-keyword-analysis",
   "description": "Analyzes BaseCMS content based on keywords using ElasticSearch.",
-  "version": "4.0.2",
+  "version": "4.4.0",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
