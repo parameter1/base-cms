@@ -58,7 +58,7 @@ jobs:
         ###############################################
     with:
       ecr_registry: \${{ vars.AWS_ECR_REGISTRY }}
-      docker_image: \${{ vars.AWS_ECR_REGISTRY }}/base-cms-websites:\${{ matrix.site.account }}-\${{ matrix.site.dir }}-\${{ needs.version.outputs.version }}
+      docker_image: \${{ vars.AWS_ECR_REGISTRY }}/base-cms-websites-staging:\${{ matrix.site.account }}-\${{ matrix.site.dir }}-\${{ needs.version.outputs.version }}
       site_id: \${{ matrix.site.id }}
       site_host: \${{ matrix.site.dir }}
       infra_stack: \${{ matrix.site.stack }}
@@ -79,7 +79,7 @@ jobs:
         #^# Make sure this matches the site matrix! #^#
         ###############################################
     with:
-      docker_image: \${{ vars.AWS_ECR_REGISTRY }}/base-cms-websites:\${{ matrix.site.account }}-\${{ matrix.site.dir }}-\${{ needs.version.outputs.version }}
+      docker_image: \${{ vars.AWS_ECR_REGISTRY }}/base-cms-websites-staging:\${{ matrix.site.account }}-\${{ matrix.site.dir }}-\${{ needs.version.outputs.version }}
       infra_stack: \${{ matrix.site.stack }}
       rancher_label_key: basecms-website
       rancher_label_val: \${{ matrix.site.rancher_label }}
