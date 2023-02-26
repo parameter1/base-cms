@@ -1,11 +1,29 @@
 #!/usr/bin/env node
-
-const yargs = require('yargs');
+/* eslint-disable global-require */
+const minimist = require('minimist');
 const log = require('fancy-log');
-const commands = require('./commands');
+const { blue, gray } = require('chalk');
 
-log('Dependency tool starting...');
-process.on('unhandledRejection', (e) => { throw e; });
+log('cli starting...');
 
-commands(yargs);
-yargs.demandCommand().help().parse();
+const commands = new Set(['upgrade']);
+(async () => {
+  const argv = minimist(process.argv.slice(2));
+  const [command] = argv._;
+
+  const cwd = argv.cwd || process.cwd();
+
+  if (!command) throw new Error('A CLI command must be provided.');
+  log(`running '${blue(command)}' command in '${gray(cwd)}'`);
+
+  if (!commands.has(command)) throw new Error(`The command ${command} was not found.`);
+
+  if (command === 'upgrade') {
+    const upgrade = require('./commands/upgrade');
+    await upgrade({
+      cwd,
+      latest: argv.latest,
+      prereleases: argv.prereleases,
+    });
+  }
+})().catch((e) => setImmediate(() => { throw e; }));
