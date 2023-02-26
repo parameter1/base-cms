@@ -1,77 +1,83 @@
-const chalk = require('chalk');
+const fg = require('fast-glob');
+const path = require('path');
+const fs = require('fs');
 const log = require('fancy-log');
 const semver = require('semver');
-const cwd = require('@parameter1/base-cms-cli-utils/get-cwd');
-const logCmd = require('@parameter1/base-cms-cli-utils/log-command');
-const exit = require('@parameter1/base-cms-cli-utils/print-and-exit');
-const loadPackage = require('./load-package');
-const exractDeps = require('./extract-deps');
 const loadVersionInfo = require('./load-version-info');
-const updatePackage = require('./update-package');
-const savePackage = require('./save-package');
-const loadWorkspaceDirs = require('./load-workspace-dirs');
+const depTypes = require('./dep-types');
+const testPackageName = require('./test-package-name');
 
-const { isArray } = Array;
+module.exports = async ({ cwd, latest: forceLatest = false }) => {
+  log('loading package json files...');
+  const entries = fg.sync(['**/package.json'], {
+    cwd,
+    ignore: ['**/node_modules/**'],
+  });
 
-const execute = async ({ dir, forceLatest, prereleases }) => {
-  const pkg = loadPackage({ dir });
-  log(chalk`Loaded package {magenta ${pkg.name}}`);
-  const baseDepMap = exractDeps(pkg);
-  log(`Found ${baseDepMap.size} dependencies`);
-  const names = new Set([...baseDepMap.values()].map(({ name }) => name));
+  const allDeps = new Map();
+  const allDepNames = new Set();
+  log('extracting dependency versions...');
+  entries.forEach((file) => {
+    const loc = path.resolve(cwd, file);
+    const pkg = JSON.parse(fs.readFileSync(loc, 'utf8'));
+    depTypes.forEach((type) => {
+      const deps = pkg[type];
+      if (!deps) return;
+      Object.keys(deps).forEach((name) => {
+        if (!testPackageName(name)) return;
+        const range = deps[name];
+        const coerced = semver.coerce(range);
+        const key = `${name}@${range}`;
+        allDepNames.add(name);
+        allDeps.set(key, { name, range, version: coerced.version });
+      });
+    });
+  });
 
-  const packageVersionMap = new Map();
-  await Promise.all([...names].map(async (name) => {
-    const { versions } = await loadVersionInfo(name);
-    const latest = prereleases
-      ? [...versions].pop()
-      : versions.filter((v) => !semver.prerelease(v)).pop();
-    packageVersionMap.set(name, { versions, latest });
+  log('getting version info from npm...');
+  const available = new Map();
+  await Promise.all([...allDepNames].map(async (name) => {
+    const info = await loadVersionInfo(name);
+    available.set(name, info);
   }));
 
-  const toChange = new Map();
-  baseDepMap.forEach(({ name, v: range }, key) => {
-    const { versions: available, latest } = packageVersionMap.get(name);
-    const { version: current } = semver.coerce(range);
+  log('determining versions to upgrade...');
+  const toUpgrade = new Map();
+  allDeps.forEach(({ name, range, version: current }, key) => {
+    const info = available.get(name);
+    if (!info) throw new Error(`Unable to get package info for ${name}`);
+    const version = forceLatest
+      ? info.latest
+      : semver.maxSatisfying(info.versions, range);
+    if (current === version) return;
+    toUpgrade.set(key, { current, version });
+  });
 
-    const maxSatisfying = semver.maxSatisfying(available, range);
-    const newVersion = forceLatest ? latest : maxSatisfying;
+  log(`found ${toUpgrade.size} dependencies to upgrade`);
+  if (!toUpgrade.size) return;
 
-    if (newVersion === current) return;
-
-    if (semver.gt(latest, newVersion)) {
-      log(chalk`{yellow WARNING:} The latest version of {grey ${name}} is {red ${latest}} but will use {green ${newVersion}} until the {blue --latest} flag is used`);
+  log('updgrading package.json versions...');
+  entries.forEach((file) => {
+    const loc = path.resolve(cwd, file);
+    const pkg = JSON.parse(fs.readFileSync(loc, 'utf8'));
+    let hasChanges = false;
+    depTypes.forEach((type) => {
+      const deps = pkg[type];
+      if (!deps) return;
+      Object.keys(deps).forEach((name) => {
+        if (!testPackageName(name)) return;
+        const range = deps[name];
+        const key = `${name}@${range}`;
+        if (!toUpgrade.has(key)) return;
+        const { version } = toUpgrade.get(key);
+        pkg[type][name] = `^${version}`;
+        hasChanges = true;
+      });
+    });
+    if (hasChanges) {
+      log(`writing new versions to ${file}`);
+      fs.writeFileSync(loc, `${JSON.stringify(pkg, null, 2)}\n`);
     }
-
-    toChange.set(key, `^${newVersion}`);
   });
-
-  if (toChange.size) {
-    updatePackage(toChange, pkg);
-    savePackage(dir, pkg);
-    log(chalk`Upgrade of package {magenta ${pkg.name}} complete`);
-  } else {
-    log('No dependencies need upgrading... exiting');
-  }
-
-  if (isArray(pkg.workspaces)) {
-    log(chalk`Workspaces detected. Will upgrade recursively: {gray ${JSON.stringify(pkg.workspaces)}}`);
-    const workspaceDirs = loadWorkspaceDirs(dir, pkg.workspaces);
-    await Promise.all(workspaceDirs.map(async (wsDir) => execute({
-      dir: wsDir,
-      forceLatest,
-      prereleases,
-    })));
-  }
-};
-
-module.exports = ({ path, latest: forceLatest = false, prereleases = false }) => {
-  const dir = cwd(path);
-  logCmd('upgrade', dir);
-
-  execute({ dir, forceLatest, prereleases }).then(() => {
-    exit(chalk`{green Upgrade complete!}`, 0);
-  }).catch((e) => {
-    exit(e.message);
-  });
+  log('upgrade complete.');
 };
