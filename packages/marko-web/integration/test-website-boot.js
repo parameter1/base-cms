@@ -101,7 +101,7 @@ const testPage = async ({ path, retryAttempts = 3, serverErrorsOnly = true } = {
     });
     if (errors.length) {
       // if all the errors were timeout errors, let's try again.
-      if (errors.every((msg) => msg === retryableMarkoErrors.has(msg))) {
+      if (errors.every((msg) => retryableMarkoErrors.has(msg))) {
         log(`all errors for page path ${path} were flagged as retryable. retrying...`);
         return;
       }
