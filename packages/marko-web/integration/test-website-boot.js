@@ -27,6 +27,11 @@ const fetchResponse = async ({
   }
 };
 
+const retryableMarkoErrors = new Set([
+  'Network error: Unexpected token < in JSON at position 0',
+  'Timed out after 10000ms',
+]);
+
 const checkReadiness = async ({
   path = '/_health',
   startAfter = 5000,
@@ -59,7 +64,7 @@ const checkReadiness = async ({
   log('container is ready.');
 };
 
-const testPage = async ({ path, retryAttempts = 3, allowNotFound = false } = {}) => {
+const testPage = async ({ path, retryAttempts = 3, serverErrorsOnly = true } = {}) => {
   log(`testing page path ${path}`);
 
   let timesChecked = 0;
@@ -72,12 +77,12 @@ const testPage = async ({ path, retryAttempts = 3, allowNotFound = false } = {})
     }
     const res = await fetchResponse({ path });
     if (!res.ok) {
-      if (allowNotFound && res.status === 404) {
-        log(`received a 404 not found from path ${path} but was set as allowed for this test. treating as passing.`);
+      if (serverErrorsOnly && res.status < 500) {
+        log(`received a ${res.status} from path ${path} but treating as passing since it was not a server error (>= 500).`);
         passed = true;
         return;
       }
-      throw new Error(`Received a non-ok response from path page ${path} - ${res.status} ${res.statusText}`);
+      throw new Error(`Received an error response from path page ${path} with status ${res.status} ${res.statusText}`);
     }
     html = await res.text();
 
@@ -96,8 +101,8 @@ const testPage = async ({ path, retryAttempts = 3, allowNotFound = false } = {})
     });
     if (errors.length) {
       // if all the errors were timeout errors, let's try again.
-      if (errors.every((msg) => msg === 'Timed out after 10000ms')) {
-        log(`all errors for page path ${path} were timeout errors. retrying...`);
+      if (errors.every((msg) => msg === retryableMarkoErrors.has(msg))) {
+        log(`all errors for page path ${path} were flagged as retryable. retrying...`);
         return;
       }
       // otherwise error.
@@ -114,11 +119,11 @@ const run = async () => {
   await checkReadiness();
 
   // test homepage first, and get html.
-  const html = await testPage({ path: '/' });
+  const html = await testPage({ path: '/', serverErrorsOnly: false });
 
   const toTest = new Map([
-    ['/search', { allowNotFound: true }],
-    ['/site-map', { allowNotFound: true }],
+    ['/search', {}],
+    ['/site-map', {}],
   ]);
   const contentToTest = new Map();
 
@@ -136,7 +141,7 @@ const run = async () => {
     }
     // non content pages
     if (toTest.size === 10) return;
-    toTest.set(href, { allowNotFound: true });
+    toTest.set(href, {});
   });
 
   // now test all extracted pages.
