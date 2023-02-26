@@ -38,6 +38,7 @@
     "@parameter1/base-cms-tenant-context": "^4.0.2",
     "@parameter1/base-cms-utils": "^4.0.2",
     "@parameter1/base-cms-web-common": "^4.0.2",
+    "async": "^3.2.4",
     "cheerio": "^1.0.0-rc.12",
     "cookie-parser": "^1.4.6",
     "express": "^4.18.2",
