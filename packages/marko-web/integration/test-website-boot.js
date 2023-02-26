@@ -13,10 +13,14 @@ const origin = process.env.MARKO_WEB_INTEGRATION_TEST_URL || 'http://localhost:8
 const fetchResponse = async ({
   path = '/',
   catchErrors = false,
+  followRedirects = false,
 } = {}) => {
   const url = `${cleanPath(origin)}/${cleanPath(path)}`;
   log(`fetching ${url}`);
-  const opts = { method: 'get', redirect: 'manual' };
+  const opts = {
+    method: 'get',
+    redirect: followRedirects ? 'follow' : 'manual',
+  };
   if (!catchErrors) return fetch(url, opts);
   try {
     const res = await fetch(url, opts);
@@ -58,15 +62,16 @@ const checkReadiness = async ({
   log('container is ready.');
 };
 
-const testPage = async ({ path, retryAttempts = 3, serverErrorsOnly = true } = {}) => {
+const testPage = async ({
+  path,
+  retryAttempts = 3,
+  serverErrorsOnly = true,
+  followRedirects = false,
+} = {}) => {
   let timesChecked = 0;
   let finished = false;
   let html;
-  const report = {
-    path,
-    error: null,
-    checks: [],
-  };
+  const report = { path, error: null, checks: [] };
   await whilst(async () => !finished, async () => {
     const check = {};
     report.checks.push(check);
@@ -77,7 +82,7 @@ const testPage = async ({ path, retryAttempts = 3, serverErrorsOnly = true } = {
       finished = true;
       return;
     }
-    const res = await fetchResponse({ path });
+    const res = await fetchResponse({ path, followRedirects });
     check.statusCode = res.status;
     if (!res.ok) {
       if (serverErrorsOnly && res.status < 500) {
@@ -121,8 +126,12 @@ const testPage = async ({ path, retryAttempts = 3, serverErrorsOnly = true } = {
 const run = async () => {
   await checkReadiness();
 
-  // test homepage first, and get html.
-  const { html, report: initialReport } = await testPage({ path: '/', serverErrorsOnly: false });
+  // test homepage first, and get html, allowing redirects (since this page _has_ to load).
+  const { html, report: initialReport } = await testPage({
+    path: '/',
+    serverErrorsOnly: false,
+    followRedirects: true,
+  });
 
   const toTest = new Map([
     ['/search', {}],
