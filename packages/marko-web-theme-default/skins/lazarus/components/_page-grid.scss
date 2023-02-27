@@ -23,8 +23,8 @@ $new-breakpoint-list: map-merge($theme-site-header-breakpoints, (desktop-grid-br
     @each $breakpoint, $width in sort-map-by-values($new-breakpoint-list, asc) {
       @if ($width >= $desktop-grid-breakpoint) {
         @media (min-width: $width) {
-          top: calc(#{calculate-navbar-height-for($breakpoint)} + #{$grid-gutter-width * 0.5});
-          height: calc(100vh - #{calculate-navbar-height-for($breakpoint)} - #{$grid-gutter-width * 0.5});
+          top: calc(calculate-navbar-height-for($breakpoint) + $grid-gutter-width * 0.5);
+          height: calc(100vh - calculate-navbar-height-for($breakpoint) - $grid-gutter-width * 0.5);
         }
       }
     }
