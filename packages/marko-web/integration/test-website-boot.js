@@ -189,7 +189,7 @@ const run = async () => {
   const errorReports = reports.filter((report) => report.error);
   if (errorReports.length) {
     log('PAGE ERRORS ENCOUNTERED');
-    errorReports.forEach((report) => log(report));
+    errorReports.forEach((report) => log(inspect(report, { colors: true, depth: null })));
     throw new Error('Page errors were encountered.');
   }
   log('test results', inspect(reports, { colors: true, depth: null }));
