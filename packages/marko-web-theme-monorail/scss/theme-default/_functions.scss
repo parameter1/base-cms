@@ -129,7 +129,7 @@
   }
   @if index($breakpoints, hide-primary) != null {
     // Orverride font size again with hidden height and set padding to none
-    $primary-font-size: $theme-site-navbar-primary-font-size-sm * $theme-site-navbar-primary-height-sm;
+    $primary-font-size: $theme-site-navbar-primary-font-size-sm * $theme-site-navbar-primary-line-height-sm;
     $primary-link-padding: 0px;
   }
   @return calc($logo-height + $primary-font-size + $brand-margin + $primary-link-padding + $secondary-padding + $additional-padding);
