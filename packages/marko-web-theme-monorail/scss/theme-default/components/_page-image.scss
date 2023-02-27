@@ -60,7 +60,7 @@
   &--primary-image-inline {
     float: right;
     max-width: 250px;
-    margin-top: calc((#{$theme-page-body-line-height} - 1) * .5em);
+    margin-top: calc(($theme-page-body-line-height - 1) * .5em);
     margin-bottom: 0;
     margin-left: .75rem;
 
@@ -70,7 +70,7 @@
     }
 
     @include media-breakpoint-down($theme-responsive-text-breakpoint) {
-      margin-top: calc((#{$theme-page-body-line-height-sm} - 1) * .5em);
+      margin-top: calc(($theme-page-body-line-height-sm - 1) * .5em);
     }
 
     #{ $self } {

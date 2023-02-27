@@ -26,7 +26,7 @@
     margin-left: -#{$marko-web-page-wrapper-padding};
     background-color: $skin-ad-bg-color;
     @media (min-width: $marko-web-document-container-max-width) {
-      $margin: calc((((100vw - #{$marko-web-document-container-max-width}) / 2) + #{$marko-web-page-wrapper-padding}) * -1);
+      $margin: calc((((100vw - $marko-web-document-container-max-width) / 2) + $marko-web-page-wrapper-padding) * -1);
       margin-right: $margin;
       margin-left: $margin;
     }
@@ -56,7 +56,7 @@
     margin-left: $marko-web-page-wrapper-padding * -1;
     background-color: $skin-ad-bg-color;
     @media (min-width: $marko-web-document-container-max-width) {
-      $margin: calc((((100vw - #{$marko-web-document-container-max-width}) / 2) + #{$marko-web-page-wrapper-padding}) * -1);
+      $margin: calc((((100vw - $marko-web-document-container-max-width) / 2) + $marko-web-page-wrapper-padding) * -1);
       margin-right: $margin;
       margin-left: $margin;
     }
@@ -76,7 +76,7 @@
     background-color: $skin-ad-bg-color;
 
     @media (min-width: $skin-content-body-max-width) {
-      $margin: calc(((100vw - #{$skin-content-body-max-width}) / 2) * -1);
+      $margin: calc(((100vw - $skin-content-body-max-width) / 2) * -1);
       margin-right: $margin;
       margin-left: $margin;
     }
@@ -244,8 +244,8 @@
     right: 0;
   }
 
-  @media (max-width: calc(#{$marko-web-document-container-max-width} + (#{$width} * 2))) {
-    $lr: calc((100vw - #{$marko-web-document-container-max-width} - (#{$width} * 2)) / 2);
+  @media (max-width: calc($marko-web-document-container-max-width + ($width * 2))) {
+    $lr: calc((100vw - $marko-web-document-container-max-width - ($width * 2)) / 2);
     &__left {
       left: $lr;
     }

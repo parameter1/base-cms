@@ -21,7 +21,7 @@ p [data-embed-type] {
 
 [data-embed-type][data-embed-align="left"] {
   float: left;
-  width: calc(#{$theme-embedded-media-align-left-width} - #{$theme-embedded-media-align-left-margin});
+  width: calc($theme-embedded-media-align-left-width - $theme-embedded-media-align-left-margin);
   margin-right: $theme-embedded-media-align-left-margin;
   @include media-breakpoint-down(sm) {
     width: 100%;
@@ -31,7 +31,7 @@ p [data-embed-type] {
 
 [data-embed-type][data-embed-align="right"] {
   float: right;
-  width: calc(#{$theme-embedded-media-align-right-width} - #{$theme-embedded-media-align-right-margin});
+  width: calc($theme-embedded-media-align-right-width - $theme-embedded-media-align-right-margin);
   margin-left: $theme-embedded-media-align-right-margin;
   @include media-breakpoint-down(sm) {
     width: 100%;

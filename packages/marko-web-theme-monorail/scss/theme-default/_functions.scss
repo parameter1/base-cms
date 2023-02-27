@@ -99,8 +99,27 @@
   $brand-margin: $theme-site-navbar-brand-margin-y * 2;
   $secondary-padding: $theme-site-navbar-secondary-padding-y * 2;
 
+  @if $logo-height == 0 {
+    $logo-height: 0px;
+  }
+  @if $primary-font-size == 0 {
+    $primary-font-size: 0px;
+  }
+  @if $brand-margin == 0 {
+    $brand-margin: 0px;
+  }
+  @if $primary-link-padding == 0 {
+    $primary-link-padding: 0px;
+  }
+  @if $secondary-padding == 0 {
+    $secondary-padding: 0px;
+  }
+  @if $additional-padding == 0 {
+    $additional-padding: 0px;
+  }
+
   @if length($breakpoints) == 0 {
-    @return calc(#{$logo-height} + #{$primary-font-size} + #{$brand-margin} + #{$primary-link-padding} + #{$secondary-padding} + #{$additional-padding});
+    @return calc($logo-height + $primary-font-size + $brand-margin + $primary-link-padding + $secondary-padding + $additional-padding);
   }
   @if index($breakpoints, small-logo) != null {
     $logo-height: $theme-site-navbar-logo-height-sm;
@@ -111,7 +130,7 @@
   @if index($breakpoints, hide-primary) != null {
     // Orverride font size again with hidden height and set padding to none
     $primary-font-size: $theme-site-navbar-primary-height-sm;
-    $primary-link-padding: 0;
+    $primary-link-padding: 0px;
   }
-  @return calc(#{$logo-height} + #{$primary-font-size} + #{$brand-margin} + #{$primary-link-padding} + #{$secondary-padding} + #{$additional-padding});
+  @return calc($logo-height + $primary-font-size + $brand-margin + $primary-link-padding + $secondary-padding + $additional-padding);
 }
