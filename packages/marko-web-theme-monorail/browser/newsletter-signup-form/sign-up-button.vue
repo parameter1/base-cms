@@ -18,7 +18,6 @@
   </button>
 </template>
 
-
 <script>
 import i18n from '../i18n-vue';
 

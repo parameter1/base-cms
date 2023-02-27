@@ -43,7 +43,7 @@ class NativeXConfiguration {
   getPlacement({ name, aliases } = {}) {
     // Retrieve the default and "alias-traversed" placements.
     const defaultPlacement = getAsObject(this.placements, `${this.defaultAlias}.${name}`);
-    const foundPlacement = asArray(aliases).map(alias => get(this.placements, `${alias}.${name}`)).filter(v => v)[0];
+    const foundPlacement = asArray(aliases).map((alias) => get(this.placements, `${alias}.${name}`)).filter((v) => v)[0];
 
     // Ensure placement is duplicated so property re-assignment doesn't "stick."
     return {

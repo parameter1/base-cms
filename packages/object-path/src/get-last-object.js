@@ -3,7 +3,7 @@ const get = require('./get');
 
 const { isArray } = Array;
 
-const pop = stack => stack.pop() || {};
+const pop = (stack) => stack.pop() || {};
 
 const getLastObject = (obj, path, stack = []) => {
   if (isObject(obj)) stack.push(obj);

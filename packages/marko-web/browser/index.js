@@ -1,5 +1,4 @@
 /* eslint-disable no-new */
-import 'whatwg-fetch';
 import Vue from './vue';
 import Components from './components';
 import EventBus from './event-bus';
@@ -23,7 +22,7 @@ const load = async ({
   if (!shouldRender) return;
   const component = new Vue({
     provide: providers[name],
-    render: h => h(Component, { props, on: { ...on, ...listeners[name] } }),
+    render: (h) => h(Component, { props, on: { ...on, ...listeners[name] } }),
   });
   component.$mount(el, hydrate);
 };
@@ -63,20 +62,22 @@ const methods = {
 };
 
 let initialized = false;
-const init = () => {
-  if (initialized) return;
-  const { markoCompQueue } = window;
-  if (!markoCompQueue) throw new Error('Unable to load Marko Web components queue!');
+if (window && window.markoCompQueue) {
+  window.markoCompQueue.flush = () => {
+    if (initialized) return;
+    const { markoCompQueue } = window;
+    if (!markoCompQueue) throw new Error('Unable to load Marko Web components queue!');
 
-  for (let i = 0; i < markoCompQueue.length; i += 1) {
-    const [method, args] = markoCompQueue[i];
-    if (methods[method]) methods[method](...args);
-  }
-  initialized = true;
-};
+    for (let i = 0; i < markoCompQueue.length; i += 1) {
+      const [method, args] = markoCompQueue[i];
+      if (methods[method]) methods[method](...args);
+    }
+    window.CMSBrowserComponents = methods;
+    initialized = true;
+  };
+}
 
 export default {
   ...methods,
-  init,
   EventBus,
 };

@@ -21,7 +21,7 @@
 <script>
 import ScrollMagic from 'scrollmagic/scrollmagic/minified/ScrollMagic.min';
 
-const buildSizeMapping = sm => sm
+const buildSizeMapping = (sm) => sm
   .reduce((map, s) => map.addSize(s.viewport, s.size), window.googletag.sizeMapping()).build();
 const block = 'marko-web-gam-fixed-ad-bottom';
 

@@ -1,27 +1,26 @@
 {
   "name": "@parameter1/base-cms-export-cli",
-  "version": "3.0.0",
+  "version": "4.0.2",
   "description": "Command line interface for BaseCMS+Marko exports.",
   "author": "Josh Worden <josh@parameter1.com>",
-  "main": "src/index.js",
+  "main": "index.js",
   "bin": {
-    "basecms-exports": "bin/cli.js"
+    "basecms-exports": "bin/index.js"
   },
   "license": "MIT",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/export-cli",
   "scripts": {
+    "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .js --max-warnings 5 ./",
     "test": "yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-cli-utils": "^3.0.0",
-    "chalk": "^2.4.2",
-    "fancy-log": "^1.3.3",
-    "gulp": "^4.0.2",
-    "gulp-cached": "^1.1.1",
-    "gulp-eslint": "^5.0.0",
-    "pump": "^3.0.0",
-    "yargs": "^14.2.3"
+    "@parameter1/base-cms-marko-compiler": "^4.0.2",
+    "@parameter1/base-cms-utils": "^4.0.2",
+    "chalk": "^4.1.2",
+    "chokidar": "^3.5.3",
+    "fancy-log": "^2.0.0",
+    "minimist": "^1.2.8"
   },
   "publishConfig": {
     "access": "public"

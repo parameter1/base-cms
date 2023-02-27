@@ -71,7 +71,7 @@
   &__item {
     position: relative;
     display: block;
-    padding: ($marko-web-node-list-padding / 2);
+    padding: ($marko-web-node-list-padding * 0.5);
     font-size: 18px;
     line-height: 1.25;
     &--open {

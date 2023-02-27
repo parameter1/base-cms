@@ -1,5 +1,5 @@
 const express = require('express');
-const marko = require('marko/express');
+const { cleanMarkoResponse, markoMiddleware } = require('@parameter1/base-cms-marko-express/middleware');
 const helmet = require('helmet');
 const apollo = require('./apollo');
 const { version } = require('../package.json');
@@ -49,7 +49,8 @@ module.exports = (config = {}) => {
   }));
 
   // Register the Marko middleware.
-  app.use(marko());
+  app.use(markoMiddleware());
+  app.use(cleanMarkoResponse());
 
   // Register newsletter "admin application."
   app.use('/', admin({ exports }));

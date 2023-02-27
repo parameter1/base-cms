@@ -1,3 +1,13 @@
-$ const src = input.src || "https://cdn.parameter1.com/deferred-script-loader/ed483020.js";
+$ const src = input.src || "https://cdn.parameter1.com/deferred-script-loader/v1.0.1/lib.min.js";
+$ const { preloadOnly } = input;
+$ const { res } = out.global;
 
-<script>(function (s,o,g,a,m) { a = s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1; a.defer = 1; a.src = g; m.parentNode.insertBefore(a, m); })(document, 'script', '${src}');</script>
+<if(preloadOnly && !res.locals.p1deferPreload)>
+  <link rel="modulepreload" href=src as="script" />
+  $ res.locals.p1deferPreload = true;
+</if>
+
+<if(!preloadOnly && !res.locals.p1deferLoad)>
+  <script type="module" src=src async defer></script>
+  $ res.locals.p1deferLoad = true;
+</if>

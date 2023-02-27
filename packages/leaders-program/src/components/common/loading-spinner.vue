@@ -22,7 +22,7 @@ export default {
       const blockName = 'leaders-loading-spinner';
       return [
         blockName,
-        ...this.modifiers.map(mod => `${blockName}--${mod}`),
+        ...this.modifiers.map((mod) => `${blockName}--${mod}`),
       ];
     },
   },

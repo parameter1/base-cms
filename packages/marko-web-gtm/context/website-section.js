@@ -4,7 +4,7 @@ const buildQueryString = require('../utils/build-query-string');
 
 module.exports = ({ obj, req }) => {
   const section = asObject(obj);
-  const hierarchy = getAsArray(section, 'hierarchy').map(s => ({
+  const hierarchy = getAsArray(section, 'hierarchy').map((s) => ({
     id: s.id,
     name: s.name,
     alias: s.alias,

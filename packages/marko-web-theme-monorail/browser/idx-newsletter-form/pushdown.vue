@@ -32,6 +32,7 @@
             :regional-consent-policies="regionalConsentPolicies"
             :app-context-id="appContextId"
             :action-text="actionText"
+            login-email-id="newsletter-pushdown-email"
             :login-email-label="translateEmail"
             :lang="lang"
             @login-link-sent="handleLoginLinkSent"
@@ -57,11 +58,11 @@ import CloseButton from '../newsletter-close-button.vue';
 import i18n from '../i18n-vue';
 
 export default {
-  inject: ['EventBus'],
   components: {
     CloseButton,
     LoginForm,
   },
+  inject: ['EventBus'],
 
   props: {
     siteName: {

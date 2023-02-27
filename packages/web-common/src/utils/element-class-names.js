@@ -6,7 +6,7 @@ const { isArray } = Array;
 module.exports = (block, obj, path, modifiers = []) => {
   const type = objectTypeName(obj);
   if (!block || !type) return [];
-  const parts = (path ? String(path).split('.') : []).map(p => dasherize(p));
+  const parts = (path ? String(path).split('.') : []).map((p) => dasherize(p));
   parts.unshift(type);
 
   const element = `${dasherize(block)}__${parts.join('-')}`;

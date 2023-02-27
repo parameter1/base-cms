@@ -9,7 +9,9 @@ const jsonErrors = require('./json-errors');
 const { env } = process;
 const { json, createError } = micro;
 
-const wait = ms => new Promise(resolve => setTimeout(resolve, parseInt(ms, 10)));
+const wait = (ms) => new Promise((resolve) => {
+  setTimeout(resolve, parseInt(ms, 10));
+});
 
 /**
  * Starts a micro json service server.

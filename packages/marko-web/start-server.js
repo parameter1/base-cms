@@ -1,12 +1,10 @@
-require('./node-require');
+/* eslint-disable import/no-dynamic-require, global-require */
+require('@parameter1/base-cms-marko-node-require');
 const http = require('http');
 const path = require('path');
 const { createTerminus } = require('@godaddy/terminus');
 const { isFunction: isFn, parseBooleanHeader } = require('@parameter1/base-cms-utils');
-const errorHandlers = require('./express/error-handlers');
-const express = require('./express');
-const loadMore = require('./express/load-more');
-const disabledFeatures = require('./middleware/disabled-features');
+const { getAsObject } = require('@parameter1/base-cms-object-path');
 
 const { env } = process;
 if (!process.env.LIVERELOAD_PORT) process.env.LIVERELOAD_PORT = 4010;
@@ -14,7 +12,9 @@ if (!process.env.EXPOSED_HOST) process.env.EXPOSED_HOST = env.HOST || 'localhost
 
 process.on('unhandledRejection', (e) => { throw e; });
 
-const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+const wait = (ms) => new Promise((resolve) => {
+  setTimeout(resolve, ms);
+});
 
 module.exports = async ({
   rootDir,
@@ -26,9 +26,6 @@ module.exports = async ({
   exposedPort = env.EXPOSED_PORT || env.PORT || 4008,
   exposedHost = env.EXPOSED_HOST,
   routes,
-  graphqlUri = env.GRAPHQL_URI,
-  tenantKey = env.TENANT_KEY,
-  siteId = env.SITE_ID,
   errorTemplate,
   document, // custom marko-web-document component
   components, // components to register globally (e.g. for load more, etc)
@@ -38,9 +35,6 @@ module.exports = async ({
   onFatalError,
   redirectHandler,
   sitemapsHeaders,
-
-  // Base browse (optional)
-  baseBrowseGraphqlUri = env.BASE_BROWSE_GRAPHQL_URI,
 
   // Cache settings.
   gqlCacheResponses = parseBooleanHeader(env.CACHE_GQL_RESPONSES),
@@ -57,12 +51,35 @@ module.exports = async ({
   onHealthCheck,
 } = {}) => {
   if (!rootDir) throw new Error('The root project directory is required.');
-  if (!graphqlUri) throw new Error('The GraphQL API URL is required.');
-  if (!siteId) throw new Error('A site ID is required.');
-
-  // Load the site package file.
-  // eslint-disable-next-line import/no-dynamic-require, global-require
+  // load the site package file.
   const sitePackage = require(path.resolve(rootDir, 'package.json'));
+  // load config from package `website` option but allow env values to override.
+  const site = getAsObject(sitePackage, 'website');
+  if (!process.env.TENANT_KEY && site.tenant) process.env.TENANT_KEY = site.tenant;
+  if (!process.env.SITE_ID && site.id) process.env.SITE_ID = site.id;
+  if (!process.env.GRAPHQL_URI && site.stack) process.env.GRAPHQL_URI = `https://graphql.${site.stack}.base.parameter1.com`;
+  if (!process.env.OEMBED_URI && site.stack) process.env.OEMBED_URI = `https://oembed.${site.stack}.base.parameter1.com`;
+  if (!process.env.RSS_URI && site.stack) process.env.RSS_URI = `https://rss.${site.stack}.base.parameter1.com`;
+  if (!process.env.SITEMAPS_URI && site.stack) process.env.SITEMAPS_URI = `https://sitemaps.${site.stack}.base.parameter1.com`;
+
+  // ensure core envs are set.
+  ['TENANT_KEY', 'SITE_ID', 'GRAPHQL_URI', 'OEMBED_URI', 'RSS_URI', 'SITEMAPS_URI'].forEach((key) => {
+    if (!process.env[key]) throw new Error(`The ${key} value must be set either from env or via the website package config.`);
+  });
+
+  // base browse (optional)
+  if (!process.env.BASE_BROWSE_GRAPHQL_URI && site.stack) process.env.BASE_BROWSE_GRAPHQL_URI = `https://base-browse.${site.stack}.base.parameter1.com/graphql`;
+
+  const graphqlUri = process.env.GRAPHQL_URI;
+  const siteId = process.env.SITE_ID;
+  const tenantKey = process.env.TENANT_KEY;
+  const baseBrowseGraphqlUri = process.env.BASE_BROWSE_GRAPHQL_URI;
+
+  // require core packages after env values have been processed so they are set when imported
+  const errorHandlers = require('./express/error-handlers');
+  const express = require('./express');
+  const loadMore = require('./express/load-more');
+  const disabledFeatures = require('./middleware/disabled-features');
 
   const app = express({
     rootDir,
@@ -148,5 +165,5 @@ module.exports = async ({
         }
       }
     });
-  }).catch(e => setImmediate(() => { throw e; }));
+  }).catch((e) => setImmediate(() => { throw e; }));
 };

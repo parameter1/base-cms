@@ -1,23 +1,25 @@
 {
   "name": "@parameter1/base-cms-marko-web-p1-events",
-  "version": "3.20.0",
+  "version": "4.3.3",
   "description": "Parameter1 user event tracking components for BaseCMS/Marko websites.",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-p1-events",
   "scripts": {
-    "lint": "eslint --ext .js --max-warnings 5 ./",
-    "compile": "basecms-marko-compile compile --dir ./ --silent true",
-    "test": "yarn compile && yarn lint"
+    "lint:fix": "yarn lint --fix",
+    "lint": "eslint --ext .js --ext .vue --max-warnings 5 ./",
+    "compile": "basecms-marko-compile compile",
+    "prepublish": "yarn compile --silent",
+    "test": "yarn compile --no-clean && yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-inflector": "^3.0.0",
-    "@parameter1/base-cms-marko-web-deferred-script-loader": "^3.20.0",
-    "@parameter1/base-cms-object-path": "^3.0.0"
+    "@parameter1/base-cms-inflector": "^4.0.2",
+    "@parameter1/base-cms-marko-web-deferred-script-loader": "^4.1.0",
+    "@parameter1/base-cms-object-path": "^4.0.2"
   },
   "peerDependencies": {
-    "@parameter1/base-cms-marko-core": "^2.0.0",
-    "@parameter1/base-cms-marko-web": "^2.0.0"
+    "@parameter1/base-cms-marko-core": "^4.0.0",
+    "@parameter1/base-cms-marko-web": "^4.0.0"
   },
   "publishConfig": {
     "access": "public"

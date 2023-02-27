@@ -210,7 +210,7 @@ export default {
     classNames() {
       const { blockName } = this;
       const classNames = [blockName];
-      this.modifiers.map(mod => classNames.push(`${blockName}--${mod}`));
+      this.modifiers.map((mod) => classNames.push(`${blockName}--${mod}`));
       classNames.push(`${blockName}__counter--${this.comments.length}`);
       return classNames;
     },
@@ -259,7 +259,7 @@ export default {
         const data = await res.json();
         if (!res.ok) throw new Error(data.message);
         this.totalCount = data.totalCount;
-        this.comments = data.edges.map(edge => edge.node);
+        this.comments = data.edges.map((edge) => edge.node);
         this.hasNextPage = data.pageInfo.hasNextPage;
         this.endCursor = data.pageInfo.endCursor;
         this.archived = data.stream ? data.stream.archived : false;
@@ -283,7 +283,7 @@ export default {
         const data = await res.json();
         if (!res.ok) throw new Error(data.message);
         this.totalCount = data.totalCount;
-        const comments = data.edges.map(edge => edge.node);
+        const comments = data.edges.map((edge) => edge.node);
         this.comments.push(...comments);
         this.hasNextPage = data.pageInfo.hasNextPage;
         this.endCursor = data.pageInfo.endCursor;

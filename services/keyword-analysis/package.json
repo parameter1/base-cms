@@ -1,13 +1,15 @@
 {
   "name": "@parameter1/base-cms-keyword-analysis",
   "description": "Analyzes BaseCMS content based on keywords using ElasticSearch.",
-  "version": "3.0.0",
+  "version": "4.4.0",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
   "private": true,
   "repository": "https://github.com/parameter1/base-cms/tree/master/services/keyword-analysis",
   "scripts": {
+    "lint": "eslint --ext .js --max-warnings 5 ./",
+    "lint:fix": "yarn lint --fix",
     "predev": "$npm_package_docker_dev_install",
     "dev": "$npm_package_docker_dev_up",
     "stop": "$npm_package_docker_dev_down",
@@ -22,17 +24,17 @@
     }
   },
   "dependencies": {
-    "@parameter1/base-cms-tooling": "^3.0.0",
-    "async": "^2.6.3",
-    "chalk": "^2.4.2",
+    "@parameter1/base-cms-tooling": "^4.0.2",
+    "async": "^3.2.4",
+    "chalk": "^4.1.2",
     "clear": "^0.1.0",
     "dataloader": "^1.4.0",
     "elasticsearch": "^15.5.0",
     "figlet": "^1.5.2",
-    "html2plaintext": "^2.1.2",
+    "html2plaintext": "^2.1.4",
     "inquirer": "^6.5.2",
     "js-yaml": "^3.14.1",
-    "mongodb": "^3.7.2",
+    "mongodb": "^3.7.3",
     "progress": "^2.0.3"
   }
 }

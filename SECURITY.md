@@ -7,7 +7,8 @@ currently being supported with security updates.
 
 | Version   | Supported          | Until |
 | --------  | ------------------ | ----- |
-| `v3.x`    | :white_check_mark:
+| `v4.x`    | :white_check_mark:
+| `v3.x`    | :white_check_mark: | 2023-04-30 |
 | `v2.x`    | :x:                | 2022-10-31 |
 | `v1.x`    | :x:                | 2021-03-01 |
 | `v0.10.x` | :x:                | 2020-03-01 |

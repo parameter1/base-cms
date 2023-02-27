@@ -36,7 +36,6 @@
       </form>
       <privacy-policy :block-name="blockName" :privacy-policy-link="privacyPolicyLink" />
 
-
       <div v-if="recaptcha.error" class="alert alert-danger mt-3 mb-0" role="alert">
         <strong>A recaptcha error occurred.</strong>
         {{ recaptcha.error.message }}
@@ -49,7 +48,6 @@
     </div>
   </div>
 </template>
-
 
 <script>
 import recaptchaLoad from '@parameter1/base-cms-marko-web-recaptcha/browser/load';
@@ -68,7 +66,7 @@ export default {
     newsletter: {
       type: Object,
       required: true,
-      validate: o => (o && o.name && o.deploymentTypeId),
+      validate: (o) => (o && o.name && o.deploymentTypeId),
     },
     recaptchaSiteKey: {
       type: String,

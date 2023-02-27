@@ -1,18 +1,19 @@
 {
   "name": "@parameter1/base-cms-marko-web-recaptcha",
-  "version": "3.0.0",
+  "version": "4.0.2",
   "description": "Utility functions for accessing JavaScript objects by path.",
   "main": "src/index.js",
   "author": "Brian Miller <brian@parameter1.com>",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-recaptcha",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint --ext .js --max-warnings 5 ./",
+    "lint:fix": "yarn lint --fix",
+    "lint": "eslint --ext .js --ext .vue --max-warnings 5 ./",
     "test": "yarn lint"
   },
   "dependencies": {
-    "http-errors": "^1.8.0",
-    "node-fetch": "^2.6.1"
+    "http-errors": "^1.8.1",
+    "node-fetch": "^2.6.9"
   },
   "publishConfig": {
     "access": "public"

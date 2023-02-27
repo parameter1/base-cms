@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
-const marko = require('marko/express');
 const helmet = require('helmet');
+const { markoMiddleware, cleanMarkoResponse } = require('@parameter1/base-cms-marko-express/middleware');
 const apollo = require('./apollo');
 const CoreConfig = require('../config/core');
 const CustomConfig = require('../config/custom');
@@ -59,7 +59,8 @@ module.exports = (config = {}) => {
   }));
 
   // Register the Marko middleware.
-  app.use(marko());
+  app.use(markoMiddleware());
+  app.use(cleanMarkoResponse());
 
   // Register public folder, if applicable.
   if (publicPath) {

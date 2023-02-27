@@ -18,7 +18,7 @@ export default Browser;
 ```scss
 // your-site/server/styles/index.scss
 @import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,500,600,700&display=swap");
-@import "../../node_modules/@parameter1/base-cms-marko-web-leaders/scss/leaders";
+@import "@parameter1/base-cms-marko-web-leaders/scss/leaders";
 ```
 
 4. Include the dropdown portal component in your template or document root. _Include immediately after the opening `<body>` tag!_ **<< Don't forget this step >>**

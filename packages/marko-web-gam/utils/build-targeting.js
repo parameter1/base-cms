@@ -4,7 +4,7 @@ const { isArray } = Array;
 
 const invalid = /["'=!+#*~;^()[\]<>,.&]/g;
 
-const clean = value => `${value || ''}`.replace(invalid, '').trim();
+const clean = (value) => `${value || ''}`.replace(invalid, '').trim();
 
 module.exports = (targeting) => {
   if (!isObject(targeting)) return '';

@@ -7,5 +7,5 @@ const Tag = require('./tag');
  */
 module.exports = (html) => {
   if (!html) return [];
-  return getTagMatches(html).map(match => new Tag(match));
+  return getTagMatches(html).map((match) => new Tag(match));
 };

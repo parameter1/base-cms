@@ -113,7 +113,7 @@ class Base4 {
    */
   static extractRefIds(refs) {
     if (!isArray(refs) || !refs.length) return [];
-    return refs.map(ref => Base4.extractRefId(ref)).filter(id => id);
+    return refs.map((ref) => Base4.extractRefId(ref)).filter((id) => id);
   }
 
   /**

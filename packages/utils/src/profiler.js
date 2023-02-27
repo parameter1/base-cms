@@ -15,7 +15,6 @@ module.exports = () => {
     log('Profile for', key, `${(secs * 1000) + (ns / 1000000)}ms`);
   };
 
-
   return {
     start,
     stop,

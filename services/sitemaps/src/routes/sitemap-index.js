@@ -29,12 +29,12 @@ const getSuffixes = (count, limit = PAGE_SIZE) => {
   const num = count % limit === 0
     ? count / limit
     : ((count - (count % limit)) / limit) + 1;
-  return [...Array(num).keys()].map(x => (x === 0 ? '' : `.${x}`));
+  return [...Array(num).keys()].map((x) => (x === 0 ? '' : `.${x}`));
 };
 
 const sitemapUrl = (origin, type, suffix) => `${origin}/sitemap/${type}${suffix}.xml`;
 const createSitemap = (origin, type, suffix) => `<sitemap><loc>${sitemapUrl(origin, type, suffix)}</loc></sitemap>`;
-const createIndex = maps => `<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd">${maps.join('')}</sitemapindex>`;
+const createIndex = (maps) => `<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd">${maps.join('')}</sitemapindex>`;
 
 module.exports = asyncRoute(async (req, res) => {
   const { apollo, websiteContext } = res.locals;
@@ -46,7 +46,7 @@ module.exports = asyncRoute(async (req, res) => {
 
   const sitemaps = publishedContentCounts.reduce((arr, { type, count }) => {
     const suffixes = getSuffixes(count);
-    const contentSitemaps = suffixes.map(suffix => createSitemap(origin, type, suffix));
+    const contentSitemaps = suffixes.map((suffix) => createSitemap(origin, type, suffix));
     arr.push(...contentSitemaps);
     return arr;
   }, [createSitemap(origin, 'sections', [''])]);

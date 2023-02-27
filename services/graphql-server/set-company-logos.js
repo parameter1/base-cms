@@ -19,7 +19,7 @@ const run = async () => {
     { $project: { imageId: '$images' } },
   ]).toArray();
 
-  const imageIds = docs.map(doc => doc.imageId);
+  const imageIds = docs.map((doc) => doc.imageId);
   const { result = {} } = await assetsColl.updateMany({
     _id: { $in: imageIds },
   }, {
@@ -31,4 +31,4 @@ const run = async () => {
   await basedb.close();
 };
 
-run().catch(e => setImmediate(() => { throw e; }));
+run().catch((e) => setImmediate(() => { throw e; }));

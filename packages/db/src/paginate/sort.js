@@ -33,7 +33,7 @@ class Sort {
     const { field, sortByValues, orderValues } = this;
     if (sortByValues && orderValues.length) {
       const map = results.reduce((m, r) => m.set(`${r[field]}`, r), new Map());
-      return orderValues.map(value => map.get(`${value}`)).filter(value => value);
+      return orderValues.map((value) => map.get(`${value}`)).filter((value) => value);
     }
     return results;
   }
@@ -147,7 +147,7 @@ class Sort {
    */
   set collation(options) {
     const defaults = { locale: 'en_US' };
-    this.opts.collation = assign({}, defaults, options);
+    this.opts.collation = { ...defaults, ...options };
   }
 
   /**

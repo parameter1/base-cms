@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-sitemaps",
-  "version": "3.19.1",
+  "version": "4.0.2",
   "description": "The BaseCMS Sitemaps service",
   "main": "src/index.js",
   "author": "Josh Worden <josh@parameter1.com>",
@@ -8,23 +8,24 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .js --max-warnings 5 ./",
     "test": "yarn lint"
   },
   "dependencies": {
-    "@godaddy/terminus": "^4.9.0",
-    "@parameter1/base-cms-env": "^3.0.0",
-    "@parameter1/base-cms-express-apollo": "^3.0.0",
-    "@parameter1/base-cms-html": "^3.0.0",
-    "@parameter1/base-cms-tenant-context": "^3.0.0",
-    "@parameter1/base-cms-utils": "^3.0.0",
-    "@parameter1/base-cms-web-common": "^3.3.1",
-    "express": "^4.17.1",
+    "@godaddy/terminus": "^4.11.2",
+    "@parameter1/base-cms-env": "^4.0.2",
+    "@parameter1/base-cms-express-apollo": "^4.0.2",
+    "@parameter1/base-cms-html": "^4.0.2",
+    "@parameter1/base-cms-tenant-context": "^4.0.2",
+    "@parameter1/base-cms-utils": "^4.0.2",
+    "@parameter1/base-cms-web-common": "^4.0.2",
+    "express": "^4.18.2",
     "graphql": "^14.7.0",
-    "graphql-tag": "^2.12.5",
+    "graphql-tag": "^2.12.6",
     "helmet": "^3.23.3",
-    "http-errors": "^1.8.0",
+    "http-errors": "^1.8.1",
     "moment": "^2.29.1",
-    "newrelic": "^6.14.0"
+    "newrelic": "^9.10.1"
   }
 }

@@ -18,10 +18,22 @@ x-env-mongo: &env-mongo
 x-env-elastic: &env-elastic
   ELASTICSEARCH_URL: ${ELASTICSEARCH_URL-http://elasticsearch:9200}
 
+x-env-tauron: &env-tauron
+  GRAPHQL_URI: ${GRAPHQL_URI-https://graphql.tauron.base.parameter1.com}
+  OEMBED_URI: ${OEMBED_URI-https://oembed.tauron.base.parameter1.com}
+  RSS_URI: ${RSS_URI-https://rss.tauron.base.parameter1.com}
+  SITEMAPS_URI: ${SITEMAPS_URI-https://sitemaps.tauron.base.parameter1.com}
+
+x-env-virgon: &env-virgon
+  GRAPHQL_URI: ${GRAPHQL_URI-https://graphql.virgon.base.parameter1.com}
+  OEMBED_URI: ${OEMBED_URI-https://oembed.virgon.base.parameter1.com}
+  RSS_URI: ${RSS_URI-https://rss.virgon.base.parameter1.com}
+  SITEMAPS_URI: ${SITEMAPS_URI-https://sitemaps.virgon.base.parameter1.com}
+
 x-node-defaults: &node
   tty: true
   init: true
-  image: node:10.24
+  image: node:14.21
   entrypoint: ["node"]
   working_dir: /base-cms
   volumes:
@@ -324,12 +336,12 @@ services:
       - "51270:80"
 
   example-website:
-    <<: *node
+    <<: [*node]
     working_dir: /base-cms/services/example-website
     entrypoint: ["yarn"]
     command: ["dev"]
     environment:
-      <<: *env
+      <<: [*env, *env-tauron]
       PORT: 80
       EXPOSED_PORT: 51269
       LIVERELOAD_PORT: 61269
@@ -339,11 +351,6 @@ services:
 
       # Debug logging
       DEBUG: ${DEBUG-defer,p1events}
-
-      GRAPHQL_URI: ${GRAPHQL_URI-http://graphql-server-tauron}
-      OEMBED_URI: ${OEMBED_URI-https://oembed}
-      RSS_URI: ${RSS_URI-http://rss-tauron}
-      SITEMAPS_URI: ${SITEMAPS_URI-http://sitemaps-tauron}
 
       IDENTITYX_GRAPHQL_URI: ${EXAMPLE_IDENTITYX_GRAPHQL_URI-}
       IDENTITYX_APP_ID: ${EXAMPLE_IDENTITYX_APP_ID-5d1b86070ce467bff670a052}
@@ -367,11 +374,6 @@ services:
       AUTH0_BASEURL: ${EXAMPLE_AUTH0_BASEURL-http://www-p1-sandbox.dev.parameter1.com:51269}
 
     hostname: www-p1-sandbox.dev.parameter1.com
-    depends_on:
-      - graphql-server-tauron
-      - oembed
-      - rss-tauron
-      - sitemaps-tauron
     ports:
       - "51269:80"
       - "61269:61269"

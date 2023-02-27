@@ -43,7 +43,7 @@ export default {
     fields() {
       return [
         ...this.standardFields,
-        ...this.submissionFieldIds.filter(f => f.id).map(f => ({ name: f.name, radix: `submission:answers.${f.id}` })),
+        ...this.submissionFieldIds.filter((f) => f.id).map((f) => ({ name: f.name, radix: `submission:answers.${f.id}` })),
       ];
     },
   },

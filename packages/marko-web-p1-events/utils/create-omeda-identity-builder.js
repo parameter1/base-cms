@@ -1,4 +1,4 @@
-module.exports = brandKey => `
+module.exports = (brandKey) => `
   function cleanOlyticsId(value) {
     if (!value) return null;
     var cleaned = value.replace(/"/g, '');

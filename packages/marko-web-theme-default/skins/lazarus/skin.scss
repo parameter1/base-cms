@@ -117,7 +117,7 @@ $theme-item-description-line-height: get-line-height($theme-item-description-fon
 $theme-item-description-line-height-sm: $theme-item-description-line-height !default;
 $theme-item-description-color: #3b3b3b !default;
 
-$marko-web-page-wrapper-padding: $grid-gutter-width / 2 !default;
+$marko-web-page-wrapper-padding: $grid-gutter-width * 0.5 !default;
 $marko-web-page-wrapper-section-margin: 1.25rem !default;
 
 // Published Date

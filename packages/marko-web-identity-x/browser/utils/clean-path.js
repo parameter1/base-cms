@@ -1,1 +1,1 @@
-export default value => value.replace(/^\/+/, '');
+export default (value) => value.replace(/^\/+/, '');

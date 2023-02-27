@@ -48,7 +48,7 @@ export default {
       const elementName = 'leaders-content-deck__item';
       return [
         elementName,
-        ...this.itemModifiers.map(mod => `${elementName}--${mod}`),
+        ...this.itemModifiers.map((mod) => `${elementName}--${mod}`),
       ];
     },
   },

@@ -11,7 +11,7 @@ const { isFunction: isFn } = require('@parameter1/base-cms-utils');
 module.exports = async (service, name, params = {}) => {
   const { error } = console;
   const onError = service.config.get('onHookError');
-  const onHookError = isFn(onError) ? onError : e => error(e);
+  const onHookError = isFn(onError) ? onError : (e) => error(e);
   const promises = { wait: [], skip: [] };
   getAsArray(service, `config.hooks.${name}`).forEach(({ fn, shouldAwait }) => {
     const key = shouldAwait ? 'wait' : 'skip';

@@ -27,7 +27,7 @@ const cleanText = (value, shouldParse) => {
   // Remove embeds and HTML.
   return stripHtml(trimmed.replace(/%{\[\s.*?\s\]}%/gi, ''));
 };
-const getWords = value => value.split(' ').filter(v => v);
+const getWords = (value) => value.split(' ').filter((v) => v);
 
 const buildTeaserFrom = (value) => {
   const words = getWords(value);
@@ -85,7 +85,7 @@ const run = async () => {
       teaser,
       body,
     };
-  }).filter(({ teaserFallback }) => teaserFallback).map(doc => ({
+  }).filter(({ teaserFallback }) => teaserFallback).map((doc) => ({
     updateOne: {
       filter: { _id: doc._id },
       update: { $set: { teaserFallback: doc.teaserFallback } },
@@ -98,4 +98,4 @@ const run = async () => {
   await basedb.close();
 };
 
-run().catch(e => setImmediate(() => { throw e; }));
+run().catch((e) => setImmediate(() => { throw e; }));

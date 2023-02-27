@@ -2,7 +2,7 @@
   <div class="leaders-video-card" :data-video-id="videoId">
     <div v-if="imageSrc" class="leaders-video-card__image">
       <common-link :href="href" target="_blank" @click="emitClick('Card Image', ...arguments)">
-        <img :src="imageSrc">
+        <img :src="imageSrc" alt="">
       </common-link>
     </div>
     <div class="leaders-video-card__title">

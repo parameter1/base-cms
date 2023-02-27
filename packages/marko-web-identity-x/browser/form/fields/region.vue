@@ -82,7 +82,7 @@ export default {
     },
     countryRegions() {
       if (!this.hasValidCountryCode) return [];
-      return this.regions.filter(region => region.country.id === this.countryCode);
+      return this.regions.filter((region) => region.country.id === this.countryCode);
     },
   },
   created() {

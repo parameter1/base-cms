@@ -16,7 +16,7 @@ export default {
     number: {
       type: Number,
       default: 1,
-      validator: n => n >= 1 && n <= 4,
+      validator: (n) => n >= 1 && n <= 4,
     },
     sections: {
       type: Array,

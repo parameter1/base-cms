@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-github-release-notes",
-  "version": "3.0.0",
+  "version": "4.1.0",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/github-release-notes",
   "license": "MIT",
@@ -9,12 +9,13 @@
     "website-release-notes": "bin/release.js"
   },
   "scripts": {
+    "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .js --max-warnings 5 --ignore-path ../../.eslintignore ./",
     "test": "yarn lint"
   },
   "dependencies": {
     "@octokit/rest": "^16.43.2",
-    "@parameter1/base-cms-env": "^3.0.0",
+    "@parameter1/base-cms-env": "^4.0.2",
     "numeral": "^2.0.6"
   },
   "publishConfig": {

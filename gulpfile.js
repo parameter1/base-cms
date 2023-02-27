@@ -1,11 +1,4 @@
-const {
-  task,
-  watch,
-  src,
-  parallel,
-} = require('gulp');
-const eslint = require('gulp-eslint');
-const cache = require('gulp-cached');
+const { task, watch } = require('gulp');
 const { spawn } = require('child_process');
 
 const { log } = console;
@@ -15,7 +8,6 @@ const { log } = console;
 module.exports = ({
   entry,
   watchPaths,
-  lintPaths,
 } = {}) => {
   let node;
 
@@ -30,16 +22,11 @@ module.exports = ({
     });
   };
 
-  const lint = () => src(lintPaths)
-    .pipe(cache('lint'))
-    .pipe(eslint())
-    .pipe(eslint.format());
-
   task('default', () => {
     watch(
       watchPaths,
       { queue: false, ignoreInitial: false },
-      parallel([serve, lint]),
+      serve,
     );
   });
 };

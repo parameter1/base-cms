@@ -4,7 +4,8 @@
   },
   "<marko-web-deferred-script-loader-load>": {
     "template": "./load.marko",
-    "@src": "string"
+    "@src": "string",
+    "@preload-only": "boolean"
   },
   "<marko-web-deferred-script-loader-call>": {
     "template": "./call.marko",
@@ -34,6 +35,7 @@
       "type": "string",
       "required": true
     },
+    "@esm": "boolean",
     "@delay-ms": "number",
     "@on": "string",
     "@target-tag": "string",

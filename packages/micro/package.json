@@ -1,25 +1,26 @@
 {
   "name": "@parameter1/base-cms-micro",
-  "version": "3.0.0",
+  "version": "4.1.0",
   "description": "Service registration and client library for Micro(services).",
   "main": "src/index.js",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/micro",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
   "scripts": {
+    "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .js --max-warnings 5 ./",
     "test": "yarn lint"
   },
   "devDependencies": {
-    "micro": "^9.3.4"
+    "micro": "^9.4.1"
   },
   "peerDependencies": {
     "micro": "^9.3.0"
   },
   "dependencies": {
-    "@godaddy/terminus": "^4.9.0",
-    "@parameter1/base-cms-object-path": "^3.0.0",
-    "node-fetch": "^2.6.5"
+    "@godaddy/terminus": "^4.11.2",
+    "@parameter1/base-cms-object-path": "^4.0.2",
+    "node-fetch": "^2.6.9"
   },
   "publishConfig": {
     "access": "public"

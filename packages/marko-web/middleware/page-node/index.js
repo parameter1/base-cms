@@ -2,7 +2,7 @@ const { isFunction: isFn } = require('@parameter1/base-cms-utils');
 const { getAsObject } = require('@parameter1/base-cms-object-path');
 const ResolvedNode = require('./resolved');
 
-const createNode = data => new ResolvedNode(data);
+const createNode = (data) => new ResolvedNode(data);
 
 class PageNode {
   constructor(apolloClient, {

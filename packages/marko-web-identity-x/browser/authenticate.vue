@@ -48,7 +48,7 @@ import AuthenticationError from './errors/authentication';
 import FeatureError from './errors/feature';
 import EventEmitter from './mixins/global-event-emitter';
 
-const isEmpty = v => v == null || v === '';
+const isEmpty = (v) => v == null || v === '';
 
 export default {
   /**
@@ -217,7 +217,7 @@ export default {
 
         this.activeUser = data.user;
         this.mustReVerifyProfile = data.user.mustReVerifyProfile;
-        this.isProfileComplete = this.requiredFields.every(key => !isEmpty(this.activeUser[key]));
+        this.isProfileComplete = this.requiredFields.every((key) => !isEmpty(this.activeUser[key]));
         this.requiresCustomFieldAnswers = this.activeUser.customSelectFieldAnswers
           .some(({ hasAnswered, field }) => field.required && !hasAnswered);
 

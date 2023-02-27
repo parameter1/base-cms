@@ -1,17 +1,18 @@
 {
   "name": "@parameter1/base-cms-object-path",
-  "version": "3.0.0",
+  "version": "4.0.2",
   "description": "Utility functions for accessing JavaScript objects by path.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/object-path",
   "license": "MIT",
   "scripts": {
+    "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .js --max-warnings 5 ./",
     "test": "yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-utils": "^3.0.0",
+    "@parameter1/base-cms-utils": "^4.0.2",
     "object-path": "^0.11.8"
   },
   "publishConfig": {

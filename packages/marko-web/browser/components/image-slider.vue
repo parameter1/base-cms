@@ -64,7 +64,7 @@ export default {
       const { blockName } = this;
       return [
         blockName,
-        ...this.modifiers.map(mod => `${blockName}--${mod}`),
+        ...this.modifiers.map((mod) => `${blockName}--${mod}`),
       ];
     },
   },

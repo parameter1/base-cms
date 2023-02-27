@@ -1,5 +1,5 @@
 language: node_js
-node_js: "10.24"
+node_js: "14.21"
 cache: yarn
 
 _production-job: &production-job
@@ -9,6 +9,14 @@ _production-job: &production-job
   install: skip
   env:
     - "ENVIRONMENT=production RANCHER_CLUSTERID=c-7p6pt"
+
+_staging-job: &staging-job
+  stage: staging
+  name: SERVICE_NAME
+  script: scripts/deploy.js SERVICE_NAME
+  install: skip
+  env:
+    - "ENVIRONMENT=staging RANCHER_CLUSTERID=c-gpjnt"
 
 stages:
   - name: test
@@ -36,10 +44,10 @@ jobs:
       stage: production-started
       name: Deployment Started
       script: npx @parameter1/base-cms-website-deployment-tool notify-started
-    # - <<: *staging-job
-    #   stage: staging-started
-    #   name: Deployment Started
-    #   script: npx @parameter1/base-cms-website-deployment-tool notify-started
+    - <<: *staging-job
+      stage: staging-started
+      name: Deployment Started
+      script: npx @parameter1/base-cms-website-deployment-tool notify-started
 
     #############################
     # vvv ADD SERVICES HERE vvv #
@@ -48,23 +56,23 @@ jobs:
     - <<: *production-job
       name: GraphQL Server
       script: scripts/deploy.js graphql-server
-    # - <<: *staging-job
-    #   name: GraphQL Server
-    #   script: scripts/deploy.js graphql-server
+    - <<: *staging-job
+      name: GraphQL Server
+      script: scripts/deploy.js graphql-server
 
     - <<: *production-job
       name: Sitemaps
       script: scripts/deploy.js sitemaps
-    # - <<: *staging-job
-    #   name: Sitemaps
-    #   script: scripts/deploy.js sitemaps
+    - <<: *staging-job
+      name: Sitemaps
+      script: scripts/deploy.js sitemaps
 
     - <<: *production-job
       name: RSS
       script: scripts/deploy.js rss
-    # - <<: *staging-job
-    #   name: RSS
-    #   script: scripts/deploy.js rss
+    - <<: *staging-job
+      name: RSS
+      script: scripts/deploy.js rss
 
     - <<: *production-job
       name: Hooks
@@ -76,16 +84,16 @@ jobs:
     - <<: *production-job
       name: oEmbed
       script: scripts/deploy.js oembed
-    # - <<: *staging-job
-    #   name: oEmbed
-    #   script: scripts/deploy.js oembed
+    - <<: *staging-job
+      name: oEmbed
+      script: scripts/deploy.js oembed
 
     - <<: *production-job
       name: Google Data API
       script: scripts/deploy.js google-data-api
-    # - <<: *staging-job
-    #   name: Google Data API
-    #   script: scripts/deploy.js google-data-api
+    - <<: *staging-job
+      name: Google Data API
+      script: scripts/deploy.js google-data-api
 
     - <<: *production-job
       name: Omail Link Processor
@@ -109,7 +117,7 @@ jobs:
       stage: production-finished
       name: Deployment Finished
       script: npx @parameter1/base-cms-website-deployment-tool notify-finished
-    # - <<: *staging-job
-    #   stage: staging-finished
-    #   name: Deployment Finished
-    #   script: npx @parameter1/base-cms-website-deployment-tool notify-finished
+    - <<: *staging-job
+      stage: staging-finished
+      name: Deployment Finished
+      script: npx @parameter1/base-cms-website-deployment-tool notify-finished

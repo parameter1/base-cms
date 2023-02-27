@@ -22,7 +22,6 @@ const setFor = async ({ url, params, data } = {}) => {
   await redis.set(key, JSON.stringify(cacheValue), 'EX', ttl);
 };
 
-
 module.exports = {
   createCacheKey,
   getFor,

@@ -9,7 +9,7 @@ const defaults = {
 
 module.exports = async (body, { imageHost, imageAttrs, basedb }) => {
   if (!body) return [];
-  const imageTags = extractEmbeddedTags(body).filter(tag => tag.type === 'image');
+  const imageTags = extractEmbeddedTags(body).filter((tag) => tag.type === 'image');
   return Promise.all(imageTags.map(async (tag) => {
     const image = await basedb.findById('platform.Asset', tag.id, {
       projection: {

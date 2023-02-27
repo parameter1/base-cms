@@ -1,18 +1,19 @@
 {
   "name": "@parameter1/base-cms-image",
-  "version": "3.13.5",
+  "version": "4.0.2",
   "description": "Common image utilities for BaseCMS projects.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/image",
   "license": "MIT",
   "scripts": {
+    "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .js --max-warnings 5 ./",
     "test": "yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-html": "^3.0.0",
-    "@parameter1/base-cms-inflector": "^3.0.0"
+    "@parameter1/base-cms-html": "^4.0.2",
+    "@parameter1/base-cms-inflector": "^4.0.2"
   },
   "publishConfig": {
     "access": "public"

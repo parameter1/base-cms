@@ -1,20 +1,21 @@
 {
   "name": "@parameter1/base-cms-embedded-media",
-  "version": "3.13.5",
+  "version": "4.0.2",
   "description": "BaseCMS embedded media parsing.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/embedded-media",
   "license": "MIT",
   "scripts": {
+    "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .js --max-warnings 5 ./",
     "test": "yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-html": "^3.0.0",
-    "@parameter1/base-cms-image": "^3.13.5",
-    "@parameter1/base-cms-inflector": "^3.0.0",
-    "cheerio": "^1.0.0-rc.10",
+    "@parameter1/base-cms-html": "^4.0.2",
+    "@parameter1/base-cms-image": "^4.0.2",
+    "@parameter1/base-cms-inflector": "^4.0.2",
+    "cheerio": "^1.0.0-rc.12",
     "escape-string-regexp": "^1.0.5"
   },
   "publishConfig": {

@@ -15,9 +15,8 @@ module.exports = async ({ html, urls = [], exHost }) => {
     return url;
   }));
 
-
   let replaced = html;
-  appendedUrls.filter(url => url.adData).forEach((url) => {
+  appendedUrls.filter((url) => url.adData).forEach((url) => {
     const { element, adData } = url;
     const dpm = `<!--DPM: ln="${adData.ad.name}" lc="Advertising" lcv="${adData.ad.advertiserName}" -->`;
     replaced = replaced.replace(element, `${element}${dpm}`);

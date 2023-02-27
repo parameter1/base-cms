@@ -1,4 +1,6 @@
-@import "../../../../node_modules/bootstrap/scss/mixins";
+@use "sass:math";
+
+@import "bootstrap/scss/mixins";
 
 @mixin theme-apply-responsive-fonts(
   $font-size: $font-size-sm,
@@ -213,7 +215,7 @@
     display: block;
     content: "";
     @if $ratio-y and $ratio-x {
-      padding-top: percentage($ratio-y / $ratio-x);
+      padding-top: percentage(math.div($ratio-y, $ratio-x));
     }
   }
 }

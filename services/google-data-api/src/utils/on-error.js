@@ -1,3 +1,3 @@
 const newrelic = require('../newrelic');
 
-module.exports = e => newrelic.noticeError(e);
+module.exports = (e) => newrelic.noticeError(e);

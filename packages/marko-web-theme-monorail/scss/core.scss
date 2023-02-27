@@ -2,14 +2,14 @@
 @import "variables";
 
 @import "./theme-default/theme";
-@import "../../node_modules/bootstrap/scss/spinners";
+@import "bootstrap/scss/spinners";
 
-@import "../../node_modules/@parameter1/base-cms-marko-web-social-sharing/scss/buttons";
-@import "../../node_modules/bootstrap/scss/input-group";
-@import "../../node_modules/@parameter1/base-cms-marko-web-html-sitemap/scss/index";
+@import "@parameter1/base-cms-marko-web-social-sharing/scss/buttons";
+@import "bootstrap/scss/input-group";
+@import "@parameter1/base-cms-marko-web-html-sitemap/scss/index";
 
 // Default reveal ad css
-@import "../../node_modules/@parameter1/base-cms-marko-web-reveal-ad/scss/reveal-ad";
+@import "@parameter1/base-cms-marko-web-reveal-ad/scss/reveal-ad";
 
 // skin mixins
 @import "./mixins";

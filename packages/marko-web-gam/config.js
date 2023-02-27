@@ -66,7 +66,7 @@ class GAMConfiguration {
   } = {}) {
     // Retrieve the default and "alias-traversed" adunits.
     const defaultAdUnit = getAsObject(this.adUnits, `${this.defaultAlias}.${name}`);
-    const foundAdUnit = asArray(aliases).map(alias => get(this.adUnits, `${alias}.${name}`)).filter(v => v)[0];
+    const foundAdUnit = asArray(aliases).map((alias) => get(this.adUnits, `${alias}.${name}`)).filter((v) => v)[0];
 
     // Ensure ad unit is duplicated so property re-assignment doesn't "stick."
     // This allows sizes and size mappings to be changed on request.

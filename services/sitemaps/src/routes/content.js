@@ -34,7 +34,7 @@ const createUrl = ({
   if (lastmod) parts.push(`<lastmod>${moment(lastmod).toISOString()}</lastmod>`);
   if (changefreq) parts.push(`<changefreq>${changefreq}</changefreq>`);
   if (priority) parts.push(`<priority>${priority}</priority>`);
-  if (images && images.length) parts.push(...images.map(image => createImage(image)));
+  if (images && images.length) parts.push(...images.map((image) => createImage(image)));
   return `<loc>${loc}</loc>${parts.join('')}`;
 };
 
@@ -61,7 +61,7 @@ module.exports = asyncRoute(async (req, res) => {
     .setAttr('xmlns:image', 'http://www.google.com/schemas/sitemap-image/1.1')
     .setAttr('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance')
     .setAttr('xsi:schemaLocation', 'http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd')
-    .setUrls(contentSitemapUrls.map(url => createUrl(url)));
+    .setUrls(contentSitemapUrls.map((url) => createUrl(url)));
 
   res.end(urlset.build());
 });

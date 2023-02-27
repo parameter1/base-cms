@@ -22,7 +22,7 @@ class CropRectangle {
   }
 
   toString() {
-    return ['x', 'y', 'width', 'height'].map(key => this[key]).join(',');
+    return ['x', 'y', 'width', 'height'].map((key) => this[key]).join(',');
   }
 }
 
@@ -45,7 +45,7 @@ module.exports = ({ width, height, cropDimensions }) => {
   }
 
   const coords = ['x1', 'x2', 'y1', 'y2'];
-  if (coords.some(key => cropDimensions[key] == null || Number.isNaN(cropDimensions[key]))) {
+  if (coords.some((key) => cropDimensions[key] == null || Number.isNaN(cropDimensions[key]))) {
     return new CropRectangle({
       x: 0,
       y: 0,
@@ -66,7 +66,6 @@ module.exports = ({ width, height, cropDimensions }) => {
     const v = Math.round(cropDimensions[key] * scale);
     return { ...o, [key]: v };
   }, {});
-
 
   return new CropRectangle({
     x: x1,

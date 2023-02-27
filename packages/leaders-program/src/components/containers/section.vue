@@ -60,7 +60,6 @@ import query from '../../graphql/queries/content-for-section';
 import getEdgeNodes from '../../utils/get-edge-nodes';
 
 export default {
-  inject: ['$graphql'],
   components: {
     PlusIcon,
     MinusIcon,
@@ -71,6 +70,8 @@ export default {
     Card,
     LinkContents,
   },
+
+  inject: ['$graphql'],
 
   props: {
     sectionId: {
@@ -116,7 +117,7 @@ export default {
     iconStyle: {
       type: String,
       default: 'plus-minus',
-      validator: v => ['plus-minus', 'chevron'].includes(v),
+      validator: (v) => ['plus-minus', 'chevron'].includes(v),
     },
   },
 
@@ -189,7 +190,7 @@ export default {
       }, {
         sectionId: this.sectionId,
         sectionName: this.title,
-        items: items.map(item => ({ id: item.id, name: item.name })),
+        items: items.map((item) => ({ id: item.id, name: item.name })),
       });
     },
 

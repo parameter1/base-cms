@@ -14,7 +14,7 @@ module.exports = async (issue, ctx) => {
     return isFn(fn) ? fn(issue, ctx) : issue[key];
   }));
 
-  const path = cleanPath(values.filter(v => v).map(v => String(v).trim()).join('/'));
+  const path = cleanPath(values.filter((v) => v).map((v) => String(v).trim()).join('/'));
   if (!path) return '/';
   if (prefix) return `/${cleanPath(prefix)}/${path}`;
   return `/${path}`;

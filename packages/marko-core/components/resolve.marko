@@ -13,15 +13,18 @@ $ const { isArray } = Array;
       <${input.onError} err=err />
     </if>
     <else>
-      <pre>An unexpected error occurred: ${err.message}</pre>
+      <pre data-marko-error=err.message>
+        An unexpected error occurred: ${err.message}
+      </pre>
       <if(isDev)>
         <pre>${err.stack}</pre>
-        $ console.error(err);
       </if>
       <if(err.networkError && err.networkError.result)>
         $ const { errors } = err.networkError.result;
         <if(isArray(errors))>
-          <pre>${JSON.stringify(errors, null, 2)}</pre>
+          <pre data-marko-error=JSON.stringify(errors)>
+            ${JSON.stringify(errors, null, 2)}
+          </pre>
         </if>
       </if>
     </else>

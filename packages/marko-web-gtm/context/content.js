@@ -7,7 +7,7 @@ module.exports = ({ obj, req }) => {
   const company = getAsObject(content, 'company');
   const createdBy = getAsObject(content, 'createdBy');
   const section = getAsObject(content, 'primarySection');
-  const hierarchy = getAsArray(section, 'hierarchy').map(s => ({
+  const hierarchy = getAsArray(section, 'hierarchy').map((s) => ({
     id: s.id,
     name: s.name,
     alias: s.alias,

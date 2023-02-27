@@ -411,7 +411,7 @@ export default {
       const { regionalConsentPolicies, countryCode } = this;
       if (!regionalConsentPolicies.length || !countryCode) return [];
       return regionalConsentPolicies.filter((policy) => {
-        const countryCodes = policy.countries.map(country => country.id);
+        const countryCodes = policy.countries.map((country) => country.id);
         return countryCodes.includes(countryCode);
       });
     },
@@ -551,7 +551,7 @@ export default {
      *
      */
     getRegionalPolicyAnswer(policyId) {
-      return this.user.regionalConsentAnswers.find(a => a.id === policyId);
+      return this.user.regionalConsentAnswers.find((a) => a.id === policyId);
     },
 
     getRegionalPolicyAnswerValue(policyId) {
@@ -570,7 +570,7 @@ export default {
     },
 
     onCustomBooleanChange(id) {
-      const objIndex = this.customBooleanFieldAnswers.findIndex((obj => obj.id === id));
+      const objIndex = this.customBooleanFieldAnswers.findIndex(((obj) => obj.id === id));
       const answer = !this.customBooleanFieldAnswers[objIndex].answer;
       this.customBooleanFieldAnswers[objIndex].answer = answer;
 
@@ -580,7 +580,7 @@ export default {
     onCustomSelectChange(answers, $event) {
       const ids = Array.isArray($event) ? [...$event] : [...($event ? [$event] : [])];
       answers.splice(0);
-      if (ids.length) answers.push(...ids.map(id => ({ id })));
+      if (ids.length) answers.push(...ids.map((id) => ({ id })));
     },
 
     async handleReload() {

@@ -11,7 +11,7 @@ const buildInstagramElement = ({
     ...(lazy && { lazy: true }),
     ...(width && { width }),
   };
-  const data = Object.keys(params).map(key => `${key}="${params[key]}"`);
+  const data = Object.keys(params).map((key) => `${key}="${params[key]}"`);
   if (data.lazy) {
     data.loading = 'lazy';
   }

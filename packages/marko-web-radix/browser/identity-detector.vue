@@ -52,7 +52,7 @@ export default {
       let ident;
       for (let i = 0; i < pairs.length; i += 1) {
         const pair = pairs[i];
-        const [key, value] = pair.split('=').map(v => this.decode(v));
+        const [key, value] = pair.split('=').map((v) => this.decode(v));
         if (key === `rdx.${this.identityKey}` && value) {
           ident = value;
         }

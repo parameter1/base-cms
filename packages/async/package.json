@@ -1,17 +1,18 @@
 {
   "name": "@parameter1/base-cms-async",
-  "version": "3.0.0",
+  "version": "4.4.0",
   "description": "Promise wrappers for the async library.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/async",
   "license": "MIT",
   "scripts": {
+    "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .js --max-warnings 5 ./",
     "test": "yarn lint"
   },
   "dependencies": {
-    "async": "^2.6.3"
+    "async": "^3.2.4"
   },
   "publishConfig": {
     "access": "public"

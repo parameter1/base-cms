@@ -1,6 +1,6 @@
 const { buildImgixUrl } = require('@parameter1/base-cms-image');
 
-const stringifyAttrs = attrs => Object.keys(attrs).reduce((arr, key) => {
+const stringifyAttrs = (attrs) => Object.keys(attrs).reduce((arr, key) => {
   const value = attrs[key];
   if (value) arr.push(`${key}="${value}"`);
   return arr;
@@ -44,7 +44,7 @@ module.exports = (tag, { config } = {}, { lazyloadImages } = {}) => {
       'data-srcset': lazyload ? maxSrcset : null,
       media: '(min-width: 576px)',
     },
-  ].map(source => `<source ${stringifyAttrs(source)}>`).join('');
+  ].map((source) => `<source ${stringifyAttrs(source)}>`).join('');
 
   const minSrc = buildImgixUrl(src, { w: minWidth });
   const minSrcset = `${buildImgixUrl(src, { w: minWidth, dpr: 2 })} 2x`;
@@ -59,7 +59,7 @@ module.exports = (tag, { config } = {}, { lazyloadImages } = {}) => {
     'data-image-id': tag.id,
     alt,
     width: (width && height) ? minWidth : null,
-    height: (height && height) ? Math.round(height / width * minWidth) : null,
+    height: (height && height) ? Math.round((height / width) * minWidth) : null,
   };
 
   const captionElement = caption ? `<span class="caption">${caption}</span>` : '';

@@ -73,7 +73,7 @@ module.exports = asyncRoute(async (req, res) => {
   };
 
   const answers = regionalConsentAnswers
-    .map(answer => ({ policyId: answer.id, given: answer.given }));
+    .map((answer) => ({ policyId: answer.id, given: answer.given }));
 
   if (answers.length) {
     await identityX.client.mutate({ mutation: consentAnswers, variables: { input: { answers } } });
@@ -81,7 +81,7 @@ module.exports = asyncRoute(async (req, res) => {
 
   if (customBooleanFieldAnswers.length) {
     // only update custom questions when there some :)
-    const customBooleanFieldsInput = customBooleanFieldAnswers.map(fieldAnswer => ({
+    const customBooleanFieldsInput = customBooleanFieldAnswers.map((fieldAnswer) => ({
       fieldId: fieldAnswer.field.id,
       // can either be true, false or null. convert null to false.
       // the form submit is effectively answers the question.
@@ -95,7 +95,7 @@ module.exports = asyncRoute(async (req, res) => {
 
   if (customSelectFieldAnswers.length) {
     // only update custom questions when there some :)
-    const customSelectFieldsInput = customSelectFieldAnswers.map(fieldAnswer => ({
+    const customSelectFieldsInput = customSelectFieldAnswers.map((fieldAnswer) => ({
       fieldId: fieldAnswer.field.id,
       optionIds: fieldAnswer.answers.map(({ id }) => id),
       writeInValues: fieldAnswer.answers.reduce((arr, { id, writeInValue }) => ([

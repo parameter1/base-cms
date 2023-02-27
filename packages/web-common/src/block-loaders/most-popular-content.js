@@ -19,7 +19,7 @@ module.exports = async (apolloClient, {
   const { data } = await apolloClient.query({ query, variables });
   if (!data || !data.mostPopularContent) return { nodes: [] };
   const nodes = data.mostPopularContent.edges
-    .map(edge => (edge && edge.node ? edge.node : null))
-    .filter(c => c);
+    .map((edge) => (edge && edge.node ? edge.node : null))
+    .filter((c) => c);
   return { nodes };
 };

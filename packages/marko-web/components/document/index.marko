@@ -13,26 +13,35 @@ $ const wrapper = getAsObject(input, "bodyWrapper");
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content=viewport>
-    <!-- @todo eventually determine if styles can be split -->
+
+    <marko-web-deferred-script-loader-init />
+
+    <for|src| of=config.sources()>
+      <marko-web-deferred-script-loader-register
+        name="marko-web-core"
+        src=src
+        esm=true
+        on="ready"
+        init="var w = window; w.markoCompQueue = w.markoCompQueue || []; var name = 'CMSBrowserComponents', methods = ['load', 'loadComponent'], queue = function(method) { return function() { w.markoCompQueue.push([method, arguments]) } }; w[name] = w[name] || {}; for (var i = 0; i < methods.length; i++) { var method = methods[i]; w[name][method] = w[name][method] || queue(method); }"
+        on-script-load="window.markoCompQueue.flush();"
+      />
+    </for>
+
+    <marko-web-deferred-script-loader-register
+      name="lazysizes"
+      src="/dist/js/lazysizes/v5.3.2.js"
+      on="ready"
+    />
+    <!-- add picturefill to old browsers -->
+    <script nomodule>
+      document.createElement("picture");
+    </script>
+    <script nomodule src="https://cdnjs.cloudflare.com/ajax/libs/picturefill/3.0.3/picturefill.min.js" async></script>
+
+    <!-- load styles -->
     <for|href| of=config.styles()>
       <link rel="stylesheet" href=href />
     </for>
-    <!-- create browser component queue -->
-    <script>
-      (function(w) {
-        w.markoCompQueue = w.markoCompQueue || [];
-        var name = 'CMSBrowserComponents', methods = ['load', 'loadComponent'], queue = function(method) { return function() { w.markoCompQueue.push([method, arguments]) } };
-        w[name] = w[name] || {};
-        for (var i = 0; i < methods.length; i++) { var method = methods[i]; w[name][method] = w[name][method] || queue(method); }
-      })(window);
-    </script>
-    <!-- load lazysizes -->
-    <script src="/dist/js/lazysizes/v5.3.2.js" async></script>
-    <!-- load picturefill -->
-    <script>
-      document.createElement( "picture" );
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/picturefill/3.0.3/picturefill.min.js" async></script>
 
     <${input.head} />
   </head>
@@ -44,15 +53,11 @@ $ const wrapper = getAsObject(input, "bodyWrapper");
         <marko-web-document-container ...input.container />
       </if>
       <${input.belowContainer} />
+      <!-- load dsl lib -->
+      <marko-web-deferred-script-loader-load />
       <live-reload />
       <${input.foot} />
     </body-wrapper>
     <${input.belowWrapper} />
-
-    <!-- load browser components lib -->
-    <for|src| of=config.sources()>
-      <script src=src></script>
-    </for>
-    <script>CMSBrowserComponents.init();</script>
   </body>
 </html>

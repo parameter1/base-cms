@@ -1,7 +1,14 @@
 <template>
   <div v-if="display" class="leaders__header">
     <div v-if="imgSrc" class="leaders__header-image">
-      <img :src="imgSrc" :alt="imgAlt">
+      <img
+        class="lazyload"
+        :src="imgSrc"
+        :srcset="`${imgSrc}&dpr=2 2x`"
+        :alt="imgAlt"
+        :width="imgWidth"
+        :height="imgHeight"
+      >
     </div>
     <div v-if="displayCallout" class="leaders__header-callout">
       <div class="leaders__callout-prefix">
@@ -28,6 +35,14 @@ export default {
     imgAlt: {
       type: String,
       default: null,
+    },
+    imgWidth: {
+      type: String,
+      default: '256',
+    },
+    imgHeight: {
+      type: String,
+      default: '90',
     },
     displayCallout: {
       type: Boolean,

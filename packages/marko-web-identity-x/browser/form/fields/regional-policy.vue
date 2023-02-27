@@ -10,6 +10,7 @@
         class="custom-control-input"
       >
       <form-label class="custom-control-label" :for="`policy-${id}`" :required="required">
+        <!-- eslint-disable-next-line -->
         <span v-html="message" />
       </form-label>
     </div>

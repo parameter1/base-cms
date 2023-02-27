@@ -22,9 +22,9 @@ import providerList from './providers';
 import ShareButton from './share-button.vue';
 
 export default {
-  inject: ['EventBus'],
 
   components: { ShareButton },
+  inject: ['EventBus'],
 
   props: {
     url: {
@@ -64,7 +64,7 @@ export default {
 
   computed: {
     filteredProviders() {
-      return this.providers.filter(key => providerList[key]);
+      return this.providers.filter((key) => providerList[key]);
     },
   },
 

@@ -3,7 +3,7 @@ const { extractEmbeddedTags } = require('@parameter1/base-cms-embedded-media');
 
 module.exports = async (body, { imageHost, basedb }) => {
   if (!body) return [];
-  const documentTags = extractEmbeddedTags(body).filter(tag => tag.type === 'document');
+  const documentTags = extractEmbeddedTags(body).filter((tag) => tag.type === 'document');
   return Promise.all(documentTags.map(async (tag) => {
     const document = await basedb.findById('platform.Asset', tag.id, {
       projection: {

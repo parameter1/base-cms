@@ -1,41 +1,53 @@
 #!/usr/bin/env node
-const program = require('yargs');
-const path = require('path');
-const compile = require('../src/compile');
 
-const { log } = console;
+/* eslint-disable global-require */
+const minimist = require('minimist');
+const { blue, gray, green } = require('chalk');
+const createLogger = require('../utils/create-logger');
 
-program
-  .usage('Usage: $0 <command> [options]')
-  .command({
-    command: 'compile [options]',
-    desc: 'Compile Marko templates in a given directory',
-    builder: yargs => yargs
-      .option('dir', {
-        alias: 'd',
-        describe: 'Load templates from a directory',
-        type: 'string',
-      })
-      .option('silent', {
-        alias: 's',
-        describe: 'Silently compile templates',
-        type: 'boolean',
-        default: false,
-      })
-      .demandOption(['dir']),
-    handler: async ({ dir, silent }) => {
-      const resolvedDir = path.resolve(dir);
-      log(`Compiling Marko templates in ${resolvedDir}...`);
-      try {
-        await compile({ dir: resolvedDir, silent });
-        log('Templates compiled successfully.');
-      } catch (e) {
-        log(e);
-        process.exit(1);
-      }
-    },
-  }).demandCommand(1, 'You need at least one command before moving on')
-  .help();
+const { isArray } = Array;
 
-const run = () => program.argv;
-run();
+const commands = new Set(['compile']);
+(async () => {
+  const argv = minimist(process.argv.slice(2));
+  const debug = !argv.silent;
+  const log = createLogger({ debug });
+
+  log('cli starting...');
+  const [command] = argv._;
+
+  const getArrayValuesFor = (key, def) => {
+    const value = argv[key];
+    let values = [];
+    if (isArray(value)) {
+      values = value;
+    } else if (value) {
+      values = [value];
+    }
+    if (def && !values.length) return def;
+    return values;
+  };
+
+  const cwd = argv.cwd || process.cwd();
+
+  if (!command) throw new Error('A CLI command must be provided.');
+
+  log(`running '${blue(command)}' command in '${gray(cwd)}'`);
+
+  if (!commands.has(command)) throw new Error(`The command ${command} was not found.`);
+
+  if (command === 'compile') {
+    const compile = require('../index');
+    const opts = {
+      cwd,
+      dirs: getArrayValuesFor('dir'),
+      clean: argv.clean == null ? true : argv.clean,
+      debug,
+    };
+    log(`beginning '${blue('compile')}' with options`, opts);
+    await compile(opts);
+    log(`command '${blue(command)}' ${green('complete')}`);
+    return process.exit(0);
+  }
+  return null;
+})().catch((e) => setImmediate(() => { throw e; }));

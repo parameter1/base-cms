@@ -25,7 +25,7 @@ export default {
     classNames() {
       const elementName = `pswp__${this.name}`;
       const classNames = [elementName];
-      this.modifiers.forEach(mod => classNames.push(`${elementName}--${mod}`));
+      this.modifiers.forEach((mod) => classNames.push(`${elementName}--${mod}`));
       return classNames;
     },
   },

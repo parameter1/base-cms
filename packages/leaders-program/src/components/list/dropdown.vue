@@ -22,12 +22,12 @@ export default {
     direction: {
       type: String,
       default: 'horizontal',
-      validator: v => ['horizontal', 'vertical'].includes(v),
+      validator: (v) => ['horizontal', 'vertical'].includes(v),
     },
     open: {
       type: String,
       default: 'auto',
-      validator: v => ['above', 'below', 'left', 'right', 'auto'].includes(v),
+      validator: (v) => ['above', 'below', 'left', 'right', 'auto'].includes(v),
     },
   },
 

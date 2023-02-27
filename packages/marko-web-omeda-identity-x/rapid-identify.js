@@ -68,14 +68,14 @@ module.exports = async ({
     const { field, hasAnswered } = select;
     if (!field.active || !field.externalId || !hasAnswered) return false;
     return isOmedaDemographicId({ externalId: field.externalId, brandKey })
-      && select.answers.some(answer => answer.externalIdentifier);
+      && select.answers.some((answer) => answer.externalIdentifier);
   }).map((select) => {
     const { field } = select;
     const { identifier } = field.externalId;
     const writeInValue = select.answers.reduce((v, answer) => (v || answer.writeInValue), null);
     return {
       id: parseInt(identifier.value, 10),
-      values: select.answers.map(answer => answer.externalIdentifier).filter(v => v),
+      values: select.answers.map((answer) => answer.externalIdentifier).filter((v) => v),
       ...(writeInValue && { writeInValue }),
     };
   });
@@ -107,7 +107,7 @@ module.exports = async ({
     appendDemographics.forEach(({ demographicId, valueIds, writeInValue }) => {
       demographics.push({
         id: demographicId,
-        values: valueIds.map(v => `${v}`),
+        values: valueIds.map((v) => `${v}`),
         ...(writeInValue && { writeInValue }),
       });
     });
@@ -120,7 +120,7 @@ module.exports = async ({
         id: behaviorId,
         // Only pass attributes through if they are present
         ...(attributes && attributes.length && {
-          attributes: attributes.map(attr => ({
+          attributes: attributes.map((attr) => ({
             id: attr.id,
             ...(attr.valueId && { valueId: attr.valueId }),
             ...(attr.value && { value: attr.value }),
@@ -135,7 +135,7 @@ module.exports = async ({
 
   // Append promo codes, if specified
   if (appendPromoCodes && appendPromoCodes.length) {
-    appendPromoCodes.forEach(code => promoCodes.push(code.promoCode));
+    appendPromoCodes.forEach((code) => promoCodes.push(code.promoCode));
   }
 
   const { id, encryptedCustomerId } = await omedaRapidIdentify({

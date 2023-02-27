@@ -1,7 +1,7 @@
 const { isFunction: isFn, cleanPath } = require('@parameter1/base-cms-utils');
 
 const pathResolvers = {
-  alias: section => section.alias,
+  alias: (section) => section.alias,
 };
 
 module.exports = async (section, ctx) => {
@@ -14,7 +14,7 @@ module.exports = async (section, ctx) => {
     return isFn(fn) ? fn(section, ctx) : section[key];
   }));
 
-  const path = cleanPath(values.filter(v => v).map(v => String(v).trim()).join('/'));
+  const path = cleanPath(values.filter((v) => v).map((v) => String(v).trim()).join('/'));
   if (!path || path === 'home') return '/';
   if (prefix) return `/${cleanPath(prefix)}/${path}`;
   return `/${path}`;

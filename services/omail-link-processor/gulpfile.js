@@ -1,11 +1,4 @@
-const {
-  task,
-  watch,
-  src,
-  parallel,
-} = require('gulp');
-const eslint = require('gulp-eslint');
-const cache = require('gulp-cached');
+const { task, watch } = require('gulp');
 const { spawn } = require('child_process');
 
 const { log } = console;
@@ -23,15 +16,10 @@ const serve = async () => {
   });
 };
 
-const lint = () => src('src/**/*.js')
-  .pipe(cache('email-proxy-lint'))
-  .pipe(eslint())
-  .pipe(eslint.format());
-
 task('default', () => {
   watch(
     ['src/**/*.js'],
     { queue: false, ignoreInitial: false },
-    parallel([serve, lint]),
+    serve,
   );
 });

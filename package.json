@@ -6,36 +6,35 @@
   "repository": "https://github.com/parameter1/base-cms.git",
   "workspaces": [
     "packages/*",
+    "packages/marko-web-modern/*",
     "services/*"
   ],
   "scripts": {
     "build": "lerna run build",
     "test": "lerna run test",
     "lint": "lerna run lint",
+    "lint:fix": "lerna run lint:fix",
     "compile": "lerna run compile"
   },
   "devDependencies": {
     "@2fd/graphdoc": "^2.4.0",
+    "@parameter1/base-cms-eslint": "^4.0.0",
+    "@parameter1/base-cms-marko-compiler": "^4.0.0-alpha.0",
     "apollo-client": "^2.6.10",
-    "babel-eslint": "^10.1.0",
-    "chai": "^4.3.4",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.2.0",
-    "eslint-plugin-import": "^2.24.2",
-    "eslint-plugin-vue": "^5.2.3",
+    "chai": "^4.3.7",
     "graphql": "^14.7.0",
-    "graphql-tag": "^2.12.5",
+    "graphql-tag": "^2.12.6",
     "gulp": "^4.0.2",
-    "gulp-cached": "^1.1.1",
-    "gulp-eslint": "^5.0.0",
-    "lerna": "^3.22.1",
+    "lerna": "^6.5.1",
     "mocha": "^6.2.3",
-    "rimraf": "^2.7.1",
-    "stylelint": "^10.1.0",
-    "stylelint-config-twbs-bootstrap": "^0.4.0"
+    "rimraf": "^2.7.1"
   },
   "graphdoc": {
     "endpoint": "http://graphql-server/graphql",
     "logo": "<h3 class='slds-text-heading--medium'><a href='/'>GraphQL Schema NPM_VERSION</a></h3>"
-  }
+  },
+  "dependencies": {},
+  "browserslist": [
+    "extends @parameter1/browserslist-config-base-cms"
+  ]
 }

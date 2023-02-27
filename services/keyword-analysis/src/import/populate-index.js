@@ -33,7 +33,7 @@ module.exports = async (batchSize) => {
 
   log(chalk`{dim Prime the Taxonomy loader...}`);
   const taxDocs = await base4.find('platform.Taxonomy', {}, {}, true);
-  taxDocs.map(taxDoc => taxonomyLoader.prime(taxDoc._id, taxDoc));
+  taxDocs.map((taxDoc) => taxonomyLoader.prime(taxDoc._id, taxDoc));
   log(chalk`{dim Priming complete.}`);
 
   let offset = 0;
@@ -61,8 +61,8 @@ module.exports = async (batchSize) => {
       let terms = [];
       if (taxonomyIds.length) {
         const taxonomies = await taxonomyLoader.loadMany(taxonomyIds);
-        taxonomy = [...new Set(taxonomies.map(t => t.name.replace('-', '').replace(/\W/g, ' ')))].join(', ');
-        terms = [...new Set(taxonomies.map(t => stripHtml(t.name)))];
+        taxonomy = [...new Set(taxonomies.map((t) => t.name.replace('-', '').replace(/\W/g, ' ')))].join(', ');
+        terms = [...new Set(taxonomies.map((t) => stripHtml(t.name)))];
       }
 
       bulkBody.push({ index: { _index: ELASTIC_INDEX, _type: ELASTIC_TYPE, _id: doc._id } });

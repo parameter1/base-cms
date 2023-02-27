@@ -1,12 +1,13 @@
 {
   "name": "@parameter1/base-cms-apollo-ssr",
-  "version": "3.0.0",
+  "version": "4.0.2",
   "description": "Apollo GraphQL SSR Client factory.",
   "main": "src/index.js",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/apollo-ssr",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
   "scripts": {
+    "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .js --max-warnings 5 ./",
     "test": "yarn lint"
   },
@@ -15,7 +16,7 @@
     "apollo-client": "^2.6.10",
     "apollo-link-context": "^1.0.20",
     "apollo-link-http": "^1.5.17",
-    "node-fetch": "^2.6.5"
+    "node-fetch": "^2.6.9"
   },
   "peerDependencies": {
     "graphql": "^14.0.0 || ^15.0.0"

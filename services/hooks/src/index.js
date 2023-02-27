@@ -18,7 +18,7 @@ const run = async () => {
     healthChecks: { '/_health': () => services.ping() },
     onSignal: () => {
       log('> Cleaning up...');
-      return services.stop().catch(e => log('> CLEANUP ERRORS:', e));
+      return services.stop().catch((e) => log('> CLEANUP ERRORS:', e));
     },
     onShutdown: () => log('> Cleanup finished. Shutting down.'),
   });
@@ -34,7 +34,7 @@ process.on('unhandledRejection', (e) => {
 });
 
 log(`> Booting ${pkg.name} v${pkg.version}...`);
-run().catch(e => setImmediate(() => {
+run().catch((e) => setImmediate(() => {
   newrelic.noticeError(e);
   throw e;
 }));

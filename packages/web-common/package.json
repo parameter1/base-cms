@@ -1,22 +1,23 @@
 {
   "name": "@parameter1/base-cms-web-common",
-  "version": "3.3.1",
+  "version": "4.0.2",
   "description": "Common utilities, queries and functions for BaseCMS website projects.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/web-common",
   "license": "MIT",
   "scripts": {
+    "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .js --max-warnings 5 ./",
     "test": "yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-inflector": "^3.0.0",
-    "@parameter1/base-cms-object-path": "^3.0.0",
-    "@parameter1/base-cms-utils": "^3.0.0",
+    "@parameter1/base-cms-inflector": "^4.0.2",
+    "@parameter1/base-cms-object-path": "^4.0.2",
+    "@parameter1/base-cms-utils": "^4.0.2",
     "graphql": "^14.7.0",
-    "graphql-tag": "^2.12.5",
-    "http-errors": "^1.8.0"
+    "graphql-tag": "^2.12.6",
+    "http-errors": "^1.8.1"
   },
   "publishConfig": {
     "access": "public"

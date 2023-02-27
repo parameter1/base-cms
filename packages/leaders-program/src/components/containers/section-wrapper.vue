@@ -10,9 +10,9 @@
       </div>
       <div class="leaders-section__children">
         <leaders-columns
+          v-slot="{ sections: colSections }"
           :number="columns"
           :sections="getChildren(section)"
-          #default="{ sections: colSections }"
         >
           <leaders-section
             v-for="colSection in colSections"
@@ -36,9 +36,9 @@
   </div>
   <div v-else class="leaders-sections-wrapper">
     <leaders-columns
+      v-slot="{ sections: colSections }"
       :number="columns"
       :sections="sections"
-      #default="{ sections: colSections }"
     >
       <leaders-section
         v-for="colSection in colSections"
@@ -111,7 +111,7 @@ export default {
     iconStyle: {
       type: String,
       default: 'plus-minus',
-      validator: v => ['plus-minus', 'chevron'].includes(v),
+      validator: (v) => ['plus-minus', 'chevron'].includes(v),
     },
     featuredProductLabel: {
       type: String,

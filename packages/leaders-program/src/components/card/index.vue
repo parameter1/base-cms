@@ -1,4 +1,3 @@
-
 <template>
   <div :class="classes">
     <div class="leaders-card__header">

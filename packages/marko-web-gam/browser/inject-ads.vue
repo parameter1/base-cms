@@ -34,7 +34,7 @@ export default {
       return `marko-web-gam-inject-ads-${Date.now()}`;
     },
     targetLengths() {
-      return Object.keys(this.toInject).map(n => parseInt(n, 10)).filter(n => n && n >= 1);
+      return Object.keys(this.toInject).map((n) => parseInt(n, 10)).filter((n) => n && n >= 1);
     },
   },
 

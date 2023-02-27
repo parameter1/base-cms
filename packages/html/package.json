@@ -1,18 +1,19 @@
 {
   "name": "@parameter1/base-cms-html",
-  "version": "3.0.0",
+  "version": "4.0.2",
   "description": "Common HTML utilities for BaseCMS projects.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/html",
   "license": "MIT",
   "scripts": {
+    "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .js --max-warnings 5 ./",
     "test": "yarn lint"
   },
   "dependencies": {
     "html-entities": "^1.4.0",
-    "html2plaintext": "^2.1.2",
+    "html2plaintext": "^2.1.4",
     "striptags": "^3.2.0"
   },
   "publishConfig": {

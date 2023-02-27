@@ -98,9 +98,9 @@ module.exports = async ({ apolloBaseCMS, apolloBaseBrowse } = {}, {
     variables: { ids, limit: ids.length },
   });
   const nodes = data.allContent.edges
-    .map(edge => (edge && edge.node ? edge.node : null))
-    .filter(c => c);
+    .map((edge) => (edge && edge.node ? edge.node : null))
+    .filter((c) => c);
   const map = nodes.reduce((m, node) => m.set(`${node.id}`, node), new Map());
-  const ordered = ids.map(id => map.get(`${id}`)).filter(node => node);
+  const ordered = ids.map((id) => map.get(`${id}`)).filter((node) => node);
   return { nodes: ordered, pageInfo, totalCount };
 };

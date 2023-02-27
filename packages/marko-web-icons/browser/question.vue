@@ -1,4 +1,3 @@
-
 <template>
   <icon-wrapper
     name="question"

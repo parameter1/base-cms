@@ -32,7 +32,7 @@ export default {
       return [
         blockName,
         `${blockName}--${this.name}`,
-        ...this.modifiers.map(mod => `${blockName}--${mod}`),
+        ...this.modifiers.map((mod) => `${blockName}--${mod}`),
       ];
     },
   },
