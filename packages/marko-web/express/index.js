@@ -11,12 +11,14 @@ const embeddedMedia = require('./embedded-media');
 const loadObject = require('./load-object');
 const loadDocument = require('./load-document');
 const oembed = require('./oembed');
+const purgeCSS = require('./purge-css');
 const rss = require('./rss');
 const sitemaps = require('./sitemaps');
 const { version } = require('../package.json');
 const websiteContext = require('./website-context');
 const CoreConfig = require('../config/core');
 const SiteConfig = require('../config/site');
+
 
 module.exports = (config = {}) => {
   const {
@@ -59,7 +61,7 @@ module.exports = (config = {}) => {
   app.locals.tenantKey = tenantKey;
 
   // Set the core config.
-  app.locals.config = new CoreConfig({ ...config.coreConfig, distDir });
+  app.locals.config = new CoreConfig({ ...config.coreConfig, rootDir, distDir });
 
   // Set the website config to the app.
   app.locals.site = new SiteConfig(config.siteConfig);
@@ -112,6 +114,7 @@ module.exports = (config = {}) => {
   // Register the Marko middleware.
   app.use(markoMiddleware());
   app.use(cleanMarkoResponse());
+  app.use(purgeCSS());
 
   // Serve static assets
   app.use('/dist/css', express.static(`${distDir}/css`, { maxAge: '2y', immutable: true }));
