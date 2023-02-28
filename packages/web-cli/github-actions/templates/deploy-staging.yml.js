@@ -2,8 +2,7 @@ module.exports = `name: Deploy sites (staging)
 
 on:
   push:
-    tags:
-      - '*'
+    branches: [staging]
 
 jobs:
   version:

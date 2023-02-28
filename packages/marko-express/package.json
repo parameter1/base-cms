@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-express",
-  "version": "4.0.2",
+  "version": "4.5.12",
   "description": "Common Marko+Express middleware.",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "main": "index.js",
