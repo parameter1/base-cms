@@ -19,7 +19,6 @@ const websiteContext = require('./website-context');
 const CoreConfig = require('../config/core');
 const SiteConfig = require('../config/site');
 
-
 module.exports = (config = {}) => {
   const {
     rootDir,
