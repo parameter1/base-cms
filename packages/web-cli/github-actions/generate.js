@@ -18,10 +18,16 @@ const mkdir = (cwd, recursive) => {
   }
 };
 
-const merge = (from, into) => [].reduce((o, k) => {
+const account = (tenant) => tenant.split('_').shift();
+
+const merge = (from, into) => ['id', 'tenant', 'stack'].reduce((o, k) => {
   const v = from[k];
   if (typeof v === 'undefined') return o;
-  return { ...o, [k]: v };
+  return {
+    ...o,
+    [k]: v,
+    ...(k === 'tenant' && { account: account(v) }),
+  };
 }, into);
 
 const buildMatrix = (sites) => `site:\n${sites.map((site) => `          - { dir: ${site.dir}, stack: ${site.stack}, id: ${site.id}, account: ${site.account}, tenant: ${site.tenant}, rancher_label: ${site.rancherLabel} }`).join('\n')}`;
@@ -58,10 +64,11 @@ module.exports = ({ cwd }) => {
     if (!website) throw new Error(`No website configuration was found in ${file}`);
 
     const site = {};
-    ['id', 'tenant', 'account', 'stack'].forEach((key) => {
+    ['id', 'tenant', 'stack'].forEach((key) => {
       const value = website[key];
       if (!value) throw new Error(`No website.${key} was provided in ${file}`);
       site[key] = value; // ensure key order, as we'll use this as an id later.
+      if (key === 'tenant') site.account = account(value);
     });
     // set the site directory.
     site.dir = file.replace(/\/package\.json$/, '').split('/').pop();
