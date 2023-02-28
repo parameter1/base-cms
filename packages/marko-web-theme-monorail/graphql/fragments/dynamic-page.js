@@ -8,6 +8,7 @@ fragment DynamicPageFragment on ContentPage {
   body
   primarySection {
     id
+    name
     alias
   }
 }
