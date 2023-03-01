@@ -83,7 +83,7 @@ module.exports = async ({
       await handleEvent({ event, file });
     } catch (e) {
       // on error, ensure forked server is killed.
-      server.kill();
+      server.kill().catch();
       throw e;
     }
   });
