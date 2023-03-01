@@ -63,7 +63,7 @@ module.exports = ({ width, height, cropDimensions }) => {
     y1,
     y2,
   } = coords.reduce((o, key) => {
-    const v = Math.round(cropDimensions[key] * scale);
+    const v = cropDimensions[key] > 0 ? Math.round(cropDimensions[key] * scale) : 0;
     return { ...o, [key]: v };
   }, {});
 
