@@ -10,7 +10,7 @@ const { env } = process;
 if (!process.env.LIVERELOAD_PORT) process.env.LIVERELOAD_PORT = 4010;
 if (!process.env.EXPOSED_HOST) process.env.EXPOSED_HOST = env.HOST || 'localhost';
 
-process.on('unhandledRejection', (e) => { throw e; });
+process.on('unhandledRejection', (e) => setImmediate(() => { throw e; }));
 
 const wait = (ms) => new Promise((resolve) => {
   setTimeout(resolve, ms);

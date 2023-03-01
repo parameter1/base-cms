@@ -14,8 +14,10 @@ const patch = (response) => {
 
     const res = this;
     const { req } = res;
-    res.set({ 'content-type': 'text/html; charset=utf-8' });
     const $global = buildGlobal(res, data);
+
+    $global.entryTemplatePath = template.path.replace(/\.marko\.js$/, '.marko');
+    res.set({ 'content-type': 'text/html; charset=utf-8' });
     return template.render({ ...(data || {}), $global }, res).on('error', req.next);
   };
 };

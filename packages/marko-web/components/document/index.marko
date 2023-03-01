@@ -1,6 +1,11 @@
 import { getAsObject } from "@parameter1/base-cms-object-path";
 
-$ const { config } = out.global;
+$ const {
+  config,
+  req,
+  usePurgedCSS,
+  embedCSS,
+} = out.global;
 
 $ const dir = input.dir || "ltr";
 $ const lang = input.lang || config.website("language.code", "en-us");
@@ -39,9 +44,15 @@ $ const wrapper = getAsObject(input, "bodyWrapper");
     <script nomodule src="https://cdnjs.cloudflare.com/ajax/libs/picturefill/3.0.3/picturefill.min.js" async></script>
 
     <!-- load styles -->
-    <for|href| of=config.styles()>
-      <link rel="stylesheet" href=href />
-    </for>
+    $ const loadStyles = usePurgedCSS ? config.purgedStyles.bind(config) : config.styles.bind(config);
+    <if(embedCSS)>
+      <style>${loadStyles({ embedded: true })}</style>
+    </if>
+    <else>
+      <for|href| of=loadStyles()>
+        <link rel="stylesheet" href=href />
+      </for>
+    </else>
 
     <${input.head} />
   </head>
