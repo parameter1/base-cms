@@ -51,6 +51,8 @@ const commands = new Set(['build', 'build:css', 'build:js', 'build:ssr', 'dev', 
       // defaults to what the site repos normally use.
       compileDirs: getArrayValuesFor('compile-dir'),
       cleanCompiledFiles: clean == null ? true : clean,
+      purgeCSS: Boolean(argv['purge-css']),
+      purgeCSSContentDirs: getArrayValuesFor('purge-css-content-dir'),
     };
     log(`beginning '${blue('build')}' server with options`, opts);
     await build(opts);
@@ -61,7 +63,13 @@ const commands = new Set(['build', 'build:css', 'build:js', 'build:ssr', 'dev', 
     const [entry = './server/styles/index.scss'] = rest;
     if (!entry) throw new Error('An entrypoint is requred.');
     const builder = require('../build/css');
-    await builder({ cwd, entry, watch: argv.watch });
+    await builder({
+      cwd,
+      entry,
+      watch: argv.watch,
+      purge: Boolean(argv.purge),
+      purgeContentDirs: getArrayValuesFor('purge-content-dir'),
+    });
     return exit(`command '${blue(command)}' ${green('complete')}`);
   }
 
@@ -97,6 +105,8 @@ const commands = new Set(['build', 'build:css', 'build:js', 'build:ssr', 'dev', 
       watchIgnore: getArrayValuesFor('watch-ignore'),
       abortOnInstanceError: Boolean(argv['abort-on-error']),
       showWatchedFiles: Boolean(argv['show-watched-files']),
+      purgeCSS: Boolean(argv['purge-css']),
+      purgeCSSContentDirs: getArrayValuesFor('purge-css-content-dir'),
     };
     log(`beginning '${blue('dev')}' server with options`, opts);
     await serve(opts);

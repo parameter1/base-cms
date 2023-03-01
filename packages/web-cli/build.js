@@ -17,6 +17,8 @@ module.exports = async ({
   cleanCompiledFiles = false,
   watch = false,
   onFileChange,
+  purgeCSS = false,
+  purgeCSSContentDirs = [],
 } = {}) => {
   const start = process.hrtime();
 
@@ -33,6 +35,8 @@ module.exports = async ({
       entry: entries.styles,
       watch,
       onFileChange,
+      purge: purgeCSS,
+      purgeContentDirs: purgeCSSContentDirs,
     }),
     js({
       cwd,

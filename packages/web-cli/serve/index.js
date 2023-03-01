@@ -16,6 +16,8 @@ module.exports = async ({
   abortOnInstanceError = false,
   showWatchedFiles = false,
   forceRequirePrebuiltTemplates = true,
+  purgeCSS = false,
+  purgeCSSContentDirs = [],
 } = {}) => {
   const start = process.hrtime();
   if (forceRequirePrebuiltTemplates) process.env.MARKO_REQUIRE_PREBUILT_TEMPLATES = true;
@@ -29,6 +31,8 @@ module.exports = async ({
     compileDirs,
     cleanCompiledFiles,
     watch: true,
+    purgeCSS,
+    purgeCSSContentDirs,
     onFileChange: () => {
       if (serverInfo) log(serverInfo);
       livereload.refresh('/');
@@ -45,7 +49,7 @@ module.exports = async ({
   });
   const message = await server.listen({ rejectOnNonZeroExit: abortOnInstanceError });
   serverInfo = formatServerMessage(message);
-  log(`server fork started in ${getProfileMS(serverStart)}ms`);
+  log(`server started in ${getProfileMS(serverStart)}ms`);
 
   // enable file watching
   await watchFiles({
