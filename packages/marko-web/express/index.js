@@ -11,7 +11,7 @@ const embeddedMedia = require('./embedded-media');
 const loadObject = require('./load-object');
 const loadDocument = require('./load-document');
 const oembed = require('./oembed');
-const purgeCSS = require('./purge-css');
+const purgedCSS = require('./purged-css');
 const rss = require('./rss');
 const sitemaps = require('./sitemaps');
 const { version } = require('../package.json');
@@ -112,8 +112,8 @@ module.exports = (config = {}) => {
 
   // Register the Marko middleware.
   app.use(markoMiddleware());
+  app.use(purgedCSS());
   app.use(cleanMarkoResponse());
-  app.use(purgeCSS());
 
   // Serve static assets
   app.use('/dist/css', express.static(`${distDir}/css`, { maxAge: '2y', immutable: true }));

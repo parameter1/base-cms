@@ -1,10 +1,19 @@
 const path = require('path');
 const { readFileSync } = require('fs');
 
+const read = (file) => {
+  try {
+    return JSON.parse(readFileSync(file, 'utf8'));
+  } catch (e) {
+    if (e.code === 'ENOENT') return null;
+    throw e;
+  }
+};
+
 const loadFromManifest = ({ distDir, type, entry }) => {
   const file = path.resolve(distDir, type, 'manifest.json');
-  const json = readFileSync(file, { encoding: 'utf8' });
-  const manifest = JSON.parse(json);
+  const manifest = read(file);
+  if (!manifest) throw new Error(`Unable to load the asset manifest for type ${type}`);
   const asset = manifest[entry];
   if (!asset) throw new Error(`Unable to extract an asset for type ${type} using manifest entry ${entry}`);
   return `/dist/${type}/${asset.file}`;

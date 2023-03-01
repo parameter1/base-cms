@@ -13,6 +13,7 @@ class CoreConfig extends AbstractConfig {
     this.assetLoader = {
       js: distLoader({ distDir, type: 'js', entry: 'browser/index.js' }),
       css: distLoader({ distDir, type: 'css', entry: 'server/styles/index.scss' }),
+      purgedcss: distLoader({ distDir, type: 'purgedcss', entry: 'server/styles/index.scss' }),
     };
   }
 
@@ -66,6 +67,22 @@ class CoreConfig extends AbstractConfig {
   styles() {
     const css = this.assetLoader.css();
     return [css];
+  }
+
+  purgedStyles() {
+    try {
+      const purgedcss = this.assetLoader.purgedcss();
+      return [purgedcss];
+    } catch (e) {
+      const { message } = e;
+      if (/unable to load the asset manifest for type purgedcss/i.test(message) || /unable to extract an asset for type purgedcss/i.test(message)) {
+        process.emitWarning('The purged CSS assets have not been built! Falling back to normal styles', {
+          code: 'MISSING_PURGED_CSS_ASSETS',
+        });
+        return this.styles();
+      }
+      throw e;
+    }
   }
 }
 
