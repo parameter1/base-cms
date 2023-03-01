@@ -16,10 +16,10 @@ const loadFromManifest = ({ distDir, type, entry }) => {
   if (!manifest) throw new Error(`Unable to load the asset manifest for type ${type}`);
   const asset = manifest[entry];
   if (!asset) throw new Error(`Unable to extract an asset for type ${type} using manifest entry ${entry}`);
-  return `${type}/${asset.file}`;
+  return `/dist/${type}/${asset.file}`;
 };
 
-const load = ({ distDir, subDir }) => readFileSync(path.resolve(distDir, subDir), 'utf8');
+const load = ({ distDir, file }) => readFileSync(path.resolve(distDir, `.${file.replace('/dist/', '/')}`), 'utf8');
 
 module.exports = ({ distDir, type, entry }) => {
   let file;
@@ -29,14 +29,14 @@ module.exports = ({ distDir, type, entry }) => {
     // when on dev, always return the file from the manifest
     // as it may have changed during build.
     if (isDevelopment) {
-      const subDir = loadFromManifest({ distDir, type, entry });
-      if (!embedded) return `/dist/${subDir}`;
-      return load({ distDir, subDir });
+      const f = loadFromManifest({ distDir, type, entry });
+      if (!embedded) return f;
+      return load({ distDir, file: f });
     }
     // otherwise, only retrieve it once
-    if (!file) file = `/dist/${loadFromManifest({ distDir, type, entry })}`;
+    if (!file) file = loadFromManifest({ distDir, type, entry });
     if (!embedded) return file;
-    if (!contents) contents = load({ distDir, subDir: file });
+    if (!contents) contents = load({ distDir, file });
     return contents;
   };
 };
