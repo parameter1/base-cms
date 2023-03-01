@@ -1,6 +1,11 @@
 import { getAsObject } from "@parameter1/base-cms-object-path";
 
-$ const { config, req, usePurgedCSS } = out.global;
+$ const {
+  config,
+  req,
+  usePurgedCSS,
+  embedCSS,
+} = out.global;
 
 $ const dir = input.dir || "ltr";
 $ const lang = input.lang || config.website("language.code", "en-us");
@@ -40,9 +45,14 @@ $ const wrapper = getAsObject(input, "bodyWrapper");
 
     <!-- load styles -->
     $ const loadStyles = usePurgedCSS ? config.purgedStyles.bind(config) : config.styles.bind(config);
-    <for|href| of=loadStyles()>
-      <link rel="stylesheet" href=href />
-    </for>
+    <if(embedCSS)>
+      <style>${loadStyles({ embedded: true })}</style>
+    </if>
+    <else>
+      <for|href| of=loadStyles()>
+        <link rel="stylesheet" href=href />
+      </for>
+    </else>
 
     <${input.head} />
   </head>

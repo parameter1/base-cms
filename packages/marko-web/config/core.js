@@ -64,22 +64,22 @@ class CoreConfig extends AbstractConfig {
     return [js];
   }
 
-  styles() {
-    const css = this.assetLoader.css();
-    return [css];
+  styles({ embedded = false } = {}) {
+    const css = this.assetLoader.css({ embedded });
+    return embedded ? css : [css];
   }
 
-  purgedStyles() {
+  purgedStyles({ embedded = false } = {}) {
     try {
-      const purgedcss = this.assetLoader.purgedcss();
-      return [purgedcss];
+      const purgedcss = this.assetLoader.purgedcss({ embedded });
+      return embedded ? purgedcss : [purgedcss];
     } catch (e) {
       const { message } = e;
       if (/unable to load the asset manifest for type purgedcss/i.test(message) || /unable to extract an asset for type purgedcss/i.test(message)) {
         process.emitWarning('The purged CSS assets have not been built! Falling back to normal styles', {
           code: 'MISSING_PURGED_CSS_ASSETS',
         });
-        return this.styles();
+        return this.styles({ embedded });
       }
       throw e;
     }
