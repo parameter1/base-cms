@@ -26,25 +26,6 @@
       "default-value": "width=device-width, initial-scale=1, shrink-to-fit=no"
     }
   },
-  "<marko-web-document-font-link>": {
-    "template": "./font-link.marko",
-    "@preconnects <preconnect>[]": {
-      "@href": "string",
-      "@crossorigin": "boolean"
-    },
-    "@href": "string",
-    "@preconnect-only": "boolean"
-  },
-  "<marko-web-document-google-font>": {
-    "template": "./font-link/google.marko",
-    "@family": "string",
-    "@preconnect-only": "boolean"
-  },
-  "<marko-web-document-typekit-font>": {
-    "template": "./font-link/typekit.marko",
-    "@id": "string",
-    "@preconnect-only": "boolean"
-  },
   "<marko-web-document-container>": {
     "template": "./container.marko",
     "<above-page>": {},

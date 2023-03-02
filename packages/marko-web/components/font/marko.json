@@ -1,0 +1,21 @@
+{
+  "<marko-web-font-link>": {
+    "template": "./link.marko",
+    "@preconnects <preconnect>[]": {
+      "@href": "string",
+      "@crossorigin": "boolean"
+    },
+    "@href": "string",
+    "@preconnect-only": "boolean"
+  },
+  "<marko-web-google-font>": {
+    "template": "./google.marko",
+    "@family": "string",
+    "@preconnect-only": "boolean"
+  },
+  "<marko-web-typekit-font>": {
+    "template": "./typekit.marko",
+    "@id": "string",
+    "@preconnect-only": "boolean"
+  }
+}

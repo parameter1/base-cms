@@ -3,7 +3,6 @@ import { getAsArray } from "@parameter1/base-cms-object-path";
 $ const preconnects = getAsArray(input, "preconnects");
 
 <for|preconnect| of=preconnects>
-  $ console.log({ preconnect });
   <link rel="preconnect" href=preconnect.href crossorigin=preconnect.crossorigin>
 </for>
 
