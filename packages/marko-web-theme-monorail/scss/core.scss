@@ -4,7 +4,20 @@
 
 // bootstrap and default theme components
 @import "components/bootstrap";
-@import "components/default-theme";
+
+// load navbar from default theme first... allows for alternate monorail navbars to override these defaults
+@import "components/default-theme/site-navbar";
+
+// Marko Web core components
+@import "@parameter1/base-cms-marko-web/scss/document";
+@import "@parameter1/base-cms-marko-web/scss/load-more";
+@import "@parameter1/base-cms-marko-web/scss/node";
+@import "@parameter1/base-cms-marko-web/scss/node-list";
+@import "@parameter1/base-cms-marko-web/scss/page-image";
+@import "@parameter1/base-cms-marko-web/scss/carousel";
+
+// Marko Web icon components
+@import "@parameter1/base-cms-marko-web-icons/scss/icons";
 
 @import "@parameter1/base-cms-marko-web-social-sharing/scss/buttons";
 @import "@parameter1/base-cms-marko-web-html-sitemap/scss/index";
@@ -20,7 +33,20 @@
 @import "components/breadcrumbs";
 @import "components/comments";
 @import "components/content-page";
+@import "components/embedded-media";
 @import "components/identity-x";
+@import "components/lazyload";
+@import "components/load-more";
+@import "components/magazine-publication-buttons";
+@import "components/node";
+@import "components/node-list";
+@import "components/page";
+@import "components/page-attribution";
+@import "components/page-contact-details";
+@import "components/page-contents";
+@import "components/page-dates";
+@import "components/page-image";
+@import "components/page-rail";
 @import "components/page-wrapper";
 @import "components/pagination-controls";
 @import "components/search-page";
@@ -30,6 +56,7 @@
 @import "components/site-navbar";
 @import "components/site-navbar-b";
 @import "components/site-newsletter-menu";
+@import "components/social-icons";
 @import "components/spec-guide";
 @import "components/sponsor-logo";
 @import "components/wallpaper-ad";
@@ -42,6 +69,7 @@
 @import "components/blocks/latest-content-list";
 @import "components/blocks/latest-podcast";
 @import "components/blocks/latest-products-feed";
+@import "components/blocks/magazine-publication-card";
 @import "components/blocks/more-products";
 @import "components/blocks/most-popular";
 @import "components/blocks/newsletter-signup-banner";
@@ -68,6 +96,9 @@
 
 // theme component flows
 @import "components/flows/card-deck";
+@import "components/flows/column-list";
+@import "components/flows/featured";
+@import "components/flows/hero";
 @import "components/flows/incremented-nodes";
 
 body {
