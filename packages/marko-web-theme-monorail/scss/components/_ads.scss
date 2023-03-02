@@ -96,6 +96,16 @@
     }
   }
 
+  &--in-card {
+    display: flex;
+    justify-content: center;
+    min-height: 100%;
+    > div {
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+  }
+
   &--rail {
     background-color: $rail-ad-bg-color;
     > *:first-child {
@@ -215,6 +225,14 @@
         content: "Advertisement";
       }
     }
+  }
+
+  &--top-of-page {
+    margin-bottom: $theme-ad-margin;
+  }
+
+  iframe {
+    box-shadow: $theme-ad-box-shadow;
   }
 }
 
