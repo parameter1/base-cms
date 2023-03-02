@@ -122,9 +122,9 @@ $font-weight-normal: 400 !default;
 
 // Buttons, Inputs, and Typography
 //
-@import "./variables/buttons";
-@import "./variables/inputs";
-@import "./variables/typography";
+@import "variables/buttons";
+@import "variables/inputs";
+@import "variables/typography";
 
 // Marko Icons
 $marko-web-icon-fill-dark: $gray-800 !default;
@@ -321,4 +321,4 @@ $theme-embedded-media-align-right-width: $skin-aligned-image-width !default;
 $theme-embedded-media-align-right-margin: $skin-aligned-body-image-spacer !default;
 
 // FROM DEFAULT THEME
-@import "theme-default/variables";
+@import "variables/default-theme";
