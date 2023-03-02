@@ -13,6 +13,7 @@ $leaders-gray-5: #f0f0f0 !default;
 
 // Base Styles
 $leaders-base-color: $leaders-black !default;
+// NOTE: this font (as well as its @font-face fallback) needs to be loaded by the site
 $leaders-base-font-family: "Open Sans", sans-serif !default;
 $leaders-base-font-size: 16px !default;
 $leaders-base-font-weight: 400 !default;
