@@ -12,14 +12,12 @@
 // Default reveal ad css
 @import "@parameter1/base-cms-marko-web-reveal-ad/scss/reveal-ad";
 
-// components
-@import "../components/breadcrumbs/scss/breadcrumbs";
-
 // theme components
 @import "components/ads";
 @import "components/author-node";
 @import "components/author-bio-node";
 @import "components/author-published-node";
+@import "components/breadcrumbs";
 @import "components/comments";
 @import "components/content-page";
 @import "components/identity-x";
