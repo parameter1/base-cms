@@ -319,3 +319,6 @@ $theme-embedded-media-align-left-margin: $skin-aligned-body-image-spacer !defaul
 
 $theme-embedded-media-align-right-width: $skin-aligned-image-width !default;
 $theme-embedded-media-align-right-margin: $skin-aligned-body-image-spacer !default;
+
+// FROM DEFAULT THEME
+@import "theme-default/variables";
