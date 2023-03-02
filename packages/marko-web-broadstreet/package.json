@@ -1,0 +1,35 @@
+{
+  "name": "@parameter1/base-cms-marko-web-broadstreet",
+  "version": "4.6.1",
+  "description": "Broadstreet Ads Marko components for BaseCMS websites",
+  "author": "Brian Miller <brian@parameter1.com>",
+  "license": "MIT",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-broadstreet",
+  "scripts": {
+    "lint:fix": "yarn lint --fix",
+    "lint": "eslint --ext .js --ext .vue --max-warnings 5 ./",
+    "compile": "basecms-marko-compile compile",
+    "prepublish": "yarn compile --silent",
+    "test": "yarn compile --no-clean && yarn lint"
+  },
+  "dependencies": {
+    "@parameter1/base-cms-marko-web-deferred-script-loader": "^4.5.12",
+    "@parameter1/base-cms-object-path": "^4.5.12",
+    "@parameter1/base-cms-utils": "^4.5.12"
+  },
+  "peerDependencies": {
+    "@parameter1/base-cms-marko-core": "^4.0.0",
+    "@parameter1/base-cms-marko-web": "^4.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=14.15"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ]
+}

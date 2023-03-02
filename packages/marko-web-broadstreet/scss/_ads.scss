@@ -1,0 +1,52 @@
+// This should match the mediaQuery breakpoints &
+// contentMobileRotation, contentMobileLeaderboard & contentDesktopRotation
+// within the bam site configs so the rotation
+$alt-zone-width: 980px !default;
+
+.broadstreet-zone {
+  > div:only-child {
+    padding-top: 30px !important;
+  }
+}
+.broadstreet-zone-label {
+  display: block;
+}
+.ad-container {
+  $self: &;
+  &--broadstreet {
+    padding-top: 10px;
+
+    &#{ $self }--combined-leaderboard {
+      &#{ $self }--leaderboard {
+        min-height: 310px;
+      }
+
+      &#{ $self }--billboard {
+        min-height: 605px;
+      }
+    }
+    &#{ $self }--rotation {
+      min-height: 150px;
+    }
+
+    &#{ $self }--inline-content-desktop,
+    &#{ $self }--inline-content-mobile {
+      min-height: 150px;
+    }
+
+    &#{ $self }--inline-content-mobile,
+    &#{ $self }--inline-mobile-leaderboard,
+    &#{ $self }--rotation-mobile {
+      @media (min-width: $alt-zone-width) {
+        display: none;
+      }
+    }
+    &#{ $self }--content-leaderboard,
+    &#{ $self }--inline-content-desktop,
+    &#{ $self }--rotation-desktop {
+      @media (max-width: $alt-zone-width) {
+        display: none;
+      }
+    }
+  }
+}
