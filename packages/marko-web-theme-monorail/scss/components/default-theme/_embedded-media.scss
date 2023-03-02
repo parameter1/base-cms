@@ -57,6 +57,15 @@ p [data-embed-type] {
   display: none;
 }
 
+
+[data-embed-type="image"] {
+  picture {
+    > :last-child:not(img) {
+      border-bottom: 1px solid #ccc;
+    }
+  }
+}
+
 [data-oembed-type="video"], [data-oembed-type="link"] {
   @extend .embed-responsive;
   @extend .embed-responsive-16by9;
