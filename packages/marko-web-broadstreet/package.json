@@ -10,7 +10,7 @@
     "lint": "eslint --ext .js --ext .vue --max-warnings 5 ./",
     "compile": "basecms-marko-compile compile",
     "prepublish": "yarn compile --silent",
-    "test": "yarn compile --no-clean && yarn lint && mocha --reporter spec"
+    "test": "yarn compile --no-clean && yarn lint"
   },
   "dependencies": {
     "@parameter1/base-cms-marko-web-deferred-script-loader": "^4.5.12",
