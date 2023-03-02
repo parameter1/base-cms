@@ -1,0 +1,43 @@
+import { randomElementId, BEM, warn } from "@parameter1/base-cms-utils";
+import { getAsArray, getAsObject } from "@parameter1/base-cms-object-path";
+
+$ const { BAM } = out.global;
+
+$ const { zoneAlias, zoneIdSizeMapping } = input;
+$ const blockName = input.blockName || "ad-container"
+$ const modifiers = getAsArray(input, "modifiers");
+$ modifiers.push("broadstreet", "inter-block");
+
+$ const zone = getAsObject(BAM, `zones.${zoneAlias}`);
+$ const sizeMapping = zoneIdSizeMapping || zone.zoneIdSizeMapping;
+$ const containerId = randomElementId({ prefix: "div-broadstreet-ad" });
+
+$ const lazyload = getAsObject(BAM, "lazyload");
+$ const offset = lazyload.offset || "10%";
+<div
+  class=[blockName, ...BEM.applyModifiers(blockName, modifiers), input.class]
+  data-bam-zone-alias=zoneAlias
+>
+  <div id=containerId class=`${blockName} ${blockName}__wrapper` />
+  <if(lazyload.enabled)>
+    $ const script = `
+      (function() {
+        if ('IntersectionObserver' in window) {
+          var lazyloadObserver = new IntersectionObserver(function (entries) {
+            if (entries[0].isIntersecting) {
+              defineBroadstreetZone('${containerId}', ${JSON.stringify(sizeMapping)});
+              lazyloadObserver.unobserve(document.getElementById('${containerId}'));
+            }
+          }, { rootMargin: '0px 0px ${offset} 0px' });
+          lazyloadObserver.observe(document.getElementById('${containerId}'));
+        } else {
+          defineBroadstreetZone('${containerId}', ${JSON.stringify(sizeMapping)});
+        }
+      })();
+    `.split("\n").map((str) => str.trim()).join(" ");
+    <script>${script}</script>
+  </if>
+  <else>
+    <script>defineBroadstreetZone('${containerId}', ${JSON.stringify(sizeMapping)});</script>
+  </else>
+</div>

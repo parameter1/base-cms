@@ -1,0 +1,6 @@
+{
+  "taglib-id": "@parameter1/base-cms-marko-web-broadstreet",
+  "taglib-imports": [
+    "./components/marko.json"
+  ]
+}

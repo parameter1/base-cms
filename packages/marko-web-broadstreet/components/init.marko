@@ -1,0 +1,70 @@
+/*
+**
+** https://information.broadstreetads.com/using-broadstreets-v2-tags/
+** Additional API and Options
+** "altZoneWhitelist": [], // these zones should load even when in alt-zone mode
+** "altZoneShortlist": [], // these are the only zones configured for alt-zone mode
+** "autoAttach": [],
+** "autoAttachAndWatch": [],
+** "callback": undefined,  // callback for a loaded zone: function (zoneId, data) {}
+** "domain": "ad.broadstreetads.com",
+** "gdpr": false,          // by default, GDPR consent is assumed to be no, or "false"
+** "keywords": window.broadstreetKeywords || [],
+** "networkId": null,      // network ID, will load "Network JS" configured by Broadstreet
+** "noRotate": false,      // only load zones as standard, non-in-place rotation zones
+** "preview": false,       // load ads in "preview" mode which prevents view/impression tracking
+** "selector": "broadstreet-zone",
+** "softKeywords": false,
+** "targets": {},          // key-value targets for key value targeting
+** "uriKeywords": false,
+** "useAltZone": function () { return false; },
+** "useZoneAliases": false,
+** "zoneOptions": {}       // options for an individual zone (overrides global options)
+**
+*/
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const src = input.src || "https://cdn.broadstreetads.com/init-2.min.js";
+$ const { on, config } = input;
+$ const { networkId, lazyload } = config;
+$ const onlyVisible = (lazyload && lazyload.enabled) ? false : defaultValue(config.onlyVisible, { mobileScaling: 2.0, renderMarginPercent: 200 });
+$ const uriKeywords = defaultValue(config.uriKeywords, true);
+$ const bamConfig = {
+  networkId,
+  onlyVisible,
+  uriKeywords,
+}
+
+$ const createContainerScript = `window.broadstreet = window.broadstreet || { run: [] }; window.broadstreet.run.push(function() { broadstreet.watch(${JSON.stringify(bamConfig)}); });`;
+<if(on)>
+  <marko-web-deferred-script-loader-register
+    name="broadstreettag"
+    src=src
+    on=on
+    request-frame=input.requestFrame
+    target-tag=input.targetTag
+    init=createContainerScript
+  />
+</if>
+<else>
+  <script src=src async></script>
+  <script>
+    '${creatContainerScript}'
+  </script>
+</else>
+$ const script = `
+  function defineBroadstreetZone(elementId, sizeMapping) {
+    const found = sizeMapping.find(([query, zoneId]) => {
+      const mql = window.matchMedia(query);
+      return mql.matches;
+    });
+    if (!found) return;
+    const [, zoneId] = found;
+    const target = document.getElementById(elementId);
+    if (!target) return;
+    const zone = document.createElement('broadstreet-zone');
+    zone.setAttribute('zone-id', zoneId);
+    target.appendChild(zone);
+  }
+`.split("\n").map((str) => str.trim()).join(" ");
+<script>${script}</script>
