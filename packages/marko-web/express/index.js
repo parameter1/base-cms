@@ -18,6 +18,7 @@ const { version } = require('../package.json');
 const websiteContext = require('./website-context');
 const CoreConfig = require('../config/core');
 const SiteConfig = require('../config/site');
+const renderMarkoComponent = require('./render-marko-component');
 
 module.exports = (config = {}) => {
   const {
@@ -114,6 +115,7 @@ module.exports = (config = {}) => {
   app.use(markoMiddleware());
   app.use(purgedCSS());
   app.use(cleanMarkoResponse());
+  renderMarkoComponent(app);
 
   // Serve static assets
   app.use('/dist/css', express.static(`${distDir}/css`, { maxAge: '2y', immutable: true }));

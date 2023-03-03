@@ -4,6 +4,7 @@ const TriggerScreenChangeEvent = () => import(/* webpackChunkName: "trigger-scre
 const OEmbed = () => import(/* webpackChunkName: "oembed" */ './oembed.vue');
 const WufooGatedDownload = () => import(/* webpackChunkName: "wufoo-gated-download" */ './gated-download/wufoo.vue');
 const ImageSlider = () => import(/* webpackChunkName: "image-slider" */ './image-slider.vue');
+const RenderMarkoComponent = () => import(/* webpackChunkName: "render-marko-component" */ './render-marko-component.vue');
 
 export default (Browser) => {
   Browser.register('LoadMoreTrigger', LoadMoreTrigger);
@@ -12,4 +13,5 @@ export default (Browser) => {
   Browser.register('OEmbed', OEmbed);
   Browser.register('WufooGatedDownload', WufooGatedDownload);
   Browser.register('ImageSlider', ImageSlider);
+  Browser.register('RenderMarkoComponent', RenderMarkoComponent);
 };

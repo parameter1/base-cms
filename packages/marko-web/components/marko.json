@@ -23,5 +23,13 @@
     "@class": "string",
     "@attrs": "object",
     "@props": "object"
+  },
+  "<marko-web-render-marko-component>": {
+    "template": "./render-marko-component.marko",
+    "<input>": {},
+    "@id": {
+      "type": "string",
+      "required": true
+    }
   }
 }
