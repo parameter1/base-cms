@@ -9,11 +9,9 @@
   "private": true,
   "scripts": {
     "lint:fix": "yarn lint --fix",
-    "dev": "basecms-website dev --compile-dir ../../packages --watch-dir ../../packages --watch-ignore ../../packages/marko-web/integration --watch-ignore ../../packages/web-cli",
-    "dev:purged-css": "yarn dev --purge-css --purge-css-content-dir ../../packages",
+    "dev": "basecms-website dev --compile-dir ../../packages --watch-dir ../../packages --watch-ignore ../../packages/marko-web/integration --watch-ignore ../../packages/web-cli --purge-css-content-dir ../../packages",
     "build": "basecms-website build --compile-dir ../../packages",
-    "build:css": "basecms-website build:css",
-    "build:css:purged": "yarn build:css --purge --purge-content-dir ../../packages",
+    "build:css": "basecms-website build:css --purge-content-dir ../../packages",
     "build:js": "basecms-website build:js",
     "build:vite": "basecms-website build:vite",
     "build:ssr": "basecms-website build:ssr",
