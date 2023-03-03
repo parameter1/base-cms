@@ -6,7 +6,14 @@ import setSectionNameFromLabel from "../../utils/set-section-name-from-label";
 $ const queryName = input.queryName ? input.queryName : "website-scheduled-content";
 $ const queryParams = {
   ...input.queryParams,
-  sectionAlias: input.alias,
+  ...(queryName === "website-scheduled-content") && {
+    sectionAlias: input.alias,
+    queryFragment,
+  },
+    ...(queryName === "website-optioned-content") && {
+    sectionAlias: input.alias,
+    queryFragment,
+  }
   queryFragment,
 };
 
