@@ -28,6 +28,16 @@ $ const optionsMap = {
     `,
     variables: { input: params },
   },
+  "website-optioned-content": {
+    query: gql`
+      query WebsiteScheduledContentCount($input: WebsiteScheduledContentQueryInput!) {
+        result: websiteScheduledContent(input: $input) {
+          totalCount
+        }
+      }
+    `,
+    variables: { input: params },
+  },
   "all-author-content": {
     query: gql`
       query AllAuthorContentCount($input: AllAuthorContentQueryInput!) {

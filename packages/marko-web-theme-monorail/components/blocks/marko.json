@@ -75,6 +75,7 @@
   "<theme-latest-products-feed-block>": {
     "template": "./latest-products-feed.marko",
     "<query-params>": {},
+    "@query-name": "string",
     "@alias": "string",
     "@count-only": "boolean"
   },

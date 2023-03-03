@@ -9,7 +9,11 @@ $ const queryParams = {
   ...(queryName === "website-scheduled-content") && {
     sectionAlias: input.alias,
     queryFragment,
-  }
+  },
+  ...(queryName === "website-optioned-content") && {
+    sectionAlias: input.alias,
+    queryFragment,
+  },
 };
 
 $ const blockName = "section-feed";
