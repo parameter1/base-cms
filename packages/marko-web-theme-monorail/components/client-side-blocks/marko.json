@@ -1,5 +1,8 @@
 {
   "<theme-client-side-most-popular-block>": {
     "template": "./most-popular.marko"
+  },
+  "<theme-client-side-most-popular-list-block>": {
+    "template": "./most-popular-list.marko"
   }
 }
