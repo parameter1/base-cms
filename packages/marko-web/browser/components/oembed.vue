@@ -12,7 +12,7 @@
     <iframe
       :src="oembedUrl"
       width="100%"
-      height="100%"
+      style="aspect-ratio: 16/9"
       frameborder="0"
     />
   </span>
