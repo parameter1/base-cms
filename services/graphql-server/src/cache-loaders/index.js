@@ -1,4 +1,5 @@
 const createSectionLoader = require('./create-section-loader');
+const createSectionDescendantIdLoader = require('./create-section-descendant-loader');
 const createOptionLoader = require('./create-option-loader');
 
 /**
@@ -23,6 +24,13 @@ module.exports = ({
   }),
 
   websiteSection: createSectionLoader({
+    basedb,
+    onCacheError,
+    refreshMaxAge,
+    debug,
+  }),
+
+  websiteSectionDescendantIds: createSectionDescendantIdLoader({
     basedb,
     onCacheError,
     refreshMaxAge,
