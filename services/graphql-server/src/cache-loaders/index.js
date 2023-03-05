@@ -1,4 +1,5 @@
 const createSectionLoader = require('./create-section-loader');
+const createOptionLoader = require('./create-option-loader');
 
 /**
  *
@@ -14,6 +15,13 @@ module.exports = ({
   refreshMaxAge = 3600,
   debug = process.env.NODE_ENV === 'development',
 }) => ({
+  websiteOption: createOptionLoader({
+    basedb,
+    onCacheError,
+    refreshMaxAge,
+    debug,
+  }),
+
   websiteSection: createSectionLoader({
     basedb,
     onCacheError,
