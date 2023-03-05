@@ -45,6 +45,7 @@ const server = new ApolloServer({
     const { body } = req;
     const { tenant, siteId } = getFromRequest(req);
     const dbContext = {
+      requestId: req.id,
       type: 'Apollo GraphQL Request',
       clientName: req.get('apollographql-client-name'),
       clientVersion: req.get('apollographql-client-version'),
@@ -71,6 +72,7 @@ const server = new ApolloServer({
     const auth = await createAuthContext({ req, userService });
 
     return {
+      requestId: req.id,
       tenant,
       basedb,
       base4rest,
