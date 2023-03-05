@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const path = require('path');
 const helmet = require('helmet');
+const { nanoid } = require('nanoid');
 const apollo = require('./apollo');
 const graphqlProxy = require('./graphql-proxy');
 const embeddedMedia = require('./embedded-media');
@@ -33,6 +34,12 @@ module.exports = (config = {}) => {
   const distDir = path.resolve(rootDir, 'dist');
   const app = express();
   const serverDir = path.resolve(rootDir, 'server');
+
+  app.use((req, res, next) => {
+    // set unique request id.
+    req.id = nanoid();
+    next();
+  });
 
   // Add async block error handler.
   app.locals.onAsyncBlockError = config.onAsyncBlockError;

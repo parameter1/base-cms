@@ -1,5 +1,6 @@
 const { apolloClient } = require('@parameter1/base-cms-express-apollo');
 const { parseBooleanHeader } = require('@parameter1/base-cms-utils');
+const pkg = require('../package.json');
 
 module.exports = (app, uri, config = {}) => {
   /**
@@ -13,7 +14,17 @@ module.exports = (app, uri, config = {}) => {
       if (!value) return o; // do nothing if no cookie or query param is set.
       // otherwise parse the value and set the GraphQL header to match.
       return { ...o, [key]: parseBooleanHeader(value) };
-    }, {});
+    }, {
+      'x-marko-web-request': JSON.stringify({
+        id: req.id,
+        env: process.env.NODE_ENV || 'unknonwn',
+        ua: req.get('user-agent'),
+        origin: `${req.protocol}://${req.get('host')}`,
+        path: req.path,
+        query: req.query,
+      }),
+      'user-agent': `marko-web-express-apollo/${pkg.version} via node-fetch/1.0`,
+    });
     return { headers };
   };
   app.use(apolloClient(uri, config, config.link, contextFn));
