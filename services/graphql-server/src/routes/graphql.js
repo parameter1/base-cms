@@ -54,6 +54,10 @@ const server = new ApolloServer({
     };
     const basedb = basedbFactory(tenant, dbContext);
     const loaders = createLoaders(basedb);
+    const cacheLoaders = createCacheLoaders({
+      basedb,
+      onCacheError: newrelic.noticeError.bind(newrelic),
+    });
 
     // Load the (optional) site context from the database.
     const site = await loadSiteContext({
@@ -79,6 +83,7 @@ const server = new ApolloServer({
       site,
       auth,
       userService,
+      cacheLoaders,
       load: async (loader, id, projection, criteria = {}) => {
         if (!loaders[loader]) throw new Error(`No dataloader found for '${loader}'`);
 
