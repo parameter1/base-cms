@@ -13,6 +13,7 @@ const basedbFactory = require('../basedb');
 const createLoaders = require('../dataloaders');
 const schema = require('../graphql/schema');
 const loadSiteContext = require('../site-context/load');
+const createCacheLoaders = require('../cache-loaders');
 const {
   GRAPHQL_ENDPOINT,
   NEW_RELIC_ENABLED,
