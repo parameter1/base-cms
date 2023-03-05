@@ -28,7 +28,6 @@ const getEmbeddedDocumentTags = require('../../utils/embedded-document-tags');
 const relatedContent = require('../../utils/related-content');
 const inquiryEmails = require('../../utils/inquiry-emails');
 const connectionProjection = require('../../utils/connection-projection');
-const getDescendantIds = require('../../utils/website-section-child-ids');
 const {
   createTitle,
   createDescription,
@@ -73,47 +72,6 @@ const convertEmptyHtmlToNull = (html) => {
 const { isArray } = Array;
 
 const resolveType = async ({ type }) => `Content${type}`;
-
-const loadSection = async ({
-  basedb,
-  siteId,
-  id,
-  alias,
-  strict = true,
-}) => {
-  if (!id && !alias) return null;
-  const sectionQuery = {
-    status: 1,
-    ...(siteId && { 'site.$id': siteId }),
-  };
-  if (alias) {
-    sectionQuery.alias = alias;
-  } else {
-    sectionQuery._id = id;
-  }
-  return strict
-    ? basedb.strictFindOne('website.Section', sectionQuery, { projection: { _id: 1 } })
-    : basedb.findOne('website.Section', sectionQuery, { projection: { _id: 1 } });
-};
-
-const loadOptions = async ({
-  basedb,
-  siteId,
-  ids = [],
-  names = [],
-}) => {
-  if (!ids.length && !names.length) return [];
-  const optionQuery = {
-    status: 1,
-    ...(siteId && { 'site.$id': siteId }),
-  };
-  if (ids.length) {
-    optionQuery._id = { $in: ids };
-  } else {
-    optionQuery.name = { $in: names };
-  }
-  return basedb.find('website.Option', optionQuery, { projection: { _id: 1 } });
-};
 
 const loadMagazineSections = async ({
   basedb,
@@ -682,7 +640,7 @@ module.exports = {
     /**
      *
      */
-    hasWebsiteSchedule: async (doc, { input }, { basedb, site }) => {
+    hasWebsiteSchedule: async (doc, { input }, { basedb, cacheLoaders, site }) => {
       const {
         sectionId,
         sectionAlias,
@@ -697,23 +655,19 @@ module.exports = {
 
       const siteId = input.siteId || site.id();
       const [section, options] = await Promise.all([
-        loadSection({
-          basedb,
+        cacheLoaders.websiteSection({
           siteId,
           id: sectionId,
           alias: sectionAlias,
           strict: false,
         }),
-        loadOptions({
-          basedb,
-          siteId,
-          ids: optionId,
-          names: optionName.length ? optionName : ['Standard'],
-        }),
+        cacheLoaders.websiteOption({ siteId, ids: optionId, names: optionName.length ? optionName : ['Standard'] }),
       ]);
       if (!section) return false;
 
-      const descendantIds = sectionBubbling ? await getDescendantIds(section._id, basedb) : [];
+      const descendantIds = sectionBubbling
+        ? await cacheLoaders.websiteSectionDescendantIds({ sectionId: section._id })
+        : [];
 
       const now = new Date();
       const $elemMatch = {
@@ -940,7 +894,7 @@ module.exports = {
     /**
      *
      */
-    allPublishedContent: async (_, { input }, { basedb, site }, info) => {
+    allPublishedContent: async (_, { input }, { basedb, cacheLoaders, site }, info) => {
       const {
         since,
         after,
@@ -1002,7 +956,7 @@ module.exports = {
 
       let sectionIds = sectionId;
       if (sectionId && sectionBubbling) {
-        const descendantIds = await getDescendantIds(sectionId, basedb);
+        const descendantIds = await cacheLoaders.websiteSectionDescendantIds({ sectionId });
         if (descendantIds.length) {
           sectionIds = { $in: descendantIds };
         }
@@ -1365,7 +1319,7 @@ module.exports = {
      * - Expiring/expire before Aug 1: `before: Aug 1`
      *
      */
-    websiteExpiringContent: async (_, { input }, { basedb, site }, info) => {
+    websiteExpiringContent: async (_, { input }, { basedb, cacheLoaders, site }, info) => {
       const {
         before,
         after,
@@ -1383,17 +1337,8 @@ module.exports = {
 
       const siteId = input.siteId || site.id();
       const [section, options] = await Promise.all([
-        loadSection({
-          basedb,
-          siteId,
-          id: sectionId,
-        }),
-        loadOptions({
-          basedb,
-          siteId,
-          ids: optionId,
-          names: ['Standard'],
-        }),
+        cacheLoaders.websiteSection({ siteId, id: sectionId }),
+        cacheLoaders.websiteOption({ siteId, ids: optionId, names: ['Standard'] }),
       ]);
 
       const $elemMatch = {
@@ -1437,7 +1382,7 @@ module.exports = {
     /**
      *
      */
-    websiteScheduledContent: async (_, { input }, { basedb, site }, info) => {
+    websiteScheduledContent: async (_, { input }, { basedb, cacheLoaders, site }, info) => {
       const {
         sectionId,
         sectionAlias,
@@ -1467,22 +1412,12 @@ module.exports = {
 
       const siteId = input.siteId || site.id();
       const [section, options] = await Promise.all([
-        loadSection({
-          basedb,
-          siteId,
-          id: sectionId,
-          alias: sectionAlias,
-        }),
-        loadOptions({
-          basedb,
-          siteId,
-          ids: optionId,
-          names: optionName.length ? optionName : ['Standard'],
-        }),
+        cacheLoaders.websiteSection({ siteId, id: sectionId, alias: sectionAlias }),
+        cacheLoaders.websiteOption({ siteId, ids: optionId, names: optionName.length ? optionName : ['Standard'] }),
       ]);
 
       const descendantIds = sectionBubbling && section
-        ? await getDescendantIds(section._id, basedb) : [];
+        ? await cacheLoaders.websiteSectionDescendantIds({ sectionId: section._id }) : [];
 
       let sectionFilter = { $exists: true };
       if (hasSectionInput) {
