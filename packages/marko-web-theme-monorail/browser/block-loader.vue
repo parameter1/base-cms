@@ -1,10 +1,8 @@
 <template>
-  <div :class="classes">
+  <div class="lazyload">
     <div v-if="isLoading">
       Loading {{ label }}...
     </div>
-    <!-- eslint-disable-next-line vue/no-v-html -->
-    <div v-else-if="html" v-html="html" />
     <div v-if="error">
       <h5>Unable to load {{ label }} block.</h5>
       <p>{{ error.message }}</p>
@@ -32,9 +30,7 @@ export default {
   data: () => ({
     error: null,
     hasLoaded: false,
-    html: null,
     isLoading: false,
-    classes: ['lazyload'],
   }),
 
   created() {
@@ -50,8 +46,12 @@ export default {
           const input = JSON.stringify(this.input);
           const href = `/__render-block/${this.name}?input=${encodeURIComponent(input)}`;
           const res = await fetch(href, { credentials: 'same-origin' });
-          this.html = await res.text();
+          const html = await res.text();
           this.hasLoaded = true;
+          const template = document.createElement('template');
+          template.innerHTML = html;
+          const toInsert = template.content.firstChild;
+          this.$el.replaceWith(toInsert);
         } catch (e) {
           this.error = e;
         } finally {
