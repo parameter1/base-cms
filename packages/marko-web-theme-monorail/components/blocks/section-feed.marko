@@ -1,7 +1,5 @@
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
-import { getAsObject } from "@parameter1/base-cms-object-path";
 import queryFragment from "../../graphql/fragments/section-feed-block";
-import setSectionNameFromLabel from "../../utils/set-section-name-from-label";
 
 $ const queryName = input.queryName ? input.queryName : "website-scheduled-content";
 $ const queryParams = {
@@ -16,21 +14,7 @@ $ const queryParams = {
   },
 };
 
-$ const blockName = "section-feed";
 $ const countOnly = defaultValue(input.countOnly, false);
-$ const modifiers = defaultValue(input.modifiers, []);
-$ const lazyload = defaultValue(input.lazyload, true);
-$ const withSection = defaultValue(input.withSection, true);
-$ const withSponsored = defaultValue(input.withSponsored, false);
-
-$ const { nativeX: nxConfig } = out.global;
-$ const nativeX = getAsObject(input, "nativeX");
-$ const withNativeXSection = defaultValue(input.withNativeXSection, true);
-$ const setWithSection = (node, nxNode, withNativeXSection = true, nodeInput = {}) => {
-  if (nodeInput.withSection) return true;
-  if (!withNativeXSection) return false;
-  return node.id !== nxNode.id;
-};
 
 <if(countOnly)>
   <theme-query-total-count|data| name=queryName params=queryParams>
@@ -38,57 +22,21 @@ $ const setWithSection = (node, nxNode, withNativeXSection = true, nodeInput = {
   </theme-query-total-count>
 </if>
 <else>
-  <marko-web-query|{ nodes: returnedNodes }| name=queryName params=queryParams>
-    $ const nodes = withSponsored ? setSectionNameFromLabel({
-      nodes: returnedNodes,
-      label: "Sponsored",
-      sectionName: "Sponsored"
-    }) : returnedNodes;
-    <if(input.before)>
-      <${input.before.renderBody} />
-    </if>
-    <marko-web-node-list
-      inner-justified=true
-      flush-x=true
-      flush-y=false
-      modifiers=[blockName, ...modifiers]
+  <marko-web-query|{ nodes }| name=queryName params=queryParams>
+    <theme-section-feed-flow
+      nodes=nodes
       header=input.header
-      ...input.nodeList
-    >
-      <@nodes nodes=nodes>
-        <@slot|{ node, index }|>
-          <if(nxConfig)>
-            <marko-web-native-x-render|{ node: nxNode, linkAttrs, containerAttrs }|
-              ...nativeX
-              when=(index === nativeX.index || (nativeX.indexes && nativeX.indexes.includes(index)))
-              node=node
-              config=nxConfig
-            >
-              <theme-section-feed-content-node
-                ...input.node
-                display-image=input.displayImage
-                with-section=setWithSection(node, nxNode, withNativeXSection, input.node)
-                lazyload=lazyload
-                node=nxNode
-                attrs=containerAttrs
-                link-attrs=linkAttrs
-              />
-            </marko-web-native-x-render>
-          </if>
-          <else>
-            <theme-section-feed-content-node
-              with-section=withSection
-              ...input.node
-              node=node
-              display-image=input.displayImage
-              lazyload=lazyload
-            />
-          </else>
-        </@slot>
-      </@nodes>
-    </marko-web-node-list>
-    <if(input.after)>
-      <${input.after.renderBody} />
-    </if>
+      before=input.before
+      after=input.after
+      node=input.node
+      node-list=input.nodeList
+      display-image=input.displayImage
+      with-section=input.withSection
+      with-sponsored=input.withSponsored
+      lazyload=input.lazyload
+      modifiers=input.modifiers
+      native-x=input.nativeX
+      with-native-x-section=input.withNativeXSection
+    />
   </marko-web-query>
 </else>
