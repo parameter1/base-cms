@@ -21,82 +21,12 @@ app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
 app.use(CORS);
 app.options('*', CORS);
 
-const videoProvider = new Set([
-  '11Alive.com',
-  '12news.com',
-  'wMAZ',
-  'KUSA.com',
-  '6abc',
-  'Abc11',
-  'Abc13',
-  'Abc30',
-  'Abc3340',
-  'Abc7',
-  'Abc7chicago',
-  'Abc7news',
-  'Abc7ny',
-  'ABC News',
-  'Scrippsdigital',
-  'cbs8.com',
-  'Jwplayer',
-  'Kaltura',
-  'Jwplatform',
-  'fox43.com',
-  'Foxillinois',
-  'Katu',
-  'kens5.com',
-  'khou.com',
-  'ksdk.com',
-  'ktvb.com',
-  'abc10.com',
-  'kgw.com',
-  'king5.com',
-  'thv11.com',
-  'wfaa.com',
-  'wtol.com',
-  'Washingtonpost',
-  'Nbcwashington',
-  'Newschannel9',
-  'Cnbc',
-  'Brightcove',
-  'TMZ',
-  'Sinclairstoryline',
-  'azcentral',
-  'cantonrep',
-  'Cincinnati',
-  'courierpress',
-  'desmoinesregister',
-  'freep',
-  'jsonline',
-  'lansingstatejournal',
-  'lohud',
-  'news-press',
-  'northjersey',
-  'oklahoman',
-  'tennessean',
-  'usatoday',
-  'Lura',
-  '9c9media',
-  'wgrz.com',
-  'whas11.com',
-  'wua9.com',
-  '5newsonline.com',
-  'Cbsnews',
-  'Mail Online',
-  'firstcostnews.com',
-  'kare11.com',
-  'kiiitv.com',
-  'newscentermain.com',
-  'Viddler',
-  'wcnc.com',
-  'wthr.com',
-  'wwltv.com',
-]);
-
 const retrieveOembed = async ({ url, params }) => {
   const data = await embedly.oembed(url, params);
-  // Match on "valid video urls" and enforce providers.
-  if (url.match(/player|video/) && videoProvider.has(data.provider_name)) return { ...data, type: 'video' };
+  // If it returns as link return it as a video instead
+  if (data.type === 'link') {
+    return { ...data, url, type: 'video' };
+  }
   return data;
 };
 
