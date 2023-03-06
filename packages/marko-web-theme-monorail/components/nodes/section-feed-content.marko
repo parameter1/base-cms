@@ -25,9 +25,9 @@ $ const lazyload = defaultValue(input.lazyload, true);
   }
   Keys are content types (all lowercase), values are the field to use when available on that type.
 **/
-$ const linkOffsite = getAsObject(site, 'config.linkOffsite');
-$ const linkField = get(linkOffsite, get(content, 'type'));
-$ const linkTarget = linkField && get(content, linkField) ? defaultValue(get(linkOffsite, 'target'), '') : '';
+$ const linkOffsite = getAsObject(site, "config.linkOffsite");
+$ const linkField = get(linkOffsite, get(content, "type"));
+$ const linkTarget = linkField && get(content, linkField) ? defaultValue(get(linkOffsite, "target"), "") : "";
 
 $ const imageOptions = {
   w: 250,
@@ -102,10 +102,10 @@ $ const blockName = "section-feed-content-node";
   </marko-web-element>
   <if(displayImage && primaryImage.src)>
     <marko-web-element block-name=blockName name="image-wrapper">
-      $ const src = buildImgixUrl(primaryImage.src, imageOptions, null, get(primaryImage, 'isLogo'));
+      $ const src = buildImgixUrl(primaryImage.src, imageOptions, null, get(primaryImage, "isLogo"));
       $ const srcset = [src, `${buildImgixUrl(src, { dpr: 2 })} 2x`];
 
-      $ const srcMobile = buildImgixUrl(primaryImage.src, mobileImageOptions, null, get(primaryImage, 'isLogo'));
+      $ const srcMobile = buildImgixUrl(primaryImage.src, mobileImageOptions, null, get(primaryImage, "isLogo"));
       $ const srcsetMobile = [srcMobile, `${buildImgixUrl(srcMobile, { dpr: 2 })} 2x`];
       $ const link = linkField && get(content, linkField) ? get(content, linkField) : get(content, "siteContext.path");
       <marko-web-picture>
