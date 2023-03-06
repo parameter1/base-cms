@@ -40,10 +40,17 @@
       </@section>
 
       <@section>
-        <theme-section-feed-block alias="design">
-          <@header>Event more in Design!</@header>
-          <@query-params skip=4 limit=4 excludeContentIds=[12345678] />
-        </theme-section-feed-block>
+        <div class="row">
+          <div class="col-lg-8">
+            <theme-section-feed-block alias="design">
+              <@header>Even more in Design!</@header>
+              <@query-params skip=4 limit=8 excludeContentIds=[12345678] />
+            </theme-section-feed-block>
+          </div>
+          <div class="col-lg-4">
+            <theme-client-side-most-popular-list-block class="sticky-top" />
+          </div>
+        </div>
       </@section>
 
       <@section>
