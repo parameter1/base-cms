@@ -36,4 +36,5 @@ module.exports = cleanEnv(process.env, {
   CDN_ASSET_HOSTNAME: nonemptystr({ desc: 'The default CDN hostname for asset delivery', default: 'cdn.base.parameter1.com' }),
   IMAGE_IMPORT_URL: nonemptystr({ desc: 'The BASE image import URL.', default: 'https://opq20fu9p2.execute-api.us-east-1.amazonaws.com/default/base-media-importer' }),
   MOST_POPULAR_CONTENT_API_URL: nonemptystr({ desc: 'The most popular content API URL.', default: 'https://most-popular-content.base.parameter1.com' }),
+  USE_CACHE_LOADERS: bool({ desc: 'Whether to use Redis cache loaders for website section and option loading', default: true }),
 });
