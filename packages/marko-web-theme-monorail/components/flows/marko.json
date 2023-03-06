@@ -18,5 +18,24 @@
     "@class": "string",
     "@modifiers": "array",
     "@attrs": "object"
+  },
+  "<theme-section-feed-flow>": {
+    "template": "./section-feed.marko",
+    "<header>": {},
+    "<node>": {},
+    "<node-list>": {},
+    "@nodes": "array",
+    "@display-image": "boolean",
+    "@with-section": "boolean",
+    "@with-sponsored": "boolean",
+    "@lazyload": "boolean",
+    "@modifiers": "array",
+    "<native-x>": {
+      "@index": "number",
+      "@indexes": "array",
+      "@name": "string",
+      "@aliases": "array"
+    },
+    "@with-native-x-section": "boolean"
   }
 }

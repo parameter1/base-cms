@@ -21,6 +21,32 @@
       </@section>
 
       <@section>
+        <theme-query-total-count|{ totalCount }|
+          name="website-scheduled-content"
+          params={ sectionAlias: "design" }
+        >
+          Total Design Items: ${totalCount}
+        </theme-query-total-count>
+        <theme-section-feed-block alias="design">
+          <@header>More in Design!</@header>
+          <@query-params limit=4 excludeContentIds=[12345678] />
+          <@before>
+            <p>Before block</p>
+          </@before>
+          <@after>
+            <p>After block</p>
+          </@after>
+        </theme-section-feed-block>
+      </@section>
+
+      <@section>
+        <theme-section-feed-block alias="design">
+          <@header>Event more in Design!</@header>
+          <@query-params skip=4 limit=4 excludeContentIds=[12345678] />
+        </theme-section-feed-block>
+      </@section>
+
+      <@section>
         <theme-latest-content-list-block alias="products" modifiers=["incremented-nodes"] />
       </@section>
 

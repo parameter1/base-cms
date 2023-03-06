@@ -1,0 +1,65 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import { getAsArray, getAsObject } from "@parameter1/base-cms-object-path";
+import setSectionNameFromLabel from "../../utils/set-section-name-from-label";
+
+$ const blockName = "section-feed";
+$ const modifiers = defaultValue(input.modifiers, []);
+$ const lazyload = defaultValue(input.lazyload, true);
+$ const withSection = defaultValue(input.withSection, true);
+$ const withSponsored = defaultValue(input.withSponsored, false);
+
+$ const { nativeX: nxConfig } = out.global;
+$ const nativeX = getAsObject(input, "nativeX");
+$ const withNativeXSection = defaultValue(input.withNativeXSection, true);
+$ const setWithSection = (node, nxNode, withNativeXSection = true, nodeInput = {}) => {
+  if (nodeInput.withSection) return true;
+  if (!withNativeXSection) return false;
+  return node.id !== nxNode.id;
+};
+
+$ const nodes = withSponsored ? setSectionNameFromLabel({
+  nodes: getAsArray(input, "nodes"),
+  label: "Sponsored",
+  sectionName: "Sponsored"
+}) : getAsArray(input, "nodes");
+
+<marko-web-node-list
+  inner-justified=true
+  flush-x=true
+  flush-y=false
+  modifiers=[blockName, ...modifiers]
+  header=input.header
+  ...input.nodeList
+>
+  <@nodes nodes=nodes>
+    <@slot|{ node, index }|>
+      <if(nxConfig)>
+        <marko-web-native-x-render|{ node: nxNode, linkAttrs, containerAttrs }|
+          ...nativeX
+          when=(index === nativeX.index || (nativeX.indexes && nativeX.indexes.includes(index)))
+          node=node
+          config=nxConfig
+        >
+          <theme-section-feed-content-node
+            ...input.node
+            display-image=input.displayImage
+            with-section=setWithSection(node, nxNode, withNativeXSection, input.node)
+            lazyload=lazyload
+            node=nxNode
+            attrs=containerAttrs
+            link-attrs=linkAttrs
+          />
+        </marko-web-native-x-render>
+      </if>
+      <else>
+        <theme-section-feed-content-node
+          with-section=withSection
+          ...input.node
+          node=node
+          display-image=input.displayImage
+          lazyload=lazyload
+        />
+      </else>
+    </@slot>
+  </@nodes>
+</marko-web-node-list>
