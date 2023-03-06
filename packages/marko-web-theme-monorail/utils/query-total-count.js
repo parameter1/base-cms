@@ -56,7 +56,7 @@ const queryMap = {
 const date = (v) => (v instanceof Date ? v.valueOf() : v);
 
 const validate = (params) => {
-  const p = asObject(params);
+  const p = { ...asObject(params) };
   // Ref package web-common/src/block-loader/website-scheduled-content.js
   // If endingAfter set ending to the following and remove invalid endingAfter param
   if (p.endingAfter) {
