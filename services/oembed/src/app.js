@@ -21,9 +21,18 @@ app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
 app.use(CORS);
 app.options('*', CORS);
 
+const retrieveOembed = async ({ url, params }) => {
+  const data = await embedly.oembed(url, params);
+  // If it returns as link return it as a video instead
+  if (data.type === 'link') {
+    return { ...data, url };
+  }
+  return data;
+};
+
 app.post('/', asyncRoute(async (req, res) => {
   const { url, ...params } = req.body;
-  const data = await embedly.oembed(url, params);
+  const data = await retrieveOembed({ url, params });
   // post will set to cache, but not read from it
   await cache.setFor({ url, params, data });
   res.json(data);
@@ -41,7 +50,7 @@ app.get('/', asyncRoute(async (req, res) => {
     res.set('Age', cached.age);
     return res.json(cached.data);
   }
-  const data = await embedly.oembed(url, params);
+  const data = await retrieveOembed({ url, params });
   await cache.setFor({ url, params, data });
   return res.json(data);
 }));
