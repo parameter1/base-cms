@@ -1,17 +1,7 @@
 <!-- eslint-disable vue/no-v-html-->
 <template>
   <span
-    v-if="html"
-    :id="id"
-    class="lazyload"
-    :data-embed-type="attrs.type"
-    :data-oembed-type="oembedType"
-    :data-oembed-provider="provider"
-    :data-expand="expand"
-    v-html="html"
-  />
-  <span
-    v-else
+    v-if="oembedType === 'link'"
     :id="id"
     class="lazyload"
     :data-embed-type="attrs.type"
@@ -26,6 +16,16 @@
       frameborder="0"
     />
   </span>
+  <span
+    v-else
+    :id="id"
+    class="lazyload"
+    :data-embed-type="attrs.type"
+    :data-oembed-type="oembedType"
+    :data-oembed-provider="provider"
+    :data-expand="expand"
+    v-html="html"
+  />
 </template>
 
 <script>
