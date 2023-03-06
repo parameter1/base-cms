@@ -43,6 +43,7 @@ fragment SectionFeedBlockContentFragment on Content {
   ... on ContentEvent {
     startDate
     endDate
+    website
   }
 }
 
