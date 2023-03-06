@@ -22,8 +22,6 @@
   "<theme-section-feed-flow>": {
     "template": "./section-feed.marko",
     "<header>": {},
-    "<before>": {},
-    "<after>": {},
     "<node>": {},
     "<node-list>": {},
     "@nodes": "array",

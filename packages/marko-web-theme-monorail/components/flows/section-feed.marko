@@ -23,10 +23,6 @@ $ const nodes = withSponsored ? setSectionNameFromLabel({
   sectionName: "Sponsored"
 }) : getAsArray(input, "nodes");
 
-<if(input.before)>
-  <${input.before.renderBody} />
-</if>
-
 <marko-web-node-list
   inner-justified=true
   flush-x=true
@@ -67,7 +63,3 @@ $ const nodes = withSponsored ? setSectionNameFromLabel({
     </@slot>
   </@nodes>
 </marko-web-node-list>
-
-<if(input.after)>
-  <${input.after.renderBody} />
-</if>

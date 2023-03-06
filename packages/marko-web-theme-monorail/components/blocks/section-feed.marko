@@ -23,11 +23,12 @@ $ const countOnly = defaultValue(input.countOnly, false);
 </if>
 <else>
   <marko-web-query|{ nodes }| name=queryName params=queryParams>
+    <if(input.before)>
+      <${input.before.renderBody} />
+    </if>
     <theme-section-feed-flow
       nodes=nodes
       header=input.header
-      before=input.before
-      after=input.after
       node=input.node
       node-list=input.nodeList
       display-image=input.displayImage
@@ -38,5 +39,8 @@ $ const countOnly = defaultValue(input.countOnly, false);
       native-x=input.nativeX
       with-native-x-section=input.withNativeXSection
     />
+    <if(input.after)>
+      <${input.after.renderBody} />
+    </if>
   </marko-web-query>
 </else>
