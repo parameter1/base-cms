@@ -25,7 +25,7 @@ const retrieveOembed = async ({ url, params }) => {
   const data = await embedly.oembed(url, params);
   // If it returns as link return it as a video instead
   if (data.type === 'link') {
-    return { ...data, url, type: 'video' };
+    return { ...data, url, };
   }
   return data;
 };
