@@ -93,12 +93,12 @@ const videoProvider = new Set([
   'wwltv.com',
 ]);
 
-const retrieveOembed = async ({url, params}) => {
+const retrieveOembed = async ({ url, params }) => {
   const data = await embedly.oembed(url, params);
   // Match on "valid video urls" and enforce providers.
   if (url.match(/player|video/) && videoProvider.has(data.provider_name)) return { ...data, type: 'video' };
   return data;
-}
+};
 
 app.post('/', asyncRoute(async (req, res) => {
   const { url, ...params } = req.body;
