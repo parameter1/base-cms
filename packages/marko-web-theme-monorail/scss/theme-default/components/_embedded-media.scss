@@ -57,7 +57,7 @@ p [data-embed-type] {
   display: none;
 }
 
-[data-oembed-type="video"] {
+[data-oembed-type="video"], [data-oembed-type="link"] {
   @extend .embed-responsive;
   @extend .embed-responsive-16by9;
 }
