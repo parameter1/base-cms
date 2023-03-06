@@ -10,7 +10,8 @@
     :data-expand="expand"
     v-html="html"
   />
-  <span v-else
+  <span
+    v-else
     :id="id"
     class="lazyload"
     :data-embed-type="attrs.type"
@@ -18,7 +19,7 @@
     :data-oembed-provider="provider"
     :data-expand="expand"
   >
-      <iframe
+    <iframe
       :src="oembedUrl"
       width="100%"
       height="100%"
