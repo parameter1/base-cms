@@ -58,10 +58,7 @@ jobs:
     with:
       ecr_registry: \${{ vars.AWS_ECR_REGISTRY }}
       docker_image: \${{ vars.AWS_ECR_REGISTRY }}/base-cms-websites-staging:\${{ matrix.site.account }}-\${{ matrix.site.dir }}-\${{ needs.version.outputs.version }}
-      site_id: \${{ matrix.site.id }}
       site_host: \${{ matrix.site.dir }}
-      infra_stack: \${{ matrix.site.stack }}
-      tenant_key: \${{ matrix.site.tenant }}
       push: true
     secrets: inherit
 

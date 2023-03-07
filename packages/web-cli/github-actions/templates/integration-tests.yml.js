@@ -20,9 +20,6 @@ jobs:
         ###############################################
     with:
       docker_image: website-\${{ matrix.site.dir }}
-      site_id: \${{ matrix.site.id }}
       site_host: \${{ matrix.site.dir }}
-      infra_stack: \${{ matrix.site.stack }}
-      tenant_key: \${{ matrix.site.tenant }}
       ecr_registry: \${{ vars.AWS_ECR_REGISTRY }}
 `;
