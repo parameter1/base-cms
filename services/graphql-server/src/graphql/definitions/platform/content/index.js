@@ -553,6 +553,8 @@ input AllPublishedContentQueryInput {
   ending: ContentEndingInput = {}
   "Limit results using the updated (modified) date."
   updated: ContentUpdatedInput = {}
+  "Whether the query should be optimized for RSS."
+  rssOptimized: Boolean
 }
 
 input AllPublishedContentDatesQueryInput {
@@ -702,6 +704,8 @@ input WebsiteScheduledContentQueryInput {
   ending: ContentEndingInput = {}
   "Limit results using the updated (modified) date."
   updated: ContentUpdatedInput = {}
+  "Whether the query should be optimized for RSS."
+  rssOptimized: Boolean
 }
 
 input RelatedPublishedContentQueryInput {
