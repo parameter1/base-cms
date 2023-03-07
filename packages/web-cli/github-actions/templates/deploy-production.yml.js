@@ -77,6 +77,7 @@ jobs:
         ###############################################
     with:
       docker_image: \${{ vars.AWS_ECR_REGISTRY }}/base-cms-websites:\${{ matrix.site.account }}-\${{ matrix.site.dir }}-\${{ needs.version.outputs.version }}
+      cdn_path: web-assets/\${{ matrix.site.tenant }}/\${{ matrix.site.id }}/\${{ needs.version.outputs.version }}
       infra_stack: \${{ matrix.site.stack }}
       rancher_label_key: basecms-website
       rancher_label_val: \${{ matrix.site.rancher_label }}
