@@ -119,7 +119,11 @@ module.exports = (config = {}) => {
   app.use(websiteContext(app.locals.config));
 
   // Load CDN info before dist loading (but after the website context).
-  app.use(cdn({ enabled: process.env.NODE_ENV === 'production', siteVersion: sitePackage.version }));
+  app.use(cdn({
+    enabled: ['true', '1'].includes(process.env.USE_ASSET_CDN),
+    origin: process.env.ASSET_CDN_ORIGIN || 'https://cdn.parameter1.com',
+    siteVersion: sitePackage.version,
+  }));
   // Register the Marko middleware.
   app.use(markoMiddleware());
   app.use(purgedCSS());
