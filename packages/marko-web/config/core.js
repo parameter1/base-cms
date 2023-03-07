@@ -1,22 +1,7 @@
 const { get } = require('@parameter1/base-cms-object-path');
 const AbstractConfig = require('./abstract-config');
-const distLoader = require('./dist-loader');
 
 class CoreConfig extends AbstractConfig {
-  /**
-   *
-   * @param {object} config
-   */
-  constructor(config) {
-    super(config);
-    const distDir = this.get('distDir');
-    this.assetLoader = {
-      js: distLoader({ distDir, type: 'js', entry: 'browser/index.js' }),
-      css: distLoader({ distDir, type: 'css', entry: 'server/styles/index.scss' }),
-      purgedcss: distLoader({ distDir, type: 'purgedcss', entry: 'server/styles/index.scss' }),
-    };
-  }
-
   setWebsiteContext(context) {
     this.websiteContext = context;
   }
@@ -57,32 +42,6 @@ class CoreConfig extends AbstractConfig {
    */
   siteName() {
     return this.website('name', '');
-  }
-
-  sources() {
-    const js = this.assetLoader.js();
-    return [js];
-  }
-
-  styles({ embedded = false } = {}) {
-    const css = this.assetLoader.css({ embedded });
-    return embedded ? css : [css];
-  }
-
-  purgedStyles({ embedded = false } = {}) {
-    try {
-      const purgedcss = this.assetLoader.purgedcss({ embedded });
-      return embedded ? purgedcss : [purgedcss];
-    } catch (e) {
-      const { message } = e;
-      if (/unable to load the asset manifest for type purgedcss/i.test(message) || /unable to extract an asset for type purgedcss/i.test(message)) {
-        process.emitWarning('The purged CSS assets have not been built! Falling back to normal styles', {
-          code: 'MISSING_PURGED_CSS_ASSETS',
-        });
-        return this.styles({ embedded });
-      }
-      throw e;
-    }
   }
 }
 
