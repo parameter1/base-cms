@@ -124,7 +124,6 @@ module.exports = (config = {}) => {
 
   // Serve static assets
   app.use('/dist/css', express.static(`${distDir}/css`, { maxAge: '2y', immutable: true }));
-  app.use('/dist/js/lazysizes', express.static(path.resolve(__dirname, '../public/lazysizes'), { maxAge: '2y', immutable: true }));
   app.use('/dist/js', express.static(`${distDir}/js`, { maxAge: '2y', immutable: true }));
   app.use('/dist', express.static(distDir));
 
