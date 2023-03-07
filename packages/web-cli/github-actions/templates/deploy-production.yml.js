@@ -84,6 +84,6 @@ jobs:
       site_dir: \${{ matrix.site.dir }}
       site_id: \${{ matrix.site.id }}
       tenant: \${{ matrix.site.tenant }}
-      version: \${{ matrix.site.version }}
+      version: \${{ needs.version.outputs.version }}
     secrets: inherit
 `;
