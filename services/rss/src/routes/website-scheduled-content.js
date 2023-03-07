@@ -43,7 +43,9 @@ module.exports = asyncRoute(async (req, res) => {
     mountHref,
   } = res.locals;
 
-  const { data } = await apollo.query({ query, variables: { input } });
+  const { data } = await apollo.query({
+    query, variables: { input: { ...input, rssOptimized: true } },
+  });
   const { section, edges } = data.websiteScheduledContent;
 
   const parts = [

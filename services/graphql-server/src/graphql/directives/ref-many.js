@@ -1,5 +1,7 @@
 const { SchemaDirectiveVisitor } = require('graphql-tools');
 const { BaseDB } = require('@parameter1/base-cms-db');
+const { createEmptyResponse } = require('@parameter1/base-cms-db/src/paginate/utils');
+const cursor = require('@parameter1/base-cms-db/src/paginate/cursor');
 const { UserInputError } = require('apollo-server-express');
 const formatStatus = require('../utils/format-status');
 const criteriaFor = require('../utils/criteria-for');
@@ -37,7 +39,17 @@ class RefManyDirective extends SchemaDirectiveVisitor {
       const refs = BaseDB.get(doc, fieldName);
       if (!refs) return BaseDB.paginateEmpty();
 
-      const ids = BaseDB.extractRefIds(isArray(refs) ? refs : [refs]);
+      // check if the ref manies were preloaded.
+      const toCheck = isArray(refs) ? refs : [refs];
+      if (toCheck.every((o) => o && o._id)) {
+        // return as-is when preloaded.
+        return {
+          ...createEmptyResponse(),
+          edges: () => toCheck.map((node) => ({ node, cursor: () => cursor.encode(node._id) })),
+          totalCount: () => toCheck.length,
+        };
+      }
+      const ids = BaseDB.extractRefIds(toCheck);
       if (!ids.length) return BaseDB.paginateEmpty();
 
       const {

@@ -39,6 +39,7 @@ const googleDataApiClient = require('../../../google-data-api-client');
 const SiteContext = require('../../../site-context');
 const { validateYoutubePlaylistId, validateYoutubeChannelId, validateYoutubeUsername } = require('../../utils/youtube');
 const { MOST_POPULAR_CONTENT_API_URL } = require('../../../env');
+const optimizeForRss = require('../../utils/optimize-for-rss');
 
 const retrieveYoutubePlaylistId = async ({ youtube }) => {
   const playlistId = get(youtube, 'playlistId');
@@ -915,6 +916,7 @@ module.exports = {
         customAttributes,
         updated,
         requiresIndexed,
+        rssOptimized,
       } = input;
 
       // @deprecated Prefer includeContentTypes over contentTypes.
@@ -975,12 +977,14 @@ module.exports = {
       }
 
       const projection = connectionProjection(info);
-      return basedb.paginate('platform.Content', {
+      const paginated = await basedb.paginate('platform.Content', {
         query,
         sort,
         projection,
         ...pagination,
       });
+      if (!rssOptimized) return paginated;
+      return optimizeForRss(paginated, { basedb, info });
     },
 
     /**
@@ -1380,7 +1384,10 @@ module.exports = {
     },
 
     /**
-     *
+     * @param {object} root
+     * @param {object} args
+     * @param {object} contextValue
+     * @param {import("graphql").GraphQLResolveInfo} info
      */
     websiteScheduledContent: async (_, { input }, { basedb, cacheLoaders, site }, info) => {
       const {
@@ -1403,6 +1410,7 @@ module.exports = {
         beginning,
         ending,
         updated,
+        rssOptimized,
       } = input;
 
       if (sectionId && sectionAlias) throw new UserInputError('You cannot provide both sectionId and sectionAlias as input.');
@@ -1471,7 +1479,7 @@ module.exports = {
 
       if (!query.$and.length) delete query.$and;
 
-      return basedb.paginate('platform.Content', {
+      const paginated = await basedb.paginate('platform.Content', {
         query,
         sort,
         projection,
@@ -1480,6 +1488,8 @@ module.exports = {
         ...pagination,
         collate: input.sort.field === 'name',
       });
+      if (!rssOptimized) return paginated;
+      return optimizeForRss(paginated, { basedb, info });
     },
 
     newsletterScheduledContent: async (_, { input }, { basedb, site }, info) => {
