@@ -19,7 +19,7 @@ const getRelPathFromManifest = async ({ distDir, type, entry }) => {
 
   const asset = manifest[entry];
   if (!asset) throw new Error(`Unable to extract an asset for type ${type} using manifest entry ${entry}`);
-  return `dist/${type}/${asset.file}`;
+  return `${type}/${asset.file}`;
 };
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -46,7 +46,7 @@ module.exports = ({ distDir }) => asyncRoute(async (req, res, next) => {
   }));
 
   assets.files = rels.reduce((map, { type, rel }) => {
-    const href = cdn.enabled ? `${cdn.url}/${rel}` : `/${rel}`;
+    const href = cdn.dist(rel);
     map.set(type, [href]);
     return map;
   }, new Map());
