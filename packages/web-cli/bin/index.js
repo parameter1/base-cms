@@ -51,7 +51,6 @@ const commands = new Set(['build', 'build:css', 'build:js', 'build:ssr', 'dev', 
       // defaults to what the site repos normally use.
       compileDirs: getArrayValuesFor('compile-dir'),
       cleanCompiledFiles: clean == null ? true : clean,
-      purgeCSS: Boolean(argv['purge-css']),
       purgeCSSContentDirs: getArrayValuesFor('purge-css-content-dir'),
     };
     log(`beginning '${blue('build')}' server with options`, opts);
@@ -67,7 +66,6 @@ const commands = new Set(['build', 'build:css', 'build:js', 'build:ssr', 'dev', 
       cwd,
       entry,
       watch: argv.watch,
-      purge: Boolean(argv.purge),
       purgeContentDirs: getArrayValuesFor('purge-content-dir'),
     });
     return exit(`command '${blue(command)}' ${green('complete')}`);
