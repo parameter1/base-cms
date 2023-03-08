@@ -5,6 +5,7 @@ $ const {
   req,
   usePurgedCSS,
   embedCSS,
+  assets,
 } = out.global;
 
 $ const dir = input.dir || "ltr";
@@ -19,9 +20,11 @@ $ const wrapper = getAsObject(input, "bodyWrapper");
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content=viewport>
 
+    <link rel="preconnect" href="https://cdn.parameter1.com">
+
     <marko-web-deferred-script-loader-init />
 
-    <for|src| of=config.sources()>
+    <for|src| of=assets.files.get("js")>
       <marko-web-deferred-script-loader-register
         name="marko-web-core"
         src=src
@@ -44,15 +47,9 @@ $ const wrapper = getAsObject(input, "bodyWrapper");
     <script nomodule src="https://cdnjs.cloudflare.com/ajax/libs/picturefill/3.0.3/picturefill.min.js" async></script>
 
     <!-- load styles -->
-    $ const loadStyles = usePurgedCSS ? config.purgedStyles.bind(config) : config.styles.bind(config);
-    <if(embedCSS)>
-      <style>${loadStyles({ embedded: true })}</style>
-    </if>
-    <else>
-      <for|href| of=loadStyles()>
-        <link rel="stylesheet" href=href />
-      </for>
-    </else>
+    <for|href| of=assets.files.get("css")>
+      <link rel="stylesheet" href=href />
+    </for>
 
     <${input.head} />
   </head>

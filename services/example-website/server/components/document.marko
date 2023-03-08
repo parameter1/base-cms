@@ -1,14 +1,14 @@
 import createOmedaIdentityBuilder from "@parameter1/base-cms-marko-web-p1-events/utils/create-omeda-identity-builder";
 import omedaConfig from "../../config/omeda";
 
-$ const { nativeX } = out.global;
+$ const { nativeX, cdn } = out.global;
 
 <marko-web-document ...input>
   <@head>
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href=cdn.public("/apple-touch-icon.png")>
+    <link rel="icon" type="image/png" sizes="32x32" href=cdn.public("/favicon-32x32.png")>
+    <link rel="icon" type="image/png" sizes="16x16" href=cdn.public("/favicon-16x16.png")>
+    <link rel="manifest" href=cdn.public("/site.webmanifest")>
 
     <marko-web-typekit-font id="eae7fel" />
     <marko-web-google-font family="Open+Sans:wght@300;400;500;600;700" />
