@@ -11,10 +11,16 @@ const { USE_CACHE_LOADERS } = require('../env');
  * @param {BaseDB} params.basedb
  * @param {object} params.query
  * @param {boolean} params.strict
+ * @param {boolean} params.withDescendantIds
  */
-const loadFromDb = ({ basedb, query, strict }) => {
+const loadFromDb = ({
+  basedb,
+  query,
+  strict,
+  withDescendantIds,
+}) => {
   const type = 'website.Section';
-  const projection = { _id: 1 };
+  const projection = { _id: 1, ...(withDescendantIds && { descendantIds: 1 }) };
   if (strict) {
     return basedb.strictFindOne(type, query, { projection });
   }
@@ -43,6 +49,7 @@ module.exports = ({
     id,
     alias,
     strict = true,
+    withDescendantIds = false,
   }) => {
     if (!id && !alias) return null;
 
@@ -61,6 +68,8 @@ module.exports = ({
       query._id = id;
     }
 
+    if (withDescendantIds) keyParts.push('with-descendant-ids');
+
     const getFromCache = async (key) => {
       if (!USE_CACHE_LOADERS) return null;
       return redis.get(key);
@@ -68,7 +77,12 @@ module.exports = ({
 
     const loadAndSet = async (key) => {
       const now = Date.now();
-      const data = await loadFromDb({ basedb, query, strict });
+      const data = await loadFromDb({
+        basedb,
+        query,
+        strict,
+        withDescendantIds,
+      });
       if (USE_CACHE_LOADERS) {
         redis.set(key, JSON.stringify({ data, ts: now }), 'EX', 60 * 60 * 24 * 365).catch((e) => {
           if (typeof onCacheError === 'function') onCacheError(e);

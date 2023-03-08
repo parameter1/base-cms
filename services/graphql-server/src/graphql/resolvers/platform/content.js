@@ -661,15 +661,13 @@ module.exports = {
           id: sectionId,
           alias: sectionAlias,
           strict: false,
+          withDescendantIds: sectionBubbling,
         }),
         cacheLoaders.websiteOption({ siteId, ids: optionId, names: optionName.length ? optionName : ['Standard'] }),
       ]);
       if (!section) return false;
 
-      const descendantIds = sectionBubbling
-        ? await cacheLoaders.websiteSectionDescendantIds({ sectionId: section._id })
-        : [];
-
+      const descendantIds = getAsArray(section, 'descendantIds');
       const now = new Date();
       const $elemMatch = {
         sectionId: descendantIds.length ? { $in: descendantIds } : section._id,
@@ -1420,13 +1418,16 @@ module.exports = {
 
       const siteId = input.siteId || site.id();
       const [section, options] = await Promise.all([
-        cacheLoaders.websiteSection({ siteId, id: sectionId, alias: sectionAlias }),
+        cacheLoaders.websiteSection({
+          siteId,
+          id: sectionId,
+          alias: sectionAlias,
+          withDescendantIds: sectionBubbling,
+        }),
         cacheLoaders.websiteOption({ siteId, ids: optionId, names: optionName.length ? optionName : ['Standard'] }),
       ]);
 
-      const descendantIds = sectionBubbling && section
-        ? await cacheLoaders.websiteSectionDescendantIds({ sectionId: section._id }) : [];
-
+      const descendantIds = getAsArray(section, 'descendantIds');
       let sectionFilter = { $exists: true };
       if (hasSectionInput) {
         sectionFilter = descendantIds.length ? { $in: descendantIds } : section._id;
