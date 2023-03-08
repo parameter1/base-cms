@@ -250,14 +250,9 @@
   $breakpoint: $theme-responsive-text-max-lines-breakpoint,
 ) {
   display: -webkit-box;
-  max-height: ($font-size * $line-height) * $num;
   overflow: hidden;
-  text-overflow: $text-overflow;
   -webkit-line-clamp: $num;
   -webkit-box-orient: vertical;
-  @include media-breakpoint-down($breakpoint) {
-    max-height: ($font-size-sm * $line-height-sm) * $num;
-  }
 }
 // stylelint-enable value-no-vendor-prefix, property-no-vendor-prefix
 
