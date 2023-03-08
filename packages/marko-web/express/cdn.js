@@ -5,17 +5,18 @@ module.exports = ({ enabled = false, origin, siteVersion } = {}) => (req, res, n
   const url = `${cleanPath(origin)}/web-assets/${tenantKey}/${config.website('id')}/v${siteVersion}`;
   const isEnabled = enabled || ['true', '1'].includes(req.query.cdn);
 
-  const href = (prefix, path) => {
-    const cleaned = prefix ? `${prefix}/${cleanPath(path)}` : cleanPath(path);
-    return isEnabled ? `${url}/${cleaned}` : `/${cleaned}`;
-  };
-
   res.locals.cdn = {
     enabled: isEnabled,
     origin,
     url,
-    dist: (path) => href('dist', path),
-    public: (path) => href('', path),
+    dist: (path) => {
+      const cleaned = `dist/${cleanPath(path)}`;
+      return isEnabled ? `${url}/${cleaned}` : `/${cleaned}`;
+    },
+    public: (path) => {
+      const cleaned = cleanPath(path);
+      return isEnabled ? `${url}/public/${cleaned}` : `/${cleaned}`;
+    },
   };
   next();
 };
