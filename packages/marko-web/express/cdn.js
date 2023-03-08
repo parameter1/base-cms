@@ -6,8 +6,8 @@ module.exports = ({ enabled = false, origin, siteVersion } = {}) => (req, res, n
   const isEnabled = enabled || ['true', '1'].includes(req.query.cdn);
 
   const href = (prefix, path) => {
-    const cleaned = cleanPath(path);
-    return isEnabled ? `${url}/${prefix}/${cleaned}` : `/${prefix}/${cleaned}`;
+    const cleaned = prefix ? `${prefix}/${cleanPath(path)}` : cleanPath(path);
+    return isEnabled ? `${url}/${cleaned}` : `/${cleaned}`;
   };
 
   res.locals.cdn = {
@@ -15,7 +15,7 @@ module.exports = ({ enabled = false, origin, siteVersion } = {}) => (req, res, n
     origin,
     url,
     dist: (path) => href('dist', path),
-    public: (path) => href('public', path),
+    public: (path) => href('', path),
   };
   next();
 };
