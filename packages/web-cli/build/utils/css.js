@@ -38,6 +38,8 @@ const buildOptions = ({ input, watch, css }) => ({
   mode: 'production',
   clearScreen: false,
   logLevel: 'warn',
+  // do not minify, otherwise critical and purge comments aren't properly passed through.
+  esbuild: { minifySyntax: false },
   build: {
     rollupOptions: { input },
     assetsDir: '.',
