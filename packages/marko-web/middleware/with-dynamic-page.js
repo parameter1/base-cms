@@ -2,6 +2,7 @@ const { get } = require('@parameter1/base-cms-object-path');
 const { asyncRoute, isFunction: isFn } = require('@parameter1/base-cms-utils');
 const { dynamicPage: loader } = require('@parameter1/base-cms-web-common/page-loaders');
 const { blockDynamicPage: queryFactory } = require('@parameter1/base-cms-web-common/query-factories');
+const setRouteKind = require('@parameter1/base-cms-marko-express/utils/set-route-kind');
 const PageNode = require('./page-node');
 const applyQueryParams = require('../utils/apply-query-params');
 
@@ -15,6 +16,9 @@ module.exports = ({
   const { apollo, query } = req;
 
   const page = await loader(apollo, { alias });
+
+  setRouteKind(res, { kind: 'dynamic-page', type: alias });
+
   const { redirectTo } = page;
   const path = get(page, 'siteContext.path');
   if (redirectTo) {

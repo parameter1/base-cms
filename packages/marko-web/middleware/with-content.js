@@ -2,6 +2,7 @@ const { get } = require('@parameter1/base-cms-object-path');
 const { asyncRoute, isFunction: isFn } = require('@parameter1/base-cms-utils');
 const { content: loader } = require('@parameter1/base-cms-web-common/page-loaders');
 const { blockContent: queryFactory } = require('@parameter1/base-cms-web-common/query-factories');
+const setRouteKind = require('@parameter1/base-cms-marko-express/utils/set-route-kind');
 const PageNode = require('./page-node');
 const buildContentInput = require('../utils/build-content-input');
 const applyQueryParams = require('../utils/apply-query-params');
@@ -22,6 +23,9 @@ module.exports = ({
 
   const additionalInput = buildContentInput({ req });
   const content = await loader(apollo, { id, additionalInput, queryFragment: loaderQueryFragment });
+
+  // set the route kind
+  setRouteKind(res, { kind: 'content', type: content.type });
   const redirectTo = isFn(redirectToFn) ? redirectToFn({ content }) : content.redirectTo;
   const path = isFn(pathFn) ? pathFn({ content }) : get(content, 'siteContext.path');
 
