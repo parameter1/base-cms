@@ -7,7 +7,7 @@ const {
   buildMain,
   buildManifest,
   buildPurged,
-  getCSSFromOutput,
+  getMainCSSFromOutput,
   logBuildStep,
   minify,
   write,
@@ -81,7 +81,7 @@ module.exports = async ({
           dir: path.resolve(cwd, dir),
         });
 
-        const main = getCSSFromOutput(output);
+        const main = getMainCSSFromOutput(output);
         const written = await build({ main });
 
         // clean old files

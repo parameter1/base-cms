@@ -49,11 +49,10 @@ const createHash = (source) => {
  * @param {OutputAsset[]} output
  * @returns {CSSOutputAsset}
  */
-const getCSSFromOutput = (output) => {
+const getMainCSSFromOutput = (output) => {
   const chunk = output[0];
-  const { name, source } = chunk;
-  const key = path.basename(name, path.extname(name));
-  return { key, source, embedded: false };
+  const { source } = chunk;
+  return { key: 'main', source, embedded: false };
 };
 
 /**
@@ -81,7 +80,7 @@ const buildMain = async ({ cwd, entry, watch }) => {
   });
   if (watch) return result;
   const { output } = result;
-  return getCSSFromOutput(output);
+  return getMainCSSFromOutput(output);
 };
 
 /**
@@ -261,7 +260,7 @@ module.exports = {
   buildMain,
   buildManifest,
   buildPurged,
-  getCSSFromOutput,
+  getMainCSSFromOutput,
   logBuildStep,
   minify,
   write,

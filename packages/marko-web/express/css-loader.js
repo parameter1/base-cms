@@ -16,13 +16,11 @@ const readManifest = async (loc) => {
 
 /**
  * @typedef {import("@parameter1/base-cms-web-cli/build/utils/css.js")
- *  .FormattedOutputAsset} FormattedOutputAsset
- * @typedef {import("@parameter1/base-cms-web-cli/build/utils/css.js")
- *  .CSSOutputTarget} CSSOutputTarget
+ *  .WrittenCSSOutputAsset} WrittenCSSOutputAsset
  *
  * @param {object} params
  * @param {string} params.distDir
- * @returns {Promise<FormattedOutputAsset[]>}
+ * @returns {Promise<WrittenCSSOutputAsset[]>}
  */
 const loadManifestEntries = async ({ distDir }) => {
   const file = path.resolve(distDir, 'css', 'manifest.json');
@@ -43,9 +41,9 @@ module.exports = ({ distDir }) => asyncRoute(async (req, res, next) => {
   const { css } = app.locals;
 
   // determine the current CSS mode
-  // use the env first and fallback to all.
-  let mode = process.env.CSS_MODE || 'all';
-  if (!modes.has(mode)) mode = 'all';
+  // use the env first and fallback to main (all).
+  let mode = process.env.CSS_MODE || 'main';
+  if (!modes.has(mode)) mode = 'main';
 
   // then allow the request query or a cookie to override this.
   const key = '__css';
