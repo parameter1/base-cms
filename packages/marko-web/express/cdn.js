@@ -3,7 +3,12 @@ const { cleanPath } = require('@parameter1/base-cms-utils');
 module.exports = ({ enabled = false, origin, siteVersion } = {}) => (req, res, next) => {
   const { config, tenantKey } = req.app.locals;
   const url = `${cleanPath(origin)}/web-assets/${tenantKey}/${config.website('id')}/v${siteVersion}`;
-  const isEnabled = enabled || ['true', '1'].includes(req.query.cdn);
+
+  const key = '__cdn';
+  const values = new Set(['true', '1']);
+  let isEnabled = enabled;
+  if (values.has(req.query[key])) isEnabled = true;
+  if (values.has(req.cookies[key])) isEnabled = true;
 
   res.locals.cdn = {
     enabled: isEnabled,
