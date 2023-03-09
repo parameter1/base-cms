@@ -179,24 +179,27 @@ const write = async ({ cwd, dir, assets }) => {
 
   return Promise.all(eligible.map(async (asset) => {
     const { source, ...rest } = asset;
-    const hash = createHash(source);
+
+    // ensure charset is present. critical files will likely drop this.
+    const s = /^@charset/.test(source) ? source : `@charset "UTF-8";${source}`;
+    const hash = createHash(s);
     const file = `${asset.key}-${hash}.css`;
 
     const compressed = await new Promise((resolve, reject) => {
-      gzip(source, (err, r) => {
+      gzip(s, (err, r) => {
         if (err) return reject(err);
         return resolve(r);
       });
     });
 
     const absolute = path.resolve(cwd, dir, file);
-    await writeFile(absolute, source, 'utf8');
+    await writeFile(absolute, s, 'utf8');
 
     return {
       ...rest,
       embedded: Boolean(asset.embedded),
       file,
-      size: source.length,
+      size: s.length,
       compressed: compressed.length,
     };
   }));
