@@ -9,6 +9,8 @@ const content = require('../templates/content');
 const section = require('../templates/section');
 const leaders = require('../templates/leaders');
 
+const dynamicPages = require('./dynamic-page');
+
 const queryFragment = require('../../graphql/fragments/content-page');
 const sectionFragment = require('../../graphql/fragments/website-section-page');
 
@@ -24,6 +26,9 @@ module.exports = (app, config) => {
   app.get('/', (_, res) => {
     res.marko(index);
   });
+
+  // pages
+  dynamicPages(app);
 
   // Content
   print(app, queryFragment);
