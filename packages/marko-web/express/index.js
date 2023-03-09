@@ -14,7 +14,7 @@ const loadDocument = require('./load-document');
 const oembed = require('./oembed');
 const cdn = require('./cdn');
 const assetLoader = require('./asset-loader');
-const css = require('./css');
+const cssLoader = require('./css');
 const rss = require('./rss');
 const sitemaps = require('./sitemaps');
 const { version } = require('../package.json');
@@ -119,17 +119,17 @@ module.exports = (config = {}) => {
   // Set website context.
   app.use(websiteContext(app.locals.config));
 
-  // Load CDN info before dist loading (but after the website context).
+  // Load CDN info before dist and CSS loading (but after the website context).
   app.use(cdn({
     enabled: ['true', '1'].includes(process.env.USE_ASSET_CDN),
     origin: process.env.ASSET_CDN_ORIGIN || 'https://cdn.parameter1.com',
     siteVersion: sitePackage.version,
   }));
+  app.use(cssLoader({ distDir }));
   app.use(assetLoader({ distDir }));
 
   // Register the Marko middleware.
   app.use(markoMiddleware());
-  app.use(css());
   app.use(cleanMarkoResponse());
 
   // Serve static assets

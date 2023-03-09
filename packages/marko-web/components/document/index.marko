@@ -1,6 +1,11 @@
 import { getAsObject } from "@parameter1/base-cms-object-path";
 
-$ const { config, req, assets } = out.global;
+$ const {
+  config,
+  req,
+  assets,
+  css,
+} = out.global;
 
 $ const dir = input.dir || "ltr";
 $ const lang = input.lang || config.website("language.code", "en-us");
@@ -15,6 +20,18 @@ $ const wrapper = getAsObject(input, "bodyWrapper");
     <meta name="viewport" content=viewport>
 
     <link rel="preconnect" href="https://cdn.parameter1.com">
+
+    <!-- load styles -->
+    <if(["all", "purged"].includes(css.mode))>
+      <link rel="stylesheet" href=css.files.get(css.mode) />
+    </if>
+    <else>
+      <style>${css.contents}</style>
+      <if(css.mode === "optimized")>
+        <link rel="preload" href=css.files.get(css.mode) as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href=css.files.get(css.mode)></noscript>
+      </if>
+    </else>
 
     <marko-web-deferred-script-loader-init />
 
@@ -39,11 +56,6 @@ $ const wrapper = getAsObject(input, "bodyWrapper");
       document.createElement("picture");
     </script>
     <script nomodule src="https://cdnjs.cloudflare.com/ajax/libs/picturefill/3.0.3/picturefill.min.js" async></script>
-
-    <!-- load styles -->
-    <for|href| of=assets.files.get("css")>
-      <link rel="stylesheet" href=href />
-    </for>
 
     <${input.head} />
   </head>
