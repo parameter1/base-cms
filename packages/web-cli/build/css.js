@@ -75,6 +75,7 @@ module.exports = async ({
     const { code } = event;
     if (code === 'BUNDLE_START') logBuildStep();
     if (code === 'BUNDLE_END') {
+      const start = process.hrtime();
       await (async () => {
         const { output } = await event.result.generate({
           dir: path.resolve(cwd, dir),
@@ -86,6 +87,8 @@ module.exports = async ({
         // clean old files
         const pathsToDelete = written.map(({ file }) => `!${path.resolve(dir, file)}`);
         await del([path.resolve(dir, './*.css'), ...pathsToDelete]);
+        const [secs, ns] = process.hrtime(start);
+        log(cyan(`built css in ${Math.ceil((secs * 1000) + (ns / 1000000))}ms.`));
       })().then(() => {
         event.result.close();
         if (typeof onFileChange === 'function') onFileChange();
