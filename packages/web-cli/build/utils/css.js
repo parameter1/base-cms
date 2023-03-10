@@ -146,7 +146,7 @@ const buildCriticals = async ({ source }) => {
       types.forEach((type) => {
         settings.push({
           ...opts,
-          key: `${key}-${kind}-${type}`,
+          key: `${key}-${kind}.${type}`,
           modules: [kind, `${kind}.${type}`],
           separator: '|',
         });
