@@ -9,8 +9,8 @@ $ const { kind } = route;
   <link rel="stylesheet" href=css.purged() />
 </else-if>
 <else>
-  $ const critical = css.critical({ kind });
-  $ const optimized = css.optimized({ kind });
+  $ const critical = css.critical(route);
+  $ const optimized = css.optimized(route);
   <if(critical)>
     <style>${critical}</style>
   </if>

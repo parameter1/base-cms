@@ -114,14 +114,18 @@ const buildPurged = async ({ cwd, source, contentDirs = [] }) => {
  * @returns {Promise<CSSOutputAsset[]>}
  */
 const buildCriticals = async ({ source }) => {
-  // extract the critical modules names that are in-use (if any)
-  /** @type {string[]} */
-  const modules = [...(source.match(/\/\*!\s*?critical.*?\s*?\*\//g) || []).reduce((set, match) => {
-    if (/:end/.test(match)) return set;
+  // extract the critical module kinds (to sub-types, if present) that are in-use (if any)
+  /** @type {Map<string, Set<string>>} */
+  const modules = (source.match(/\/\*!\s*?critical.*?\s*?\*\//g) || []).reduce((map, match) => {
+    if (/:end/.test(match)) return map;
     const matches = /\|(.+[^\s*?])\s*?\*\//.exec(match);
-    if (matches && matches[1]) set.add(matches[1]);
-    return set;
-  }, new Set())];
+    if (matches && matches[1]) {
+      const [kind, type] = matches[1].split('.');
+      if (!map.has(kind)) map.set(kind, new Set());
+      if (type) map.get(kind).add(type);
+    }
+    return map;
+  }, new Map());
 
   const keys = ['critical', 'optimized'];
   const settings = [];
@@ -132,12 +136,20 @@ const buildCriticals = async ({ source }) => {
       output: key === 'critical' ? key : 'rest',
     };
     settings.push(opts);
-    modules.forEach((name) => {
+    modules.forEach((types, kind) => {
       settings.push({
         ...opts,
-        key: `${key}-${name}`,
-        modules: [name],
+        key: `${key}-${kind}`,
+        modules: [kind],
         separator: '|',
+      });
+      types.forEach((type) => {
+        settings.push({
+          ...opts,
+          key: `${key}-${kind}.${type}`,
+          modules: [kind, `${kind}.${type}`],
+          separator: '|',
+        });
       });
     });
   });
@@ -182,7 +194,8 @@ const write = async ({ cwd, dir, assets }) => {
     // ensure charset is present. critical files will likely drop this.
     const s = /^@charset/.test(source) ? source : `@charset "UTF-8";${source}`;
     const hash = createHash(s);
-    const file = `${asset.key}-${hash}.css`;
+    // ensure asset key is safe to save
+    const file = `${asset.key.replace(/[^a-z0-9_-]/gi, '-')}-${hash}.css`;
 
     const compressed = await new Promise((resolve, reject) => {
       gzip(s, (err, r) => {
