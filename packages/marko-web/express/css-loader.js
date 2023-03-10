@@ -1,8 +1,9 @@
 const path = require('path');
 const { readFile } = require('fs').promises;
+const { readFileSync } = require('fs');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 
-const modes = new Set(['all', 'purged', 'optimized', 'critical']);
+const modes = new Set(['main', 'purged', 'optimized', 'critical']);
 
 const readManifest = async (loc) => {
   try {
@@ -27,7 +28,7 @@ const loadManifestEntries = async ({ distDir }) => {
   const manifest = await readManifest(file);
   if (!manifest) throw new Error('Unable to load the CSS asset manifest');
   return Object.keys(manifest).map((key) => {
-    const asset = { target: key, ...manifest[key] };
+    const asset = { key, ...manifest[key] };
     return asset;
   });
 };
@@ -58,22 +59,50 @@ module.exports = ({ distDir }) => asyncRoute(async (req, res, next) => {
 
   // when on production, only load the file paths and/or contents from the manifest once
   // as long as the cdn configs are the same (allows for changing the cdn env var in prod)
-  if (isProduction && css.files && css.cdn === cdn.enabled) return next();
+  if (isProduction && css.ready && css.cdn === cdn.enabled) return next();
+
+  css.cdn = cdn.enabled;
 
   const items = await loadManifestEntries({ distDir });
-  css.files = items.reduce((map, asset) => {
+  const files = items.reduce((map, asset) => {
     if (asset.embedded) return map;
-    map.set(asset.target, cdn.dist(`css/${asset.file}`));
+    map.set(asset.key, cdn.dist(`css/${asset.file}`));
     return map;
   }, new Map());
+  css.files = files;
 
-  const contents = await Promise.all(items.map(async (asset) => {
-    if (!asset.embedded) return null;
-    const str = await readFile(path.resolve(distDir, 'css', asset.file), 'utf8');
-    return str;
-  }));
-  css.cdn = cdn.enabled;
-  css.contents = contents.filter((v) => v).join('');
+  const embeddable = items.reduce((map, asset) => {
+    if (!asset.embedded) return map;
+    map.set(asset.key, path.resolve(distDir, 'css', asset.file));
+    return map;
+  }, new Map());
+  css.embeddable = embeddable;
+
+  css.main = () => files.get('main');
+  css.purged = () => files.get('purged');
+
+  css.optimized = ({ kind } = {}) => {
+    // load the route specific file when a kind is provided, if it exists...
+    if (kind) {
+      const forKind = `optimized-${kind}`;
+      if (files.has(forKind)) return files.get(forKind);
+    }
+
+    // load standard file when no kind is specified, or nothing if not set.
+    return files.get('optimized') || null;
+  };
+
+  css.critical = ({ kind } = {}) => {
+    // attempt to load the critical CSS for the incoming route kind, otherwise fallback
+    const fallback = embeddable.get('critical');
+    const critical = kind ? embeddable.get(`critical-${kind}`) || fallback : fallback;
+    if (!critical) return null;
+    // @todo determine if this should read contents all the time or store in memory?
+    const contents = readFileSync(critical, 'utf8');
+    return `/* ${critical.split('/').pop()} */ ${contents}`;
+  };
+
+  css.ready = true;
 
   return next();
 });
