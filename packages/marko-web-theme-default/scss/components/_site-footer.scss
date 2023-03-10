@@ -21,20 +21,10 @@
     }
 
     &--secondary {
-      @if $theme-site-footer-secondary-type == dark {
-        @extend .navbar-dark;
-      } @else {
-        @extend .navbar-light;
-      }
       background-color: $theme-site-footer-secondary-bg-color;
     }
 
     &--primary {
-      @if $theme-site-footer-primary-type == dark {
-        @extend .navbar-dark;
-      } @else {
-        @extend .navbar-light;
-      }
       background-color: $theme-site-footer-primary-bg-color;
     }
   }

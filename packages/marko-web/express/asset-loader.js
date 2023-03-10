@@ -25,7 +25,6 @@ const getRelPathFromManifest = async ({ distDir, type, entry }) => {
 const isProduction = process.env.NODE_ENV === 'production';
 const types = [
   { type: 'js', entry: 'browser/index.js' },
-  { type: 'css', entry: 'server/styles/index.scss' },
 ];
 
 module.exports = ({ distDir }) => asyncRoute(async (req, res, next) => {

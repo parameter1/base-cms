@@ -1,83 +1,125 @@
 @import "functions";
 @import "variables";
+@import "mixins";
 
-@import "./theme-default/theme";
-@import "bootstrap/scss/spinners";
+// bootstrap and default theme components
+@import "components/bootstrap";
+
+// load navbar from default theme first... allows for alternate monorail navbars to override these defaults
+@import "components/default-theme/site-navbar";
+
+// Marko Web core components
+@import "@parameter1/base-cms-marko-web/scss/document";
+
+@import "@parameter1/base-cms-marko-web/scss/load-more";
+@import "@parameter1/base-cms-marko-web/scss/node";
+@import "@parameter1/base-cms-marko-web/scss/node-list";
+@import "@parameter1/base-cms-marko-web/scss/page-image";
+@import "@parameter1/base-cms-marko-web/scss/carousel";
+
+// Marko Web icon components
+@import "@parameter1/base-cms-marko-web-icons/scss/icons";
 
 @import "@parameter1/base-cms-marko-web-social-sharing/scss/buttons";
-@import "bootstrap/scss/input-group";
 @import "@parameter1/base-cms-marko-web-html-sitemap/scss/index";
 
 // Default reveal ad css
 @import "@parameter1/base-cms-marko-web-reveal-ad/scss/reveal-ad";
 
-// skin mixins
-@import "./mixins";
-
-// components
-@import "../components/breadcrumbs/scss/breadcrumbs";
-
 // theme components
-@import "./components/ads";
-@import "./components/author-node";
-@import "./components/author-bio-node";
-@import "./components/author-published-node";
-@import "./components/comments";
-@import "./components/content-page";
-@import "./components/identity-x";
-@import "./components/page-wrapper";
-@import "./components/pagination-controls";
-@import "./components/search-page";
-@import "./components/site-footer";
-@import "./components/site-menu";
-@import "./components/site-navbar";
-@import "./components/site-navbar-b";
-@import "./components/site-newsletter-menu";
-@import "./components/spec-guide";
-@import "./components/sponsor-logo";
+@import "components/ad-container";
+
+@import "components/author-node";
+@import "components/author-bio-node";
+@import "components/author-published-node";
+@import "components/breadcrumbs";
+@import "components/comments";
+@import "components/content-page";
+@import "components/embedded-media";
+@import "components/identity-x";
+@import "components/lazyload";
+@import "components/load-more";
+@import "components/magazine-publication-buttons";
+@import "components/node";
+@import "components/node-list";
+@import "components/page";
+@import "components/page-attribution";
+@import "components/page-contact-details";
+@import "components/page-contents";
+@import "components/page-dates";
+@import "components/page-image";
+@import "components/page-rail";
+@import "components/page-wrapper";
+@import "components/pagination-controls";
+@import "components/search-page";
+@import "components/site-footer";
+@import "components/site-header";
+@import "components/site-menu";
+@import "components/site-navbar";
+@import "components/site-navbar-b";
+@import "components/site-newsletter-menu";
+@import "components/social-icons";
+@import "components/spec-guide";
+@import "components/sponsor-logo";
+@import "components/sticky-top";
+@import "components/wallpaper-ad";
 
 // theme component blocks
-@import "./components/blocks/callout-cards";
-@import "./components/blocks/content-card-deck";
-@import "./components/blocks/company-inquiry-form";
-@import "./components/blocks/hero-card";
-@import "./components/blocks/latest-content-list";
-@import "./components/blocks/latest-podcast";
-@import "./components/blocks/latest-products-feed";
-@import "./components/blocks/more-products";
-@import "./components/blocks/most-popular";
-@import "./components/blocks/newsletter-signup-banner";
-@import "./components/blocks/newsletter-signup-banner-large";
-@import "./components/blocks/newsletter-signup-site-footer";
-@import "./components/blocks/node-author";
-@import "./components/blocks/opinion";
-@import "./components/blocks/primary-image";
-@import "./components/blocks/products";
-@import "./components/blocks/promo-card";
-@import "./components/blocks/read-next";
-@import "./components/blocks/related-native-x-stories";
-@import "./components/blocks/related-stories";
-@import "./components/blocks/resource-library";
-@import "./components/blocks/section-card-deck-featured";
-@import "./components/blocks/section-card-list";
-@import "./components/blocks/section-feed";
-@import "./components/blocks/section-forbes";
-@import "./components/blocks/section-list";
-@import "./components/blocks/social-follow";
-@import "./components/blocks/top-stories";
-@import "./components/blocks/top-stories-menu";
-@import "./components/blocks/white-papers";
+@import "components/blocks/callout-cards";
+@import "components/blocks/content-card-deck";
+@import "components/blocks/company-inquiry-form";
+@import "components/blocks/hero-card";
+@import "components/blocks/latest-content-list";
+@import "components/blocks/latest-podcast";
+@import "components/blocks/latest-products-feed";
+@import "components/blocks/magazine-publication-card";
+@import "components/blocks/more-products";
+@import "components/blocks/most-popular";
+@import "components/blocks/newsletter-signup-banner";
+@import "components/blocks/newsletter-signup-banner-large";
+@import "components/blocks/newsletter-signup-site-footer";
+@import "components/blocks/node-author";
+@import "components/blocks/opinion";
+@import "components/blocks/primary-image";
+@import "components/blocks/products";
+@import "components/blocks/promo-card";
+@import "components/blocks/read-next";
+@import "components/blocks/related-native-x-stories";
+@import "components/blocks/related-stories";
+@import "components/blocks/resource-library";
+@import "components/blocks/section-card-deck-featured";
+@import "components/blocks/section-card-list";
+@import "components/blocks/section-feed";
+@import "components/blocks/section-forbes";
+@import "components/blocks/section-list";
+@import "components/blocks/social-follow";
+@import "components/blocks/top-stories";
+@import "components/blocks/top-stories-menu";
+@import "components/blocks/white-papers";
 
 // theme component flows
-@import "./components/flows/card-deck";
-@import "./components/flows/incremented-nodes";
+@import "components/flows/card-deck";
+@import "components/flows/column-list";
+@import "components/flows/featured";
+@import "components/flows/hero";
+@import "components/flows/incremented-nodes";
 
+body {
+  text-rendering: $theme-text-rendering;
+}
 
-.sticky-top {
-  top: calculate-navbar-height-for(default);
+.document-container {
+  flex-shrink: 0;
+  padding-top: calculate-navbar-height-for(default);
+
   @each $breakpoint, $width in sort-map-by-values($theme-site-header-breakpoints, desc) {
     @media (max-width: $width) {
-      top: calculate-navbar-height-for($breakpoint);
+      padding-top: calculate-navbar-height-for($breakpoint);
     }
+  }
+
+  @include media-breakpoint-down($theme-responsive-text-breakpoint) {
+    padding-right: 0;
+    padding-left: 0;
   }
 }

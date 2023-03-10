@@ -96,6 +96,16 @@
     }
   }
 
+  &--in-card {
+    display: flex;
+    justify-content: center;
+    min-height: 100%;
+    > div {
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+  }
+
   &--rail {
     background-color: $rail-ad-bg-color;
     > *:first-child {
@@ -216,41 +226,12 @@
       }
     }
   }
-}
 
-.wallpaper-ad {
-  $width: 300px;
-
-  position: fixed;
-  right: 0;
-  left: 0;
-
-  display: none;
-
-  @media (min-width: 1400px) {
-    display: block;
+  &--top-of-page {
+    margin-bottom: $theme-ad-margin;
   }
 
-  &__left,
-  &__right {
-    position: absolute;
-    top: 0;
-  }
-
-  &__left {
-    left: 0;
-  }
-  &__right {
-    right: 0;
-  }
-
-  @media (max-width: calc($marko-web-document-container-max-width + ($width * 2))) {
-    $lr: calc((100vw - $marko-web-document-container-max-width - ($width * 2)) / 2);
-    &__left {
-      left: $lr;
-    }
-    &__right {
-      right: $lr;
-    }
+  iframe {
+    box-shadow: $theme-ad-box-shadow;
   }
 }

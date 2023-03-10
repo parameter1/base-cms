@@ -90,11 +90,3 @@
     margin-left: 0;
   }
 }
-
-[data-embed-type="image"] {
-  picture {
-    > :last-child:not(img) {
-      border-bottom: 1px solid #ccc;
-    }
-  }
-}

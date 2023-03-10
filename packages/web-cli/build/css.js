@@ -1,64 +1,105 @@
-const vite = require('vite');
 const path = require('path');
-const purgecss = require('@fullhuman/postcss-purgecss');
-const handleWatch = require('./utils/handle-watch');
+const { rm } = require('fs').promises;
+const del = require('del');
+const { dim, cyan } = require('chalk');
+const {
+  buildCriticals,
+  buildMain,
+  buildManifest,
+  buildPurged,
+  getMainCSSFromOutput,
+  logBuildStep,
+  minify,
+  write,
+} = require('./utils/css');
 
-const purgeGlobs = ['**/*.marko', '**/*.vue'];
+const { log } = console;
 
+/**
+ * @typedef {import("./utils/css.js").RollupWatcher} RollupWatcher
+ *
+ * @param {object} params
+ * @param {string} params.cwd
+ * @param {string} params.entry
+ * @param {boolean} [params.watch=false]
+ * @param {Function} [params.onFileChange]
+ * @param {string[]} [params.purgeContentDirs]
+ */
 module.exports = async ({
   cwd,
   entry,
-  watch = false,
+  watch: inWatchMode = false,
   onFileChange,
-  purge = false,
   purgeContentDirs = [],
 } = {}) => {
-  const common = {
-    appType: 'custom',
-    mode: 'production',
-    clearScreen: false,
-    build: {
-      rollupOptions: { input: path.resolve(cwd, entry) },
-      outDir: './dist/css/',
-      manifest: true,
-      sourcemap: true,
-      watch: watch ? {} : false,
-    },
+  const dir = './dist/css';
+
+  /**
+   *
+   * @param {object} params
+   * @param {CSSOutputAsset} params.main
+   */
+  const build = async ({ main }) => {
+    const purged = await buildPurged({ cwd, source: main.source, contentDirs: purgeContentDirs });
+    const criticals = await buildCriticals({ source: purged.source });
+    const minified = await minify({ assets: [main, purged, ...criticals] });
+    const written = await write({ cwd, dir, assets: minified });
+    await buildManifest({ cwd, dir, written });
+    return written;
   };
 
-  const maybeWatchers = await Promise.all([
-    vite.build(common),
-    ...purge ? [
-      vite.build({
-        ...common,
-        build: {
-          ...common.build,
-          outDir: './dist/purgedcss/',
-        },
-        css: {
-          postcss: {
-            plugins: [
-              purgecss({
-                content: purgeGlobs.reduce((arr, glob) => {
-                  [cwd, ...purgeContentDirs].forEach((dir) => {
-                    arr.push(path.resolve(cwd, path.join(dir, glob)));
-                  });
-                  return arr;
-                }, []),
-                safelist: {
-                  standard: [/--/, /__/],
-                },
-              }),
-            ],
-          },
-        },
-      }),
-    ] : [],
-  ]);
+  if (!inWatchMode) {
+    // normal build
+    logBuildStep();
 
-  await Promise.all(maybeWatchers.map(async (maybeWatcher) => handleWatch({
-    watch,
-    maybeWatcher,
-    onFileChange,
-  })));
+    // clean directory
+    await rm(path.resolve(cwd, dir), { recursive: true, force: true });
+
+    /** @type {CSSOutputAsset} */
+    const main = await buildMain({ cwd, entry, watch: false });
+    await build({ main });
+    return;
+  }
+
+  // watch mode
+  /** @type {RollupWatcher} */
+  const watcher = await buildMain({ cwd, entry, watch: true });
+
+  // clear vite watchers so we can manually control dependent builds and writes
+  watcher.removeAllListeners();
+
+  watcher.on('change', (id) => {
+    log(`watch event '${cyan('change')}' detected in file ${dim(id)}`);
+  });
+  watcher.on('event', async (event) => {
+    const { code } = event;
+    if (code === 'BUNDLE_START') logBuildStep();
+    if (code === 'BUNDLE_END') {
+      const start = process.hrtime();
+      await (async () => {
+        const { output } = await event.result.generate({
+          dir: path.resolve(cwd, dir),
+        });
+
+        const main = getMainCSSFromOutput(output);
+        const written = await build({ main });
+
+        // clean old files
+        const pathsToDelete = written.map(({ file }) => `!${path.resolve(dir, file)}`);
+        await del([path.resolve(dir, './*.css'), ...pathsToDelete]);
+        const [secs, ns] = process.hrtime(start);
+        log(cyan(`built css in ${Math.ceil((secs * 1000) + (ns / 1000000))}ms.`));
+      })().then(() => {
+        event.result.close();
+        if (typeof onFileChange === 'function') onFileChange();
+      });
+    }
+  });
+
+  await new Promise((resolve, reject) => {
+    watcher.on('event', ({ code }) => {
+      if (code === 'ERROR') reject();
+      if (code === 'END') resolve();
+    });
+  });
 };

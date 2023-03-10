@@ -6,7 +6,6 @@
   "repository": "https://github.com/parameter1/base-cms.git",
   "workspaces": [
     "packages/*",
-    "packages/marko-web-modern/*",
     "services/*"
   ],
   "scripts": {

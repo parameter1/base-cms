@@ -1,0 +1,8 @@
+.sticky-top {
+  top: calculate-navbar-height-for(default);
+  @each $breakpoint, $width in sort-map-by-values($theme-site-header-breakpoints, desc) {
+    @media (max-width: $width) {
+      top: calculate-navbar-height-for($breakpoint);
+    }
+  }
+}

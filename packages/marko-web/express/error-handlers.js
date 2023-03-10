@@ -1,5 +1,6 @@
 const { STATUS_CODES } = require('http');
 const createError = require('http-errors');
+const setRouteKind = require('@parameter1/base-cms-marko-express/utils/set-route-kind');
 const errorTemplate = require('../components/document/components/error');
 const getRedirect = require('./get-redirect');
 const findContentAlias = require('./find-content-alias');
@@ -16,6 +17,7 @@ const noCache = (res) => {
 };
 
 const renderError = (res, { statusCode, err, template }) => {
+  setRouteKind(res, { kind: 'error', type: statusCode });
   res.status(statusCode);
   res.marko(template || errorTemplate, {
     statusCode,

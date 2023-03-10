@@ -1,0 +1,23 @@
+$ const { css, route } = out.global;
+$ const { mode } = css;
+$ const { kind } = route;
+
+<if(mode === "main")>
+  <link rel="stylesheet" href=css.main() />
+</if>
+<else-if(mode === "purged")>
+  <link rel="stylesheet" href=css.purged() />
+</else-if>
+<else>
+  $ const critical = css.critical({ kind });
+  $ const optimized = css.optimized({ kind });
+  <if(critical)>
+    <style>${critical}</style>
+  </if>
+  <if(mode === "optimized" && optimized)>
+    <link rel="preload" href=optimized as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+      <link rel="stylesheet" href=optimized>
+    </noscript>
+  </if>
+</else>

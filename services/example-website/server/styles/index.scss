@@ -4,6 +4,7 @@ $skin-font-family-secondary: informapro, sans-serif;
 @import "@parameter1/base-cms-marko-web-theme-monorail/scss/core";
 @import "@parameter1/base-cms-marko-web-leaders/scss/leaders";
 
+/*! critical:start */
 body {
   -webkit-font-smoothing: antialiased;
   letter-spacing: .25px;
@@ -26,3 +27,4 @@ body {
     }
   }
 }
+/*! critical:end */

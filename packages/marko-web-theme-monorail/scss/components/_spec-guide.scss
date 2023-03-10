@@ -1,10 +1,5 @@
 $common-spec-guide-container-max-width: 1400px;
 
-// Require Bootstrap tables and input groups
-@import "bootstrap/scss/tables";
-// @import "bootstrap/scss/input-group";
-
-
 .spec-guide-container {
   position: relative;
   width: 100%;
@@ -25,8 +20,55 @@ $common-spec-guide-container-max-width: 1400px;
 }
 
 .spec-guide-button {
-  @extend .btn;
-  @extend .btn-block;
+  display: block;
+  width: 100%;
+  font-family: $btn-font-family;
+  font-weight: $btn-font-weight;
+  color: $body-color;
+  text-align: center;
+  text-decoration: if($link-decoration == none, null, none);
+  white-space: $btn-white-space;
+  user-select: none;
+  background-color: transparent;
+  border: $btn-border-width solid transparent;
+  @include button-size($btn-padding-y, $btn-padding-x, $btn-font-size, $btn-line-height, $btn-border-radius);
+  @include transition($btn-transition);
+
+  @include hover() {
+    color: $body-color;
+    text-decoration: none;
+  }
+
+  // Vertically space out multiple block buttons
+  + .btn-block {
+    margin-top: $btn-block-spacing-y;
+  }
+
+  &:focus,
+  &.focus {
+    outline: 0;
+    box-shadow: $btn-focus-box-shadow;
+  }
+
+  // Disabled comes first so active can properly restyle
+  &.disabled,
+  &:disabled {
+    opacity: $btn-disabled-opacity;
+    @include box-shadow(none);
+  }
+
+  &:not(:disabled):not(.disabled) {
+    cursor: if($enable-pointer-cursor-for-buttons, pointer, null);
+
+    &:active,
+    &.active {
+      @include box-shadow($btn-active-box-shadow);
+
+      &:focus {
+        @include box-shadow($btn-focus-box-shadow, $btn-active-box-shadow);
+      }
+    }
+  }
 }
 
 .spec-guide-tagline {
