@@ -1,6 +1,8 @@
-$skin-font-family-primary: solitaire-mvb-pro, sans-serif;
-$skin-font-family-secondary: informapro, sans-serif;
+$skin-font-family-primary: solitaire-mvb-pro, solitaire-mvb-pro-fallback, sans-serif;
+$skin-font-family-secondary: informapro, informapro-fallback, sans-serif;
 
+@import "@parameter1/base-cms-marko-web/scss/fonts/solitaire-mvb-pro-fallback";
+@import "@parameter1/base-cms-marko-web/scss/fonts/informapro-fallback";
 @import "@parameter1/base-cms-marko-web-theme-monorail/scss/core";
 @import "@parameter1/base-cms-marko-web-leaders/scss/leaders";
 
