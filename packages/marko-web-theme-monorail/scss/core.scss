@@ -6,40 +6,28 @@
 @import "components/bootstrap";
 
 // load navbar from default theme first... allows for alternate monorail navbars to override these defaults
-/*! critical:start */
 @import "components/default-theme/site-navbar";
-/*! critical:end */
 
 // Marko Web core components
-/*! critical:start */
 @import "@parameter1/base-cms-marko-web/scss/document";
-/*! critical:end */
 
 @import "@parameter1/base-cms-marko-web/scss/load-more";
-/*! critical:start */
 @import "@parameter1/base-cms-marko-web/scss/node";
 @import "@parameter1/base-cms-marko-web/scss/node-list";
-/*! critical:end */
 @import "@parameter1/base-cms-marko-web/scss/page-image";
 @import "@parameter1/base-cms-marko-web/scss/carousel";
 
 // Marko Web icon components
-/*! critical:start */
 @import "@parameter1/base-cms-marko-web-icons/scss/icons";
-/*! critical:end */
 
 @import "@parameter1/base-cms-marko-web-social-sharing/scss/buttons";
 @import "@parameter1/base-cms-marko-web-html-sitemap/scss/index";
 
 // Default reveal ad css
-/*! critical:start */
 @import "@parameter1/base-cms-marko-web-reveal-ad/scss/reveal-ad";
-/*! critical:end */
 
 // theme components
-/*! critical:start */
 @import "components/ad-container";
-/*! critical:end */
 
 @import "components/author-node";
 @import "components/author-bio-node";
@@ -49,49 +37,32 @@
 @import "components/content-page";
 @import "components/embedded-media";
 @import "components/identity-x";
-
-/*! critical:start */
 @import "components/lazyload";
-/*! critical:end */
-
 @import "components/load-more";
 @import "components/magazine-publication-buttons";
-/*! critical:start */
 @import "components/node";
 @import "components/node-list";
 @import "components/page";
-/*! critical:end */
 @import "components/page-attribution";
 @import "components/page-contact-details";
 @import "components/page-contents";
 @import "components/page-dates";
 @import "components/page-image";
 @import "components/page-rail";
-/*! critical:start */
 @import "components/page-wrapper";
-/*! critical:end */
 @import "components/pagination-controls";
 @import "components/search-page";
 @import "components/site-footer";
-
-/*! critical:start */
 @import "components/site-header";
 @import "components/site-menu";
 @import "components/site-navbar";
 @import "components/site-navbar-b";
-/*! critical:end */
-
-/*! critical:start */
 @import "components/site-newsletter-menu";
-/*! critical:end */
-
 @import "components/social-icons";
 @import "components/spec-guide";
-
-/*! critical:start */
 @import "components/sponsor-logo";
+@import "components/sticky-top";
 @import "components/wallpaper-ad";
-/*! critical:end */
 
 // theme component blocks
 @import "components/blocks/callout-cards";
@@ -121,23 +92,18 @@
 @import "components/blocks/section-feed";
 @import "components/blocks/section-forbes";
 @import "components/blocks/section-list";
-/*! critical:start */
 @import "components/blocks/social-follow";
 @import "components/blocks/top-stories";
 @import "components/blocks/top-stories-menu";
-/*! critical:end */
 @import "components/blocks/white-papers";
 
 // theme component flows
-/*! critical:start */
 @import "components/flows/card-deck";
-/*! critical:end */
 @import "components/flows/column-list";
 @import "components/flows/featured";
 @import "components/flows/hero";
 @import "components/flows/incremented-nodes";
 
-/*! critical:start */
 body {
   text-rendering: $theme-text-rendering;
 }
@@ -155,16 +121,5 @@ body {
   @include media-breakpoint-down($theme-responsive-text-breakpoint) {
     padding-right: 0;
     padding-left: 0;
-  }
-}
-
-/*! critical:end */
-
-.sticky-top {
-  top: calculate-navbar-height-for(default);
-  @each $breakpoint, $width in sort-map-by-values($theme-site-header-breakpoints, desc) {
-    @media (max-width: $width) {
-      top: calculate-navbar-height-for($breakpoint);
-    }
   }
 }
