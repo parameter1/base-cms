@@ -7,6 +7,7 @@
       v-show="url"
       :id="formId"
       :src="url"
+      allowfullscreen
       frameborder="0"
       style="width: 1px; min-width: 100%; border: none;"
     />
