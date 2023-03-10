@@ -81,21 +81,30 @@ module.exports = ({ distDir }) => asyncRoute(async (req, res, next) => {
   css.main = () => files.get('main');
   css.purged = () => files.get('purged');
 
-  css.optimized = ({ kind } = {}) => {
-    // load the route specific file when a kind is provided, if it exists...
-    if (kind) {
-      const forKind = `optimized-${kind}`;
-      if (files.has(forKind)) return files.get(forKind);
-    }
+  css.optimized = ({ kind, type } = {}) => {
+    // attempt to load the optimized file from most to least specific.
+    const keys = [];
+    if (kind && type) keys.push(`optimized-${kind}.${type}`);
+    if (kind) keys.push(`optimized-${kind}`);
+    keys.push('optimized');
 
-    // load standard file when no kind is specified, or nothing if not set.
-    return files.get('optimized') || null;
+    return keys.reduce((file, k) => {
+      if (file) return file;
+      return files.get(k) || null;
+    }, null);
   };
 
-  css.critical = ({ kind } = {}) => {
-    // attempt to load the critical CSS for the incoming route kind, otherwise fallback
-    const fallback = embeddable.get('critical');
-    const critical = kind ? embeddable.get(`critical-${kind}`) || fallback : fallback;
+  css.critical = ({ kind, type } = {}) => {
+    // attempt to load the critical file from most to least specific.
+    const keys = [];
+    if (kind && type) keys.push(`critical-${kind}.${type}`);
+    if (kind) keys.push(`critical-${kind}`);
+    keys.push('critical');
+
+    const critical = keys.reduce((file, k) => {
+      if (file) return file;
+      return embeddable.get(k) || null;
+    }, null);
     if (!critical) return null;
     // @todo determine if this should read contents all the time or store in memory?
     const contents = readFileSync(critical, 'utf8');
