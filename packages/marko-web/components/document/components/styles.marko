@@ -15,9 +15,6 @@ $ const { kind } = route;
     <style>${critical}</style>
   </if>
   <if(mode === "optimized" && optimized)>
-    <link rel="preload" href=optimized as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-      <link rel="stylesheet" href=optimized>
-    </noscript>
+    <marko-web-deferred-stylesheet href=optimized />
   </if>
 </else>
