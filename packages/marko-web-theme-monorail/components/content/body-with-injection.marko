@@ -67,7 +67,14 @@ $ const gamAdInjection = (GAM) ? [
   to-render=MarkoWebContentBody
   selector=`#${selector}`
 >
-  <@component-input block-name=blockName modifiers=modifiers obj=content attrs={ id: selector } />
+  <@component-input
+    block-name=blockName
+    modifiers=modifiers
+    obj=content
+    attrs={ id: selector }
+    embedOptions=input.embedOptions
+    firstImageEmbedOptions=input.firstImageEmbedOptions
+  />
   <if(!preventHTMLInjection)>
     <for|adInjection| of=gamAdInjection>
       $ const { counts, name, modifiers } = adInjection;
