@@ -72,8 +72,8 @@ $ const gamAdInjection = (GAM) ? [
     modifiers=modifiers
     obj=content
     attrs={ id: selector }
-    embedOptions=input.embedOptions
-    firstImageEmbedOptions=input.firstImageEmbedOptions
+    embed-options=input.embedOptions
+    lazyload-first-image=input.lazyloadFirstImage
   />
   <if(!preventHTMLInjection)>
     <for|adInjection| of=gamAdInjection>

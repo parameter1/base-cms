@@ -11,13 +11,13 @@ module.exports = (app, { image, oembed, invalid } = {}) => {
   };
 
   // eslint-disable-next-line no-param-reassign
-  app.locals.parseEmbeddedMedia = (body, res, options, firstImageOptions) => {
+  app.locals.parseEmbeddedMedia = (body, res, options, lazyloadFirstImage = true) => {
     const $global = buildMarkoGlobal(res);
 
     const replacements = extractEmbeddedTags(body).map((tag, index) => {
       const type = ['image', 'oembed'].includes(tag.type) && tag.isValid() ? tag.type : 'invalid';
       const pattern = tag.getRegExp();
-      const replacementOptions = (index === 0 && type === 'image') ? firstImageOptions : options;
+      const replacementOptions = (index === 0 && type === 'image' && !lazyloadFirstImage) ? { ...options, lazyloadImages: false } : options;
       const replacement = handlers[type](tag, $global, replacementOptions);
       return { pattern, replacement };
     });
