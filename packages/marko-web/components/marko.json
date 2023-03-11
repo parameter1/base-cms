@@ -23,5 +23,12 @@
     "@class": "string",
     "@attrs": "object",
     "@props": "object"
+  },
+  "<marko-web-deferred-stylesheet>": {
+    "template": "./deferred-stylesheet.marko",
+    "@href": {
+      "type": "string",
+      "required": true
+    }
   }
 }
