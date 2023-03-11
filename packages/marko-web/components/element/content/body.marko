@@ -1,12 +1,14 @@
 import { get, getAsObject } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 import extractRender from "../extract-render";
 
 $ const { parseEmbeddedMedia, res } = out.global;
 
 $ const body = get(input.obj, "body");
 $ const v = body == null ? "" : `${body}`.trim();
-$ const embedOptions = getAsObject(input, "embedOptions")
-$ const obj = { body: parseEmbeddedMedia(v, res, embedOptions) };
+$ const embedOptions = getAsObject(input, "embedOptions");
+$ const lazyloadFirstImage = defaultValue(input.lazyloadFirstImage, true);
+$ const obj = { body: parseEmbeddedMedia(v, res, embedOptions, lazyloadFirstImage) };
 
 <marko-web-obj-text
   type="content"
