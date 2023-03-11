@@ -5,8 +5,9 @@ $ const { parseEmbeddedMedia, res } = out.global;
 
 $ const body = get(input.obj, "body");
 $ const v = body == null ? "" : `${body}`.trim();
-$ const obj = { body: parseEmbeddedMedia(v, res, embedOptions) };
 $ const embedOptions = getAsObject(input, "embedOptions");
+$ const firstImageEmbedOptions = getAsObject(input, "firstImageEmbedOptions");
+$ const obj = { body: parseEmbeddedMedia(v, res, embedOptions, firstImageEmbedOptions) };
 
 <marko-web-obj-text
   type="content"
