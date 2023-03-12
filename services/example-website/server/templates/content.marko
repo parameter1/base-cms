@@ -8,6 +8,13 @@ $ const { recaptcha } = out.global;
       <marko-web-content-name obj=content tag="h1" />
       <marko-web-content-teaser obj=content class="lead" />
 
+      <marko-web-social-sharing
+        path=content.siteContext.path
+        providers=["print", "facebook", "linkedin", "twitter", "pinterest"]
+        print-path=`/print/content/${content.id}`
+        ssr=true
+      />
+
       <div class="content-page-body">
         <primary-media content=content />
       </div>
