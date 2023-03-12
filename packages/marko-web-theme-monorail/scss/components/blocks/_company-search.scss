@@ -1,3 +1,4 @@
+/*! purgecss start ignore */
 .company-search {
   position: relative;
   &__title {
@@ -6,7 +7,7 @@
     font-weight: 800;
     text-transform: uppercase;
   }
-  .autocomplete-input{
+  .autocomplete-input {
     display: block;
     width: 100%;
     height: calc(1.5em + .75rem + 2px);
@@ -53,3 +54,4 @@
     }
   }
 }
+/*! purgecss end ignore */
