@@ -51,7 +51,7 @@ module.exports = ({ distDir }) => asyncRoute(async (req, res, next) => {
   if (modes.has(req.query[key])) {
     mode = req.query[key];
   } else if (modes.has(req.cookies[key])) {
-    mode = req.cookie[key];
+    mode = req.cookies[key];
   }
 
   // always set the mode to the app on every request.
