@@ -16,12 +16,12 @@ $ const requiresCoverImage = defaultValue(input.requiresCoverImage, true);
   <div class=`${blockName}__body`>
     <div class="row">
       <marko-web-query|{ node: issue }| name="magazine-issue" params={ id: input.issueId, queryFragment: latestIssueFragment, requiresCoverImage }>
-        <div class="col-md-5 mb-block">
+        <div class="col-md-4 mb-block">
           <theme-magazine-latest-issue-block ...getAsObject(input, "latestIssue") node=issue />
         </div>
       </marko-web-query>
       <marko-web-query|{ nodes: issues }| name="magazine-active-issues" params={ publicationId: input.publicationId, excludeIssueIds: [input.issueId], queryFragment: issueArchiveListFragment, limit: 12, requiresCoverImage }>
-        <div class="col-md-7 mb-block">
+        <div class="col-md-8 mb-block">
           <div class="row">
             <for|issue| of=issues>
               <div class="col-3 mb-block">
