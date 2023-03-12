@@ -9,6 +9,7 @@
     "@media": "string",
     "@print-url": "string",
     "@print-path": "string",
-    "@show-action": "boolean"
+    "@show-action": "boolean",
+    "@ssr": "boolean"
   }
 }
