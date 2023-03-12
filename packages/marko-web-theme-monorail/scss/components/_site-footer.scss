@@ -1,4 +1,5 @@
 .site-footer {
+  /*! critical */
   $self: &;
   position: relative;
   z-index: 1500;
@@ -14,6 +15,7 @@
   color: $white;
 
   &__container {
+    /*! critical */
     @include make-container();
     padding-top: 28px;
     padding-bottom: 28px;
