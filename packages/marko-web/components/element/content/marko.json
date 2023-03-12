@@ -18,7 +18,8 @@
     "@class": "string",
     "@modifiers": "string",
     "@attrs": "object",
-    "@link": "expression"
+    "@link": "expression",
+    "@lazyload-first-image": "boolean"
   },
   "<marko-web-content-transcript>": {
     "template": "./transcript.marko",
