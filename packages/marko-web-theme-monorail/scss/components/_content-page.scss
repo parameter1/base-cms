@@ -226,10 +226,6 @@
   padding-bottom: map-get($spacers, block);
 }
 
-[data-embed-type="image"] > :last-child:not(img) {
-  border-bottom: none;
-}
-
 .content-page-preview-overlay {
   position: relative;
   width: 100%;

@@ -67,6 +67,10 @@ p [data-embed-type] {
   }
 }
 
+[data-embed-type="image"] > :last-child:not(img) {
+  border-bottom: none;
+}
+
 [data-oembed-type="video"], [data-oembed-type="link"] {
   position: relative;
   display: block;
