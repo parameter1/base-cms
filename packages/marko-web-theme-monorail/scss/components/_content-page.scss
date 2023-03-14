@@ -1,17 +1,3 @@
-.page-wrapper {
-  &__content-name {
-    @include skin-typography($style: "header-1");
-  }
-
-  &__section {
-    &--content-page-body {
-      max-width: $skin-content-body-max-width;
-      margin-right: auto;
-      margin-left: auto;
-    }
-  }
-}
-
 .content-page-body {
   max-width: $skin-content-body-max-width;
   margin-right: auto;
