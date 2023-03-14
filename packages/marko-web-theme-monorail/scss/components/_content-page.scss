@@ -32,18 +32,6 @@
   margin-left: auto;
 }
 
-.page-dates {
-  &__content-published,
-  &__content-updated {
-    @include skin-typography($style: "date");
-    display: inline;
-    text-transform: none;
-  }
-  &__content-updated::before {
-    content: " | ";
-  }
-}
-
 .contact-page {
   &__content-name {
     margin-bottom: 16px;
