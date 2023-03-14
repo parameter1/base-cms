@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-web-cli",
-  "version": "4.9.0",
+  "version": "4.11.5",
   "description": "A Marko CLI for managing websites.",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "homepage": "https://github.com/parameter1/base-cms/tree/main/packages/marko-web-modern/cli#readme",
