@@ -1,25 +1,3 @@
-.page-wrapper {
-  &__content-name {
-    @include skin-typography($style: "header-1");
-  }
-
-  &__section {
-    &--content-page-body {
-      max-width: $skin-content-body-max-width;
-      margin-right: auto;
-      margin-left: auto;
-    }
-  }
-}
-
-.page-attribution {
-  &__content-authors {
-    &::before {
-      content: "By";
-    }
-  }
-}
-
 .content-page-body {
   max-width: $skin-content-body-max-width;
   margin-right: auto;
@@ -40,15 +18,18 @@
   margin-left: auto;
 }
 
-.page-dates {
-  &__content-published,
-  &__content-updated {
-    @include skin-typography($style: "date");
-    display: inline;
-    text-transform: none;
+.content-page-header .details {
+  padding: map-get($spacers, block);
+  margin-bottom: map-get($spacers, block);
+  background-color: $gray-100;
+  &__image {
+    margin-bottom: map-get($spacers, block);
   }
-  &__content-updated::before {
-    content: " | ";
+  .page-contact-details {
+    &__content-website,
+    &__content-public-email {
+      display: inline;
+    }
   }
 }
 
@@ -76,21 +57,6 @@
   }
 }
 
-.content-page-header .details {
-  padding: map-get($spacers, block);
-  margin-bottom: map-get($spacers, block);
-  background-color: $gray-100;
-  &__image {
-    margin-bottom: map-get($spacers, block);
-  }
-  .page-contact-details {
-    &__content-website,
-    &__content-public-email {
-      display: inline;
-    }
-  }
-}
-
 .page-contents {
   $self: &;
   .btn-transcript,
@@ -106,12 +72,87 @@
     margin-bottom: map-get($spacers, 2);
   }
 
+  &__content-body {
+    @include theme-content-body();
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+
+    blockquote {
+      display: block;
+      padding: 20px;
+      border-left: 8px solid #d2d2d2;
+      background: #e3e3e3;
+      p {
+        margin-bottom: 0;
+      }
+    }
+
+    .pullquote {
+      position: relative;
+      float: right;
+      width: 50%;
+      max-width: 50%;
+      padding: 12px 0 12px 12px;
+      margin: 6px 0 6px 12px;
+      font-size: 18.75px;
+      color: #6f6f6f;
+      z-index: 0;
+      &::before {
+        position: absolute;
+        left: 0;
+        z-index: -1;
+        font-size: 8em;
+        line-height: .6em;
+        content: "“";
+        color: #dedede;
+      }
+    }
+
+    .drop-caps {
+      display: inherit;
+      &::first-letter {
+        float: left;
+        padding: 0;
+        margin: -.05em .125em 0 0;
+        font-size: 115px;
+        font-weight: 700;
+        line-height: .8;
+      }
+    }
+
+    p.footnote {
+      @include theme-apply-fonts(
+        $font-family: $theme-content-heading-h6-font-family,
+        $font-size-sm: $theme-content-heading-h6-font-size-sm,
+        $font-size: $theme-content-heading-h6-font-size,
+        $font-weight: $theme-content-heading-h6-font-weight,
+        $line-height-sm: $theme-content-heading-h6-line-height-sm,
+        $line-height: $theme-content-heading-h6-line-height
+      );
+    }
+  }
+
+  &__content-sidebar {
+    @include border-radius($theme-page-border-radius);
+    @include theme-content-body();
+    @include theme-page-body-spacing();
+    padding: map-get($spacers, 4);
+    background-color: $gray-100;
+    border-left: 8px solid $gray-300;
+  }
+
   &__content-body,
   &__content-profile,
   &__content-sidebar,
   &__content-transcript {
     padding-bottom: map-get($spacers, block);
     @include skin-typography($style: "article-text", $link-style: "content-body");
+
+    &:empty {
+      display: none;
+    }
 
     .btn-primary {
       color: map-deep-get($skin-buttons, "primary", "color");
@@ -172,9 +213,21 @@
     }
   }
 
+  &__content-embed-code {
+    @include theme-embed-responsive($theme-primary-media-video-aspect-ratio-x, $theme-primary-media-video-aspect-ratio-y);
+
+    iframe,
+    embed,
+    object,
+    video {
+      @include theme-embed-responsive-item();
+    }
+  }
+
   > #{ $self }__content-transcript {
     border-top: solid 3px $gray-200;
   }
+
   &__content-body p {
 
     [data-embed-type="image"][data-embed-align="right"] {
@@ -258,46 +311,4 @@
 
 .content-download {
   padding-bottom: map-get($spacers, block);
-}
-
-[data-embed-type="image"] > :last-child:not(img) {
-  border-bottom: none;
-}
-
-.content-page-preview-overlay {
-  position: relative;
-  width: 100%;
-  height: 50px;
-  margin-top: -74px;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #fff 100%);
-}
-
-.content-page-gate {
-  padding: 24px 1rem;
-  margin-top: map-get($spacers, block);
-  margin-bottom: map-get($spacers, block);
-  border: 1px solid #e3e4e5;
-  border-radius: 4px;
-
-  &__title {
-    margin-bottom: 15px;
-    font-size: 24px;
-    font-weight: $font-weight-semibold;
-    line-height: 1;
-    color: $gray-800;
-    letter-spacing: .25px;
-  }
-
-  &__body {
-    margin-bottom: 15px;
-    font-family: $theme-font-family-serif;
-    font-size: 16px;
-    color: #222;
-    > p {
-      margin-bottom: 8px;
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
 }

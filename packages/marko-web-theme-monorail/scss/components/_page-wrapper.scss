@@ -17,6 +17,10 @@
     padding-left: 16px;
   }
 
+  &__content-name {
+    @include skin-typography($style: "header-1");
+  }
+
   &__title {
     @include theme-apply-fonts(
       $font-family: $theme-page-title-font-family,
@@ -71,6 +75,12 @@
     margin-bottom: 30px;
     @include media-breakpoint-up(md) {
       margin-bottom: 60px;
+    }
+
+    &--content-page-body {
+      max-width: $skin-content-body-max-width;
+      margin-right: auto;
+      margin-left: auto;
     }
 
     &--break-container {
