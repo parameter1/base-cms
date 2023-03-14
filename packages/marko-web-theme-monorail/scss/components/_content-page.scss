@@ -18,6 +18,21 @@
   margin-left: auto;
 }
 
+.content-page-header .details {
+  padding: map-get($spacers, block);
+  margin-bottom: map-get($spacers, block);
+  background-color: $gray-100;
+  &__image {
+    margin-bottom: map-get($spacers, block);
+  }
+  .page-contact-details {
+    &__content-website,
+    &__content-public-email {
+      display: inline;
+    }
+  }
+}
+
 .contact-page {
   &__content-name {
     margin-bottom: 16px;
@@ -42,20 +57,7 @@
   }
 }
 
-.content-page-header .details {
-  padding: map-get($spacers, block);
-  margin-bottom: map-get($spacers, block);
-  background-color: $gray-100;
-  &__image {
-    margin-bottom: map-get($spacers, block);
-  }
-  .page-contact-details {
-    &__content-website,
-    &__content-public-email {
-      display: inline;
-    }
-  }
-}
+
 
 .page-contents {
   $self: &;
