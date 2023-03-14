@@ -45,6 +45,7 @@
     "mkdirp": "^2.1.3",
     "postcss": "^8.4.21",
     "postcss-critical-split": "mrnocreativity/postcss-critical-split#51bb6d62bc75d635e32dcce90f30ba3ef6299081",
+    "postcss-url": "^10.1.3",
     "purgecss": "^5.0.0",
     "sass": "^1.58.3",
     "vite": "^4.1.4",

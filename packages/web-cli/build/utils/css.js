@@ -6,6 +6,7 @@ const purgecss = require('@fullhuman/postcss-purgecss');
 const critical = require('postcss-critical-split');
 const cssnano = require('cssnano');
 const defaultPreset = require('cssnano-preset-default');
+const url = require('postcss-url');
 const { gzip } = require('zlib');
 const crypto = require('crypto');
 const {
@@ -13,6 +14,7 @@ const {
   cyan,
   dim,
   green,
+  magenta,
 } = require('chalk');
 const formatFileSize = require('./format-file-size');
 
@@ -20,10 +22,21 @@ const { log } = console;
 
 const purgeGlobs = ['**/*.marko', '**/*.vue'];
 const preset = defaultPreset({ discardComments: { removeAll: true } });
+const FILE_ASSET_FOLDER = 'assets';
 
 const createHash = (source) => {
   const hash = crypto.createHash('sha256').update(source).digest('hex');
   return hash.substring(0, 8);
+};
+
+const getCompressedSize = async (source) => {
+  const gzipped = await new Promise((resolve, reject) => {
+    gzip(source, (err, r) => {
+      if (err) return reject(err);
+      return resolve(r);
+    });
+  });
+  return gzipped.length;
 };
 
 /**
@@ -36,23 +49,61 @@ const createHash = (source) => {
  * @prop {string} source
  * @prop {boolean} [embedded]
  *
+ * @typedef MainCSSResult
+ * @prop {CSSOutputAsset} main
+ * @prop {OutputAsset[]} assets
+ *
+ * @typedef CSSWriteResult
+ * @prop {WrittenCSSOutputAsset[]} css
+ * @prop {WrittenOutputFileAsset[]} assets
+ *
+ *
  * @typedef WrittenCSSOutputAsset
  * @prop {string} key The file output target key, e.g. index, purged or critical
  * @prop {string} file The name of the written file, include it's content hash
  * @prop {number} size The file size, in bytes
  * @prop {number} compressed The gzipped file size, in bytes.
  * @prop {boolean} embedded Whether the output should be flagged as embeddable
+ *
+ * @typedef WrittenOutputFileAsset
+ * @prop {string} key The output file key
+ * @prop {string} file The name of the written asset file.
+ * @prop {number} size The file size, in bytes
+ * @prop {number} compressed The gzipped file size, in bytes.
  */
 
 /**
  *
- * @param {OutputAsset[]} output
- * @returns {CSSOutputAsset}
+ * @param {string} entry
+ * @param {RollupOutput} result
+ * @returns {MainCSSResult}
  */
-const getMainCSSFromOutput = (output) => {
-  const chunk = output[0];
-  const { source } = chunk;
-  return { key: 'main', source, embedded: false };
+const getMainCSSFromRollup = async (entry, result) => {
+  const basename = path.basename(entry, path.extname(entry));
+
+  const { output } = result;
+
+  const { main, assets } = output.reduce((o, asset) => {
+    if (asset.name === `${basename}.css` && !o.main) {
+      // main entry.
+      return { ...o, main: asset };
+    }
+    o.assets.push(asset);
+    return o;
+  }, { main: null, assets: [] });
+
+  if (!main) throw new Error(`Unable to extract a main CSS asset for entry ${entry}`);
+
+  // ensure extracted file assets (svgs, pngs, etc) have their `url()` paths re-written
+  // to a relative location otherwise they will 404.
+  const relativeAssetUrls = await postcss([
+    url({ url: (asset) => `./${FILE_ASSET_FOLDER}${asset.url}` }),
+  ]).process(main.source, { from: undefined });
+
+  return {
+    main: { key: 'main', source: relativeAssetUrls.css, embedded: false },
+    assets,
+  };
 };
 
 /**
@@ -61,7 +112,7 @@ const getMainCSSFromOutput = (output) => {
  * @param {string} params.cwd The current working directory.
  * @param {string} params.entry The entry SASS file
  * @param {boolean} [params.watch]
- * @returns {Promise<CSSOutputAsset|RollupWatcher>}
+ * @returns {Promise<MainCSSResult|RollupWatcher>}
  */
 const buildMain = async ({ cwd, entry, watch }) => {
   const file = path.resolve(cwd, entry);
@@ -79,8 +130,7 @@ const buildMain = async ({ cwd, entry, watch }) => {
     },
   });
   if (watch) return result;
-  const { output } = result;
-  return getMainCSSFromOutput(output);
+  return getMainCSSFromRollup(entry, result);
 };
 
 /**
@@ -179,59 +229,77 @@ const minify = async ({ assets }) => Promise.all(assets.map(async (asset) => {
  * @param {string} params.cwd
  * @param {string} params.dir
  * @param {CSSOutputAsset[]} params.assets
- * @returns {Promise<WrittenCSSOutputAsset[]>}
+ * @param {OutputAsset[]} params.files
+ * @returns {Promise<CSSWriteResult>}
  */
-const write = async ({ cwd, dir, assets }) => {
+const write = async ({
+  cwd,
+  dir,
+  assets,
+  files,
+}) => {
   // only write assets that have code. its possible some optimized assets can be empty.
   const eligible = assets.filter((asset) => asset.source);
 
   // make the dir
-  await mkdir(path.resolve(cwd, dir), { recursive: true });
+  await mkdir(path.resolve(cwd, dir, `./${FILE_ASSET_FOLDER}`), { recursive: true });
 
-  return Promise.all(eligible.map(async (asset) => {
-    const { source, ...rest } = asset;
+  const [css, writtenAssets] = await Promise.all([
+    // css files
+    Promise.all(eligible.map(async (asset) => {
+      const { source, ...rest } = asset;
 
-    // ensure charset is present. critical files will likely drop this.
-    const s = /^@charset/.test(source) ? source : `@charset "UTF-8";${source}`;
-    const hash = createHash(s);
-    // ensure asset key is safe to save
-    const file = `${asset.key.replace(/[^a-z0-9_-]/gi, '-')}-${hash}.css`;
+      // ensure charset is present. critical files will likely drop this.
+      const s = /^@charset/.test(source) ? source : `@charset "UTF-8";${source}`;
+      const hash = createHash(s);
+      // ensure asset key is safe to save
+      const file = `${asset.key.replace(/[^a-z0-9_-]/gi, '-')}-${hash}.css`;
 
-    const compressed = await new Promise((resolve, reject) => {
-      gzip(s, (err, r) => {
-        if (err) return reject(err);
-        return resolve(r);
-      });
-    });
+      const compressed = await getCompressedSize(s);
 
-    const absolute = path.resolve(cwd, dir, file);
-    await writeFile(absolute, s, 'utf8');
-
-    return {
-      ...rest,
-      embedded: Boolean(asset.embedded),
-      file,
-      size: s.length,
-      compressed: compressed.length,
-    };
-  }));
+      const absolute = path.resolve(cwd, dir, file);
+      await writeFile(absolute, s, 'utf8');
+      return {
+        ...rest,
+        embedded: Boolean(asset.embedded),
+        file,
+        size: s.length,
+        compressed,
+      };
+    })),
+    // asset files extracted from css (e.g. svgs, pngs, etc)
+    Promise.all(files.map(async (asset) => {
+      const relative = path.join(`./${FILE_ASSET_FOLDER}`, asset.fileName);
+      const absolute = path.resolve(cwd, dir, relative);
+      const compressed = await getCompressedSize(asset.source);
+      await writeFile(absolute, asset.source, 'utf8');
+      return {
+        key: relative,
+        file: relative,
+        size: asset.source.length,
+        compressed,
+      };
+    })),
+  ]);
+  return { css, assets: writtenAssets };
 };
 
 /**
  * @param {object} params
  * @param {string} params.cwd The current working directory
  * @param {string} params.dir The CSS dist directory
- * @param {WrittenCSSOutputAsset[]} params.written The written assets
+ * @param {CSSWriteResult} params.written The written assets
  * @returns {Promise<object>}
  */
 const buildManifest = async ({ cwd, dir, written }) => {
+  const { css, assets } = written;
   const manifest = {};
   const longest = {
     file: 0,
     size: 0,
     compressed: 0,
   };
-  written.forEach(({ key, ...rest }) => {
+  [...css, ...assets].forEach(({ key, ...rest }) => {
     manifest[key] = rest;
     const { file } = rest;
     const loc = path.join(dir, file);
@@ -249,9 +317,13 @@ const buildManifest = async ({ cwd, dir, written }) => {
     if (a.size < b.size) return -1;
     return 0;
   }).forEach(({ file, size, compressed }) => {
-    const rel = `${path.join(dir)}/`;
+    const isAsset = file.startsWith(`${FILE_ASSET_FOLDER}/`);
+    // const fileName = isAsset ? file.replace(`${FILE_ASSET_FOLDER}/`, '') : file;
+
+    const rel = isAsset ? `${path.join(dir)}/${FILE_ASSET_FOLDER}/` : `${path.join(dir)}/`;
+    const fileColor = isAsset ? magenta : cyan;
     let str = dim(rel);
-    str += cyan(path.join(dir, file).replace(rel, '').padEnd(longest.file + 2 - rel.length));
+    str += fileColor(path.join(dir, file).replace(rel, '').padEnd(longest.file + 2 - rel.length));
     str += ` ${dim(bold(formatFileSize(size).padStart(longest.size)))}`;
     str += `${dim(' │ gzip: ')}`;
     str += dim(formatFileSize(compressed).padStart(longest.compressed));
@@ -273,7 +345,7 @@ module.exports = {
   buildMain,
   buildManifest,
   buildPurged,
-  getMainCSSFromOutput,
+  getMainCSSFromRollup,
   logBuildStep,
   minify,
   write,
