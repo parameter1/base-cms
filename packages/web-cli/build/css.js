@@ -97,8 +97,8 @@ module.exports = async ({
   });
 
   await new Promise((resolve, reject) => {
-    watcher.on('event', ({ code }) => {
-      if (code === 'ERROR') reject();
+    watcher.on('event', ({ code, error }) => {
+      if (code === 'ERROR') reject(error);
       if (code === 'END') resolve();
     });
   });

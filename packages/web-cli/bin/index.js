@@ -3,7 +3,12 @@
 /* eslint-disable global-require */
 const minimist = require('minimist');
 const log = require('fancy-log');
-const { blue, gray, green } = require('chalk');
+const {
+  blue,
+  gray,
+  green,
+  red,
+} = require('chalk');
 
 const { isArray } = Array;
 log('cli starting...');
@@ -116,4 +121,7 @@ const commands = new Set(['build', 'build:css', 'build:js', 'build:ssr', 'dev', 
     return exit(`command '${blue(command)}' ${green('complete')}`);
   }
   return null;
-})().catch((e) => setImmediate(() => { throw e; }));
+})().catch((e) => {
+  log(e, '\n', red('AN ERROR OCCURED.'));
+  process.exit(1);
+});
