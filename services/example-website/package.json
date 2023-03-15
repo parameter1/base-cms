@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-example-website",
-  "version": "4.12.0",
+  "version": "4.12.1",
   "description": "Example BaseCMS website.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
@@ -38,7 +38,7 @@
     "@parameter1/base-cms-marko-web-theme-monorail": "^4.12.0",
     "@parameter1/base-cms-object-path": "^4.5.12",
     "@parameter1/base-cms-utils": "^4.5.12",
-    "@parameter1/base-cms-web-cli": "^4.11.5",
+    "@parameter1/base-cms-web-cli": "^4.12.1",
     "graphql": "^14.7.0",
     "graphql-tag": "^2.12.6"
   }
