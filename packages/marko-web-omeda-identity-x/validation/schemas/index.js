@@ -5,6 +5,7 @@ const behavior = require('./behavior');
 const hookBehavior = require('./hook-behavior');
 const hookDemographic = require('./hook-demographic');
 const hookPromoCode = require('./hook-promo-code');
+const shouldAwait = require('./should-await');
 
 module.exports = {
   appendBehavior,
@@ -14,4 +15,5 @@ module.exports = {
   hookBehavior,
   hookDemographic,
   hookPromoCode,
+  shouldAwait,
 };
