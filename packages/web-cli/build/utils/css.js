@@ -97,7 +97,13 @@ const getMainCSSFromRollup = async (entry, result) => {
   // ensure extracted file assets (svgs, pngs, etc) have their `url()` paths re-written
   // to a relative location otherwise they will 404.
   const relativeAssetUrls = await postcss([
-    url({ url: (asset) => `./${FILE_ASSET_FOLDER}${asset.url}` }),
+    url({
+      url: (asset) => {
+        // preserve data and remote files.
+        if (/^(?:data|http[s]?):/.test(asset.url)) return asset.url;
+        return `./${FILE_ASSET_FOLDER}${asset.url}`;
+      },
+    }),
   ]).process(main.source, { from: undefined });
 
   return {
