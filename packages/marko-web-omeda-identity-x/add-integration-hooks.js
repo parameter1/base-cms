@@ -29,9 +29,7 @@ module.exports = (params = {}) => {
     idxOmedaRapidIdentifyProp,
     omedaPromoCodeCookieName,
     omedaPromoCodeDefault,
-    onLoginLinkSentShouldAwait,
-    onAuthenticationSucessShouldAwait,
-    onUserProfileUpdateShouldAwait,
+    shouldAwait,
     onLoginLinkSentFormatter,
     onAuthenticationSuccessFormatter,
     onUserProfileUpdateFormatter,
@@ -47,9 +45,7 @@ module.exports = (params = {}) => {
     omedaGraphQLClientProp: Joi.string().required(),
     omedaPromoCodeCookieName: Joi.string().required(),
     omedaPromoCodeDefault: Joi.string(),
-    onLoginLinkSentShouldAwait: Joi.boolean().default(false),
-    onAuthenticationSucessShouldAwait: Joi.boolean().default(true),
-    onUserProfileUpdateShouldAwait: Joi.boolean().default(false),
+    shouldAwait: schemas.shouldAwait,
     onLoginLinkSentFormatter: Joi.function().required(),
     onAuthenticationSuccessFormatter: Joi.function().required(),
     onUserProfileUpdateFormatter: Joi.function().required(),
@@ -64,7 +60,7 @@ module.exports = (params = {}) => {
 
   idxConfig.addHook({
     name: 'onLoginLinkSent',
-    shouldAwait: onLoginLinkSentShouldAwait,
+    shouldAwait: shouldAwait.onLoginLinkSent,
     fn: async (args) => onLoginLinkSent({
       ...args,
       brandKey,
@@ -84,7 +80,7 @@ module.exports = (params = {}) => {
 
   idxConfig.addHook({
     name: 'onAuthenticationSuccess',
-    shouldAwait: onAuthenticationSucessShouldAwait,
+    shouldAwait: shouldAwait.onAuthenticationSucess,
     fn: async (args) => onAuthenticationSuccess({
       ...args,
       brandKey,
@@ -103,7 +99,7 @@ module.exports = (params = {}) => {
 
   idxConfig.addHook({
     name: 'onUserProfileUpdate',
-    shouldAwait: onUserProfileUpdateShouldAwait,
+    shouldAwait: shouldAwait.onUserProfileUpdate,
     fn: async (args) => onUserProfileUpdate({
       ...args,
       idxOmedaRapidIdentify: get(args, `req.${idxOmedaRapidIdentifyProp}`),
