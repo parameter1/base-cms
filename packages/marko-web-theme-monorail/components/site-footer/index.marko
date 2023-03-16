@@ -114,7 +114,7 @@ $ const useIdxNewsletterSignup = defaultValue(input.useIdxNewsletterSignup, true
         <for|item| of=getNavItems({ items: footerItems, hasUser: input.hasUser, regEnabled: input.regEnabled })>
           <@item>
             $ const obj = asObject(item);
-            <marko-web-link href=obj.href title=obj.title target=obj.target>
+            <marko-web-link class=obj.class href=obj.href title=obj.title target=obj.target>
               $!{obj.label}
             </marko-web-link>
           </@item>
