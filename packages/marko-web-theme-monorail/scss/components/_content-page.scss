@@ -246,7 +246,7 @@
   }
 
   &__content-body h2 {
-    margin-bottom: 0;
+    margin-bottom: 1rem;
     font-size: 26px;
     @include media-breakpoint-down(sm) {
       font-size: 23px;
@@ -254,7 +254,7 @@
   }
 
   &__content-body h3 {
-    margin-bottom: 0;
+    margin-bottom: 1rem;
     font-size: 24px;
   }
 
