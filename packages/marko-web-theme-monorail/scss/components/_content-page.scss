@@ -59,6 +59,40 @@
 
 .page-contents {
   $self: &;
+
+  &__content-body p {
+
+    [data-embed-type="image"][data-embed-align="right"] {
+      margin-bottom: 1rem;
+      @include media-breakpoint-up(md) {
+        text-align: right;
+      }
+    }
+
+    [data-embed-type="image"][data-embed-align="left"] {
+      margin-bottom: 1rem;
+      @include media-breakpoint-up(md) {
+        text-align: left;
+      }
+    }
+  }
+
+  &__content-body h2 {
+    font-size: 26px;
+    @include media-breakpoint-down(sm) {
+      font-size: 23px;
+    }
+  }
+
+  &__content-body h3 {
+    font-size: 24px;
+  }
+
+  &__content-body ol,
+  &__content-body ul {
+    list-style-position: initial;
+  }
+
   .btn-transcript,
   .btn-transcript:hover {
     background-color: $gray-100;
@@ -226,41 +260,6 @@
 
   > #{ $self }__content-transcript {
     border-top: solid 3px $gray-200;
-  }
-
-  &__content-body p {
-
-    [data-embed-type="image"][data-embed-align="right"] {
-      margin-bottom: 1rem;
-      @include media-breakpoint-up(md) {
-        text-align: right;
-      }
-    }
-
-    [data-embed-type="image"][data-embed-align="left"] {
-      margin-bottom: 1rem;
-      @include media-breakpoint-up(md) {
-        text-align: left;
-      }
-    }
-  }
-
-  &__content-body h2 {
-    margin-bottom: 1rem;
-    font-size: 26px;
-    @include media-breakpoint-down(sm) {
-      font-size: 23px;
-    }
-  }
-
-  &__content-body h3 {
-    margin-bottom: 1rem;
-    font-size: 24px;
-  }
-
-  &__content-body ol,
-  &__content-body ul {
-    list-style-position: initial;
   }
 
   &--download-form {
