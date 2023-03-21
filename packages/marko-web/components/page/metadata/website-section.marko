@@ -13,6 +13,14 @@ fragment WebsiteSectionPageMetadataFragment on WebsiteSection {
     title
     description
   }
+  logo {
+    id
+    src
+    cropRectangle {
+      width
+      height
+    }
+  }
 }
 `;
 
@@ -22,6 +30,11 @@ fragment WebsiteSectionPageMetadataFragment on WebsiteSection {
       title: get(node, "metadata.title"),
       description: get(node, "metadata.description"),
       canonicalPath: node.canonicalPath,
+      imageSrc: get(node, "logo.src"),
+      imageDimensions: {
+        width: get(node, "logo.cropRectangle.width"),
+        height: get(node, "logo.cropRectangle.height")
+      },
     };
     <common ...metadata />
     <meta property="og:type" content="website" />
