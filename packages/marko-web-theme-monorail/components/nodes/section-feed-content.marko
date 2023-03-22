@@ -11,6 +11,7 @@ $ const containerAttrs = getAsObject(input, "containerAttrs");
 $ const linkAttrs = getAsObject(input, "linkAttrs");
 
 $ const withBody = defaultValue(input.withBody, false);
+$ const withAddress = defaultValue(input.withAddress, (content.type === "company"));
 $ const withDates = defaultValue(input.withDates, true);
 $ const isUpcoming = content.startDate > Date.now();
 $ const withSection = defaultValue(input.withSection, true);
@@ -75,7 +76,14 @@ $ const blockName = "section-feed-content-node";
           obj=content
         />
       </if>
-      <if(withDates && (content.startDate || content.endDate))>
+      <if(withAddress && (content.address1 || content.address2 || content.cityStateZip))>
+        <marko-web-block name=blockName modifiers=["contact-info"] >
+          <marko-web-content-address1 block-name=blockName obj=content />
+          <marko-web-content-address2 block-name=blockName obj=content />
+          <marko-web-content-city-state-zip block-name=blockName obj=content />
+        </marko-web-block>
+      </if>
+      <else-if(withDates && (content.startDate || content.endDate))>
         <div class=`${blockName}__content-event-dates`>
           <marko-web-content-start-date tag="span" block-name=blockName obj=content />
           <marko-web-content-end-date tag="span" block-name=blockName obj=content />
@@ -87,7 +95,7 @@ $ const blockName = "section-feed-content-node";
             target="_blank"
           />
         </if>
-      </if>
+      </else-if>
       <else-if(withDates)>
         <marko-web-content-published
           block-name=blockName
@@ -102,10 +110,11 @@ $ const blockName = "section-feed-content-node";
   </marko-web-element>
   <if(displayImage && primaryImage.src)>
     <marko-web-element block-name=blockName name="image-wrapper">
-      $ const src = buildImgixUrl(primaryImage.src, imageOptions, null, get(primaryImage, "isLogo"));
+      $ const isLogo = content.type === "company" ? true : get(primaryImage, "isLogo");
+      $ const src = buildImgixUrl(primaryImage.src, imageOptions, null, isLogo);
       $ const srcset = [src, `${buildImgixUrl(src, { dpr: 2 })} 2x`];
 
-      $ const srcMobile = buildImgixUrl(primaryImage.src, mobileImageOptions, null, get(primaryImage, "isLogo"));
+      $ const srcMobile = buildImgixUrl(primaryImage.src, mobileImageOptions, null, isLogo);
       $ const srcsetMobile = [srcMobile, `${buildImgixUrl(srcMobile, { dpr: 2 })} 2x`];
       $ const link = linkField && get(content, linkField) ? get(content, linkField) : get(content, "siteContext.path");
       <marko-web-picture>
