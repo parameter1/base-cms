@@ -1,4 +1,12 @@
-$ const { facets, title, description, aliases, initiallyExpanded, searchQuery } = input;
+$ const {
+  facets,
+  title,
+  description,
+  aliases,
+  initiallyExpanded,
+  contentTypes,
+  searchQuery,
+} = input;
 
 <if(facets.length)>
   <div class='directory-facets'>
@@ -17,6 +25,7 @@ $ const { facets, title, description, aliases, initiallyExpanded, searchQuery } 
       aliases=aliases
       active-id=input.activeId
       search-query=searchQuery
+      content-types=contentTypes
       initially-expanded=initiallyExpanded
     />
   </div>

@@ -5,6 +5,7 @@ import categorySectionsFragment from "../../graphql/fragments/category-sections"
 $ const activeId = defaultValue(input.activeId, null);
 $ const aliases = defaultValue(input.aliases, []);
 $ const contentType = defaultValue(input.contentType, "");
+$ const contentTypes = defaultValue(input.contentTypes, null);
 $ const searchQuery = defaultValue(input.searchQuery, null);
 $ const primaryAlias = defaultValue(input.primaryAlias, "directory");
 $ const title = defaultValue(input.title, "");
@@ -22,6 +23,7 @@ $ const withToggle = defaultValue(input.withToggle, false);
     active-id=activeId
     aliases=aliases
     search-query=searchQuery
+    content-types=contentTypes
     initially-expanded=input.initiallyExpanded
   />
 </marko-web-query>

@@ -8,6 +8,7 @@
     "@title": "string",
     "@description": "string",
     "@content-type": "string",
+    "@content-types": "string",
     "@search-query": "string",
     "@initially-expanded": {
       "type": "boolean",
