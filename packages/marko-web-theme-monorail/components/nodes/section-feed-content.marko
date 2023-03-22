@@ -11,7 +11,7 @@ $ const containerAttrs = getAsObject(input, "containerAttrs");
 $ const linkAttrs = getAsObject(input, "linkAttrs");
 
 $ const withBody = defaultValue(input.withBody, false);
-$ const withAddress = defaultValue(input.withAddress, true);
+$ const withAddress = defaultValue(input.withAddress, (content.type === "company"));
 $ const withDates = defaultValue(input.withDates, true);
 $ const isUpcoming = content.startDate > Date.now();
 $ const withSection = defaultValue(input.withSection, true);
