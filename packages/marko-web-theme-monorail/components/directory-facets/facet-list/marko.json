@@ -1,6 +1,7 @@
 {
   "<theme-directory-facet-list>": {
     "template": "./facet-list.marko",
+    "@content-types": "string",
     "@search-query": "string",
     "@facets": {
       "type": "array",

@@ -7,7 +7,8 @@ $ const {
   activeId,
   aliases,
   initiallyExpanded,
-  searchQuery
+  searchQuery,
+  contentTypes
 } = input;
 
 $ const isActiveId = ({id}) => (activeId && (`${activeId}` === `${id}`));
@@ -25,7 +26,10 @@ $ facets.sort((a, b) => a.name.localeCompare(b.name));
       $ if (isOpen) classNames.push(`${block}__item--open`);
       $ if (isActive) linkClasses.push(`${block}__link--active`);
       <div class=classNames>
-        $ const facetLink = searchQuery ? `/${facet.alias}?searchQuery=${searchQuery}` : `/${facet.alias}`;
+        $ const querySringParams = [];
+        $ if (searchQuery) querySringParams.push(`searchQuery=${searchQuery}`)
+        $ if (contentTypes) querySringParams.push(`contentTypes=${contentTypes}`)
+        $ const facetLink = querySringParams ? `/${facet.alias}?${querySringParams.join('&')}` : `/${facet.alias}`;
         <a class=linkClasses href=facetLink>
           ${facet.name}
         </a>
