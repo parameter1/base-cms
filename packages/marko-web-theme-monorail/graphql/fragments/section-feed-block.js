@@ -45,6 +45,11 @@ fragment SectionFeedBlockContentFragment on Content {
     endDate
     website
   }
+  ... on ContentCompany {
+    address1
+    address2
+    cityStateZip
+  }
 }
 
 `;
