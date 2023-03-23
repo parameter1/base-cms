@@ -30,8 +30,8 @@ $ const image = imageSrc || fallbackImage;
   <!-- Image (standard, OpenGrah, and Schema.org respectively) -->
   <meta name="image" property="og:image" item-prop="image" content=image />
   <if(imageDimensions && imageDimensions.width && imageDimensions.height)>
-    <meta property="og:image:width" content=imageDimensions.width />
-    <meta property="og:image:height" content=imageDimensions.height />
+    <meta property="og:image:width" content=`${imageDimensions.width}` />
+    <meta property="og:image:height" content=`${imageDimensions.height}` />
   </if>
   <!-- @todo Create a new focal point preview for FB's 1200x630 ratio -->
 </if>
