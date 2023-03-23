@@ -109,7 +109,7 @@ module.exports = (node) => {
       ...(get(node, 'metadata.description') && { description: get(node, 'metadata.description') }),
       ...(getImages(node) && { image: getImages(node) }),
       url: canonicalUrl,
-      ...(siteUrl !== canonicalUrl && { url: siteUrl }),
+      ...(siteUrl !== canonicalUrl && { url: { url: siteUrl, isBasedOn: canonicalUrl } }),
       ...(address && { address }),
       ...(telephone && { telephone }),
       ...(get(node, 'email') && { email: get(node, 'email') }),
