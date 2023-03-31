@@ -328,7 +328,7 @@ export default {
         const scheduledSections = getAsArray(r1, 'data.content.websiteSchedules');
         if (scheduledSections.length) {
           sectionIds.push(
-            ...scheduledSections.map((scheduledSection) => scheduledSection.section.id)
+            ...scheduledSections.map((scheduledSection) => scheduledSection.section.id),
           );
         }
       }
