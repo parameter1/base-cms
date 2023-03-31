@@ -57,6 +57,7 @@ import fromIdsQuery from '../graphql/queries/sections-from-ids';
 import contentQuery from '../graphql/queries/content';
 import getEdgeNodes from '../utils/get-edge-nodes';
 import getAsObject from '../utils/get-as-object';
+import getAsArray from '../utils/get-as-array';
 
 export default {
   components: {
@@ -172,6 +173,10 @@ export default {
       default: 3,
     },
     useContentPrimarySection: {
+      type: Boolean,
+      default: false,
+    },
+    useContentSchedules: {
       type: Boolean,
       default: false,
     },
@@ -318,6 +323,12 @@ export default {
       if (this.useContentPrimarySection) {
         const primarySection = getAsObject(r1, 'data.content.primarySection');
         if (primarySection.id) sectionIds.push(primarySection.id);
+      }
+      if (this.useContentSchedules) {
+        const scheduledSections = getAsArray(r1, 'data.content.websiteSchedules');
+        if (scheduledSections.length) {
+          sectionIds.push(...scheduledSections.map((scheduledSection) => scheduledSection.section.id));
+        }
       }
       if (!taxonomyIds.length && !sectionIds.length) return [];
       const v2 = { taxonomyIds, relatedSectionIds: sectionIds };
