@@ -327,7 +327,9 @@ export default {
       if (this.useContentSchedules) {
         const scheduledSections = getAsArray(r1, 'data.content.websiteSchedules');
         if (scheduledSections.length) {
-          sectionIds.push(...scheduledSections.map((scheduledSection) => scheduledSection.section.id));
+          sectionIds.push(
+            ...scheduledSections.map((scheduledSection) => scheduledSection.section.id)
+          );
         }
       }
       if (!taxonomyIds.length && !sectionIds.length) return [];
