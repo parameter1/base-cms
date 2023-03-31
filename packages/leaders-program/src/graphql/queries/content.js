@@ -15,6 +15,11 @@ query LeadersContentTaxonomyIds($contentId: Int!) {
     primarySection {
       id
     }
+    websiteSchedules {
+      section {
+        id
+      }
+    }
   }
 }
 
