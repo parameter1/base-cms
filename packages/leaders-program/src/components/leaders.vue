@@ -325,11 +325,9 @@ export default {
         if (primarySection.id) sectionIds.push(primarySection.id);
       }
       if (this.useContentSchedules) {
-        const scheduledSections = getAsArray(r1, 'data.content.websiteSchedules');
-        if (scheduledSections.length) {
-          sectionIds.push(
-            ...scheduledSections.map((scheduledSection) => scheduledSection.section.id),
-          );
+        const schedules = getAsArray(r1, 'data.content.websiteSchedules');
+        if (schedules.length) {
+          sectionIds.push(...schedules.map((schedule) => schedule.section.id));
         }
       }
       if (!taxonomyIds.length && !sectionIds.length) return [];
