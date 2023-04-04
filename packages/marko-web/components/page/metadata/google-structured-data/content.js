@@ -47,7 +47,7 @@ module.exports = (node, contentGatingHandler) => {
     url: canonicalUrl,
     ...(siteUrl !== canonicalUrl && { url: siteUrl, isBasedOn: canonicalUrl }),
     ...(getAuthor(node) && { author: getAuthor(node) }),
-    ...(contentGatingHandler(node) && {
+    ...(contentGatingHandler({ content: node }) && {
       isAccessibleForFree: false,
       hasPart: {
         '@type': 'WebPageElement',
