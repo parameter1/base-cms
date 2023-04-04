@@ -90,7 +90,7 @@ ${processedFragment}
 `;
 
 $ const buildStructuredData = isFunction(input.buildStructuredData) ? input.buildStructuredData : defaultBuildStructuredData;
-$ const defaultFn = ({ content }) => get(content, 'userRegistration.isCurrentlyRequired', false);
+$ const defaultFn = (node) => get(node, 'userRegistration.isCurrentlyRequired', false);
 $ const { contentGatingHandler: globalContentGatingHandler } = out.global;
 $ const contentGatingHandler = isFunction(globalContentGatingHandler) ? globalContentGatingHandler : defaultFn;
 
