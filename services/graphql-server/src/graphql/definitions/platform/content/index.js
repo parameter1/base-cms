@@ -593,6 +593,7 @@ input AllCompanyContentQueryInput {
   excludeContentTypes: [ContentType!] = []
   includeLabels: [String!] = []
   excludeLabels: [String!] = []
+  excludeContentIds: [Int!] = []
   requiresImage: Boolean = false
   sort: ContentSortInput = { field: published, order: desc }
   pagination: PaginationInput = {}

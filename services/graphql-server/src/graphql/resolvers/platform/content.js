@@ -1224,6 +1224,7 @@ module.exports = {
         excludeContentTypes,
         includeLabels,
         excludeLabels,
+        excludeContentIds,
         requiresImage,
         sort,
         pagination,
@@ -1234,6 +1235,7 @@ module.exports = {
         since,
         contentTypes: includeContentTypes,
         excludeContentTypes,
+        excludeContentIds,
       });
       const siteId = input.siteId || site.id();
       if (withSite && siteId) query['mutations.Website.primarySite'] = siteId;
