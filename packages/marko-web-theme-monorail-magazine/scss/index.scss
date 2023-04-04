@@ -187,6 +187,20 @@
         }
       }
     }
+    &.sticky-top {
+      @media (max-height: 650px) and (min-width: 992px) {
+        .node {
+          &__image-inner-wrapper {
+            max-height: calc(100vh - 150px);
+            width: auto;
+            margin: 0 auto;
+            &--fluid-3by4 {
+              aspect-ratio: 3/4;
+            }
+          }
+        }
+      }
+    }
   }
 }
 
