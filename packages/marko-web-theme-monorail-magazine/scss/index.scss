@@ -187,6 +187,11 @@
         }
       }
     }
+    &.sticky-top {
+      @media (max-height: 650px) and (min-width: 992px) {
+        position: initial;
+      }
+    }
   }
 }
 
