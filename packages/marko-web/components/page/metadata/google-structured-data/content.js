@@ -24,7 +24,7 @@ const getImages = (node) => {
   return images.length ? images : undefined;
 };
 
-module.exports = (node) => {
+module.exports = (node, contentGatingHandler) => {
   const publishedISOString = node.published ? (new Date(node.published)).toISOString() : undefined;
   const updatedISOString = node.updated ? (new Date(node.updated)).toISOString() : undefined;
   const siteUrl = get(node, 'siteContext.url');
@@ -47,6 +47,14 @@ module.exports = (node) => {
     url: canonicalUrl,
     ...(siteUrl !== canonicalUrl && { url: siteUrl, isBasedOn: canonicalUrl }),
     ...(getAuthor(node) && { author: getAuthor(node) }),
+    ...(contentGatingHandler(node) && {
+      isAccessibleForFree: false,
+      hasPart: {
+        '@type': 'WebPageElement',
+        isAccessibleForFree: false,
+        cssSelector: '.page-contents__content-body--ld-json',
+      },
+    }),
   };
 
   if (node.type === 'video') {

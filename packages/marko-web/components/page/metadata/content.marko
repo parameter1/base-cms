@@ -31,6 +31,9 @@ fragment ContentPageMetadataFragment on Content {
       src(input: { options: { auto: "format,compress", w: "1200", fit: "max", q: 70 } })
     }
   }
+  userRegistration {
+    isCurrentlyRequired
+  }
   ... on ContentVideo {
     embedSrc
     transcript
@@ -87,6 +90,9 @@ ${processedFragment}
 `;
 
 $ const buildStructuredData = isFunction(input.buildStructuredData) ? input.buildStructuredData : defaultBuildStructuredData;
+$ const defaultFn = ({ content }) => get(content, 'userRegistration.isCurrentlyRequired', false);
+$ const { contentGatingHandler: globalContentGatingHandler } = out.global;
+$ const contentGatingHandler = isFunction(globalContentGatingHandler) ? globalContentGatingHandler : defaultFn;
 
 <if(id)>
   <marko-web-query|{ node }| name="content" params={ id, queryFragment }>
@@ -123,7 +129,7 @@ $ const buildStructuredData = isFunction(input.buildStructuredData) ? input.buil
       </if>
     </else>
 
-    $ const structuredData = buildStructuredData(node);
+    $ const structuredData = buildStructuredData(node, contentGatingHandler);
     <if(structuredData)>
       <script type="application/ld+json">
         ${structuredData}
