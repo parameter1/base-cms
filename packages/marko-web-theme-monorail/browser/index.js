@@ -32,10 +32,12 @@ export default (Browser, config = {
   withGTM: true,
   withP1Events: true,
   idxArgs: {},
+  inquiryArgs: {},
 }) => {
   const { EventBus } = Browser;
   const { enableOmedaIdentityX } = config;
   const idxArgs = config.idxArgs || {};
+  const inquiryArgs = config.inquiryArgs || {};
 
   if (config.withP1Events) {
     P1Events(Browser);
@@ -83,7 +85,7 @@ export default (Browser, config = {
     IdentityX(Browser, idxArgs);
   }
   IdentityXNewsletterForms(Browser);
-  Inquiry(Browser);
+  Inquiry(Browser, inquiryArgs);
 
   Browser.register('ThemeBlockLoader', BlockLoader);
 
