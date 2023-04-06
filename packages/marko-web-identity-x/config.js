@@ -12,6 +12,7 @@ class IdentityXConfiguration {
    * @param {string} [options.apiToken] An API token to use. Only required when doing write ops.
    * @param {string[]} [options.requiredServerFields] Required fields, server enforced.
    * @param {string[]} [options.requiredClientFields] Required fields, client-side only.
+   * @param {string[]} [options.requiredCreateFields] Required fields, when creating a new user.
    * @param {string[]} [options.hiddenFields] The fields to hide from the profile.
    * @param {function} [options.onHookError]
    * @param {object} options.rest
@@ -21,6 +22,7 @@ class IdentityXConfiguration {
     apiToken,
     requiredServerFields = [],
     requiredClientFields = [],
+    requiredCreateFields = [],
     defaultFieldLabels = {},
     hiddenFields = ['city', 'street', 'addressExtra', 'phoneNumber'],
     defaultCountryCode,
@@ -35,6 +37,7 @@ class IdentityXConfiguration {
       enableChangeEmail: false,
       requiredServerFields,
       requiredClientFields,
+      requiredCreateFields,
       defaultFieldLabels,
       hiddenFields,
       defaultCountryCode,
@@ -104,6 +107,10 @@ class IdentityXConfiguration {
 
   getRequiredClientFields() {
     return this.getAsArray('requiredClientFields');
+  }
+
+  getRequiredCreateFields() {
+    return this.getAsArray('requiredCreateFields');
   }
 
   getHiddenFields() {
