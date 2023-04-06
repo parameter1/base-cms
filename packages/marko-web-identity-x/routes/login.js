@@ -2,6 +2,14 @@ const gql = require('graphql-tag');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 const userFragment = require('../api/fragments/active-user');
 
+const mutation = gql`
+  mutation SetPreLoginFields($input: SetAppUserUnverifiedDataMutationInput!) {
+    setAppUserUnverifiedData(input: $input) {
+      id
+    }
+  }
+`;
+
 const buildQuery = () => gql`
   query LoginCheckAppUser($email: String!) {
     appUser(input: { email: $email }) {
@@ -34,7 +42,20 @@ module.exports = asyncRoute(async (req, res) => {
   const { data } = await identityX.client.query({ query, variables });
   let { appUser } = data;
 
-  if (!appUser) {
+  // Check for required creation fields
+  const required = identityX.config.getRequiredCreateFields();
+  if (required.length) {
+    // If we don't have a user, or the user is missing some of the required fields
+    if (!appUser || (appUser && !required.every((key) => appUser[key]))) {
+      additionalEventData.createdNewUser = true;
+      // And they weren't presented in the login request, require them.
+      if (!required.every((key) => body[key])) {
+        return res.status(400).json({ ok: false, requiresUserInput: true });
+      }
+    }
+  }
+
+  if (!appUser || (appUser && !required.every((key) => appUser[key]))) {
     // Create the user.
     appUser = await identityX.createAppUser({ email });
     additionalEventData.createdNewUser = true;
@@ -46,6 +67,20 @@ module.exports = asyncRoute(async (req, res) => {
       mutation: forceProfileReVerificationUser,
       variables: { input: { id } },
     });
+  }
+
+  // Set the fields as unverified app data and continue login.
+  if (required.length && additionalEventData.createdNewUser) {
+    const regionalConsentAnswers = Array.isArray(body.regionalConsentAnswers)
+      ? body.regionalConsentAnswers
+      : [];
+    const input = {
+      ...(required.reduce((obj, key) => ({ ...obj, [key]: body[key] }), {})),
+      regionalConsentAnswers: regionalConsentAnswers
+        .map((answer) => ({ policyId: answer.id, given: answer.given })),
+      email,
+    };
+    await identityX.client.mutate({ mutation, variables: { input } });
   }
 
   // Send login link.

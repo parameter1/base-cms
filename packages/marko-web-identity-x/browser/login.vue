@@ -28,6 +28,28 @@
         @focus="$emit('focus')"
       />
 
+      <p v-if="requiresUserInput">
+        Thanks! Additional information is required to continue:
+      </p>
+      <div v-if="requiresUserInput" class="row form-group">
+        <div v-if="requiredCreateFields.includes('givenName')" class="col">
+          <given-name
+            v-model="givenName"
+            :required="true"
+            :disabled="loading"
+            :label="defaultFieldLabels.givenName || 'First Name'"
+          />
+        </div>
+        <div v-if="requiredCreateFields.includes('familyName')" class="col">
+          <family-name
+            v-model="familyName"
+            :required="true"
+            :disabled="loading"
+            :label="defaultFieldLabels.familyName || 'Last Name'"
+          />
+        </div>
+      </div>
+
       <small
         v-if="emailConsentRequestEnabled && emailConsentRequest"
         class="text-muted mb-1 d-block"
@@ -55,6 +77,8 @@
 
 <script>
 import Email from './form/fields/email.vue';
+import GivenName from './form/fields/given-name.vue';
+import FamilyName from './form/fields/family-name.vue';
 
 import cleanPath from './utils/clean-path';
 import post from './utils/post';
@@ -69,6 +93,8 @@ export default {
    */
   components: {
     Email,
+    GivenName,
+    FamilyName,
   },
 
   /**
@@ -99,6 +125,10 @@ export default {
         profile: 'Modify Profile',
         logout: 'Logout',
       }),
+    },
+    defaultFieldLabels: {
+      type: Object,
+      default: () => {},
     },
     consentPolicy: {
       type: String,
@@ -154,6 +184,11 @@ export default {
       default: () => [],
     },
 
+    requiredCreateFields: {
+      type: Array,
+      default: () => [],
+    },
+
     lang: {
       type: String,
       default: 'en',
@@ -165,9 +200,12 @@ export default {
    */
   data: () => ({
     email: null,
+    givenName: null,
+    familyName: null,
     complete: false,
     error: null,
     loading: false,
+    requiresUserInput: false,
   }),
 
   /**
@@ -249,6 +287,8 @@ export default {
         this.loading = true;
         const res = await post('/login', {
           email: this.email,
+          // Append any additional required fields
+          ...(this.requiredCreateFields.reduce((obj, key) => ({ ...obj, [key]: this[key] }), {})),
           source: this.source,
           redirectTo: this.redirectTo,
           authUrl: this.authUrl,
@@ -259,7 +299,13 @@ export default {
           },
         });
         const data = await res.json();
-        if (!res.ok) throw new FormError(data.message, res.status);
+        if (!res.ok) {
+          if (data.requiresUserInput) {
+            this.requiresUserInput = true;
+            return;
+          }
+          throw new FormError(data.message, res.status);
+        }
         this.complete = true;
         this.emit('login-link-sent', {
           data,
