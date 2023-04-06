@@ -1,6 +1,5 @@
 const gql = require('graphql-tag');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
-const userFragment = require('../api/fragments/active-user');
 
 const mutation = gql`
   mutation SetPreLoginFields($input: SetAppUserUnverifiedDataMutationInput!) {
@@ -8,15 +7,6 @@ const mutation = gql`
       id
     }
   }
-`;
-
-const buildQuery = () => gql`
-  query LoginCheckAppUser($email: String!) {
-    appUser(input: { email: $email }) {
-      ...ActiveUserFragment
-    }
-  }
-  ${userFragment}
 `;
 
 const forceProfileReVerificationUser = gql`
@@ -36,11 +26,8 @@ module.exports = asyncRoute(async (req, res) => {
     redirectTo,
     additionalEventData = {},
   } = body;
-  const variables = { email };
   const { forceProfileReVerification } = additionalEventData;
-  const query = buildQuery();
-  const { data } = await identityX.client.query({ query, variables });
-  let { appUser } = data;
+  let appUser = await identityX.loadAppUserByEmail(email);
 
   // Check for required creation fields
   const required = identityX.config.getRequiredCreateFields();
@@ -85,8 +72,7 @@ module.exports = asyncRoute(async (req, res) => {
 
   // Refresh the user for verification/new field state
   if (additionalEventData.createdNewUser) {
-    const r = await identityX.client.query({ query, variables });
-    appUser = r.data.appUser;
+    appUser = await identityX.loadAppUserByEmail(email);
   }
 
   // Send login link.

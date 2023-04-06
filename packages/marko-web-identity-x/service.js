@@ -2,6 +2,7 @@ const { get, getAsObject } = require('@parameter1/base-cms-object-path');
 const createClient = require('./utils/create-client');
 const getActiveContext = require('./api/queries/get-active-context');
 const checkContentAccess = require('./api/queries/check-content-access');
+const loadUser = require('./api/queries/load-user');
 const addExternalUserId = require('./api/mutations/add-external-user-id');
 const setCustomAttributes = require('./api/mutations/set-custom-attributes');
 const impersonateAppUser = require('./api/mutations/impersonate-app-user');
@@ -56,6 +57,18 @@ class IdentityX {
       activeContext,
     });
     return activeContext;
+  }
+
+  /**
+   * Returns an IdentityX user record by email address
+   */
+  async loadAppUserByEmail(email) {
+    const { data } = await this.client.query({
+      query: loadUser,
+      variables: { email },
+      fetchPolicy: 'no-cache',
+    });
+    return data.appUser;
   }
 
   /**
