@@ -1,4 +1,5 @@
 const gql = require('graphql-tag');
+const debug = require('debug')('omeda');
 
 const RAPID_IDENT = gql`
   mutation RapidIdentityX($input: RapidCustomerIdentificationMutationInput!) {
@@ -65,5 +66,6 @@ module.exports = async (omedaGraphQLClient, {
     mutation: RAPID_IDENT,
     variables: { input },
   });
+  debug('rapid-identify', input, data);
   return data.result;
 };
