@@ -215,6 +215,8 @@
       :email-consent-request="emailConsentRequest"
       :email-consent-request-enabled="emailConsentRequestEnabled"
       :regional-consent-policies="regionalConsentPolicies"
+      :required-create-fields="requiredCreateFields"
+      :default-field-labels="defaultFieldLabels"
     />
   </div>
 </template>
@@ -289,6 +291,10 @@ export default {
       default: () => [],
     },
     requiredClientFields: {
+      type: Array,
+      default: () => [],
+    },
+    requiredCreateFields: {
       type: Array,
       default: () => [],
     },

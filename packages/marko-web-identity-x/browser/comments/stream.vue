@@ -43,6 +43,8 @@
           :app-context-id="appContextId"
           :regional-consent-policies="regionalConsentPolicies"
           :button-labels="loginButtonLabels"
+          :required-create-fields="requiredCreateFields"
+          :default-field-labels="defaultFieldLabels"
           @login-link-sent="showLoginMessage = false"
         />
       </div>
@@ -187,6 +189,14 @@ export default {
     regionalConsentPolicies: {
       type: Array,
       default: () => [],
+    },
+    requiredCreateFields: {
+      type: Array,
+      default: () => [],
+    },
+    defaultFieldLabels: {
+      type: Object,
+      default: () => ({}),
     },
   },
 
