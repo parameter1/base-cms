@@ -83,6 +83,12 @@ module.exports = asyncRoute(async (req, res) => {
     await identityX.client.mutate({ mutation, variables: { input } });
   }
 
+  // Refresh the user for verification/new field state
+  if (additionalEventData.createdNewUser) {
+    const r = await identityX.client.query({ query, variables });
+    appUser = r.data.appUser;
+  }
+
   // Send login link.
   await identityX.sendLoginLink({
     appUser,
