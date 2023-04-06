@@ -52,6 +52,8 @@ module.exports = async (params = {}) => {
     cookies: req.cookies,
   });
 
+  const requiredCreateFields = identityX.config.getRequiredCreateFields();
+
   const [omedaLinkedFields, { encryptedCustomerId }] = await Promise.all([
     getOmedaLinkedFields({ identityX, brandKey }),
     idxOmedaRapidIdentify(await formatter({
@@ -59,7 +61,11 @@ module.exports = async (params = {}) => {
       req,
       source,
       payload: {
-        user: user.verified ? user : { id: user.id, email: user.email },
+        user: user.verified ? user : {
+          ...(requiredCreateFields.reduce((obj, key) => ({ ...obj, [key]: user[key] }), {})),
+          id: user.id,
+          email: user.email,
+        },
         behavior,
         promoCode,
         appendBehaviors,
