@@ -13,6 +13,10 @@ module.exports = {
     clientSecret: process.env.AUTH0_SECRET,
     issuerBaseURL: process.env.AUTH0_ISSUER_URL,
   },
+  contentMeter: {
+    enabled: true,
+    viewLimit: 1,
+  },
   omedaIdentityX,
   identityX,
   nativeX,

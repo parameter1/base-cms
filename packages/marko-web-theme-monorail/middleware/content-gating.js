@@ -5,7 +5,7 @@ const defaultFn = ({ content }) => get(content, 'userRegistration.isCurrentlyReq
 
 /**
  * Installs the configured content gating handler in the Express app instance.
- * If not customized, content only be gated when set as gated in the CMS.
+ * If not customized, content will only be gated when set as gated in the CMS.
  */
 module.exports = (app, enabled = true, fn) => { // eslint-disable-line
   const contentGatingHandler = enabled && isFn(fn) ? fn : defaultFn;
