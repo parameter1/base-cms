@@ -26,7 +26,6 @@ module.exports = asyncRoute(async (req, res) => {
     redirectTo,
     additionalEventData = {},
   } = body;
-  const { forceProfileReVerification } = additionalEventData;
   let appUser = await identityX.loadAppUserByEmail(email);
 
   // Check for required creation fields
@@ -48,7 +47,7 @@ module.exports = asyncRoute(async (req, res) => {
     additionalEventData.createdNewUser = true;
   }
 
-  if (forceProfileReVerification) {
+  if (additionalEventData.forceProfileReVerification) {
     const { id } = appUser;
     await identityX.client.mutate({
       mutation: forceProfileReVerificationUser,
@@ -71,7 +70,7 @@ module.exports = asyncRoute(async (req, res) => {
   }
 
   // Refresh the user for verification/new field state
-  if (additionalEventData.createdNewUser) {
+  if (additionalEventData.forceProfileReVerification || additionalEventData.createdNewUser) {
     appUser = await identityX.loadAppUserByEmail(email);
   }
 
