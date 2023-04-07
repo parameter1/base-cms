@@ -5,6 +5,7 @@ const nativeX = require('./native-x');
 const navigation = require('./navigation');
 const newsletter = require('./newsletter');
 const search = require('./search');
+const contentMeter = require('./content-meter');
 
 module.exports = {
   auth0: {
@@ -13,10 +14,7 @@ module.exports = {
     clientSecret: process.env.AUTH0_SECRET,
     issuerBaseURL: process.env.AUTH0_ISSUER_URL,
   },
-  contentMeter: {
-    enabled: true,
-    viewLimit: 1,
-  },
+  contentMeter,
   omedaIdentityX,
   identityX,
   nativeX,

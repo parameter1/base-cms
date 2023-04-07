@@ -52,9 +52,8 @@ const hasOmedaId = ({ query, cookies }) => {
  * Installs the configured content metering handler in the Express app instance.
  * To utilize, chain this middleware on a content route.
  */
-module.exports = asyncRoute(async (req, res, next) => {
-  const { app, identityX, params: { id } } = req;
-  const config = app.locals.site.getAsObject('contentMeter');
+module.exports = (config) => asyncRoute(async (req, res, next) => {
+  const { identityX, params: { id } } = req;
   const viewLimit = get(config, 'viewLimit', 3);
   const timeframe = get(config, 'timeframe', 30 * 24 * 60 * 60 * 1000); // 30 days
 

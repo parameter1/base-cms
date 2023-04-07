@@ -4,6 +4,7 @@ const search = require('@parameter1/base-cms-marko-web-theme-monorail/routes/sea
 const print = require('@parameter1/base-cms-marko-web-theme-monorail/routes/print');
 const contentMetering = require('@parameter1/base-cms-marko-web-theme-monorail/middleware/content-metering');
 const nativeX = require('./native-x');
+const contentMeteringCfg = require('../../config/content-meter');
 
 const index = require('../templates/index');
 const content = require('../templates/content');
@@ -33,7 +34,7 @@ module.exports = (app, config) => {
 
   // Content
   print(app, queryFragment);
-  app.get('/*?:id(\\d{8})*', contentMetering, withContent({
+  app.get('/*?:id(\\d{8})*', contentMetering(contentMeteringCfg), withContent({
     template: content,
     queryFragment,
   }));

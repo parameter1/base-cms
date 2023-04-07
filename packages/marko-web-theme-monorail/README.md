@@ -8,13 +8,14 @@ Monorail website theme
 To install and use this feature, you must:
 1. Import the content metering middleware and add to your content routes:
 ```diff
-# site/routes/content.js
+// site/routes/content.js
 
-+import contentMetering from '@parameter1/base-cms-marko-web-theme-monorail/middleware/content-metering';
++const contentMetering = require('@parameter1/base-cms-marko-web-theme-monorail/middleware/content-metering');
++const config = require('../config/content-meter');
 
-export default (app) => {
+module.exports (app) => {
 -  app.get('/*?:id(\\d{8})*', withContent({
-+  app.get('/*?:id(\\d{8})*', contentMetering, withContent({
++  app.get('/*?:id(\\d{8})*', contentMetering(config), withContent({
     template: content,
     queryFragment,
   }));
@@ -22,20 +23,31 @@ export default (app) => {
 
 2. Add the `contentMeter` site config object. See below table for defined options/default values.
 
+
 ```diff
-# site/config.js
+# site/config/site.js
+
++const contentMeter = require('./content-meter');
 
 module.exports = {
-+   contentMeter: {
-+    enabled: process.env.ENABLE_CONTENT_METER || false,
-+    viewLimit: 5,
-+  },
+  // ...
++  contentMeter,
+  // ...
+}
+```
+
+```js
+// site/config/content-meter.js
+
+module.exports = {
+  enabled: process.env.ENABLE_CONTENT_METER || false,
+  viewLimit: 5,
 }
 ```
 
 | Key | Default value | Description |
 | - | - | - |
-| `enable` | `false` | If the feature should be enabled. |
+| `enabled` | `false` | If the feature should be enabled. |
 | `viewLimit` |  `3` | The number of content items a viewer can see in `timeframe` without logging in. |
 | `timeframe` | `30 * 24 * 60 * 60 * 1000` (30 days in ms) | The timeframe to consider |
 | `excludeLabels` | `[]` | Content labels that should be excluded from metering. |
@@ -44,18 +56,6 @@ module.exports = {
 | `excludePrimarySectionAlias` | `[]` | Sections whose primary content should be excluded from metering. |
 | `displayOverlay` | _None_ | ??? @B77Mills what is this |
 | `promoCode` | _None_ | If present, the Omeda promo code to use with content metering events. |
-
-
-```diff
-# site/config.js
-
-module.exports = {
-+   contentMeter: {
-+    enabled: process.env.ENABLE_CONTENT_METER || false,
-+    viewLimit: 5,
-+  },
-}
-```
 
 3. Add the UI display and event tracking component to your core `document` component (ideally in above-container):
 ```marko
