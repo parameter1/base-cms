@@ -1,10 +1,33 @@
 const debug = require('debug')('content-meter');
 const parser = require('ua-parser-js');
+const Joi = require('@parameter1/joi');
+const { validate } = require('@parameter1/joi/utils');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 const { content: loader } = require('@parameter1/base-cms-web-common/page-loaders');
 const { get, getAsArray } = require('@parameter1/base-cms-object-path');
 const buildContentInput = require('@parameter1/base-cms-marko-web/utils/build-content-input');
 const queryFragment = require('../graphql/fragments/content-meter');
+
+const configSchema = Joi.object({
+  enabled: Joi.boolean().default(false)
+    .description('Should content metering be enabled?'),
+  viewLimit: Joi.number().min(0).default(3)
+    .description('The number of views allowed within the timeframe before restricting access.'),
+  timeframe: Joi.number().min(0).default(30 * 24 * 60 * 60 * 1000) // 30 days
+    .description('Milliseconds to consider content accesses within.'),
+  excludeLabels: Joi.array().items(Joi.string().required())
+    .description('Content labels that should be excluded from metering.'),
+  excludeContentTypes: Joi.array().items(Joi.string().required())
+    .description('Content types that should be excluded from metering.'),
+  excludePrimarySectionIds: Joi.array().items(Joi.number().required())
+    .description('Sections whose primary content should be excluded from metering.'),
+  excludePrimarySectionAlias: Joi.array().items(Joi.string().required())
+    .description('Sections whose primary content should be excluded from metering.'),
+  displayOverlay: Joi.boolean().default(false)
+    .description('If the metering overlay should be displayed.'),
+  promoCode: Joi.string().default('registration_meter')
+    .description('If present, the Omeda promo code to use with content metering events.'),
+});
 
 const cookieName = 'contentMeter';
 const now = new Date().getTime();
@@ -52,12 +75,13 @@ const hasOmedaId = ({ query, cookies }) => {
  * Installs the configured content metering handler in the Express app instance.
  * To utilize, chain this middleware on a content route.
  */
-module.exports = (config) => asyncRoute(async (req, res, next) => {
-  const { identityX, params: { id } } = req;
-  const viewLimit = get(config, 'viewLimit', 3);
-  const timeframe = get(config, 'timeframe', 30 * 24 * 60 * 60 * 1000); // 30 days
+module.exports = (params = {}) => asyncRoute(async (req, res, next) => {
+  const config = validate(configSchema, params);
 
-  if (!get(config, 'enabled', false)) return next();
+  const { identityX, params: { id } } = req;
+  const { enabled, viewLimit, timeframe } = config;
+
+  if (!enabled) return next();
 
   if (!identityX) {
     error('IdentityX middleware must be loaded before content metering middleware!');
