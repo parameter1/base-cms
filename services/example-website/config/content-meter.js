@@ -1,4 +1,6 @@
 module.exports = {
   enabled: true,
-  viewLimit: 1,
+  excludeLabels: [
+    'foobar',
+  ],
 };

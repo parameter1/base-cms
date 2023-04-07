@@ -15,13 +15,13 @@ const configSchema = Joi.object({
     .description('The number of views allowed within the timeframe before restricting access.'),
   timeframe: Joi.number().min(0).default(30 * 24 * 60 * 60 * 1000) // 30 days
     .description('Milliseconds to consider content accesses within.'),
-  excludeLabels: Joi.array().items(Joi.string().required())
+  excludeLabels: Joi.array().items(Joi.string())
     .description('Content labels that should be excluded from metering.'),
-  excludeContentTypes: Joi.array().items(Joi.string().required())
+  excludeContentTypes: Joi.array().items(Joi.string())
     .description('Content types that should be excluded from metering.'),
-  excludePrimarySectionIds: Joi.array().items(Joi.number().required())
+  excludePrimarySectionIds: Joi.array().items(Joi.number())
     .description('Sections whose primary content should be excluded from metering.'),
-  excludePrimarySectionAlias: Joi.array().items(Joi.string().required())
+  excludePrimarySectionAlias: Joi.array().items(Joi.string())
     .description('Sections whose primary content should be excluded from metering.'),
   displayOverlay: Joi.boolean().default(false)
     .description('If the metering overlay should be displayed.'),
