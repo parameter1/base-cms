@@ -68,7 +68,7 @@ module.exports = (config) => asyncRoute(async (req, res, next) => {
 
   const bypassOmeda = hasOmedaId(req);
   const bypassQuery = ['1', 'true'].includes(get(req, 'query.bypassContentMetering'));
-  const bypassFacebook = parser(req.headers['user-agent']).browser.name === 'Facebook';
+  const bypassFacebook = get(parser(req.headers['user-agent']), 'browser.name') === 'Facebook';
   const bypassPushdown = Boolean(get(res, 'locals.newsletterState.canBeInitiallyExpanded'));
 
   debug({
