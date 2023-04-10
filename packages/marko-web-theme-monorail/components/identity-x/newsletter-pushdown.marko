@@ -54,6 +54,8 @@ $ const imageSrcset = imageSrc ? `${imageSrc}&dpr=2 2x` : null;
           emailConsentRequest: get(application, "organization.emailConsentRequest"),
           regionalConsentPolicies: get(application, "organization.regionalConsentPolicies"),
           appContextId: identityX.config.get("appContextId"),
+          requiredCreateFields: identityX.config.getRequiredCreateFields(),
+          defaultFieldLabels: identityX.config.get("defaultFieldLabels"),
         }
         ssr=true
       />

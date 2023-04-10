@@ -7,6 +7,7 @@ module.exports = new IdentityXConfiguration({
   apiToken: process.env.IDENTITYX_API_TOKEN,
   requiredServerFields: ['givenName', 'familyName', 'countryCode'],
   requiredClientFields: ['regionCode', 'countryCode'],
+  requiredCreateFields: ['givenName', 'familyName'],
   booleanQuestionsLabel: 'Choose your subscriptions:',
   enableChangeEmail: true,
   defaultFieldLabels: {
