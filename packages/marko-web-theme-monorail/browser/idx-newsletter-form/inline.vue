@@ -24,6 +24,8 @@
             :consent-policy="consentPolicy"
             :email-consent-request-enabled="true"
             :email-consent-request="emailConsentRequest"
+            :required-create-fields="requiredCreateFields"
+            :default-field-labels="defaultFieldLabels"
             :regional-consent-policies="regionalConsentPolicies"
             :app-context-id="appContextId"
             :login-email-label="translateEmail"
@@ -160,6 +162,14 @@ export default {
     actionText: {
       type: String,
       default: 'signing up to receive your email notifications',
+    },
+    requiredCreateFields: {
+      type: Array,
+      default: () => [],
+    },
+    defaultFieldLabels: {
+      type: Object,
+      default: () => ({}),
     },
   },
 

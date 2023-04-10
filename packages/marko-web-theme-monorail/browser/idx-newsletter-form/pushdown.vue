@@ -29,6 +29,8 @@
             :consent-policy="consentPolicy"
             :email-consent-request-enabled="true"
             :email-consent-request="emailConsentRequest"
+            :required-create-fields="requiredCreateFields"
+            :default-field-labels="defaultFieldLabels"
             :regional-consent-policies="regionalConsentPolicies"
             :app-context-id="appContextId"
             :action-text="actionText"
@@ -163,6 +165,14 @@ export default {
     regionalConsentPolicies: {
       type: Array,
       default: () => [],
+    },
+    requiredCreateFields: {
+      type: Array,
+      default: () => [],
+    },
+    defaultFieldLabels: {
+      type: Object,
+      default: () => ({}),
     },
   },
 

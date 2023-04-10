@@ -21,6 +21,8 @@ $ const additionalEventData = defaultValue(input.additionalEventData, {});
       consentPolicy: get(application, "organization.consentPolicy"),
       regionalConsentPolicies: get(application, "organization.regionalConsentPolicies"),
       appContextId: identityX.config.get("appContextId"),
+      requiredCreateFields: identityX.config.getRequiredCreateFields(),
+      defaultFieldLabels: identityX.config.get("defaultFieldLabels"),
     };
     <if(isEnabled && identityX.config.commentsEnabled())>
       <marko-web-browser-component name="IdentityXCommentStream" props=props />

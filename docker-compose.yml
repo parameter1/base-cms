@@ -350,7 +350,7 @@ services:
       SITE_ID: ${EXAMPLE_SITE_ID-5ed294c6c13a4626008b4568}
 
       # Debug logging
-      DEBUG: ${DEBUG-defer,p1events,content-meter}
+      DEBUG: ${DEBUG-defer,p1events,omeda,content-meter}
 
       IDENTITYX_GRAPHQL_URI: ${EXAMPLE_IDENTITYX_GRAPHQL_URI-}
       IDENTITYX_APP_ID: ${EXAMPLE_IDENTITYX_APP_ID-5d1b86070ce467bff670a052}
