@@ -88,13 +88,6 @@ $ const blockName = "section-feed-content-node";
           <marko-web-content-start-date tag="span" block-name=blockName obj=content />
           <marko-web-content-end-date tag="span" block-name=blockName obj=content />
         </div>
-        <if(content.linkUrl)>
-          <theme-content-link-url
-            obj=content
-            label=(isUpcoming ? `${i18n("Register for Webinar")}` : `${i18n("View Webinar")}`)
-            target="_blank"
-          />
-        </if>
       </else-if>
       <else-if(withDates)>
         <marko-web-content-published
@@ -103,9 +96,21 @@ $ const blockName = "section-feed-content-node";
           format="MMMM D, YYYY"
         />
       </else-if>
+
       <marko-web-content-sponsors|{ node }| block-name=blockName obj=content>
         Sponsored By: <marko-web-content-name tag="span" block-name=blockName obj=node link=true />
       </marko-web-content-sponsors>
+      <!-- Force display of CTA button on webinars -->
+      <if(withDates && content.type === "webinar")>
+        $ const linkUrl = (content.linkUrl) ? content.linkUrl : get(content, "siteContext.path");
+        $ const target = (content.linkUrl) ? "_blank" : "_self";
+        $ const obj = { ...content, linkUrl };
+        <theme-content-link-url
+          obj=obj
+          label=(isUpcoming ? `${i18n("Register for Webinar")}` : `${i18n("View Webinar")}`)
+          target=target
+        />
+      </if>
     </marko-web-element>
   </marko-web-element>
   <if(displayImage && primaryImage.src)>
