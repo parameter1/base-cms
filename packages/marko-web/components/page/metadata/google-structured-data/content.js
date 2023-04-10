@@ -30,7 +30,7 @@ module.exports = (node, contentGatingHandler) => {
   const siteUrl = get(node, 'siteContext.url');
   const canonicalUrl = get(node, 'siteContext.canonicalUrl');
 
-  const defaultStruturedData = {
+  const defaultStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     mainEntityOfPage: {
@@ -59,7 +59,7 @@ module.exports = (node, contentGatingHandler) => {
 
   if (node.type === 'video') {
     return JSON.stringify({
-      ...defaultStruturedData,
+      ...defaultStructuredData,
       '@type': 'VideoObject',
       uploadDate: publishedISOString,
       contentUrl: get(node, 'siteContext.canonicalUrl'),
@@ -78,7 +78,7 @@ module.exports = (node, contentGatingHandler) => {
       }
       : undefined;
     return JSON.stringify({
-      ...defaultStruturedData,
+      ...defaultStructuredData,
       '@type': 'PodcastEpisode',
       headline: get(node, 'metadata.title'),
       ...(associatedMedia && { associatedMedia }),
@@ -107,19 +107,28 @@ module.exports = (node, contentGatingHandler) => {
     const telephone = get(node, 'tollfree') || get(node, 'phone');
 
     return JSON.stringify({
-      ...defaultStruturedData,
+      '@context': 'https://schema.org',
       '@type': 'Organization',
-      address,
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': get(node, 'siteContext.canonicalUrl'),
+      },
+      name: get(node, 'metadata.title'),
+      ...(get(node, 'metadata.description') && { description: get(node, 'metadata.description') }),
+      ...(getImages(node) && { image: getImages(node) }),
+      url: canonicalUrl,
+      ...(siteUrl !== canonicalUrl && { url: { url: siteUrl, isBasedOn: canonicalUrl } }),
+      ...(address && { address }),
       ...(telephone && { telephone }),
-      ...(get(node, 'metadata.image.src') && { logo: get(node, 'metadata.image.src') }),
       ...(get(node, 'email') && { email: get(node, 'email') }),
+      ...(get(node, 'metadata.image.src') && { logo: get(node, 'metadata.image.src') }),
       ...(get(node, 'fax') && { faxNumber: get(node, 'fax') }),
     });
   }
 
   if (['article', 'news'].includes(node.type)) {
     return JSON.stringify({
-      ...defaultStruturedData,
+      ...defaultStructuredData,
       '@type': 'NewsArticle',
       headline: get(node, 'metadata.title'),
     });
