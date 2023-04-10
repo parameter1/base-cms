@@ -1,11 +1,13 @@
 import { get, getAsArray, getAsObject } from "@parameter1/base-cms-object-path";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 import getContentPreview from "@parameter1/base-cms-marko-web-theme-monorail/utils/get-content-preview";
+import cm from "@parameter1/base-cms-marko-web-theme-monorail/utils/content-meter-helpers";
 
 $ const { content, blockName } = input;
-$ const { contentGatingHandler, req } = out.global;
+$ const { contentGatingHandler, contentMeterState, req } = out.global;
 
-$ const requiresReg = contentGatingHandler({ content, req });
+$ const showOverlay = cm.shouldOverlay(contentMeterState);
+$ const requiresReg = cm.restrictContentByReg(contentMeterState, contentGatingHandler, content);
 $ const accessLevels = getAsArray(content, "userRegistration.accessLevels");
 $ const authors = getAsArray(content, "authors.edges").map((edge) => edge.node);
 $ const sidebars = getAsArray(content, "sidebars").map((sidebar) => sidebar.body);
@@ -25,7 +27,26 @@ $ const displaySocialShare = defaultValue(input.displaySocialShare, true);
   <if(input.beforeBody)>
     <${input.beforeBody} context=context />
   </if>
-  <if(!context.canAccess || context.requiresUserInput)>
+  <if(cm.shouldTruncate(contentMeterState))>
+    $ const body = showOverlay ? getContentPreview({ body: content.body, selector: "p:lt(7)" }) : getContentPreview({ body: content.body, selector: "p:lt(3)" });
+    <marko-web-content-body block-name=blockName obj={ body } />
+    <div class="content-page-preview-overlay" />
+    <if(!showOverlay)>
+      <theme-content-page-gate
+        can-access=context.canAccess
+        is-logged-in=context.isLoggedIn
+        has-required-access-level=context.hasRequiredAccessLevel
+        requires-access-level=context.requiresAccessLevel
+        requires-user-input=context.requiresUserInput
+        messages=context.messages
+        user-input-title="Step 2 of 2"
+        profile-call-to-action=""
+        profile-button-label="Create Account"
+        profile-event-name="content_meter_profile"
+      />
+    </if>
+  </if>
+  <else-if(!context.canAccess || context.requiresUserInput)>
     $ const body = getContentPreview({ body: content.body, selector: "p:lt(3)" });
     <marko-web-content-body block-name=blockName obj={ body } />
 
@@ -41,7 +62,7 @@ $ const displaySocialShare = defaultValue(input.displaySocialShare, true);
       additional-event-data=additionalEventData
       content-gate-type=contentGateType
     />
-  </if>
+  </else-if>
   <else>
     $ const bodyId = `content-body-${content.id}`;
     <if(shouldInjectAds)>

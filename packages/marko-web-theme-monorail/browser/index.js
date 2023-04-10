@@ -8,6 +8,7 @@ import IdentityX from '@parameter1/base-cms-marko-web-identity-x/browser';
 import OmedaIdentityX from '@parameter1/base-cms-marko-web-omeda-identity-x/browser';
 import P1Events from '@parameter1/base-cms-marko-web-p1-events/browser';
 import IdentityXNewsletterForms from './idx-newsletter-form/index';
+import ContentMeterTrack from './content-meter-track.vue';
 
 const CommentToggleButton = () => import(/* webpackChunkName: "theme-comment-toggle-button" */ './comment-toggle-button.vue');
 const BlockLoader = () => import(/* webpackChunkName: "theme-block-loader" */ './block-loader.vue');
@@ -131,4 +132,5 @@ export default (Browser, config = {
   Browser.register('ThemeTopStoriesMenu', TopStoriesMenu);
   Browser.register('WufooForm', WufooForm);
   Browser.register('RevealAdHandler', RevealAdHandler);
+  Browser.register('ContentMeterTrack', ContentMeterTrack);
 };

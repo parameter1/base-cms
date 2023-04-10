@@ -190,5 +190,8 @@
   },
   "<theme-white-papers-block>": {
     "template": "./white-papers.marko"
+  },
+  "<theme-content-meter-block>": {
+    "template": "./content-meter.marko"
   }
 }

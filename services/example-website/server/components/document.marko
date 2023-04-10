@@ -1,7 +1,7 @@
 import createOmedaIdentityBuilder from "@parameter1/base-cms-marko-web-p1-events/utils/create-omeda-identity-builder";
 import omedaConfig from "../../config/omeda";
 
-$ const { nativeX, cdn } = out.global;
+$ const { nativeX, cdn, contentMeterState } = out.global;
 
 <marko-web-document ...input>
   <@head>
@@ -67,7 +67,14 @@ $ const { nativeX, cdn } = out.global;
       <theme-site-menu has-user=hasUser reg-enabled=isEnabled />
     </marko-web-identity-x-context>
     <marko-web-leaders-dropdown-portal />
-
+    <if(contentMeterState && !contentMeterState.isLoggedIn)>
+      <theme-content-meter-block
+        views=contentMeterState.views
+        view-limit=contentMeterState.viewLimit
+        display-overlay=contentMeterState.displayOverlay
+        display-gate=contentMeterState.displayGate
+      />
+    </if>
     <${input.aboveContainer} />
   </@above-container>
   <@below-container>
