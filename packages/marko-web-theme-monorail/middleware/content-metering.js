@@ -33,6 +33,8 @@ const cookieName = 'contentMeter';
 const now = new Date().getTime();
 const { error } = console;
 
+const isFn = (f) => typeof f === 'function';
+const defaultRegFn = ({ content }) => get(content, 'userRegistration.isCurrentlyRequired', false);
 const shouldMeter = async (req, config) => {
   const { apollo, params } = req;
   const { id } = params;
@@ -40,6 +42,15 @@ const shouldMeter = async (req, config) => {
   // @todo error handling!
   const content = await loader(apollo, { id, additionalInput, queryFragment });
   if (!content) return false;
+
+  // Check for local contentGatingHandler and use it or use the defaultRegFn
+  const localFn = req.app.locals.contentGatingHandler;
+  // Get the globally avaiable one if set and is function
+  const contentGatingHandler = (localFn && isFn(localFn)) ? localFn : defaultRegFn;
+  // bypass if content is already gated by reg of some sort
+  if (contentGatingHandler({ content })) {
+    return false;
+  }
 
   // excludeContentTypes: Excludes content metering on page if type matches exclusions
   if (getAsArray(config, 'excludeContentTypes').includes(content.type)) {
