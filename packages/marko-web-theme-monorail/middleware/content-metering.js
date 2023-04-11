@@ -2,7 +2,7 @@ const debug = require('debug')('content-meter');
 const parser = require('ua-parser-js');
 const Joi = require('@parameter1/joi');
 const { validate } = require('@parameter1/joi/utils');
-const { asyncRoute } = require('@parameter1/base-cms-utils');
+const { asyncRoute, isFunction } = require('@parameter1/base-cms-utils');
 const { content: loader } = require('@parameter1/base-cms-web-common/page-loaders');
 const { get, getAsArray } = require('@parameter1/base-cms-object-path');
 const buildContentInput = require('@parameter1/base-cms-marko-web/utils/build-content-input');
@@ -33,6 +33,7 @@ const cookieName = 'contentMeter';
 const now = new Date().getTime();
 const { error } = console;
 
+const defaultRegFn = ({ content }) => get(content, 'userRegistration.isCurrentlyRequired', false);
 const shouldMeter = async (req, config) => {
   const { apollo, params } = req;
   const { id } = params;
@@ -40,6 +41,15 @@ const shouldMeter = async (req, config) => {
   // @todo error handling!
   const content = await loader(apollo, { id, additionalInput, queryFragment });
   if (!content) return false;
+
+  // Check for local contentGatingHandler and use it or use the defaultRegFn
+  const localFn = req.app.locals.contentGatingHandler;
+  // Get the globally avaiable one if set and is function
+  const contentGatingHandler = (localFn && isFunction(localFn)) ? localFn : defaultRegFn;
+  // bypass if content is already gated by reg of some sort
+  if (contentGatingHandler({ content })) {
+    return false;
+  }
 
   // excludeContentTypes: Excludes content metering on page if type matches exclusions
   if (getAsArray(config, 'excludeContentTypes').includes(content.type)) {
