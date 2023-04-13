@@ -67,14 +67,14 @@ module.exports = async ({ apolloBaseCMS, apolloBaseBrowse } = {}, {
 } = {}) => {
   if (!apolloBaseCMS || !apolloBaseBrowse) throw new Error('Both the BaseCMS and Base Browse Apollo clients must be provided.');
   const query = (!searchQuery.match(/^".+"$/) && !searchQuery.match(/^'.+'$/)) ? searchQuery : '';
-  const phrase = (searchQuery.match(/^".+"$/) || searchQuery.match(/^'.+'$/)) ? searchQuery.replace(/[",']/g, '') : '';
+  const phrase = (searchQuery.match(/^".+"$/) || searchQuery.match(/^'.+'$/)) ? searchQuery : '';
   const input = {
     omitScheduledAndExpiredContent: true,
     statuses: ['PUBLISHED'],
     contentTypes,
     countryCodes,
     ...(query && { search: { query } }),
-    ...(phrase && { autocomplete: { phrase }}),
+    ...(phrase && { autocomplete: { phrase } }),
     ...((assignedToWebsiteSiteIds.length || assignedToWebsiteSectionIds.length) && {
       assignedToWebsites: {
         ...(assignedToWebsiteSiteIds.length && { siteIds: assignedToWebsiteSiteIds }),
