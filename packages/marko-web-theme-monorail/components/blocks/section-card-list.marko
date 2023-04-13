@@ -14,6 +14,10 @@ $ const queryParams = {
 $ const blockName = "section-card-list";
 $ const buttonClass = input.buttonClass || "btn btn-secondary";
 $ const linkHeader = input.linkHeader || false;
+$ const imageProps = input.imageProps;
+$ const imageFluid = typeof imageProps.fluid === 'boolean' ? imageProps.fluid : true;
+$ const imageWidth = imageProps.width ? imageProps.width : 340;
+$ const imageAspectRatio = imageProps.ar ? imageProps.ar : "3:2"
 
 <marko-web-query|{ nodes, section }| name="website-scheduled-content" params=queryParams>
   $ const heroNode = nodes.slice(0, 1)[0];
@@ -50,7 +54,7 @@ $ const linkHeader = input.linkHeader || false;
           modifiers=[`${blockName}-hero-image`]
           node=heroImageNode
         >
-          <@image fluid=true width=340 ar="3:2" />
+          <@image fluid=imageFluid width=imageWidth ar=imageAspectRatio />
         </theme-content-node>
       </marko-web-element>
       <marko-web-element block-name=blockName name="col">
