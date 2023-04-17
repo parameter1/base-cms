@@ -227,6 +227,7 @@ export default {
           mustReVerifyProfile: this.mustReVerifyProfile,
           isProfileComplete: this.isProfileComplete,
           requiresCustomFieldAnswers: this.requiresCustomFieldAnswers,
+          loginSource: data.loginSource,
           additionalEventData: {
             ...(this.additionalEventData || {}),
             ...(data.additionalEventData || {}),
