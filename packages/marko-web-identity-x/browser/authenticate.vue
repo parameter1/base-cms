@@ -212,7 +212,6 @@ export default {
 
         const res = await post('/authenticate', { token, additionalEventData });
         const data = await res.json();
-
         if (!res.ok) throw new AuthenticationError(data.message, res.status);
 
         this.activeUser = data.user;
@@ -227,7 +226,7 @@ export default {
           mustReVerifyProfile: this.mustReVerifyProfile,
           isProfileComplete: this.isProfileComplete,
           requiresCustomFieldAnswers: this.requiresCustomFieldAnswers,
-          loginSource: data.loginSource,
+          actionSource: data.loginSource,
           additionalEventData: {
             ...(this.additionalEventData || {}),
             ...(data.additionalEventData || {}),

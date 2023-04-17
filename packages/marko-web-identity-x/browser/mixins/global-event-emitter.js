@@ -9,8 +9,8 @@ export default {
   methods: {
     emit(name, data) {
       const source = this.loginSource || this.source;
-      const actionSource = window.IdentityX.getLoginSource() || source;
-      console.warn('actionSource: ', actionSource, data, this.token);
+      const dataActionSource = data ? data.actionSource : undefined;
+      const actionSource = dataActionSource || window.IdentityX.getLoginSource() || source;
       const payload = {
         ...data,
         ...this.additionalEventData,
