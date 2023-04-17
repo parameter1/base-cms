@@ -73,7 +73,7 @@ module.exports = async ({ apolloBaseCMS, apolloBaseBrowse } = {}, {
     contentTypes,
     countryCodes,
     ...(!enableNewSearch && searchQuery && { search: { query: searchQuery } }),
-    ...(enableNewSearch && searchQuery && { autocomplete: { phrase: searchQuery }}),
+    ...(enableNewSearch && searchQuery && { autocomplete: { phrase: searchQuery } }),
     ...((assignedToWebsiteSiteIds.length || assignedToWebsiteSectionIds.length) && {
       assignedToWebsites: {
         ...(assignedToWebsiteSiteIds.length && { siteIds: assignedToWebsiteSiteIds }),
