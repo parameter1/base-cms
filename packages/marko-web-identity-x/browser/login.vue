@@ -85,6 +85,7 @@ import post from './utils/post';
 import cookiesEnabled from './utils/cookies-enabled';
 import FormError from './errors/form';
 import FeatureError from './errors/feature';
+import AutoSignupEventEmitter from './mixins/global-auto-signup-event-emitter';
 import EventEmitter from './mixins/global-event-emitter';
 
 export default {
@@ -100,7 +101,7 @@ export default {
   /**
    *
    */
-  mixins: [EventEmitter],
+  mixins: [EventEmitter, AutoSignupEventEmitter],
 
   /**
    *
@@ -307,6 +308,7 @@ export default {
           throw new FormError(data.message, res.status);
         }
         this.complete = true;
+        this.emitAutoSignup(data);
         this.emit('login-link-sent', {
           data,
           email: this.email,

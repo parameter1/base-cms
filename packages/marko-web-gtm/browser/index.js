@@ -25,6 +25,7 @@ export default (Browser) => {
     'identity-x-profile-mounted',
     // Actions/submissions
     'identity-x-authenticated',
+    'identity-x-auto-signup',
     'identity-x-comment-post-submitted',
     'identity-x-comment-report-submitted',
     'identity-x-comment-stream-loaded',
