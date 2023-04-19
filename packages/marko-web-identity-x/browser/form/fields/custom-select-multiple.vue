@@ -5,7 +5,7 @@
       <strong v-if="required" class="text-danger">*</strong>
     </legend>
 
-    <div class="csmulti-wrapper border p-2">
+    <div class="csmulti-wrapper p-2">
       <div class="csmulti-inner">
         <label class="text-muted">
           Select all that apply...
