@@ -80,7 +80,7 @@ module.exports = (params = {}) => {
 
   idxConfig.addHook({
     name: 'onAuthenticationSuccess',
-    shouldAwait: shouldAwait.onAuthenticationSucess,
+    shouldAwait: shouldAwait.onAuthenticationSuccess,
     fn: async (args) => onAuthenticationSuccess({
       ...args,
       brandKey,
