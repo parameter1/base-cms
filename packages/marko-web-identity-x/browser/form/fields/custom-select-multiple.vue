@@ -95,20 +95,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.csmulti-legend {
-  font-size: 1rem;
-}
-.csmulti-wrapper {
-  max-height: 150px;
-  overflow: hidden;
-}
-.csmulti-inner {
-  overflow-y: auto;
-  max-height: 132px;
-}
-.csmulti + .input-group {
-  margin-top: 0.5rem;
-}
-</style>
