@@ -23,12 +23,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.csmulti-legend {
-  font-size: 1rem;
-}
-div.checkbox-group + fieldset.csmulti-group {
-  margin-top: 0.5rem;
-}
-</style>

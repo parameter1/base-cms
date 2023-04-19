@@ -5,7 +5,7 @@
       <strong v-if="required" class="text-danger">*</strong>
     </legend>
 
-    <div class="csmulti-wrapper border p-2">
+    <div class="csmulti-wrapper p-2">
       <div class="csmulti-inner">
         <label class="text-muted">
           Select all that apply...
@@ -95,20 +95,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.csmulti-legend {
-  font-size: 1rem;
-}
-.csmulti-wrapper {
-  max-height: 150px;
-  overflow: hidden;
-}
-.csmulti-inner {
-  overflow-y: auto;
-  max-height: 132px;
-}
-.csmulti + .input-group {
-  margin-top: 0.5rem;
-}
-</style>
