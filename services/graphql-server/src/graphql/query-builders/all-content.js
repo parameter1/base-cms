@@ -1,9 +1,11 @@
 module.exports = ({ query }, { input }) => {
-  const { ids } = input;
+  const { ids, includeContentTypes } = input;
 
-  if (ids.length) {
-    return { query: { ...query, _id: { $in: ids } } };
-  }
-
-  return { query };
+  return {
+    query: {
+      ...query,
+      ...(ids.length && { _id: { $in: ids } }),
+      ...(includeContentTypes.length && { type: { $in: includeContentTypes } }),
+    },
+  };
 };
