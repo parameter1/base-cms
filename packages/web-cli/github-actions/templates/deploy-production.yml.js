@@ -26,7 +26,7 @@ jobs:
 
   post-deploy-failure:
     if: failure()
-    needs: [notify-start, deploy-sites]
+    needs: [notify-start, build-sites, deploy-sites]
     uses: parameter1/actions/.github/workflows/notify-fail.yml@main
     secrets: inherit
     with:
@@ -34,7 +34,7 @@ jobs:
 
   post-deploy-complete:
     if: success()
-    needs: [notify-start, deploy-sites]
+    needs: [notify-start, build-sites, deploy-sites]
     uses: parameter1/actions/.github/workflows/notify-complete.yml@main
     secrets: inherit
     with:
