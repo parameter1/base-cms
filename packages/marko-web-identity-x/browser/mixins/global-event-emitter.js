@@ -8,12 +8,16 @@ export default {
   },
   methods: {
     emit(name, data) {
+      const source = this.loginSource || this.source;
+      const dataActionSource = data ? data.actionSource : undefined;
+      const actionSource = dataActionSource || window.IdentityX.getLoginSource() || source;
       const payload = {
         ...data,
         ...this.additionalEventData,
-        // Ensure the `actionSource` is emitted with client-side events
-        ...(this.source && { actionSource: this.source }),
-        ...(this.loginSource && { actionSource: this.loginSource }),
+        additionalEventData: this.additionalEventData,
+        actionSource,
+        loginSource: actionSource,
+        source: actionSource,
       };
       const { EventBus } = this;
       this.$emit(name, payload);

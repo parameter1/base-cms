@@ -252,6 +252,7 @@ import Login from './login.vue';
 
 import FeatureError from './errors/feature';
 import FormError from './errors/form';
+import AutoSignupEventEmitter from './mixins/global-auto-signup-event-emitter';
 import EventEmitter from './mixins/global-event-emitter';
 
 const { isArray } = Array;
@@ -275,7 +276,7 @@ export default {
   /**
    *
    */
-  mixins: [EventEmitter],
+  mixins: [EventEmitter, AutoSignupEventEmitter],
 
   /**
    *
@@ -628,6 +629,7 @@ export default {
         // force scroll to top of page when form and success message toggle
         window.scrollTo(0, 0);
 
+        this.emitAutoSignup(data);
         this.emit('profile-updated', {
           additionalEventData: {
             ...(this.additionalEventData || {}),
