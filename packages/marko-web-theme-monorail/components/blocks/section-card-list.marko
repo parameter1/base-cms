@@ -1,3 +1,5 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import { getAsObject } from "@parameter1/base-cms-object-path";
 import queryFragment from "../../graphql/fragments/section-card-list-block";
 import sectionFragment from "../../graphql/fragments/section-info";
 
@@ -14,10 +16,10 @@ $ const queryParams = {
 $ const blockName = "section-card-list";
 $ const buttonClass = input.buttonClass || "btn btn-secondary";
 $ const linkHeader = input.linkHeader || false;
-$ const imageProps = input.imageProps;
-$ const imageFluid = typeof imageProps.fluid === 'boolean' ? imageProps.fluid : true;
-$ const imageWidth = imageProps.width ? imageProps.width : 340;
-$ const imageAspectRatio = imageProps.ar ? imageProps.ar : "3:2"
+$ const imageProps = getAsObject(input.imageProps);
+$ const imageFluid = defaultValue(imageProps.fluid, true);
+$ const imageWidth = defaultValue(imageProps.width, 340;
+$ const imageAspectRatio = defaultValue(imageProps.ar, "3:2");
 
 <marko-web-query|{ nodes, section }| name="website-scheduled-content" params=queryParams>
   $ const heroNode = nodes.slice(0, 1)[0];
