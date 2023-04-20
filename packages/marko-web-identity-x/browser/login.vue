@@ -3,14 +3,14 @@
     <p>You are currently logged in as {{ activeUser.email }}.</p>
     <a
       :href="endpoints.profile"
-      class="btn btn-secondary"
+      class="btn btn-secondary mb-2 mr-2"
       role="button"
     >
       {{ buttonLabels.profile || "Modify Profile" }}
     </a>
     <a
       :href="endpoints.logout"
-      class="btn btn-primary"
+      class="btn btn-primary mb-2 mr-2"
       role="button"
     >
       {{ buttonLabels.logout || "Log out" }}
