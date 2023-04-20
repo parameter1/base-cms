@@ -58,6 +58,7 @@ export default {
     observed: 0,
     observer: null,
     payload: {},
+    slot: null,
   }),
 
   mounted() {
@@ -73,12 +74,12 @@ export default {
 
     window.addEventListener('message', this.listener);
     googletag.cmd.push(() => {
-      const slot = googletag.defineOutOfPageSlot(this.path, this.id).addService(googletag.pubads());
+      this.slot = googletag.defineOutOfPageSlot(this.path, this.id).addService(googletag.pubads());
       const div = document.createElement('div');
       div.id = this.id;
       div.dataset.path = this.path;
       this.$el.appendChild(div);
-      googletag.pubads().refresh([slot], { changeCorrelator: false });
+      googletag.pubads().refresh([this.slot], { changeCorrelator: false });
     });
   },
 
@@ -97,9 +98,13 @@ export default {
 
       const backgroundImage = `url("${backgroundImagePath}")`;
       const revealBackground = $('<a>', { href: adClickUrl, target, rel }).addClass('reveal-ad-background').css({ backgroundImage });
+      revealBackground.on('click', () => {
+        this.trackClick();
+      });
       $('body').css({ backgroundColor }).prepend(revealBackground);
       $('body').addClass('with-reveal-ad');
     },
+
     displayAd(element) {
       if (!element) return;
       const {
@@ -111,19 +116,25 @@ export default {
 
       const adContainer = $('<div>').addClass('reveal-ad');
       if (boxShadow) adContainer.addClass(`reveal-ad--${boxShadow}-shadow`);
-      adContainer.html($('<a>', {
+      const $a = $('<a>', {
         href: adClickUrl,
         title: adTitle,
         target,
         rel,
-      }).append($('<img>', { src: adImagePath, alt: adTitle })));
+      }).append($('<img>', { src: adImagePath, alt: adTitle }));
+      $a.on('click', () => {
+        this.trackClick();
+      });
+      adContainer.html($a);
       $(element).before(adContainer);
     },
+
     shouldDisplay() {
       const { displayFrequency } = this;
       this.observed += 1;
       return this.observed % displayFrequency > 0;
     },
+
     observeMutations() {
       if (!window.MutationObserver) return;
       this.observer = new MutationObserver((mutationList) => {
@@ -158,6 +169,7 @@ export default {
         this.execute(payload);
       }
     },
+
     execute(payload) {
       const elements = this.selectAllTargets
         ? document.querySelectorAll(this.target) : [document.querySelector(this.target)];
@@ -168,6 +180,11 @@ export default {
       }
       this.observeMutations();
       window.removeEventListener('message', this.listener);
+    },
+
+    trackClick() {
+      if (!window.p1events) return;
+      window.p1events('trackGAMSlot', { action: 'Click', slot: this.slot });
     },
 
     warn(...args) {
