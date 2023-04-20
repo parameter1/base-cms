@@ -25,6 +25,7 @@ $enable-shadows: false !default;
 $enable-rounded: false !default;
 $border-radius: .25rem !default;
 $btn-border-radius: $border-radius !default;
+$input-border-radius: $border-radius !default;
 // Disable box shadow on button focus
 $btn-active-box-shadow: none !default;
 $btn-focus-width: 0 !default;
