@@ -74,7 +74,7 @@ export default (Browser, {
       window.dataLayer.push({
         event,
         'identity-x': {
-          ...(args && args),
+          ...args,
           event,
         },
       });
