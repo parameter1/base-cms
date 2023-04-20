@@ -636,6 +636,7 @@ input AllContentQueryInput {
   status: ModelStatus = active
   "Content IDs to filter by. An empty value (default) returns all content."
   ids: [Int!] = []
+  includeContentTypes: [ContentType!] = []
   sort: ContentSortInput = {}
   pagination: PaginationInput = {}
 }
