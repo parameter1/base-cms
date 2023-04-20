@@ -7,7 +7,9 @@
     "@on": "string",
     "@target-tag": "string",
     "@request-frame": "boolean",
-    "@init-only": "boolean"
+    "@init-only": "boolean",
+    "@enable-gam-plugin": "boolean",
+    "@gam-plugin-options": "object"
   },
   "<marko-web-p1-events-track-content>": {
     "template": "./track-content.marko",
