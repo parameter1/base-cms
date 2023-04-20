@@ -1,4 +1,4 @@
-import getAsArray from '@parameter1/base-cms-object-path';
+import getAsArray from '../../utils/get-as-array';
 
 export default {
   inject: ['EventBus'],
