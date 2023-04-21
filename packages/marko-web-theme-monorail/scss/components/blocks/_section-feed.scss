@@ -92,6 +92,15 @@
     }
   }
 
+  &__content-company {
+    font-weight: $theme-content-attribution-prefix-font-weight;
+    &::before {
+      margin-right: $theme-content-attribution-prefix-margin;
+      font-weight: $theme-content-attribution-prefix-font-weight;
+      content: "From";
+    }
+  }
+
   .btn-primary {
     margin-top: 10px;
   }
