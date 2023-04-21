@@ -5,6 +5,8 @@ import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 $ const { site, i18n } = out.global;
 
 $ const content = getAsObject(input, "node");
+$ const { company } = content;
+$ const withCompany = (company) ? defaultValue(input.withCompany, true) : false;
 $ const primaryImage = getAsObject(content, "primaryImage");
 $ const primarySection = getAsObject(content, "primarySection");
 $ const containerAttrs = getAsObject(input, "containerAttrs");
@@ -96,6 +98,10 @@ $ const blockName = "section-feed-content-node";
           format="MMMM D, YYYY"
         />
       </else-if>
+
+      <if(withCompany)>
+        <theme-content-attribution obj=content elements=["company"] />
+      </if>
 
       <marko-web-content-sponsors|{ node }| block-name=blockName obj=content>
         Sponsored By: <marko-web-content-name tag="span" block-name=blockName obj=node link=true />
