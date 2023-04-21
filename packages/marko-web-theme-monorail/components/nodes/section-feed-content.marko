@@ -100,7 +100,7 @@ $ const blockName = "section-feed-content-node";
       </else-if>
 
       <if(withCompany)>
-        <theme-content-attribution obj=content elements=["company"] />
+        <marko-web-content-name class=`${blockName}__content-company` obj=content.company link=true />
       </if>
 
       <marko-web-content-sponsors|{ node }| block-name=blockName obj=content>
