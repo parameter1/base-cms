@@ -46,6 +46,7 @@ import post from './utils/post';
 import ProfileForm from './profile.vue';
 import AuthenticationError from './errors/authentication';
 import FeatureError from './errors/feature';
+import AutoSignupEventEmitter from './mixins/global-auto-signup-event-emitter';
 import EventEmitter from './mixins/global-event-emitter';
 
 const isEmpty = (v) => v == null || v === '';
@@ -59,7 +60,7 @@ export default {
   /**
    *
    */
-  mixins: [EventEmitter],
+  mixins: [EventEmitter, AutoSignupEventEmitter],
 
   /**
    *
@@ -220,6 +221,7 @@ export default {
         this.requiresCustomFieldAnswers = this.activeUser.customSelectFieldAnswers
           .some(({ hasAnswered, field }) => field.required && !hasAnswered);
 
+        this.emitAutoSignup(data);
         this.emit('authenticated', {
           id: this.activeUser.id,
           email: this.activeUser.email,
