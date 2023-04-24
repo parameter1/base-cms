@@ -25,6 +25,7 @@ $ const containerMods = (href) => {
   $ const classNames = [elementName, ...linkMods(input.href).map(mod => `${elementName}--${mod}`)];
   <marko-web-link
     href=input.href
+    attrs=input.attrs
     title=input.title
     target=input.target
     class=classNames
