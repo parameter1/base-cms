@@ -14,6 +14,7 @@ $ const additionalEventData = defaultValue(input.additionalEventData, {});
       redirectTo: query.redirectTo,
       requiredServerFields: identityX.config.getRequiredServerFields(),
       requiredClientFields: identityX.config.getRequiredClientFields(),
+      activeCustomFieldIds: identityX.config.getActiveCustomFieldIds(),
       defaultCountryCode: identityX.config.get("defaultCountryCode"),
       defaultFieldLabels: identityX.config.get("defaultFieldLabels"),
       booleanQuestionsLabel: identityX.config.get("booleanQuestionsLabel"),
