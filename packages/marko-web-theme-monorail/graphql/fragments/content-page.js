@@ -80,6 +80,7 @@ fragment ContentPageFragment on Content {
   ... on ContentWebinar {
     linkUrl
     starts
+    startDate
     transcript
     sponsors {
       edges {
