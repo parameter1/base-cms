@@ -306,6 +306,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    activeCustomFieldIds: {
+      type: Array,
+      default: () => [],
+    },
     requiredCreateFields: {
       type: Array,
       default: () => [],
@@ -438,16 +442,20 @@ export default {
      *
      */
     customBooleanFieldAnswers() {
+      const { activeCustomFieldIds: ids } = this;
       const { customBooleanFieldAnswers } = this.user;
-      return isArray(customBooleanFieldAnswers) ? customBooleanFieldAnswers : [];
+      const answers = isArray(customBooleanFieldAnswers) ? customBooleanFieldAnswers : [];
+      return answers.filter(ids.length > 0 ? ({ field }) => ids.includes(field.id) : () => true);
     },
 
     /**
      *
      */
     customSelectFieldAnswers() {
+      const { activeCustomFieldIds: ids } = this;
       const { customSelectFieldAnswers } = this.user;
-      return isArray(customSelectFieldAnswers) ? customSelectFieldAnswers : [];
+      const answers = isArray(customSelectFieldAnswers) ? customSelectFieldAnswers : [];
+      return answers.filter(ids.length > 0 ? ({ field }) => ids.includes(field.id) : () => true);
     },
 
     showAddressBlock() {

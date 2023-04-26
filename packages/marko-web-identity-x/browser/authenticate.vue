@@ -12,6 +12,7 @@
       :active-user="activeUser"
       :required-server-fields="requiredServerFields"
       :required-client-fields="requiredClientFields"
+      :active-custom-field-ids="activeCustomFieldIds"
       :hidden-fields="hiddenFields"
       :default-country-code="defaultCountryCode"
       :boolean-questions-label="booleanQuestionsLabel"
@@ -87,6 +88,10 @@ export default {
       default: () => [],
     },
     requiredClientFields: {
+      type: Array,
+      default: () => [],
+    },
+    activeCustomFieldIds: {
       type: Array,
       default: () => [],
     },
@@ -208,7 +213,7 @@ export default {
     async authenticate() {
       this.isLoading = true;
       try {
-        const { token, additionalEventData } = this;
+        const { token, additionalEventData, activeCustomFieldIds: ids } = this;
         if (!token) throw new Error('No login token was provided.');
 
         const res = await post('/authenticate', { token, additionalEventData });
@@ -219,6 +224,7 @@ export default {
         this.mustReVerifyProfile = data.user.mustReVerifyProfile;
         this.isProfileComplete = this.requiredFields.every((key) => !isEmpty(this.activeUser[key]));
         this.requiresCustomFieldAnswers = this.activeUser.customSelectFieldAnswers
+          .filter(!ids.length ? ({ field }) => ids.includes(field.id) : () => true)
           .some(({ hasAnswered, field }) => field.required && !hasAnswered);
 
         this.emitAutoSignup(data);

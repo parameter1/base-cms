@@ -13,6 +13,7 @@ class IdentityXConfiguration {
    * @param {string[]} [options.requiredServerFields] Required fields, server enforced.
    * @param {string[]} [options.requiredClientFields] Required fields, client-side only.
    * @param {string[]} [options.requiredCreateFields] Required fields, when creating a new user.
+   * @param {string[]} [options.activeCustomFieldIds] Limit displayed custom fields, if present.
    * @param {string[]} [options.hiddenFields] The fields to hide from the profile.
    * @param {function} [options.onHookError]
    * @param {object} options.rest
@@ -23,6 +24,7 @@ class IdentityXConfiguration {
     requiredServerFields = [],
     requiredClientFields = [],
     requiredCreateFields = [],
+    activeCustomFieldIds = [],
     defaultFieldLabels = {},
     hiddenFields = ['city', 'street', 'addressExtra', 'phoneNumber'],
     defaultCountryCode,
@@ -38,6 +40,7 @@ class IdentityXConfiguration {
       requiredServerFields,
       requiredClientFields,
       requiredCreateFields,
+      activeCustomFieldIds,
       defaultFieldLabels,
       hiddenFields,
       defaultCountryCode,
@@ -115,6 +118,10 @@ class IdentityXConfiguration {
 
   getHiddenFields() {
     return this.getAsArray('hiddenFields');
+  }
+
+  getActiveCustomFieldIds() {
+    return this.getAsArray('activeCustomFieldIds');
   }
 
   get(path, def) {

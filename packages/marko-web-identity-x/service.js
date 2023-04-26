@@ -94,7 +94,9 @@ class IdentityX {
       }
       if (user && !access.requiresUserInput) {
         // Check if user needs to answer any globally required custom fields.
+        const ids = this.config.getActiveCustomFieldIds();
         access.requiresUserInput = user.customSelectFieldAnswers
+          .filter(!ids.length ? ({ field }) => ids.includes(field.id) : () => true)
           .some(({ hasAnswered, field }) => field.required && !hasAnswered);
       }
 
