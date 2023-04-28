@@ -14,6 +14,7 @@ $ const withDates = defaultValue(input.withDates, true);
 $ const withPrimarySectionModifier = defaultValue(input.withPrimarySectionModifier, true);
 $ const displayButton = defaultValue(input.displayButton, false);
 $ const callToAction = defaultValue(input.callToAction, "View Profile");
+$ const dateFormat = defaultValue(input.dateFormat, "MMMM D, YYYY");
 
 $ const isWebinar = content.type === "webinar";
 $ const isPromotion = content.type === "promotion";
@@ -89,8 +90,8 @@ $ const withSponsored = primarySection && primarySection.name === 'Sponsored' &&
       >
         <if(content.startDate || content.endDate)>
           <div class=`${blockName}__content-event-dates`>
-            <marko-web-content-start-date tag="span" block-name=blockName obj=content />
-            <marko-web-content-end-date tag="span" block-name=blockName obj=content />
+            <marko-web-content-start-date tag="span" block-name=blockName obj=content format=dateFormat />
+            <marko-web-content-end-date tag="span" block-name=blockName obj=content format=dateFormat />
           </div>
         </if>
         <if(isWebinar && content.linkUrl)>
@@ -134,7 +135,7 @@ $ const withSponsored = primarySection && primarySection.name === 'Sponsored' &&
         <attribution ...input.attribution content=content />
       </@text>
       <@text|{ blockName }| show=(Boolean(withDates && !isEvent))>
-        <marko-web-content-published block-name=blockName obj=content format="MMMM D, YYYY" />
+        <marko-web-content-published block-name=blockName obj=content format=dateFormat />
       </@text>
       <@text show=displayButton>
         <marko-web-link
