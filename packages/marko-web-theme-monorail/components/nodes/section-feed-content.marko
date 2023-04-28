@@ -1,4 +1,4 @@
-import { getAsObject, get } from "@parameter1/base-cms-object-path";
+import { getAsObject, getAsArray, get } from "@parameter1/base-cms-object-path";
 import { buildImgixUrl } from "@parameter1/base-cms-image";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 
@@ -6,6 +6,8 @@ $ const { site, i18n } = out.global;
 
 $ const content = getAsObject(input, "node");
 $ const { company } = content;
+$ const type = defaultValue(content.type, 'article');
+$ const modifiers = [...getAsArray(input, "modifiers"), `${type}-content-type`]
 $ const withCompany = (company) ? defaultValue(input.withCompany, true) : false;
 $ const primaryImage = getAsObject(content, "primaryImage");
 $ const primarySection = getAsObject(content, "primarySection");
@@ -29,7 +31,7 @@ $ const lazyload = defaultValue(input.lazyload, true);
   Keys are content types (all lowercase), values are the field to use when available on that type.
 **/
 $ const linkOffsite = getAsObject(site, "config.linkOffsite");
-$ const linkField = get(linkOffsite, get(content, "type"));
+$ const linkField = get(linkOffsite, type);
 $ const linkTarget = linkField && get(content, linkField) ? defaultValue(get(linkOffsite, "target"), "") : "";
 
 $ const imageOptions = {
@@ -48,7 +50,7 @@ $ const mobileImageOptions = {
 
 $ const blockName = "section-feed-content-node";
 
-<marko-web-block name=blockName modifiers=input.modifiers attrs=containerAttrs>
+<marko-web-block name=blockName modifiers=modifiers attrs=containerAttrs>
   <marko-web-element block-name=blockName name="contents">
     <marko-web-element block-name=blockName name="body">
       <if(input.sponsoredBy)>
