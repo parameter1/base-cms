@@ -75,6 +75,15 @@ $ const blockName = "section-feed-content-node";
           obj=content
           link={ field: linkField, target: linkTarget, attrs: linkAttrs }
         />
+        <if(input.teaserCTA)>
+          <marko-web-link
+            class="teaser-link"
+            href=content.siteContext.path
+            title=content.shortName
+          >
+            ${input.teaserCTA}
+          </marko-web-link>
+        </if>
       </if>
       <if(withBody)>
         <marko-web-content-body
