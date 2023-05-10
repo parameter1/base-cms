@@ -1,0 +1,29 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import getSectionsFromSchedules from "../../utils/get-sections-from-schedules";
+$ const rootAlias = defaultValue(input.rootAlias, 'directory');
+$ const schedules = defaultValue(input.schedules, []);
+$ const title = defaultValue(input.title, "Listed In");
+$ const fullNameFind = defaultValue(input.fullNameFind, "");
+$ const fullNameReplace = defaultValue(input.fullNameReplace, "");
+
+$ console.log('NodeMods SectionListIn: ', schedules)
+
+<if(schedules.length)>
+  $ const sections = getSectionsFromSchedules(schedules, rootAlias);
+
+  <if(sections.length)>
+    <marko-web-node-list flush-x=false flush-y=false modifiers=["section-feed", "company-categories-feed"] >
+      <@header>
+        ${title}
+      </@header>
+      <@nodes nodes=sections>
+        <@slot|{ node }|>
+          $ const name = (fullNameFind) ? node.fullName.replace(fullNameFind, fullNameReplace) : node.fullName;
+          <marko-web-link href=`/${node.alias}` title=name >
+            ${name}
+          </marko-web-link>
+        </@slot>
+      </@nodes>
+    </marko-web-node-list>
+  </if>
+</if>
