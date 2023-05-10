@@ -63,6 +63,14 @@ const validate = (params) => {
     p.ending = { after: date(p.endingAfter) };
     delete p.endingAfter;
   }
+  if (p.beginningBefore || p.beginningAfter) {
+    p.beginning = {
+      ...(p.beginningBefore && { before: date(p.beginningBefore) }),
+      ...(p.beginningAfter && { after: date(p.beginningAfter) }),
+    };
+  }
+  delete p.beginningBefore;
+  delete p.beginningAfter;
   delete p.queryFragment;
   delete p.sectionFragment;
   return p;
