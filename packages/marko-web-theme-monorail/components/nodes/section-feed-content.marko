@@ -19,6 +19,7 @@ $ const withAddress = defaultValue(input.withAddress, (content.type === "company
 $ const withDates = defaultValue(input.withDates, true);
 $ const dateFormat = defaultValue(input.dateFormat, "MMMM D, YYYY");
 $ const isUpcoming = content.startDate > Date.now();
+$ if (isUpcoming) modifiers.push("upcoming");
 $ const withSection = defaultValue(input.withSection, true);
 $ const withTeaser = defaultValue(input.withTeaser, true);
 $ const displayImage = defaultValue(input.displayImage, true);
@@ -74,6 +75,15 @@ $ const blockName = "section-feed-content-node";
           obj=content
           link={ field: linkField, target: linkTarget, attrs: linkAttrs }
         />
+        <if(input.teaserCTA)>
+          <marko-web-link
+            class="teaser-link"
+            href=content.siteContext.path
+            title=content.shortName
+          >
+            ${input.teaserCTA}
+          </marko-web-link>
+        </if>
       </if>
       <if(withBody)>
         <marko-web-content-body
