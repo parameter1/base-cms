@@ -22,6 +22,7 @@ $ const displayUpdatedDate = defaultValue(input.displayUpdatedDate, true);
   field="published"
   format=format
   locale=locale
+  timezone=timezone
 >
   <if(input.publishedPrefix)>
     ${input.publishedPrefix} ${value}
@@ -38,6 +39,7 @@ $ const displayUpdatedDate = defaultValue(input.displayUpdatedDate, true);
     field="updated"
     format=format
     locale=locale
+    timezone=timezone
   >
     ${i18n("Updated")} ${value}
   </marko-web-obj-date>

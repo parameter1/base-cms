@@ -138,6 +138,7 @@
     "@field": "string",
     "@format": "string",
     "@locale": "string",
+    "@timezone": "string",
     "@tag": "string",
     "@class": "string",
     "@modifiers": "string",
