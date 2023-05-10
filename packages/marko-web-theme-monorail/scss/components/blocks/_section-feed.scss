@@ -68,6 +68,7 @@
   &__content-teaser {
     display: none;
     margin-top: 10px;
+    margin-bottom: 0.25rem;
     @include skin-typography($style: "teaser-text-1", $link-style: "primary", $breakpoint: sm);
     @include media-breakpoint-up(md) {
       display: block;
