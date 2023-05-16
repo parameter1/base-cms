@@ -8,6 +8,8 @@ const {
   updateIdentityX,
 } = require('../omeda-data');
 
+const { log } = console;
+
 /**
  * A middleware to resync the IdentityX user data with the Omeda customer data. After syncing data,
  * sets a cookie to prevent resyncs for the configured timeframe.
@@ -36,6 +38,11 @@ module.exports = ({
     getOmedaCustomerRecord({ omedaGraphQLClient, encryptedCustomerId }),
     getOmedaLinkedFields({ identityX, brandKey }),
   ]);
+
+  if (!omedaCustomer) {
+    log(`Unable to resync Omeda customer using "${encryptedCustomerId}", aborting sync!`);
+    return next();
+  }
 
   // Update the IdentityX user record custom select fields with the Omeda user data
   await updateIdentityX({
