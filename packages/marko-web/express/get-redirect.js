@@ -23,6 +23,14 @@ module.exports = async (req, handler, app) => {
   const { websiteRedirect } = data;
   const { to } = websiteRedirect || {};
   if (to) return websiteRedirect;
+  const pathDecoded = decodeURIComponent(from);
+  if (pathDecoded !== from) {
+    const variablesForDecoded = { input: { from: pathDecoded, params } };
+    const { data: dataForDecoded } = await apollo.query({ query, variables: variablesForDecoded });
+    const { websiteRedirect: decodedRedirect } = dataForDecoded;
+    const { to: redirectToDecoded } = decodedRedirect || {};
+    if (redirectToDecoded) return decodedRedirect;
+  }
   // Attempt to find a redirect using the handler.
   if (typeof handler !== 'function') return null;
   const result = await handler({
