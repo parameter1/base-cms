@@ -109,6 +109,11 @@ module.exports = ({ templates }) => {
       // finally, ensure the date is always the beginning of the day
       date = moment(date).startOf('day');
 
+      // addDays support
+      if (req.query.addDays && parseInt(req.query.addDays, 10)) {
+        date = moment(date).add(parseInt(req.query.addDays, 10), 'days');
+      }
+
       const templateData = {
         date,
         dateInfo: {
