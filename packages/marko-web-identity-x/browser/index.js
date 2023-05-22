@@ -3,6 +3,7 @@ import IdentityX from './service';
 const Authenticate = () => import(/* webpackChunkName: "identity-x-authenticate" */ './authenticate.vue');
 const ChangeEmailConfirm = () => import(/* webpackChunkName: "identity-x-change-email-confirm" */ './change-email-confirm.vue');
 const ChangeEmailInit = () => import(/* webpackChunkName: "identity-x-change-email-init" */ './change-email-init.vue');
+const Download = () => import(/* webpackChunkName: "identity-x-download" */ './download.vue');
 const Logout = () => import(/* webpackChunkName: "identity-x-logout" */ './logout.vue');
 const Login = () => import(/* webpackChunkName: "identity-x-login" */ './login.vue');
 const Profile = () => import(/* webpackChunkName: "identity-x-profile" */ './profile.vue');
@@ -13,6 +14,7 @@ export default (Browser, {
   CustomChangeEmailConfirmComponent,
   CustomChangeEmailInitComponent,
   CustomCommentStreamComponent,
+  CustomDownloadComponent,
   CustomLoginComponent,
   CustomLogoutComponent,
   CustomProfileComponent,
@@ -21,6 +23,7 @@ export default (Browser, {
   const ChangeEmailConfirmComponent = CustomChangeEmailConfirmComponent || ChangeEmailConfirm;
   const ChangeEmailInitComponent = CustomChangeEmailInitComponent || ChangeEmailInit;
   const CommentStreamComponent = CustomCommentStreamComponent || CommentStream;
+  const DownloadComponent = CustomDownloadComponent || Download;
   const LoginComponent = CustomLoginComponent || Login;
   const LogoutComponent = CustomLogoutComponent || Logout;
   const ProfileComponent = CustomProfileComponent || Profile;
@@ -32,6 +35,7 @@ export default (Browser, {
   Browser.register('IdentityXChangeEmailConfirm', ChangeEmailConfirmComponent, { provide: { EventBus } });
   Browser.register('IdentityXChangeEmailInit', ChangeEmailInitComponent, { provide: { EventBus } });
   Browser.register('IdentityXCommentStream', CommentStreamComponent, { provide: { EventBus } });
+  Browser.register('IdentityXDownload', DownloadComponent, { provide: { EventBus } });
   Browser.register('IdentityXLogin', LoginComponent, { provide: { EventBus } });
   Browser.register('IdentityXLogout', LogoutComponent, { provide: { EventBus } });
   Browser.register('IdentityXProfile', ProfileComponent, { provide: { EventBus } });
@@ -44,27 +48,33 @@ export default (Browser, {
   [
     // Views
     'identity-x-authenticate-mounted',
-    'identity-x-comment-stream-mounted',
-    'identity-x-comment-post-mounted',
+    'identity-x-change-email-mounted',
     'identity-x-comment-create-mounted',
+    'identity-x-comment-post-mounted',
+    'identity-x-comment-stream-mounted',
+    'identity-x-download-mounted',
     'identity-x-login-mounted',
     'identity-x-logout-mounted',
     'identity-x-profile-mounted',
     // Actions/submissions
     'identity-x-authenticated',
     'identity-x-auto-signup',
+    'identity-x-change-email',
     'identity-x-comment-post-submitted',
     'identity-x-comment-report-submitted',
     'identity-x-comment-stream-loaded',
     'identity-x-comment-stream-loaded-more',
+    'identity-x-download-submitted',
     'identity-x-login-link-sent',
     'identity-x-logout',
     'identity-x-profile-updated',
     // Errors
     'identity-x-authenticate-errored',
+    'identity-x-change-email-errored',
     'identity-x-comment-post-errored',
     'identity-x-comment-report-errored',
     'identity-x-comment-stream-errored',
+    'identity-x-download-errored',
     'identity-x-login-errored',
     'identity-x-logout-errored',
     'identity-x-profile-errored',

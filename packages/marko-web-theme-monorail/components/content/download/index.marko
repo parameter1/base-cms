@@ -17,6 +17,9 @@ $ const { surveyId, surveyType } = getAsObject(content, "gating");
       <else-if(surveyType === "wufoo")>
         <theme-content-download-wufoo ...input.wufoo survey-id=surveyId target=fileSrc />
       </else-if>
+      <else-if(surveyType === "idx")>
+        <theme-content-download-identity-x content=content form-id=surveyId />
+      </else-if>
       <else>
         $ console.log("Unknown form provider ", surveyType);
         <theme-content-download-link ...input.link href=fileSrc block-name=blockName />

@@ -6,6 +6,11 @@
     "<wufoo>": {},
     "<form-dot-com>": {}
   },
+  "<theme-content-download-identity-x>": {
+    "template": "./identity-x.marko",
+    "@content": "object",
+    "@form-id": "string"
+  },
   "<theme-content-download-link>": {
     "template": "./link.marko"
   },
