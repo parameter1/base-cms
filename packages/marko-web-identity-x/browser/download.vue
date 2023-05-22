@@ -48,14 +48,12 @@
 
       <template v-else>
         <div class="success-message">
-          <div class="success-message__title">
-            <p>
-              Your responses have been saved, and your download should start automatically.
-            </p>
-            <p>
-              If not, <a :href="content.fileSrc" target="_blank">click here</a> to download.
-            </p>
-          </div>
+          <p class="success-message__title">
+            Your responses have been saved, and your download should start automatically.
+          </p>
+          <p class="success-message__title">
+            If not, <a :href="content.fileSrc" target="_blank">click here</a> to try again.
+          </p>
         </div>
       </template>
     </template>
@@ -209,6 +207,7 @@ export default {
           && { countryCode: this.defaultCountryCode }
         ),
       },
+      downloaded: [],
     };
   },
 
@@ -268,20 +267,32 @@ export default {
         // Re-focus on the form
         document.getElementById('content-download-idx-form').scrollIntoView({ behavior: 'smooth' });
 
-        this.emit('download-submitted', {
-          content: this.content,
-          user: this.user,
-          additionalEventData: { ...additionalEventData, ...(data.additionalEventData || {}) },
-        });
-
-        // Attempt to open download
-        window.open(this.content.fileSrc, '_blank');
+        // Perform and notify about the download
+        const eventData = { ...additionalEventData, ...(data.additionalEventData || {}) };
+        await this.download(this.content, eventData);
       } catch (e) {
         this.error = e;
         this.emit('download-errored', { message: e.message });
       } finally {
         this.isLoading = false;
       }
+    },
+    /**
+     *
+     */
+    async download(content, additionalEventData) {
+      const company = content.company || {};
+      this.emit('download-submitted', {
+        contentId: content.id,
+        contentType: content.type,
+        companyId: company.id,
+        userId: this.user.id,
+        additionalEventData,
+      });
+      this.downloaded.push(content.id);
+
+      // Attempt to open download
+      window.open(this.content.fileSrc, '_blank');
     },
   },
 };

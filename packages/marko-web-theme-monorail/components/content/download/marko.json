@@ -8,6 +8,7 @@
   },
   "<theme-content-download-identity-x>": {
     "template": "./identity-x.marko",
+    "<link>": {},
     "@content": "object",
     "@form-id": "string"
   },

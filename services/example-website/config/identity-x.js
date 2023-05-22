@@ -1,4 +1,5 @@
 const IdentityXConfiguration = require('@parameter1/base-cms-marko-web-identity-x/config');
+const download = require('./identity-x/download');
 
 const { log } = console;
 
@@ -21,6 +22,10 @@ module.exports = new IdentityXConfiguration({
       '628e98dc2da307ff2ef6a8b0', // Rain
     ],
   }),
+  // custom form field definitions
+  forms: {
+    download,
+  },
   apiToken: process.env.IDENTITYX_API_TOKEN,
   requiredServerFields: ['givenName', 'familyName', 'countryCode'],
   requiredClientFields: ['regionCode', 'countryCode'],

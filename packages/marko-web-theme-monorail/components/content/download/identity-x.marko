@@ -12,7 +12,7 @@ $ const callToActionLoggedOut = defaultValue(input.callToAction, `${ctaPrefix}, 
 $ const buttonLabel = defaultValue(input.buttonLabel, "Submit & Download");
 $ const title = defaultValue(input.title, "Complete the form to download this content");
 
-<if(identityX && form)>
+<if(identityX && form.fieldRows)>
   <div class="content-download-idx__wrapper">
     <marko-web-identity-x-context|{ user, isEnabled, application }|>
       $ const props = {
@@ -48,5 +48,10 @@ $ const title = defaultValue(input.title, "Complete the form to download this co
   </div>
 </if>
 <else>
-  <h3>Couldn"t load form <code>${formId}</code>!</h3>
+  $ const msg = `IdentityX Survey Gating: couldn't load form "${formId}"!`;
+  <p class="text-danger" data-marko-error=msg>
+    $ console.log(msg);
+    ${msg}
+  </p>
+  <theme-content-download-link ...input.link href=content.fileSrc block-name="content-download" />
 </else>

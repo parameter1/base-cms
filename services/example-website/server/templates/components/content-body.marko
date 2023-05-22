@@ -22,6 +22,8 @@ $ const displayNewsletterForm = defaultValue(input.displayNewsletterForm, true);
 $ const displayReadNext = defaultValue(input.displayReadNext, true);
 $ const displaySidebars = defaultValue(input.displaySidebars, true);
 $ const displaySocialShare = defaultValue(input.displaySocialShare, true);
+$ const displayComments = defaultValue(input.displayComments, true);
+$ const useIdxDownload = defaultValue(get(content, "gating.surveyType") === "idx" && content.fileSrc, false);
 
 <marko-web-identity-x-access|context| enabled=requiresReg required-access-level-ids=accessLevels>
   <if(input.beforeBody)>
@@ -46,7 +48,7 @@ $ const displaySocialShare = defaultValue(input.displaySocialShare, true);
       />
     </if>
   </if>
-  <else-if(!context.canAccess || context.requiresUserInput)>
+  <else-if(!useIdxDownload && (!context.canAccess || context.requiresUserInput))>
     $ const body = getContentPreview({ body: content.body, selector: "p:lt(3)" });
     <marko-web-content-body block-name=blockName obj={ body } />
 
@@ -122,6 +124,10 @@ $ const displaySocialShare = defaultValue(input.displaySocialShare, true);
       <identity-x-newsletter-form-inline type="inlineContent" />
     </if>
   </else>
+
+  <if(displayComments)>
+    <theme-identity-x-comment-stream content=content />
+  </if>
 
   <if(input.afterBody)>
     <${input.afterBody} context=context />

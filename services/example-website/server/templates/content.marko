@@ -23,8 +23,12 @@ $ const { recaptcha } = out.global;
         <div class="col-md-8">
           <div class="content-page-body">
             <theme-page-contents|{ blockName }| attrs={ "data-gallery-id": id }>
-              <content-body content=content block-name=blockName display-read-next=false />
-              <theme-identity-x-comment-stream content=content />
+              <content-body
+                content=content
+                block-name=blockName
+                display-read-next=false
+                display-comments=false
+              />
             </theme-page-contents>
           </div>
         </div>
