@@ -13,6 +13,7 @@ const topics = {
     { href: '/leaders', label: 'Leaders' },
     { href: '/directory', label: 'Directory' },
     { href: '/Sponsored', label: 'Sponsored' },
+    { href: '/downloads', label: 'Downloads' },
   ],
 };
 

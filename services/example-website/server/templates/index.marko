@@ -23,12 +23,12 @@
       <@section>
         <theme-query-total-count|{ totalCount }|
           name="website-scheduled-content"
-          params={ sectionAlias: "design" }
+          params={ sectionAlias: "home" }
         >
-          Total Design Items: ${totalCount}
+          Total Home Items: ${totalCount}
         </theme-query-total-count>
-        <theme-section-feed-block alias="design">
-          <@header>More in Design!</@header>
+        <theme-section-feed-block alias="home">
+          <@header>More in Home!</@header>
           <@query-params limit=4 excludeContentIds=[12345678] />
           <@before>
             <p>Before block</p>
@@ -42,8 +42,8 @@
       <@section>
         <div class="row">
           <div class="col-lg-8">
-            <theme-section-feed-block alias="design">
-              <@header>Even more in Design!</@header>
+            <theme-section-feed-block alias="home">
+              <@header>Even more in Home!</@header>
               <@query-params skip=4 limit=8 excludeContentIds=[12345678] />
             </theme-section-feed-block>
           </div>
@@ -58,7 +58,7 @@
       </@section>
 
       <@section>
-        <theme-section-list-deck-block aliases=["covid-19", "design", "factory"] collapsible=false />
+        <theme-section-list-deck-block aliases=["markets", "products", "services"] collapsible=false />
       </@section>
 
       <@section>

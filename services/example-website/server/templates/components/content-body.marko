@@ -66,7 +66,12 @@ $ const displaySocialShare = defaultValue(input.displaySocialShare, true);
   <else>
     $ const bodyId = `content-body-${content.id}`;
     <if(shouldInjectAds)>
-      <!-- ... -->
+      <theme-body-with-injection
+        content=content
+        aliases=[]
+        block-name=blockName
+        preventHTMLInjection=false
+      />
     </if>
     <marko-web-content-body block-name=blockName obj=content attrs={ id: bodyId } />
     <if(displaySidebars)>
@@ -113,7 +118,7 @@ $ const displaySocialShare = defaultValue(input.displaySocialShare, true);
       <!-- <marko-web-leaders-company-videos content-id=content.id /> -->
     </if>
 
-    <if(displayNewsletterForm)>
+    <if(!context.canAccess)>
       <identity-x-newsletter-form-inline type="inlineContent" />
     </if>
   </else>

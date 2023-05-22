@@ -1,0 +1,77 @@
+import defaultDescription from "@parameter1/base-cms-marko-web/utils/published-content/description";
+import queryFragment from "../../graphql/fragments/content-list";
+import { getAsArray } from "@parameter1/base-cms-object-path";
+
+$ const { config, GAM, pagination: p } = out.global;
+$ const perPage = 6;
+
+$ const type = "published-content";
+$ const title = "Downloadable Content";
+$ const description = defaultDescription(title, config);
+$ const section = {
+  name: title,
+  descendantIds: [],
+  hierarchy: [{ name: title, alias: "downloads" }]
+};
+
+<theme-default-page name=title>
+  <@page>
+    <marko-web-page-wrapper>
+      <@section>
+        <div class="row">
+          <div class="col">
+            <theme-website-section-breadcrumbs section=section />
+            <h1 class="page-wrapper__title">${title}</h1>
+            <div class="page-wrapper__deck">${description}</div>
+          </div>
+        </div>
+      </@section>
+      <@section>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="p-4 bg-light">
+              <h3>Ինչո՞ւ ենք այն</h3>
+              <p class="muted">Հայտնի է, որ ընթերցողը, կարդալով հասկանալի տեքստ, չի կարողանա կենտրոնանալ տեքստի ձևավորման օգտագործում</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="p-4 bg-light">
+              <h3>օգտագործում</h3>
+              <p class="muted">Lorem Ipsum օգտագործելը բացատրվում է նրանով, որ այն բաշխում է բառերը քիչ թե շատ իրականի նման վրա բաշխում է</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <marko-web-leaders props={
+              sectionAlias: "leaders/2022",
+              relatedSectionIds: section.descendantIds,
+              open: "left",
+              viewAllHref: "/leaders",
+              useContentPrimarySection: true,
+              columns: 1,
+            } />
+          </div>
+        </div>
+      </@section>
+      <@section|{ blockName }|>
+        <theme-section-feed-block with-section=false query-name="all-published-content" lazyload=false>
+          <@query-params include-content-types=["Document", "Whitepaper"] limit=6 skip=p.skip({ perPage }) query-fragment=queryFragment />
+        </theme-section-feed-block>
+        <theme-section-feed-block|{ totalCount }| query-name="all-published-content" count-only=true>
+          <@query-params include-content-types=["Document", "Whitepaper"] />
+          <theme-pagination-controls
+            per-page=perPage
+            total-count=totalCount
+            path="/downloads"
+          />
+        </theme-section-feed-block>
+      </@section>
+      <@section>
+        <div class="row">
+          <div class="col">
+            <identity-x-newsletter-form-inline type="inlineSection" consent-policy="custom consent policy - section" />
+          </div>
+        </div>
+      </@section>
+    </marko-web-page-wrapper>
+  </@page>
+</theme-default-page>

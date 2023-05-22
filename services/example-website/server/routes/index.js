@@ -10,6 +10,7 @@ const index = require('../templates/index');
 const content = require('../templates/content');
 const section = require('../templates/section');
 const leaders = require('../templates/leaders');
+const downloads = require('../templates/downloads');
 
 const dynamicPages = require('./dynamic-page');
 
@@ -38,6 +39,11 @@ module.exports = (app, config) => {
     template: content,
     queryFragment,
   }));
+
+  // Published content
+  app.get('/downloads', (_, res) => {
+    res.marko(downloads);
+  });
 
   // Sections
   app.get('/:alias(leaders)', withWebsiteSection({
