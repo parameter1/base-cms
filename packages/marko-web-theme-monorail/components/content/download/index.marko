@@ -8,12 +8,19 @@ $ const { surveyId, surveyType } = getAsObject(content, "gating");
 <if(fileSrc)>
   <marko-web-block name=blockName>
     <if(surveyId)>
-      <if(surveyType === "app_form_com")>
-        <theme-content-download-form-dot-com ...input.formDotCom survey-id=surveyId target=fileSrc />
+      <if(input.renderBody)>
+        <${input.renderBody} survey-id=surveyId />
       </if>
+      <else-if(surveyType === "app_form_com")>
+        <theme-content-download-form-dot-com ...input.formDotCom survey-id=surveyId target=fileSrc />
+      </else-if>
       <else-if(surveyType === "wufoo")>
         <theme-content-download-wufoo ...input.wufoo survey-id=surveyId target=fileSrc />
       </else-if>
+      <else>
+        $ console.log("Unknown form provider ", surveyType);
+        <theme-content-download-link ...input.link href=fileSrc block-name=blockName />
+      </else>
     </if>
     <else>
       <theme-content-download-link ...input.link href=fileSrc block-name=blockName />
