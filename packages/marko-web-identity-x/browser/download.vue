@@ -54,6 +54,7 @@
           <p class="success-message__title">
             If not, <a :href="content.fileSrc" target="_blank">click here</a> to try again.
           </p>
+          <download-related :content="content" @submit="download" />
         </div>
       </template>
     </template>
@@ -88,10 +89,12 @@ import Login from './login.vue';
 import FeatureError from './errors/feature';
 import FormError from './errors/form';
 import EventEmitter from './mixins/global-event-emitter';
+import DownloadRelated from './download-related.vue';
 
 export default {
   components: {
     CustomColumn,
+    DownloadRelated,
     FormConsent,
     Login,
   },
@@ -292,7 +295,7 @@ export default {
       this.downloaded.push(content.id);
 
       // Attempt to open download
-      window.open(this.content.fileSrc, '_blank');
+      window.open(content.fileSrc, '_blank');
     },
   },
 };

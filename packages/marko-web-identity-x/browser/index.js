@@ -1,4 +1,5 @@
 import IdentityX from './service';
+import createGraphqlClient from './graphql/create-client';
 
 const Authenticate = () => import(/* webpackChunkName: "identity-x-authenticate" */ './authenticate.vue');
 const ChangeEmailConfirm = () => import(/* webpackChunkName: "identity-x-change-email-confirm" */ './change-email-confirm.vue');
@@ -8,6 +9,8 @@ const Logout = () => import(/* webpackChunkName: "identity-x-logout" */ './logou
 const Login = () => import(/* webpackChunkName: "identity-x-login" */ './login.vue');
 const Profile = () => import(/* webpackChunkName: "identity-x-profile" */ './profile.vue');
 const CommentStream = () => import(/* webpackChunkName: "identity-x-comment-stream" */ './comments/stream.vue');
+
+const $graphql = createGraphqlClient({ uri: '/__graphql' });
 
 export default (Browser, {
   CustomAuthenticateComponent,
@@ -35,7 +38,7 @@ export default (Browser, {
   Browser.register('IdentityXChangeEmailConfirm', ChangeEmailConfirmComponent, { provide: { EventBus } });
   Browser.register('IdentityXChangeEmailInit', ChangeEmailInitComponent, { provide: { EventBus } });
   Browser.register('IdentityXCommentStream', CommentStreamComponent, { provide: { EventBus } });
-  Browser.register('IdentityXDownload', DownloadComponent, { provide: { EventBus } });
+  Browser.register('IdentityXDownload', DownloadComponent, { provide: { EventBus, $graphql } });
   Browser.register('IdentityXLogin', LoginComponent, { provide: { EventBus } });
   Browser.register('IdentityXLogout', LogoutComponent, { provide: { EventBus } });
   Browser.register('IdentityXProfile', ProfileComponent, { provide: { EventBus } });
