@@ -49,10 +49,10 @@
       <template v-else>
         <div class="success-message">
           <p class="success-message__title">
-            Your responses have been saved, and your download should start automatically.
+            Your responses have been saved, and your download should begin automatically.
           </p>
           <p class="success-message__title">
-            If not, <a :href="content.fileSrc" target="_blank">click here</a> to try again.
+            If not, <a :href="content.fileSrc" target="_blank">click here</a> to start.
           </p>
           <download-related :content="content" @submit="download" />
         </div>
@@ -284,15 +284,18 @@ export default {
      *
      */
     async download(content, additionalEventData) {
-      const company = content.company || {};
-      this.emit('download-submitted', {
-        contentId: content.id,
-        contentType: content.type,
-        companyId: company.id,
-        userId: this.user.id,
-        additionalEventData,
-      });
-      this.downloaded.push(content.id);
+      // Only emit event once when downloading
+      if (!this.downloaded.includes(content.id)) {
+        const company = content.company || {};
+        this.emit('download-submitted', {
+          contentId: content.id,
+          contentType: content.type,
+          companyId: company.id,
+          userId: this.user.id,
+          additionalEventData,
+        });
+        this.downloaded.push(content.id);
+      }
 
       // Attempt to open download
       window.open(content.fileSrc, '_blank');
