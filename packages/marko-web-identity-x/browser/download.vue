@@ -1,5 +1,5 @@
 <template>
-  <div id="content-download-idx-form" class="content-page-gate">
+  <div id="content-download-idx-form" class="content-page-gate p-block">
     <template v-if="hasActiveUser">
       <h5 class="content-page-gate__title">
         {{ title }}
@@ -26,7 +26,7 @@
           </div>
 
           <form-consent
-            :user="activeUser"
+            :user="user"
             :consent-policy="consentPolicy"
             :consent-policy-enabled="consentPolicyEnabled"
             :email-consent-request="emailConsentRequest"
@@ -51,8 +51,13 @@
           <p class="success-message__title">
             Your responses have been saved, and your download should begin automatically.
           </p>
-          <p class="success-message__title">
-            If not, <a :href="content.fileSrc" target="_blank">click here</a> to start.
+          <p class="success-message__title d-flex justify-content-between">
+            If not, click this button to start:
+            <a
+              class="btn btn-primary mr-3"
+              :href="content.fileSrc"
+              target="_blank"
+            >Download</a>
           </p>
           <download-related :content="content" @submit="download" />
         </div>

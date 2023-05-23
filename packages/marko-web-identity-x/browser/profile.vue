@@ -148,7 +148,7 @@
         </div>
 
         <form-consent
-          :user="activeUser"
+          :user="user"
           :consent-policy="consentPolicy"
           :consent-policy-enabled="consentPolicyEnabled"
           :email-consent-request="emailConsentRequest"
