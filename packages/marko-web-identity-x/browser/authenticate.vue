@@ -145,6 +145,7 @@ export default {
    *
    */
   data: () => ({
+    bypassProfileForm: false,
     error: null,
     isLoading: false,
     isRedirecting: false,
@@ -184,6 +185,7 @@ export default {
      *
      */
     showProfileForm() {
+      if (this.bypassProfileForm) return false;
       if (this.mustReVerifyProfile) return true;
       if (this.requiresCustomFieldAnswers) return true;
       return !this.isProfileComplete;
@@ -226,6 +228,7 @@ export default {
         this.requiresCustomFieldAnswers = this.activeUser.customSelectFieldAnswers
           .filter(!ids.length ? ({ field }) => ids.includes(field.id) : () => true)
           .some(({ hasAnswered, field }) => field.required && !hasAnswered);
+        this.bypassProfileForm = data.loginSource === 'contentDownload';
 
         this.emitAutoSignup(data);
         this.emit('authenticated', {

@@ -57,6 +57,31 @@ fragment ContentPageFragment on Content {
     surveyType
     surveyId
   }
+
+  relatedTo {
+    totalCount
+    edges {
+      node {
+        id
+        type
+        name
+        siteContext { path }
+        primaryImage {
+          id
+          src(input: { options: { auto: "format,compress" } })
+          alt
+        }
+        company {
+          id
+          name
+          siteContext { path }
+        }
+        ...on Media {
+          fileSrc
+        }
+      }
+    }
+  }
   userRegistration {
     isCurrentlyRequired
     accessLevels

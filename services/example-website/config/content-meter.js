@@ -3,4 +3,8 @@ module.exports = {
   excludeLabels: [
     'foobar',
   ],
+  excludeContentTypes: [
+    'document',
+    'whitepaper',
+  ],
 };

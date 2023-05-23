@@ -23,19 +23,24 @@ $ const { recaptcha } = out.global;
         <div class="col-md-8">
           <div class="content-page-body">
             <theme-page-contents|{ blockName }| attrs={ "data-gallery-id": id }>
-              <theme-body-with-injection
+              <content-body
                 content=content
-                aliases=[]
                 block-name=blockName
-                preventHTMLInjection=false
+                display-read-next=false
+                display-comments=false
               />
-              <identity-x-newsletter-form-inline type="inlineContent" />
-              <theme-identity-x-comment-stream content=content />
             </theme-page-contents>
           </div>
         </div>
         <div class="col-md-4">
-          <rmi-form content=content />
+          <theme-read-next-block
+            content-id=content.id
+            section-id=content.primarySection.id
+            published=content.published
+          />
+          <if(["company","product"].includes(content.type))>
+            <rmi-form content=content />
+          </if>
           <leaders-context content-id=content.id />
         </div>
       </div>

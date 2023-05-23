@@ -309,5 +309,43 @@
 }
 
 .content-download {
-  padding-bottom: map-get($spacers, block);
+  &:not(&__link) {
+    padding-bottom: map-get($spacers, block);
+  }
+}
+
+.download-related {
+  &__wrapper {
+    & > p {
+      border-top: 1px solid #ccc;
+      padding-top: 1rem;
+    }
+  }
+  &__item {
+    display: flex;
+    margin-bottom: .5rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  &__title {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__image {
+    max-width: 160px;
+    margin-right: 1rem;
+  }
+  &__title {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+  }
+  &__button {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 }

@@ -147,33 +147,14 @@
           </div>
         </div>
 
-        <div v-if="emailConsentRequest" class="row mt-3">
-          <div class="col-12">
-            <receive-email
-              v-model="user.receiveEmail"
-              :email-consent-request="emailConsentRequest"
-            />
-          </div>
-        </div>
-
-        <div v-if="regionalPolicyFields.length" class="row mt-3">
-          <div class="col-12">
-            <regional-policy
-              v-for="policy in regionalPolicyFields"
-              :id="policy.id"
-              :key="policy.id"
-              :message="policy.message"
-              :required="policy.required"
-              :value="getRegionalPolicyAnswerValue(policy.id)"
-              @input="setPolicyAnswer(policy.id, $event)"
-            />
-          </div>
-        </div>
-
-        <small
-          v-if="consentPolicy"
-          class="text-muted mb-3 d-inline-block"
-          v-html="consentPolicy"
+        <form-consent
+          :user="user"
+          :consent-policy="consentPolicy"
+          :consent-policy-enabled="consentPolicyEnabled"
+          :email-consent-request="emailConsentRequest"
+          :email-consent-request-enabled="emailConsentRequestEnabled"
+          :regional-consent-policies="regionalConsentPolicies"
+          :country-code="countryCode"
         />
 
         <div class="d-flex align-items-center">
@@ -238,6 +219,7 @@ import cookiesEnabled from './utils/cookies-enabled';
 import regionCountryCodes from './utils/region-country-codes';
 
 import AddressBlock from './form/address-block.vue';
+import FormConsent from './form/consent.vue';
 import CustomBoolean from './form/fields/custom-boolean.vue';
 import CustomSelect from './form/fields/custom-select.vue';
 import GivenName from './form/fields/given-name.vue';
@@ -246,8 +228,6 @@ import Organization from './form/fields/organization.vue';
 import OrganizationTitle from './form/fields/organization-title.vue';
 import Country from './form/fields/country.vue';
 import PhoneNumber from './form/fields/phone-number.vue';
-import ReceiveEmail from './form/fields/receive-email.vue';
-import RegionalPolicy from './form/fields/regional-policy.vue';
 import Login from './login.vue';
 
 import FeatureError from './errors/feature';
@@ -264,12 +244,11 @@ export default {
     CustomSelect,
     GivenName,
     FamilyName,
+    FormConsent,
     Organization,
     OrganizationTitle,
     Country,
     PhoneNumber,
-    ReceiveEmail,
-    RegionalPolicy,
     Login,
   },
 
@@ -429,15 +408,6 @@ export default {
       return user.countryCode;
     },
 
-    regionalPolicyFields() {
-      const { regionalConsentPolicies, countryCode } = this;
-      if (!regionalConsentPolicies.length || !countryCode) return [];
-      return regionalConsentPolicies.filter((policy) => {
-        const countryCodes = policy.countries.map((country) => country.id);
-        return countryCodes.includes(countryCode);
-      });
-    },
-
     /**
      *
      */
@@ -576,25 +546,6 @@ export default {
     /**
      *
      */
-    getRegionalPolicyAnswer(policyId) {
-      return this.user.regionalConsentAnswers.find((a) => a.id === policyId);
-    },
-
-    getRegionalPolicyAnswerValue(policyId) {
-      const answer = this.getRegionalPolicyAnswer(policyId);
-      if (answer) return answer.given;
-      return false;
-    },
-
-    setPolicyAnswer(policyId, given) {
-      const answer = this.getRegionalPolicyAnswer(policyId);
-      if (answer) {
-        answer.given = given;
-      } else {
-        this.user.regionalConsentAnswers.push({ id: policyId, given });
-      }
-    },
-
     onCustomBooleanChange(id) {
       const objIndex = this.customBooleanFieldAnswers.findIndex(((obj) => obj.id === id));
       const answer = !this.customBooleanFieldAnswers[objIndex].answer;
