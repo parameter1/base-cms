@@ -1,0 +1,12 @@
+import { getAsObject } from "@parameter1/base-cms-object-path";
+import eventEntity from "../utils/base-content-entity";
+
+$ const content = getAsObject(input, "content");
+
+<marko-web-browser-component
+  name="P1EventsTrackDownloadSubmission"
+  props={
+    entity: eventEntity(content.id, content.type),
+    eventName: input.eventName,
+  }
+/>
