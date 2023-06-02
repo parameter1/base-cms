@@ -44,6 +44,11 @@
     "@publisher-id": "string",
     "@exclude-story-ids": "array"
   },
+  "<marko-web-native-x-publisher-stories>": {
+    "template": "./publisher-stories.marko",
+    "@domain-name": "string",
+    "@website": "string"
+  },
   "<marko-web-native-x-story-track-init>": {
     "template": "./story/track-init.marko",
     "@story": "object"
