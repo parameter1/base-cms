@@ -16,6 +16,7 @@ const loginAppUser = gql`
         ...ActiveUserFragment
       }
       loginSource
+      loginSourceType
     }
   }
 
@@ -30,7 +31,12 @@ module.exports = asyncRoute(async (req, res) => {
   const input = { token };
   const variables = { input };
   const { data = {} } = await identityX.client.mutate({ mutation: loginAppUser, variables });
-  const { token: authToken, user, loginSource } = data.loginAppUser;
+  const {
+    token: authToken,
+    user,
+    loginSource,
+    loginSourceType,
+  } = data.loginAppUser;
 
   // call authentication hooks
   await callHooksFor(identityX, 'onAuthenticationSuccess', {
@@ -43,6 +49,7 @@ module.exports = asyncRoute(async (req, res) => {
   });
   tokenCookie.setTo(res, authToken.value);
   contextCookie.setTo(res, { loginSource });
+  if (loginSourceType) additionalEventData.loginSourceType = loginSourceType;
   res.json({
     ok: true,
     user,

@@ -232,16 +232,22 @@ class IdentityX {
     additionalEventData,
   }) {
     const authUrl = `${this.req.protocol}://${this.req.get('host')}${this.config.getEndpointFor('authenticate')}`;
+    const input = {
+      email: appUser.email,
+      authUrl,
+      appContextId: this.config.get('appContextId'),
+      source,
+      // conditionally spread contentGateType when source is contentGate
+      ...((source === 'contentGate' && additionalEventData.contentGateType) && {
+        sourceType: additionalEventData.contentGateType,
+      }),
+      redirectTo,
+    };
+
     await this.client.mutate({
       mutation: sendLoginLinkMutation,
       variables: {
-        input: {
-          email: appUser.email,
-          authUrl,
-          appContextId: this.config.get('appContextId'),
-          source,
-          redirectTo,
-        },
+        input,
       },
     });
     await callHooksFor(this, 'onLoginLinkSent', {
