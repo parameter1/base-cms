@@ -18,6 +18,7 @@ $ const { surveyId, surveyType } = getAsObject(content, "gating");
         <theme-content-download-wufoo ...input.wufoo survey-id=surveyId target=fileSrc />
       </else-if>
       <else-if(surveyType === "idx")>
+        <marko-web-p1-events-track-download-submission content=content event-name="identity-x-download-submitted" />
         <theme-content-download-identity-x link=input.link content=content form-id=surveyId />
       </else-if>
       <else>
