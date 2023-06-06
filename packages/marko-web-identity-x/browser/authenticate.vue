@@ -10,6 +10,7 @@
       :additional-event-data="additionalEventData"
       :endpoints="endpoints"
       :active-user="activeUser"
+      :login-source="loginSource"
       :required-server-fields="requiredServerFields"
       :required-client-fields="requiredClientFields"
       :active-custom-field-ids="activeCustomFieldIds"
@@ -153,6 +154,7 @@ export default {
     activeUser: null,
     requiresCustomFieldAnswers: false,
     mustReVerifyProfile: false,
+    loginSource: null,
   }),
 
   /**
@@ -185,7 +187,6 @@ export default {
      *
      */
     showProfileForm() {
-      if (this.bypassProfileForm) return false;
       if (this.mustReVerifyProfile) return true;
       if (this.requiresCustomFieldAnswers) return true;
       return !this.isProfileComplete;
@@ -228,7 +229,14 @@ export default {
         this.requiresCustomFieldAnswers = this.activeUser.customSelectFieldAnswers
           .filter(!ids.length ? ({ field }) => ids.includes(field.id) : () => true)
           .some(({ hasAnswered, field }) => field.required && !hasAnswered);
-        this.bypassProfileForm = data.loginSource === 'contentDownload';
+
+        // set loginSource & loginSourceType from auth reaponse when conditions are met
+        if (data.loginSource === 'contentGate' && data.loginSourceType) {
+          // this will insure the are passed from login to profile submit when continuouse
+          this.loginSource = data.loginSource;
+          // if loginSource contentGate also send contentGateType along in additionalEventData
+          this.additionalEventData.contentGateType = data.loginSourceType;
+        }
 
         this.emitAutoSignup(data);
         this.emit('authenticated', {
