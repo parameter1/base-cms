@@ -255,6 +255,10 @@ class IdentityX {
       additionalEventData,
       req: this.req,
       source,
+      // conditionally spread contentGateType when source is contentGate
+      ...((source === 'contentGate' && additionalEventData.contentGateType) && {
+        sourceType: additionalEventData.contentGateType,
+      }),
       user: appUser,
     });
   }
