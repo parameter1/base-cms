@@ -49,11 +49,13 @@ module.exports = asyncRoute(async (req, res) => {
   });
   tokenCookie.setTo(res, authToken.value);
   contextCookie.setTo(res, { loginSource });
+  contextCookie.setTo(res, { loginSourceType });
   if (loginSourceType) additionalEventData.loginSourceType = loginSourceType;
   res.json({
     ok: true,
     user,
     loginSource,
+    loginSourceType,
     additionalEventData,
   });
 });
