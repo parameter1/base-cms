@@ -22,7 +22,7 @@ $ const params = {
   ),
   queryFragment: input.queryFragment,
   opSuffix: input.opSuffix,
-  useAutocomplete: site.get('search.useAutocomplete', false),
+  useSimpleSearch: site.get('search.useSimpleSearch', false),
 };
 
 <marko-web-resolve|{ resolved }| promise=loader({ apolloBaseCMS, apolloBaseBrowse }, params)>
