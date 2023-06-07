@@ -4,10 +4,12 @@ $ const { $markoWebSearch: search, i18n } = out.global;
 
 $ const nextPage = search.getNextPage(input.totalCount);
 
+$ const { sortField, sortOrder } = search.input;
+
 <if(nextPage)>
   <marko-web-search-link
     path=input.path
-    query-values={ page: nextPage }
+    query-values={ page: nextPage, sortField, sortOrder }
     class=input.class
     target=input.target
     rel=input.rel
