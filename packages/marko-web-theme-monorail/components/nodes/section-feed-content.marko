@@ -69,6 +69,9 @@ $ const blockName = "section-feed-content-node";
         obj=content
         link={ field: linkField, target: linkTarget, attrs: linkAttrs }
       />
+      <if(withCompany)>
+        <marko-web-content-name class=`${blockName}__content-company` obj=content.company link=true />
+      </if>
       <if(withTeaser)>
         <marko-web-content-teaser
           block-name=blockName
@@ -111,10 +114,6 @@ $ const blockName = "section-feed-content-node";
           format=dateFormat
         />
       </else-if>
-
-      <if(withCompany)>
-        <marko-web-content-name class=`${blockName}__content-company` obj=content.company link=true />
-      </if>
 
       <marko-web-content-sponsors|{ node }| block-name=blockName obj=content>
         Sponsored By: <marko-web-content-name tag="span" block-name=blockName obj=node link=true />
