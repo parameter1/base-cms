@@ -4,8 +4,8 @@ const gql = require('graphql-tag');
 module.exports = (queryFragment) => {
   const { spreadFragmentName, processedFragment } = extractFragmentData(queryFragment);
   return gql`
-    query MarkoWebPublisherStories($input: PublisherStoriesInput!) {
-      publisherStories(input: $input) {
+    query MarkoWebPublisherStories($input: PublisherStoriesInput!, $pagination: PaginationInput, $sort: StorySortInput) {
+      publisherStories(input: $input, pagination: $pagination, sort: $sort) {
         edges {
           node {
             id

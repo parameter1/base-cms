@@ -46,8 +46,10 @@
   },
   "<marko-web-native-x-publisher-stories>": {
     "template": "./publisher-stories.marko",
+    "@limit": "string",
     "@domain-name": "string",
-    "@website": "string"
+    "@website": "string",
+    "@sort": "object"
   },
   "<marko-web-native-x-story-track-init>": {
     "template": "./story/track-init.marko",

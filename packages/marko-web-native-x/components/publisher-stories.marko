@@ -3,9 +3,23 @@ import buildQuery from "../apollo/graphql/queries/publisher-stories";
 
 $ const { req, nativeX } = out.global;
 
-$ const { domainName, website, limit = 25, after } = input;
+$ const {
+  domainName,
+  website,
+  limit = 25,
+  after,
+  sort = {
+    order: -1,
+    field: "publishedAt",
+  },
+} = input;
 $ const args = {
   config: nativeX,
+  sort,
+  pagination: {
+    first: limit,
+    after,
+  },
   ...(domainName && { domainName }),
   ...(website && { website }),
 };
@@ -17,24 +31,21 @@ $ const args = {
  */
 $ const getStories = async ({
   config,
-  pagination = {
-    first: limit,
-    after,
-  },
+  pagination,
+  sort,
   queryFragment = defaultFragment,
   domainName,
   website,
 } = {}) => {
-  const { data } = await config.client.query({
-    query: buildQuery(queryFragment),
-    variables: {
-      input: {
-        ...(domainName && { domainName }),
-        ...(website && { website }),
-       },
-      ...(pagination && { pagination }),
-    },
-  });
+
+  const input = {
+    ...(domainName && { domainName }),
+    ...(website && { website }),
+  };
+  const query = buildQuery(queryFragment);
+  const variables = { input, pagination, sort };
+
+  const { data } = await config.client.query({ query, variables });
   if (!data || !data.publisherStories) return { nodes: [], pageInfo: {} };
   const { pageInfo } = data.publisherStories;
   const nodes = data.publisherStories.edges
