@@ -64,7 +64,7 @@ module.exports = async ({ apolloBaseCMS, apolloBaseBrowse } = {}, {
 
   queryFragment,
   opSuffix,
-  useAutocomplete = false,
+  searchType,
 } = {}) => {
   if (!apolloBaseCMS || !apolloBaseBrowse) throw new Error('Both the BaseCMS and Base Browse Apollo clients must be provided.');
   const input = {
@@ -72,8 +72,7 @@ module.exports = async ({ apolloBaseCMS, apolloBaseBrowse } = {}, {
     statuses: ['PUBLISHED'],
     contentTypes,
     countryCodes,
-    ...(!useAutocomplete && searchQuery && { search: { query: searchQuery } }),
-    ...(useAutocomplete && searchQuery && { autocomplete: { phrase: searchQuery } }),
+    ...(searchQuery && { search: { query: searchQuery, type: searchType } }),
     ...((assignedToWebsiteSiteIds.length || assignedToWebsiteSectionIds.length) && {
       assignedToWebsites: {
         ...(assignedToWebsiteSiteIds.length && { siteIds: assignedToWebsiteSiteIds }),
