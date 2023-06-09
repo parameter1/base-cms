@@ -26,6 +26,7 @@ class MarkoWebSearchQueryParamConfig {
   constructor({
     resultsPerPage = {},
     contentTypeIds = [],
+    defaultSortField = 'PUBLISHED',
   } = {}) {
     this.params = new Map();
 
@@ -71,7 +72,7 @@ class MarkoWebSearchQueryParamConfig {
       })
       .add('sortField', {
         type: String,
-        defaultValue: 'PUBLISHED',
+        defaultValue: defaultSortField,
         validator: (v) => sortFieldSet.has(v),
       })
       .add('sortOrder', {
