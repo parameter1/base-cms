@@ -18,6 +18,7 @@ module.exports = gql`
     advertiser {
       id
       name
+      externalId
       logo {
         ...NativeXImageFragment
       }
