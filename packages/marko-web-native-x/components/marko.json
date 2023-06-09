@@ -41,6 +41,7 @@
   "<marko-web-native-x-story-advertiser-related-stories>": {
     "template": "./story/advertiser-related-stories.marko",
     "@advertiser-id": "string",
+    "@external-id": "string",
     "@publisher-id": "string",
     "@exclude-story-ids": "array"
   },
