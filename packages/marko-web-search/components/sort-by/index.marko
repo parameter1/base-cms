@@ -1,6 +1,5 @@
 import { get, getAsArray, getAsObject } from "@parameter1/base-cms-object-path";
 import { dasherize } from "@parameter1/base-cms-inflector";
-import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 import { isFunction } from '@parameter1/base-cms-utils';
 
 $ const { $markoWebSearch: search, i18n } = out.global;
@@ -16,7 +15,7 @@ $ const options = isFunction(i18n) ? [
 
 <marko-web-block name=blockName modifiers=input.modifiers>
   $ const { searchQuery, sortField } = search.input;
-  $ const selectedId = input.sortField || sortField;
+  $ const selectedId = sortField;
   <if(searchQuery)>
     <marko-web-browser-component
       name="MarkoWebSearchSortSelect"

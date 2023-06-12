@@ -30,6 +30,7 @@ class MarkoWebSearchConfig {
       resultsPerPage,
       contentTypes,
       assignedToWebsiteSectionIds,
+      defaultSortField,
     } = validate(Joi.object({
       resultsPerPage: Joi.object({
         min: Joi.number().integer().default(1),
@@ -48,6 +49,8 @@ class MarkoWebSearchConfig {
       assignedToWebsiteSectionIds: Joi.array().items(
         Joi.number().integer().min(1).required(),
       ).default([]),
+
+      defaultSortField: Joi.string().allow('PUBLISHED', 'SCORE').default('PUBLISHED'),
     }).default(), params);
 
     this.contentTypeObjects = contentTypes.sort().map((type) => (type.label ? ({
@@ -68,6 +71,7 @@ class MarkoWebSearchConfig {
     this.queryParams = new MarkoWebSearchQueryParamConfig({
       resultsPerPage,
       contentTypeIds: this.contentTypeObjects.map(({ id }) => id),
+      defaultSortField,
     });
   }
 }

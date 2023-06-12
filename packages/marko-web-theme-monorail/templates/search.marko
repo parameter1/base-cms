@@ -17,10 +17,6 @@ $ const description = i18nIsFunction ? `${i18n("Search")} ${config.siteName()}` 
 
 $ const currentPage = search.getCurrentPage();
 
-$ const overrideSortField = get(site, 'config.setSearchSortFieldToScore');
-$ const searchQueryPresent = (search.query.searchQuery && search.query.searchQuery !== '');
-$ const setDefaultSortField = (searchQueryPresent && !search.query.sortField && overrideSortField);
-$ const sortField = setDefaultSortField ? 'SCORE' : search.input.sortField;
 $ const sponsorLogo = site.get('search.sponsorLogos.page');
 
 <marko-web-default-page-layout type=type title=title description=description>
@@ -73,7 +69,7 @@ $ const sponsorLogo = site.get('search.sponsorLogos.page');
                 </marko-web-search-form>
                 </div>
                 <div class="col-xl-3">
-                  <marko-web-search-sort-by sort-field=sortField />
+                  <marko-web-search-sort-by />
                   <if(sponsorLogo)>
                     <div class="search-sponsor">
                       <span class="search-sponsor__label">Sponsored by</span>
@@ -91,7 +87,7 @@ $ const sponsorLogo = site.get('search.sponsorLogos.page');
             <marko-web-search-query|{ nodes, totalCount }|
               limit=search.getLimit()
               skip=search.getSkip()
-              sort-field=sortField
+              sort-field=search.input.sortField
               sort-order=search.input.sortOrder
               content-types=search.input.contentTypes
               search-query=search.input.searchQuery
