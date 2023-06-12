@@ -101,6 +101,9 @@ $ const blockName = "section-feed-content-node";
           <marko-web-content-city-state-zip block-name=blockName obj=content />
         </marko-web-block>
       </if>
+      <else-if(withDates && input.date)>
+        <${input.date} />
+      </else-if>
       <else-if(withDates && (content.startDate || content.endDate))>
         <div class=`${blockName}__content-event-dates`>
           <marko-web-content-start-date tag="span" block-name=blockName obj=content format=dateFormat />
