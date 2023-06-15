@@ -560,8 +560,8 @@ export default {
       if (ids.length) answers.push(...ids.map((id) => ({ id })));
     },
 
-    customSelectIsRequired(field) {
-      return this.requiredFields.includes(field.id) || field.required;
+    customSelectIsRequired(fieldAnswer) {
+      return this.requiredFields.includes(fieldAnswer.field.id) || fieldAnswer.field.required;
     },
 
     async handleReload() {
