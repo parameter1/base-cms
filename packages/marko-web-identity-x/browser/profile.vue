@@ -118,7 +118,7 @@
             class="col-12"
             :class="{ 'col-md-6': (customSelectFieldAnswers.length > 1) }"
             :label="fieldAnswer.field.label"
-            :required="fieldAnswer.field.required"
+            :required="customSelectIsRequired(fieldAnswer)"
             :multiple="fieldAnswer.field.multiple"
             :selected="fieldAnswer.answers"
             :options="fieldAnswer.field.options"
@@ -558,6 +558,10 @@ export default {
       const ids = Array.isArray($event) ? [...$event] : [...($event ? [$event] : [])];
       answers.splice(0);
       if (ids.length) answers.push(...ids.map((id) => ({ id })));
+    },
+
+    customSelectIsRequired(field) {
+      return this.requiredFields.includes(field.id) || field.require;
     },
 
     async handleReload() {
