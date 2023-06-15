@@ -83,11 +83,12 @@ $ const sponsorLogo = site.get('search.sponsorLogos.page');
                   </if>
                 </div>
               </div>
-
+            <!-- Enforce it this way to not mess with the config, changing at the config level will auto apply sort -->
+            $ const sortField = (search.input.sortField === "SCORE" && search.input.searchQuery === '') ? "PUBLISHED" : search.input.sortField;
             <marko-web-search-query|{ nodes, totalCount }|
               limit=search.getLimit()
               skip=search.getSkip()
-              sort-field=search.input.sortField
+              sort-field=sortField
               sort-order=search.input.sortOrder
               content-types=search.input.contentTypes
               search-query=search.input.searchQuery
