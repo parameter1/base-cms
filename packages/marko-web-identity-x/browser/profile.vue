@@ -561,7 +561,7 @@ export default {
     },
 
     customSelectIsRequired(field) {
-      return this.requiredFields.includes(field.id) || field.require;
+      return this.requiredFields.includes(field.id) || field.required;
     },
 
     async handleReload() {
