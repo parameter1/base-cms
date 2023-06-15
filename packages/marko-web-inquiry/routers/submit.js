@@ -53,6 +53,7 @@ module.exports = ({ queryFragment, notification, confirmation }) => asyncRoute(a
       contentId: content.id,
       payload,
       addresses,
+      ipAddress: req.ip,
     }),
     // Notify the contacts of the submission
     send(notificationBuilder({

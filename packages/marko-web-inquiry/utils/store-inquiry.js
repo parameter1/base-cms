@@ -13,11 +13,13 @@ module.exports = async ({
   addresses,
   contentId,
   payload,
+  ipAddress,
 }) => {
   const input = {
     addresses,
     contentId,
     payload,
+    ipAddress,
   };
   return apollo.mutate({ mutation, variables: { input } });
 };
