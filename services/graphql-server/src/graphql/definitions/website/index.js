@@ -1,4 +1,5 @@
 const gql = require('graphql-tag');
+const contentDownloadSubmission = require('./content-download-submission');
 const inquirySubmission = require('./inquiry-submission');
 const option = require('./option');
 const redirect = require('./redirect');
@@ -8,6 +9,7 @@ const site = require('./site');
 
 module.exports = gql`
 
+${contentDownloadSubmission}
 ${inquirySubmission}
 ${option}
 ${redirect}
