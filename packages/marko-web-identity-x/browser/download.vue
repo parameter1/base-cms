@@ -292,6 +292,38 @@ export default {
       // Only emit event once when downloading
       if (!this.downloaded.includes(content.id)) {
         const company = content.company || {};
+        await post('/download', {
+          contentId: content.id,
+          contentType: content.type,
+          companyId: company.id,
+          userId: this.user.id,
+          additionalEventData,
+          // Flatten the payload for storage
+          payload: this.fieldRows.reduce((objs, row) => {
+            const { fields, selects, booleans } = objs;
+            row.forEach((col) => {
+              const { id, type, label } = col;
+              if (type === 'custom-select') {
+                const value = this.user.customSelectFieldAnswers.find((ans) => ans.id === id);
+                const values = (value.answers || []).map((answer) => {
+                  const opts = value.field.options.reduce((arr, opt) => ([
+                    ...arr, opt, ...(opt.options ? opt.options : []),
+                  ]), []);
+                  const ans = opts.find((opt) => opt.id === answer.id);
+                  return { id: answer.id, label: ans.label, writeIn: answer.writeInValue };
+                });
+                selects[id] = { label, values };
+              } else if (type === 'custom-boolean') {
+                const value = this.user.customBooleanFieldAnswers.find((ans) => ans.id === id);
+                booleans[id] = { label, value };
+              } else {
+                const value = this.user[col.key];
+                fields[col.key] = { label, value };
+              }
+            });
+            return { fields, selects, booleans };
+          }, { fields: {}, selects: {}, booleans: {} }),
+        });
         this.emit('download-submitted', {
           contentId: content.id,
           contentType: content.type,
