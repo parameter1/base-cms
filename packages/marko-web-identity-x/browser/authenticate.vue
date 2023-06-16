@@ -224,7 +224,14 @@ export default {
 
         this.activeUser = data.user;
         this.mustReVerifyProfile = data.user.mustReVerifyProfile;
-        this.isProfileComplete = this.requiredFields.every((key) => !isEmpty(this.activeUser[key]));
+        const customAnswerIds = [
+          ...data.user.customBooleanFieldAnswers,
+          ...data.user.customSelectFieldAnswers,
+        ].filter((field) => field.hasAnswered).map((field) => field.id);
+
+        this.isProfileComplete = this.requiredFields
+          .every((key) => customAnswerIds.includes(key) || !isEmpty(this.activeUser[key]));
+
         this.requiresCustomFieldAnswers = this.activeUser.customSelectFieldAnswers
           .filter(!ids.length ? ({ field }) => ids.includes(field.id) : () => true)
           .some(({ hasAnswered, field }) => field.required && !hasAnswered);
