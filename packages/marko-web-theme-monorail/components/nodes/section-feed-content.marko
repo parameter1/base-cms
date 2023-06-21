@@ -111,7 +111,6 @@ $ const blockName = "section-feed-content-node";
           <for|dateObj| of=multiDateFormats>
             $ const dateFormat = dateObj.dateFormat || dateFormat;
             $ const timezone = dateObj.timezone  || "America/Chicago";
-            $ console.warn('inside: ', dateFormat.timezone, timezone);
             <marko-web-content-published
               block-name=blockName
               obj=content
