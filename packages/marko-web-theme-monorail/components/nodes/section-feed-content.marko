@@ -18,6 +18,8 @@ $ const withBody = defaultValue(input.withBody, false);
 $ const withAddress = defaultValue(input.withAddress, (content.type === "company"));
 $ const withDates = defaultValue(input.withDates, true);
 $ const dateFormat = defaultValue(input.dateFormat, "MMMM D, YYYY");
+$ const multiDateFormats = input.multiDateFormats;
+
 $ const isUpcoming = content.startDate > Date.now();
 $ if (isUpcoming) modifiers.push("upcoming");
 $ const withSection = defaultValue(input.withSection, true);
@@ -103,6 +105,20 @@ $ const blockName = "section-feed-content-node";
       </if>
       <else-if(withDates && input.date)>
         <${input.date} />
+      </else-if>
+      <else-if(withDates && multiDateFormats)>
+        <marko-web-element block-name=blockName name="multidates" modifiers=modifiers >
+          <for|dateObj| of=multiDateFormats>
+            $ const dateFormat = dateObj.dateFormat || dateFormat;
+            $ const timezone = dateObj.timezone  || "America/Chicago";
+            <marko-web-content-published
+              block-name=blockName
+              obj=content
+              format=dateFormat
+              timezone=timezone
+            />
+          </for>
+        </marko-web-element>
       </else-if>
       <else-if(withDates && (content.startDate || content.endDate))>
         <div class=`${blockName}__content-event-dates`>
