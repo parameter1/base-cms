@@ -93,6 +93,11 @@
     }
   }
 
+  &__multidates {
+    display: flex;
+    flex-direction: row;
+  }
+
   &__content-company {
     font-weight: $theme-content-attribution-prefix-font-weight;
     &::before {
