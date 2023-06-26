@@ -30,7 +30,6 @@ const setP1EventsIdentity = ({ p1events, brandKey, encryptedId }) => {
 
 const defaultConfig = {
   enableOmedaIdentityX: true,
-  withGTM: true,
   withP1Events: true,
   idxArgs: {},
   inquiryArgs: {},
