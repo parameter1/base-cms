@@ -38,10 +38,14 @@ const defaultConfig = {
 export default (Browser, configOverrides = {}) => {
   const config = { ...defaultConfig, ...configOverrides };
   const { EventBus } = Browser;
-  const { enableOmedaIdentityX } = config;
-  const idxArgs = config.idxArgs || {};
-  const inquiryArgs = config.inquiryArgs || {};
-  if (config.withP1Events) {
+  const {
+    enableOmedaIdentityX,
+    idxArgs,
+    inquiryArgs,
+    withP1Events,
+  } = config;
+
+  if (withP1Events) {
     P1Events(Browser);
   }
 
