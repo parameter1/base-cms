@@ -106,6 +106,24 @@ $ const blockName = "section-feed-content-node";
       <else-if(withDates && input.date)>
         <${input.date} />
       </else-if>
+      <else-if(withDates && multiDateFormats && (content.startDate || content.endDate))>
+        <marko-web-element block-name=blockName name="multidates" modifiers=modifiers >
+          <for|dateObj| of=multiDateFormats>
+            $ const dateFormat =  dateObj.dateFormat || dateFormat;
+            $ const timezone = dateObj.timezone  || "America/Chicago";
+            <div class=`${blockName}__content-event-dates`>
+              <marko-web-content-start-date tag="span" block-name=blockName obj=content format=dateFormat timezone=timezone />
+              <marko-web-content-end-date tag="span" block-name=blockName obj=content format=dateFormat timezone=timezone />
+            </div>
+          </for>
+        </marko-web-element>
+      </else-if>
+      <else-if(withDates && (content.startDate || content.endDate))>
+        <div class=`${blockName}__content-event-dates`>
+          <marko-web-content-start-date tag="span" block-name=blockName obj=content format=dateFormat />
+          <marko-web-content-end-date tag="span" block-name=blockName obj=content format=dateFormat />
+        </div>
+      </else-if>
       <else-if(withDates && multiDateFormats)>
         <marko-web-element block-name=blockName name="multidates" modifiers=modifiers >
           <for|dateObj| of=multiDateFormats>
@@ -119,12 +137,6 @@ $ const blockName = "section-feed-content-node";
             />
           </for>
         </marko-web-element>
-      </else-if>
-      <else-if(withDates && (content.startDate || content.endDate))>
-        <div class=`${blockName}__content-event-dates`>
-          <marko-web-content-start-date tag="span" block-name=blockName obj=content format=dateFormat />
-          <marko-web-content-end-date tag="span" block-name=blockName obj=content format=dateFormat />
-        </div>
       </else-if>
       <else-if(withDates)>
         <marko-web-content-published
