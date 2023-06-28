@@ -6,7 +6,7 @@ fragment ActiveUserFragment on AppUser {
   id
   email
   verified
-  isFirstTimeVerifying
+  verifiedCount
   givenName
   familyName
   displayName
