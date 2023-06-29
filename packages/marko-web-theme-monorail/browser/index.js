@@ -7,6 +7,7 @@ import NativeX from '@parameter1/base-cms-marko-web-native-x/browser';
 import IdentityX from '@parameter1/base-cms-marko-web-identity-x/browser';
 import OmedaIdentityX from '@parameter1/base-cms-marko-web-omeda-identity-x/browser';
 import P1Events from '@parameter1/base-cms-marko-web-p1-events/browser';
+import { getAsObject } from '@parameter1/base-cms-object-path';
 import IdentityXNewsletterForms from './idx-newsletter-form/index';
 import ContentMeterTrack from './content-meter-track.vue';
 
@@ -40,10 +41,11 @@ export default (Browser, configOverrides = {}) => {
   const { EventBus } = Browser;
   const {
     enableOmedaIdentityX,
-    idxArgs,
-    inquiryArgs,
     withP1Events,
   } = config;
+
+  const idxArgs = getAsObject(config, 'idxArgs');
+  const inquiryArgs = getAsObject(config, 'inquiryArgs');
 
   if (withP1Events) {
     P1Events(Browser);
