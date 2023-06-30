@@ -10,6 +10,7 @@
         :disabled="disabled"
         :image-src="imageSrc"
         :image-srcset="imageSrcset"
+        :ctaLabel="step1CtaLabel"
         :recaptcha-site-key="recaptchaSiteKey"
         :privacy-policy-link="privacyPolicyLink"
         :lang="lang"
@@ -25,6 +26,7 @@
         :default-newsletter="defaultNewsletter"
         :newsletters="newsletters"
         :demographic="demographic"
+        :ctaLabel="step2CtaLabel"
         :recaptcha-site-key="recaptchaSiteKey"
         :privacy-policy-link="privacyPolicyLink"
         :lang="lang"
@@ -89,6 +91,14 @@ export default {
       default: null,
     },
     imageSrcset: {
+      type: String,
+      default: null,
+    },
+    step1CtaLabel: {
+      type: String,
+      default: null,
+    },
+    step2CtaLabel: {
       type: String,
       default: null,
     },

@@ -38,6 +38,7 @@
           :class="element('form-button')"
           :is-loading="isLoading"
           :disabled="disabled || recaptcha.loading || recaptcha.error"
+          :label="ctaLabel"
           :lang="lang"
         />
       </form>
@@ -97,6 +98,10 @@ export default {
     description: {
       type: String,
       required: true,
+    },
+    ctaLabel: {
+      type: String,
+      default: null,
     },
     disabled: {
       type: Boolean,

@@ -10,6 +10,8 @@ $ const {
   newsletters,
   demographic,
   disabled,
+  step1CtaLabel,
+  step2CtaLabel,
   privacyPolicy,
 } = site.getAsObject("newsletter.pushdown");
 
@@ -33,6 +35,8 @@ $ const imageSrcset = imageSrc ? `${imageSrc}&dpr=2 2x` : null;
       imageSrc,
       imageSrcset,
       initiallyExpanded,
+      step1CtaLabel,
+      step2CtaLabel,
       recaptchaSiteKey: recaptcha.siteKey,
       privacyPolicyLink: privacyPolicy,
       lang
