@@ -241,6 +241,7 @@ export default {
         this.emit('authenticated', {
           id: this.activeUser.id,
           email: this.activeUser.email,
+          verifiedCount: this.activeUser.verifiedCount,
           mustReVerifyProfile: this.mustReVerifyProfile,
           isProfileComplete: this.isProfileComplete,
           requiresCustomFieldAnswers: this.requiresCustomFieldAnswers,
