@@ -7,6 +7,7 @@ import NativeX from '@parameter1/base-cms-marko-web-native-x/browser';
 import IdentityX from '@parameter1/base-cms-marko-web-identity-x/browser';
 import OmedaIdentityX from '@parameter1/base-cms-marko-web-omeda-identity-x/browser';
 import P1Events from '@parameter1/base-cms-marko-web-p1-events/browser';
+import { getAsObject } from '@parameter1/base-cms-object-path';
 import IdentityXNewsletterForms from './idx-newsletter-form/index';
 import ContentMeterTrack from './content-meter-track.vue';
 
@@ -28,19 +29,25 @@ const setP1EventsIdentity = ({ p1events, brandKey, encryptedId }) => {
   p1events('setIdentity', `omeda.${brandKey}.customer*${encryptedId}~encrypted`);
 };
 
-export default (Browser, config = {
+const defaultConfig = {
   enableOmedaIdentityX: true,
-  withGTM: true,
   withP1Events: true,
   idxArgs: {},
   inquiryArgs: {},
-}) => {
-  const { EventBus } = Browser;
-  const { enableOmedaIdentityX } = config;
-  const idxArgs = config.idxArgs || {};
-  const inquiryArgs = config.inquiryArgs || {};
+};
 
-  if (config.withP1Events) {
+export default (Browser, configOverrides = {}) => {
+  const config = { ...defaultConfig, ...configOverrides };
+  const { EventBus } = Browser;
+  const {
+    enableOmedaIdentityX,
+    withP1Events,
+  } = config;
+
+  const idxArgs = getAsObject(config, 'idxArgs');
+  const inquiryArgs = getAsObject(config, 'inquiryArgs');
+
+  if (withP1Events) {
     P1Events(Browser);
   }
 
