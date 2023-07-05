@@ -17,10 +17,20 @@ export default {
     IconMail,
   },
   inject: ['EventBus'],
+  props: {
+    initiallyExpanded: {
+      type: Boolean,
+      default: false,
+    },
+  },
 
   data: () => ({
     expanded: false,
   }),
+
+  mounted() {
+    this.expanded = this.initiallyExpanded;
+  },
 
   methods: {
     toggle() {
