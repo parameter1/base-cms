@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div :class="element('image-wrapper', ['d-none', 'd-md-flex', 'col-md-5', 'col-lg-4'])">
+    <div :class="element('image-wrapper', ['d-none', 'd-md-flex', 'col-md-3'])">
       <img
         v-if="imageSrc"
         :src="imageSrc"
@@ -9,7 +9,7 @@
         :class="element('image')"
       >
     </div>
-    <div :class="element('form-wrapper', ['col-12', 'col-md-6', 'col-lg-5'])">
+    <div :class="element('form-wrapper', ['col-12', 'col-md-8'])">
       <div :class="element('name')">
         {{ name }}
       </div>
@@ -38,6 +38,7 @@
           :class="element('form-button')"
           :is-loading="isLoading"
           :disabled="disabled || recaptcha.loading || recaptcha.error"
+          :label="ctaLabel"
           :lang="lang"
         />
       </form>
@@ -52,7 +53,7 @@
         {{ error.message }}
       </div>
     </div>
-    <div :class="element('close-container', ['d-none', 'd-md-flex', 'col-md-1', 'col-lg-3'])">
+    <div :class="element('close-container', ['d-none', 'd-md-flex', 'col-md-1'])">
       <close-button
         :class-name="element('close').join(' ')"
         target-button=".site-navbar__newsletter-toggler"
@@ -97,6 +98,10 @@ export default {
     description: {
       type: String,
       required: true,
+    },
+    ctaLabel: {
+      type: String,
+      default: null,
     },
     disabled: {
       type: Boolean,

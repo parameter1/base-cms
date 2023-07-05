@@ -90,6 +90,7 @@
                 :class="`${blockName}__form-button`"
                 :is-loading="isLoading"
                 :disabled="isComplete"
+                :label="ctaLabel"
                 :lang="lang"
               />
             </div>
@@ -179,6 +180,10 @@ export default {
     inPushdown: {
       type: Boolean,
       default: false,
+    },
+    ctaLabel: {
+      type: String,
+      default: null,
     },
     privacyPolicyLink: {
       type: Object,
