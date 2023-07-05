@@ -31,6 +31,10 @@ export default {
       type: Array,
       default: () => ['lg'],
     },
+    initiallyExpanded: {
+      type: Boolean,
+      default: false,
+    },
     buttonClass: {
       type: String,
       default: 'site-navbar__idx-newsletter-toggler',
@@ -45,6 +49,10 @@ export default {
     icon() {
       return `icon-${this.iconName}`;
     },
+  },
+
+  mounted() {
+    this.expanded = this.initiallyExpanded;
   },
 
   methods: {
