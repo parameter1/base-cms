@@ -50,6 +50,7 @@ body.site-menu--open {
   @each $breakpoint, $width in sort-map-by-values($theme-site-header-breakpoints, desc) {
     @media (max-width: $width) {
       top: calculate-navbar-height-for($breakpoint);
+      max-height: calc(100vh - calculate-navbar-height-for($breakpoint));
     }
   }
 
