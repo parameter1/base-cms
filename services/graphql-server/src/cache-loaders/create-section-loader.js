@@ -13,7 +13,7 @@ const { USE_CACHE_LOADERS } = require('../env');
  * @param {boolean} params.strict
  * @param {boolean} params.withDescendantIds
  */
-const loadFromDb = ({
+const loadFromDb = async ({
   basedb,
   query,
   strict,
@@ -22,7 +22,12 @@ const loadFromDb = ({
   const type = 'website.Section';
   const projection = { _id: 1, ...(withDescendantIds && { descendantIds: 1 }) };
   if (strict) {
-    return basedb.strictFindOne(type, query, { projection });
+    try {
+      const section = await basedb.strictFindOne(type, query, { projection });
+      return section;
+    } catch (e) {
+      throw new Error(`CacheLoader Error: ${e.message}`);
+    }
   }
   return basedb.findOne(type, query, { projection });
 };
