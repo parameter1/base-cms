@@ -50,7 +50,7 @@ class MarkoWebSearchConfig {
         Joi.number().integer().min(1).required(),
       ).default([]),
 
-      defaultSortField: Joi.string().allow('PUBLISHED', 'SCORE').default('PUBLISHED'),
+      defaultSortField: Joi.string().allow('NAME', 'PUBLISHED', 'SCORE').default('PUBLISHED'),
     }).default(), params);
 
     this.contentTypeObjects = contentTypes.sort().map((type) => (type.label ? ({
