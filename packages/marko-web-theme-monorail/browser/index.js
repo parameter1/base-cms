@@ -28,19 +28,25 @@ const setP1EventsIdentity = ({ p1events, brandKey, encryptedId }) => {
   p1events('setIdentity', `omeda.${brandKey}.customer*${encryptedId}~encrypted`);
 };
 
-export default (Browser, config = {
+const defaultConfig = {
   enableOmedaIdentityX: true,
-  withGTM: true,
   withP1Events: true,
   idxArgs: {},
   inquiryArgs: {},
-}) => {
+};
+
+export default (Browser, configOverrides = {}) => {
+  const config = { ...defaultConfig, ...configOverrides };
   const { EventBus } = Browser;
-  const { enableOmedaIdentityX } = config;
+  const {
+    enableOmedaIdentityX,
+    withP1Events,
+  } = config;
+
   const idxArgs = config.idxArgs || {};
   const inquiryArgs = config.inquiryArgs || {};
 
-  if (config.withP1Events) {
+  if (withP1Events) {
     P1Events(Browser);
   }
 
