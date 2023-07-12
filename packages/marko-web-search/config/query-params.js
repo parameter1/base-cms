@@ -19,7 +19,7 @@ const fromArrayInput = (arr) => {
 const toIntArrayInput = (arr) => toArrayInput(arr, (v) => parseInt(v, 10));
 const toStringArrayInput = (arr) => toArrayInput(arr, (v) => v.trim());
 
-const sortFieldSet = new Set(['PUBLISHED', 'SCORE']);
+const sortFieldSet = new Set(['NAME', 'PUBLISHED', 'SCORE']);
 const sortOrderSet = new Set(['DESC', 'ASC']);
 
 class MarkoWebSearchQueryParamConfig {
