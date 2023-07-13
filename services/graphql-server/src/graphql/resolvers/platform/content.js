@@ -1096,6 +1096,7 @@ module.exports = {
         type: 1,
         'mutations.Website.slug': 1,
         'mutations.Website.primarySection': 1,
+        'mutations.Website.primaryCategory': 1,
         updated: 1,
         images: 1,
       };
