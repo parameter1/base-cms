@@ -30,6 +30,7 @@ module.exports = (story = {}, { sectionName = 'Sponsored' } = {}) => {
       __typename: 'WebsiteSection',
     },
     company: {
+      id: advertiser.id,
       name: advertiser.name,
       primaryImage: {
         id: advertiserImage.id,
