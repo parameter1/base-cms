@@ -15,6 +15,10 @@
     "template": "./track-content.marko",
     "@node": "object"
   },
+  "<marko-web-p1-events-track-native-story>": {
+    "template": "./track-content.marko",
+    "@story": "object"
+  },
   "<marko-web-p1-events-track-content-body-links>": {
     "template": "./track-content-body-links.marko",
     "<content>": {
