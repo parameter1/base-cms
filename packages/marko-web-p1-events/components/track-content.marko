@@ -13,17 +13,17 @@ $ const config = site.getAsObject("p1events");
     name: node.name,
     props: { type, published: node.published },
     refs: {
-      primarySection: primarySection
+      primarySection: primarySection && primarySection.id
         ? { id: primarySection.id, ns: ns("website-section"), name: primarySection.fullName, props: { alias: primarySection.alias } }
         : null,
-      company: company
+      company: company && company.id
         ? { id: company.id, ns: ns("content-company"), name: company.name }
         : null,
       authors: getAsArray(node, "authors.edges").map((edge) => {
         const { node: author } = edge;
         return { id: author.id, ns: ns("content-contact"), name: author.name };
       }),
-      createdBy: createdBy
+      createdBy: createdBy && createdBy.id
         ? { id: createdBy.id, ns: ns("user"), name: createdBy.username, props: { firstName: createdBy.firstName, lastName: createdBy.lastName } }
         : null,
     },
