@@ -15,11 +15,9 @@ $ const ns = (type) => {
     ns: ns(`story`),
     name: story.title,
     props: { type: 'story', published: get(story, 'publishedAt') },
-    refs: {
-      advertiser: advertiser && advertiser.id
-        ? { id: advertiser.id, ns: ns("advertiser"), name: advertiser.name }
-        : null,
-    },
+    ...(advertiser && advertiser.id && {
+      refs: { advertiser: { id: advertiser.id, ns: ns("advertiser"), name: advertiser.name } },
+    }),
   };
   $ const data = {
     action: 'View',
