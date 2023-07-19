@@ -16,6 +16,7 @@ export default {
     action: 'Print',
     params: {},
     type: 'print',
+    rel: 'nofollow',
   },
   facebook: {
     name: 'Facebook',

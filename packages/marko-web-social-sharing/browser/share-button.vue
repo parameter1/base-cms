@@ -1,5 +1,10 @@
 <template>
-  <button :class="classNames" :title="shareTo" @click="share">
+  <button
+    :class="classNames"
+    :title="shareTo"
+    :rel="rel"
+    @click="share"
+  >
     <span :class="elementName('provider-icon')">
       <component :is="iconComponent" />
     </span>
@@ -86,6 +91,7 @@ export default {
         left: 0,
       },
     },
+    rel: null,
   }),
 
   computed: {
@@ -110,6 +116,9 @@ export default {
     this.params = provider.params;
     this.action = provider.action;
     this.type = provider.type;
+    if (provider.rel) {
+      this.rel = provider.rel;
+    }
   },
 
   mounted() {
