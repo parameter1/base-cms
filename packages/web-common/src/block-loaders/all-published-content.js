@@ -52,6 +52,7 @@ module.exports = async (apolloClient, {
 
   sectionId,
   contentTypes,
+  siteId,
   withSite,
   requiresImage,
   sectionBubbling,
@@ -69,6 +70,7 @@ module.exports = async (apolloClient, {
     includeTaxonomyIds,
     includeLabels,
     excludeContentIds,
+    siteId,
     withSite,
     requiresImage,
     sectionBubbling,
