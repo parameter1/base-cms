@@ -6,6 +6,7 @@ import GAMDefineDisplayAd from "@parameter1/base-cms-marko-web-theme-monorail/co
 $ const { global: $global } = out;
 $ const { GAM } = $global;
 $ const { content, modifiers } = input;
+$ const htmlInjections = getAsArray(input, "htmlInjections");
 $ const preventHTMLInjection = getAsArray(content, "labels").some( l => ["Sponsored", "Product Spotlight"].indexOf(l) >= 0) || input.preventHTMLInjection;
 $ const blockName = defaultValue(input.blockName, 'page-contents');
 $ const aliases = getAsArray(input, 'aliases');
@@ -76,6 +77,17 @@ $ const gamAdInjection = (GAM) ? [
     lazyload-first-image=input.lazyloadFirstImage
   />
   <if(!preventHTMLInjection)>
+    <if(htmlInjections.length)>
+      <for|htmlInjection| of=input.htmlInjections>
+        $ const { at, html } = htmlInjection;
+        <if (at && html)>
+          <@inject
+            at=at
+            html=html
+          />
+        </if>
+      </for>
+    </if>
     <for|adInjection| of=gamAdInjection>
       $ const { counts, name, modifiers } = adInjection;
       <if(adInjection.counts.length)>
