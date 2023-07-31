@@ -579,6 +579,7 @@ export default {
       try {
         const res = await post('/profile', {
           ...this.user,
+          activeCustomFieldIds: this.activeCustomFieldIds,
           additionalEventData: {
             ...this.additionalEventData,
             actionSource: this.loginSource,
