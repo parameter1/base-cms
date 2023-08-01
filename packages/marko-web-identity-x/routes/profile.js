@@ -1,5 +1,6 @@
 const gql = require('graphql-tag');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
+const { getAsArray } = require('@parameter1/base-cms-object-path');
 const userFragment = require('../api/fragments/active-user');
 const callHooksFor = require('../utils/call-hooks-for');
 
@@ -55,7 +56,6 @@ module.exports = asyncRoute(async (req, res) => {
     regionalConsentAnswers,
     customBooleanFieldAnswers,
     customSelectFieldAnswers,
-    activeCustomFieldIds = [],
     additionalEventData = {},
   } = body;
   const input = {
@@ -72,6 +72,8 @@ module.exports = asyncRoute(async (req, res) => {
     phoneNumber,
     receiveEmail,
   };
+
+  const activeCustomFieldIds = getAsArray(identityX, 'config.options.activeCustomFieldIds');
 
   const answers = regionalConsentAnswers
     .map((answer) => ({ policyId: answer.id, given: answer.given }));
