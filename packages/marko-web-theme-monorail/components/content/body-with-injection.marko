@@ -106,4 +106,14 @@ $ const gamAdInjection = (GAM) ? [
       </if>
     </for>
   </if>
+  <if(input.beforeInjectedHtml)>
+    <@before-injected-html|{ hasInjectedContent }|>
+      <${input.beforeInjectedHtml.renderBody} has-injected-content=hasInjectedContent />
+    </@before-injected-html>
+  </if>
+  <if(input.afterInjectedHtml)>
+    <@after-injected-html|{ hasInjectedContent }|>
+      <${input.afterInjectedHtml.renderBody} has-injected-content=hasInjectedContent />
+    </@after-injected-html>
+  </if>
 </theme-ssr-html-inject>

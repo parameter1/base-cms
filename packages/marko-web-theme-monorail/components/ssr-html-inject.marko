@@ -97,6 +97,12 @@ $ $children.each(function injectAds(index) {
 });
 
 $ const injectedHtml = $('body').html();
+<if(input.beforeInjectedHtml)>
+  <${input.beforeInjectedHtml.renderBody} has-injected-content=hasInjectedContent />
+</if>
 <if(true)>
   $!{injectedHtml}
+</if>
+<if(input.afterInjectedHtml)>
+  <${input.afterInjectedHtml.renderBody} has-injected-content=hasInjectedContent />
 </if>

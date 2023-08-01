@@ -45,6 +45,8 @@
     "@inject <inject>[]": {},
     "@selector": "string",
     "@to-render": "expression",
-    "@ad-inject-config": "array"
+    "@ad-inject-config": "array",
+    "<before-injected-html>": {},
+    "<after-injected-html>": {}
   }
 }
