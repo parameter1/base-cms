@@ -146,9 +146,19 @@ $ const blockName = "section-feed-content-node";
         />
       </else-if>
 
-      <marko-web-content-sponsors|{ node }| block-name=blockName obj=content>
-        Sponsored By: <marko-web-content-name tag="span" block-name=blockName obj=node link=true />
-      </marko-web-content-sponsors>
+      <if(content.sponsors && getAsArray(content, "sponsors.edges").length)>
+        $ const sponsorEdges = getAsArray(content, "sponsors.edges");
+        <marko-web-element block-name=blockName name="content-sponsors">
+          Sponsored By:
+          <for|sponsor, index| of=sponsorEdges>
+            $ const sponsorNode = getAsObject(sponsor, "node");
+            <span>
+              <marko-web-content-name tag="span" block-name=blockName obj=sponsorNode link=true />
+              <if(index + 1 !== sponsorEdges.length)>, </if>
+            </span>
+          </for>
+        </marko-web-element>
+      </if>
       <!-- Force display of CTA button on webinars -->
       <if(withDates && content.type === "webinar")>
         $ const linkUrl = (content.linkUrl) ? content.linkUrl : get(content, "siteContext.path");
