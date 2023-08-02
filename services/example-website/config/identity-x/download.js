@@ -39,8 +39,67 @@ module.exports = {
     // Row 3
     [
       {
-        label: 'Custom 1',
-        id: '618ab74dcd3e2f0147386c42',
+        label: 'Phone Number',
+        key: 'phoneNumber',
+        type: 'built-in',
+        required: true,
+        width: 0.5,
+      },
+      {
+        label: 'Country',
+        key: 'countryCode',
+        type: 'built-in',
+        required: true,
+        width: 0.5,
+      },
+
+    ],
+    // Row 4
+    [
+      {
+        label: 'Street',
+        key: 'street',
+        className: 'col-6',
+        type: 'built-in',
+        required: true,
+        width: 0.33,
+      },
+      {
+        label: 'Extra',
+        key: 'addressExtra',
+        type: 'built-in',
+        required: false,
+        width: 0.33,
+      },
+      {
+        label: 'City',
+        key: 'city',
+        type: 'built-in',
+        required: false,
+        width: 0.33,
+      },
+    ],
+    // Row 4
+    [
+      {
+        label: 'State/Province',
+        key: 'regionCode',
+        type: 'built-in',
+        required: true,
+        width: 0.5,
+      },
+      {
+        label: 'ZIP Code',
+        key: 'postalCode',
+        type: 'built-in',
+        required: true,
+        width: 0.5,
+      },
+    ],
+    [
+      {
+        label: 'Custom 2',
+        id: '626fe8854e597205b368a50f',
         type: 'custom-select',
         required: true,
         width: 0.66,
@@ -51,37 +110,6 @@ module.exports = {
         type: 'custom-select',
         required: true,
         width: 0.33,
-      },
-    ],
-    // Row 4
-    [
-      {
-        label: 'Phone Number',
-        key: 'phoneNumber',
-        type: 'built-in',
-        required: true,
-        width: 0.25,
-      },
-      {
-        label: 'Country',
-        key: 'countryCode',
-        type: 'built-in',
-        required: true,
-        width: 0.25,
-      },
-      {
-        label: 'State/Province',
-        key: 'regionCode',
-        type: 'built-in',
-        required: false,
-        width: 0.25,
-      },
-      {
-        label: 'ZIP Code',
-        key: 'postalCode',
-        type: 'built-in',
-        required: false,
-        width: 0.25,
       },
     ],
   ],
