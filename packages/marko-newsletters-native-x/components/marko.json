@@ -1,0 +1,37 @@
+{
+  "<marko-newsletters-email-x-display>": {
+    "template": "./display.marko",
+    "<ad-unit>": {
+      "@uri": "string",
+      "@id": "string",
+      "@width": "number",
+      "@height": "number",
+      "@name": "string",
+      "@alias": "string"
+    },
+    "<params>": {
+      "@email": "string",
+      "@date": "date",
+      "@send": "string"
+    },
+    "<link>": {},
+    "<image>": {},
+    "@decoded-params":  "array",
+    "@class": "string",
+    "@attrs": "object"
+  },
+  "<marko-newsletters-email-x-data>": {
+    "template": "./data.marko",
+    "<ad-unit>": {
+      "@uri": "string",
+      "@id": "string"
+    },
+    "<params>": {
+      "@email": "string",
+      "@date": "date",
+      "@send": "string",
+      "@include-advertiser": "boolean"
+    },
+    "@decoded-params":  "array"
+  }
+}
