@@ -62,15 +62,18 @@ module.exports = {
         className: 'col-6',
         type: 'built-in',
         required: true,
-        width: 0.33,
+        width: 0.50,
       },
       {
-        label: 'Extra',
+        label: 'Extra (Apt, Suite, etc.)',
         key: 'addressExtra',
         type: 'built-in',
         required: false,
-        width: 0.33,
+        width: 0.50,
       },
+    ],
+    // Row 4
+    [
       {
         label: 'City',
         key: 'city',
@@ -78,22 +81,19 @@ module.exports = {
         required: false,
         width: 0.33,
       },
-    ],
-    // Row 4
-    [
       {
         label: 'State/Province',
         key: 'regionCode',
         type: 'built-in',
         required: true,
-        width: 0.5,
+        width: 0.33,
       },
       {
         label: 'ZIP Code',
         key: 'postalCode',
         type: 'built-in',
         required: true,
-        width: 0.5,
+        width: 0.33,
       },
     ],
     [
