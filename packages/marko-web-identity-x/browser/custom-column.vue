@@ -85,7 +85,7 @@
     />
     <template v-else-if="fieldKey === 'regionCode'">
       <region-code
-        v-if="showContryCodeFields"
+        v-if="showCountryCodeFields"
         v-model="user.regionCode"
         :country-code="user.countryCode"
         :class-name="className"
@@ -95,7 +95,7 @@
     </template>
     <template v-else-if="fieldKey === 'postalCode'">
       <postal-code
-        v-if="showContryCodeFields"
+        v-if="showCountryCodeFields"
         v-model="user.postalCode"
         :class-name="className"
         :required="required"
@@ -230,7 +230,7 @@ export default {
     /**
      *
      */
-    showContryCodeFields() {
+    showCountryCodeFields() {
       return regionCountryCodes.includes(this.user.countryCode);
     },
 
