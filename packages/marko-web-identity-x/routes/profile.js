@@ -1,5 +1,6 @@
 const gql = require('graphql-tag');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
+const { getAsArray } = require('@parameter1/base-cms-object-path');
 const userFragment = require('../api/fragments/active-user');
 const callHooksFor = require('../utils/call-hooks-for');
 
@@ -72,6 +73,8 @@ module.exports = asyncRoute(async (req, res) => {
     receiveEmail,
   };
 
+  const activeCustomFieldIds = getAsArray(identityX, 'config.options.activeCustomFieldIds');
+
   const answers = regionalConsentAnswers
     .map((answer) => ({ policyId: answer.id, given: answer.given }));
 
@@ -86,7 +89,11 @@ module.exports = asyncRoute(async (req, res) => {
       // can either be true, false or null. convert null to false.
       // the form submit is effectively answers the question.
       value: Boolean(fieldAnswer.answer),
-    }));
+    })).filter(
+      activeCustomFieldIds.length > 0
+        ? ({ fieldId }) => activeCustomFieldIds.includes(fieldId)
+        : () => true,
+    );
     await identityX.client.mutate({
       mutation: customBooleanFieldsMutation,
       variables: { input: { answers: customBooleanFieldsInput } },
@@ -102,7 +109,11 @@ module.exports = asyncRoute(async (req, res) => {
         ...arr,
         ...(writeInValue ? [{ optionId: id, value: writeInValue }] : []),
       ]), []),
-    }));
+    })).filter(
+      activeCustomFieldIds.length > 0
+        ? ({ fieldId }) => activeCustomFieldIds.includes(fieldId)
+        : () => true,
+    );
     await identityX.client.mutate({
       mutation: customSelectFieldsMutation,
       variables: { input: { answers: customSelectFieldsInput } },
