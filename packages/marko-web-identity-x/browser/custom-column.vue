@@ -224,6 +224,9 @@ export default {
    *
    */
   computed: {
+    countryCode() {
+      return this.user.countryCode;
+    },
     /**
      *
      */
@@ -264,6 +267,19 @@ export default {
       return classes;
     },
   },
+  /**
+   *
+   */
+  watch: {
+    /**
+     * Clear region and postal codes on country code change.
+     */
+    countryCode() {
+      this.user.regionCode = null;
+      this.user.postalCode = null;
+    },
+  },
+
   /**
    *
    */
