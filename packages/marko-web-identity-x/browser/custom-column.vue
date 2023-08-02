@@ -4,12 +4,14 @@
     <given-name
       v-if="fieldKey === 'givenName'"
       v-model="user.givenName"
+      :class-name="className"
       :required="required"
       :label="label"
     />
     <family-name
       v-else-if="fieldKey === 'familyName'"
       v-model="user.familyName"
+      :class-name="className"
       :required="required"
       :label="label"
     />
@@ -35,59 +37,71 @@
     <organization
       v-else-if="fieldKey === 'organization'"
       v-model="user.organization"
+      :class-name="className"
       :required="required"
       :label="label"
     />
     <organization-title
       v-else-if="fieldKey === 'organizationTitle'"
       v-model="user.organizationTitle"
+      :class-name="className"
       :required="required"
       :label="label"
     />
     <phone-number
       v-else-if="fieldKey === 'phoneNumber'"
       v-model="user.phoneNumber"
+      :class-name="className"
       :required="required"
       :label="label"
     />
     <country-code
       v-else-if="fieldKey === 'countryCode'"
       v-model="user.countryCode"
+      :class-name="className"
       :required="required"
       :label="label"
     />
     <street
       v-else-if="fieldKey === 'street'"
       v-model="user.street"
+      :class-name="className"
       :required="required"
       :label="label"
     />
     <address-extra
       v-else-if="fieldKey === 'addressExtra'"
       v-model="user.addressExtra"
+      :class-name="className"
       :required="required"
       :label="label"
     />
     <city
       v-else-if="fieldKey === 'city'"
       v-model="user.city"
+      :class-name="className"
       :required="required"
       :label="label"
     />
-    <region-code
-      v-else-if="fieldKey === 'regionCode'"
-      v-model="user.regionCode"
-      :country-code="user.countryCode"
-      class-name="col"
-      :required="required"
-      :label="label"
-    />
-    <postal-code
-      v-else-if="fieldKey === 'postalCode'"
-      v-model="user.postalCode"
-      :required="required"
-      :label="label"
-    />
+    <template v-else-if="fieldKey === 'regionCode'">
+      <region-code
+        v-if="showContryCodeFields"
+        v-model="user.regionCode"
+        :country-code="user.countryCode"
+        :class-name="className"
+        :required="required"
+        :label="label"
+      />
+    </template>
+    <template v-else-if="fieldKey === 'postalCode'">
+      <postal-code
+        v-if="showContryCodeFields"
+        v-model="user.postalCode"
+        :class-name="className"
+        :required="required"
+        :label="label"
+      />
+    </template>
     <custom-select
       v-else-if="type === 'custom-select' && customField"
       :id="fieldId"
@@ -119,6 +133,7 @@
 </template>
 
 <script>
+import regionCountryCodes from './utils/region-country-codes';
 import AddressExtra from './form/fields/address-extra.vue';
 import City from './form/fields/city.vue';
 import CountryCode from './form/fields/country.vue';
@@ -200,11 +215,22 @@ export default {
       type: Boolean,
       default: false,
     },
+    className: {
+      type: String,
+      default: '',
+    },
   },
   /**
    *
    */
   computed: {
+    /**
+     *
+     */
+    showContryCodeFields() {
+      return regionCountryCodes.includes(this.user.countryCode);
+    },
+
     /**
      *
      */
