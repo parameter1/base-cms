@@ -1,0 +1,30 @@
+import { warn } from "@parameter1/base-cms-utils";
+import { dateToTimestamp, fetchEmailAd } from "@parameter1/base-cms-marko-newsletters-native-x/utils";
+
+$ const { req } = out.global;
+$ const {
+  uri,
+  placementId,
+  date,
+  imageOptions,
+  logoOptions,
+  opts,
+} = input;
+
+$ const timestamp = date ? dateToTimestamp(date) : undefined;
+
+<if(uri && placementId)>
+  <marko-web-resolve|{ resolved }| promise=fetchEmailAd({
+    uri,
+    placementId,
+    timestamp,
+    imageOptions,
+    logoOptions,
+    opts,
+  })>
+    <${input.renderBody} data=resolved.data />
+  </marko-web-resolve>
+</if>
+<else>
+  $ warn('Unable to fetch campaign from NativeX: a uri and placement ID are required.');
+</else>

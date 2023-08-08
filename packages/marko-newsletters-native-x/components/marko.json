@@ -1,1 +1,9 @@
-{}
+{
+  "<native-x-fetch>": {
+    "@uri": "string",
+    "@placement-id": "string",
+    "@date": "date",
+    "@image-options": "object",
+    "@logo-options": "object"
+  }
+}
