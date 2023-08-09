@@ -19,7 +19,7 @@ module.exports = async ({
     ...(isObject(opts) && { opts: JSON.stringify(opts) }),
   });
   const query = `${params}`;
-  const url = `${uri}/email-placement/${placementId}.json${query ? `?${query}` : ''}`;
+  const url = `${uri}/${placementId}.json${query ? `?${query}` : ''}`;
   const response = await fetch(url, { headers: createHeaders({ req }) });
   const json = await response.json();
   if (!response.ok) {
