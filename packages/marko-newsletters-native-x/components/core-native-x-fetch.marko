@@ -1,7 +1,6 @@
 import { warn } from "@parameter1/base-cms-utils";
 import { dateToTimestamp, fetchEmailAd } from "../utils";
 
-$ const { req } = out.global;
 $ const {
   uri,
   placementId,
@@ -9,11 +8,17 @@ $ const {
   imageOptions,
   logoOptions,
   opts,
+  req,
+  debug,
 } = input;
 
 $ const timestamp = date ? dateToTimestamp(date) : undefined;
 
 <if(uri && placementId)>
+  <if(debug)>
+    $ console.log(uri);
+    $ console.log(placementId);
+  </if>
   <marko-web-resolve|{ resolved }| promise=fetchEmailAd({
     uri,
     placementId,
@@ -21,6 +26,8 @@ $ const timestamp = date ? dateToTimestamp(date) : undefined;
     imageOptions,
     logoOptions,
     opts,
+    req,
+    debug,
   })>
     <${input.renderBody} data=resolved.data />
   </marko-web-resolve>
