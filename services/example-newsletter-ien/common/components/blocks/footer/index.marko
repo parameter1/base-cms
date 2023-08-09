@@ -1,0 +1,149 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const bgColor = defaultValue(input.bgColor, "#000000");
+$ const companyName = defaultValue(input.companyName, "Industrial Media, LLC");
+$ const pleaseContactEmail = defaultValue(input.pleaseContactEmail, "tom@ien.com");
+$ const pleaseContactName = defaultValue(input.pleaseContactName, "Tom Lynch");
+$ const footerText = defaultValue(input.footerText, {
+  "text-decoration": "none !important",
+  "color": "#fff",
+  "font-size": "10px",
+  "font-family": "Arial, 'Helvetica Neue', Helvetica, sans-serif",
+});
+
+$ const { website, config, req } = out.global;
+
+$ const subscrbeUrl = defaultValue(input.subscribeUrl, `${website.get("origin")}/newsletter-signup`);
+$ const unsubscribeId = defaultValue(input.unsubscribeCloudPageId, 204);
+$ const unsubscribeUrl = `%%=RedirectTo(CloudPagesURL(${unsubscribeId}, 'sk', _subscriberkey, 'p', listid, 'ln', _listname, 'j', jobid, 'e', _emailid, 'en', emailname_, 'de', _DataSourceName))=%%`;
+
+$ const preferencePageLink = defaultValue(input.preferencePageLink, "https://industrialmedia.dragonforms.com/loading.do?omedasite=IEN_prefs&r=@{encrypted_customer_id}@");
+$ const advertisePageLink = defaultValue(input.advertisePageLink, "https://ien.formstack.com/forms/advertise_with_industrial_media");
+
+$ const { query } = req;
+$ const esp = query.esp || config.get("defaultEsp");
+
+<common-table width=630 border=0 padding=10 spacing=0 align="center" class="main">
+  <tr>
+    <td bgcolor=bgColor>
+      <common-table width=300 border=0 padding=0 spacing=0 align="left">
+        <tr>
+          <td>
+            <div style=footerText class="center">
+              <a href=`${website.get("origin")}` target="_blank" style=footerText>Home</a>
+              |
+              <a href=`${website.get("origin")}/contact-us` target="_blank" style=footerText>Contact Us</a>
+              |
+              <a href=subscrbeUrl target="_blank" style=footerText>Subscribe</a>
+              |
+              <a href=`${advertisePageLink}` target="_blank" style=footerText>Advertise</a>
+            </div>
+          </td>
+        </tr>
+      </common-table>
+      <common-table width=300 border=0 padding=0 spacing=0 align="right">
+        <tr>
+          <td align="right" class="center">
+            <div style=footerText>© ${(new Date().getFullYear())} All rights reserved, ${companyName} </div>
+          </td>
+        </tr>
+      </common-table>
+    </td>
+  </tr>
+</common-table>
+
+<!-- ET Opt-Out -->
+<if(esp === 'et')>
+  <common-table width=630 border=0 padding=10 spacing=0 align="center" class="main">
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>
+        <span style="display:none;">
+          $!{`
+            %%[
+              set @publistID = listid
+              if IndexOf(_listname,"VPL") > 0 AND IndexOf(_listname,"for List") > 0 then
+                set @publistID = Substring(_listname,Add(IndexOf(_listname,"for List"),9),20)
+              endif
+            ]%%
+          `}
+        </span>
+        <div style="font-family: Arial, Helvetica, sans-serif; font-size: 10px; line-height: 17px;">
+          <p style="margin:0px;margin-bottom:1em;">This email is being sent to
+            <a href="mailto:%%emailaddr%%">%%emailaddr%%</a>.
+          </p>
+          <p style="margin:0px;margin-bottom:1em;">
+            Please add ${config.get("optOut.safeSenders")} to your address book or safe sender list to receive our emails in your inbox.
+          </p>
+          <p style="margin:0px;margin-bottom:1em;">
+          <a href=unsubscribeUrl>Unsubscribe</a>
+            | <a href="%%ftaf_url%%">Forward to a Friend</a>
+            | <a href="%%profile_center_url%%" alias="Update Profile">Update Profile</a>
+            | <a href=`${advertisePageLink}` alias="Advertise">Advertise</a>
+            | <a href=`${website.get("origin")}/contact-us`>Customer Service Center </a>
+            | <a href=`${website.get("origin")}/privacy-policy`> Privacy Policy</a>
+          </p>
+
+          <p style="margin:0px;margin-bottom:1em;">
+            Interested in advertising opportunities?  Please contact <a href=`mailto:${pleaseContactEmail}`>${pleaseContactName}</a> for more information.
+          </p>
+          <p>
+            %%Member_Busname%% <br>
+            %%Member_Addr%% <br>
+            %%Member_City%%, %%Member_State%%, %%Member_PostalCode%%, %%Member_Country%%
+          </p>
+          <!-- <img border="0" src="https://cdn.baseplatform.io/files/base/newsletter/ien.jpg" width="100" height="100" alt=""/> -->
+          <p>This newsletter is an ${companyName} product.</p>
+        </div>
+      </td>
+    </tr>
+  </common-table>
+
+</if>
+<else>
+  <common-table width=630 border=0 padding=10 spacing=0 align="center" class="main">
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>
+        <span style="display:none;"></span>
+        <div style="font-family: Arial, Helvetica, sans-serif; font-size: 10px; line-height: 17px;">
+          <p style="margin:0px;margin-bottom:1em;">
+            This email is being sent to <a href="mailto:@{delivery_email}@">@{delivery_email}@</a>.
+          </p>
+          <p style="margin:0px;margin-bottom:1em;">
+            Please add ${config.get("optOut.safeSenders")} to your address book or safe sender list to receive our emails in your inbox.
+          </p>
+          <p style="margin:0px;margin-bottom:1em;">
+            <a href="@{confirmunsubscribelink}@">Unsubscribe</a>
+            | <a href="@{forwardtoafriendlink}@">Forward to a Friend</a>
+            | <a href=`${preferencePageLink}` alias="Update Profile">Update Profile</a>
+            | <a href=`${advertisePageLink}` alias="Advertise">Advertise</a>
+            | <a href=`${website.get("origin")}/contact-us`>Customer Service Center </a>
+            | <a href=`${website.get("origin")}/privacy-policy`> Privacy Policy</a>
+          </p>
+          <p style="margin:0px;margin-bottom:1em;">Interested in advertising opportunities? Please contact <a href="mailto:tom@ien.com">Tom Lynch</a> for more information.</p>
+          <if(companyName === 'Lynch Media')>
+            <p>
+              Lynch Media, LLC<br>
+              137 East Wilson Street #310<br>
+              Madison, WI 53703, USA
+            </p>
+            <p>This newsletter is a Lynch Media product.</p>
+          </if>
+          <else>
+            <p>
+              Industrial Media<br>
+              199 East Badger Road, Suite 100<br>
+              Madison, WI 53713, USA
+            </p>
+            <p>This newsletter is an Industrial Media, LLC product.</p>
+          </else>
+        </div>
+      </td>
+    </tr>
+  </common-table>
+</else>

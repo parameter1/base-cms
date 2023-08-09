@@ -1,0 +1,77 @@
+import contentList from "@parameter1/base-cms-example-newsletter-ien/graphql/fragments/content-list";
+
+$ const { website } = out.global;
+$ const { newsletter, date, dateInfo } = data;
+$ const primaryColor = "#45ad35";
+
+<marko-newsletter-root
+  title=newsletter.name
+  description=newsletter.description
+  date=date
+>
+  <@head>
+    <common-static-styles />
+  </@head>
+  <@body style="margin: 0px !important;">
+    <tenant-banner-element
+      newsletter=newsletter
+      date=date
+      date-info=dateInfo
+    />
+
+    <!-- Header -->
+    <common-default-header-block
+      name=newsletter.name
+      href=website.get("origin")
+      image-src="/files/base/indm/ien/image/2020/03/eng.5e6a95e6a62c9.png"
+      bg-color="#ffffff"
+    >
+      <@wrapper date=date separator-type="date"/>
+    </common-default-header-block>
+
+    <!-- Content -->
+    <common-featured-full-block
+      section-id=52274,
+      limit=1,
+      title="FEATURED STORY",
+      date=date,
+      newsletter=newsletter,
+      primary-color=primaryColor,
+      hr-below=true,
+    />
+
+    <common-table width="630" style="border-collapse:collapse;" align="center" class="main" padding=0 spacing=0>
+      <tr>
+        <td>
+          <common-featured-half-block
+            section-id=53091,
+            limit=2,
+            date=date,
+            newsletter=newsletter,
+            primary-color=primaryColor,
+            align="left",
+          />
+          <common-promotion-half-block
+            section-id=52273,
+            limit=2,
+            date=date,
+            primary-color=primaryColor,
+            newsletter=newsletter,
+            align="right",
+          />
+        </td>
+      </tr>
+    </common-table>
+
+    <common-feed-full-block
+      section-id=52272,
+      date=date,
+      newsletter=newsletter,
+      primary-color=primaryColor,
+    />
+
+    <!-- Footer/OptOut -->
+    <common-default-footer-block />
+
+  </@body>
+</marko-newsletter-root>

@@ -1,0 +1,130 @@
+import contentList from "@parameter1/base-cms-example-newsletter-ien/graphql/fragments/content-list";
+
+$ const { website, config } = out.global;
+$ const { newsletter, date, dateInfo } = data;
+$ const socialMediaProviders = config.getAsArray('cen.socialMediaLinks');
+$ const primaryColor = "#247c26";
+
+<marko-newsletter-root
+  title=newsletter.name
+  description=newsletter.description
+  date=date
+>
+  <@head>
+    <common-static-styles />
+  </@head>
+  <@body style="margin: 0px !important;">
+    <tenant-banner-element
+      newsletter=newsletter
+      date=date
+      date-info=dateInfo
+    />
+
+    <!-- Header -->
+    <common-table width="630" style="border-collapse:collapse;" align="center" class="main" padding=0 spacing=0>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td valign="top" style="height:100px; width:320px;" align="right">
+          <marko-newsletter-imgix
+            src="/files/base/indm/cen/image/static/CEN-Today2.png"
+            alt="CEN Today"
+            options={ w: 320, h: 100 }
+            class="main"
+            attrs={ border: 0, width: 320 }
+          >
+            <@link href=website.get("origin") target="_blank" />
+          </marko-newsletter-imgix>
+        </td>
+        <td valign="top" class="mobileHide" style="height:100px; width:310px; background-color:#ffffff;" align="left">
+          <common-table style="border-collapse:collapse;" width="310" padding=0 align="center" spacing=0 class="main">
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+            <tr align="right">
+              <tr>
+                <td height="20" align="right">
+                  <common-table width="100%" border="0" spacing=0 padding=0>
+                    <tr style="text-decoration: none !important; font-size: 11px; font-family: Arial, Helvetica, sans-serif; color: #424242; font-weight: bold;">
+                      <td align="right" style="color:#424242; padding-right:20px; padding-bottom: 10px;">
+                        ${date.format("MMMM DD, YYYY")}
+                      </td>
+                    </tr>
+                  </common-table>
+                </td>
+              </tr>
+              <td align="right">
+                <for|socialLinks| of=socialMediaProviders>
+                    <marko-newsletter-imgix
+                      src=`/files/base/newsletter/${socialLinks.provider}-gray-round.png`
+                      alt=socialLinks.provider
+                      options={ w: 40 }
+                      attrs={ border: 0, width: 40 }
+                    >
+                      <@link href=socialLinks.href title=socialLinks.title target="_blank" />
+                    </marko-newsletter-imgix>
+                    &nbsp;&nbsp;&nbsp;
+                  </for>
+              </td>
+            </tr>
+          </common-table>
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+    </common-table>
+
+    <!-- Content -->
+    <common-featured-full-block
+      section-id=60775,
+      limit=1,
+      title="FEATURED STORY",
+      date=date,
+      newsletter=newsletter,
+      primary-color=primaryColor,
+      hr-below=true,
+    />
+
+    <common-table width="630" style="border-collapse:collapse;" align="center" class="main" padding=0 spacing=0>
+      <tr>
+        <td>
+          <common-featured-half-block
+            section-id=60776,
+            limit=2,
+            date=date,
+            newsletter=newsletter,
+            primary-color=primaryColor,
+            align="left",
+          />
+          <common-promotion-half-block
+            section-id=60777,
+            limit=2,
+            date=date,
+            primary-color=primaryColor,
+            newsletter=newsletter,
+            align="right",
+          />
+        </td>
+      </tr>
+    </common-table>
+
+    <common-feed-full-block
+      section-id=62908,
+      date=date,
+      newsletter=newsletter,
+      primary-color=primaryColor,
+    />
+
+    <!-- Footer/OptOut -->
+    <common-default-footer-block
+      unsubscribe-cloud-page-id=854
+      company-name="Lynch Media"
+      please-contact-email="tom@cannabisequipmentnews.com"
+      preference-page-link="https://lynchmedia.dragonforms.com/loading.do?omedasite=CEN_prefs"
+      advertise-page-link="https://ien.formstack.com/forms/advertise_with_lynch_media"
+    />
+
+  </@body>
+</marko-newsletter-root>

@@ -1,0 +1,118 @@
+import contentList from "@parameter1/base-cms-example-newsletter-ien/graphql/fragments/content-list";
+import waterMarkDisplay from "@parameter1/base-cms-example-newsletter-ien/utils/watermark-display";
+
+$ const { website } = out.global;
+$ const { newsletter, date, dateInfo } = data;
+$ const blackBarText = "text-decoration: none !important; font-size: 10px; font-family: Arial, Helvetica, sans-serif; color: #ffffff; font-weight: normal;"
+$ const contentLinkStyle = {
+  "text-decoration": "none",
+  "text-align": "left",
+  "text-decoration": "none !important",
+  "font-size": "14px",
+  "font-family": "Arial, Helvetica, sans-serif",
+  "color": "#002f4e",
+  "font-weight": "bold"
+};
+$ const teaserStyle = {
+  "text-decoration": "none !important",
+  "font-size": "13px",
+  "font-family": "Arial, Helvetica, sans-serif",
+  "color": "#666666",
+  "font-weight": "normal",
+  "text-align": "left",
+  "margin-top": "3px !important",
+  "line-height": "1.2em",
+};
+
+<marko-newsletter-root
+  title=newsletter.n
+  description=newsletter.description
+  date=date
+>
+  <@head>
+    <common-static-styles />
+  </@head>
+  <@body style="margin: 0px !important;">
+    <tenant-banner-element
+      newsletter=newsletter
+      date=date
+      date-info=dateInfo
+    />
+
+    <!-- Header -->
+    <common-table width="630" style="border-collapse:collapse;" align="center" class="main" padding=0 spacing=0>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>
+          <common-default-header-block
+            name=newsletter.name
+            href=website.get("origin")
+            image-src="/files/base/indm/all/image/static/logos/impo_mag_today.png"
+            bg-color="#ffffff"
+          />
+        </td>
+      </tr>
+    </common-table>
+
+    <!-- Featured Full -->
+    <common-table width="630" style="border-collapse:collapse;" align="center" class="main" padding=0 spacing=0>
+      <tr>
+        <td>
+          <marko-web-query|{ nodes }| name="newsletter-scheduled-content" params={
+            date: date.valueOf(),
+            newsletterId: newsletter.id,
+            sectionId: 63319,
+            queryFragment: contentList,
+          }>
+            <for|node| of=nodes>
+              <common-table width="630" style="border: 5px solid #ecedee;" align="center" class="sponsored" padding=10 spacing=0>
+                <tr>
+                  <td valign="top">
+                    <common-table width="280" class="left" align="left" padding=0 spacing=0>
+                      <tr>
+                        <td>
+                          <marko-core-obj-value|{ value: image }| obj=node field="primaryImage" as="object">
+                            $ const imgWaterMarkOptions = waterMarkDisplay({ node, newsletter, markWidth: 90, markHeight: 90 });
+                            $ const imgOptions = {
+                              w: 280,
+                              ...imgWaterMarkOptions
+                            };
+                            <marko-newsletter-imgix
+                              src=image.src
+                              alt=image.alt
+                              options=imgOptions
+                              class="main"
+                              attrs={ border: 0, width: 280 }
+                            >
+                              <@link href=node.siteContext.url target="_blank" />
+                            </marko-newsletter-imgix>
+                          </marko-core-obj-value>
+                        </td>
+                      </tr>
+                    </common-table>
+                    <common-table width="295" class="main" align="right" padding=0 spacing=0>
+                      <tr>
+                        <td>
+                          <marko-core-obj-text obj=node field="name" attrs={ style: { "text-align": "left" } } >
+                            <@link href=node.siteContext.url target="_blank" attrs={ style: contentLinkStyle } />
+                          </marko-core-obj-text>
+                          <marko-core-obj-text tag="div" obj=node field="teaser" html=true attrs={ style: teaserStyle } />
+                        </td>
+                      </tr>
+                    </common-table>
+                  </td>
+                </tr>
+              </common-table>
+            </for>
+          </marko-web-query>
+        </td>
+      </tr>
+    </common-table>
+
+    <!-- Footer/OptOut -->
+    <common-default-footer-block />
+
+  </@body>
+</marko-newsletter-root>

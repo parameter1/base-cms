@@ -378,6 +378,21 @@ services:
       - "51269:80"
       - "61269:61269"
 
+  example-newsletter-ien:
+    <<: [*node]
+    working_dir: /base-cms/services/example-newsletter-ien
+    entrypoint: ["yarn"]
+    command: ["dev"]
+    environment:
+      <<: [*env, *env-tauron]
+      PORT: 80
+      EXPOSED_PORT: 21094
+      LIVERELOAD_PORT: 31094
+      TENANT_KEY: indm_multi
+    ports:
+      - "21269:80"
+      - "31269:31269"
+
   example-leaders-program:
     << : *node
     working_dir: /base-cms/packages/leaders-program

@@ -1,0 +1,128 @@
+import contentList from "@parameter1/base-cms-example-newsletter-ien/graphql/fragments/content-list";
+
+$ const { website, config } = out.global;
+$ const { newsletter, date, dateInfo } = data;
+$ const primaryColor = "#00b3e3";
+$ const socialMediaProviders = config.getAsArray('ddt.socialMediaLinks');
+
+<marko-newsletter-root
+  title=newsletter.name
+  description=newsletter.description
+  date=date
+>
+  <@head>
+    <common-static-styles />
+  </@head>
+  <@body style="margin: 0px !important;">
+    <tenant-banner-element
+      newsletter=newsletter
+      date=date
+      date-info=dateInfo
+    />
+
+    <!-- Header -->
+    <common-table width="630" style="border-collapse:collapse;" align="center" class="main" padding=0 spacing=0>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      <tr style="background-color:#ffffff">
+        <td align="left">
+          <common-table width="300" border="0" padding=0 spacing=0 align="left" class="main" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;">
+            <tr>
+              <td>
+                <marko-newsletter-imgix
+                  src="/files/base/indm/all/image/static/logos/TIM_Final_DDT.jpeg"
+                  alt="DDT Today"
+                  options={ w: 340, h: 100 }
+                  class="main"
+                  attrs={ border: 0, width: 340}
+                >
+                  <@link href=website.get("origin") target="_blank" />
+                </marko-newsletter-imgix>
+              </td>
+            </tr>
+          </common-table>
+          <common-table width="290" border="0" padding=5 spacing=0 align="right" class="mobileHide" style="padding-top:10px;">
+            <tr>
+              <td height="20" align="right">
+                <common-table width="100%" border="0" spacing=0 padding=0>
+                  <tr style="text-decoration: none !important; font-size: 11px; font-family: Arial, Helvetica, sans-serif; color: #000000; font-weight: bold;">
+                    <td align="right" style="color:#000000; padding-right:20px;">
+                      ${date.format("MMMM DD, YYYY")}
+                    </td>
+                  </tr>
+                </common-table>
+              </td>
+            </tr>
+            <tr>
+              <td align="right" valign="bottom">
+                <for|socialLinks| of=socialMediaProviders>
+                  <marko-newsletter-imgix
+                    src=`/files/base/newsletter/${socialLinks.provider}-black-round.png`
+                    alt=socialLinks.provider
+                    options={ w: 40 }
+                    attrs={ border: 0, width: 40 }
+                  >
+                    <@link href=socialLinks.href title=socialLinks.title target="_blank" />
+                  </marko-newsletter-imgix>
+                  &nbsp;&nbsp;&nbsp;
+                </for>
+              </td>
+            </tr>
+          </common-table>
+        </td>
+      </tr>
+      <tr>
+        <td><hr></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+    </common-table>
+
+    <!-- Content -->
+    <common-featured-full-block
+      section-id=86465,
+      limit=1,
+      title="FEATURED STORY",
+      date=date,
+      newsletter=newsletter,
+      primary-color=primaryColor,
+      hr-below=true,
+    />
+
+    <common-table width="630" style="border-collapse:collapse;" align="center" class="main" padding=0 spacing=0>
+      <tr>
+        <td>
+          <common-featured-half-block
+            section-id=86464,
+            limit=2,
+            date=date,
+            newsletter=newsletter,
+            primary-color=primaryColor,
+            align="left",
+          />
+          <common-promotion-half-block
+            section-id=86467,
+            limit=2,
+            date=date,
+            primary-color=primaryColor,
+            newsletter=newsletter,
+            align="right",
+          />
+        </td>
+      </tr>
+    </common-table>
+
+    <common-feed-full-block
+      section-id=86466,
+      date=date,
+      newsletter=newsletter,
+      primary-color=primaryColor,
+    />
+
+    <!-- Footer/OptOut -->
+    <common-default-footer-block />
+
+  </@body>
+</marko-newsletter-root>

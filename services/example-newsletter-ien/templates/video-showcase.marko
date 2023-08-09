@@ -1,0 +1,60 @@
+import contentList from "@parameter1/base-cms-example-newsletter-ien/graphql/fragments/content-list";
+
+$ const { website } = out.global;
+$ const { newsletter, date, dateInfo } = data;
+
+$ const contentLinkStyle = {
+  "text-decoration": "none !important",
+  "font-size": "14px",
+  "margin-top": "10px !important",
+  "font-family": "Arial, Helvetica, sans-serif",
+  "color": "#e9132f",
+  "font-weight": "bold",
+};
+
+$ const teaserStyle = {
+  "text-decoration": "none !important",
+  "font-size": "13px",
+  "font-family": "Arial, Helvetica, sans-serif",
+  "color": "#666666",
+  "margin-top": "0px !important",
+};
+
+<marko-newsletter-root
+  title=newsletter.name
+  description=newsletter.description
+  date=date
+>
+  <@head>
+    <common-static-styles />
+  </@head>
+  <@body style="margin: 0px !important;">
+    <tenant-banner-element
+      newsletter=newsletter
+      date=date
+      date-info=dateInfo
+    />
+
+    <!-- Header -->
+    <common-default-header-block
+      name=newsletter.name
+      href=website.get("origin")
+      image-src="/files/base/indm/ien/image/2019/01/video_showcase_2.5c32de2d18b91.png"
+      bg-color="#ffffff"
+    />
+
+    <!-- Content -->
+    <common-featured-full-block
+      section-id=61601,
+      date=date,
+      newsletter=newsletter,
+      show-body=true,
+      content-link-style=contentLinkStyle,
+      teaser-style=teaserStyle,
+    />
+
+    <!-- Footer/OptOut -->
+    <common-default-footer-block />
+
+  </@body>
+</marko-newsletter-root>

@@ -1,0 +1,25 @@
+{
+  "<common-header-wrapper>": {
+    "template": "./wrapper.marko",
+    "@separator-position": "string",
+    "@separator-type": "string",
+    "@clear-floats": "boolean",
+    "@date": "object",
+    "@date-style": "object"
+  },
+  "<common-default-header-block>": {
+    "template": "./image-full.marko",
+    "<wrapper>": {
+      "@separator-position": "string",
+      "@separator-type": "string",
+      "@clear-floats": "boolean",
+      "@date": "object",
+      "@date-style": "object"
+    },
+    "@name": "string",
+    "@href": "string",
+    "@image-src": "string",
+    "@image-width": "number",
+    "@bg-color": "string"
+  }
+}

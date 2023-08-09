@@ -1,0 +1,39 @@
+{
+  "name": "@parameter1/base-cms-example-newsletter-ien",
+  "version": "4.34.0",
+  "author": "Brian Miller <brian@parameter1.com>",
+  "repository": "https://github.com/parameter1/newsletter-industrial-media/tree/master/tenants/multi",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "yarn compile",
+    "dev": "basecms-newsletters dev --compile-dir ../../packages --watch-dir ../../packages",
+    "compile": "basecms-marko-compile compile",
+    "lint": "eslint --ext .js --max-warnings 5 --config ../../.eslintrc.js --ignore-path ../../.eslintignore ./",
+    "lint:fix": "yarn lint --fix",
+    "test": "yarn lint && yarn compile --no-clean"
+  },
+  "engines": {
+    "node": ">=14.15"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "dependencies": {
+    "@parameter1/base-cms-marko-core": "^4.32.0",
+    "@parameter1/base-cms-marko-newsletters": "^4.32.0",
+    "@parameter1/base-cms-marko-newsletters-email-x": "^4.5.12",
+    "@parameter1/base-cms-marko-newsletters-gam": "^4.5.12",
+    "@parameter1/base-cms-marko-web-native-x": "^4.32.0",
+    "@parameter1/base-cms-newsletter-cli": "^4.5.12",
+    "@parameter1/base-cms-object-path": "^4.5.12",
+    "graphql": "^14.5.4",
+    "graphql-tag": "^2.10.1",
+    "newrelic": "^9.10.1"
+  },
+  "resolutions": {
+    "editorconfig": "1.0.2"
+  }
+}

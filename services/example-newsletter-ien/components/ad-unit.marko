@@ -1,0 +1,45 @@
+import buildGAMTargeting from "../utils/build-gam-targeting";
+import emailX from "../config/email-x";
+import GAM from "../config/gam";
+
+$ const { config, req } = out.global;
+$ const gamEnabled = Object.hasOwnProperty.call(req.query, 'gam');
+
+$ const {
+  name,
+  newsletter,
+  date,
+  dateInfo,
+} = input;
+
+$ const { alias } = newsletter;
+
+$ const { query } = req;
+$ const esp = query.esp || config.get("defaultEsp");
+$ const emailMergeVars = {
+  email: esp === "et" ? "%%emailaddr%%" : "@{delivery_email}@",
+  send: esp === "et" ? "%%jobid%%" : "@{track_id}@",
+};
+
+$ let adUnit;
+$ if (gamEnabled) {
+  adUnit = GAM.getAdUnit({ name, alias, targeting: buildGAMTargeting({ newsletter, date, dateInfo }) });
+} else {
+  adUnit = emailX.getAdUnit({ name, alias });
+}
+
+<if(adUnit.path || adUnit.id)>
+  <if(gamEnabled)>
+    <marko-newsletters-gam-display>
+      <@ad-unit ...adUnit />
+      <@image class="scaleAd" />
+    </marko-newsletters-gam-display>
+  </if>
+  <else>
+    <marko-newsletters-email-x-display decoded-params=["email", "send"]>
+      <@ad-unit ...adUnit />
+      <@params date=date email=emailMergeVars.email send=emailMergeVars.send />
+      <@image class="scaleAd" />
+    </marko-newsletters-email-x-display>
+  </else>
+</if>

@@ -1,0 +1,35 @@
+import { getAsObject } from "@parameter1/base-cms-object-path";
+
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { req } = out.global;
+$ const emailXEnabled = Object.hasOwnProperty.call(req.query, 'emailx');
+
+$ const { newsletter, date, dateInfo } = input;
+
+<common-table width="100%" align="center" class="top">
+  <tr>
+    <td bgcolor="#ecedee">
+      <common-table width="630" align="center" class="main">
+        <tr>
+          <common-view-online-element name=newsletter.name />
+        </tr>
+        <tr>
+          <td align="center">
+            <div class="advertisement inline ad-600x100">
+              <tenant-ad-unit
+                name="header"
+                newsletter=newsletter
+                date=date
+                date-info=dateInfo
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td height="20" class="short">&nbsp;</td>
+        </tr>
+      </common-table>
+    </td>
+  </tr>
+</common-table>

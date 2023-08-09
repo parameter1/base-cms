@@ -1,0 +1,33 @@
+import { getAsObject } from "@parameter1/base-cms-object-path";
+
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const styles = [];
+$ if (input.bgColor) styles.push(`background-color:${input.bgColor}`);
+
+$ const wrapper = getAsObject(input, "wrapper");
+$ const imageWidth = defaultValue(input.imageWidth, 630);
+
+<common-header-wrapper ...wrapper>
+  <common-table width="630" align="center" class="main" style=styles>
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>
+        <common-table width=imageWidth align="left" class="main">
+          <tr>
+            <td align="left" valign="top">
+              <marko-newsletter-imgix src=input.imageSrc options={ w: imageWidth } alt=input.name class="main" attrs={ border: 0, width: imageWidth }>
+                <@link href=input.href title=input.name target="_blank" />
+              </marko-newsletter-imgix>
+            </td>
+          </tr>
+        </common-table>
+      </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+  </common-table>
+</common-header-wrapper>
