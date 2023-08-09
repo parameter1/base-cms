@@ -11,6 +11,7 @@ module.exports = async ({
   logoOptions,
   opts,
   req,
+  debug,
 } = {}) => {
   const params = new URLSearchParams({
     ...(typeof timestamp === 'number' && { timestamp }),
@@ -20,6 +21,7 @@ module.exports = async ({
   });
   const query = `${params}`;
   const url = `${uri}/${placementId}.json${query ? `?${query}` : ''}`;
+  if (debug) console.log(url);
   const response = await fetch(url, { headers: createHeaders({ req }) });
   const json = await response.json();
   if (!response.ok) {
