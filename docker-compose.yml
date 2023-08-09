@@ -378,9 +378,9 @@ services:
       - "51269:80"
       - "61269:61269"
 
-  example-newsletter-ien:
+  example-newsletter:
     <<: [*node]
-    working_dir: /base-cms/services/example-newsletter-ien
+    working_dir: /base-cms/services/example-newsletter
     entrypoint: ["yarn"]
     command: ["dev"]
     environment:
@@ -388,10 +388,10 @@ services:
       PORT: 80
       EXPOSED_PORT: 21094
       LIVERELOAD_PORT: 31094
-      TENANT_KEY: indm_multi
+      TENANT_KEY: p1_sandbox
     ports:
-      - "21269:80"
-      - "31269:31269"
+      - "21094:80"
+      - "31094:31094"
 
   example-leaders-program:
     << : *node

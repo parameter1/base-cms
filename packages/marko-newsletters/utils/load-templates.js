@@ -6,6 +6,7 @@ let promise;
 
 const load = async ({ rootDir, templatePath, queryFragment }) => {
   const templateDir = path.resolve(rootDir, templatePath);
+
   if (!fs.existsSync(templateDir)) throw new Error(`The template directory ${templateDir} does not exist.`);
 
   const templates = [];
