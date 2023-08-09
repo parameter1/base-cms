@@ -4,6 +4,7 @@
     "@placement-id": "string",
     "@date": "date",
     "@image-options": "object",
-    "@logo-options": "object"
+    "@logo-options": "object",
+    "@opts": "object"
   }
 }
