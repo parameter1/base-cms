@@ -87,6 +87,7 @@ input UpdateContentCompanyPayloadMutationInput {
   website: String
   type: String
   email: String
+  publicEmail: String
   body: String
   teaser: String
   numberOfEmployees: String
