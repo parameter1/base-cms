@@ -82,4 +82,8 @@ $ const additionalEventData = {
       />
     </marko-web-element>
   </else-if>
+  <if(!canAccess || (isLoggedIn && requiresUserInput))>
+    <!-- If either condition is true assume content body is gated & display for seo purposes -->
+    <marko-web-content-body block-name=blockName attrs={ style: "display: none;" } obj=content modifiers=["ld-json"] />
+  </if>
 </marko-web-block>
