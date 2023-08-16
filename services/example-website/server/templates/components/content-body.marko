@@ -2,6 +2,7 @@ import { get, getAsArray, getAsObject } from "@parameter1/base-cms-object-path";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 import getContentPreview from "@parameter1/base-cms-marko-web-theme-monorail/utils/get-content-preview";
 import cm from "@parameter1/base-cms-marko-web-theme-monorail/utils/content-meter-helpers";
+import renderSiteNewsletterMenu from "@parameter1/base-cms-marko-web-theme-monorail/utils/render-site-newsletter-menu";
 
 $ const { content, blockName } = input;
 $ const { contentGatingHandler, contentMeterState, req } = out.global;
@@ -67,11 +68,15 @@ $ const useIdxDownload = defaultValue(get(content, "gating.surveyType") === "idx
   </else-if>
   <else>
     $ const bodyId = `content-body-${content.id}`;
+    $ const newsletterPromise = renderSiteNewsletterMenu({ out }).then((html) => ({ at: 800, html }));
     <if(shouldInjectAds)>
       <theme-body-with-injection
         content=content
         aliases=[]
         block-name=blockName
+        html-injections=[
+          newsletterPromise,
+        ]
         preventHTMLInjection=false
       />
     </if>
