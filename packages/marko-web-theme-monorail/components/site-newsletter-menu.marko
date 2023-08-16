@@ -1,45 +1,11 @@
-import { buildImgixUrl } from "@parameter1/base-cms-image";
-import { getAsObject } from "@parameter1/base-cms-object-path";
+import buildProps from "@parameter1/base-cms-marko-web-theme-monorail/utils/site-newsletter-menu-props";
 
-$ const { site, config, recaptcha } = out.global;
-$ const {
-  name,
-  description,
-  imagePath,
-  defaultNewsletter,
-  newsletters,
-  demographic,
-  disabled,
-  step1CtaLabel,
-  step2CtaLabel,
-  privacyPolicy,
-} = site.getAsObject("newsletter.pushdown");
+$ const props = buildProps({ out });
 
-$ const lang = site.config.lang || "en";
-$ const { initiallyExpanded } = getAsObject(out.global, "newsletterState");
-$ const imageSrc = imagePath ? buildImgixUrl(`https://${config.website("imageHost")}/${imagePath}`, { w: 280, auto: "format,compress" }) : null;
-$ const imageSrcset = imageSrc ? `${imageSrc}&dpr=2 2x` : null;
-
-<if(name && description)>
+<if(props.name && props.description)>
   <marko-web-browser-component
     name="ThemeSiteNewsletterMenu"
     ssr=true
-    props={
-      siteName: config.website("name"),
-      name,
-      description,
-      defaultNewsletter,
-      newsletters,
-      demographic,
-      disabled,
-      imageSrc,
-      imageSrcset,
-      initiallyExpanded,
-      step1CtaLabel,
-      step2CtaLabel,
-      recaptchaSiteKey: recaptcha.siteKey,
-      privacyPolicyLink: privacyPolicy,
-      lang
-    }
+    props=props
   />
 </if>
