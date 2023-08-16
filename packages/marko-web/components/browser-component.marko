@@ -2,14 +2,9 @@ import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 import { randomElementId } from "@parameter1/base-cms-utils";
 import renderComponent from "../utils/render-ssr-component-from-marko";
 
-$ const id = randomElementId({ prefix: 'vue' });
+$ const id = randomElementId({ prefix: "vue" });
 $ const tag = defaultValue(input.tag, "div");
-$ const { name } = input;
 $ const ssr = defaultValue(input.ssr, false);
-$ const hydrate = ssr ? true : defaultValue(input.hydrate, false);
-$ const skipWhenExists = defaultValue(input.skipWhenExists, false);
-$ const props = JSON.stringify(input.props || {});
-$ const contents = `CMSBrowserComponents.load({ el: '#${id}', name: '${name}', props: ${props}, hydrate: ${hydrate}, skipWhenExists: ${skipWhenExists} });`;
 
 <if(ssr)>
   <marko-web-resolve|{ resolved: html }| promise=renderComponent({ id, input, out })>
@@ -20,5 +15,10 @@ $ const contents = `CMSBrowserComponents.load({ el: '#${id}', name: '${name}', p
   <${tag} ...input.attrs id=id class=input.class>
     <${input.renderBody} />
   </>
+  <marko-web-browser-component-script
+    id=id
+    hydrate=input.hydrate
+    name=input.name
+    props=input.props
+  />
 </else>
-<script class="component" data-name=name>$!{contents}</script>

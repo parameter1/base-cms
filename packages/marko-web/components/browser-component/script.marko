@@ -1,0 +1,10 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { id, name } = input;
+
+$ const props = JSON.stringify(input.props || {})
+$ const hydrate = defaultValue(input.hydrate, false);
+$ const skipWhenExists = defaultValue(input.skipWhenExists, false);
+$ const contents = `CMSBrowserComponents.load({ el: '#${id}', name: '${name}', props: ${props}, hydrate: ${hydrate}, skipWhenExists: ${skipWhenExists} });`;
+
+<script class="component" data-name=name>$!{contents}</script>
