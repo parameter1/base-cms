@@ -1,5 +1,7 @@
 import buildProps from "@parameter1/base-cms-marko-web-theme-monorail/utils/site-idx-newsletter-menu-props";
 
+$ const { identityX } =  out.global.req;
+
 <if(Boolean(identityX))>
   <marko-web-identity-x-context|{ user, application }|>
     $ const props = buildProps({
