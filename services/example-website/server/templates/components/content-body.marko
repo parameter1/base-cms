@@ -3,6 +3,7 @@ import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 import getContentPreview from "@parameter1/base-cms-marko-web-theme-monorail/utils/get-content-preview";
 import cm from "@parameter1/base-cms-marko-web-theme-monorail/utils/content-meter-helpers";
 import renderSiteNewsletterMenu from "@parameter1/base-cms-marko-web-theme-monorail/utils/render-site-newsletter-menu";
+import renderSiteIdxNewsletterMenu from "@parameter1/base-cms-marko-web-theme-monorail/utils/render-site-idx-newsletter-menu";
 
 $ const { content, blockName } = input;
 $ const { contentGatingHandler, contentMeterState, req } = out.global;
@@ -69,12 +70,21 @@ $ const useIdxDownload = defaultValue(get(content, "gating.surveyType") === "idx
   <else>
     $ const bodyId = `content-body-${content.id}`;
     $ const newsletterPromise = renderSiteNewsletterMenu({ out }).then((html) => ({ at: 800, html }));
+    $ const idxNewsletterPromise = renderSiteIdxNewsletterMenu({
+      out,
+      input: {
+        type: "inlineContent",
+        user: context.user,
+        application: context.application,
+      },
+    }).then((html) => ({ at: 200, html }));
     <if(shouldInjectAds)>
       <theme-body-with-injection
         content=content
         aliases=[]
         block-name=blockName
         html-injections=[
+          idxNewsletterPromise,
           newsletterPromise,
         ]
         preventHTMLInjection=false
