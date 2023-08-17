@@ -149,6 +149,29 @@
   }
 }
 
+// overrides for inbody content injections
+.page-contents__content-body {
+  .site-newsletter-menu {
+    visibility: visible;
+    max-height: initial;
+    padding: map-get($spacers, block);
+    padding-bottom: 0;
+    margin-bottom: map-get($spacers, block);
+    background: linear-gradient($gray-100, $gray-300);
+    &__container {
+      padding-top: 0;
+    }
+    &__image {
+      max-width: 100%;
+      filter: drop-shadow(-10px -10px 10px rgba(0,0,0,.24));
+    }
+    &__close-container,
+    &__close-container {
+      display: none !important;
+    }
+  }
+}
+
 .complete-newsletter-signup {
   $self: &;
   max-width: 652px;
