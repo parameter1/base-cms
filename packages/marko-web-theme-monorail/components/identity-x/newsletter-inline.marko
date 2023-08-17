@@ -1,65 +1,19 @@
-import { buildImgixUrl } from "@parameter1/base-cms-image";
-import { get } from "@parameter1/base-cms-object-path";
-import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
-
-$ const blockName = "newsletter-signup-banner";
-
-$ const { config, site, req } = out.global;
-$ const { identityX } = req;
-$ const additionalEventData = defaultValue(input.additionalEventData, {});
-$ const buttonLabels = defaultValue(input.buttonLabels, { continue: "Sign Up" })
-$ const loginEmailPlaceholder = defaultValue(input.loginEmailPlaceholder, "example@gmail.com");
-$ const source = defaultValue(input.source, "newsletterSignup");
-$ const configName = defaultValue(input.configName, "signupBanner");
-$ const newsletterSignupType = defaultValue(input.type, "default");
-$ const validTypes = ["inlineContent", "inlineSection", "footer"];
-$ const withImage = defaultValue(input.withImage, true);
-
-$ if (!validTypes.includes(newsletterSignupType)) {
-  console.log(`Unknown inline signup type. One of ${validTypes} expected!`);
-}
-
-$ const {
-  name,
-  description,
-  imagePath,
-  disabled,
-} = site.getAsObject(`newsletter.${configName}`);
-
-$ const lang = site.config.lang || "en";
-$ const imageSrc = imagePath ? buildImgixUrl(`https://${config.website("imageHost")}/${imagePath}`, { w: 120, auto: "format,compress" }) : null;
-$ const imageSrcset = imageSrc ? `${imageSrc}&dpr=2 2x` : null;
+import buildProps from "@parameter1/base-cms-marko-web-theme-monorail/utils/site-idx-newsletter-menu-props";
 
 <if(Boolean(identityX))>
-  <marko-web-identity-x-context|{ user, isEnabled, application }|>
-    <if(name && description)>
+  <marko-web-identity-x-context|{ user, application }|>
+    $ const props = buildProps({
+        out,
+        input: {
+          ...input,
+          user,
+          application,
+        }
+      });
+    <if(props.name && props.description)>
       <marko-web-browser-component
         name="IdentityXNewsletterFormInline"
-        props={
-          imageSrc: withImage && imageSrc,
-          imageSrcset: withImage && imageSrcset,
-          siteName: config.website("name"),
-          name,
-          description,
-          disabled,
-          lang,
-          additionalEventData: additionalEventData,
-          source,
-          type: newsletterSignupType,
-          activeUser: user,
-          endpoints: identityX.config.getEndpoints(),
-          buttonLabels,
-          redirect: input.redirect,
-          loginEmailPlaceholder,
-          loginEmailLabel: input.loginEmailLabel,
-          actionText: input.actionText,
-          consentPolicy: input.consentPolicy || get(application, "organization.consentPolicy"),
-          emailConsentRequest: get(application, "organization.emailConsentRequest"),
-          regionalConsentPolicies: get(application, "organization.regionalConsentPolicies"),
-          appContextId: identityX.config.get("appContextId"),
-          requiredCreateFields: identityX.config.getRequiredCreateFields(),
-          defaultFieldLabels: identityX.config.get("defaultFieldLabels"),
-        }
+        props=props
       />
     </if>
   </marko-web-identity-x-context>
