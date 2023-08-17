@@ -64,46 +64,53 @@ $ const gamAdInjection = (GAM) ? [
   }
 ] : [];
 
-<theme-ssr-html-inject
-  to-render=MarkoWebContentBody
-  selector=`#${selector}`
->
-  <@component-input
-    block-name=blockName
-    modifiers=modifiers
-    obj=content
-    attrs={ id: selector }
-    embed-options=input.embedOptions
-    lazyload-first-image=input.lazyloadFirstImage
-  />
-  <if(!preventHTMLInjection)>
-    <if(htmlInjections.length)>
-      <for|htmlInjection| of=input.htmlInjections>
-        $ const { at, html } = htmlInjection;
-        <if (at && html)>
-          <@inject
-            at=at
-            html=html
-          />
+
+$ const injectionPromises = [];
+$ if (!preventHTMLInjection && htmlInjections.length) {
+  htmlInjections.forEach((injection) => injectionPromises.push(Promise.resolve(injection)));
+}
+<marko-web-resolve|{ resolved: resolvedInjections }| promise=Promise.all(injectionPromises)>
+  <theme-ssr-html-inject
+    to-render=MarkoWebContentBody
+    selector=`#${selector}`
+  >
+    <@component-input
+      block-name=blockName
+      modifiers=modifiers
+      obj=content
+      attrs={ id: selector }
+      embed-options=input.embedOptions
+      lazyload-first-image=input.lazyloadFirstImage
+    />
+    <if(!preventHTMLInjection)>
+      <if(resolvedInjections.length)>
+        <for|htmlInjection| of=resolvedInjections>
+          $ const { at, html } = htmlInjection;
+          <if (at && html)>
+            <@inject
+              at=at
+              html=html
+            />
+          </if>
+        </for>
+      </if>
+      <for|adInjection| of=gamAdInjection>
+        $ const { counts, name, modifiers } = adInjection;
+        <if(adInjection.counts.length)>
+          <for|count| of=adInjection.counts>
+            <@inject
+              at=count
+              html=GAMDefineDisplayAd.renderToString({
+                name,
+                aliases,
+                modifiers,
+                $global
+              })
+              dataPropToPreventDupes=adInjection.dataPropToPreventDupes
+            />
+          </for>
         </if>
       </for>
     </if>
-    <for|adInjection| of=gamAdInjection>
-      $ const { counts, name, modifiers } = adInjection;
-      <if(adInjection.counts.length)>
-        <for|count| of=adInjection.counts>
-          <@inject
-            at=count
-            html=GAMDefineDisplayAd.renderToString({
-              name,
-              aliases,
-              modifiers,
-              $global
-            })
-            dataPropToPreventDupes=adInjection.dataPropToPreventDupes
-          />
-        </for>
-      </if>
-    </for>
-  </if>
-</theme-ssr-html-inject>
+  </theme-ssr-html-inject>
+</marko-web-resolve>

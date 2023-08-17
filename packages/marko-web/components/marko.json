@@ -24,6 +24,9 @@
     "@attrs": "object",
     "@props": "object"
   },
+  "<marko-web-browser-component-script>": {
+    "template": "./browser-component/script.marko"
+  },
   "<marko-web-deferred-stylesheet>": {
     "template": "./deferred-stylesheet.marko",
     "@href": {
