@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-example-website",
-  "version": "4.34.1",
+  "version": "4.35.0",
   "description": "Example BaseCMS website.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@parameter1/base-cms-marko-core": "^4.32.0",
-    "@parameter1/base-cms-marko-web": "^4.32.0",
+    "@parameter1/base-cms-marko-web": "^4.35.0",
     "@parameter1/base-cms-marko-web-auth0-identity-x": "^4.34.0",
     "@parameter1/base-cms-marko-web-contact-us": "^4.5.12",
     "@parameter1/base-cms-marko-web-deferred-script-loader": "^4.5.12",
@@ -35,7 +35,7 @@
     "@parameter1/base-cms-marko-web-omeda-identity-x": "^4.34.0",
     "@parameter1/base-cms-marko-web-p1-events": "^4.33.1",
     "@parameter1/base-cms-marko-web-social-sharing": "^4.32.0",
-    "@parameter1/base-cms-marko-web-theme-monorail": "^4.34.1",
+    "@parameter1/base-cms-marko-web-theme-monorail": "^4.35.0",
     "@parameter1/base-cms-object-path": "^4.5.12",
     "@parameter1/base-cms-utils": "^4.5.12",
     "@parameter1/base-cms-web-cli": "^4.18.3",
