@@ -14,6 +14,5 @@ module.exports = async ({ id, input, out }) => {
     props,
     skipWhenExists: input.skipWhenExists,
   });
-  console.log({ script });
   return `${html}${script}`;
 };
