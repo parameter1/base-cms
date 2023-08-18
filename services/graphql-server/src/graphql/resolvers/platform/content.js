@@ -904,6 +904,7 @@ module.exports = {
         excludeContentIds,
         includeTaxonomyIds,
         includeLabels,
+        excludeLabels,
         requiresImage,
         sectionBubbling,
         sort,
@@ -967,9 +968,10 @@ module.exports = {
       if (includeTaxonomyIds.length) {
         query['taxonomy.$id'] = { $in: includeTaxonomyIds };
       }
-      if (includeLabels.length) {
-        query.labels = { $in: includeLabels };
-      }
+
+      if (includeLabels.length) query.$and.push({ labels: { $in: includeLabels } });
+      if (excludeLabels.length) query.$and.push({ labels: { $nin: excludeLabels } });
+
       if (requiresIndexed) {
         query.$and.push({ $or: [{ 'mutations.Website.noIndex': { $exists: false } }, { 'mutations.Website.noIndex': false }] });
       }

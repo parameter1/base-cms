@@ -533,10 +533,12 @@ input AllPublishedContentQueryInput {
   excludeContentTypes: [ContentType!] = []
   "Limit results to items matching none of these ids."
   excludeContentIds: [Int!] = []
-  "Limit results to items matching at least one of these ids."
+  "Limit results to items having at least one of these labels."
+  excludeLabels: [String!]! = []
+  "Limit results to items that have at least one of these taxonomy ids."
   includeTaxonomyIds: [Int!] = []
   "Limit results to items matching at least one of these labels."
-  includeLabels: [String!] = []
+  includeLabels: [String!]! = []
   "Limit results to items that have a primary image."
   requiresImage: Boolean = false
   "Include child sections when limiting by primary section id."
