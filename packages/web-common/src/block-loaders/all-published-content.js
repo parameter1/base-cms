@@ -14,6 +14,7 @@ const date = (v) => (v instanceof Date ? v.valueOf() : v);
  * @param {number} params.sectionId The section ID.
  * @param {number[]} [params.includeTaxonomyIds] An array of taxonomies to include.
  * @param {string[]} [params.includeLabels] An array of labels to include.
+ * @param {string[]} [params.excludeLabels] An array of labels to exclude.
  * @param {string[]} [params.contentTypes] An array of content types to include.
  * @param {boolean} [params.withSite] Whether the content must belong to the current site.
  * @param {boolean} [params.requiresImage] Whether the content must have an image.
@@ -47,6 +48,7 @@ module.exports = async (apolloClient, {
   includeTaxonomyIds,
 
   includeLabels,
+  excludeLabels,
 
   excludeContentIds,
 
@@ -69,6 +71,7 @@ module.exports = async (apolloClient, {
     excludeContentTypes,
     includeTaxonomyIds,
     includeLabels,
+    excludeLabels,
     excludeContentIds,
     siteId,
     withSite,
