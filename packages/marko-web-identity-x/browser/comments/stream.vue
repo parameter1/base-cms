@@ -49,8 +49,11 @@
         />
       </div>
 
-      <h5 v-if="latestCommentsHeader && comments.length" :class="element('latest-comments')">
-        {{ latestCommentsHeader }} ({{ totalCount }})
+      <h5
+        v-if="latestCommentsHeader && approvedComments.length"
+        :class="element('latest-comments')"
+      >
+        {{ latestCommentsHeader }} ({{ approvedComments.length }})
       </h5>
     </div>
     <div v-if="isLoading" :class="element('loading')">
@@ -59,12 +62,12 @@
     <div v-else-if="error" :class="element('error')">
       Unable to load comments: {{ error.message }}
     </div>
-    <div v-else-if="comments.length === 0" :class="element('no-posts')">
+    <div v-else-if="approveComments.length === 0" :class="element('no-posts')">
       {{ noCommentsMessage }}
     </div>
     <div v-else :class="element('posts')">
       <div
-        v-for="comment in comments"
+        v-for="comment in approvedComments"
         :key="comment.id"
         :class="element('post')"
       >
@@ -230,6 +233,12 @@ export default {
      */
     hasActiveUser() {
       return this.activeUser && this.activeUser.email;
+    },
+    /**
+     *
+     */
+    approvedComments() {
+      return this.comments.filter((comment) => comment.approved);
     },
   },
 
