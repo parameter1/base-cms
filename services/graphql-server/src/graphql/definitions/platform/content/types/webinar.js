@@ -13,6 +13,7 @@ type ContentWebinar implements Content & Media @applyInterfaceFields {
   transcript: String @projection
   linkUrl: String @projection
   sponsors(input: ContentWebinarSponsorsInput = {}): ContentCompanyConnection! @projection @refMany(model: "platform.Content" criteria: "contentCompany")
+  speakers(input: ContentWebinarSpeakersInput = {}): ContentContactConnection! @projection @refMany(model: "platform.Content" criteria: "contentContact")
 
   # GraphQL only fields
   starts(input: FormatDate = {}): String @projection(localField: "startDate") @momentFormat(localField: "startDate")
@@ -37,6 +38,12 @@ input ContentWebinarQueryInput {
 input ContentWebinarSortInput {
   field: ContentSortField = id
   order: SortOrder = desc
+}
+
+input ContentWebinarSpeakersInput {
+  status: ModelStatus = active
+  sort: ContentWebinarSortInput = {}
+  pagination: PaginationInput = {}
 }
 
 input ContentWebinarSponsorsInput {
