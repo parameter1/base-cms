@@ -3,6 +3,6 @@ $ const elementName = input.name || "brand";
 $ const classNames = [`${blockName}__${elementName}`, input.class];
 $ const href = input.href || "/";
 
-<marko-web-link href=(input.href || "/") class=classNames>
+<marko-web-link href=(input.href || "/") class=classNames target=input.target>
   <${input.renderBody} />
 </marko-web-link>
