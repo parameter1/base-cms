@@ -62,7 +62,7 @@
     <div v-else-if="error" :class="element('error')">
       Unable to load comments: {{ error.message }}
     </div>
-    <div v-else-if="approveComments.length === 0" :class="element('no-posts')">
+    <div v-else-if="approvedComments.length === 0" :class="element('no-posts')">
       {{ noCommentsMessage }}
     </div>
     <div v-else :class="element('posts')">
