@@ -25,7 +25,8 @@
       "@index": "number",
       "@indexes": "array",
       "@name": "string",
-      "@aliases": "array"
+      "@aliases": "array",
+      "@section-name": "string"
     }
   },
   "<theme-company-inquiry-form-block>": {
@@ -54,7 +55,8 @@
       "@index": "number",
       "@indexes": "array",
       "@name": "string",
-      "@aliases": "array"
+      "@aliases": "array",
+      "@section-name": "string"
     },
     "<node>": {},
     "<query-params>": {},
@@ -160,7 +162,8 @@
       "@index": "number",
       "@indexes": "array",
       "@name": "string",
-      "@aliases": "array"
+      "@aliases": "array",
+      "@section-name": "string"
     },
     "@with-native-x-section": "boolean"
   },

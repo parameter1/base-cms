@@ -34,7 +34,8 @@
       "@index": "number",
       "@indexes": "array",
       "@name": "string",
-      "@aliases": "array"
+      "@aliases": "array",
+      "@section-name": "string"
     },
     "@with-native-x-section": "boolean"
   }
