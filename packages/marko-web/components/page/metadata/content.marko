@@ -73,9 +73,6 @@ fragment ContentPageMetadataFragment on Content {
     mobile
     publicEmail
   }
-  ... on ContentCompany {
-    email
-  }
   images(input:{ pagination: { limit: 0 }, sort: { order: values } }) {
     edges {
       node {
