@@ -12,7 +12,8 @@
       "@index": "number",
       "@indexes": "number",
       "@name": "string",
-      "@aliases": "array"
+      "@aliases": "array",
+      "@section-name": "string"
     },
     "@with-native-x-section": "boolean",
     "@nodes": "array",
