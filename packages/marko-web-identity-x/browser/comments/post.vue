@@ -3,7 +3,6 @@
     <div :class="element('header')">
       <div :class="element('display-name')">
         <span>Posted by {{ displayName }}</span>
-        <span v-if="!approved">(pending moderation)</span>
       </div>
       <div>
         <span :class="element('created-at')">
