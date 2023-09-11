@@ -4,9 +4,7 @@
       <h5 class="content-page-gate__title">
         {{ title }}
       </h5>
-      <p v-if="!didSubmit">
-        {{ callToAction }}
-      </p>
+      <p v-if="!didSubmit" v-html="callToAction" />
       <form v-if="!didSubmit" @submit.prevent="handleSubmit">
         <fieldset :disabled="isLoading">
           <div v-for="(row, ridx) in fieldRows" :key="ridx" class="row">
