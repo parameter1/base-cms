@@ -1456,10 +1456,15 @@ module.exports = {
         ],
       };
 
+      const $or = [
+        { unpublished: { $gt: now } },
+        { unpublished: { $exists: false } },
+      ];
+
       if (excludeSectionIds.length) {
         $elemMatch.$and.push({ sectionId: { $nin: excludeSectionIds } });
       }
-      const query = { sectionQuery: { $elemMatch }, $and: [] };
+      const query = { sectionQuery: { $elemMatch }, $and: [], $or };
       if (requiresImage) query.primaryImage = { $exists: true };
       if (includeContentTypes.length) {
         query.$and.push({ type: { $in: includeContentTypes } });
