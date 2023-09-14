@@ -64,6 +64,41 @@
 
   &__form-wrapper {
     padding-bottom: 30px;
+    max-width: 600px;
+    margin-right: auto;
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      label {
+        display: none;
+      }
+      .form-group {
+        flex: 1;
+        flex-grow: 1;
+        max-width: 318px
+      }
+      .btn {
+        flex-shrink: 1;
+        margin-left: map-get($spacers, 3);
+        padding: 10px;
+        font-weight: $font-weight-bolder;
+        order: 2;
+        align-self: flex-start;
+      }
+      .form-group ~ .text-muted {
+        order: 4;
+        flex: 0 0 100%;
+        font-size: 12px;
+      }
+      &__name {
+        font-size: 28px;
+      }
+      @include media-breakpoint-down(sm) {
+        &__name {
+          font-size: 18px;
+        }
+      }
+    }
     @include media-breakpoint-down(sm) {
       max-width: 450px;
       margin-right: auto;
@@ -120,6 +155,7 @@
   &__close-container {
     right: 0;
     display: flex;
+    flex-shrink: 1;
   }
 
   &__close {
@@ -470,5 +506,48 @@
       color: $gray-700;
       text-decoration: underline;
     }
+  }
+}
+
+.site-newsletter-menu {
+  $self: &;
+  &__form-wrapper {
+    max-width: 600px;
+    margin-right: auto;
+
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      label {
+        display: none;
+      }
+      #newsletter-menu-email {
+        flex: 1;
+        flex-grow: 1;
+      }
+      .btn {
+        flex-shrink: 1;
+        margin-left: map-get($spacers, 3);
+        padding: 10px;
+        order: 2;
+        align-self: flex-start;
+      }
+      .form-group ~ .text-muted {
+        order: 4;
+        flex: 0 0 100%;
+        font-size: 12px;
+      }
+    }
+    &__name {
+      font-size: 28px;
+    }
+    @include media-breakpoint-down(sm) {
+      &__name {
+        font-size: 18px;
+      }
+    }
+  }
+  &__close-container{
+    flex-shrink: 1;
   }
 }
