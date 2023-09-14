@@ -11,7 +11,7 @@
             :class="element('image')"
           >
         </div>
-        <div :class="element('form-wrapper', ['col-12', 'col-md-6', 'col-lg-5'])">
+        <div :class="element('form-wrapper', ['col-12', 'col-md-6', 'col-lg-7'])">
           <div v-if="!submitted" :class="element('name')">
             {{ name }}
           </div>
@@ -42,7 +42,7 @@
             @focus="$emit('focus')"
           />
         </div>
-        <div :class="element('close-container', ['d-none', 'd-md-flex', 'col-md-1', 'col-lg-3'])">
+        <div :class="element('close-container', ['d-none', 'd-md-flex', 'col-md-1', 'col-lg-1'])">
           <close-button
             :class-name="element('close').join(' ')"
             target-button=".site-navbar__idx-newsletter-toggler"
