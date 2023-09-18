@@ -22,6 +22,7 @@ import LinkedinIcon from './icons/linkedin.vue';
 import PinterestIcon from './icons/pinterest.vue';
 import PrintIcon from './icons/print.vue';
 import TwitterIcon from './icons/twitter.vue';
+import TwitterXIcon from './icons/twitter-x.vue';
 
 export default {
   components: {
@@ -31,6 +32,7 @@ export default {
     PinterestIcon,
     PrintIcon,
     TwitterIcon,
+    TwitterXIcon,
   },
 
   props: {
