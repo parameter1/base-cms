@@ -44,6 +44,15 @@ fragment SectionFeedBlockContentFragment on Content {
         }
       }
     }
+    speakers {
+      edges {
+        node {
+          id
+          name
+          title
+        }
+      }
+    }
   }
   ... on ContentEvent {
     startDate
