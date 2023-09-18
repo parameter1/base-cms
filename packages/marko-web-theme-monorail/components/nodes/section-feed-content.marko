@@ -17,6 +17,7 @@ $ const linkAttrs = getAsObject(input, "linkAttrs");
 $ const withBody = defaultValue(input.withBody, false);
 $ const withAddress = defaultValue(input.withAddress, (content.type === "company"));
 $ const withDates = defaultValue(input.withDates, true);
+$ const withSpeakers = defaultValue(input.withSpeakers, true);
 $ const dateFormat = defaultValue(input.dateFormat, "MMMM D, YYYY");
 $ const multiDateFormats = input.multiDateFormats;
 
@@ -145,6 +146,23 @@ $ const blockName = "section-feed-content-node";
           format=dateFormat
         />
       </else-if>
+
+      <if(withSpeakers && getAsArray(content, 'speakers.edges').length && content.type === 'webinar')>
+        <marko-web-element block-name=blockName name="content-speakers">
+          <marko-web-obj-nodes|{ node, index, length }| type="content" block-name=blockName obj=content field="speakers" tag="span">
+            <if(index === 0)>
+              <marko-web-element tag="span" block-name=blockName name="content-speakers-label">
+                <if(length === 1)>Speaker: </if>
+                <else>Speakers: </else>
+              </marko-web-element>
+            </if>
+            <marko-web-content-name tag="span" block-name=blockName obj=node link=false />
+            <span> </span>
+            <marko-web-content-title tag="span" block-name=blockName obj=node />
+            <if(index + 1 !== length)>, </if>
+          </marko-web-obj-nodes>
+        </marko-web-element>
+      </if>
 
       <marko-web-element block-name=blockName name="content-sponsors">
         <marko-web-obj-nodes|{ node, index, length }| type="content" block-name=blockName obj=content field="sponsors" tag="span">
