@@ -63,7 +63,7 @@
     </template>
 
     <div v-else>
-      <p>{{ callToActionLoggedOut }}</p>
+      <p v-html="callToActionLoggedOut" />
       <login
         :additional-event-data="additionalEventData"
         :source="loginSource"
