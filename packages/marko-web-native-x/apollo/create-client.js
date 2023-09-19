@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const { get } = require('@parameter1/base-cms-object-path');
 
 const getOperationName = (string) => {
   const matches = /query\s+([a-z0-9]+)[(]?.+{/gi.exec(string);
@@ -11,7 +12,7 @@ module.exports = (uri) => Object.create({
     const body = JSON.stringify({
       operationName: getOperationName(query),
       variables,
-      query,
+      query: get(query, 'loc.source.body', query),
     });
 
     const res = await fetch(uri, {
