@@ -231,7 +231,7 @@ export default {
       if (this.lang === 'es') {
         return `<h4>Falta muy poco!</h4>
         <p>
-          Enviamos un correo a <em>${this.email}</em> con su enlace de inicio de sesión único.
+          Enviamos un correo a <em>${this.email}</em> con su enlace de inicio de sesión único(caducó en una hora).
           Para terminar de  ${this.actionText || 'logging in'}, abra el mensaje de correo electrónico y haga clic en el enlace que contiene.
         </p>
         <p>
@@ -242,7 +242,7 @@ export default {
       }
       return `<h4>Almost Done!</h4>
       <p>
-        We just sent an email to <em>${this.email}</em> with your one-time login link.
+        We just sent an email to <em>${this.email}</em> with your one-time login link(expired in one hour).
         To finish ${this.actionText || 'logging in'}, open the email message and click the link within.
       </p>
       <p>
