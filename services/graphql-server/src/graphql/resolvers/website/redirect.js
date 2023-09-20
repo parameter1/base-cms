@@ -49,9 +49,8 @@ module.exports = {
       const siteOp = siteOps[siteQueryOperator];
       const query = {
         $or: [
-          { siteId: { [siteOp]: siteId }, from },
-          { siteId: { [siteOp]: siteId }, from: from.toLowerCase() },
-          { siteId: { [siteOp]: siteId }, from: { $regex: new RegExp(`${from.toLowerCase()}\\?${queryParams}`, 'i') } },
+          { siteId: { [siteOp]: siteId }, from: { $regex: new RegExp(`${from}`, 'i') } },
+          { siteId: { [siteOp]: siteId }, from: { $regex: new RegExp(`${from}\\?${queryParams}`, 'i') } },
         ],
       };
       const redirect = await basedb.findOne('website.Redirects', query);
