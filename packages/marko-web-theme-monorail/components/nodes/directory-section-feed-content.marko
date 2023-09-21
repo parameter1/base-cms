@@ -20,6 +20,9 @@ $ const displayImage = defaultValue(input.displayImage, true);
 $ const isFeatured = defaultValue(input.isFeatured, false);
 $ const displayFeaturedTeaser = defaultValue(input.displayFeaturedTeaser, true);
 $ const requestQuote = defaultValue(input.requestQuote, true);
+$ const displayFeaturedSocialLinks = defaultValue(input.displayFeaturedSocialLinks, false);
+$ const socialLinks = getAsArray(content, "socialLinks");
+$ const showSocial = socialLinks.length;
 // linkOffsite is an object like the following:
 /**
   {
@@ -87,6 +90,18 @@ $ const blockName = "section-feed-content-node";
             >
               ${i18n("Website")} &raquo;
             </marko-web-content-website>
+            <if(displayFeaturedSocialLinks && showSocial)>
+              <theme-content-contact-details-section block-name=blockName modifiers=["social-links"]>
+                <for|item| of=socialLinks>
+                  <theme-social-icon-link
+                    label=item.label
+                    provider=item.provider
+                    href=item.url
+                    modifiers=["dark", "lg"]
+                  />
+                </for>
+              </theme-content-contact-details-section>
+            </if>
           </marko-web-block>
         </marko-web-block>
       </if>
