@@ -71,7 +71,7 @@ fragment ContentPageMetadataFragment on Content {
     website
     title
     mobile
-    publicEmail
+    email: publicEmail
   }
   images(input:{ pagination: { limit: 0 }, sort: { order: values } }) {
     edges {
