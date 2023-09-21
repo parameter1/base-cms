@@ -12,7 +12,7 @@
         >
       </div>
       <div class="download-related__title">
-        <h3>{{ item.name }}</h3>
+        <h3 v-html="item.name" />
         <small v-if="item.company">
           from <strong>{{ item.company.name }}</strong>
         </small>
