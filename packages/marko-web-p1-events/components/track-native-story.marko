@@ -3,25 +3,22 @@ import { get } from "@parameter1/base-cms-object-path";
 $ const { site } = out.global;
 $ const { story } = input;
 $ const config = site.getAsObject("p1events");
-$ const ns = (type) => {
-  const [,tenantKey] = site.get('nativeX.uri').match(/\/\/(\w+)\.native-x/i);
-  return `native-x.${tenantKey}.${type}`;
-};
+$ const nxConfig = site.get("nativeX");
 
-<if(config.enabled)>
+<if(config.enabled && nxConfig && nxConfig.enabled)>
   $ const { advertiser } = story;
   $ const entity = {
     id: story.id,
-    ns: ns(`story`),
+    ns: nxConfig.getEntityFor("story"),
     name: story.title,
-    props: { type: 'story', published: get(story, 'publishedAt') },
+    props: { type: "story", published: get(story, "publishedAt") },
     ...(advertiser && advertiser.id && {
-      refs: { advertiser: { id: advertiser.id, ns: ns("advertiser"), name: advertiser.name } },
+      refs: { advertiser: { id: advertiser.id, ns: nxConfig.getEntityFor("advertiser"), name: advertiser.name } },
     }),
   };
   $ const data = {
-    action: 'View',
-    category: 'Content',
+    action: "View",
+    category: "Content",
     entity,
   };
   <script>
