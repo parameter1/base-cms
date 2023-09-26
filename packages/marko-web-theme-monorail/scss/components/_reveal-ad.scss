@@ -14,6 +14,7 @@ body .document-container > .page:first-of-type {
   // excluded the following page types as they dont use reskin ads
   &.page--search,
   &.page--authenticate,
+  &.page--change-email,
   &.page--login,
   &.page--logout,
   &.page--profile,
