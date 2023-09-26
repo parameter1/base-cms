@@ -10,11 +10,12 @@ class NativeXConfiguration {
    * @param {boolean} [params.enabled=true]
    * @param {string} [params.defaultAlias=default]
    */
-  constructor(uri, { enabled = true, defaultAlias = 'default' } = {}) {
+  constructor(uri, { enabled = true, defaultAlias = 'default', tenantKey } = {}) {
     if (!uri) throw new Error('Unable to configure NativeX: no URI was provided.');
     this.uri = uri;
     this.enabled = enabled;
     this.defaultAlias = defaultAlias;
+    this.tenantKey = tenantKey;
 
     this.client = createClient(this.getGraphQLUri());
     this.placements = {};
@@ -75,6 +76,13 @@ class NativeXConfiguration {
 
   isEnabled() {
     return this.enabled;
+  }
+
+  getTenantKey() {
+    const { tenantKey } = this;
+    if (tenantKey) return tenantKey;
+    const [, key] = this.uri.match(/\/\/(\w+)\.native-x/i);
+    return key;
   }
 }
 
