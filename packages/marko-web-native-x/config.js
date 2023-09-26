@@ -84,6 +84,11 @@ class NativeXConfiguration {
     const [, key] = this.uri.match(/\/\/(\w+)\.native-x/i);
     return key;
   }
+
+  getEntityFor(type) {
+    const tenantKey = this.getTenantKey();
+    return `native-x.${tenantKey}.${type}`;
+  }
 }
 
 module.exports = NativeXConfiguration;
