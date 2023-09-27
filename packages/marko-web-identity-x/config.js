@@ -116,7 +116,7 @@ class IdentityXConfiguration {
     const userData = { user_id: user.id };
     Object.entries(questions).forEach(([key, value]) => {
       const select = user.customSelectFieldAnswers.find(({id: qId}) => qId === value)
-      if (select && select.answers.length) userData[key] = select.answers.map(({ label }) => label).join("| ");
+      if (select && select.answers.length) userData[key] = select.answers.map(({ label }) => label).join("|");
       const boolean = user.customBooleanFieldAnswers.find(({id: qId}) => qId === value)
       if (boolean && boolean.hasAnswered) userData[key] =  boolean.answer;
     });
