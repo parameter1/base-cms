@@ -110,7 +110,7 @@ class IdentityXConfiguration {
     return this.getAsArray('requiredServerFields');
   }
 
-  getGTMUserFieldsData(user) {
+  getGTMUserData(user) {
     if (!user) return {};
     const questions = this.getAsObject('gtmUserFields');
     const userData = { user_id: user.id };
