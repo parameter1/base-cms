@@ -54,7 +54,7 @@ fragment ActiveUserFragment on AppUser {
   }) {
     id
     hasAnswered
-    answers { id externalIdentifier writeInValue }
+    answers { id label externalIdentifier writeInValue }
     field {
       id
       label

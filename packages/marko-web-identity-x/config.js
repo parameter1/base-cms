@@ -29,6 +29,7 @@ class IdentityXConfiguration {
     hiddenFields = ['city', 'street', 'addressExtra', 'phoneNumber'],
     defaultCountryCode,
     booleanQuestionsLabel,
+    gtmUserFields = {},
     onHookError,
     ...rest
   } = {}) {
@@ -45,6 +46,7 @@ class IdentityXConfiguration {
       hiddenFields,
       defaultCountryCode,
       booleanQuestionsLabel,
+      gtmUserFields,
       onHookError: (e) => {
         if (process.env.NODE_ENV === 'development') {
           log('ERROR IN IDENTITY-X HOOK', e);
@@ -106,6 +108,19 @@ class IdentityXConfiguration {
 
   getRequiredServerFields() {
     return this.getAsArray('requiredServerFields');
+  }
+
+  getGTMUserData(user) {
+    if (!user) return {};
+    const questions = this.getAsObject('gtmUserFields');
+    const userData = { user_id: user.id };
+    Object.entries(questions).forEach(([key, value]) => {
+      const select = user.customSelectFieldAnswers.find(({ id }) => id === value);
+      if (select && select.answers.length) userData[key] = select.answers.map(({ label }) => label).join('|');
+      const boolean = user.customBooleanFieldAnswers.find(({ id }) => id === value);
+      if (boolean && boolean.hasAnswered) userData[key] = boolean.answer;
+    });
+    return userData;
   }
 
   getRequiredClientFields() {
