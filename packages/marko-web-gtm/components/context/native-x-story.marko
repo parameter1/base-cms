@@ -1,0 +1,9 @@
+import { isFunction, warn } from "@parameter1/base-cms-utils";
+import { nativeXStoryBuilder } from "../../context";
+
+$ const { req } = out.global;
+$ const builder = isFunction(input.builder) ? input.builder : nativeXStoryBuilder;
+$ const type = input.type || "content";
+
+$ const context = builder({ type, obj: input.obj, req });
+<${input.renderBody} context=context />

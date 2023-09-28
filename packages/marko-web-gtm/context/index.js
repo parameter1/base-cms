@@ -4,6 +4,7 @@ const websiteSectionBuilder = require('./website-section');
 const dynamicPageBuilder = require('./dynamic-page');
 const magazineIssueBuilder = require('./magazine-issue');
 const magazinePublicationBuilder = require('./magazine-publication');
+const nativeXStoryBuilder = require('./native-x-story');
 
 module.exports = {
   defaultBuilder,
@@ -12,4 +13,5 @@ module.exports = {
   dynamicPageBuilder,
   magazineIssueBuilder,
   magazinePublicationBuilder,
+  nativeXStoryBuilder,
 };
