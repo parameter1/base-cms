@@ -415,7 +415,8 @@ export default {
       const { activeCustomFieldIds: ids } = this;
       const { customBooleanFieldAnswers } = this.user;
       const answers = isArray(customBooleanFieldAnswers) ? customBooleanFieldAnswers : [];
-      return answers.filter(ids.length > 0 ? ({ field }) => ids.includes(field.id) : () => true);
+      return answers.filter(ids.length > 0 ? ({ field }) => ids.includes(field.id) : () => true)
+      .sort(this.sortByActiveCustomFieldId);
     },
 
     /**
@@ -425,7 +426,8 @@ export default {
       const { activeCustomFieldIds: ids } = this;
       const { customSelectFieldAnswers } = this.user;
       const answers = isArray(customSelectFieldAnswers) ? customSelectFieldAnswers : [];
-      return answers.filter(ids.length > 0 ? ({ field }) => ids.includes(field.id) : () => true);
+      return answers.filter(ids.length > 0 ? ({ field }) => ids.includes(field.id) : () => true)
+      .sort(this.sortByActiveCustomFieldIds);
     },
 
     showAddressBlock() {
@@ -562,6 +564,12 @@ export default {
 
     customSelectIsRequired(fieldAnswer) {
       return this.requiredFields.includes(fieldAnswer.field.id) || fieldAnswer.field.required;
+    },
+
+    sortByActiveCustomFieldIds(a, b) {
+      const { activeCustomFieldIds: ids } = this;
+      const sortingArr = ids.length > 0 ? ids : [];
+      return sortingArr.indexOf(a.field.id) - sortingArr.indexOf(a.field.id);
     },
 
     async handleReload() {
