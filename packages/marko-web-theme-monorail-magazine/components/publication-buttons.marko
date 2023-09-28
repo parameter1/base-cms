@@ -2,7 +2,7 @@ import { getAsArray, getAsObject } from "@parameter1/base-cms-object-path";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 
 $ const { site } = out.global;
-$ const buttons = input.buttons || defaultValue(site.get("magazine.buttons"), ["subscribe", "digital-edition", "pdf", "archives", "renewal", "reprints", "e-inquiry"]);
+$ const buttons = input.buttons || defaultValue(site.get("magazine.buttons"), ["subscribe", "digital-edition", "pdf", "archives", "change-address", "renewal", "cancel", "reprints", "e-inquiry"]);
 
 $ const link = { class: "btn btn-primary" };
 $ const targetBlankLink = {
@@ -22,6 +22,16 @@ $ const issue = getAsObject(input, "issue");
     <marko-web-magazine-publication-renewal-url tag=null obj=issue.publication link=targetBlankLink>
       Renew
     </marko-web-magazine-publication-renewal-url>
+  </if>
+  <if(button === "cancel")>
+    <marko-web-magazine-publication-cancel-url tag=null obj=issue.publication link=targetBlankLink>
+      Cancel
+    </marko-web-magazine-publication-cancel-url>
+  </if>
+  <if(button === "change-address")>
+    <marko-web-magazine-publication-change-address-url tag=null obj=issue.publication link=targetBlankLink>
+      Change Address
+    </marko-web-magazine-publication-change-address-url>
   </if>
   <if(button === "digital-edition")>
     <marko-web-magazine-issue-digital-edition-url tag=null obj=issue link=targetBlankLink>
@@ -47,10 +57,5 @@ $ const issue = getAsObject(input, "issue");
     <marko-web-magazine-publication-einquiry-url tag=null obj=issue.publication link=targetBlankLink>
       E-Inquiry
     </marko-web-magazine-publication-einquiry-url>
-  </if>
-  <if(button === "change-address")>
-    <marko-web-magazine-publication-change-address-url tag=null obj=issue.publication link=targetBlankLink>
-      Change Address
-    </marko-web-magazine-publication-change-address-url>
   </if>
 </for>
