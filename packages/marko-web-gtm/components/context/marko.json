@@ -34,5 +34,11 @@
     "@id": "string",
     "@builder": "function",
     "@query-fragment": "expression"
+  },
+  "<marko-web-gtm-native-x-story-context>": {
+    "template": "./native-x-story.marko",
+    "@type": "string",
+    "@obj": "object",
+    "@builder": "function"
   }
 }
