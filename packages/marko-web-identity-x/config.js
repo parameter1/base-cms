@@ -113,7 +113,7 @@ class IdentityXConfiguration {
   getGTMUserData(user) {
     if (!user) return {};
     const questions = this.getAsObject('gtmUserFields');
-    const userData = { user_id: user.id };
+    const userData = { id: user.id };
     Object.entries(questions).forEach(([key, value]) => {
       const select = user.customSelectFieldAnswers.find(({ id }) => id === value);
       if (select && select.answers.length) userData[key] = select.answers.map(({ label }) => label).join('|');
