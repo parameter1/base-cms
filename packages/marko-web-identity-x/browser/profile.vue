@@ -569,7 +569,7 @@ export default {
     sortByActiveCustomFieldIds(a, b) {
       const { activeCustomFieldIds: ids } = this;
       const sortingArr = ids.length > 0 ? ids : [];
-      return sortingArr.indexOf(a.field.id) - sortingArr.indexOf(a.field.id);
+      return sortingArr.indexOf(a.field.id) - sortingArr.indexOf(b.field.id);
     },
 
     async handleReload() {
