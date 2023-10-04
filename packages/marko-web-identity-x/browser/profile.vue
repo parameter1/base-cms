@@ -416,7 +416,7 @@ export default {
       const { customBooleanFieldAnswers } = this.user;
       const answers = isArray(customBooleanFieldAnswers) ? customBooleanFieldAnswers : [];
       return answers.filter(ids.length > 0 ? ({ field }) => ids.includes(field.id) : () => true)
-      .sort(this.sortByActiveCustomFieldId);
+        .sort(this.sortByActiveCustomFieldId);
     },
 
     /**
@@ -427,7 +427,7 @@ export default {
       const { customSelectFieldAnswers } = this.user;
       const answers = isArray(customSelectFieldAnswers) ? customSelectFieldAnswers : [];
       return answers.filter(ids.length > 0 ? ({ field }) => ids.includes(field.id) : () => true)
-      .sort(this.sortByActiveCustomFieldIds);
+        .sort(this.sortByActiveCustomFieldIds);
     },
 
     showAddressBlock() {
