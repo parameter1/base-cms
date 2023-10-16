@@ -6,6 +6,7 @@ import defaultBuildStructuredData from "./google-structured-data/content";
 
 <!-- @todo This data should generated and saved to the content object as flat data, so no relationships are required. -->
 
+$ const { config } = out.global;
 $ const { id, structuredDataQueryFragment } = input;
 $ const { spreadFragmentName, processedFragment } = extractFragmentData(structuredDataQueryFragment);
 $ const queryFragment = gql`
@@ -37,6 +38,9 @@ fragment ContentPageMetadataFragment on Content {
   ... on ContentVideo {
     embedSrc
     transcript
+  }
+  primarySite {
+    id
   }
   ... on ContentPodcast {
     fileSrc
@@ -99,7 +103,7 @@ $ const contentGatingHandler = isFunction(globalContentGatingHandler) ? globalCo
       description: get(node, "metadata.description"),
       canonicalPath: get(node, "siteContext.path"),
       canonicalUrl: get(node, "siteContext.canonicalUrl"),
-      noIndex: get(node, "siteContext.noIndex"),
+      noIndex: get(node, "siteContext.noIndex") || config.website("id") !== get(node, "primarySite.id"),
       imageSrc: get(node, "metadata.image.src"),
     };
     $ const publishedDate = get(node, "metadata.publishedDate");
