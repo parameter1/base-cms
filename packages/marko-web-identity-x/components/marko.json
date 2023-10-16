@@ -66,6 +66,18 @@
     "@return-to-delay": "number",
     "@button-label": "string"
   },
+  "<marko-web-identity-x-form-progressive>": {
+    "template": "./form-progressive.marko",
+    "@additional-event-data": "object",
+    "@login-source": {
+      "type": "string",
+      "default-value": "default"
+    },
+    "@call-to-action": "string",
+    "@reload-page-on-submit": "boolean",
+    "@return-to-delay": "number",
+    "@button-label": "string"
+  },
   "<marko-web-identity-x-comment-stream>": {
     "template": "./comment-stream.marko",
     "@additional-event-data": "object",

@@ -9,6 +9,7 @@ const Download = () => import(/* webpackChunkName: "identity-x-download" */ './d
 const Logout = () => import(/* webpackChunkName: "identity-x-logout" */ './logout.vue');
 const Login = () => import(/* webpackChunkName: "identity-x-login" */ './login.vue');
 const Profile = () => import(/* webpackChunkName: "identity-x-profile" */ './profile.vue');
+const Progressive = () => import(/* webpackChunkName: "identity-x-progressive" */ './progressive.vue');
 const CommentStream = () => import(/* webpackChunkName: "identity-x-comment-stream" */ './comments/stream.vue');
 
 const $graphql = createGraphqlClient({ uri: '/__graphql' });
@@ -25,6 +26,7 @@ export default (Browser, {
   CustomLoginComponent,
   CustomLogoutComponent,
   CustomProfileComponent,
+  CustomProgressiveComponent,
 } = {}) => {
   const AccessComponent = CustomAccessComponent || Access;
   const AuthenticateComponent = CustomAuthenticateComponent || Authenticate;
@@ -35,6 +37,7 @@ export default (Browser, {
   const LoginComponent = CustomLoginComponent || Login;
   const LogoutComponent = CustomLogoutComponent || Logout;
   const ProfileComponent = CustomProfileComponent || Profile;
+  const ProgressiveComponent = CustomProgressiveComponent || Progressive;
 
   window.IdentityX = new IdentityX();
 
@@ -48,6 +51,7 @@ export default (Browser, {
   Browser.register('IdentityXLogin', LoginComponent, { provide: { EventBus } });
   Browser.register('IdentityXLogout', LogoutComponent, { provide: { EventBus } });
   Browser.register('IdentityXProfile', ProfileComponent, { provide: { EventBus } });
+  Browser.register('IdentityXProgressive', ProgressiveComponent, { provide: { EventBus } });
 
   // Ensure the client-side IdX context is refreshed when the authentication event occurs
   EventBus.$on('identity-x-authenticated', () => window.IdentityX.refreshContext());
@@ -66,6 +70,7 @@ export default (Browser, {
     'identity-x-login-mounted',
     'identity-x-logout-mounted',
     'identity-x-profile-mounted',
+    'identity-x-progressive-mounted',
     // Actions/submissions
     'identity-x-access-submitted',
     'identity-x-authenticated',
@@ -79,6 +84,7 @@ export default (Browser, {
     'identity-x-login-link-sent',
     'identity-x-logout',
     'identity-x-profile-updated',
+    'identity-x-progressive-updated',
     // Errors
     'identity-x-access-errored',
     'identity-x-authenticate-errored',
@@ -90,6 +96,7 @@ export default (Browser, {
     'identity-x-login-errored',
     'identity-x-logout-errored',
     'identity-x-profile-errored',
+    'identity-x-progressive-errored',
   ].forEach((event) => {
     EventBus.$on(event, (args) => {
       if (!window.IdentityX) return;
