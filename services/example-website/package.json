@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-example-website",
-  "version": "4.38.3",
+  "version": "4.39.0",
   "description": "Example BaseCMS website.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@parameter1/base-cms-marko-core": "^4.36.0",
-    "@parameter1/base-cms-marko-web": "^4.38.1",
+    "@parameter1/base-cms-marko-web": "^4.39.0",
     "@parameter1/base-cms-marko-web-auth0-identity-x": "^4.38.3",
     "@parameter1/base-cms-marko-web-contact-us": "^4.5.12",
     "@parameter1/base-cms-marko-web-deferred-script-loader": "^4.5.12",
