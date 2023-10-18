@@ -2,7 +2,6 @@ const { asyncRoute } = require('@parameter1/base-cms-utils');
 const { getAsObject } = require('@parameter1/base-cms-object-path');
 const defaultFragment = require('../apollo/graphql/fragments/story');
 const buildQuery = require('../apollo/graphql/queries/story');
-const applyQueryParams = require('../utils/apply-query-params');
 
 /**
  * @param NativeXConfiguration The NativeX config
@@ -14,9 +13,12 @@ module.exports = ({
   template,
   queryFragment = defaultFragment,
 } = {}) => asyncRoute(async (req, res) => {
-  const { query } = req;
-  if (req.path.substr(-1) === '/' && req.path.length > 1) {
-    return res.redirect(301, applyQueryParams({ path: req.path.slice(0, -1), query }));
+  const { path, url } = req;
+  if (path.substr(-1) === '/' && path.length > 1) {
+    const query = url.slice(path.length);
+    const safe = path.slice(0, -1).replace(/\/+/g, '/');
+    res.redirect(301, `${safe}${query}`);
+    return;
   }
 
   const { id } = req.params;
@@ -26,5 +28,5 @@ module.exports = ({
     variables: { input: { id, preview } },
   });
   const story = getAsObject(result, 'data.publishedStory');
-  return res.marko(template, { story });
+  res.marko(template, { story });
 });
