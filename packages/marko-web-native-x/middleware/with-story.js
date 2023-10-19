@@ -13,6 +13,14 @@ module.exports = ({
   template,
   queryFragment = defaultFragment,
 } = {}) => asyncRoute(async (req, res) => {
+  const { path, url } = req;
+  if (path.substr(-1) === '/' && path.length > 1) {
+    const query = url.slice(path.length);
+    const safe = path.slice(0, -1).replace(/\/+/g, '/');
+    res.redirect(301, `${safe}${query}`);
+    return;
+  }
+
   const { id } = req.params;
   const preview = Boolean(req.query.preview);
   const result = await config.client.query({
