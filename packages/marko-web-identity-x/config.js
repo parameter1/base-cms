@@ -25,6 +25,7 @@ class IdentityXConfiguration {
     requiredClientFields = [],
     requiredCreateFields = [],
     activeCustomFieldIds = [],
+    progressiveDelay = 24, // hours
     progressiveQuestions = [],
     defaultFieldLabels = {},
     hiddenFields = ['city', 'street', 'addressExtra', 'phoneNumber', 'mobileNumber'],
@@ -43,6 +44,7 @@ class IdentityXConfiguration {
       requiredClientFields,
       requiredCreateFields,
       activeCustomFieldIds,
+      progressiveDelay,
       progressiveQuestions,
       defaultFieldLabels,
       hiddenFields,
@@ -140,6 +142,10 @@ class IdentityXConfiguration {
 
   getActiveCustomFieldIds() {
     return this.getAsArray('activeCustomFieldIds');
+  }
+
+  getProgresiveDelay() {
+    return this.get('progressiveDelay');
   }
 
   getProgresiveQuestions() {

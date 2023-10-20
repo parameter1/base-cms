@@ -7,9 +7,8 @@ $ const title = "Progressive Profile";
 $ const description = `Tell ${config.siteName()} a little more about your self`;
 
 $ const now = new Date().getTime();
-<!-- day / hours * min * factor(4=15sec, 6=10sec) -->
-$ const days = 1 / (24 * 60);
-$ const delay = days * 24 * 60 * 60 * 1000;
+$ const hours = identityX.config.getProgresiveDelay();
+$ const delay = hours * 60 * 60 * 1000;
 
 $ const setDisplayNext = user => identityX.setAppUserCustomAttributes({
   userId: user.id,
@@ -25,11 +24,9 @@ $ const qIds = questions.map(({id}) => id);
       <@section>
         <h1 class="page-wrapper__title">${description}</h1>
         <marko-web-identity-x-context|{ user, hasUser }|>
-          $ console.log(user);
           <if(user)>
             $ const customAttributes = getAsObject(user, 'customAttributes');
             $ const { profileLastUpdated } = customAttributes;
-            $ console.log(customAttributes, profileLastUpdated, now, delay, profileLastUpdated - (now - delay))
             $ const canAsk = profileLastUpdated ? profileLastUpdated < (now - delay) : true;
             <if(canAsk)>
               <marko-web-identity-x-form-progressive
@@ -41,49 +38,14 @@ $ const qIds = questions.map(({id}) => id);
             </if>
             <else>
               $ const waitInMilliSeconds =  profileLastUpdated - (now - delay);
-              $ const waitInSec = waitInMilliSeconds / 1000;
-              $ const customAttributes = { ...user.customAttributes, waitInMilliSeconds, waitInSec };
+              $ const date = new Date(waitInMilliSeconds);
+              $ const waitInMin = `${date.getMinutes()}:${date.getSeconds()}`;
+              $ const customAttributes = { ...user.customAttributes, waitInMilliSeconds, waitInMin };
               <pre class="my-3 border p-3">${JSON.stringify({ id: user.id, customAttributes }, null, 2)}</pre>
             </else>
           </if>
         </marko-web-identity-x-context>
       </@section>
-      <!-- <@section>
-        <h1 class="page-wrapper__title">${description}</h1>
-        <marko-web-identity-x-context|{ user, hasUser }|>
-          $ console.log(user);
-          <if(user && user.customAttributes && (user.customAttributes.progressiveSeenAt < (now - delay)))>
-            <await(setDisplayNext(user))>
-              <@placeholder>
-                Updating user attributes only after ${delay} milliseconds...
-              </@placeholder>
-              <@then|updated|>
-                <pre class="my-3 border p-3">${JSON.stringify({ id: user.id, customAttributes: updated.customAttributes || {} }, null, 2)}</pre>
-              </@then>
-              <@catch|e|>
-                <div class="my-3 border p-3 text-danger border-danger">
-                  <h3>Error: ${e.name}</h3>
-                  <p>${e.message}</p>
-                </div>
-              </@catch>
-            </await>
-          </if>
-          <else-if(user)>
-            $ const waitInMilliSeconds =  user.customAttributes.progressiveSeenAt - (now-delay);
-            $ const sec = waitInMilliSeconds / 1000;
-            $ const customAttributes = { ...user.customAttributes, waitInMilliSeconds, sec };
-            <pre class="my-3 border p-3">${JSON.stringify({ id: user.id, customAttributes }, null, 2)}</pre>
-          </else-if>
-        </marko-web-identity-x-context>
-
-          <marko-web-identity-x-form-progressive
-            additional-event-data={
-              foo: "bar",
-              action: "progressiveReg",
-            }
-          />
-
-      </@section> -->
     </marko-web-page-wrapper>
   </@page>
 </marko-web-default-page-layout>
