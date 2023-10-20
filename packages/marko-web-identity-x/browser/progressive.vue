@@ -151,20 +151,11 @@
     <div v-else>
       <div class="success-message">
         <div class="success-message__title">
-          Your profile has been saved.
+          Your profile has been update.
         </div>
-        <div v-if="returnTo" class="success-message__message">
+        <div class="success-message__message">
           <p>
-            You will be automatically redirected in {{ returnToDelay / 1000 }} seconds.
-          </p>
-          <p>
-            To continue now,
-            <a :href="returnTo">click here</a>.
-          </p>
-        </div>
-        <div v-else class="success-message__message">
-          <p>
-            To continue modifying your profile,
+            To finsih filling out your profile,
             <button class="" type="button" @click="handleReload()">
               click here
             </button>.
