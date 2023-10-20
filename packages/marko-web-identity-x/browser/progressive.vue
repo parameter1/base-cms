@@ -81,7 +81,6 @@
         </div>
 
         <address-block
-          v-if="showAddressBlock"
           :user="user"
           :street="streetSettings"
           :address-extra="addressExtraSettings"
@@ -361,12 +360,12 @@ export default {
      */
     currentProgressiveQuestions() {
       const ids = this.progressiveFields.map(({ id }) => id);
-      console.warn('currentProgressiceIds: ', ids);
+      const addressDependent = ['postalCode'];
       const unAnsweredIds = ids.filter((id) => {
         if (this.activeUser[id]) return false;
+        if (addressDependent.includes(id)) return this.showAddressBlock;
         if (this.activeUser.customBooleanFieldAnswers && this.activeUser.customBooleanFieldAnswers
           .filter(({ id: answerId, hasAnswered }) => {
-            console.warn('filter: ', id, answerId, hasAnswered);
             if (id === answerId && !hasAnswered) return true;
             return false;
           }).length) return true;
@@ -377,7 +376,6 @@ export default {
           }).length) return true;
         return true;
       });
-      // console.warn('hittingCurrentPro: ', ids, this.user);
       return [unAnsweredIds[0]];
     },
 

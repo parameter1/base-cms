@@ -40,6 +40,15 @@ module.exports = new IdentityXConfiguration({
   },
   progressiveQuestions: [
     {
+      id: 'postalCode',
+    },
+    {
+      id: 'street',
+    },
+    {
+      id: 'countryCode',
+    },
+    {
       id: 'givenName',
     },
     {
