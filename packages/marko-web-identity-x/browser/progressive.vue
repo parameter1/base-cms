@@ -256,7 +256,7 @@ export default {
     },
     callToAction: {
       type: String,
-      default: 'To complete your profile, please fill out the required fields.',
+      default: 'Please tell us a little more about yourself',
     },
     requiredServerFields: {
       type: Array,
