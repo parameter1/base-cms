@@ -38,6 +38,7 @@ module.exports = new IdentityXConfiguration({
     phoneNumber: 'Mobile Phone',
     organization: 'Company Name',
   },
+  progressiveDelay: 0.25, // hours
   progressiveQuestions: [
     {
       id: 'postalCode',
