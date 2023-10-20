@@ -38,6 +38,21 @@ module.exports = new IdentityXConfiguration({
     phoneNumber: 'Mobile Phone',
     organization: 'Company Name',
   },
+  progressiveQuestions: [
+    {
+      id: 'givenName',
+    },
+    {
+      id: 'familyName',
+    },
+    {
+      id: '618a8a62934f8400ad4beb8f',
+    },
+    {
+      id: '626fe91c79d99b27544a4c9f',
+    },
+
+  ],
   hiddenFields: [],
   onHookError: (e) => {
     log('IDENTITY-X HOOK ERROR!', e);
