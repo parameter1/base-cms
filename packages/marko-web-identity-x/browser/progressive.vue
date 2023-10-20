@@ -5,25 +5,6 @@
     </p>
     <form v-if="!didSubmit" @submit.prevent="handleSubmit">
       <fieldset :disabled="isLoading">
-        <div v-if="enableChangeEmail" class="row">
-          <div class="col-12">
-            <label>Email address</label>
-            <div class="form-group">
-              <div class="input-group">
-                <input disabled :value="user.email" class="form-control">
-                <div class="input-group-append">
-                  <a
-                    :href="endpoints.changeEmail"
-                    class="btn btn-outline-secondary d-flex justify-content-center flex-column"
-                    title="Change your login email address"
-                  >
-                    Change email
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         <div class="row">
           <div
             v-if="givenNameSettings.visible"
