@@ -122,6 +122,13 @@ module.exports = asyncRoute(async (req, res) => {
 
   const { data } = await identityX.client.mutate({ mutation, variables: { input } });
   const { updateOwnAppUser: user } = data;
+
+  const now = new Date().getTime();
+  await identityX.setAppUserCustomAttributes({
+    userId: user.id,
+    attributes: { profileLastUpdated: now },
+  });
+
   await callHooksFor(identityX, 'onUserProfileUpdate', {
     additionalEventData,
     ...(additionalEventData || {}),
