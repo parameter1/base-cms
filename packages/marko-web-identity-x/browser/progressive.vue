@@ -128,7 +128,7 @@
           </div>
         </div>
 
-        <form-consent
+        <!-- <form-consent
           :user="user"
           :consent-policy="consentPolicy"
           :consent-policy-enabled="consentPolicyEnabled"
@@ -136,7 +136,7 @@
           :email-consent-request-enabled="emailConsentRequestEnabled"
           :regional-consent-policies="regionalConsentPolicies"
           :country-code="countryCode"
-        />
+        /> -->
 
         <div class="d-flex align-items-center">
           <button type="submit" class="btn btn-primary">
@@ -320,18 +320,6 @@ export default {
     booleanQuestionsLabel: {
       type: String,
       default: null,
-    },
-    returnTo: {
-      type: String,
-      default: null,
-    },
-    returnToDelay: {
-      type: Number,
-      default: 3000,
-    },
-    enableChangeEmail: {
-      type: Boolean,
-      default: false,
     },
   },
 
@@ -613,13 +601,6 @@ export default {
         if (this.reloadPageOnSubmit) {
           this.isReloadingPage = true;
           window.location.reload(true);
-        }
-
-        if (this.returnTo) {
-          this.isRedirectingPage = true;
-          setTimeout(() => {
-            window.location.href = this.returnTo;
-          }, this.returnToDelay);
         }
       } catch (e) {
         this.error = e;
