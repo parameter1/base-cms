@@ -363,14 +363,14 @@ export default {
       const ids = this.progressiveFields.map(({ id }) => id);
       console.warn('currentProgressiceIds: ', ids);
       const unAnsweredIds = ids.filter((id) => {
-        if (this.user[id]) return false;
-        if (this.user.customBooleanFieldAnswers && this.user.customBooleanFieldAnswers
+        if (this.activeUser[id]) return false;
+        if (this.activeUser.customBooleanFieldAnswers && this.activeUser.customBooleanFieldAnswers
           .filter(({ id: answerId, hasAnswered }) => {
             console.warn('filter: ', id, answerId, hasAnswered);
             if (id === answerId && !hasAnswered) return true;
             return false;
           }).length) return true;
-        if (this.user.customSelectFieldAnswers && this.user.customSelectFieldAnswers
+        if (this.activeUser.customSelectFieldAnswers && this.activeUser.customSelectFieldAnswers
           .filter(({ id: answerId, hasAnswered }) => {
             if (id === answerId && !hasAnswered) return true;
             return false;
