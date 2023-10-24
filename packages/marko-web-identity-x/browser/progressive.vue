@@ -13,7 +13,7 @@
           >
             <given-name
               v-model="user.givenName"
-              :required="givenNameSettings.required"
+              required
               :label="defaultFieldLabels.givenName"
             />
           </div>
@@ -24,7 +24,7 @@
           >
             <family-name
               v-model="user.familyName"
-              :required="familyNameSettings.required"
+              required
               :label="defaultFieldLabels.familyName"
             />
           </div>
@@ -38,7 +38,7 @@
           >
             <organization
               v-model="user.organization"
-              :required="organizationSettings.required"
+              required
               :label="defaultFieldLabels.organization"
             />
           </div>
@@ -49,7 +49,7 @@
           >
             <organization-title
               v-model="user.organizationTitle"
-              :required="organizationTitleSettings.required"
+              required
               :label="defaultFieldLabels.organizationTitle"
             />
           </div>
@@ -63,7 +63,7 @@
           >
             <phone-number
               v-model="user.phoneNumber"
-              :required="phoneNumberSettings.required"
+              required
               :label="defaultFieldLabels.phoneNumber"
             />
           </div>
@@ -74,21 +74,55 @@
           >
             <country
               v-model="user.countryCode"
-              :required="countryCodeSettings.required"
+              required
               :label="defaultFieldLabels.country"
             />
           </div>
         </div>
 
-        <address-block
-          :user="user"
-          :street="streetSettings"
-          :address-extra="addressExtraSettings"
-          :city="citySettings"
-          :region-code="regionCodeSettings"
-          :postal-code="postalCodeSettings"
-          :default-field-labels="defaultFieldLabels"
-        />
+        <div v-if="streetSettings.visible" class="row">
+          <street
+            v-model="user.street"
+            required
+            class="col-md-12"
+            :class="{ 'col-md-6': addressExtraSettings.visible }"
+            :label="defaultFieldLabels.street"
+          />
+          <address-extra
+            v-if="addressExtraSettings.visible"
+            v-model="user.addressExtra"
+            required
+            :label="defaultFieldLabels.addressExtra"
+          />
+        </div>
+
+        <div
+          v-if="citySettings.visible || regionCodeSettings.visible || postalCodeSettings.visible"
+          class="row"
+        >
+          <city
+            v-if="citySettings.visible"
+            v-model="user.city"
+            required
+            class="col-12"
+            :label="defaultFieldLabels.city"
+          />
+          <region
+            v-if="regionCodeSettings.visible"
+            v-model="user.regionCode"
+            :country-code="user.countryCode"
+            required
+            class="col-12"
+            :label="defaultFieldLabels.region"
+          />
+          <postal-code
+            v-if="postalCodeSettings.visible"
+            v-model="user.postalCode"
+            required
+            class="col-12"
+            :label="defaultFieldLabels.postalCode"
+          />
+        </div>
 
         <div v-if="customSelectFieldAnswers.length" class="row">
           <custom-select
@@ -98,7 +132,7 @@
             class="col-12"
             :class="{ 'col-md-6': (customSelectFieldAnswers.length > 1) }"
             :label="fieldAnswer.field.label"
-            :required="customSelectIsRequired(fieldAnswer)"
+            required
             :multiple="fieldAnswer.field.multiple"
             :selected="fieldAnswer.answers"
             :options="fieldAnswer.field.options"
@@ -120,14 +154,15 @@
             <custom-boolean
               :id="fieldAnswer.id"
               :message="fieldAnswer.field.label"
-              :required="fieldAnswer.field.required"
+              required
               :value="fieldAnswer.answer"
               @input="onCustomBooleanChange(fieldAnswer.id)"
             />
           </div>
         </div>
 
-        <!-- <form-consent
+        <form-consent
+          hide-when-answered
           :user="user"
           :consent-policy="consentPolicy"
           :consent-policy-enabled="consentPolicyEnabled"
@@ -135,7 +170,7 @@
           :email-consent-request-enabled="emailConsentRequestEnabled"
           :regional-consent-policies="regionalConsentPolicies"
           :country-code="countryCode"
-        /> -->
+        />
 
         <div class="d-flex align-items-center">
           <button type="submit" class="btn btn-primary">
@@ -155,7 +190,7 @@
         <div class="success-message__message">
           <p>
             To finsih filling out your profile,
-            <button class="" type="button" @click="handleReload()">
+            <button class="" type="button" href="/user/profile">
               click here
             </button>.
           </p>
@@ -178,7 +213,7 @@
       :email-consent-request="emailConsentRequest"
       :email-consent-request-enabled="emailConsentRequestEnabled"
       :regional-consent-policies="regionalConsentPolicies"
-      :required-create-fields="requiredCreateFields"
+      required
       :default-field-labels="defaultFieldLabels"
     />
   </div>
@@ -189,7 +224,11 @@ import post from './utils/post';
 import cookiesEnabled from './utils/cookies-enabled';
 import regionCountryCodes from './utils/region-country-codes';
 
-import AddressBlock from './form/address-block.vue';
+import City from './form/fields/city.vue';
+import Region from './form/fields/region.vue';
+import PostalCode from './form/fields/postal-code.vue';
+import Street from './form/fields/street.vue';
+import AddressExtra from './form/fields/address-extra.vue';
 import FormConsent from './form/consent.vue';
 import CustomBoolean from './form/fields/custom-boolean.vue';
 import CustomSelect from './form/fields/custom-select.vue';
@@ -210,7 +249,11 @@ const { isArray } = Array;
 
 export default {
   components: {
-    AddressBlock,
+    City,
+    Region,
+    PostalCode,
+    Street,
+    AddressExtra,
     CustomBoolean,
     CustomSelect,
     GivenName,
@@ -360,15 +403,25 @@ export default {
      */
     currentProgressiveQuestions() {
       const ids = this.progressiveFields.map(({ id }) => id);
-      const addressDependent = ['postalCode'];
+      const addressDependent = ['regionCode', 'postalCode'];
       const unAnsweredIds = ids.filter((id) => {
+        // filter already preansered userFields
         if (this.activeUser[id]) return false;
-        if (addressDependent.includes(id)) return this.showAddressBlock;
+
+        // Region & Postal are dependent on country being United Stages, Canada or Mexico
+        if (addressDependent.includes(id)) {
+          if (!this.countryCode || !regionCountryCodes.includes(this.countryCode)) return false;
+          return true;
+        }
+
+        // only return non answered customBooleanFields
         if (this.activeUser.customBooleanFieldAnswers && this.activeUser.customBooleanFieldAnswers
           .filter(({ id: answerId, hasAnswered }) => {
             if (id === answerId && !hasAnswered) return true;
             return false;
           }).length) return true;
+
+        // only return non answered customSelectFields
         if (this.activeUser.customSelectFieldAnswers && this.activeUser.customSelectFieldAnswers
           .filter(({ id: answerId, hasAnswered }) => {
             if (id === answerId && !hasAnswered) return true;
@@ -376,23 +429,27 @@ export default {
           }).length) return true;
         return true;
       });
-      return [unAnsweredIds[0]];
+      // for now ensure only one is returned.
+      return unAnsweredIds;
     },
 
     /**
      *
      */
     requiredFields() {
-      return [...this.currentProgressiveQuestions];
+      // for now ensure only one is returned.
+      const requiredIds = [this.currentProgressiveQuestions[0]];
+      // [...this.currentProgressiveQuestions[0]];
+      return requiredIds;
     },
 
     /**
      *
      */
     countryCode() {
-      const { user } = this;
-      if (!user) return null;
-      return user.countryCode;
+      const { activeUser } = this;
+      if (!activeUser) return null;
+      return activeUser.countryCode;
     },
 
     /**
@@ -402,8 +459,7 @@ export default {
       const { requiredFields: ids } = this;
       const { customBooleanFieldAnswers } = this.user;
       const answers = isArray(customBooleanFieldAnswers) ? customBooleanFieldAnswers : [];
-      return answers.filter(ids.length > 0 ? ({ field }) => ids.includes(field.id) : () => true)
-        .sort(this.sortByActiveCustomFieldId);
+      return answers.filter(ids.length > 0 ? ({ field }) => ids.includes(field.id) : () => true);
     },
 
     /**
@@ -411,23 +467,9 @@ export default {
      */
     customSelectFieldAnswers() {
       const { requiredFields: ids } = this;
-      console.log('customblah: ', ids)
       const { customSelectFieldAnswers } = this.user;
       const answers = isArray(customSelectFieldAnswers) ? customSelectFieldAnswers : [];
-      return answers.filter(ids.length > 0 ? ({ field }) => ids.includes(field.id) : () => true)
-        .sort(this.sortByActiveCustomFieldIds);
-    },
-
-    showAddressBlock() {
-      // Don't show at all until country is selected.
-      if (!this.countryCode) return false;
-
-      // Only show if a subfield is visible
-      if (this.citySettings.visible) return true;
-      if (this.streetSettings.visible) return true;
-      if (this.regionCodeSettings.visible) return true;
-      if (this.postalCodeSettings.visible) return true;
-      return false;
+      return answers.filter(ids.length > 0 ? ({ field }) => ids.includes(field.id) : () => true);
     },
 
     /**
@@ -435,70 +477,59 @@ export default {
      */
     givenNameSettings() {
       return {
-        required: this.requiredFields.includes('givenName'),
-        visible: !this.hiddenFields.includes('givenName') && this.currentProgressiveQuestions.includes('givenName'),
+        visible: this.requiredFields.includes('givenName'),
       };
     },
     familyNameSettings() {
       return {
-        required: this.requiredFields.includes('familyName'),
-        visible: !this.hiddenFields.includes('familyName') && this.currentProgressiveQuestions.includes('familyName'),
+        visible: this.requiredFields.includes('familyName'),
       };
     },
     organizationSettings() {
       return {
-        required: this.requiredFields.includes('organization'),
-        visible: !this.hiddenFields.includes('organization') && this.currentProgressiveQuestions.includes('organization'),
+        visible: this.requiredFields.includes('organization'),
       };
     },
     organizationTitleSettings() {
       return {
-        required: this.requiredFields.includes('organizationTitle'),
-        visible: !this.hiddenFields.includes('organizationTitle') && this.currentProgressiveQuestions.includes('organizationTitle'),
+        visible: this.requiredFields.includes('organizationTitle'),
       };
     },
     countryCodeSettings() {
       return {
-        required: this.requiredFields.includes('countryCode'),
-        visible: !this.hiddenFields.includes('countryCode') && this.currentProgressiveQuestions.includes('countryCode'),
+        visible: this.requiredFields.includes('countryCode'),
       };
     },
     streetSettings() {
       return {
-        required: this.requiredFields.includes('street'),
-        visible: !this.hiddenFields.includes('street') && this.currentProgressiveQuestions.includes('street'),
+        visible: this.requiredFields.includes('street'),
       };
     },
     addressExtraSettings() {
       return {
-        required: this.requiredFields.includes('addressExtra'),
-        visible: !this.hiddenFields.includes('addressExtra') && this.currentProgressiveQuestions.includes('addressExtra'),
+        visible: this.requiredFields.includes('addressExtra'),
       };
     },
     phoneNumberSettings() {
       return {
-        required: this.requiredFields.includes('phoneNumber'),
-        visible: !this.hiddenFields.includes('phoneNumber') && this.currentProgressiveQuestions.includes('phoneNumber'),
+        visible: this.requiredFields.includes('phoneNumber'),
       };
     },
     citySettings() {
       return {
-        required: this.requiredFields.includes('city'),
-        visible: !this.hiddenFields.includes('city') && this.currentProgressiveQuestions.includes('city'),
+        visible: this.requiredFields.includes('city'),
       };
     },
     regionCodeSettings() {
       const canRequire = regionCountryCodes.includes(this.countryCode);
       return {
-        required: canRequire && this.requiredFields.includes('regionCode'),
-        visible: canRequire && !this.hiddenFields.includes('regionCode') && this.currentProgressiveQuestions.includes('regionCode'),
+        visible: canRequire && this.requiredFields.includes('regionCode'),
       };
     },
     postalCodeSettings() {
       const canRequire = regionCountryCodes.includes(this.countryCode);
       return {
-        required: canRequire && this.requiredFields.includes('postalCode'),
-        visible: canRequire && !this.hiddenFields.includes('postalCode') && this.currentProgressiveQuestions.includes('postalCode'),
+        visible: canRequire && this.requiredFields.includes('postalCode'),
       };
     },
   },
@@ -552,17 +583,6 @@ export default {
 
     customSelectIsRequired(fieldAnswer) {
       return this.requiredFields.includes(fieldAnswer.field.id) || fieldAnswer.field.required;
-    },
-
-    sortByActiveCustomFieldIds(a, b) {
-      const { activeCustomFieldIds: ids } = this;
-      const sortingArr = ids.length > 0 ? ids : [];
-      return sortingArr.indexOf(a.field.id) - sortingArr.indexOf(b.field.id);
-    },
-
-    async handleReload() {
-      this.isReloadingPage = true;
-      window.location.reload(true);
     },
 
     /**
