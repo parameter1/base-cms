@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="visible">
     <div v-if="emailConsentRequest" class="row mt-3">
       <div class="col-12">
         <receive-email
@@ -66,6 +66,21 @@ export default {
       type: String,
       default: null,
     },
+    hideWhenAnswered: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
+  /**
+   *
+   */
+  data() {
+    return {
+      currentUser: {
+        ...this.user,
+      },
+    };
   },
 
   /**
@@ -82,6 +97,20 @@ export default {
         const countryCodes = policy.countries.map((country) => country.id);
         return countryCodes.includes(countryCode);
       });
+    },
+    /**
+     *
+     */
+    visible() {
+      const { hideWhenAnswered } = this;
+      if (!hideWhenAnswered) return true;
+      if (!this.currentUser.receiveEmail) return true;
+      if (this.regionalPolicyFields.length) {
+        if (this.regionalPolicyFields.reduce(
+          (policy) => this.getRegionalPolicyAnswerValue(policy.id),
+        ).length) return true;
+      }
+      return false;
     },
   },
 
