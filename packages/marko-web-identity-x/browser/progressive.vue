@@ -407,26 +407,24 @@ export default {
       const unAnsweredIds = ids.filter((id) => {
         // filter already preansered userFields
         if (this.activeUser[id]) return false;
-
         // Region & Postal are dependent on country being United Stages, Canada or Mexico
         if (addressDependent.includes(id)) {
           if (!this.countryCode || !regionCountryCodes.includes(this.countryCode)) return false;
           return true;
         }
-
         // only return non answered customBooleanFields
-        if (this.activeUser.customBooleanFieldAnswers && this.activeUser.customBooleanFieldAnswers
-          .filter(({ id: answerId, hasAnswered }) => {
-            if (id === answerId && !hasAnswered) return true;
-            return false;
-          }).length) return true;
-
+        const { customBooleanFieldAnswers, customSelectFieldAnswers} = this.activeUser;
+        const filteredBoolean = customBooleanFieldAnswers && customBooleanFieldAnswers
+          .filter(({ id: answerId }) => id === answerId);
+        if (filteredBoolean.length !== 0) {
+          return filteredBoolean.some(({ hasAnswered }) => !hasAnswered);
+        }
+        const filteredSelect = customSelectFieldAnswers && customSelectFieldAnswers
+          .filter(({ id: answerId }) => id === answerId);
+        if (filteredSelect.length !== 0) {
+          return filteredSelect.some(({ hasAnswered }) => !hasAnswered);
+        }
         // only return non answered customSelectFields
-        if (this.activeUser.customSelectFieldAnswers && this.activeUser.customSelectFieldAnswers
-          .filter(({ id: answerId, hasAnswered }) => {
-            if (id === answerId && !hasAnswered) return true;
-            return false;
-          }).length) return true;
         return true;
       });
       // for now ensure only one is returned.
