@@ -9,6 +9,7 @@
     "@has-required-access-level": "boolean",
     "@requires-access-level": "boolean",
     "@requires-user-input": "boolean",
+    "@requiresPUI": "boolean",
     "@messages": "object",
     "@title": "string",
     "@user-input-title": "string",
