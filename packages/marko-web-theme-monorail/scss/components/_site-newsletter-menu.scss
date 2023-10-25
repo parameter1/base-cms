@@ -69,13 +69,16 @@
     form {
       display: flex;
       flex-wrap: wrap;
-      label {
+      label[for="newsletter-pushdown-email"] {
         display: none;
       }
-      .form-group {
+      .form-group:only-of-type {
         flex: 1;
         flex-grow: 1;
-        max-width: 318px
+        max-width: 318px;
+         ~ .btn {
+          align-self: flex-start;
+         }
       }
       .btn {
         flex-shrink: 1;
@@ -83,7 +86,7 @@
         padding: 10px;
         font-weight: $font-weight-bolder;
         order: 2;
-        align-self: flex-start;
+        align-self: center;
       }
       .form-group ~ .text-muted {
         order: 4;
@@ -518,19 +521,24 @@
     form {
       display: flex;
       flex-wrap: wrap;
-      label {
+      label[for="newsletter-pushdown-email"] {
         display: none;
       }
       #newsletter-menu-email {
         flex: 1;
         flex-grow: 1;
       }
+      .form-group:only-of-type {
+        ~ .btn {
+          align-self: flex-start;
+         }
+      }
       .btn {
         flex-shrink: 1;
         margin-left: map-get($spacers, 3);
         padding: 10px;
         order: 2;
-        align-self: flex-start;
+        align-self: center;
       }
       .form-group ~ .text-muted {
         order: 4;
