@@ -23,10 +23,14 @@ module.exports = ({
 
   const additionalInput = buildContentInput({ req });
   const content = await loader(apollo, { id, additionalInput, queryFragment: loaderQueryFragment });
+  const requestingSiteId = req.app.locals.config.website('id');
 
   // set the route kind
   setRouteKind(res, { kind: 'content', type: content.type });
-  const redirectTo = isFn(redirectToFn) ? redirectToFn({ content }) : content.redirectTo;
+  const redirectTo = isFn(redirectToFn) ? redirectToFn({
+    content,
+    requestingSiteId,
+  }) : content.redirectTo;
   const path = isFn(pathFn) ? pathFn({ content }) : get(content, 'siteContext.path');
 
   if (redirectTo) {
