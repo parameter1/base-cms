@@ -211,6 +211,43 @@ class IdentityX {
         access.requiresUserInput = !hasRequiredAnswers;
       }
     }
+
+    access.requiresPUI = false;
+    const progressiveQuestions = this.config.getProgresiveQuestions().map((({ id }) => id));
+    if (access.isLoggedIn && progressiveQuestions.length) {
+      // Check if the user requires additonal input.
+      const { user } = await this.loadActiveContext();
+      //  access.requiresPUI(requiresProgressiveUserInput
+      access.requiresPUI = false;
+      // if progressiveQuestions are configured apply access logic
+      const profileLastUpdated = get(user, 'customAttributes.profileLastUpdated');
+      const now = new Date().getTime();
+      const hours = this.config.getProgresiveDelay();
+      const delay = hours * 60 * 60 * 1000;
+      const canAsk = profileLastUpdated ? profileLastUpdated < (now - delay) : true;
+      access.requiresPUI = user && canAsk ? progressiveQuestions.some((key) => {
+        // check direct user fields first
+        if (user[key]) return false;
+        // only check postal and region when country code is US, CA or MX
+        if (['postalCode', 'regionCode'].includes(key)) {
+          if (!user.countryCode || !['US', 'CA', 'MX'].includes(user.countryCode)) return false;
+          return true;
+        }
+        // check user boolean answer
+        const booleanToCheck = user.customBooleanFieldAnswers
+          .filter(({ field }) => field.id === key);
+        if (booleanToCheck.length !== 0) {
+          return booleanToCheck.some(({ hasAnswered }) => !hasAnswered);
+        }
+        // check users select answers
+        const selectToCheck = user.customSelectFieldAnswers
+          .filter(({ field }) => field.id === key);
+        if (selectToCheck.length !== 0) {
+          return selectToCheck.some(({ hasAnswered }) => !hasAnswered);
+        }
+        return true;
+      }) : false;
+    }
     return access;
   }
 
