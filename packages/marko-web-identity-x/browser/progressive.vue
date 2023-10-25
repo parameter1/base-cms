@@ -413,7 +413,7 @@ export default {
           return true;
         }
         // only return non answered customBooleanFields
-        const { customBooleanFieldAnswers, customSelectFieldAnswers} = this.activeUser;
+        const { customBooleanFieldAnswers, customSelectFieldAnswers } = this.activeUser;
         const filteredBoolean = customBooleanFieldAnswers && customBooleanFieldAnswers
           .filter(({ id: answerId }) => id === answerId);
         if (filteredBoolean.length !== 0) {
