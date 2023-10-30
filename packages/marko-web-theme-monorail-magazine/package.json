@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-theme-monorail-magazine",
-  "version": "4.38.2",
+  "version": "4.40.0",
   "description": "Magazine components, routes, and styling for the Monorail theme",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-theme-monorail-magazine",
   "author": "Brandon Krigbaum <brandon@parameter1.com>",
@@ -17,7 +17,7 @@
     "@parameter1/base-cms-marko-web-gtm": "^4.38.1",
     "@parameter1/base-cms-object-path": "^4.5.12",
     "@parameter1/base-cms-utils": "^4.5.12",
-    "@parameter1/base-cms-web-common": "^4.36.0",
+    "@parameter1/base-cms-web-common": "^4.40.0",
     "graphql": "^14.7.0",
     "graphql-tag": "^2.12.6",
     "object-path": "^0.11.8"
