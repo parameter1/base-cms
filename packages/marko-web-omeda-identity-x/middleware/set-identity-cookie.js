@@ -39,17 +39,10 @@ module.exports = ({
 }) => asyncRoute(async (req, res, next) => {
   /** @type {OIDXRequest} */
   const { identityX: idx, $omedaGraphQLClient: omeda } = req;
-  const { user } = await idx.loadActiveContext();
   const cookie = idx.getIdentity(res);
 
   // Don't overwrite an existing cookie
   if (cookie) return next();
-
-  // Set logged in user identity
-  if (user && user.id) {
-    idx.setIdentityCookie(user.id);
-    return next();
-  }
 
   // get oly enc id. if we don't have one, bail
   const omedaId = findOlyticsId(req, res);
