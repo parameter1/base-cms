@@ -7,6 +7,7 @@ const setPromoSourceCookie = require('./middleware/set-promo-source');
 const stripOlyticsParam = require('./middleware/strip-olytics-param');
 const resyncCustomerData = require('./middleware/resync-customer-data');
 const setOlyticsCookie = require('./middleware/set-olytics-cookie');
+const setIdentityCookie = require('./middleware/set-identity-cookie');
 const rapidIdentify = require('./middleware/rapid-identify');
 const rapidIdentifyRouter = require('./routes/rapid-identify');
 const props = require('./validation/props');
@@ -158,6 +159,7 @@ module.exports = (app, params = {}) => {
   identityX(app, idxConfig, { templates: idxRouteTemplates });
 
   app.use(setOlyticsCookie({ brandKey }));
+  app.use(setIdentityCookie({ brandKey }));
 
   // install the Omeda data sync middleware
   app.use(resyncCustomerData({
