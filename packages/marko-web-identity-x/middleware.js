@@ -1,3 +1,4 @@
+const { asyncRoute } = require('@parameter1/base-cms-utils');
 const IdentityX = require('./service');
 
 /**
@@ -6,9 +7,23 @@ const IdentityX = require('./service');
  * @param {IdentityXConfiguration} config The IdentityX config object
  * @returns {function} The middleware function
  */
-module.exports = (config) => (req, res, next) => {
+module.exports = (config) => asyncRoute(async (req, res, next) => {
   const service = new IdentityX({ req, res, config });
   req.identityX = service;
   res.locals.identityX = service;
-  next();
-};
+
+  const cookie = service.getIdentity(res);
+
+  // Don't overwrite an existing cookie
+  if (cookie) return next();
+
+  // Set cookie for logged in users
+  if (service.token) {
+    const { user } = await service.loadActiveContext();
+    if (user && user.id) {
+      service.setIdentityCookie(user.id);
+    }
+  }
+
+  return next();
+});

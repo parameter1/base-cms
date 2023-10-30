@@ -1,8 +1,10 @@
 const { get, getAsObject } = require('@parameter1/base-cms-object-path');
+const debug = require('debug')('identity-x');
 const createClient = require('./utils/create-client');
 const getActiveContext = require('./api/queries/get-active-context');
 const checkContentAccess = require('./api/queries/check-content-access');
 const loadUser = require('./api/queries/load-user');
+const appUserByExternalIdQuery = require('./api/queries/load-user-by-external-id');
 const addExternalUserId = require('./api/mutations/add-external-user-id');
 const setCustomAttributes = require('./api/mutations/set-custom-attributes');
 const impersonateAppUser = require('./api/mutations/impersonate-app-user');
@@ -15,6 +17,7 @@ const callHooksFor = require('./utils/call-hooks-for');
 
 const isEmpty = (v) => v == null || v === '';
 const isFn = (v) => typeof v === 'function';
+const IDENTITY_COOKIE_NAME = '__idx_idt';
 
 class IdentityX {
   constructor({
@@ -115,6 +118,60 @@ class IdentityX {
       }
     }
     return access;
+  }
+
+  /**
+   * Returns the identity id from the request or supplied response.
+   *
+   * @returns {String}
+   */
+  getIdentity(res) {
+    try {
+      const id = get(this.req, `cookies.${IDENTITY_COOKIE_NAME}`);
+      if (id) return id;
+      const sc = res.get('set-cookie');
+      const scv = (typeof sc === 'string' ? [sc] : sc || []).reduce((o, c) => {
+        const [r] = `${c}`.split(';');
+        const [k, v] = `${r}`.split('=');
+        return { ...o, [k]: v };
+      }, {});
+      if (scv) return get(scv, IDENTITY_COOKIE_NAME);
+    } catch (e) {
+      debug('Unable to parse identity', e);
+    }
+    return null;
+  }
+
+  /**
+   * Sets the IdentityX Identity cookie to the response
+   */
+  setIdentityCookie(id) {
+    const options = {
+      maxAge: 60 * 60 * 24 * 365,
+      httpOnly: false,
+    };
+    this.res.cookie(IDENTITY_COOKIE_NAME, id, options);
+  }
+
+  /**
+   * @param {Object} o
+   * @param {String} o.identifier
+   * @param {Object} o.namespace
+   *
+   * @returns {Promise<Object>}
+   */
+  async findUserByExternalId({ identifier, namespace }) {
+    const apiToken = this.config.getApiToken();
+    if (!apiToken) throw new Error('Unable to add external ID: No API token has been configured.');
+    const { data } = await this.client.query({
+      query: appUserByExternalIdQuery,
+      variables: {
+        identifier: { value: identifier },
+        namespace,
+      },
+      context: { apiToken },
+    });
+    return data.appUserByExternalId;
   }
 
   /**
