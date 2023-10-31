@@ -14,9 +14,11 @@ $ const additionalEventData = {
   contentGateType: "metered",
 };
 
+
+
 $ const setTextVariables = () => {
   // Set title based on views remaining
-  let dynamicTitle = "Create an account"
+  let dynamicTitle = defaultValue(input.dynamicTitle, "Create an account");
   if (views < viewLimit) dynamicTitle = `You have ${viewLimit - views} article views remaining.`;
   if (viewLimit - views === 1) dynamicTitle = `You have 1 article view remaining.`;
   if (viewLimit === views && !displayOverlay) dynamicTitle = `This is your last free article.`;
