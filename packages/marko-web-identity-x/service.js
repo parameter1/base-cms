@@ -5,6 +5,7 @@ const getActiveContext = require('./api/queries/get-active-context');
 const checkContentAccess = require('./api/queries/check-content-access');
 const loadUser = require('./api/queries/load-user');
 const appUserByExternalIdQuery = require('./api/queries/load-user-by-external-id');
+const appUserByIdQuery = require('./api/queries/load-user-by-id');
 const addExternalUserId = require('./api/mutations/add-external-user-id');
 const setCustomAttributes = require('./api/mutations/set-custom-attributes');
 const impersonateAppUser = require('./api/mutations/impersonate-app-user');
@@ -19,7 +20,98 @@ const isEmpty = (v) => v == null || v === '';
 const isFn = (v) => typeof v === 'function';
 const IDENTITY_COOKIE_NAME = '__idx_idt';
 
+/**
+ * @typedef ActiveContext
+ * @prop {Application} application
+ * @prop {Boolean} hasUser
+ * @prop {User} user
+ * @prop {Boolean} hasTeams
+ * @prop {Team[]} mergedTeams
+ * @prop {AccessLevel[]} mergedAccessLevels
+ *
+ * @typedef Application
+ * @prop {String} id
+ * @prop {String} name
+ * @prop {Object} organization
+ *
+ * @typedef User
+ * @prop {String} id
+ * @prop {String} email
+ * @prop {Boolean} verified
+ * @prop {Number} verifiedCount
+ * @prop {String} givenName
+ * @prop {String} familyName
+ * @prop {String} displayName
+ * @prop {String} organization
+ * @prop {String} organizationTitle
+ * @prop {String} countryCode
+ * @prop {String} regionCode
+ * @prop {String} postalCode
+ * @prop {String} city
+ * @prop {String} street
+ * @prop {String} addressExtra
+ * @prop {String} phoneNumber
+ * @prop {Boolean} receiveEmail
+ * @prop {Boolean} mustReVerifyProfile
+ * @prop {ExternalId[]} externalIds
+ * @prop {Object} customAttributes
+ * @prop {RegionalConsentAnswer[]} regionalConsentAnswers
+ * @prop {CustomBooleanFieldAnswer[]} customBooleanFieldAnswers
+ * @prop {CustomSelectFieldAnswer[]} customSelectFieldAnswers
+ *
+ * @typedef ExternalId
+ * @prop {String} id
+ * @prop {ExternalIdIdentifier} identifier
+ * @prop {ExternalIdNamespace} namespace
+ *
+ * @typedef ExternalIdIdentifier
+ * @prop {String} value
+ * @prop {String} type
+ *
+ * @typedef ExternalIdNamespace
+ * @prop {String} provider
+ * @prop {String} tenant
+ * @prop {String} typedef
+ *
+ * @typedef RegionalConsentAnswer
+ * @prop {String} id
+ * @prop {Boolean} given
+ * @prop {Date} date
+ *
+ * @typedef CustomBooleanFieldAnswer
+ * @prop {String} id
+ * @prop {Boolean} hasAnswered
+ * @prop {BooleanFieldAnswer} answer
+ * @prop {BooleanField} field
+ *
+ * @typedef CustomSelectFieldAnswer
+ * @prop {String} id
+ * @prop {Boolean} hasAnswered
+ * @prop {SelectFieldAnswer[]} answers
+ * @prop {SelectField} field
+ *
+ * @typedef SelectField
+ * @typedef SelectFieldAnswer
+ * @typedef BooleanField
+ * @typedef BooleanFieldAnswer
+ *
+ * @typedef Team
+ * @prop {String} id
+ * @prop {String} name
+ * @prop {String} photoURL
+ *
+ * @typedef AccessLevel
+ * @prop {String} id
+ * @prop {String} name
+ */
+
 class IdentityX {
+  /**
+   * @param {Object} o
+   * @param {import('express').Request} o.req
+   * @param {import('express').Response} o.res
+   * @param {import('./config')} o.config
+   */
   constructor({
     req,
     res,
@@ -34,7 +126,7 @@ class IdentityX {
   /**
    * Validates the email address with a user-supplied function, if present.
    * @param {String} email
-   * @return {Tuple} [Boolean, String] The validation status and error message (if present)
+   * @returns {[Boolean, String]} The validation status and error message (if present)
    */
   async validateEmail(email) {
     const targetFn = get(this, 'config.options.emailValidator');
@@ -45,7 +137,7 @@ class IdentityX {
   /**
    * Loads the current application, user, and team context.
    *
-   * @returns {Promise<object>}
+   * @returns {Promise<ActiveContext>}
    */
   async loadActiveContext({ forceQuery = false } = {}) {
     // Only run the active context query once
@@ -123,6 +215,7 @@ class IdentityX {
   /**
    * Returns the identity id from the request or supplied response.
    *
+   * @param {import('express').Response} res
    * @returns {String}
    */
   getIdentity(res) {
@@ -143,6 +236,34 @@ class IdentityX {
   }
 
   /**
+   * Returns GTM formatted data for the current identity/user
+   * @returns {Object}
+   */
+  async getIdentityData() {
+    const context = await this.loadActiveContext();
+    if (context.user) return this.getGTMUserData(context.user, 'authenticated');
+    const identity = this.getIdentity(this.res);
+    if (identity) {
+      const user = await this.findUserById(identity);
+      if (user) return this.getGTMUserData(user, 'identified');
+    }
+    return this.getGTMUserData({}, 'anonymous');
+  }
+
+  /**
+   * Formats user data for use with GTM
+   *
+   * @param {User} user
+   * @returns {Object}
+   */
+  getGTMUserData(user, state = 'anonymous') {
+    return {
+      ...this.config.getGTMUserData(user),
+      state,
+    };
+  }
+
+  /**
    * Sets the IdentityX Identity cookie to the response
    */
   setIdentityCookie(id) {
@@ -156,13 +277,13 @@ class IdentityX {
   /**
    * @param {Object} o
    * @param {String} o.identifier
-   * @param {Object} o.namespace
+   * @param {ExternalIdNamespace} o.namespace
    *
-   * @returns {Promise<Object>}
+   * @returns {Promise<User|null>}
    */
   async findUserByExternalId({ identifier, namespace }) {
     const apiToken = this.config.getApiToken();
-    if (!apiToken) throw new Error('Unable to add external ID: No API token has been configured.');
+    if (!apiToken) throw new Error('Unable to look up user: No API token has been configured.');
     const { data } = await this.client.query({
       query: appUserByExternalIdQuery,
       variables: {
@@ -172,6 +293,22 @@ class IdentityX {
       context: { apiToken },
     });
     return data.appUserByExternalId;
+  }
+
+  /**
+   * @param {String} id The user id
+   *
+   * @returns {Promise<User|null>}
+   */
+  async findUserById(id) {
+    const apiToken = this.config.getApiToken();
+    if (!apiToken) throw new Error('Unable to retrieve identity: No API token has been configured.');
+    const { data } = await this.client.query({
+      query: appUserByIdQuery,
+      variables: { id },
+      context: { apiToken },
+    });
+    return data.appUserById;
   }
 
   /**

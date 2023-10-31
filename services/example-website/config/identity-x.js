@@ -40,4 +40,9 @@ module.exports = new IdentityXConfiguration({
   onHookError: (e) => {
     log('IDENTITY-X HOOK ERROR!', e);
   },
+  gtmUserFields: {
+    weather_preference: '628e98dc2da307ff2ef6a8b0',
+    games: '618ab74dcd3e2f0147386c42',
+    food: '618a8a62934f8400ad4beb8f',
+  },
 });

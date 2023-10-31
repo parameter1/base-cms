@@ -1,18 +1,10 @@
 $ const { req, res } = out.global;
 $ const { identityX } = req;
-$ const identity = identityX.getIdentity(res);
 
 <if(Boolean(identityX))>
-  <marko-web-identity-x-context|{ user, hasUser }|>
-    $ const payload = {
-      ...(identity && { identity }),
-      ...(hasUser && {
-        user: identityX.config.getGTMUserData(user),
-        user_id: user.id
-      }),
-    };
-    <if(hasUser || identity)>
-      <marko-web-gtm-push data=payload />
+  <marko-web-resolve|{ resolved: user }| promise=identityX.getIdentityData()>
+    <if(user)>
+      <marko-web-gtm-push data={ user } />
     </if>
-  </marko-web-identity-x-context>
+  </marko-web-resolve>
 </if>
