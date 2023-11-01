@@ -1093,6 +1093,7 @@ module.exports = {
 
       const siteId = input.siteId || site.id();
       if (siteId) query['mutations.Website.primarySite'] = siteId;
+      query['mutations.Website.noIndex'] = { $ne: true };
 
       const projection = {
         type: 1,
