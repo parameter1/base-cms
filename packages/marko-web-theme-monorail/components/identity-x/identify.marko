@@ -1,10 +1,16 @@
+import getCookieId from "@parameter1/base-cms-marko-web-omeda-identity-x/utils/get-cookie-id";
+import { getResponseCookies } from "@parameter1/base-cms-utils";
+
 $ const { req, res } = out.global;
 $ const { identityX } = req;
+$ const cookies = { ...req.cookies, ...getResponseCookies(res) };
+$ const olyEncId = cookies.oly_enc_id ? getCookieId(cookies.oly_enc_id, 'enc') : undefined;
+$ const olyAnonId = cookies.oly_anon_id ? getCookieId(cookies.oly_anon_id, 'anon') : undefined;
 
 <if(Boolean(identityX))>
   <marko-web-resolve|{ resolved: user }| promise=identityX.getIdentityData()>
-    <if(user)>
-      <marko-web-gtm-push data={ user } />
+    <if(user || olyEncId || olyAnonId)>
+      <marko-web-gtm-push data={ user, olyEncId, olyAnonId } />
     </if>
   </marko-web-resolve>
 </if>

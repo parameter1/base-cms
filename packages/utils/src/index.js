@@ -10,6 +10,7 @@ const getDefaultTaxonomyTypes = require('./get-default-taxonomy-types');
 const getDefaultContentTypes = require('./get-default-content-types');
 const getPublishedContentCriteria = require('./get-published-content-criteria');
 const getProfileMS = require('./get-profile-ms');
+const getResponseCookies = require('./get-response-cookies');
 const getSectionFromSchedules = require('./get-section-from-schedules');
 const isDev = require('./is-dev');
 const isFunction = require('./is-function');
@@ -34,6 +35,7 @@ module.exports = {
   getDefaultContentTypes,
   getPublishedContentCriteria,
   getProfileMS,
+  getResponseCookies,
   getSectionFromSchedules,
   isDev,
   isFunction,

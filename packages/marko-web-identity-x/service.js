@@ -1,5 +1,5 @@
 const { get, getAsObject } = require('@parameter1/base-cms-object-path');
-const debug = require('debug')('identity-x');
+const { getResponseCookies } = require('@parameter1/base-cms-utils');
 const createClient = require('./utils/create-client');
 const getActiveContext = require('./api/queries/get-active-context');
 const checkContentAccess = require('./api/queries/check-content-access');
@@ -219,20 +219,10 @@ class IdentityX {
    * @returns {String}
    */
   getIdentity(res) {
-    try {
-      const id = get(this.req, `cookies.${IDENTITY_COOKIE_NAME}`);
-      if (id) return id;
-      const sc = res.get('set-cookie');
-      const scv = (typeof sc === 'string' ? [sc] : sc || []).reduce((o, c) => {
-        const [r] = `${c}`.split(';');
-        const [k, v] = `${r}`.split('=');
-        return { ...o, [k]: v };
-      }, {});
-      if (scv) return get(scv, IDENTITY_COOKIE_NAME);
-    } catch (e) {
-      debug('Unable to parse identity', e);
-    }
-    return null;
+    const id = get(this.req, `cookies.${IDENTITY_COOKIE_NAME}`);
+    if (id) return id;
+    const { [IDENTITY_COOKIE_NAME]: resid } = getResponseCookies(res || this.res);
+    return resid;
   }
 
   /**
