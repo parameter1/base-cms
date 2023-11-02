@@ -10,7 +10,7 @@ $ const olyAnonId = cookies.oly_anon_id ? getCookieId(cookies.oly_anon_id, 'anon
 <if(Boolean(identityX))>
   <marko-web-resolve|{ resolved: user }| promise=identityX.getIdentityData()>
     <if(user || olyEncId || olyAnonId)>
-      <marko-web-gtm-push data={ user, olyEncId, olyAnonId } />
+      <marko-web-gtm-push data={ user, oly_enc_id: olyEncId, oly_anon_id: olyAnonId } />
     </if>
   </marko-web-resolve>
 </if>
