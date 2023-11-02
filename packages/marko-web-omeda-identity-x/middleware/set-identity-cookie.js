@@ -1,6 +1,7 @@
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 const { get } = require('@parameter1/base-cms-object-path');
 const olyticsCookie = require('@parameter1/base-cms-marko-web-omeda/olytics/customer-cookie');
+const { getResponseCookies } = require('@parameter1/base-cms-utils');
 const query = require('../api/queries/customer-by-encrypted-id');
 
 /**
@@ -17,11 +18,7 @@ const findOlyticsId = (req, res) => {
   const { oly_enc_id: qId } = req.query;
   if (qId) return qId;
   // response cookie
-  const cookies = (res.get('set-cookie') || []).reduce((o, c) => {
-    const [r] = `${c}`.split(';');
-    const [k, v] = `${r}`.split('=');
-    return { ...o, [k]: v };
-  }, {});
+  const cookies = getResponseCookies(res);
   const resId = olyticsCookie.parseFrom({ cookies });
   return resId;
 };
