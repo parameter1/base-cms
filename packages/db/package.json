@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-db",
-  "version": "4.5.12",
+  "version": "4.40.3",
   "description": "The BaseCMS database driver. Requires direct MongoDB access.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "@parameter1/base-cms-async": "^4.5.12",
-    "@parameter1/base-cms-object-path": "^4.5.12",
-    "@parameter1/base-cms-utils": "^4.5.12",
+    "@parameter1/base-cms-object-path": "^4.40.3",
+    "@parameter1/base-cms-utils": "^4.40.3",
     "base64-url": "^2.3.3",
     "deepmerge": "^3.3.0",
     "mongodb": "^3.7.3",

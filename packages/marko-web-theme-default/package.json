@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-theme-default",
-  "version": "4.36.8",
+  "version": "4.40.3",
   "description": "Default theme for Marko BaseCMS websites",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "main": "index.js",
@@ -15,8 +15,8 @@
   },
   "dependencies": {
     "@parameter1/base-cms-marko-web-icons": "^4.36.8",
-    "@parameter1/base-cms-object-path": "^4.5.12",
-    "@parameter1/base-cms-utils": "^4.5.12",
+    "@parameter1/base-cms-object-path": "^4.40.3",
+    "@parameter1/base-cms-utils": "^4.40.3",
     "bootstrap": "^4.6.2",
     "graphql": "^14.7.0",
     "graphql-tag": "^2.12.6"

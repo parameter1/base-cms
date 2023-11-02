@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-reveal-ad",
-  "version": "4.5.12",
+  "version": "4.40.3",
   "description": "Custom Reveal Ad Marko/Vue components for BaseCMS websites",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
@@ -13,8 +13,8 @@
     "test": "yarn compile --no-clean && yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-object-path": "^4.5.12",
-    "@parameter1/base-cms-utils": "^4.5.12"
+    "@parameter1/base-cms-object-path": "^4.40.3",
+    "@parameter1/base-cms-utils": "^4.40.3"
   },
   "peerDependencies": {
     "@parameter1/base-cms-marko-web": "^4.0.0"

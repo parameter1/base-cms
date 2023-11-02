@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-gtm",
-  "version": "4.38.1",
+  "version": "4.40.3",
   "description": "Google Tag Manager (GAM) Marko components for BaseCMS websites",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
@@ -14,9 +14,9 @@
   },
   "dependencies": {
     "@parameter1/base-cms-inflector": "^4.5.12",
-    "@parameter1/base-cms-marko-web-deferred-script-loader": "^4.5.12",
-    "@parameter1/base-cms-object-path": "^4.5.12",
-    "@parameter1/base-cms-utils": "^4.5.12",
+    "@parameter1/base-cms-marko-web-deferred-script-loader": "^4.40.3",
+    "@parameter1/base-cms-object-path": "^4.40.3",
+    "@parameter1/base-cms-utils": "^4.40.3",
     "graphql": "^14.7.0",
     "graphql-tag": "^2.12.6"
   },

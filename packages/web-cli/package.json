@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-web-cli",
-  "version": "4.18.3",
+  "version": "4.40.3",
   "description": "A Marko CLI for managing websites.",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "homepage": "https://github.com/parameter1/base-cms/tree/main/packages/marko-web-modern/cli#readme",
@@ -29,8 +29,8 @@
   },
   "dependencies": {
     "@fullhuman/postcss-purgecss": "^5.0.0",
-    "@parameter1/base-cms-marko-compiler": "^4.5.12",
-    "@parameter1/base-cms-utils": "^4.5.12",
+    "@parameter1/base-cms-marko-compiler": "^4.40.3",
+    "@parameter1/base-cms-utils": "^4.40.3",
     "@vitejs/plugin-vue2": "^2.2.0",
     "autoprefixer": "^10.4.13",
     "chalk": "^4.1.2",

@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-export-cli",
-  "version": "4.5.12",
+  "version": "4.40.3",
   "description": "Command line interface for BaseCMS+Marko exports.",
   "author": "Josh Worden <josh@parameter1.com>",
   "main": "index.js",
@@ -15,8 +15,8 @@
     "test": "yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-marko-compiler": "^4.5.12",
-    "@parameter1/base-cms-utils": "^4.5.12",
+    "@parameter1/base-cms-marko-compiler": "^4.40.3",
+    "@parameter1/base-cms-utils": "^4.40.3",
     "chalk": "^4.1.2",
     "chokidar": "^3.5.3",
     "fancy-log": "^2.0.0",

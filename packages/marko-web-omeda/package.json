@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-omeda",
-  "version": "4.23.1",
+  "version": "4.40.3",
   "description": "Omeda Marko components for BaseCMS websites",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
@@ -14,9 +14,9 @@
   },
   "dependencies": {
     "@parameter1/base-cms-env": "^4.5.12",
-    "@parameter1/base-cms-marko-web-deferred-script-loader": "^4.5.12",
+    "@parameter1/base-cms-marko-web-deferred-script-loader": "^4.40.3",
     "@parameter1/base-cms-marko-web-recaptcha": "^4.5.12",
-    "@parameter1/base-cms-utils": "^4.5.12",
+    "@parameter1/base-cms-utils": "^4.40.3",
     "@parameter1/omeda-graphql-client": "^0.7.2",
     "body-parser": "^1.20.1",
     "debug": "^4.3.4",

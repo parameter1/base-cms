@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-newsletters-native-x",
-  "version": "4.34.7",
+  "version": "4.40.3",
   "description": "NativeX Marko components for BaseCMS newsletters.",
   "author": "Brandon Krigbaum <brandon@parameter1.com>",
   "license": "MIT",
@@ -13,8 +13,8 @@
     "test": "yarn compile --no-clean && yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-object-path": "^4.5.12",
-    "@parameter1/base-cms-utils": "^4.5.12",
+    "@parameter1/base-cms-object-path": "^4.40.3",
+    "@parameter1/base-cms-utils": "^4.40.3",
     "node-fetch": "^2.6.9"
   },
   "peerDependencies": {

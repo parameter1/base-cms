@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-compiler",
-  "version": "4.5.12",
+  "version": "4.40.3",
   "description": "Marko template compiler.",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-compiler",
   "author": "Jacob Bare <jacob@parameter1.com>",
@@ -23,7 +23,7 @@
     "test": "yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-utils": "^4.5.12",
+    "@parameter1/base-cms-utils": "^4.40.3",
     "chalk": "^4.1.2",
     "fancy-log": "^2.0.0",
     "fast-glob": "^3.2.12",
