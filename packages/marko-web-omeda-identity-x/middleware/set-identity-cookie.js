@@ -16,7 +16,7 @@ const findOlyticsId = (req, res) => {
   if (reqId) return reqId;
   // request query param
   const { oly_enc_id: qId } = req.query;
-  if (qId) return qId;
+  if (qId && olyticsCookie.clean(reqId)) return olyticsCookie.clean(reqId);
   // response cookie
   const cookies = getResponseCookies(res);
   const resId = olyticsCookie.parseFrom({ cookies });
