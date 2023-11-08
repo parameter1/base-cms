@@ -1,12 +1,14 @@
 const gql = require('graphql-tag');
 
+const enableBCL = process.env.ENABLE_BCL === 'true';
+
 module.exports = gql`
 fragment ContentPageFragment on Content {
   id
   name
   teaser(input: { useFallback: false, maxLength: null })
   labels
-  body
+  body(input: { useLinkInjectedBody: ${enableBCL} })
   published
   updated
   siteContext {
