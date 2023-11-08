@@ -1,6 +1,6 @@
 const gql = require('graphql-tag');
 
-const enableBCL = process.env.ENABLE_BCL === 'true';
+const useLinkInjectedBody = process.env.USE_LINK_INJECTED_BODY === 'true';
 
 module.exports = gql`
 fragment ContentPageFragment on Content {
@@ -8,7 +8,7 @@ fragment ContentPageFragment on Content {
   name
   teaser(input: { useFallback: false, maxLength: null })
   labels
-  body(input: { useLinkInjectedBody: ${enableBCL} })
+  body(input: { useLinkInjectedBody: ${useLinkInjectedBody} })
   published
   updated
   siteContext {
