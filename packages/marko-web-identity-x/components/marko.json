@@ -76,5 +76,9 @@
     "@url": "string",
     "@load-more-button-class": "string",
     "@login-button-labels": "object"
+  },
+  "<marko-web-identity-x-identify>": {
+    "template": "./identify.marko",
+    "@provider-data": "object"
   }
 }

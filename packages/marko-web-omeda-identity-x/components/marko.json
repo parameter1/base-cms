@@ -1,0 +1,6 @@
+{
+  "taglib-imports": [],
+  "<marko-web-omeda-identity-x-identify>": {
+    "template": "./identify.marko"
+  }
+}
