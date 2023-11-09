@@ -29,9 +29,6 @@
   "<identity-x-newsletter-form-inline>": {
     "template": "./newsletter-inline.marko"
   },
-  "<identity-x-identify>": {
-    "template": "./identify.marko"
-  },
   "<identity-x-newsletter-form-footer>": {
     "template": "./newsletter-footer.marko"
   }

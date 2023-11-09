@@ -1,0 +1,17 @@
+import { getAsObject } from "@parameter1/base-cms-object-path";
+import getCookieId from "@parameter1/base-cms-marko-web-omeda-identity-x/utils/get-cookie-id";
+import { getResponseCookies } from "@parameter1/base-cms-utils";
+
+$ const { req, res } = out.global;
+$ const { identityX } = req;
+
+<if(Boolean(identityX))>
+  <marko-web-resolve|{ resolved: user }| promise=identityX.getIdentityData()>
+    <if(user || input.providerData)>
+      <!-- additional user data to spread base on provider(omeda, braze...) -->
+      $ const providerData = getAsObject(input, "providerData");
+      $ const data = { user, ...providerData };
+      <marko-web-gtm-push  data=data />
+    </if>
+  </marko-web-resolve>
+</if>
