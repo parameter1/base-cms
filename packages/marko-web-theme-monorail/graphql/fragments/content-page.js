@@ -7,34 +7,23 @@ const factory = ({ useLinkInjectedBody = false } = {}) => {
     id
     name
     teaser(input: { useFallback: false, maxLength: null })
+    labels
     body(input: { useLinkInjectedBody: ${useLinkInjectedBody} })
     published
-    labels
+    updated
     siteContext {
       path
       canonicalUrl
-      url
     }
     company {
       id
       name
-      siteContext {
-        path
-      }
+      canonicalPath
       enableRmi
-      primaryImage {
-        id
-        src(input: { options: { auto: "format,compress" } })
-        alt
-        caption
-        credit
-        isLogo
-      }
     }
     primarySection {
       id
       name
-      fullName
       alias
       canonicalPath
       hierarchy {
@@ -42,34 +31,31 @@ const factory = ({ useLinkInjectedBody = false } = {}) => {
         name
         alias
         canonicalPath
-        logo {
-          id
-          src(input: { options: { auto: "format,compress" } })
-        }
       }
     }
     primaryImage {
       id
-      src(input: { options: { auto: "format,compress" } })
+      src(input: { useCropRectangle: true, options: { auto: "format,compress" } })
+      cropRectangle {
+        width
+        height
+      }
       alt
       caption
       credit
       isLogo
+      cropDimensions {
+        aspectRatio
+      }
+      primaryImageDisplay
     }
     gating {
       surveyType
       surveyId
     }
     userRegistration {
-      bypassGating
       isCurrentlyRequired
       accessLevels
-    }
-    createdBy {
-      id
-      username
-      firstName
-      lastName
     }
     ... on ContentVideo {
       embedCode
@@ -83,14 +69,19 @@ const factory = ({ useLinkInjectedBody = false } = {}) => {
       byline
     }
     ... on ContentEvent {
-      endDate
-      startDate
+      ends
+      starts
     }
-    ... on ContentArticle {
-      sidebars
+    ... on SidebarEnabledInterface {
+      sidebars: sidebarStubs {
+        name
+        body
+        label
+      }
     }
     ... on ContentWebinar {
       linkUrl
+      starts
       startDate
       transcript
       sponsors {
@@ -98,9 +89,7 @@ const factory = ({ useLinkInjectedBody = false } = {}) => {
           node {
             id
             name
-            siteContext {
-              path
-            }
+            canonicalPath
           }
         }
       }
@@ -143,59 +132,34 @@ const factory = ({ useLinkInjectedBody = false } = {}) => {
             id
             name
             type
+            body
+            labels
             siteContext {
               path
             }
-          }
-        }
-      }
-      contributors {
-        edges {
-          node {
-            id
-            name
-            type
-            siteContext {
-              path
-            }
-          }
-        }
-      }
-      photographers {
-        edges {
-          node {
-            id
-            name
-            type
-            siteContext {
-              path
+            primaryImage {
+              id
+              src(input: { options: { auto: "format,compress" } })
+              alt(input: { append: "Headshot" })
             }
           }
         }
       }
     }
-    images(input: { pagination: { limit: 100 }, sort: { order: values } }) {
+    images(input:{ pagination: { limit: 0 }, sort: { order: values } }) {
       edges {
         node {
           id
           src(input: { options: { auto: "format,compress" } })
           alt
+          displayName
+          caption
+          credit
+          inCarousel
           source {
             width
             height
           }
-          displayName
-          caption
-          credit
-          isLogo
-        }
-      }
-    }
-    taxonomy {
-      edges {
-        node {
-          id
-          name
         }
       }
     }
