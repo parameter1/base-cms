@@ -1097,6 +1097,7 @@ module.exports = {
 
       const projection = {
         type: 1,
+        'mutations.Website.alias': 1,
         'mutations.Website.slug': 1,
         'mutations.Website.primarySection': 1,
         'mutations.Website.primaryCategory': 1,
