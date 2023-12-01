@@ -7,6 +7,7 @@ import sectionFragment from "../../graphql/fragments/section-info";
 $ const { i18n } = out.global;
 
 $ const sectionAlias = defaultValue(input.sectionAlias, "white-papers");
+$ const iconName = defaultValue(input.iconName, "file");
 $ const contentTypes = defaultValue(input.contentTypes, ["Whitepaper"]);
 $ const shuffle = defaultValue(input.shuffle, false);
 $ const defaultLimit = (shuffle) ? 20 : 1;
@@ -22,15 +23,15 @@ $ const queryParams = {
 };
 
 <marko-web-query|{ nodes, section }| name="website-scheduled-content" params=queryParams>
-
   <if(nodes.length)>
+    $ const blockTitle = defaultValue(input.blockTitle, section.name);
     $ const node = (shuffle) ? shuffleArray(nodes)[0]: nodes[0];
     $ const blockName = "white-papers";
 
     <marko-web-block name=blockName>
       <marko-web-element block-name=blockName name="header">
-        <marko-web-icon name="file" modifiers=[blockName] />
-        ${section.name}
+        <marko-web-icon name=iconName modifiers=[blockName] />
+        ${blockTitle}
       </marko-web-element>
 
       <marko-web-node
