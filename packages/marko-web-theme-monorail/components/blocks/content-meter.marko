@@ -24,7 +24,7 @@ $ const setTextVariables = () => {
   if (views < viewLimit) dynamicTitle = `You have ${viewLimit - views} article views remaining.`;
   if (viewLimit - views === 1) dynamicTitle = `You have 1 article view remaining.`;
   if (viewLimit === views && !displayOverlay) dynamicTitle = `This is your last free article.`;
-  if (viewLimit === 1 && !displayOverlay) 'Enjoy this free article.';
+  if (viewLimit === 1 && !displayOverlay) dynamicTitle = 'Enjoy this free article.';
 
   return [
     dynamicTitle,
