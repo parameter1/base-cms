@@ -148,7 +148,7 @@ module.exports = (params = {}) => asyncRoute(async (req, res, next) => {
         if (viewId === id) return { id, viewed: now };
         return pageview;
       });
-    } else if (valid.length <= viewLimit) {
+    } else if (valid.length < viewLimit) {
       valid.push({ id, viewed: now });
     }
 
