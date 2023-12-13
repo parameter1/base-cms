@@ -38,28 +38,32 @@ module.exports = new IdentityXConfiguration({
     phoneNumber: 'Mobile Phone',
     organization: 'Company Name',
   },
-  progressiveDelay: 0.25, // hours
+  progressiveDelay: 0.1, // hours
   progressiveQuestions: [
-    {
-      id: 'postalCode',
-    },
-    {
-      id: 'street',
-    },
-    {
-      id: 'countryCode',
-    },
     {
       id: 'givenName',
     },
-    {
-      id: 'familyName',
-    },
+    // {
+    //   id: 'familyName',
+    // },
+    // {
+    //   id: 'postalCode',
+    // },
+    // {
+    //   id: 'street',
+    // },
+    // {
+    //   id: 'countryCode',
+    // },
+
     {
       id: '618a8a62934f8400ad4beb8f',
     },
     {
       id: '626fe91c79d99b27544a4c9f',
+    },
+    {
+      id: '628e9333f8dbf1d5cdda43d2',
     },
 
   ],
