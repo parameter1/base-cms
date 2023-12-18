@@ -1,14 +1,19 @@
 import { getAsObject } from "@parameter1/base-cms-object-path";
-import latestIssueFragment from "../../graphql/fragments/magazine-latest-issue";
+import { defaultValue } from "@parameter1/base-cms-marko-web/utils";
+import latestIssueFragment from "@parameter1/base-cms-marko-web-theme-monorail-magazine/graphql/fragments/magazine-latest-issue";
 
 $ const { publicationId } = input;
+
+$ const title = defaultValue(input.title, "In Print");
+$ const linkTitle = defaultValue(input.linkTitle, false);
+$ const buttons = defaultValue(input.buttons, ['subscribe', 'digital-edition', 'archives']);
 
 <marko-web-query|{ node: issue }|
   name="magazine-latest-issue"
   params={ publicationId, queryFragment: latestIssueFragment, requiresCoverImage: true  }
 >
   <marko-web-node-list
-    inner-justified=true
+    inner-justified=false
     flush-x=true
     flush-y=true
     modifiers=[
@@ -16,10 +21,11 @@ $ const { publicationId } = input;
     ]
     header=input.header
     footer=input.footer
+    ...input.nodeList
   >
     <@header>
-      <marko-web-magazine-issue-name tag=null obj=issue link=true>
-        In Print
+      <marko-web-magazine-issue-name tag=null obj=issue link=linkTitle>
+        ${title}
       </marko-web-magazine-issue-name>
     </@header>
     <@nodes nodes=[issue]>
@@ -30,7 +36,7 @@ $ const { publicationId } = input;
     <@footer>
       <theme-magazine-publication-buttons
         issue=issue
-        buttons=['subscribe', 'digital-edition', 'archives']
+        buttons=buttons
       />
     </@footer>
   </marko-web-node-list>
