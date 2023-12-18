@@ -631,6 +631,8 @@ input ContentCustomAttributeQueryInput {
   value: String!
   "Whether or not value exists"
   exists: Boolean
+  "Whether or not to use RegEx over exact match"
+  useRegEx: Boolean = false
 }
 
 input AllContentQueryInput {
