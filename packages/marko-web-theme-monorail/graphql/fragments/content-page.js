@@ -1,6 +1,6 @@
 const gql = require('graphql-tag');
 
-const factory = ({ useLinkInjectedBody = false } = {}) => {
+const factory = ({ useLinkInjectedBody = false, withMagazineSchedules = false } = {}) => {
   const fragment = gql`
 
   fragment ContentPageFragment on Content {
@@ -161,6 +161,26 @@ const factory = ({ useLinkInjectedBody = false } = {}) => {
             height
           }
         }
+      }
+    }
+    magazineSchedules @include(if: ${withMagazineSchedules}) {
+      issue {
+        id
+        name
+        digitalEditionUrl
+        coverImage {
+          id
+          src(input: { options: { auto: "format,compress", q: 70 } })
+        }
+      }
+      publication {
+        id
+        name
+        subscribeUrl
+      }
+      section {
+        id
+        name
       }
     }
   }
