@@ -77,6 +77,12 @@
       margin-bottom: 60px;
     }
 
+    &--user-form {
+      max-width: 1000px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
     &--content-page-body {
       max-width: $skin-content-body-max-width;
       margin-right: auto;
