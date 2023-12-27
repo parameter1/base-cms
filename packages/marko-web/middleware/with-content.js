@@ -17,7 +17,7 @@ module.exports = ({
   pathFn,
   formatResponse,
   sideloadDataFn,
-  contentIdStatusExceptions,
+  contentIdStatusExceptions = [],
 } = {}) => asyncRoute(async (req, res) => {
   const id = isFn(idResolver) ? await idResolver(req, res) : req.params.id;
   const { apollo, query } = req;
