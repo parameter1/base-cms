@@ -17,11 +17,12 @@ module.exports = ({
   pathFn,
   formatResponse,
   sideloadDataFn,
+  contentIdStatusExceptions,
 } = {}) => asyncRoute(async (req, res) => {
   const id = isFn(idResolver) ? await idResolver(req, res) : req.params.id;
   const { apollo, query } = req;
 
-  const additionalInput = buildContentInput({ req });
+  const additionalInput = buildContentInput({ req, contentIdStatusExceptions });
   const content = await loader(apollo, { id, additionalInput, queryFragment: loaderQueryFragment });
   const requestingSiteId = req.app.locals.config.website('id');
 
