@@ -929,12 +929,18 @@ module.exports = {
         excludeContentTypes,
       });
 
-      customAttributes.forEach(({ key, value, exists }) => {
+      customAttributes.forEach(({
+        key,
+        value,
+        exists,
+        useRegEx,
+      }) => {
         const valueOrExists = Boolean(value || typeof exists === 'boolean');
         if (!valueOrExists) throw new UserInputError('Value or exists must be defined');
         query.$and.push({
           [`customAttributes.${key}`]: {
-            ...(value && { $eq: value }),
+            ...(value && !useRegEx && { $eq: value }),
+            ...(value && useRegEx && { $regex: value }),
             ...(exists === false && { $in: ['', null] }),
             ...(exists === true && { $exists: true, $nin: ['', null] }),
           },
