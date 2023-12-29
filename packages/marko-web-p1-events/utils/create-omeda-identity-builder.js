@@ -9,5 +9,5 @@ module.exports = (brandKey) => `
   var incomingId = cleanOlyticsId(query.oly_enc_id);
   var currentId = cleanOlyticsId(cookies.oly_enc_id);
   var id = incomingId || currentId;
-  if (id) return 'omeda.${brandKey}.customer*' + id + '~encoded';
+  if (id) return 'omeda.${brandKey}.customer*' + id + '~encrypted';
 `;
