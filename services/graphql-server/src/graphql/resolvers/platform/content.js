@@ -1284,9 +1284,11 @@ module.exports = {
         issueId,
         sectionId,
         excludeContentIds,
-        includeContentTypes: contentTypes,
+        excludeSectionIds,
         includeSectionNames,
         excludeSectionNames,
+        excludeContentTypes,
+        includeContentTypes: contentTypes,
         requiresImage,
         pagination,
       } = input;
@@ -1305,12 +1307,22 @@ module.exports = {
         idQuery.section = {
           ...(sectionId && { $eq: sectionId }),
           ...(include.length && { $in: include.map((section) => section._id) }),
-          ...(exclude.length && { $nin: exclude.map((section) => section._id) }),
+          ...(exclude.length && {
+            $nin: [
+              ...exclude.map((section) => section._id),
+              ...excludeSectionIds,
+            ],
+          }),
         };
       }
       const ids = await basedb.distinct('magazine.Schedule', 'content.$id', idQuery);
 
-      const query = getPublishedCriteria({ excludeContentIds, contentTypes, since });
+      const query = getPublishedCriteria({
+        excludeContentIds,
+        contentTypes,
+        excludeContentTypes,
+        since,
+      });
       query.$and.push({ _id: { $in: ids } });
 
       if (requiresImage) query.primaryImage = { $exists: true };
