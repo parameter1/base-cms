@@ -1307,7 +1307,7 @@ module.exports = {
         idQuery.section = {
           ...(sectionId && { $eq: sectionId }),
           ...(include.length && { $in: include.map((section) => section._id) }),
-          ...(exclude.length && {
+          ...((exclude.length || excludeSectionIds.length) && {
             $nin: [
               ...exclude.map((section) => section._id),
               ...excludeSectionIds,
