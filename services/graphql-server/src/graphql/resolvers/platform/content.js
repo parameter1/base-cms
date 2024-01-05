@@ -1295,7 +1295,12 @@ module.exports = {
 
       const since = new Date();
       const idQuery = { issue: issueId };
-      if (sectionId || includeSectionNames.length || excludeSectionNames.length) {
+      if (
+        sectionId
+        || includeSectionNames.length
+        || excludeSectionNames.length
+        || excludeSectionIds.length
+      ) {
         const [include, exclude] = await Promise.all([
           includeSectionNames.length
             ? loadMagazineSections({ basedb, names: includeSectionNames })
@@ -1304,15 +1309,12 @@ module.exports = {
             ? loadMagazineSections({ basedb, names: excludeSectionNames })
             : [],
         ]);
+        const $nin = exclude.length ? exclude.map((section) => section._id) : [];
+        if (excludeSectionIds.length) $nin.push(...excludeSectionIds);
         idQuery.section = {
           ...(sectionId && { $eq: sectionId }),
           ...(include.length && { $in: include.map((section) => section._id) }),
-          ...((exclude.length || excludeSectionIds.length) && {
-            $nin: [
-              ...exclude.map((section) => section._id),
-              ...excludeSectionIds,
-            ],
-          }),
+          ...($nin.length && { $nin }),
         };
       }
       const ids = await basedb.distinct('magazine.Schedule', 'content.$id', idQuery);
