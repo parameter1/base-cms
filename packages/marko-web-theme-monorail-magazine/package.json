@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-theme-monorail-magazine",
-  "version": "4.40.12",
+  "version": "4.41.5",
   "description": "Magazine components, routes, and styling for the Monorail theme",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-theme-monorail-magazine",
   "author": "Brandon Krigbaum <brandon@parameter1.com>",
