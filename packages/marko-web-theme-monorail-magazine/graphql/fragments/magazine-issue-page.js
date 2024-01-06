@@ -13,6 +13,7 @@ fragment MagazineIssuePageFragment on MagazineIssue {
     id
     src(input: { options: { auto: "format,compress", q: 70 } })
   }
+  mailDate(input: { format: "x" })
   publication {
     id
     name
