@@ -1284,16 +1284,23 @@ module.exports = {
         issueId,
         sectionId,
         excludeContentIds,
-        includeContentTypes: contentTypes,
+        excludeSectionIds,
         includeSectionNames,
         excludeSectionNames,
+        excludeContentTypes,
+        includeContentTypes: contentTypes,
         requiresImage,
         pagination,
       } = input;
 
       const since = new Date();
       const idQuery = { issue: issueId };
-      if (sectionId || includeSectionNames.length || excludeSectionNames.length) {
+      if (
+        sectionId
+        || includeSectionNames.length
+        || excludeSectionNames.length
+        || excludeSectionIds.length
+      ) {
         const [include, exclude] = await Promise.all([
           includeSectionNames.length
             ? loadMagazineSections({ basedb, names: includeSectionNames })
@@ -1302,15 +1309,22 @@ module.exports = {
             ? loadMagazineSections({ basedb, names: excludeSectionNames })
             : [],
         ]);
+        const $nin = exclude.length ? exclude.map((section) => section._id) : [];
+        if (excludeSectionIds.length) $nin.push(...excludeSectionIds);
         idQuery.section = {
           ...(sectionId && { $eq: sectionId }),
           ...(include.length && { $in: include.map((section) => section._id) }),
-          ...(exclude.length && { $nin: exclude.map((section) => section._id) }),
+          ...($nin.length && { $nin }),
         };
       }
       const ids = await basedb.distinct('magazine.Schedule', 'content.$id', idQuery);
 
-      const query = getPublishedCriteria({ excludeContentIds, contentTypes, since });
+      const query = getPublishedCriteria({
+        excludeContentIds,
+        contentTypes,
+        excludeContentTypes,
+        since,
+      });
       query.$and.push({ _id: { $in: ids } });
 
       if (requiresImage) query.primaryImage = { $exists: true };
