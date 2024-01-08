@@ -26,6 +26,14 @@ module.exports = async (apolloClient, {
   const { content } = data;
 
   if (!content) {
+    // Try again except this time using status deleted
+    const { data: deletedData } = await apolloClient.query({
+      query: buildQuery({ queryFragment }),
+      variables: { input: { id: Number(id), status: 'deleted' } },
+    });
+    const { content: deletedContent } = deletedData;
+    if (deletedContent) return { ...deletedContent, deletedContent: true };
+
     // No content was found for this id. Return a 404.
     throw createError(404, `No content was found for id '${id}'`);
   }

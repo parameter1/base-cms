@@ -1,3 +1,4 @@
+const createError = require('http-errors');
 const { get } = require('@parameter1/base-cms-object-path');
 const { asyncRoute, isFunction: isFn } = require('@parameter1/base-cms-utils');
 const { content: loader } = require('@parameter1/base-cms-web-common/page-loaders');
@@ -40,6 +41,7 @@ module.exports = ({
     const pathTo = req.query['preview-mode'] ? `${path}?preview-mode=true` : path;
     return res.redirect(301, applyQueryParams({ path: pathTo, query }));
   }
+  if (content.deletedContent) throw createError(404, `No published content was found for id '${id}'`);
   const pageNode = new PageNode(apollo, {
     queryFactory,
     queryFragment,
