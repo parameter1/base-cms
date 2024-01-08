@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-search",
-  "version": "4.40.3",
+  "version": "4.42.0",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-search",
   "license": "MIT",
@@ -16,7 +16,7 @@
     "@parameter1/base-cms-marko-web-icons": "^4.36.8",
     "@parameter1/base-cms-object-path": "^4.40.3",
     "@parameter1/base-cms-utils": "^4.40.3",
-    "@parameter1/base-cms-web-common": "^4.40.3",
+    "@parameter1/base-cms-web-common": "^4.42.0",
     "@parameter1/joi": "^1.2.10",
     "graphql": "^14.7.0",
     "graphql-tag": "^2.12.6"

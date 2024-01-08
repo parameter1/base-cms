@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-core",
-  "version": "4.40.3",
+  "version": "4.42.0",
   "description": "Core BaseCMS Marko components.",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "main": "index.js",
@@ -26,7 +26,7 @@
     "@parameter1/base-cms-marko-express": "^4.9.0",
     "@parameter1/base-cms-object-path": "^4.40.3",
     "@parameter1/base-cms-utils": "^4.40.3",
-    "@parameter1/base-cms-web-common": "^4.40.3"
+    "@parameter1/base-cms-web-common": "^4.42.0"
   },
   "publishConfig": {
     "access": "public"
