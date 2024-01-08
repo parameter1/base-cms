@@ -19,9 +19,13 @@ module.exports = async (apolloClient, {
   skip,
   after,
   issueId,
+  sectionId,
   excludeContentIds,
   includeSectionNames,
   excludeSectionNames,
+  excludeContentTypes,
+  includeContentTypes,
+  requiresImage,
   sort,
   queryFragment,
   queryName,
@@ -31,9 +35,13 @@ module.exports = async (apolloClient, {
     sort,
     pagination,
     issueId,
+    sectionId,
     excludeContentIds,
     includeSectionNames,
     excludeSectionNames,
+    excludeContentTypes,
+    includeContentTypes,
+    requiresImage,
   };
   const query = buildQuery({ queryFragment, queryName });
   const variables = { input };
