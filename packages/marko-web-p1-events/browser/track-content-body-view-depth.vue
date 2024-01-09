@@ -10,7 +10,7 @@ export default {
       type: String,
       required: true,
     },
-    bodyTarget: {
+    selector: {
       type: String,
       default: '.page-contents__content-body',
     },
@@ -53,7 +53,7 @@ export default {
     this.depthsViewed[this.fullViewDepth] = false;
     // wait until next tick to attempt to load body selector post document.ready.
     this.$nextTick(() => {
-      if (!this.cb) this.cb = document.querySelector(this.bodyTarget);
+      if (!this.cb) this.cb = document.querySelector(this.selector);
     });
   },
   methods: {

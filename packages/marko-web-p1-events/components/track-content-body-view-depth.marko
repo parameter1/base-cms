@@ -3,12 +3,10 @@ import { getAsObject } from "@parameter1/base-cms-object-path";
 import eventEntity from "../utils/base-content-entity";
 
 $ const content = getAsObject(input, "content");
-$ const selector = defaultValue(input.selector, "content-page-body");
 
 <marko-web-browser-component
   name="P1EventsTrackContentBodyViewDepth"
   props={
     entity: eventEntity(content.id, content.type),
-    selector,
   }
 />
