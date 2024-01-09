@@ -37,6 +37,23 @@
     "@action": "string",
     "@category": "string"
   },
+  "<marko-web-p1-events-track-content-body-view-depth>": {
+    "template": "./track-content-body-view-depth.marko",
+    "<content>": {
+      "@id": {
+        "type": "number",
+        "required": true
+      },
+      "@type": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "@full-view-depth": "number",
+    "@target-view-depths": "array",
+    "@action": "string",
+    "@category": "string"
+  },
   "<marko-web-p1-events-track-inquiry-submission>": {
     "template": "./track-inquiry-submission.marko",
     "<content>": {
