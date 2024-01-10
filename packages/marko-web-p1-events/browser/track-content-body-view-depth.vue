@@ -12,7 +12,7 @@ export default {
     },
     selector: {
       type: String,
-      default: '.page-contents__content-body',
+      default: '.document-container > .page > h1, .document-container > .page > h1 ~ .lead, .document-container > .page > h1 ~ .row .content-page-body',
     },
     fullViewDepth: {
       type: Number,
@@ -35,9 +35,11 @@ export default {
   data() {
     return {
       depthsViewed: {
-        0.0: false,
+        // set to 1% just to ensure it will only trigger when in view.
+        0.01: false,
       },
       cb: null,
+      pageHeight: 0,
     };
   },
   destroyed() {
@@ -53,18 +55,24 @@ export default {
     this.depthsViewed[this.fullViewDepth] = false;
     // wait until next tick to attempt to load body selector post document.ready.
     this.$nextTick(() => {
-      if (!this.cb) this.cb = document.querySelector(this.selector);
+      if (!this.cb) {
+        this.cb = document.querySelectorAll(this.selector);
+        this.cb.forEach((c) => {
+          const bottom = c.getBoundingClientRect().height + c.getBoundingClientRect().height;
+          if (this.pageHeight < bottom) this.pageHeight = bottom;
+        });
+      }
     });
   },
   methods: {
     handleScroll() {
       if (!this.cb) return;
       const { scrollY } = window;
-      const { height } = this.cb.getBoundingClientRect();
+      const { pageHeight } = this;
       Object.keys(this.depthsViewed).forEach((d) => {
         if (
           !this.depthsViewed[d]
-          && Math.floor(scrollY) >= ((Math.floor(height * d)))
+          && Math.floor(scrollY) >= ((Math.floor(pageHeight * d)))
         ) {
           this.depthsViewed[d] = true;
 
