@@ -12,7 +12,7 @@ export default {
     },
     selector: {
       type: String,
-      default: '.document-container > .page > h1, .document-container > .page > h1 ~ .lead, .document-container > .page > h1 ~ .row .content-page-body',
+      default: '.document-container .page .row .content-page-body',
     },
     fullViewDepth: {
       type: Number,
@@ -39,7 +39,8 @@ export default {
         0.01: false,
       },
       cb: null,
-      pageHeight: 0,
+      start: 0,
+      end: 0,
     };
   },
   destroyed() {
@@ -56,24 +57,26 @@ export default {
     // wait until next tick to attempt to load body selector post document.ready.
     this.$nextTick(() => {
       if (!this.cb) {
-        this.cb = document.querySelectorAll(this.selector);
-        this.cb.forEach((c) => {
-          const bottom = c.getBoundingClientRect().height + c.getBoundingClientRect().height;
-          if (this.pageHeight < bottom) this.pageHeight = bottom;
-        });
+        const { scrollY } = window;
+        this.cb = document.querySelector(this.selector);
+        const { top, height: h } = this.cb.getBoundingClientRect();
+        this.start = scrollY + top;
+        this.end = Math.floor(scrollY + top + h);
       }
     });
   },
   methods: {
     handleScroll() {
       if (!this.cb) return;
-      const { scrollY } = window;
-      const { pageHeight } = this;
+      const { scrollY, innerHeight } = window;
+      const { start, end } = this;
+      const offset = scrollY + innerHeight;
+      if (offset < start) return;
+      const total = (end - start);
+      const seen = offset - start;
+      const currentPercentage = seen / total;
       Object.keys(this.depthsViewed).forEach((d) => {
-        if (
-          !this.depthsViewed[d]
-          && Math.floor(scrollY) >= ((Math.floor(pageHeight * d)))
-        ) {
+        if (!this.depthsViewed[d] && currentPercentage >= d) {
           this.depthsViewed[d] = true;
 
           const action = (Number(d) === Number(this.fullViewDepth)) ? `100% ${this.action}` : `${d * 100}% ${this.action}`
