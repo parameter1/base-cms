@@ -16,7 +16,7 @@ export default {
     },
     fullViewDepth: {
       type: Number,
-      default: 0.90,
+      default: 1,
     },
     targetViewDepths: {
       type: Array,
@@ -36,7 +36,7 @@ export default {
     return {
       depthsViewed: {
         // set to 1% just to ensure it will only trigger when in view.
-        0.01: false,
+        // 0.01: false,
       },
       cb: null,
       start: 0,
