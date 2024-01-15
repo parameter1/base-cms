@@ -80,8 +80,7 @@ export default {
 
           const action = `${Number(d) * 100} percent`;
           if (window.p1events) {
-            // console.warn the track event for now until we determin corrct action & category
-            console.warn('track', {
+            window.p1events('track', {
               category: this.category,
               action,
               entity: this.entity,
@@ -89,14 +88,6 @@ export default {
                 depthsViewed: this.depthsViewed,
               },
             });
-            // window.p1events('track', {
-            //   category: this.category,
-            //   action: this.action,
-            //   entity: this.entity,
-            //   props: {
-            //     depthsViewed: this.depthsViewed,
-            //   },
-            // });
           }
         }
       });
