@@ -78,7 +78,7 @@ export default {
         if (!this.depthsViewed[d] && currentPercentage >= d) {
           this.depthsViewed[d] = true;
 
-          const action = (Number(d) === Number(this.fullViewDepth)) ? `100% ${this.action}` : `${d * 100}% ${this.action}`;
+          const action = `${Number(d) * 100} percent`;
           if (window.p1events) {
             // console.warn the track event for now until we determin corrct action & category
             console.warn('track', {
