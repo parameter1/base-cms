@@ -56,16 +56,13 @@ export default {
     });
     // add full page read depth marker
     this.depthsViewed[this.fullViewDepth] = false;
-    // wait until next tick to attempt to load body selector post document.ready.
-    this.$nextTick(() => {
-      if (cb) {
-        const { scrollY } = window;
-        this.cb = document.querySelector(this.selector);
-        const { top, height: h } = this.cb.getBoundingClientRect();
-        this.start = 0;
-        this.end = Math.floor(scrollY + top + h);
-      }
-    });
+    if (cb) {
+      const { scrollY } = window;
+      this.cb = document.querySelector(this.selector);
+      const { top, height: h } = this.cb.getBoundingClientRect();
+      this.start = 0;
+      this.end = Math.floor(scrollY + top + h);
+    }
   },
   methods: {
     handleScroll() {
