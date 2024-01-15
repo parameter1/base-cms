@@ -23,7 +23,7 @@ $ const { recaptcha } = out.global;
         <div class="col-md-8">
           <div class="content-page-body">
             <theme-page-contents|{ blockName }| attrs={ "data-gallery-id": id }>
-            <marko-web-p1-events-track-content-body-view-depth content=content />
+            <marko-web-p1-events-track-page-view-depth obj={id: content.id, type: content.type } />
               <content-body
                 content=content
                 block-name=blockName

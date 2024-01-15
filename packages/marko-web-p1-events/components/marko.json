@@ -37,9 +37,9 @@
     "@action": "string",
     "@category": "string"
   },
-  "<marko-web-p1-events-track-content-body-view-depth>": {
-    "template": "./track-content-body-view-depth.marko",
-    "<content>": {
+  "<marko-web-p1-events-track-page-view-depth>": {
+    "template": "./track-page-view-depth.marko",
+    "<obj>": {
       "@id": {
         "type": "number",
         "required": true
@@ -49,6 +49,7 @@
         "required": true
       }
     },
+    "@selector": "string",
     "@full-view-depth": "number",
     "@target-view-depths": "array",
     "@action": "string",

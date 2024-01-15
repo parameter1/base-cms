@@ -47,6 +47,8 @@ export default {
     window.removeEventListener('scroll', this.handleScroll);
   },
   mounted() {
+    const cb = this.cb || document.querySelector(this.selector);
+    if (!cb) return;
     window.addEventListener('scroll', this.handleScroll);
     // add % based depths
     this.targetViewDepths.forEach((d) => {
@@ -56,7 +58,7 @@ export default {
     this.depthsViewed[this.fullViewDepth] = false;
     // wait until next tick to attempt to load body selector post document.ready.
     this.$nextTick(() => {
-      if (!this.cb) {
+      if (cb) {
         const { scrollY } = window;
         this.cb = document.querySelector(this.selector);
         const { top, height: h } = this.cb.getBoundingClientRect();

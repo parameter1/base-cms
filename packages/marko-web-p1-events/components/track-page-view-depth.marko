@@ -2,11 +2,13 @@ import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 import { getAsObject } from "@parameter1/base-cms-object-path";
 import eventEntity from "../utils/base-content-entity";
 
-$ const content = getAsObject(input, "content");
+$ const obj = getAsObject(input, "obj");
+$ const { selector } = input;
 
 <marko-web-browser-component
-  name="P1EventsTrackContentBodyViewDepth"
+  name="P1EventsTrackPageViewDepth"
   props={
-    entity: eventEntity(content.id, content.type),
+    selector,
+    entity: eventEntity(obj.id, obj.type),
   }
 />
