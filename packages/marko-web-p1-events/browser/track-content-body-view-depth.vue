@@ -60,7 +60,7 @@ export default {
         const { scrollY } = window;
         this.cb = document.querySelector(this.selector);
         const { top, height: h } = this.cb.getBoundingClientRect();
-        this.start = scrollY + top;
+        this.start = 0;
         this.end = Math.floor(scrollY + top + h);
       }
     });
