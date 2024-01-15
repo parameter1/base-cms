@@ -41,7 +41,7 @@
     "template": "./track-page-view-depth.marko",
     "<obj>": {
       "@id": {
-        "type": "number",
+        "type": "string",
         "required": true
       },
       "@type": {
