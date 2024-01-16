@@ -54,6 +54,7 @@
       "required": true
     },
     "@target-scroll-depths": "array",
+    "@action": "string",
     "@category": "string"
   },
   "<marko-web-p1-events-track-inquiry-submission>": {

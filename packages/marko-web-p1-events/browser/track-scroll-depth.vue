@@ -20,11 +20,11 @@ export default {
     },
     action: {
       type: String,
-      default: 'Viewed',
+      default: 'Scroll',
     },
     category: {
       type: String,
-      default: 'Scroll Depth',
+      default: 'Content',
     },
   },
 
@@ -72,11 +72,12 @@ export default {
         if (!this.didScroll[d] && currentPercentage >= d) {
           this.didScroll[d] = true;
 
-          const action = `${Number(d) * 100} percent`;
+          const lab = `${Number(d) * 100} percent`;
           if (window.p1events) {
             window.p1events('track', {
               category: this.category,
-              action,
+              action: this.action,
+              lab,
               entity: this.entity,
               props: {
                 didScroll: this.didScroll,

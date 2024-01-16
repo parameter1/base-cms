@@ -4,6 +4,7 @@ import eventEntity from "../utils/base-entity";
 
 $ const obj = getAsObject(input, "obj");
 $ const {
+  action,
   category,
   selector,
   targetScrollDepths,
@@ -12,6 +13,7 @@ $ const {
 <marko-web-browser-component
   name="P1EventsTrackScrollDepth"
   props={
+    action,
     category,
     selector,
     targetScrollDepths,
