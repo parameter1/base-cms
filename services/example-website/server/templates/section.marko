@@ -5,7 +5,10 @@ $ const { recaptcha } = out.global;
   <@page>
 
     <marko-web-resolve-page|{ data: section, resolved }| node=pageNode>
-    <marko-web-p1-events-track-scroll-depth obj={ id: section.id, type: 'Section' } selector=".document-container" category="Section" />
+    <marko-web-p1-events-track-website-section-scroll-depth
+      section=section
+      selector=".document-container"
+    />
 
       <marko-web-p1-events-track-website-section node=section />
 

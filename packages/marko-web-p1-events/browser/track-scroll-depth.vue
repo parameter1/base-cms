@@ -7,7 +7,7 @@
 export default {
   props: {
     entity: {
-      type: String,
+      type: Object,
       required: true,
     },
     selector: {
@@ -24,7 +24,7 @@ export default {
     },
     category: {
       type: String,
-      default: 'Content',
+      required: true,
     },
   },
 
@@ -71,17 +71,12 @@ export default {
       Object.keys(this.didScroll).forEach((d) => {
         if (!this.didScroll[d] && currentPercentage >= d) {
           this.didScroll[d] = true;
-
-          const lab = `${Number(d) * 100} percent`;
           if (window.p1events) {
             window.p1events('track', {
               category: this.category,
               action: this.action,
-              lab,
+              label: `${Number(d) * 100} percent`,
               entity: this.entity,
-              props: {
-                didScroll: this.didScroll,
-              },
             });
           }
         }

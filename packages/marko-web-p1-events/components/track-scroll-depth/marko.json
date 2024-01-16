@@ -1,0 +1,35 @@
+{
+  "<marko-web-p1-events-track-content-scroll-depth>": {
+    "template": "./content.marko",
+    "@content": "object",
+    "@selector": {
+      "type": "string",
+      "required": true
+    },
+    "@target-scroll-depths": "array",
+    "@action": "string",
+    "@category": "string"
+  },
+  "<marko-web-p1-events-track-website-section-scroll-depth>": {
+    "template": "./website-section.marko",
+    "@section": "object",
+    "@selector": {
+      "type": "string",
+      "required": true
+    },
+    "@target-scroll-depths": "array",
+    "@action": "string",
+    "@category": "string"
+  },
+  "<marko-web-p1-events-track-native-story-scroll-depth>": {
+    "template": "./native-story.marko",
+    "@story": "object",
+    "@selector": {
+      "type": "string",
+      "required": true
+    },
+    "@target-scroll-depths": "array",
+    "@action": "string",
+    "@category": "string"
+  }
+}

@@ -1,0 +1,35 @@
+import { get } from "@parameter1/base-cms-object-path";
+
+$ const { site } = out.global;
+$ const {
+  story,
+  action,
+  category = 'Content',
+  selector,
+  targetScrollDepths,
+} = input;
+$ const config = site.getAsObject("p1events");
+$ const nxConfig = site.get("nativeX");
+
+<if(config.enabled && nxConfig && nxConfig.enabled && story)>
+  $ const { advertiser } = story;
+  $ const entity = {
+    id: story.id,
+    ns: nxConfig.getEntityFor("story"),
+    name: story.title,
+    props: { type: "story", published: get(story, "publishedAt") },
+    ...(advertiser && advertiser.id && {
+      refs: { advertiser: { id: advertiser.id, ns: nxConfig.getEntityFor("advertiser"), name: advertiser.name } },
+    }),
+  };
+  <marko-web-browser-component
+    name="P1EventsTrackScrollDepth"
+    props={
+      entity,
+      action,
+      category,
+      selector,
+      targetScrollDepths,
+    }
+  />
+</if>

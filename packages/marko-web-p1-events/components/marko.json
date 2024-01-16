@@ -1,4 +1,7 @@
 {
+  "taglib-imports": [
+    "./track-scroll-depth/marko.json"
+  ],
   "<marko-web-p1-events-init>": {
     "template": "./init.marko",
     "@script-src": "string",
@@ -34,26 +37,6 @@
     "@selector": "string",
     "@link-selector": "string",
     "@link-type": "string",
-    "@action": "string",
-    "@category": "string"
-  },
-  "<marko-web-p1-events-track-scroll-depth>": {
-    "template": "./track-scroll-depth.marko",
-    "<obj>": {
-      "@id": {
-        "type": "string",
-        "required": true
-      },
-      "@type": {
-        "type": "string",
-        "required": true
-      }
-    },
-    "@selector": {
-      "type": "string",
-      "required": true
-    },
-    "@target-scroll-depths": "array",
     "@action": "string",
     "@category": "string"
   },
