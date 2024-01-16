@@ -6,9 +6,11 @@ $ const { site, i18n } = out.global;
 
 $ const content = getAsObject(input, "node");
 $ const { company } = content;
+$ const authors = getAsArray(content, "authors.edges");
 $ const contentType = defaultValue(content.type, 'article');
 $ const modifiers = [...getAsArray(input, "modifiers"), `${contentType}-content-type`]
 $ const withCompany = (company) ? defaultValue(input.withCompany, true) : false;
+$ const withAuthors = (authors.length) ? defaultValue(input.withAuthors, false) : false;
 $ const primaryImage = getAsObject(content, "primaryImage");
 $ const primarySection = getAsObject(content, "primarySection");
 $ const containerAttrs = getAsObject(input, "containerAttrs");
@@ -72,6 +74,20 @@ $ const blockName = "section-feed-content-node";
         obj=content
         link={ field: linkField, target: linkTarget, attrs: linkAttrs }
       />
+      <if(withAuthors)>
+        $ const bylinePrefix = 'By ';
+        <marko-web-element block-name=blockName name="content-authors">
+          <marko-web-obj-nodes|{ node, index, length }| type="content" block-name=blockName obj=content field="authors" tag="span">
+            <if(index === 0)>
+              <marko-web-element tag="span" block-name=blockName name="content-authors-label">
+                ${bylinePrefix}
+              </marko-web-element>
+            </if>
+            <marko-web-content-name tag="span" block-name=blockName obj=node link=true />
+            <if(index + 1 !== length)>, </if>
+          </marko-web-obj-nodes>
+        </marko-web-element>
+      </if>
       <if(withCompany)>
         <marko-web-content-name class=`${blockName}__content-company` obj=content.company link=true />
       </if>
