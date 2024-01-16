@@ -37,8 +37,8 @@
     "@action": "string",
     "@category": "string"
   },
-  "<marko-web-p1-events-track-page-view-depth>": {
-    "template": "./track-page-view-depth.marko",
+  "<marko-web-p1-events-track-scroll-depth>": {
+    "template": "./track-scroll-depth.marko",
     "<obj>": {
       "@id": {
         "type": "string",
