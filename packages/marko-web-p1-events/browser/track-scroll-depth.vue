@@ -14,13 +14,9 @@ export default {
       type: String,
       required: true,
     },
-    fullScrollDepth: {
-      type: Number,
-      default: 0.9,
-    },
     targetScrollDepths: {
       type: Array,
-      default: () => ([0.25, 0.50, 0.75]),
+      default: () => ([0.25, 0.50, 0.75, 0.9]),
     },
     action: {
       type: String,
@@ -54,8 +50,6 @@ export default {
     this.targetScrollDepths.forEach((d) => {
       this.didScroll[d] = false;
     });
-    // add full page read depth marker
-    this.didScroll[this.fullScrollDepth] = false;
     if (cb) {
       const { scrollY } = window;
       this.cb = document.querySelector(this.selector);
@@ -78,7 +72,7 @@ export default {
         if (!this.didScroll[d] && currentPercentage >= d) {
           this.didScroll[d] = true;
 
-          const action = (Number(d) === Number(this.fullScrollDepth)) ? '100 percent' : `${Number(d) * 100} percent`;
+          const action = `${Number(d) * 100} percent`;
           if (window.p1events) {
             window.p1events('track', {
               category: this.category,

@@ -5,7 +5,6 @@ import eventEntity from "../utils/base-entity";
 $ const obj = getAsObject(input, "obj");
 $ const {
   category,
-  fullScrollDepth,
   selector,
   targetScrollDepths,
 } = input;
@@ -14,7 +13,6 @@ $ const {
   name="P1EventsTrackScrollDepth"
   props={
     category,
-    fullScrollDepth,
     selector,
     targetScrollDepths,
     entity: eventEntity(obj.id, obj.type),

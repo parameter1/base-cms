@@ -53,7 +53,6 @@
       "type": "string",
       "required": true
     },
-    "@full-scroll-depth": "number",
     "@target-scroll-depths": "array",
     "@category": "string"
   },
