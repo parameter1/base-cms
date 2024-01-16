@@ -64,6 +64,17 @@ fragment SectionFeedBlockContentFragment on Content {
     address2
     cityStateZip
   }
+  ... on Authorable {
+    authors {
+      edges {
+        node {
+          id
+          name
+          canonicalPath
+        }
+      }
+    }
+  }
 }
 
 `;
