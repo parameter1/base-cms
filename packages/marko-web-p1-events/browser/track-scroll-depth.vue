@@ -1,3 +1,7 @@
+<template>
+  <div class="marko-web-p1-events-track-scroll-depth" style="display: none;" />
+</template>
+
 <script>
 
 export default {
