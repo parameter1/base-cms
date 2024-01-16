@@ -12,7 +12,7 @@ export default {
     },
     selector: {
       type: String,
-      default: '.document-container .page .row .content-page-body',
+      required: true,
     },
     fullViewDepth: {
       type: Number,

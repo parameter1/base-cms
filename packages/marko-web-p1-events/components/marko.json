@@ -49,7 +49,10 @@
         "required": true
       }
     },
-    "@selector": "string",
+    "@selector": {
+      "type": "string",
+      "required": true
+    },
     "@full-view-depth": "number",
     "@target-view-depths": "array",
     "@action": "string",
