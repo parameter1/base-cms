@@ -3,12 +3,20 @@ import { getAsObject } from "@parameter1/base-cms-object-path";
 import eventEntity from "../utils/base-entity";
 
 $ const obj = getAsObject(input, "obj");
-$ const { selector } = input;
+$ const {
+  category,
+  fullScrollDepth,
+  selector,
+  targetScrollDepths,
+} = input;
 
 <marko-web-browser-component
   name="P1EventsTrackScrollDepth"
   props={
+    category,
+    fullScrollDepth,
     selector,
+    targetScrollDepths,
     entity: eventEntity(obj.id, obj.type),
   }
 />

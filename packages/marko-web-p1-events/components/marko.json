@@ -53,9 +53,8 @@
       "type": "string",
       "required": true
     },
-    "@full-view-depth": "number",
-    "@target-view-depths": "array",
-    "@action": "string",
+    "@full-scroll-depth": "number",
+    "@target-scroll-depths": "array",
     "@category": "string"
   },
   "<marko-web-p1-events-track-inquiry-submission>": {

@@ -14,11 +14,11 @@ export default {
       type: String,
       required: true,
     },
-    fullViewDepth: {
+    fullScrollDepth: {
       type: Number,
-      default: 1,
+      default: 0.9,
     },
-    targetViewDepths: {
+    targetScrollDepths: {
       type: Array,
       default: () => ([0.25, 0.50, 0.75]),
     },
@@ -34,7 +34,7 @@ export default {
 
   data() {
     return {
-      depthsViewed: {
+      didScroll: {
         // set to 1% just to ensure it will only trigger when in view.
         // 0.01: false,
       },
@@ -51,11 +51,11 @@ export default {
     if (!cb) return;
     window.addEventListener('scroll', this.handleScroll);
     // add % based depths
-    this.targetViewDepths.forEach((d) => {
-      this.depthsViewed[d] = false;
+    this.targetScrollDepths.forEach((d) => {
+      this.didScroll[d] = false;
     });
     // add full page read depth marker
-    this.depthsViewed[this.fullViewDepth] = false;
+    this.didScroll[this.fullScrollDepth] = false;
     if (cb) {
       const { scrollY } = window;
       this.cb = document.querySelector(this.selector);
@@ -74,18 +74,18 @@ export default {
       const total = (end - start);
       const seen = offset - start;
       const currentPercentage = seen / total;
-      Object.keys(this.depthsViewed).forEach((d) => {
-        if (!this.depthsViewed[d] && currentPercentage >= d) {
-          this.depthsViewed[d] = true;
+      Object.keys(this.didScroll).forEach((d) => {
+        if (!this.didScroll[d] && currentPercentage >= d) {
+          this.didScroll[d] = true;
 
-          const action = `${Number(d) * 100} percent`;
+          const action = (Number(d) === Number(this.fullScrollDepth)) ? '100 percent' : `${Number(d) * 100} percent`;
           if (window.p1events) {
             window.p1events('track', {
               category: this.category,
               action,
               entity: this.entity,
               props: {
-                depthsViewed: this.depthsViewed,
+                didScroll: this.didScroll,
               },
             });
           }
