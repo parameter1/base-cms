@@ -11,6 +11,7 @@ $ const contentType = defaultValue(content.type, 'article');
 $ const modifiers = [...getAsArray(input, "modifiers"), `${contentType}-content-type`]
 $ const withCompany = (company) ? defaultValue(input.withCompany, true) : false;
 $ const withAuthors = (authors.length) ? defaultValue(input.withAuthors, false) : false;
+$ const bylinePrefix = withAuthors ? defaulValue(input.bylinePrefix, "By ") : '';
 $ const primaryImage = getAsObject(content, "primaryImage");
 $ const primarySection = getAsObject(content, "primarySection");
 $ const containerAttrs = getAsObject(input, "containerAttrs");
@@ -75,7 +76,6 @@ $ const blockName = "section-feed-content-node";
         link={ field: linkField, target: linkTarget, attrs: linkAttrs }
       />
       <if(withAuthors)>
-        $ const bylinePrefix = 'By ';
         <marko-web-element block-name=blockName name="content-authors">
           <marko-web-obj-nodes|{ node, index, length }| type="content" block-name=blockName obj=content field="authors" tag="span">
             <if(index === 0)>
