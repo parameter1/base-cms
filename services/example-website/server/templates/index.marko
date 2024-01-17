@@ -1,11 +1,18 @@
+import ns from "@parameter1/base-cms-marko-web-p1-events/utils/create-namespace";
+
 <marko-web-default-page-layout
   type="home"
   title="Test Page"
   description="This is a test page."
 >
   <@page>
-    <marko-web-p1-events-track-website-section-scroll-depth
-      section={ id: 12345, type: 'section', alias: 'home' }
+    <marko-web-p1-events-track-static-scroll-depth
+      entity={
+        id: "home",
+        ns: ns("website-section"),
+        name: "home",
+        alias: "home",
+      }
       selector=".document-container"
     />
     <marko-web-page-wrapper>
