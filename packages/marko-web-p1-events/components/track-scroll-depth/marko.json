@@ -6,9 +6,7 @@
       "type": "string",
       "required": true
     },
-    "@target-scroll-depths": "array",
-    "@action": "string",
-    "@category": "string"
+    "@target-scroll-depths": "array"
   },
   "<marko-web-p1-events-track-static-scroll-depth>": {
     "template": "./static.marko",
@@ -37,8 +35,10 @@
       "required": true
     },
     "@target-scroll-depths": "array",
-    "@action": "string",
-    "@category": "string"
+    "@category": {
+      "type": "string",
+      "required": true
+    }
   },
   "<marko-web-p1-events-track-website-section-scroll-depth>": {
     "template": "./website-section.marko",
@@ -47,9 +47,7 @@
       "type": "string",
       "required": true
     },
-    "@target-scroll-depths": "array",
-    "@action": "string",
-    "@category": "string"
+    "@target-scroll-depths": "array"
   },
   "<marko-web-p1-events-track-native-story-scroll-depth>": {
     "template": "./native-story.marko",
@@ -58,8 +56,6 @@
       "type": "string",
       "required": true
     },
-    "@target-scroll-depths": "array",
-    "@action": "string",
-    "@category": "string"
+    "@target-scroll-depths": "array"
   }
 }

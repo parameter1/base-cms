@@ -3,8 +3,6 @@ import { get } from "@parameter1/base-cms-object-path";
 $ const { site } = out.global;
 $ const {
   story,
-  action,
-  category = 'Content',
   selector,
   targetScrollDepths,
 } = input;
@@ -26,8 +24,7 @@ $ const nxConfig = site.get("nativeX");
     name="P1EventsTrackScrollDepth"
     props={
       entity,
-      action,
-      category,
+      category: 'Content',
       selector,
       targetScrollDepths,
     }

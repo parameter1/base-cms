@@ -4,8 +4,7 @@ $ const { site } = out.global;
 $ const config = site.getAsObject("p1events");
 $ const {
   entity,
-  action,
-  category = 'Static',
+  category,
   selector,
   targetScrollDepths,
 } = input;
@@ -15,7 +14,6 @@ $ const {
     name="P1EventsTrackScrollDepth"
     props={
       entity,
-      action,
       category,
       selector,
       targetScrollDepths,

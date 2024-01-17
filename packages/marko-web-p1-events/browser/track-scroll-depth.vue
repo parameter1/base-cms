@@ -18,10 +18,6 @@ export default {
       type: Array,
       default: () => ([0.25, 0.50, 0.75, 0.9]),
     },
-    action: {
-      type: String,
-      default: 'Scroll',
-    },
     category: {
       type: String,
       required: true,
@@ -74,7 +70,7 @@ export default {
           if (window.p1events) {
             window.p1events('track', {
               category: this.category,
-              action: this.action,
+              action: 'Scroll',
               label: `${Number(d) * 100} percent`,
               entity: this.entity,
             });

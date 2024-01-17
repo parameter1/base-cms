@@ -4,8 +4,6 @@ import ns from "../../utils/create-namespace";
 $ const { site } = out.global;
 $ const {
   content,
-  action,
-  category = 'Content',
   selector,
   targetScrollDepths,
 } = input;
@@ -38,8 +36,7 @@ $ const config = site.getAsObject("p1events");
     name="P1EventsTrackScrollDepth"
     props={
       entity,
-      action,
-      category,
+      category: 'Content',
       selector,
       targetScrollDepths,
     }
