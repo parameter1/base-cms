@@ -1,0 +1,44 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+import ns from "../../utils/create-namespace";
+
+$ const { site } = out.global;
+$ const {
+  content,
+  selector,
+  targetScrollDepths,
+} = input;
+$ const config = site.getAsObject("p1events");
+
+<if(config.enabled && content)>
+  $ const { type, primarySection, company, createdBy } = content;
+  $ const entity = {
+    id: content.id,
+    ns: ns(`content-${type}`),
+    name: content.name,
+    props: { type, published: content.published },
+    refs: {
+      primarySection: primarySection && primarySection.id
+        ? { id: primarySection.id, ns: ns("website-section"), name: primarySection.fullName, props: { alias: primarySection.alias } }
+        : null,
+      company: company && company.id
+        ? { id: company.id, ns: ns("content-company"), name: company.name }
+        : null,
+      authors: getAsArray(content, "authors.edges").map((edge) => {
+        const { content: author } = edge;
+        return { id: author.id, ns: ns("content-contact"), name: author.name };
+      }),
+      createdBy: createdBy && createdBy.id
+        ? { id: createdBy.id, ns: ns("user"), name: createdBy.username, props: { firstName: createdBy.firstName, lastName: createdBy.lastName } }
+        : null,
+    },
+  };
+  <marko-web-browser-component
+    name="P1EventsTrackScrollDepth"
+    props={
+      entity,
+      category: 'Content',
+      selector,
+      targetScrollDepths,
+    }
+  />
+</if>

@@ -3,7 +3,12 @@ $ const { recaptcha } = out.global;
 
 <marko-web-website-section-page-layout id=id alias=alias name=name>
   <@page>
+
     <marko-web-resolve-page|{ data: section, resolved }| node=pageNode>
+    <marko-web-p1-events-track-website-section-scroll-depth
+      section=section
+      selector=".document-container"
+    />
 
       <marko-web-p1-events-track-website-section node=section />
 

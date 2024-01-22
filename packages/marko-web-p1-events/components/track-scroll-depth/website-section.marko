@@ -1,0 +1,27 @@
+import ns from "../../utils/create-namespace";
+
+$ const { site } = out.global;
+$ const config = site.getAsObject("p1events");
+$ const {
+  section,
+  selector,
+  targetScrollDepths,
+} = input;
+
+<if(config.enabled && section)>
+  $ const entity = {
+    id: section.id,
+    ns: ns('website-section'),
+    name: section.fullName,
+    alias: section.alias,
+  };
+  <marko-web-browser-component
+    name="P1EventsTrackScrollDepth"
+    props={
+      entity,
+      category: 'Website Section',
+      selector,
+      targetScrollDepths,
+    }
+  />
+</if>

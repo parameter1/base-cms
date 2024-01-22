@@ -1,9 +1,15 @@
+import ns from "@parameter1/base-cms-marko-web-p1-events/utils/create-namespace";
+
 <marko-web-default-page-layout
   type="home"
   title="Test Page"
   description="This is a test page."
 >
   <@page>
+    <marko-web-p1-events-track-website-section-scroll-depth
+      section={ id: 'home', alias: 'home', naee: "Home", }
+      selector=".document-container"
+    />
     <marko-web-page-wrapper>
       <@section>
         <div class="ad-container ad-container--inline text-center py-5">

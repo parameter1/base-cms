@@ -14,6 +14,10 @@ $ const blockName = "section-list";
   </@head>
   <@page>
     <marko-web-native-x-story-track-init story=story />
+    <marko-web-p1-events-track-native-story-scroll-depth
+      story=story
+      selector=".document-container"
+    />
     <marko-web-native-x-story-track-page-view />
     <marko-web-native-x-story-track-social-share />
 

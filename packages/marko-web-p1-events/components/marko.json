@@ -1,4 +1,7 @@
 {
+  "taglib-imports": [
+    "./track-scroll-depth/marko.json"
+  ],
   "<marko-web-p1-events-init>": {
     "template": "./init.marko",
     "@script-src": "string",
