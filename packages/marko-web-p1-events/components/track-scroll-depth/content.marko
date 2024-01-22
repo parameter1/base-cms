@@ -24,7 +24,7 @@ $ const config = site.getAsObject("p1events");
         ? { id: company.id, ns: ns("content-company"), name: company.name }
         : null,
       authors: getAsArray(content, "authors.edges").map((edge) => {
-        const { content: author } = edge;
+        const { node: author } = edge;
         return { id: author.id, ns: ns("content-contact"), name: author.name };
       }),
       createdBy: createdBy && createdBy.id
