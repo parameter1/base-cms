@@ -176,3 +176,13 @@
     text-transform: uppercase;
   }
 }
+
+.marko-web-search-form {
+  display: flex;
+  .search-form {
+    &__group {
+      margin-bottom: 0;
+      margin-right: 1rem;
+    }
+  }
+}
