@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-p1-events",
-  "version": "4.41.3",
+  "version": "4.43.0",
   "description": "Parameter1 user event tracking components for BaseCMS/Marko websites.",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
