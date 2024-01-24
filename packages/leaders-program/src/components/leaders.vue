@@ -331,11 +331,19 @@ export default {
         }
       }
       if (!taxonomyIds.length && !sectionIds.length) return [];
-      const v2 = { taxonomyIds, relatedSectionIds: sectionIds };
+      const v2 = { taxonomyIds: [], relatedSectionIds: sectionIds };
       const r2 = await this.$graphql.query({ query: fromContentQuery, variables: v2 });
       const sections = getEdgeNodes(r2, 'data.websiteSections');
-      return sections
+      const applicableSections = sections
         .filter((s) => s.hierarchy.some(({ alias }) => alias === this.sectionAlias));
+      if (applicableSections.length) return applicableSections;
+      const v3 = { taxonomyIds: [], relatedSectionIds: [] };
+      const r3 = await this.$graphql.query({ query: fromContentQuery, variables: v3 });
+      const taxonomyRelatedSections = getEdgeNodes(r3, 'data.websiteSections');
+      const lastChanceSections = taxonomyRelatedSections
+        .filter((s) => s.hierarchy.some(({ alias }) => alias === this.sectionAlias));
+      if (lastChanceSections.length) return lastChanceSections;
+      return [];
     },
 
     async loadAllSections() {
