@@ -61,6 +61,7 @@ export default {
           'inlineContent',
           'inlineSection',
           'footer',
+          'modal',
           'recommended',
         ].includes(value);
       },
