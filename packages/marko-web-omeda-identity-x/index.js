@@ -25,6 +25,7 @@ module.exports = (app, params = {}) => {
     behaviorAttributes,
     brandKey,
     clientKey,
+    createFromIdentity,
     idxConfig,
     idxOmedaRapidIdentifyProp,
     idxRouteTemplates,
@@ -93,6 +94,7 @@ module.exports = (app, params = {}) => {
     }).required(),
     brandKey: props.brandKey.required(),
     clientKey: props.clientKey.required(),
+    createFromIdentity: Joi.boolean().default(true),
     idxConfig: props.idxConfig.required(),
     idxOmedaRapidIdentifyProp: Joi.string().default('$idxOmedaRapidIdentify'),
     idxRouteTemplates: Joi.object().required(),
@@ -159,7 +161,7 @@ module.exports = (app, params = {}) => {
   identityX(app, idxConfig, { templates: idxRouteTemplates });
 
   app.use(setOlyticsCookie({ brandKey }));
-  app.use(setIdentityCookie({ brandKey }));
+  app.use(setIdentityCookie({ brandKey, createFromIdentity }));
 
   // install the Omeda data sync middleware
   app.use(resyncCustomerData({

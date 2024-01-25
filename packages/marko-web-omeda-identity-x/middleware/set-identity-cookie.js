@@ -28,11 +28,15 @@ const findOlyticsId = (req, res) => {
  * @prop {import('@parameter1/omeda-graphql-client')} $omedaGraphQLClient
  * @prop {import('@parameter1/base-cms-marko-web-identity-x/service')} identityX
  *
- * @param {Object} o
- * @param {String} o.brandKey
+ * @typedef MiddlewareConstructor
+ * @prop {string} brandKey              The Omeda Brand Key (tenant identifier).
+ * @prop {boolean} createFromIdentity   If true, create the app user and set identity's external id.
+ *
+ * @param {MiddlewareConstructor}
  */
 module.exports = ({
   brandKey,
+  createFromIdentity = true,
 }) => asyncRoute(async (req, res, next) => {
   /** @type {OIDXRequest} */
   const { identityX: idx, $omedaGraphQLClient: omeda } = req;
@@ -52,6 +56,9 @@ module.exports = ({
     idx.setIdentityCookie(identity.id);
     return next();
   }
+
+  // If disabled, don't create a user from the incoming identity.
+  if (!createFromIdentity) return next();
 
   const or = await omeda.query({ query, variables: { id: omedaId } });
   const email = get(or, 'data.customerByEncryptedId.primaryEmailAddress.emailAddress');
