@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const { json } = require('body-parser');
 const jsonErrorHandler = require('../utils/json-error-handler');
+const access = require('./access');
 const authenticate = require('./authenticate');
 const changeEmailConfirm = require('./change-email-confirm');
 const changeEmailInit = require('./change-email-init');
@@ -19,6 +20,7 @@ const regions = require('./regions');
 const router = Router();
 
 router.use(json());
+router.get('/access', access);
 router.get('/comment-count/:identifier', commentCount);
 router.get('/comments/:identifier', comments);
 router.get('/countries', countries);
