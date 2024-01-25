@@ -48,6 +48,12 @@
     "@login-email-placeholder": "string",
     "@redirect": "string"
   },
+  "<marko-web-identity-x-non-auth-identify>": {
+    "template": "./non-auth-identify.marko"
+  },
+  "<marko-web-identity-x-form-access>": {
+    "template": "./form-access.marko"
+  },
   "<marko-web-identity-x-form-profile>": {
     "template": "./form-profile.marko",
     "@additional-event-data": "object",

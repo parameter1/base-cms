@@ -1,0 +1,12 @@
+$ const { req } = out.global;
+$ const { identityX } = req;
+
+<if(Boolean(identityX))>
+  <marko-web-resolve|{ resolved: user }| promise=identityX.getIdentityData()>
+    <if(user && user.id)>
+      <marko-web-resolve|{ resolved: fullUser }| promise=identityX.findUserById(user.id)>
+        <${input.renderBody} user=fullUser />
+      </marko-web-resolve>
+    </if>
+  </marko-web-resolve>
+</if>
