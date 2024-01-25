@@ -4,6 +4,9 @@ const { getOmedaCustomerRecord } = require('@parameter1/base-cms-marko-web-omeda
 const idxConfig = require('./identity-x');
 const omedaConfig = require('./omeda');
 
+/**
+ * @type {import('@parameter1/base-cms-marko-web-omeda-identity-x').OmedaIdentityXConfig}
+ */
 module.exports = {
   clientKey: omedaConfig.clientKey,
   brandKey: omedaConfig.brandKey,
