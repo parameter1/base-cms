@@ -1,0 +1,56 @@
+
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import { get, getAsObject } from "@parameter1/base-cms-object-path";
+
+$ const { req: { identityX } } = out.global;
+$ const { content, formId, user, application } = input;
+$ const form = identityX.config.getAsObject(`forms.${formId}`);
+$ const additionalEventData = defaultValue(input.additionalEventData, {});
+$ const ctaPrefix = defaultValue(input.ctaPrefix, `To access "${content.name}"`);
+$ const callToAction = defaultValue(input.callToAction, `${ctaPrefix}, please fill out the form below.`);
+$ const callToActionLoggedOut = defaultValue(input.callToAction, `${ctaPrefix}, please enter your email address below. You will receive an email containing a verification link.`);
+$ const buttonLabel = defaultValue(input.buttonLabel, "Submit & Access");
+$ const title = defaultValue(input.title, "Complete the form to access this content");
+$ const { displayForm, cookie } = getAsObject(out, "global.contentIdxFormState");
+
+<if(identityX && form.fieldRows, displayForm)>
+  <div class="content-survey-access-idx__wrapper">
+    $ const props = {
+      // Access form props
+      content: content,
+      title: form.title,
+      fieldRows: form.fieldRows,
+      loginSource: "contentAccess",
+      title: title,
+      cookie,
+      displayForm,
+      callToAction: callToAction,
+      callToActionLoggedOut: callToActionLoggedOut,
+
+      // Login props
+      activeUser: user,
+      additionalEventData: additionalEventData,
+      appContextId: identityX.config.get("appContextId"),
+      buttonLabel: buttonLabel,
+      defaultCountryCode: identityX.config.get("defaultCountryCode"),
+      defaultFieldLabels: identityX.config.get("defaultFieldLabels"),
+      enableChangeEmail: identityX.config.get("enableChangeEmail"),
+      endpoints: identityX.config.getEndpoints(),
+      requiredCreateFields: identityX.config.getRequiredCreateFields(),
+
+      // Consent
+      consentPolicy: get(application, "organization.consentPolicy"),
+      consentPolicyEnabled: defaultValue(input.consentPolicyEnabled, true),
+      emailConsentRequest: get(application, "organization.emailConsentRequest"),
+      emailConsentRequestEnabled: defaultValue(input.emailConsentRequest, true),
+      regionalConsentPolicies: get(application, "organization.regionalConsentPolicies"),
+    };
+    <marko-web-browser-component name="IdentityXAccess" props=props />
+  </div>
+</if>
+<else>
+  $ const msg = `IdentityX Survey Gating: couldn't load form "${formId}"!`;
+  <p class="text-danger" data-marko-error=msg>
+    ${msg}
+  </p>
+</else>

@@ -1,6 +1,7 @@
 import IdentityX from './service';
 import createGraphqlClient from './graphql/create-client';
 
+const Access = () => import(/* webpackChunkName: "identity-x-form-access" */ './access.vue');
 const Authenticate = () => import(/* webpackChunkName: "identity-x-authenticate" */ './authenticate.vue');
 const ChangeEmailConfirm = () => import(/* webpackChunkName: "identity-x-change-email-confirm" */ './change-email-confirm.vue');
 const ChangeEmailInit = () => import(/* webpackChunkName: "identity-x-change-email-init" */ './change-email-init.vue');
@@ -13,6 +14,7 @@ const CommentStream = () => import(/* webpackChunkName: "identity-x-comment-stre
 const $graphql = createGraphqlClient({ uri: '/__graphql' });
 
 export default (Browser, {
+  CustomAccessComponent,
   CustomAuthenticateComponent,
   CustomChangeEmailConfirmComponent,
   CustomChangeEmailInitComponent,
@@ -22,6 +24,7 @@ export default (Browser, {
   CustomLogoutComponent,
   CustomProfileComponent,
 } = {}) => {
+  const AccessComponent = CustomAccessComponent || Access;
   const AuthenticateComponent = CustomAuthenticateComponent || Authenticate;
   const ChangeEmailConfirmComponent = CustomChangeEmailConfirmComponent || ChangeEmailConfirm;
   const ChangeEmailInitComponent = CustomChangeEmailInitComponent || ChangeEmailInit;
@@ -34,6 +37,7 @@ export default (Browser, {
   window.IdentityX = new IdentityX();
 
   const { EventBus } = Browser;
+  Browser.register('IdentityXAccess', AccessComponent, { provide: { EventBus, $graphql } });
   Browser.register('IdentityXAuthenticate', AuthenticateComponent, { provide: { EventBus } });
   Browser.register('IdentityXChangeEmailConfirm', ChangeEmailConfirmComponent, { provide: { EventBus } });
   Browser.register('IdentityXChangeEmailInit', ChangeEmailInitComponent, { provide: { EventBus } });
@@ -50,6 +54,7 @@ export default (Browser, {
   window.dataLayer = window.dataLayer || [];
   [
     // Views
+    'identity-x-access-mounted',
     'identity-x-authenticate-mounted',
     'identity-x-change-email-mounted',
     'identity-x-comment-create-mounted',
@@ -60,6 +65,7 @@ export default (Browser, {
     'identity-x-logout-mounted',
     'identity-x-profile-mounted',
     // Actions/submissions
+    'identity-x-access-submitted',
     'identity-x-authenticated',
     'identity-x-auto-signup',
     'identity-x-change-email',
@@ -72,6 +78,7 @@ export default (Browser, {
     'identity-x-logout',
     'identity-x-profile-updated',
     // Errors
+    'identity-x-access-errored',
     'identity-x-authenticate-errored',
     'identity-x-change-email-errored',
     'identity-x-comment-post-errored',

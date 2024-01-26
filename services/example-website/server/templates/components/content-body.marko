@@ -6,7 +6,12 @@ import renderSiteNewsletterMenu from "@parameter1/base-cms-marko-web-theme-monor
 import renderSiteIdxNewsletterMenu from "@parameter1/base-cms-marko-web-theme-monorail/utils/render-site-idx-newsletter-menu";
 
 $ const { content, blockName } = input;
-$ const { contentGatingHandler, contentMeterState, req } = out.global;
+$ const { contentGatingHandler, contentMeterState, contentIdxFormState = {}, req } = out.global;
+
+<!-- update contentIdxFormStateDisplayBase on the req cookies being present -->
+<!-- @todo figure out how to do this ahead of time within the content route if possible -->
+$ contentIdxFormState.displayForm = !Boolean(get(req, `cookies.${get(contentIdxFormState, 'cookie.name')}`));
+$ const { formId: idxFormId, displayForm: displayIdxForm, cookie: idxSuveyCookie } = contentIdxFormState;
 
 $ const showOverlay = cm.shouldOverlay(contentMeterState);
 $ const requiresReg = cm.restrictContentByReg(contentMeterState, contentGatingHandler, content);
@@ -31,7 +36,45 @@ $ const useIdxDownload = defaultValue(get(content, "gating.surveyType") === "idx
   <if(input.beforeBody)>
     <${input.beforeBody} context=context />
   </if>
-  <if(cm.shouldTruncate(contentMeterState))>
+  <if(idxFormId)>
+    <if(displayIdxForm)>
+      $ const body = getContentPreview({ body: content.body, selector: "p:lt(3)" });
+      <marko-web-content-body block-name=blockName obj={ body } />
+      <div class="content-page-preview-overlay" />
+      <marko-web-content-body block-name=blockName attrs={ style: "display: none;" } obj=content modifiers=["ld-json"] />
+        <marko-web-identity-x-context|{ hasUser, user, application }|>
+        <if(hasUser)>
+          <marko-web-identity-x-form-access
+            content=content
+            user=user
+            formId=idxFormId
+            application=application
+          />
+        </if>
+        <else>
+          <marko-web-identity-x-non-auth-identify|{ user: identifiedUser }|>
+            <marko-web-identity-x-form-access
+              content=content
+              user=identifiedUser
+              formId=idxFormId
+              application=application
+            />
+          </marko-web-identity-x-non-auth-identify>
+        </else>
+      </marko-web-identity-x-context>
+    </if>
+    <else>
+      $ const bodyId = `content-body-${content.id}`;
+      <theme-body-with-injection
+        content=content
+        aliases=[]
+        block-name=blockName
+        selector=bodyId
+        preventHTMLInjection=true
+      />
+    </else>
+  </if>
+  <else-if(cm.shouldTruncate(contentMeterState))>
     $ const body = showOverlay ? getContentPreview({ body: content.body, selector: "p:lt(7)" }) : getContentPreview({ body: content.body, selector: "p:lt(3)" });
     <marko-web-content-body block-name=blockName obj={ body } />
     <div class="content-page-preview-overlay" />
@@ -49,7 +92,7 @@ $ const useIdxDownload = defaultValue(get(content, "gating.surveyType") === "idx
         profile-event-name="content_meter_profile"
       />
     </if>
-  </if>
+  </else-if>
   <else-if(!useIdxDownload && (!context.canAccess || context.requiresUserInput))>
     $ const body = getContentPreview({ body: content.body, selector: "p:lt(3)" });
     <marko-web-content-body block-name=blockName obj={ body } />

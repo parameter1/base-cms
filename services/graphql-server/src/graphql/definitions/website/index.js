@@ -1,4 +1,5 @@
 const gql = require('graphql-tag');
+const contentAccessSubmission = require('./content-access-submission');
 const contentDownloadSubmission = require('./content-download-submission');
 const inquirySubmission = require('./inquiry-submission');
 const option = require('./option');
@@ -9,6 +10,7 @@ const site = require('./site');
 
 module.exports = gql`
 
+${contentAccessSubmission}
 ${contentDownloadSubmission}
 ${inquirySubmission}
 ${option}
