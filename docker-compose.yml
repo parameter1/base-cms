@@ -341,13 +341,18 @@ services:
     entrypoint: ["yarn"]
     command: ["dev"]
     environment:
-      <<: [*env, *env-tauron]
+      <<: [*env]
       PORT: 80
       EXPOSED_PORT: 51269
       LIVERELOAD_PORT: 61269
       TENANT_KEY: ${EXAMPLE_TENANT_KEY-p1_sandbox}
       HOST: www-p1-sandbox.dev.parameter1.com
       SITE_ID: ${EXAMPLE_SITE_ID-5ed294c6c13a4626008b4568}
+
+      GRAPHQL_URI: ${GRAPHQL_URI-http://graphql-server}
+      OEMBED_URI: ${OEMBED_URI-https://oembed}
+      RSS_URI: ${RSS_URI-http://rss}
+      SITEMAPS_URI: ${SITEMAPS_URI-http://sitemaps}
 
       # Debug logging
       DEBUG: ${DEBUG-defer,p1events,omeda,content-meter}
@@ -377,6 +382,12 @@ services:
     ports:
       - "51269:80"
       - "61269:61269"
+
+    depends_on:
+      - graphql-server
+      - oembed
+      - rss
+      - sitemaps
 
   example-leaders-program:
     << : *node
