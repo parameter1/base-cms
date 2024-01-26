@@ -13,7 +13,7 @@ $ const buttonLabel = defaultValue(input.buttonLabel, "Submit & Access");
 $ const title = defaultValue(input.title, "Complete the form to access this content");
 $ const { displayForm, cookie } = getAsObject(out, "global.contentIdxFormState");
 
-<if(identityX && form.fieldRows)>
+<if(identityX && form.fieldRows, displayForm)>
   <div class="content-survey-access-idx__wrapper">
     $ const props = {
       // Access form props

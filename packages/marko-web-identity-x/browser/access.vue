@@ -1,5 +1,5 @@
 <template>
-  <div v-if=displayForm id="access-idx-form" class="content-page-gate p-block">
+  <div id="access-idx-form" class="content-page-gate p-block">
     <template v-if="hasActiveUser">
       <h5 class="content-page-gate__title">
         {{ title }}
@@ -152,10 +152,6 @@ export default {
       type: Array,
       default: () => [],
     },
-    displayForm: {
-      type: Boolean,
-      default: true,
-    },
     cookie: {
       type: Object,
       required: true,
@@ -248,11 +244,6 @@ export default {
   mounted() {
     if (cookiesEnabled()) {
       this.emit('access-mounted');
-      if (!this.displayForm) {
-        // Fake submit the form!
-        console.warn('Fake submit the form!');
-        this.handleSubmit({ withReload: false });
-      }
     } else {
       const error = new FeatureError('Your browser does not support cookies. Please enable cookies to use this feature.');
       this.error = error.message;

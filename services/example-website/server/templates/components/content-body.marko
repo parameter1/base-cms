@@ -42,6 +42,29 @@ $ const useIdxDownload = defaultValue(get(content, "gating.surveyType") === "idx
       <marko-web-content-body block-name=blockName obj={ body } />
       <div class="content-page-preview-overlay" />
       <marko-web-content-body block-name=blockName attrs={ style: "display: none;" } obj=content modifiers=["ld-json"] />
+        <marko-web-identity-x-context|{ hasUser, user, application }|>
+        <if(hasUser)>
+          <marko-web-identity-x-form-access
+            content=content
+            user=user
+            formId=idxFormId
+            application=application
+          />
+          $ console.log("authenticated", idxFormId);
+        </if>
+        <else>
+          $ console.log('!hasUser')
+          <marko-web-identity-x-non-auth-identify|{ user: identifiedUser }|>
+            <marko-web-identity-x-form-access
+              content=content
+              user=identifiedUser
+              formId=idxFormId
+              application=application
+            />
+            $ console.log("Identitfied", identifiedUser);
+          </marko-web-identity-x-non-auth-identify>
+        </else>
+      </marko-web-identity-x-context>
     </if>
     <else>
       $ const bodyId = `content-body-${content.id}`;
@@ -53,31 +76,6 @@ $ const useIdxDownload = defaultValue(get(content, "gating.surveyType") === "idx
         preventHTMLInjection=true
       />
     </else>
-    <marko-web-identity-x-context|{ hasUser, user, application }|>
-      <if(hasUser)>
-        <marko-web-identity-x-form-access
-          content=content
-          displayForm=displayIdxForm
-          user=user
-          formId=idxFormId
-          application=application
-        />
-        $ console.log("authenticated", idxFormId);
-      </if>
-      <else>
-        $ console.log('!hasUser')
-        <marko-web-identity-x-non-auth-identify|{ user: identifiedUser }|>
-          <marko-web-identity-x-form-access
-            content=content
-            displayForm=displayIdxForm
-            user=identifiedUser
-            formId=idxFormId
-            application=application
-          />
-          $ console.log("Identitfied", identifiedUser);
-        </marko-web-identity-x-non-auth-identify>
-      </else>
-    </marko-web-identity-x-context>
   </if>
   <else-if(cm.shouldTruncate(contentMeterState))>
     $ const body = showOverlay ? getContentPreview({ body: content.body, selector: "p:lt(7)" }) : getContentPreview({ body: content.body, selector: "p:lt(3)" });
