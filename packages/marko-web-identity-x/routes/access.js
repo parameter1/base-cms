@@ -2,8 +2,8 @@ const gql = require('graphql-tag');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 
 const mutation = gql`
-  mutation StoreContentAccessSubmission($input: CreateContentAccessSubmissionMutationInput!) {
-    createContentAccessSubmission(input:$input) {
+  mutation StoreContentAccessSubmission($input: CreateContentDownloadSubmissionMutationInput!) {
+    createContentDownloadSubmission(input:$input) {
       id
     }
   }
