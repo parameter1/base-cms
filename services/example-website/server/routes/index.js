@@ -1,3 +1,4 @@
+const gql = require('graphql-tag');
 const { withContent, withWebsiteSection } = require('@parameter1/base-cms-marko-web/middleware');
 const renderBlock = require('@parameter1/base-cms-marko-web-theme-monorail/routes/render-block');
 const search = require('@parameter1/base-cms-marko-web-theme-monorail/routes/search');
@@ -17,6 +18,18 @@ const dynamicPages = require('./dynamic-page');
 
 const queryFragment = require('../../graphql/fragments/content-page');
 const sectionFragment = require('../../graphql/fragments/website-section-page');
+const loaderQueryFragment = gql`
+  fragment WithContentPrimarySectionFragment on Content {
+    primarySection {
+      id
+      alias
+    }
+    gating {
+      surveyType
+      surveyId
+    }
+  }
+`;
 
 module.exports = (app, config) => {
   // NativeX
@@ -39,6 +52,7 @@ module.exports = (app, config) => {
   app.get('/*?:id(\\d{8})*', contentMetering(contentMeteringCfg), withContent({
     template: content,
     queryFragment,
+    loaderQueryFragment,
     formatResponse: formatContentResponse,
   }));
 
