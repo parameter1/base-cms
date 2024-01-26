@@ -11,12 +11,14 @@ const mutation = gql`
 
 module.exports = asyncRoute(async (req, res) => {
   const { body, apollo } = req;
-  const { contentId, payload } = body;
+  const { contentId, payload, cookie } = body;
   const input = {
     contentId,
     payload,
     ipAddress: req.ip,
   };
+  const { name: COOKIE_NAME, maxAge } = cookie;
   await apollo.mutate({ mutation, variables: { input } });
+  res.cookie(COOKIE_NAME, true, { maxAge, httpOnly: false });
   res.json({ ok: true });
 });

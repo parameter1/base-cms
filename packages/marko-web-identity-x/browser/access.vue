@@ -82,7 +82,6 @@
 </template>
 
 <script>
-import cookies from 'js-cookie';
 import post from './utils/post';
 import cookiesEnabled from './utils/cookies-enabled';
 
@@ -272,6 +271,7 @@ export default {
         const res = await post('/access', {
           contentId: content.id,
           contentType: content.type,
+          cookie: this.cookie,
           // companyId: company.id,
           userId: this.user.id,
           additionalEventData,
@@ -310,8 +310,6 @@ export default {
           userId: this.user.id,
           additionalEventData,
         });
-        const { cookie } = this;
-        cookies.set(cookie.name, true, { expires: cookie.maxAge });
 
         this.didSubmit = true;
 
