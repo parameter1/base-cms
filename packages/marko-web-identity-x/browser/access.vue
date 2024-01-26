@@ -50,7 +50,7 @@
             Your responses have been saved, and this page will automatically reload.
           </p>
           <p class="success-message__title d-flex justify-content-between">
-            If not, click here:
+            If not, click the reload button
             <a
               class="btn btn-primary mr-3"
               :href="handleReload()"
