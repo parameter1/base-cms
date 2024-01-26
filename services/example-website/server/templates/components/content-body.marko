@@ -53,6 +53,7 @@ $ const useIdxDownload = defaultValue(get(content, "gating.surveyType") === "idx
           $ console.log("authenticated", idxFormId);
         </if>
         <else>
+          $ console.log('!hasUser')
           <marko-web-identity-x-non-auth-identify|{ user: identifiedUser }|>
             <marko-web-identity-x-form-access
               content=content
@@ -60,6 +61,7 @@ $ const useIdxDownload = defaultValue(get(content, "gating.surveyType") === "idx
               formId=idxFormId
               application=application
             />
+            $ console.log("Identitfied", identifiedUser);
           </marko-web-identity-x-non-auth-identify>
         </else>
       </marko-web-identity-x-context>

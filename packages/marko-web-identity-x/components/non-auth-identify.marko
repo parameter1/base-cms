@@ -8,5 +8,8 @@ $ const { identityX } = req;
         <${input.renderBody} user=fullUser />
       </marko-web-resolve>
     </if>
+    <else>
+      <${input.renderBody} />
+    </else>
   </marko-web-resolve>
 </if>
