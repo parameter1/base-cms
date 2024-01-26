@@ -31,6 +31,7 @@ const schemas = require('./validation/schemas');
  * @prop {string} brandKey
  * @prop {string} clientKey
  * @prop {boolean} [createFromIdentity=true] createFromIdentity
+ * @prop {boolean} [enableIdentityCookies=true] enableIdentityCookies
  * @prop {HookBehaviorSchema[]} hookBehavior
  * @prop {IdentityXConfig} idxConfig
  * @prop {string} [idxOmedaRapidIdentifyProp=$idxOmedaRapidIdentify]
@@ -108,6 +109,7 @@ module.exports = (app, params = {}) => {
     brandKey,
     clientKey,
     createFromIdentity,
+    enableIdentityCookies,
     idxConfig,
     idxOmedaRapidIdentifyProp,
     idxRouteTemplates,
@@ -177,6 +179,7 @@ module.exports = (app, params = {}) => {
     brandKey: props.brandKey.required(),
     clientKey: props.clientKey.required(),
     createFromIdentity: Joi.boolean().default(true),
+    enableIdentityCookies: Joi.boolean().default(true),
     idxConfig: props.idxConfig.required(),
     idxOmedaRapidIdentifyProp: Joi.string().default('$idxOmedaRapidIdentify'),
     idxRouteTemplates: Joi.object().required(),
@@ -243,7 +246,11 @@ module.exports = (app, params = {}) => {
   identityX(app, idxConfig, { templates: idxRouteTemplates });
 
   app.use(setOlyticsCookie({ brandKey }));
-  app.use(setIdentityCookie({ brandKey, createFromIdentity }));
+  app.use(setIdentityCookie({
+    brandKey,
+    createFromIdentity,
+    enabled: enableIdentityCookies,
+  }));
 
   // install the Omeda data sync middleware
   app.use(resyncCustomerData({

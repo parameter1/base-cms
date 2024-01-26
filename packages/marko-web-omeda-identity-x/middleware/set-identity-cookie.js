@@ -31,13 +31,17 @@ const findOlyticsId = (req, res) => {
  * @typedef MiddlewareConstructor
  * @prop {string} brandKey              The Omeda Brand Key (tenant identifier).
  * @prop {boolean} createFromIdentity   If true, create the app user and set identity's external id.
+ * @prop {boolean} enabled              If false, don't perform any identity cookie management.
  *
  * @param {MiddlewareConstructor}
  */
 module.exports = ({
   brandKey,
   createFromIdentity = true,
+  enabled = true,
 }) => asyncRoute(async (req, res, next) => {
+  if (!enabled) return next();
+
   /** @type {OIDXRequest} */
   const { identityX: idx, $omedaGraphQLClient: omeda } = req;
   const cookie = idx.getIdentity(res);
