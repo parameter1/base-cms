@@ -47,17 +47,15 @@
       <template v-else>
         <div class="success-message">
           <p class="success-message__title">
-            Your responses have been saved, and your download should begin automatically.
+            Your responses have been saved, and this page will automatically reload.
           </p>
           <p class="success-message__title d-flex justify-content-between">
-            If not, click this button to start:
+            If not, click here:
             <a
               class="btn btn-primary mr-3"
-              :href="content.fileSrc"
-              target="_blank"
-            >Download</a>
+              :href="handleReload()"
+            >Reload</a>
           </p>
-          <download-related :content="content" @submit="download" />
         </div>
       </template>
     </template>
@@ -92,12 +90,12 @@ import Login from './login.vue';
 import FeatureError from './errors/feature';
 import FormError from './errors/form';
 import EventEmitter from './mixins/global-event-emitter';
-import DownloadRelated from './download-related.vue';
+// import DownloadRelated from './download-related.vue';
 
 export default {
   components: {
     CustomColumn,
-    DownloadRelated,
+    // DownloadRelated,
     FormConsent,
     Login,
   },
@@ -266,6 +264,10 @@ export default {
    *
    */
   methods: {
+    async handleReload() {
+      this.isReloadingPage = true;
+      window.location.reload(true);
+    },
 
     /**
      *
@@ -312,15 +314,18 @@ export default {
         });
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
+
+        this.didSubmit = true;
+
         this.emit('access-submitted', {
           contentId: content.id,
           contentType: content.type,
           userId: this.user.id,
           additionalEventData,
         });
+
         if (withReload) {
-          this.didSubmit = true;
-          window.location.reload(true);
+          this.handleReload();
         }
       } catch (e) {
         this.error = e;
