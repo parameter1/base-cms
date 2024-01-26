@@ -111,9 +111,6 @@ $ const useIdxDownload = defaultValue(get(content, "gating.surveyType") === "idx
     />
   </else-if>
   <else>
-    <if(idxFormId)>
-
-    </if>
     $ const bodyId = `content-body-${content.id}`;
     $ const newsletterPromise = renderSiteNewsletterMenu({ out }).then((html) => ({ at: 800, html }));
     $ const idxNewsletterPromise = renderSiteIdxNewsletterMenu({
