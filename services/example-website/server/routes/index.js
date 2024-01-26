@@ -18,6 +18,7 @@ const dynamicPages = require('./dynamic-page');
 
 const queryFragment = require('../../graphql/fragments/content-page');
 const sectionFragment = require('../../graphql/fragments/website-section-page');
+
 const loaderQueryFragment = gql`
   fragment WithContentPrimarySectionFragment on Content {
     primarySection {

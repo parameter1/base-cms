@@ -26,7 +26,7 @@ module.exports = new IdentityXConfiguration({
   // custom form field definitions
   forms: {
     default: formDefault,
-    // download,
+    download,
   },
   apiToken: process.env.IDENTITYX_API_TOKEN,
   requiredServerFields: ['givenName', 'familyName', 'countryCode'],
