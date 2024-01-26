@@ -241,10 +241,6 @@ export default {
     },
   },
 
-  created() {
-    alert('hitting');
-  },
-
   /**
    *
    */
