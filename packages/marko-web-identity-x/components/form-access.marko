@@ -12,6 +12,8 @@ $ const callToActionLoggedOut = defaultValue(input.callToAction, `${ctaPrefix}, 
 $ const buttonLabel = defaultValue(input.buttonLabel, "Submit & Access");
 $ const title = defaultValue(input.title, "Complete the form to access this content");
 $ const { displayForm, cookie } = getAsObject(out, "global.contentIdxFormState");
+$ const consentPolicy = defaultValue(form.consentPolicy, get(application, "organization.consentPolicy"));
+$ const emailConsentRequest = defaultValue(form.emailConsentRequest, get(application, "organization.emailConsentRequest"));
 
 <if(identityX && form.fieldRows, displayForm)>
   <div class="content-survey-access-idx__wrapper">
@@ -39,9 +41,9 @@ $ const { displayForm, cookie } = getAsObject(out, "global.contentIdxFormState")
       requiredCreateFields: identityX.config.getRequiredCreateFields(),
 
       // Consent
-      consentPolicy: get(application, "organization.consentPolicy"),
+      consentPolicy: consentPolicy,
       consentPolicyEnabled: defaultValue(input.consentPolicyEnabled, true),
-      emailConsentRequest: get(application, "organization.emailConsentRequest"),
+      emailConsentRequest: emailConsentRequest,
       emailConsentRequestEnabled: defaultValue(input.emailConsentRequest, true),
       regionalConsentPolicies: get(application, "organization.regionalConsentPolicies"),
     };
