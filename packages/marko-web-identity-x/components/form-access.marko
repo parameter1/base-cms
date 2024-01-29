@@ -14,6 +14,7 @@ $ const title = defaultValue(input.title, "Complete the form to access this cont
 $ const { displayForm, cookie } = getAsObject(out, "global.contentIdxFormState");
 $ const consentPolicy = defaultValue(form.consentPolicy, get(application, "organization.consentPolicy"));
 $ const emailConsentRequest = defaultValue(form.emailConsentRequest, get(application, "organization.emailConsentRequest"));
+$ const enableChangeEmail = defaultValue(input.enableChangeEmail, defaultValue(identityX.config.get("enableChangeEmail"), false));
 
 <if(identityX && form.fieldRows, displayForm)>
   <div class="content-survey-access-idx__wrapper">
@@ -36,7 +37,7 @@ $ const emailConsentRequest = defaultValue(form.emailConsentRequest, get(applica
       buttonLabel: buttonLabel,
       defaultCountryCode: identityX.config.get("defaultCountryCode"),
       defaultFieldLabels: identityX.config.get("defaultFieldLabels"),
-      enableChangeEmail: identityX.config.get("enableChangeEmail"),
+      enableChangeEmail,
       endpoints: identityX.config.getEndpoints(),
       requiredCreateFields: identityX.config.getRequiredCreateFields(),
 
