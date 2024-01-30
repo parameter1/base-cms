@@ -239,6 +239,7 @@ export default {
 
         this.emitAutoSignup(data);
         this.emit('authenticated', {
+          ...data,
           id: this.activeUser.id,
           email: this.activeUser.email,
           verifiedCount: this.activeUser.verifiedCount,
