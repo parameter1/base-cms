@@ -6,6 +6,9 @@ const IdentityX = require('./service');
  *
  * @param {IdentityXConfiguration} config The IdentityX config object
  * @returns {function} The middleware function
+ *
+ * @typedef IdentityXRequest
+ * @prop {IdentityX} identityX The IdentityX service instance
  */
 module.exports = (config) => asyncRoute(async (req, res, next) => {
   const service = new IdentityX({ req, res, config });
