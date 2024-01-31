@@ -36,8 +36,8 @@ const dispatchP1EAuthenticate = (args) => {
   } = args;
   window.p1events('track', {
     category: 'Identity',
-    action: 'Authenticate',
-    label: 'Complete',
+    action: 'Click',
+    label: 'Login Link',
     props: {
       ...(actionSource && { actionSource }),
       ...(newsletterSignupType && { newsletterSignupType }),

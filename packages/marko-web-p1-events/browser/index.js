@@ -44,8 +44,8 @@ export default (Browser) => {
     }],
     ['identity-x-login-link-sent', {
       category: 'Identity',
-      action: 'Authenticate',
-      label: 'Start',
+      action: 'Sent',
+      label: 'Login Link',
     }],
     ['identity-x-profile-updated', {
       category: 'Identity',
