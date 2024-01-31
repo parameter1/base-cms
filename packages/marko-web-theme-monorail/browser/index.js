@@ -28,6 +28,15 @@ const setP1EventsIdentity = ({ p1events, brandKey, encryptedId }) => {
   p1events('setIdentity', `omeda.${brandKey}.customer*${encryptedId}~encrypted`);
 };
 
+/**
+ * @typedef ThemeConfig
+ * @prop {boolean} [enableOmedaIdentityX=true]
+ * @prop {boolean} [withP1Events=true]
+ * @prop {object} [idxArgs={}]
+ * @prop {object} [inquiryArgs={}]
+ *
+ * @type {ThemeConfig}
+ */
 const defaultConfig = {
   enableOmedaIdentityX: true,
   withP1Events: true,
@@ -35,6 +44,10 @@ const defaultConfig = {
   inquiryArgs: {},
 };
 
+/**
+ * @param {import('@parameter1/base-cms-marko-web/browser')} Browser
+ * @param {ThemeConfig} [configOverrides={}]
+ */
 export default (Browser, configOverrides = {}) => {
   const config = { ...defaultConfig, ...configOverrides };
   const { EventBus } = Browser;
@@ -51,11 +64,18 @@ export default (Browser, configOverrides = {}) => {
   }
 
   if (enableOmedaIdentityX) {
-    EventBus.$on('omeda-identity-x-authenticated', ({ brandKey, encryptedId }) => {
+    EventBus.$on([
+      'omeda-identity-x-authenticated',
+      'omeda-identity-x-rapid-identify-response',
+    ], ({ brandKey, encryptedId }) => {
       setP1EventsIdentity({ p1events: window.p1events, brandKey, encryptedId });
     });
-    EventBus.$on('omeda-identity-x-rapid-identify-response', ({ brandKey, encryptedId }) => {
-      setP1EventsIdentity({ p1events: window.p1events, brandKey, encryptedId });
+  } else {
+    EventBus.$on([
+      'identity-x-authenticated',
+    ], ({ applicationId, user }) => {
+      if (!window.p1events || !applicationId || !user) return;
+      window.p1events('setIdentity', `identity-x.${applicationId}.app-user*${user.id}`);
     });
   }
 
