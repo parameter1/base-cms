@@ -79,6 +79,30 @@ export default (Browser, configOverrides = {}) => {
     });
   }
 
+  if (withP1Events) {
+    /**
+     * @see @parameter1/marko-web-p1-events/browser for non-authenticate conversion events
+     *
+     * Dispatch the auth complete event. Note that this _must_ be registered after the above
+     * identity-x-authenticated events in order for the identity to be set before the event is
+     * emitted.
+     */
+    EventBus.$on(['identity-x-authenticated'], (args) => {
+      if (!window.p1events) return;
+      const { actionSource, newsletterSignupType, contentGatingType } = args;
+      window.p1events('track', {
+        category: 'Identity',
+        action: 'Authenticate',
+        label: 'Complete',
+        props: {
+          ...(actionSource && { actionSource }),
+          ...(newsletterSignupType && { newsletterSignupType }),
+          ...(contentGatingType && { contentGatingType }),
+        },
+      });
+    });
+  }
+
   Browser.register('ThemeCommentToggleButton', CommentToggleButton);
 
   EventBus.$on('identity-x-logout', () => {
