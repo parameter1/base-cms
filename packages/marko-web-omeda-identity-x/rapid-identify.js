@@ -55,6 +55,10 @@ module.exports = async ({
     countryCode,
     regionCode,
     postalCode,
+    street,
+    addressExtra,
+    city,
+    phoneNumber,
   } = appUser;
 
   let alpha3;
@@ -148,6 +152,10 @@ module.exports = async ({
     ...(alpha3 && { countryCode: alpha3 }),
     ...(regionCode && { regionCode }),
     ...(postalCode && { postalCode }),
+    ...(street && { street }),
+    ...(addressExtra && { addressExtra }),
+    ...(city && { city }),
+    ...(phoneNumber && { phoneNumber }),
     ...(demographics.length && { demographics }),
     ...(behaviors.length && { behaviors }),
     ...(deploymentTypes.length && { deploymentTypes }),
