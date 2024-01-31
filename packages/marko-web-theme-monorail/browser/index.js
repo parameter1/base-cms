@@ -28,6 +28,24 @@ const setP1EventsIdentity = ({ p1events, brandKey, encryptedId }) => {
   p1events('setIdentity', `omeda.${brandKey}.customer*${encryptedId}~encrypted`);
 };
 
+const dispatchP1EAuthenticate = (args) => {
+  const {
+    loginSource: actionSource,
+    newsletterSignupType,
+    contentGatingType,
+  } = args;
+  window.p1events('track', {
+    category: 'Identity',
+    action: 'Authenticate',
+    label: 'Complete',
+    props: {
+      ...(actionSource && { actionSource }),
+      ...(newsletterSignupType && { newsletterSignupType }),
+      ...(contentGatingType && { contentGatingType }),
+    },
+  });
+};
+
 /**
  * @typedef ThemeConfig
  * @prop {boolean} [enableOmedaIdentityX=true]
@@ -63,43 +81,27 @@ export default (Browser, configOverrides = {}) => {
     P1Events(Browser);
   }
 
+  /**
+   * Sets the P1E Identity and explicitly dispatches the authenticate converion event
+   * @see @parameter1/marko-web-p1-events/browser for post-auth conversion events
+   */
   if (enableOmedaIdentityX) {
-    EventBus.$on([
-      'omeda-identity-x-authenticated',
-      'omeda-identity-x-rapid-identify-response',
-    ], ({ brandKey, encryptedId }) => {
+    EventBus.$on('omeda-identity-x-authenticated', (args) => {
+      const { brandKey, encryptedId } = args;
       setP1EventsIdentity({ p1events: window.p1events, brandKey, encryptedId });
+      dispatchP1EAuthenticate(args);
+    });
+    EventBus.$on('omeda-identity-x-rapid-identify-response', (args) => {
+      const { brandKey, encryptedId } = args;
+      setP1EventsIdentity({ p1events: window.p1events, brandKey, encryptedId });
+      dispatchP1EAuthenticate(args);
     });
   } else {
-    EventBus.$on([
-      'identity-x-authenticated',
-    ], ({ applicationId, user }) => {
+    EventBus.$on('identity-x-authenticated', (args) => {
+      const { applicationId, user } = args;
       if (!window.p1events || !applicationId || !user) return;
       window.p1events('setIdentity', `identity-x.${applicationId}.app-user*${user.id}`);
-    });
-  }
-
-  if (withP1Events) {
-    /**
-     * @see @parameter1/marko-web-p1-events/browser for non-authenticate conversion events
-     *
-     * Dispatch the auth complete event. Note that this _must_ be registered after the above
-     * identity-x-authenticated events in order for the identity to be set before the event is
-     * emitted.
-     */
-    EventBus.$on(['identity-x-authenticated'], (args) => {
-      if (!window.p1events) return;
-      const { actionSource, newsletterSignupType, contentGatingType } = args;
-      window.p1events('track', {
-        category: 'Identity',
-        action: 'Authenticate',
-        label: 'Complete',
-        props: {
-          ...(actionSource && { actionSource }),
-          ...(newsletterSignupType && { newsletterSignupType }),
-          ...(contentGatingType && { contentGatingType }),
-        },
-      });
+      dispatchP1EAuthenticate(args);
     });
   }
 
