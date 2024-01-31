@@ -48,6 +48,10 @@ const { log } = console;
   'identity-x-profile-errored',
   // Newsletter forms (Monorail)
   'identity-x-newsletter-form-action',
+  // Omeda
+  'omeda-identity-x-authenticated',
+  'omeda-identity-x-rapid-identify-encrypted-id-found',
+  'omeda-identity-x-rapid-identify-response',
 ].forEach((event) => EventBus.$on(event, (args) => log('Emitted event', event, args)));
 
 export default Browser;

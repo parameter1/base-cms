@@ -23,6 +23,7 @@ const loginAppUser = gql`
 `;
 
 module.exports = asyncRoute(async (req, res) => {
+  /** @type {import('../middleware').IdentityXRequest} */
   const { identityX, body } = req;
   const { token, additionalEventData } = body;
   if (!token) throw new Error('No login token was provided.');
@@ -46,6 +47,7 @@ module.exports = asyncRoute(async (req, res) => {
   identityX.setIdentityCookie(user.id);
   res.json({
     ok: true,
+    applicationId: identityX.config.getAppId(),
     user,
     loginSource,
     additionalEventData,

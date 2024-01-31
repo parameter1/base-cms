@@ -29,4 +29,41 @@ export default (Browser) => {
       entity,
     });
   });
+
+  // User Conversion Events
+  [...new Map([
+    ['identity-x-access-submitted', {
+      category: 'Identity',
+      action: 'Submit',
+      label: 'Content Access',
+    }],
+    ['identity-x-download-submitted', {
+      category: 'Identity',
+      action: 'Submit',
+      label: 'Content Download',
+    }],
+    ['identity-x-login-link-sent', {
+      category: 'Identity',
+      action: 'Sent',
+      label: 'Login Link',
+    }],
+    ['identity-x-profile-updated', {
+      category: 'Identity',
+      action: 'Submit',
+      label: 'Profile',
+    }],
+  ]).entries()].forEach(([event, payload]) => {
+    EventBus.$on(event, (args) => {
+      if (!window.p1events) return;
+      const { actionSource, newsletterSignupType, contentGatingType } = args;
+      window.p1events('track', {
+        ...payload,
+        props: {
+          ...(actionSource && { actionSource }),
+          ...(newsletterSignupType && { newsletterSignupType }),
+          ...(contentGatingType && { contentGatingType }),
+        },
+      });
+    });
+  });
 };

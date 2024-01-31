@@ -6,7 +6,8 @@ export default (Browser, idxArgs = {}) => {
   IdentityX(Browser, idxArgs);
 
   const { EventBus } = Browser;
-  EventBus.$on('identity-x-authenticated', ({ user = {} } = {}) => {
+  EventBus.$on('identity-x-authenticated', (args = {}) => {
+    const { user = {} } = args;
     const externalIds = user.externalIds || [];
     const eid = externalIds.find((external) => {
       if (!external || !external.namespace || !external.identifier) return false;
@@ -21,6 +22,7 @@ export default (Browser, idxArgs = {}) => {
     const encryptedId = eid ? eid.identifier.value : null;
     const brandKey = eid ? eid.namespace.tenant : null;
     EventBus.$emit('omeda-identity-x-authenticated', {
+      ...args,
       user,
       eid,
       brandKey,
