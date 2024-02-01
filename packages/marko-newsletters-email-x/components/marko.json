@@ -33,5 +33,25 @@
       "@include-advertiser": "boolean"
     },
     "@decoded-params":  "array"
+  },
+  "<marko-newsletters-email-x-render>": {
+    "template": "./render.marko",
+    "<response>": {
+      "<data>": {
+        "<ad>": {
+          "@height": "number",
+          "@mindfulCreativeId": "string",
+          "@width": "number"
+        }
+      },
+      "@imageSrc": "string"
+    },
+    "<link>": {
+      "@href": "string",
+      "@attrs": "object"
+    },
+    "<image>": {
+      "@attrs": "object"
+    }
   }
 }
