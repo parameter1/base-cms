@@ -1,0 +1,25 @@
+import { getAsObject, get } from "@parameter1/base-cms-object-path";
+
+$ const response = getAsObject(input, "response");
+$ const imageSrc = get(input, "response.imageSrc");
+$ const { ad } = response.data;
+
+$ const imageAttrs = {
+  ...getAsObject(input, "image.attrs"),
+  width: ad.width,
+  height: ad.height,
+};
+
+$ const mindfulCreativeId = get(response, "data.ad.mindfulCreativeId");
+$ const linkAttrs = {
+  href: ad.url,
+  ...(getAsObject(input, "link")),
+  attrs: {
+    ...(getAsObject(input, "link.attrs")),
+    ...(mindfulCreativeId && { "data-mindful-creative-id": mindfulCreativeId }),
+  },
+};
+
+<marko-core-img ...input.image src=imageSrc attrs=imageAttrs>
+  <@link target="_blank" ...linkAttrs />
+</marko-core-img>
