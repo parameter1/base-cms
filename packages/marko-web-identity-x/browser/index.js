@@ -102,7 +102,7 @@ export default (Browser, {
       };
       const { searchParams } = new URL(window.location.href);
       if (searchParams.has('idxDebugger')) {
-        log(`identity-x event: ${event}) `, payload);
+        log(`identity-x event: ${event} `, payload);
       }
       window.dataLayer.push(payload);
     });
