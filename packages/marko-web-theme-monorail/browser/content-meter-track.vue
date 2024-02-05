@@ -4,6 +4,8 @@
 
 <script>
 
+const { log } = console;
+
 export default {
   props: {
     views: {
@@ -39,7 +41,7 @@ export default {
       if (event[0].isIntersecting) {
         const { dataLayer } = window;
         if (dataLayer) {
-          dataLayer.push({
+          const payload = {
             event: 'identity-x-content-meter-view',
             'identity-x': {
               label: 'content-meter',
@@ -47,7 +49,12 @@ export default {
               remaining,
               overlayDisplayed,
             },
-          });
+          };
+          dataLayer.push(payload);
+          const { searchParams } = new URL(window.location.href);
+          if (searchParams.has('idxDebugger')) {
+            log('identity-x event: identity-x-content-meter-view', payload);
+          }
         }
       }
     });
