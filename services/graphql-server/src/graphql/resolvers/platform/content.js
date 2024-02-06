@@ -2105,7 +2105,8 @@ module.exports = {
       const content = await basedb.strictFindById('platform.Content', contentId, { projection: { type: 1 } });
       const contentType = `platform/content/${dasherize(content.type)}`;
       const body = new Base4RestPayload({ type: contentType });
-      body.set('mutations.Website.seoTitle', value);
+      body.set('id', contentId);
+      body.set('seoTitleWebsite', value);
       await base4rest.updateOne({ model: contentType, id: contentId, body });
 
       const projection = buildProjection({ info, type: 'Content' });
