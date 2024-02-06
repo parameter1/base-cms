@@ -2095,21 +2095,21 @@ module.exports = {
       const projection = buildProjection({ info, type: 'ContentCompany' });
       return basedb.findOne('platform.Content', { _id: id }, { projection });
     },
-  },
 
-  /**
-   *
-   */
-  contentSEOTitle: async (_, { input }, { base4rest, basedb }, info) => {
-    validateRest(base4rest);
-    const { id: contentId, value } = input;
-    const content = await basedb.strictFindById('platform.Content', contentId, { projection: { type: 1 } });
-    const contentType = `platform/content/${dasherize(content.type)}`;
-    const body = new Base4RestPayload({ type: contentType });
-    body.set('mutations.Website.seoTitle', value);
-    await base4rest.updateOne({ model: contentType, id: contentId, body });
+    /**
+     *
+     */
+    contentSEOTitle: async (_, { input }, { base4rest, basedb }, info) => {
+      validateRest(base4rest);
+      const { id: contentId, value } = input;
+      const content = await basedb.strictFindById('platform.Content', contentId, { projection: { type: 1 } });
+      const contentType = `platform/content/${dasherize(content.type)}`;
+      const body = new Base4RestPayload({ type: contentType });
+      body.set('mutations.Website.seoTitle', value);
+      await base4rest.updateOne({ model: contentType, id: contentId, body });
 
-    const projection = buildProjection({ info, type: 'Content' });
-    return basedb.findOne('platform.Content', { _id: contentId }, { projection });
+      const projection = buildProjection({ info, type: 'Content' });
+      return basedb.findOne('platform.Content', { _id: contentId }, { projection });
+    },
   },
 };
