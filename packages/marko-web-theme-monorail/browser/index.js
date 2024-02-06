@@ -184,5 +184,7 @@ export default (Browser, configOverrides = {}) => {
   Browser.register('ThemeTopStoriesMenu', TopStoriesMenu);
   Browser.register('WufooForm', WufooForm);
   Browser.register('RevealAdHandler', RevealAdHandler);
-  Browser.register('ContentMeterTrack', ContentMeterTrack);
+  Browser.register('ContentMeterTrack', ContentMeterTrack, {
+    provide: { EventBus },
+  });
 };

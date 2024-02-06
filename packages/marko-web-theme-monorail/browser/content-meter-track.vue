@@ -1,10 +1,12 @@
 <template>
-  <div id="content-meter-gtm-event" />
+  <div id="content-meter-gtm-event" :class="classes.join(', ')"/>
 </template>
 
 <script>
 
 export default {
+  inject: ['EventBus'],
+
   props: {
     views: {
       type: Number,
@@ -23,6 +25,9 @@ export default {
       required: false,
     },
   },
+  data: () => ({
+    classes: [],
+  }),
   computed: {
     remaining() {
       const { viewLimit, views } = this;
@@ -54,6 +59,11 @@ export default {
   },
   mounted() {
     this.observer.observe(this.$el);
+    this.EventBus.$on('identity-x-login-link-sent', ({ actionSource }) => {
+      if (actionSource === 'content_meter_login') {
+        this.classes.push('login-link-sent');
+      }
+    });
   },
 };
 </script>
