@@ -75,7 +75,7 @@ extend type Mutation {
   "Updates the content taxonomy field"
   contentTaxonomy(input: ContentTaxonomyMutationInput!): Content! @requiresAuth
   "Updates the content SEO Title field"
-  contentSEOTitle(input: ContentSEOTitleMutationInput!): COntent! @requiresAuth
+  contentSEOTitle(input: ContentSEOTitleMutationInput!): Content! @requiresAuth
 }
 
 enum GateableUserRole {
