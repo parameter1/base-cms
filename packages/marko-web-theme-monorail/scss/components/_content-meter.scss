@@ -2,6 +2,12 @@ $content-meter-mobile-breakpoint: 600px !default;
 
 .content-meter {
   $self: &;
+  .login-link-sent {
+    & ~ #{ $self }__title,
+    & ~ #{ $self }__call-to-action {
+      display: none;
+    }
+  }
   &__overlay {
     z-index: 1499;
     position: fixed;
