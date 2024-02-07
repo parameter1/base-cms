@@ -74,6 +74,8 @@ extend type Mutation {
   contentCompanyField(input: ContentCompanyFieldMutationInput!): Content! @requiresAuth
   "Updates the content taxonomy field"
   contentTaxonomy(input: ContentTaxonomyMutationInput!): Content! @requiresAuth
+  "Updates the content SEO Title field"
+  contentSEOTitle(input: ContentSEOTitleMutationInput!): Content! @requiresAuth
 }
 
 enum GateableUserRole {
@@ -832,6 +834,13 @@ input ContentCompanyFieldMutationInput {
   id: Int!
   "The company ID, allows for 'nulling out' of company (removing a related company) if set to null or not present"
   companyId: Int
+}
+
+input ContentSEOTitleMutationInput {
+  "The content ID"
+  id: Int!
+  "The SEO Title for the content"
+  value: String!
 }
 
 ${interfaces}
