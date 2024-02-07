@@ -13,6 +13,8 @@ const CommentStream = () => import(/* webpackChunkName: "identity-x-comment-stre
 
 const $graphql = createGraphqlClient({ uri: '/__graphql' });
 
+const { log } = console;
+
 export default (Browser, {
   CustomAccessComponent,
   CustomAuthenticateComponent,
@@ -91,13 +93,18 @@ export default (Browser, {
   ].forEach((event) => {
     EventBus.$on(event, (args) => {
       if (!window.IdentityX) return;
-      window.dataLayer.push({
+      const payload = {
         event,
         'identity-x': {
           ...args,
           event,
         },
-      });
+      };
+      const { searchParams } = new URL(window.location.href);
+      if (searchParams.has('idxDebugger')) {
+        log(`identity-x event: ${event} `, payload);
+      }
+      window.dataLayer.push(payload);
     });
   });
 };

@@ -268,7 +268,7 @@ export default {
    */
   mounted() {
     if (cookiesEnabled()) {
-      this.emit('login-mounted');
+      this.emit('login-mounted', { actionSource: this.source });
     } else {
       this.error = new FeatureError('Your browser does not support cookies. Please enable cookies to use this feature.');
       this.emit('login-errored', { message: this.error.message });
