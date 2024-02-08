@@ -18,6 +18,7 @@ const date = (v) => (v instanceof Date ? v.valueOf() : v);
  * @param {string} [params.optionName] The option name.
  * @param {number[]} [params.excludeContentIds] An array of content IDs to exclude.
  * @param {string[]} [params.excludeContentTypes] An array of content types to exclude.
+ * @param {string[]} [params.includeContentIds] An array of the content IDs to include.
  * @param {string[]} [params.includeContentTypes] An array of content types to include.
  * @param {string[]} [params.includeLabels] An array of content labels to include.
  * @param {string[]} [params.excludeLabels] An array of content labels to exclude.
@@ -46,6 +47,7 @@ module.exports = async (apolloClient, {
 
   excludeContentIds,
   excludeContentTypes,
+  includeContentIds,
   includeContentTypes,
 
   includeLabels,
@@ -63,6 +65,7 @@ module.exports = async (apolloClient, {
     pagination,
     excludeContentIds,
     excludeContentTypes,
+    includeContentIds,
     includeContentTypes,
     includeLabels,
     excludeLabels,
