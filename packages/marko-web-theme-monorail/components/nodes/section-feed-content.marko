@@ -27,6 +27,7 @@ $ const multiDateFormats = input.multiDateFormats;
 $ const isUpcoming = content.startDate > Date.now();
 $ if (isUpcoming) modifiers.push("upcoming");
 $ const withSection = defaultValue(input.withSection, true);
+$ const withSponsorLogo = defaultValue(input.withSponsorLogo, false);
 $ const withTeaser = defaultValue(input.withTeaser, true);
 $ const displayImage = defaultValue(input.displayImage, true);
 $ const lazyload = defaultValue(input.lazyload, true);
@@ -180,13 +181,40 @@ $ const blockName = "section-feed-content-node";
         </marko-web-element>
       </if>
 
-      <marko-web-element block-name=blockName name="content-sponsors">
+      $ const hasSponsorsImage = getAsArray(content, "sponsors.edges").map(edge => getAsObject(edge, "node")).some(({primaryImage}) => primaryImage);
+      $ const sponsorsModifiers = hasSponsorsImage ? ['has-logo'] : [];
+      <marko-web-element block-name=blockName name="content-sponsors" modifiers=sponsorsModifiers>
         <marko-web-obj-nodes|{ node, index, length }| type="content" block-name=blockName obj=content field="sponsors" tag="span">
           <if(index === 0)>
             <marko-web-element tag="span" block-name=blockName name="content-sponsors-label">Sponsored By: </marko-web-element>
           </if>
-          <marko-web-content-name tag="span" block-name=blockName obj=node link=true />
-          <if(index + 1 !== length)>, </if>
+          <if(withSponsorLogo && node.primaryImage)>
+            $ const src = buildImgixUrl(node.primaryImage.src, imageOptions, null, true);
+            $ const srcset = [src, `${buildImgixUrl(src, { dpr: 2 })} 2x`];
+
+            $ const srcMobile = buildImgixUrl(node.primaryImage.src, mobileImageOptions, null, true);
+            $ const srcsetMobile = [srcMobile, `${buildImgixUrl(srcMobile, { dpr: 2 })} 2x`];
+            $ const link = linkField && get(node, linkField) ? get(node, linkField) : get(node, "siteContext.path");
+            <marko-web-picture>
+              <@link href=link target=linkTarget attrs=linkAttrs />
+              <@source srcset=srcset media="(min-width: 768px)" width=120 height=80 />
+              <@image
+                src=srcMobile
+                srcset=srcsetMobile
+                class=[`${blockName}__image`]
+                alt=node.primaryImage.alt
+                lazyload=lazyload
+                attrs={ width: "120", height: "80" }
+              />
+            </marko-web-picture>
+          </if>
+          <else>
+            <marko-web-content-name tag="span" block-name=blockName obj=node link=true />
+          </else>
+
+          <if(index + 1 !== length && !hasSponsorsImage)>
+            <marko-web-element tag="span" block-name=blockName name="contentsponsors-seporator">, </marko-web-element>
+          </if>
         </marko-web-obj-nodes>
       </marko-web-element>
       <!-- Force display of CTA button on webinars -->
