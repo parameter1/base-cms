@@ -30,5 +30,6 @@ module.exports = asyncRoute(async (req, res) => {
     email,
   };
   await identityX.client.mutate({ mutation, variables: { input } });
-  return res.json({ ok: true });
+  const entity = await identityX.generateEntityId();
+  return res.json({ ok: true, entity });
 });

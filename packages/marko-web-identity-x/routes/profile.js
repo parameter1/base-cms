@@ -129,5 +129,11 @@ module.exports = asyncRoute(async (req, res) => {
     req,
     user,
   });
-  res.json({ ok: true, user, additionalEventData });
+  const entity = await identityX.generateEntityId({ userId: user.id });
+  res.json({
+    ok: true,
+    user,
+    additionalEventData,
+    entity,
+  });
 });

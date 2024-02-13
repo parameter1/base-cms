@@ -13,5 +13,7 @@ module.exports = asyncRoute(async (req, res) => {
   } else {
     await identityX.logoutAppUser({ token });
   }
-  res.json({ ok: true });
+  res.json({
+    ok: true,
+  });
 });

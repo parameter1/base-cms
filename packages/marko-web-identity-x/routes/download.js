@@ -11,7 +11,7 @@ const mutation = gql`
 
 module.exports = asyncRoute(async (req, res) => {
   /** @type {import('../middleware').IdentityXRequest} */
-  const { body, apollo } = req;
+  const { body, apollo, identityX } = req;
   const { contentId, payload } = body;
   const input = {
     contentId,
@@ -19,5 +19,9 @@ module.exports = asyncRoute(async (req, res) => {
     ipAddress: req.ip,
   };
   await apollo.mutate({ mutation, variables: { input } });
-  res.json({ ok: true });
+  const entity = await identityX.generateEntityId();
+  res.json({
+    ok: true,
+    entity,
+  });
 });
