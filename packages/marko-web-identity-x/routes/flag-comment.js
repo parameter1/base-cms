@@ -11,6 +11,7 @@ const mutation = gql`
 `;
 
 module.exports = asyncRoute(async (req, res) => {
+  /** @type {import('../middleware').IdentityXRequest} */
   const { identityX } = req;
   const { id } = req.params;
   const variables = { id };

@@ -39,6 +39,7 @@ const customSelectFieldsMutation = gql`
 `;
 
 module.exports = asyncRoute(async (req, res) => {
+  /** @type {import('../middleware').IdentityXRequest} */
   const { identityX, body } = req;
   const {
     givenName,

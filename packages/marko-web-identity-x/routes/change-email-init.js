@@ -1,6 +1,7 @@
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 
 module.exports = asyncRoute(async (req, res) => {
+  /** @type {import('../middleware').IdentityXRequest} */
   const { identityX, body } = req;
   const { email } = body;
 

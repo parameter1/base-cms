@@ -24,6 +24,7 @@ const mutation = gql`
 `;
 
 module.exports = asyncRoute(async (req, res) => {
+  /** @type {import('../middleware').IdentityXRequest} */
   const { identityX, body } = req;
   const { token } = body;
   const loginSource = 'change-email';
