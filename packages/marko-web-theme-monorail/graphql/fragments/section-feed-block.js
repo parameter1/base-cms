@@ -38,6 +38,12 @@ fragment SectionFeedBlockContentFragment on Content {
         node {
           id
           name
+          primaryImage {
+            id
+            src(input: { options: { auto: "format,compress" } })
+            alt
+            isLogo
+          }
           siteContext {
             path
           }

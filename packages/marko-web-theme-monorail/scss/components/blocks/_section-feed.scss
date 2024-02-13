@@ -120,6 +120,22 @@
     @include skin-typography($style: "date");
   }
 
+  &__content-sponsors {
+    #{ $self }__content-sponsors-label {
+      @include skin-typography($style: "teaser-text-1", $link-style: "primary", $breakpoint: sm);
+      font-weight: $font-weight-bold;
+    }
+    &--has-logo {
+      #{ $self }__content-sponsors {
+        display: flex;
+        flex-direction: column;
+        .content-sponsors-seporator {
+          display: none;
+        }
+      }
+    }
+  }
+
   &--full-width-native-ad {
     padding: 24px;
     background-color: $gray-100;
