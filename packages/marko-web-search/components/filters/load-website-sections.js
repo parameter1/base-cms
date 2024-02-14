@@ -5,16 +5,19 @@ const selectedQueryFragment = gql`
   fragment MarkoWebSearchSeletedWebsiteSectionFragment on WebsiteSection {
     id
     name
+    alias
     isRoot
     hierarchy {
       id
       name
+      alias
     }
     children(input: { pagination: { limit: 100 }, sort: { field: name, order: asc } }) {
       edges {
         node {
           id
           name
+          alias
         }
       }
     }
