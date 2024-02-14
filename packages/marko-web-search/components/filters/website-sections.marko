@@ -19,7 +19,8 @@ $ const title = isFunction(i18n) ? i18n("Website Sections") : "Website Sections"
         $ const { hierarchy } = selectedSection;
         <marko-web-element block-name=blockName name="item" modifiers=["breadcrumbs"]>
           <for|section| of=hierarchy>
-            <marko-web-search-set-filter-value-link name=filterKey value=section.id reset-class=`${blockName}__clear-item`>
+            <!-- $ console.log('section if: ', section, filterKey) -->
+            <marko-web-search-set-filter-value-link path=section.alias name=filterKey value=section.id reset-class=`${blockName}__clear-item`>
               ${section.name}
             </marko-web-search-set-filter-value-link>
           </for>
@@ -28,12 +29,17 @@ $ const title = isFunction(i18n) ? i18n("Website Sections") : "Website Sections"
         <!-- then display children -->
         $ const children = getAsArray(selectedSection, "children.edges").map(edge => edge.node);
         <marko-web-search-filter-block filter-key=filterKey items=children modifiers=["children"]>
-          <@item label-path="name" />
+          <@item|{ node: child, blockName }|>
+            <marko-web-search-set-filter-value-link path=child.alias name=filterKey value=child.id reset-class=`${blockName}__clear-item`>
+              ${child.name}
+            </marko-web-search-set-filter-value-link>
+          </@item>
         </marko-web-search-filter-block>
       </if>
       <else>
         <!-- display the "normal" section -->
-        <marko-web-search-set-filter-value-link name=filterKey value=node.id>
+        <!-- $ console.log('section else: ', node, filterKey) -->
+        <marko-web-search-set-filter-value-link path=node.alias name=filterKey>
           ${node.name}
         </marko-web-search-set-filter-value-link>
       </else>
