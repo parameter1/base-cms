@@ -6,7 +6,7 @@ $ const { req, $markoWebSearch: search } = out.global;
 $ const path = defaultValue(input.path, req.path);
 $ const rootAlias = get(search, "config.rootAlias");
 
-$ const omit = rootAlias && rootaAlias !== "search" ? { assignedToWebsiteSectionIds: true } : {}
+$ const omit = rootAlias && rootAlias !== "search" ? { assignedToWebsiteSectionIds: true } : {}
 
 $ const queryString = search.buildQueryString(input.queryValues, omit);
 $ const href = `/${cleanPath(path)}${queryString}`;
