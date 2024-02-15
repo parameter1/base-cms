@@ -29,5 +29,8 @@
   },
   "<marko-web-search-website-sections-filter>": {
     "template": "./website-sections.marko"
+  },
+  "<marko-web-search-website-sections-by-alias-filter>": {
+    "template": "./website-sections-by-alias.marko"
   }
 }

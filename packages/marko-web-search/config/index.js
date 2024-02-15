@@ -24,6 +24,7 @@ class MarkoWebSearchConfig {
    *                                                      Defaults to none. Should be an array of
    *                                                      section IDs, e.g. [123, 321]
    *
+   * @param {string} [params.rootAlias] The root alias for the search page defaults to 'search'
    */
   constructor(params = {}) {
     const {
@@ -31,6 +32,7 @@ class MarkoWebSearchConfig {
       contentTypes,
       assignedToWebsiteSectionIds,
       defaultSortField,
+      rootAlias,
     } = validate(Joi.object({
       resultsPerPage: Joi.object({
         min: Joi.number().integer().default(1),
@@ -51,6 +53,8 @@ class MarkoWebSearchConfig {
       ).default([]),
 
       defaultSortField: Joi.string().allow('NAME', 'PUBLISHED', 'SCORE').default('PUBLISHED'),
+
+      rootAlias: Joi.string().default('search'),
     }).default(), params);
 
     this.contentTypeObjects = contentTypes.sort().map((type) => (type.label ? ({
@@ -73,6 +77,7 @@ class MarkoWebSearchConfig {
       contentTypeIds: this.contentTypeObjects.map(({ id }) => id),
       defaultSortField,
     });
+    this.rootAlias = rootAlias;
   }
 }
 

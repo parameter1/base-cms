@@ -1,10 +1,14 @@
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 import { cleanPath } from "@parameter1/base-cms-utils";
+import { get } from "@parameter1/base-cms-object-path";
 
 $ const { req, $markoWebSearch: search } = out.global;
 $ const path = defaultValue(input.path, req.path);
+$ const rootAlias = get(search, "config.rootAlias");
 
-$ const queryString = search.buildQueryString(input.queryValues);
+$ const omit = rootAlias && rootAlias !== "search" ? { assignedToWebsiteSectionIds: true } : {}
+
+$ const queryString = search.buildQueryString(input.queryValues, omit);
 $ const href = `/${cleanPath(path)}${queryString}`;
 
 <${input.renderBody} href=href />

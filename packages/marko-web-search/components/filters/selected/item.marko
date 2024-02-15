@@ -1,5 +1,9 @@
+import { get } from "@parameter1/base-cms-object-path";
+
+$ const { $markoWebSearch: search } = out.global;
 $ const blockName = "marko-web-search-selected-filter";
 $ const { prefix } = input;
+$ const path = get(search, "config.rootAlias");
 
 <marko-web-block name=blockName>
   <marko-web-element block-name=blockName name="label">
@@ -10,7 +14,7 @@ $ const { prefix } = input;
       ${input.label}
     </else>
   </marko-web-element>
-  <marko-web-search-reset-filter-link name=input.filterKey class=`${blockName}__reset`>
+  <marko-web-search-reset-filter-link name=input.filterKey path=path class=`${blockName}__reset`>
     <marko-web-icon name="x" modifiers=[blockName] />
   </marko-web-search-reset-filter-link>
 </marko-web-block>
