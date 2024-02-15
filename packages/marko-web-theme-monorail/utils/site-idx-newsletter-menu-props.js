@@ -12,7 +12,7 @@ module.exports = ({ out, input }) => {
   const source = defaultValue(input.source, 'newsletterSignup');
   const configName = defaultValue(input.configName, 'signupBanner');
   const newsletterSignupType = defaultValue(input.type, 'default');
-  const validTypes = ['inlineContent', 'inlineSection', 'footer'];
+  const validTypes = ['inlineContent', 'inlineSection', 'footer', 'modal'];
   const withImage = defaultValue(input.withImage, true);
 
   if (!validTypes.includes(newsletterSignupType)) {
