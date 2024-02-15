@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-search",
-  "version": "4.42.0",
+  "version": "4.48.0",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-search",
   "license": "MIT",
