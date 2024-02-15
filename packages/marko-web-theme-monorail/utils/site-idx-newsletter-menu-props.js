@@ -47,6 +47,7 @@ module.exports = ({ out, input }) => {
     redirect: input.redirect,
     loginEmailPlaceholder,
     loginEmailLabel: input.loginEmailLabel,
+    modifiers: input.modifiers,
     actionText: input.actionText,
     consentPolicy: input.consentPolicy || get(application, 'organization.consentPolicy'),
     emailConsentRequest: get(application, 'organization.emailConsentRequest'),
