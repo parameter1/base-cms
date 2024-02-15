@@ -14,7 +14,14 @@ $ const path = get(search, "config.rootAlias");
       ${input.label}
     </else>
   </marko-web-element>
-  <marko-web-search-reset-filter-link name=input.filterKey path=path class=`${blockName}__reset`>
-    <marko-web-icon name="x" modifiers=[blockName] />
-  </marko-web-search-reset-filter-link>
+  <if(input.filterKey === "assignedToWebsiteSectionIds" && path !== "search")>
+    <marko-web-search-reset-filter-link name=input.filterKey path=path class=`${blockName}__reset`>
+      <marko-web-icon name="x" modifiers=[blockName] />
+    </marko-web-search-reset-filter-link>
+  </if>
+  <else>
+    <marko-web-search-reset-filter-link name=input.filterKey class=`${blockName}__reset`>
+      <marko-web-icon name="x" modifiers=[blockName] />
+    </marko-web-search-reset-filter-link>
+  </else>
 </marko-web-block>
