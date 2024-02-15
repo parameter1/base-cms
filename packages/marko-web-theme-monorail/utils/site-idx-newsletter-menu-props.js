@@ -31,8 +31,8 @@ module.exports = ({ out, input }) => {
   const imageSrcset = imageSrc ? `${imageSrc}&dpr=2 2x` : null;
 
   return {
-    imageSrc: withImage && imageSrc,
-    imageSrcset: withImage && imageSrcset,
+    ...((withImage && imageSrc) && { imageSrc }),
+    ...((withImage && imageSrcset) && { imageSrcset }),
     siteName: config.website('name'),
     name,
     description,
