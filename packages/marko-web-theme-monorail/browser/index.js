@@ -28,24 +28,6 @@ const setP1EventsIdentity = ({ p1events, brandKey, encryptedId }) => {
   p1events('setIdentity', `omeda.${brandKey}.customer*${encryptedId}~encrypted`);
 };
 
-const dispatchP1EAuthenticate = (args) => {
-  const {
-    loginSource: actionSource,
-    newsletterSignupType,
-    contentGatingType,
-  } = args;
-  window.p1events('track', {
-    category: 'Identity',
-    action: 'Click',
-    label: 'Login Link',
-    props: {
-      ...(actionSource && { actionSource }),
-      ...(newsletterSignupType && { newsletterSignupType }),
-      ...(contentGatingType && { contentGatingType }),
-    },
-  });
-};
-
 /**
  * @typedef ThemeConfig
  * @prop {boolean} [enableOmedaIdentityX=true]
@@ -82,26 +64,22 @@ export default (Browser, configOverrides = {}) => {
   }
 
   /**
-   * Sets the P1E Identity and explicitly dispatches the authenticate converion event
-   * @see @parameter1/marko-web-p1-events/browser for post-auth conversion events
+   * Sets the P1E Identity. @see @parameter1/marko-web-p1-events/browser other events
    */
   if (enableOmedaIdentityX) {
     EventBus.$on('omeda-identity-x-authenticated', (args) => {
       const { brandKey, encryptedId } = args;
       setP1EventsIdentity({ p1events: window.p1events, brandKey, encryptedId });
-      dispatchP1EAuthenticate(args);
     });
     EventBus.$on('omeda-identity-x-rapid-identify-response', (args) => {
       const { brandKey, encryptedId } = args;
       setP1EventsIdentity({ p1events: window.p1events, brandKey, encryptedId });
-      dispatchP1EAuthenticate(args);
     });
   } else {
     EventBus.$on('identity-x-authenticated', (args) => {
       const { applicationId, user } = args;
       if (!window.p1events || !applicationId || !user) return;
       window.p1events('setIdentity', `identity-x.${applicationId}.app-user*${user.id}`);
-      dispatchP1EAuthenticate(args);
     });
   }
 

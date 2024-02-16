@@ -52,6 +52,11 @@ export default (Browser) => {
       action: 'Submit',
       label: 'Profile',
     }],
+    ['identity-x-authenticated', {
+      category: 'Identity',
+      action: 'Click',
+      label: 'Login Link',
+    }],
   ]).entries()].forEach(([event, payload]) => {
     EventBus.$on(event, (args) => {
       if (!window.p1events) return;
@@ -59,6 +64,7 @@ export default (Browser) => {
       window.p1events('track', {
         ...payload,
         props: {
+          idxEntity: args.entity,
           ...(actionSource && { actionSource }),
           ...(newsletterSignupType && { newsletterSignupType }),
           ...(contentGatingType && { contentGatingType }),
