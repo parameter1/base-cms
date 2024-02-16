@@ -81,5 +81,6 @@ module.exports = asyncRoute(async (req, res) => {
     redirectTo,
     additionalEventData,
   });
-  return res.json({ ok: true, additionalEventData });
+  const returnedAppUser = { id: appUser.id, email: appUser.email };
+  return res.json({ ok: true, additionalEventData, appUser: returnedAppUser });
 });
