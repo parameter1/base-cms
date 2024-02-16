@@ -251,7 +251,7 @@ export default {
             ...(this.additionalEventData || {}),
             ...(data.additionalEventData || {}),
           },
-        });
+        }, data.entity);
 
         if (!this.showProfileForm) this.redirect();
       } catch (e) {

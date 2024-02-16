@@ -290,7 +290,7 @@ export default {
       // Only emit event once when downloading
       if (!this.downloaded.includes(content.id)) {
         const company = content.company || {};
-        await post('/download', {
+        const { entity } = await post('/download', {
           contentId: content.id,
           contentType: content.type,
           companyId: company.id,
@@ -328,7 +328,7 @@ export default {
           companyId: company.id,
           userId: this.user.id,
           additionalEventData,
-        });
+        }, entity);
         this.downloaded.push(content.id);
       }
 

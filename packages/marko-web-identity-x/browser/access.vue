@@ -313,7 +313,7 @@ export default {
           contentType: content.type,
           userId: this.user.id,
           additionalEventData,
-        });
+        }, data.entity);
 
         if (withReload) {
           this.handleReload();

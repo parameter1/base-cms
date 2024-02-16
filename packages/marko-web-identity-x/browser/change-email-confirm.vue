@@ -93,7 +93,7 @@ export default {
 
         if (!res.ok) throw new AuthenticationError(data.message, res.status);
 
-        this.emit('change-email', { data });
+        this.emit('change-email', { data }, data.entity);
 
         this.redirect();
       } catch (e) {
