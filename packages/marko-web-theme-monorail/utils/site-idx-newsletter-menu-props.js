@@ -12,7 +12,7 @@ module.exports = ({ out, input }) => {
   const source = defaultValue(input.source, 'newsletterSignup');
   const configName = defaultValue(input.configName, 'signupBanner');
   const newsletterSignupType = defaultValue(input.type, 'default');
-  const validTypes = ['inlineContent', 'inlineSection', 'footer'];
+  const validTypes = ['inlineContent', 'inlineSection', 'footer', 'modal'];
   const withImage = defaultValue(input.withImage, true);
 
   if (!validTypes.includes(newsletterSignupType)) {
@@ -31,8 +31,8 @@ module.exports = ({ out, input }) => {
   const imageSrcset = imageSrc ? `${imageSrc}&dpr=2 2x` : null;
 
   return {
-    imageSrc: withImage && imageSrc,
-    imageSrcset: withImage && imageSrcset,
+    ...((withImage && imageSrc) && { imageSrc }),
+    ...((withImage && imageSrcset) && { imageSrcset }),
     siteName: config.website('name'),
     name,
     description,
@@ -47,6 +47,7 @@ module.exports = ({ out, input }) => {
     redirect: input.redirect,
     loginEmailPlaceholder,
     loginEmailLabel: input.loginEmailLabel,
+    modifiers: input.modifiers,
     actionText: input.actionText,
     consentPolicy: input.consentPolicy || get(application, 'organization.consentPolicy'),
     emailConsentRequest: get(application, 'organization.emailConsentRequest'),

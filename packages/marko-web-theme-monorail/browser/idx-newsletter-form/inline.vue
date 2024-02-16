@@ -81,7 +81,7 @@ export default {
     modifiers: {
       type: Array,
       default: () => ['large'],
-      validator: (v) => v.every((val) => ['large', 'footer'].includes(val)),
+      validator: (v) => v.every((val) => ['large', 'footer', 'modal'].includes(val)),
     },
     disabled: {
       type: Boolean,
