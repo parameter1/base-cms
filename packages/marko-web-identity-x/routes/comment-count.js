@@ -10,6 +10,7 @@ const query = gql`
 `;
 
 module.exports = asyncRoute(async (req, res) => {
+  /** @type {import('../middleware').IdentityXRequest} */
   const { identityX } = req;
   const { identifier } = req.params;
   const variables = { identifier };

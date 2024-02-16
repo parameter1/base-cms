@@ -300,6 +300,7 @@ export default {
           },
         });
         const data = await res.json();
+        const { entity } = data;
         if (!res.ok) {
           if (data.requiresUserInput) {
             this.requiresUserInput = true;
@@ -317,7 +318,7 @@ export default {
             ...(this.additionalEventData || {}),
             ...(data.additionalEventData || {}),
           },
-        });
+        }, entity);
       } catch (e) {
         this.error = e;
         this.emit('login-errored', { message: e.message });

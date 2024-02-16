@@ -33,6 +33,7 @@ const query = gql`
 module.exports = asyncRoute(async (req, res) => {
   const { identifier } = req.params;
   const { after } = req.query;
+  /** @type {import('../middleware').IdentityXRequest} */
   const { identityX } = req;
   const limit = after ? 20 : 5;
   const pagination = { limit, after };

@@ -7,7 +7,7 @@ export default {
     },
   },
   methods: {
-    emit(name, data) {
+    emit(name, data, entity) {
       const source = this.loginSource || this.source;
       const dataActionSource = data ? data.actionSource : undefined;
       const actionSource = dataActionSource || window.IdentityX.getLoginSource() || source;
@@ -18,6 +18,7 @@ export default {
         actionSource,
         loginSource: actionSource,
         source: actionSource,
+        entity,
       };
       const { EventBus } = this;
       this.$emit(name, payload);

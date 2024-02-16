@@ -39,6 +39,7 @@ const customSelectFieldsMutation = gql`
 `;
 
 module.exports = asyncRoute(async (req, res) => {
+  /** @type {import('../middleware').IdentityXRequest} */
   const { identityX, body } = req;
   const {
     givenName,
@@ -128,5 +129,11 @@ module.exports = asyncRoute(async (req, res) => {
     req,
     user,
   });
-  res.json({ ok: true, user, additionalEventData });
+  const entity = await identityX.generateEntityId({ userId: user.id });
+  res.json({
+    ok: true,
+    user,
+    additionalEventData,
+    entity,
+  });
 });

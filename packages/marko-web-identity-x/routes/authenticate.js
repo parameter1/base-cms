@@ -45,11 +45,13 @@ module.exports = asyncRoute(async (req, res) => {
   tokenCookie.setTo(res, authToken.value);
   contextCookie.setTo(res, { loginSource });
   identityX.setIdentityCookie(user.id);
+  const entity = await identityX.generateEntityId({ userId: user.id });
   res.json({
     ok: true,
     applicationId: identityX.config.getAppId(),
     user,
     loginSource,
     additionalEventData,
+    entity,
   });
 });

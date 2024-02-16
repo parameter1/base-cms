@@ -24,6 +24,7 @@ const mutation = gql`
 `;
 
 module.exports = asyncRoute(async (req, res) => {
+  /** @type {import('../middleware').IdentityXRequest} */
   const { identityX, body } = req;
   const { token } = body;
   const loginSource = 'change-email';
@@ -50,5 +51,10 @@ module.exports = asyncRoute(async (req, res) => {
   });
   tokenCookie.setTo(res, authToken.value);
   contextCookie.setTo(res, { loginSource });
-  res.json({ ok: true, user });
+  const entity = await identityX.generateEntityId({ userId: user.id });
+  res.json({
+    ok: true,
+    user,
+    entity,
+  });
 });

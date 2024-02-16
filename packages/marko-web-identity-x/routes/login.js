@@ -19,6 +19,7 @@ const forceProfileReVerificationUser = gql`
 `;
 
 module.exports = asyncRoute(async (req, res) => {
+  /** @type {import('../middleware').IdentityXRequest} */
   const { identityX, body } = req;
   const {
     email,
@@ -73,6 +74,7 @@ module.exports = asyncRoute(async (req, res) => {
   if (additionalEventData.forceProfileReVerification || additionalEventData.createdNewUser) {
     appUser = await identityX.loadAppUserByEmail(email);
   }
+  const entity = await identityX.generateEntityId({ userId: appUser.id });
 
   // Send login link.
   await identityX.sendLoginLink({
@@ -82,5 +84,10 @@ module.exports = asyncRoute(async (req, res) => {
     additionalEventData,
   });
   const returnedAppUser = { id: appUser.id, email: appUser.email };
-  return res.json({ ok: true, additionalEventData, appUser: returnedAppUser });
+  return res.json({
+    ok: true,
+    additionalEventData,
+    appUser: returnedAppUser,
+    entity,
+  });
 });

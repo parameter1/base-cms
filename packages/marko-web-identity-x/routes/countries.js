@@ -12,6 +12,7 @@ const localeCountries = gql`
 `;
 
 module.exports = asyncRoute(async (req, res) => {
+  /** @type {import('../middleware').IdentityXRequest} */
   const { identityX } = req;
   const { data } = await identityX.client.query({ query: localeCountries });
   res.json(data.localeCountries);

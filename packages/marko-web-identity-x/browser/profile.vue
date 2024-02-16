@@ -606,7 +606,7 @@ export default {
             ...(this.additionalEventData || {}),
             ...(data.additionalEventData || {}),
           },
-        });
+        }, data.entity);
 
         if (this.reloadPageOnSubmit) {
           this.isReloadingPage = true;

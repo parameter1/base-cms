@@ -166,7 +166,7 @@ export default {
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
         this.complete = true;
-        this.emit('change-email-link-sent', { data, email: this.email });
+        this.emit('change-email-link-sent', { data, email: this.email }, data.entity);
       } catch (e) {
         this.error = e;
         this.emit('change-email-errored', { message: e.message });
