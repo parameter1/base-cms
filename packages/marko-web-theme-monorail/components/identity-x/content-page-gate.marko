@@ -10,6 +10,7 @@ $ const {
   hasRequiredAccessLevel,
   requiresAccessLevel,
   requiresUserInput,
+  requiresPUI,
   profileCallToAction,
   profileButtonLabel,
   buttonLabels,
@@ -20,6 +21,7 @@ $ const messages = getAsObject(input, "messages");
 $ const title = defaultValue(input.title, "Log in to view the full article");
 $ const profileConfirmation = defaultValue(input.profileConfirmation, "Email Confirmed!")
 $ const userInputTitle = defaultValue(input.userInputTitle, "Complete your profile to view the full article");
+$ const puiTitle = defaultValue(input.userInputTitle, "Tell us a little more to view the full article");
 $ const contentGateType = defaultValue(input.contentGateType, "default");
 $ const additionalEventData = {
   promoCode: site.get("contentMetering.promoCode", undefined),
@@ -28,7 +30,6 @@ $ const additionalEventData = {
   ...(input.loginEventName === "content_meter_login" && { contentGateType: "metered" }),
   ...(input.profileEventName === "content_meter_profile" && { contentGateType: "metered" }),
 };
-
 <marko-web-block name=blockName>
   <if(!canAccess)>
     <marko-web-element tag="h5" name="title" block-name=blockName>
@@ -79,6 +80,24 @@ $ const additionalEventData = {
         reload-page-on-submit=true
         additional-event-data=additionalEventData
         login-source="contentGate"
+      />
+    </marko-web-element>
+  </else-if>
+  <else-if(isLoggedIn && requiresPUI)>
+    <if(profileConfirmation)>
+      <marko-web-element name="confirmation" block-name=blockName>
+        ${profileConfirmation}
+      </marko-web-element>
+    </if>
+    <marko-web-element tag="h5" name="title" block-name=blockName>
+      ${puiTitle}
+    </marko-web-element>
+    <marko-web-element name="form-wrapper" block-name=blockName>
+      <marko-web-identity-x-form-progressive
+        call-to-action=' '
+        reload-page-on-submit=true
+        additional-event-data=additionalEventData
+        login-source="progressive"
       />
     </marko-web-element>
   </else-if>
