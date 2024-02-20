@@ -414,7 +414,7 @@ class IdentityX {
    * @param {GenerateEntityIdArgs} args
    * @returns {?string} The entityId of the active user/identity, if present.
    */
-  async generateEntityId({ appId, userId }) {
+  async generateEntityId({ appId, userId } = {}) {
     const applicationId = appId || (await this.loadActiveContext()).application.id;
     const uid = userId || (await this.loadActiveContext()).user.id || await this.getIdentity();
     return `identity-x.${applicationId}.app-user*${uid}`;
