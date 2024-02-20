@@ -12,8 +12,10 @@ $ const getMostPopular = async () => {
   const uri = MOST_POPULAR_API_URI || 'https://most-popular-content.base.parameter1.com';
   const tenant = site.get("p1events.tenant");
   const realm = config.website("id");
+  const contentTypes = getAsArray(input, 'input.includeContentTypes');
 
-  const url = `${uri}/retrieve?tenant=${tenant}&realm=${realm}`;
+  const defaultUrl = `${uri}/retrieve?tenant=${tenant}&realm=${realm}`;
+  const url = contentTypes.length ? `${defaultUrl}&types=${contentTypes.join(',')}` : defaultUrl;
   const res = await fetch(url);
   const json = await res.json();
   if (!res.ok) {
