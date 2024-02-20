@@ -9,6 +9,9 @@ const formatContentResponse = ({ res, content }) => {
   res.locals.contentIdxFormState = {
     displayForm: false,
     formId: 'default',
+    cookie: {
+      name: `${cookieNamePrefix}_${content.id}`,
+    },
   };
   if (surveyType === 'idx') {
     const cookieName = `${cookieNamePrefix}_${surveyId}_${content.id}`;
