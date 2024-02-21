@@ -1,7 +1,6 @@
 import { get, getAsObject } from "@parameter1/base-cms-object-path";
 
-$ const { content } = input;
-$ const creativeId = get(input, "creativeId");
+$ const { content, creativeId, tenant } = input;
 $ const url = get(content, "siteContext.path");
 
 $ const imgStyles = {
@@ -27,6 +26,7 @@ $ const nameLinkStyles = {
 $ const linkAttrs = {
   ...(getAsObject(input, "link.attrs")),
   ...(creativeId && { 'data-mindful-creative-id': creativeId }),
+  ...(tenant && { 'data-mindful-tenant': tenant }),
 };
 
 $ const imgLinkAttrs = { style: imgLinkStyles, ...linkAttrs };

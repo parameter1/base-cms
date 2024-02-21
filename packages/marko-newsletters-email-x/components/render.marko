@@ -11,12 +11,22 @@ $ const imageAttrs = {
 };
 
 $ const mindfulCreativeId = get(response, "data.ad.mindfulCreativeId");
+$ let mindfulTenant;
+$ try {
+  [, mindfulTenant] = imageSrc.match(/^https:\/\/delivery\.mindfulcms\.com\/(\w+\/\w+)\//);
+} catch (e) {
+  // Explicitly throw, native email-x delivery is no longer supported.
+  throw new Error(`Unable to parse mindful tenant from image url ${imageSrc}`);
+}
+$ if (!mindfulCreativeId) throw new Error('Unable to parse mindful creative id from response.');
+
 $ const linkAttrs = {
   href: ad.url,
   ...(getAsObject(input, "link")),
   attrs: {
     ...(getAsObject(input, "link.attrs")),
-    ...(mindfulCreativeId && { "data-mindful-creative-id": mindfulCreativeId }),
+    "data-mindful-tenant": mindfulTenant,
+    "data-mindful-creative-id": mindfulCreativeId,
   },
 };
 

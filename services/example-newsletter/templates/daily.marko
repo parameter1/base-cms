@@ -64,11 +64,16 @@ $ const nxPlacementId = config.get("nativeX.placements.daily.default");
           <h3>Native-X</h3>
 
           <if(nxUri && nxPlacementId)>
-            <core-native-x-fetch|{ data }| uri=nxUri date=date placement-id=nxPlacementId>
+            <core-native-x-fetch|{ data, creativeId, tenant }|
+              uri=nxUri
+              date=date
+              placement-id=nxPlacementId
+            >
               <if(data)>
                 <native-x-item
                   content=convertAdToContent(data)
-                  creative-id=get(data, "creative.mindfulCreativeId")
+                  creative-id=creativeId
+                  tenant=tenant
                 />
               </if>
               <else>
