@@ -335,6 +335,24 @@ services:
     ports:
       - "51270:80"
 
+  example-newsletter:
+    <<: *node
+    working_dir: /base-cms/services/example-newsletter
+    entrypoint: ["yarn"]
+    command: ["dev"]
+    environment:
+      <<: *env
+      GRAPHQL_URI: ${GRAPHQL_URI-http://graphql-server}
+      TENANT_KEY: ${EXAMPLE_TENANT_KEY-p1_sandbox}
+      EXPOSED_HOST: newsletters.dev.parameter1.com
+      EXPOSED_PORT: 51271
+      PORT: 80
+    hostname: newsletters.dev.parameter1.com
+    depends_on:
+      - graphql-server
+    ports:
+      - "51271:80"
+
   example-website:
     <<: [*node]
     working_dir: /base-cms/services/example-website

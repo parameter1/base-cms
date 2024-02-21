@@ -1,0 +1,79 @@
+$ const { website } = out.global;
+$ const publicationName = website.get("name");
+$ const { newsletter, date } = input;
+$ const standardStyle = {
+  "font-size": "17px",
+  "line-height": "22px",
+  "color": "#000000",
+  "font-family": "'Roboto', Arial, sans-serif",
+  "padding": "0 15px",
+  "font-size": "15px",
+  "line-height": "20px",
+};
+
+<table role="presentation" width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center" valign="top">
+      <table role="presentation" width="600" border="0" align="center" cellpadding="0" cellspacing="0" class="wrap000">
+        <tr>
+          <td align="center" valign="top">
+            <table role="presentation" width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+              <!-- Header block -->
+              <tr>
+                <td align="center" valign="top">
+                  <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <common-table-spacer-element height="9" />
+                    <tr>
+                      <td align="center" valign="top">
+                        <table role="presentation" width="610" border="0" cellspacing="0" cellpadding="0" class="wrap003">
+                          <tr>
+                            <td align="center" valign="top">
+                              <common-logo-element newsletter=newsletter width=600 options={ fit: "fill", fillColor: "#ffffff" }/>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <common-table-spacer-element height="9" />
+                  </table>
+                </td>
+              </tr>
+
+              <common-table-spacer-element />
+
+              <if(input.renderBody)>
+                <${input.renderBody} date=date newsletter=newsletter />
+              </if>
+
+              <!-- Footer block -->
+              <tr>
+                <td align="center" valign="top">
+                  <table role="presentation" width="610" border="0" align="center"  cellpadding="0" cellspacing="0" class="wrap003">
+                    <tr>
+                      <td align="center" valign="top">
+                        <table role="presentation" width="100%" border="0" bgcolor="#ededed" align="center"  cellpadding="0" cellspacing="0">
+                          <common-table-spacer-element height="20" />
+
+                          <tr>
+                            <td align="left" valign="top" style=standardStyle>
+                              You are receiving this email deployment because you have opted in to receive emails from ${publicationName}.
+                            </td>
+                          </tr>
+
+                          <common-table-spacer-element height="20" />
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

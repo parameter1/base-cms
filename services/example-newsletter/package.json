@@ -1,0 +1,21 @@
+{
+  "name": "@parameter1/base-cms-example-newsletter",
+  "version": "0.0.0",
+  "description": "Example BaseCMS newsletter.",
+  "main": "src/index.js",
+  "author": "Josh Worden <josh@parameter1.com>",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/services/example-newsletter",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "basecms-newsletters dev --compile-dir ../../packages --watch-dir ../../packages",
+    "compile": "basecms-marko-compile compile",
+    "lint": "eslint --ext .js --ext .vue --max-warnings 5 --ignore-path ../../.eslintignore ./",
+    "lint:fix": "yarn lint --fix",
+    "test": "yarn lint && yarn compile --no-clean"
+  },
+  "dependencies": {
+    "@parameter1/base-cms-newsletter-cli": "^4.40.3",
+    "@parameter1/base-cms-marko-newsletters": "^4.48.1"
+  }
+}

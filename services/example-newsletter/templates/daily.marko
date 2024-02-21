@@ -1,0 +1,23 @@
+$ const { config } = out.global;
+$ const { newsletter, date } = input;
+
+<marko-newsletter-root
+  title=newsletter.name
+  description=newsletter.description
+  date=date
+>
+  <@head>
+    <style type="text/css">
+      /* inline head css */
+    </style>
+  </@head>
+  <@body style="padding:0; margin:0;font-family: 'Roboto', Arial, sans-serif; -webkit-text-size-adjust:100%;">
+
+    <common-body-wrapper newsletter=newsletter date=date>
+      <common-table-spacer-element />
+      <tr><td>email content goes here</td></tr>
+      <common-table-spacer-element />
+    </common-body-wrapper>
+
+  </@body>
+</marko-newsletter-root>
