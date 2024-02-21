@@ -1,7 +1,12 @@
+import { get } from "@parameter1/base-cms-object-path";
+import { convertAdToContent } from "@parameter1/base-cms-marko-newsletters-native-x/utils";
+
 $ const { config } = out.global;
 $ const { newsletter, date } = input;
 
 $ const emailX = config.get("emailX");
+$ const nxUri = config.get("nativeX.uri");
+$ const nxPlacementId = config.get("nativeX.placements.daily.default");
 
 <marko-newsletter-root
   title=newsletter.name
@@ -48,6 +53,32 @@ $ const emailX = config.get("emailX");
               Nothing here...try 2020-01-01
             </else>
           </marko-newsletters-email-x-data>
+
+        </td>
+      </tr>
+
+      <common-table-spacer-element />
+
+      <tr>
+        <td>
+          <h3>Native-X</h3>
+
+          <if(nxUri && nxPlacementId)>
+            <core-native-x-fetch|{ data }| uri=nxUri date=date placement-id=nxPlacementId>
+              <if(data)>
+                <native-x-item
+                  content=convertAdToContent(data)
+                  creative-id=get(data, "creative.mindfulCreativeId")
+                />
+              </if>
+              <else>
+                No NativeX ad was returned!
+              </else>
+            </core-native-x-fetch>
+          </if>
+          <else>
+            NativeX URI or Email Placement was not defined!
+          </else>
 
         </td>
       </tr>
