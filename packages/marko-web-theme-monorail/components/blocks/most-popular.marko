@@ -51,7 +51,7 @@ $ const buildContentQuery = () => {
 };
 
 <marko-web-resolve|{ resolved }| promise=getMostPopular()>
-  $ const excludeContentIds = getAsArray(input, 'input.excludeContentIds');
+  $ const excludeContentIds = getAsArray(input, 'excludeContentIds');
   $ const ids = excludeContentIds.length ? resolved.reduce(
     (arr, { id }) => (!excludeContentIds.includes(id) ? [...arr, id] : arr), []
   ) : resolved.map(({ id }) => id);
