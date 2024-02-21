@@ -1,6 +1,8 @@
 $ const { config } = out.global;
 $ const { newsletter, date } = input;
 
+$ const emailX = config.get("emailX");
+
 <marko-newsletter-root
   title=newsletter.name
   description=newsletter.description
@@ -15,7 +17,41 @@ $ const { newsletter, date } = input;
 
     <common-body-wrapper newsletter=newsletter date=date>
       <common-table-spacer-element />
-      <tr><td>email content goes here</td></tr>
+
+      <tr>
+        <td>
+          <h3>Email-X: Leaderboard</h3>
+          <marko-newsletters-email-x-data|{ response }| decoded-params=["email", "send"]>
+            <@ad-unit ...emailX.getAdUnit({ name: "lb-1", alias: newsletter.alias }) />
+            <@params date=date email="@{email name}@" send="@{track_id}@" include-advertiser=true />
+            <if(response)>
+              <marko-newsletters-email-x-render response=response />
+            </if>
+            <else>
+              Nothing here...try 2020-01-01
+            </else>
+          </marko-newsletters-email-x-data>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <h3>Email-X: MR</h3>
+          <marko-newsletters-email-x-data|{ response }| decoded-params=["email", "send"]>
+            <@ad-unit ...emailX.getAdUnit({ name: "mr-1", alias: newsletter.alias }) />
+            <@params date=date email="@{email name}@" send="@{track_id}@" include-advertiser=true />
+            <if(response)>
+              <marko-newsletters-email-x-render response=response />
+            </if>
+            <else>
+              Nothing here...try 2020-01-01
+            </else>
+          </marko-newsletters-email-x-data>
+
+        </td>
+      </tr>
+
       <common-table-spacer-element />
     </common-body-wrapper>
 

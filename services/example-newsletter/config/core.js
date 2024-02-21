@@ -1,4 +1,9 @@
+const emailX = require('./email-x');
+
 const config = {
+  emailX,
+
+  // ENL cfgs
   daily: {
     name: 'Sandbox Daily',
     primaryColor: '#1f4391',

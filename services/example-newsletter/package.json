@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@parameter1/base-cms-newsletter-cli": "^4.40.3",
-    "@parameter1/base-cms-marko-newsletters": "^4.48.1"
+    "@parameter1/base-cms-marko-newsletters": "^4.48.1",
+    "@parameter1/base-cms-marko-newsletters-email-x": "^4.46.0"
   }
 }
