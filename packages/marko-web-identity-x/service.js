@@ -13,6 +13,7 @@ const sendChangeEmailLinkMutation = require('./api/mutations/send-change-email-l
 const sendLoginLinkMutation = require('./api/mutations/send-login-link');
 const createAppUser = require('./api/mutations/create-app-user');
 const logoutAppUser = require('./api/mutations/logout-app-user');
+const deleteAppUserForCurrentApplicationMutation = require('./api/mutations/delete-app-user-for-current-application');
 const tokenCookie = require('./utils/token-cookie');
 const callHooksFor = require('./utils/call-hooks-for');
 
@@ -448,6 +449,27 @@ class IdentityX {
       req: this.req,
       source,
       user: appUser,
+    });
+  }
+
+  /**
+   * Delete the user record for the current application using the provided email or id
+   */
+  async deleteAppUserForCurrentApplication({
+    email,
+    userId,
+  }) {
+    const apiToken = this.config.getApiToken();
+    if (!apiToken) throw new Error('Unable to delete user: No API token has been configured.');
+    this.client.mutate({
+      mutation: deleteAppUserForCurrentApplicationMutation,
+      variables: {
+        input: {
+          ...(email && { email }),
+          ...(userId && { userId }),
+        },
+      },
+      context: { apiToken },
     });
   }
 }
