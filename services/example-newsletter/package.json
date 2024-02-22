@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-example-newsletter",
-  "version": "0.0.0",
+  "version": "4.49.4",
   "description": "Example BaseCMS newsletter.",
   "main": "src/index.js",
   "author": "Josh Worden <josh@parameter1.com>",
