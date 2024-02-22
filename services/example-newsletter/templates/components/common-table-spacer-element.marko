@@ -1,0 +1,19 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const style = {
+  "font-size": "1px",
+  "line-height": "1px",
+  ...input.style,
+};
+
+$ const attributes = {
+  align: "center",
+  valign: "top",
+  height: defaultValue(input.height, "12"),
+  ...input.attributes,
+  style,
+};
+
+<tr>
+  <td ...attributes>&nbsp;</td>
+</tr>

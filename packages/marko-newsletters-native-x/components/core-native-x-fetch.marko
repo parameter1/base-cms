@@ -1,3 +1,4 @@
+import { get } from "@parameter1/base-cms-object-path";
 import { warn } from "@parameter1/base-cms-utils";
 import { dateToTimestamp, fetchEmailAd } from "../utils";
 
@@ -11,6 +12,13 @@ $ const {
   req,
   debug,
 } = input;
+$ let mindfulTenant;
+$ try {
+  [, mindfulTenant] = uri.match(/^https:\/\/delivery\.mindfulcms\.com\/(\w+\/\w+)\//);
+} catch (e) {
+  // Explicitly throw, native native-x delivery is no longer supported.
+  throw new Error(`Unable to parse mindful tenant from native ad url ${uri}`);
+}
 
 $ const timestamp = date ? dateToTimestamp(date) : undefined;
 
@@ -29,7 +37,13 @@ $ const timestamp = date ? dateToTimestamp(date) : undefined;
     req,
     debug,
   })>
-    <${input.renderBody} data=resolved.data />
+    $ const mindfulCreativeId = get(resolved, "data.creative.mindfulCreativeId")
+    $ if (resolved.data && !mindfulCreativeId) throw new Error('Unable to parse mindful creative id from ad response.');
+    <${input.renderBody}
+      data=resolved.data
+      creative-id=mindfulCreativeId
+      tenant=mindfulTenant
+    />
   </marko-web-resolve>
 </if>
 <else>

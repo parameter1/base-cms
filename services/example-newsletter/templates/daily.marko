@@ -1,0 +1,95 @@
+import { get } from "@parameter1/base-cms-object-path";
+import { convertAdToContent } from "@parameter1/base-cms-marko-newsletters-native-x/utils";
+
+$ const { config } = out.global;
+$ const { newsletter, date } = input;
+
+$ const emailX = config.get("emailX");
+$ const nxUri = config.get("nativeX.uri");
+$ const nxPlacementId = config.get("nativeX.placements.daily.default");
+
+<marko-newsletter-root
+  title=newsletter.name
+  description=newsletter.description
+  date=date
+>
+  <@head>
+    <style type="text/css">
+      /* inline head css */
+    </style>
+  </@head>
+  <@body style="padding:0; margin:0;font-family: 'Roboto', Arial, sans-serif; -webkit-text-size-adjust:100%;">
+
+    <common-body-wrapper newsletter=newsletter date=date>
+      <common-table-spacer-element />
+
+      <tr>
+        <td>
+          <h3>Email-X: Leaderboard</h3>
+          <marko-newsletters-email-x-data|{ response }| decoded-params=["email", "send"]>
+            <@ad-unit ...emailX.getAdUnit({ name: "lb-1", alias: newsletter.alias }) />
+            <@params date=date email="@{email name}@" send="@{track_id}@" include-advertiser=true />
+            <if(response)>
+              <marko-newsletters-email-x-render response=response />
+            </if>
+            <else>
+              Nothing here...try 2020-01-01
+            </else>
+          </marko-newsletters-email-x-data>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <h3>Email-X: MR</h3>
+          <marko-newsletters-email-x-data|{ response }| decoded-params=["email", "send"]>
+            <@ad-unit ...emailX.getAdUnit({ name: "mr-1", alias: newsletter.alias }) />
+            <@params date=date email="@{email name}@" send="@{track_id}@" include-advertiser=true />
+            <if(response)>
+              <marko-newsletters-email-x-render response=response />
+            </if>
+            <else>
+              Nothing here...try 2020-01-01
+            </else>
+          </marko-newsletters-email-x-data>
+
+        </td>
+      </tr>
+
+      <common-table-spacer-element />
+
+      <tr>
+        <td>
+          <h3>Native-X</h3>
+
+          <if(nxUri && nxPlacementId)>
+            <core-native-x-fetch|{ data, creativeId, tenant }|
+              uri=nxUri
+              date=date
+              placement-id=nxPlacementId
+            >
+              <if(data)>
+                <native-x-item
+                  content=convertAdToContent(data)
+                  creative-id=creativeId
+                  tenant=tenant
+                />
+              </if>
+              <else>
+                No NativeX ad was returned!
+              </else>
+            </core-native-x-fetch>
+          </if>
+          <else>
+            NativeX URI or Email Placement was not defined!
+          </else>
+
+        </td>
+      </tr>
+
+      <common-table-spacer-element />
+    </common-body-wrapper>
+
+  </@body>
+</marko-newsletter-root>
