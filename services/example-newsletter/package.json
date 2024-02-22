@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-example-newsletter",
-  "version": "4.49.4",
+  "version": "4.50.0",
   "description": "Example BaseCMS newsletter.",
   "main": "src/index.js",
   "author": "Josh Worden <josh@parameter1.com>",
@@ -15,10 +15,10 @@
     "test": "yarn lint && yarn compile --no-clean"
   },
   "dependencies": {
-    "@parameter1/base-cms-newsletter-cli": "^4.40.3",
     "@parameter1/base-cms-marko-core": "^4.48.1",
     "@parameter1/base-cms-marko-newsletters": "^4.48.1",
-    "@parameter1/base-cms-marko-newsletters-email-x": "^4.46.0",
-    "@parameter1/base-cms-marko-newsletters-native-x": "^4.40.3"
+    "@parameter1/base-cms-marko-newsletters-email-x": "^4.50.0",
+    "@parameter1/base-cms-marko-newsletters-native-x": "^4.50.0",
+    "@parameter1/base-cms-newsletter-cli": "^4.40.3"
   }
 }
