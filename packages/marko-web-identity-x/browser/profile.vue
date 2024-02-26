@@ -76,20 +76,20 @@
 
         <div class="row">
           <div
-            v-if="phoneNumberSettings.visible"
+            v-if="phoneNumberFieldDisplaySettings.visible"
             class="col-12"
             :class="{ 'col-md-6': countryCodeSettings.visible }"
           >
             <phone-number
-              v-model="user.phoneNumber"
-              :required="phoneNumberSettings.required"
+              v-model="user[phoneNumberFieldDisplaySettings.field]"
+              :required="phoneNumberFieldDisplaySettings.required"
               :label="defaultFieldLabels.phoneNumber"
             />
           </div>
           <div
             v-if="countryCodeSettings.visible"
             class="col-12"
-            :class="{ 'col-md-6': phoneNumberSettings.visible }"
+            :class="{ 'col-md-6': phoneNumberFieldDisplaySettings.visible }"
           >
             <country
               v-model="user.countryCode"
@@ -493,6 +493,12 @@ export default {
         visible: !this.hiddenFields.includes('phoneNumber'),
       };
     },
+    mobileNumberSettings() {
+      return {
+        required: this.requiredFields.includes('mobileNumber'),
+        visible: !this.hiddenFields.includes('mobileNumber'),
+      };
+    },
     citySettings() {
       return {
         required: this.requiredFields.includes('city'),
@@ -512,6 +518,23 @@ export default {
         required: canRequire && this.requiredFields.includes('postalCode'),
         visible: canRequire && !this.hiddenFields.includes('postalCode'),
       };
+    },
+    phoneNumberFieldDisplaySettings() {
+      if (this.phoneNumberSettings.required || this.phoneNumberSettings.visible) {
+        return {
+          required: this.phoneNumberSettings.required,
+          visible: this.phoneNumberSettings.visible,
+          field: 'phoneNumber',
+        };
+      }
+      if (this.mobileNumberSettings.required || this.mobileNumberSettings.visible) {
+        return {
+          required: this.mobileNumberSettings.required,
+          visible: this.mobileNumberSettings.visible,
+          field: 'mobileNumber',
+        };
+      }
+      return {};
     },
   },
 
