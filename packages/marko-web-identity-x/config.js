@@ -26,7 +26,7 @@ class IdentityXConfiguration {
     requiredCreateFields = [],
     activeCustomFieldIds = [],
     defaultFieldLabels = {},
-    hiddenFields = ['city', 'street', 'addressExtra', 'phoneNumber'],
+    hiddenFields = ['city', 'street', 'addressExtra', 'phoneNumber', 'mobileNumber'],
     defaultCountryCode,
     booleanQuestionsLabel,
     gtmUserFields = {},
