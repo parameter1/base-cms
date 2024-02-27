@@ -18,6 +18,7 @@ fragment ActiveUserFragment on AppUser {
   city
   street
   addressExtra
+  mobileNumber
   phoneNumber
   receiveEmail
   mustReVerifyProfile

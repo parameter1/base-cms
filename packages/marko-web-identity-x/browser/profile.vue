@@ -78,7 +78,10 @@
           <div
             v-if="phoneNumberSettings.visible"
             class="col-12"
-            :class="{ 'col-md-6': countryCodeSettings.visible }"
+            :class="{
+              'col-md-6': countryCodeSettings.visible || mobileNumberSettings.visible,
+              'col-md-4': countryCodeSettings.visible && mobileNumberSettings.visible,
+            }"
           >
             <phone-number
               v-model="user.phoneNumber"
@@ -87,9 +90,26 @@
             />
           </div>
           <div
+            v-if="mobileNumberSettings.visible"
+            class="col-12"
+            :class="{
+              'col-md-6': countryCodeSettings.visible || phoneNumberSettings.visible,
+              'col-md-4': countryCodeSettings.visible && phoneNumberSettings.visible,
+            }"
+          >
+            <phone-number
+              v-model="user.mobileNumber"
+              :required="mobileNumberSettings.required"
+              :label="defaultFieldLabels.mobileNumber"
+            />
+          </div>
+          <div
             v-if="countryCodeSettings.visible"
             class="col-12"
-            :class="{ 'col-md-6': phoneNumberSettings.visible }"
+            :class="{
+              'col-md-6': mobileNumberSettings.visible || phoneNumberSettings.visible,
+              'col-md-4': mobileNumberSettings.visible && phoneNumberSettings.visible
+            }"
           >
             <country
               v-model="user.countryCode"
@@ -491,6 +511,12 @@ export default {
       return {
         required: this.requiredFields.includes('phoneNumber'),
         visible: !this.hiddenFields.includes('phoneNumber'),
+      };
+    },
+    mobileNumberSettings() {
+      return {
+        required: this.requiredFields.includes('mobileNumber'),
+        visible: !this.hiddenFields.includes('mobileNumber'),
       };
     },
     citySettings() {

@@ -16,6 +16,9 @@ const query = gql`
         extraAddress
         city
       }
+      primaryMobileNumber {
+        phoneNumber
+      }
       primaryPhoneNumber {
         phoneNumber
       }

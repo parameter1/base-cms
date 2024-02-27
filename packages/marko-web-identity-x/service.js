@@ -51,6 +51,7 @@ const IDENTITY_COOKIE_NAME = '__idx_idt';
  * @prop {String} city
  * @prop {String} street
  * @prop {String} addressExtra
+ * @prop {String} mobileNumber
  * @prop {String} phoneNumber
  * @prop {Boolean} receiveEmail
  * @prop {Boolean} mustReVerifyProfile

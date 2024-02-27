@@ -25,6 +25,7 @@ module.exports = async ({ identityX, user, omedaCustomer }) => {
     street: get(omedaCustomer, 'primaryPostalAddress.street'),
     addressExtra: get(omedaCustomer, 'primaryPostalAddress.extraAddress'),
     city: get(omedaCustomer, 'primaryPostalAddress.city'),
+    mobileNumber: get(omedaCustomer, 'primaryMobileNumber.phoneNumber'),
     phoneNumber: get(omedaCustomer, 'primaryPhoneNumber.phoneNumber'),
   };
   return identityX.client.mutate({

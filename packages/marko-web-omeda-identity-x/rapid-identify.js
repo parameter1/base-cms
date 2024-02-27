@@ -59,6 +59,7 @@ module.exports = async ({
     addressExtra,
     city,
     phoneNumber,
+    mobileNumber,
   } = appUser;
 
   let alpha3;
@@ -155,6 +156,7 @@ module.exports = async ({
     ...(street && { street }),
     ...(addressExtra && { addressExtra }),
     ...(city && { city }),
+    ...(mobileNumber && { mobileNumber }),
     ...(phoneNumber && { phoneNumber }),
     ...(demographics.length && { demographics }),
     ...(behaviors.length && { behaviors }),
