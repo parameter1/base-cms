@@ -106,7 +106,10 @@
           <div
             v-if="countryCodeSettings.visible"
             class="col-12"
-            :class="{ 'col-md-6': phoneNumberFieldDisplaySettings.visible }"
+            :class="{
+              'col-md-6': mobileNumberSettings.visible || phoneNumberSettings.visible,
+              'col-md-4': mobileNumberSettings.visible && phoneNumberSettings.visible
+            }"
           >
             <country
               v-model="user.countryCode"
