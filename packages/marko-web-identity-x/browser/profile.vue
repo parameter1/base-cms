@@ -76,13 +76,30 @@
 
         <div class="row">
           <div
-            v-if="phoneNumberFieldDisplaySettings.visible"
+            v-if="phoneNumberSettings.visible"
             class="col-12"
-            :class="{ 'col-md-6': countryCodeSettings.visible }"
+            :class="{
+              'col-md-6': countryCodeSettings.visible || mobileNumberSettings.visible,
+              'col-md-4': countryCodeSettings.visible && mobileNumberSettings.visible,
+            }"
           >
             <phone-number
-              v-model="user[phoneNumberFieldDisplaySettings.field]"
-              :required="phoneNumberFieldDisplaySettings.required"
+              v-model="user.phoneNumber"
+              :required="phoneNumberSettings.required"
+              :label="defaultFieldLabels.phoneNumber"
+            />
+          </div>
+          <div
+            v-if="mobileNumberSettings.visible"
+            class="col-12"
+            :class="{
+              'col-md-6': countryCodeSettings.visible || phoneNumberSettings.visible,
+              'col-md-4': countryCodeSettings.visible && phoneNumberSettings.visible,
+            }"
+          >
+            <phone-number
+              v-model="user.mobileNumber"
+              :required="mobileNumberSettings.required"
               :label="defaultFieldLabels.phoneNumber"
             />
           </div>
@@ -518,23 +535,6 @@ export default {
         required: canRequire && this.requiredFields.includes('postalCode'),
         visible: canRequire && !this.hiddenFields.includes('postalCode'),
       };
-    },
-    phoneNumberFieldDisplaySettings() {
-      if (this.phoneNumberSettings.required || this.phoneNumberSettings.visible) {
-        return {
-          required: this.phoneNumberSettings.required,
-          visible: this.phoneNumberSettings.visible,
-          field: 'phoneNumber',
-        };
-      }
-      if (this.mobileNumberSettings.required || this.mobileNumberSettings.visible) {
-        return {
-          required: this.mobileNumberSettings.required,
-          visible: this.mobileNumberSettings.visible,
-          field: 'mobileNumber',
-        };
-      }
-      return {};
     },
   },
 
