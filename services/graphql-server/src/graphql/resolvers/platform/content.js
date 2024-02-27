@@ -418,6 +418,8 @@ module.exports = {
 
     magazineSchedules: ({ _id }, _, { basedb }) => basedb.find('magazine.Schedule', { 'content.$id': _id }),
 
+    emailSchedules: ({ _id }, _, { basedb }) => basedb.find('email.Schedule', { 'content.$id': _id, status: 1 }),
+
     /**
      * Load primary section of content.
      * If primary section's site matches the current site, return the section.
@@ -1545,7 +1547,8 @@ module.exports = {
       const section = await basedb.strictFindOne('email.Section', sectionQuery, { projection: { _id: 1 } });
 
       const date = momentTZ(input.date).tz(timezone);
-      const start = date.startOf('day').toDate();
+      const startDate = input.startDate ? momentTZ(input.startDate).tz(timezone) : null;
+      const start = startDate ? startDate.startOf('day').toDate() : date.startOf('day').toDate();
       const end = date.endOf('day').toDate();
 
       const scheduleSort = ignoreStartDate
