@@ -100,7 +100,7 @@
             <phone-number
               v-model="user.mobileNumber"
               :required="mobileNumberSettings.required"
-              :label="defaultFieldLabels.phoneNumber"
+              :label="defaultFieldLabels.mobileNumber"
             />
           </div>
           <div
