@@ -462,7 +462,7 @@ class IdentityX {
   }) {
     const apiToken = this.config.getApiToken();
     if (!apiToken) throw new Error('Unable to delete user: No API token has been configured.');
-    this.client.mutate({
+    const { data } = this.client.mutate({
       mutation: deleteAppUserForCurrentApplicationMutation,
       variables: {
         input: {
@@ -472,6 +472,7 @@ class IdentityX {
       },
       context: { apiToken },
     });
+    return data.deleteAppUserForCurrentApplication;
   }
 }
 
