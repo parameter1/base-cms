@@ -7,6 +7,7 @@ const { content: loader } = require('@parameter1/base-cms-web-common/page-loader
 const { get, getAsArray } = require('@parameter1/base-cms-object-path');
 const buildContentInput = require('@parameter1/base-cms-marko-web/utils/build-content-input');
 const queryFragment = require('../graphql/fragments/content-meter');
+const hasOmedaId = require('../utils/has-omeda-id');
 
 const configSchema = Joi.object({
   enabled: Joi.boolean().default(false)
@@ -68,17 +69,6 @@ const shouldMeter = async (req, config) => {
     return false;
   }
   return true;
-};
-
-const hasOmedaId = ({ query, cookies }) => {
-  const getOmedaId = (value) => {
-    if (!value) return null;
-    const trimmed = `${value}`.trim();
-    return /^[a-z0-9]{15}$/i.test(trimmed) ? trimmed : null;
-  };
-  const idFromQuery = getOmedaId(query.oly_enc_id);
-  const idFromCookie = cookies.oly_enc_id ? getOmedaId(cookies.oly_enc_id.replace(/^"/, '').replace(/"$/, '')) : undefined;
-  return Boolean(idFromQuery || idFromCookie);
 };
 
 /**
