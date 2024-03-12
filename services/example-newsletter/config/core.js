@@ -1,8 +1,10 @@
 const emailX = require('./email-x');
+const mindful = require('./mindful');
 const nativeX = require('./native-x');
 
 const config = {
   emailX,
+  mindful,
   nativeX,
 
   // ENL cfgs

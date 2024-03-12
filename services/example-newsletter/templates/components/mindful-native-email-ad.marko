@@ -1,0 +1,111 @@
+import { get, getAsObject } from "@parameter1/base-cms-object-path";
+
+$ const { creative, creativeId, tenant } = input;
+
+$ const imgStyles = {
+  "font-size": "14px",
+  "line-height": 0,
+  "border": 0,
+};
+
+$ const imgLinkStyles = {
+  "display": "block",
+  "font-size": "14px",
+  "line-height": 0,
+}
+
+$ const nameLinkStyles = {
+  "font-size": "24px",
+  "line-height": "28px",
+  "color": "#202022",
+  "font-weight": "700",
+  "text-decoration": "none",
+};
+
+$ const linkAttrs = {
+  ...(getAsObject(input, "link.attrs")),
+  'data-mindful-creative-id': creative._id,
+  ...(tenant && { 'data-mindful-tenant': tenant }),
+};
+
+$ const imgLinkAttrs = { style: imgLinkStyles, ...linkAttrs };
+$ const nameLinkAttrs = { style: nameLinkStyles, ...linkAttrs };
+
+<tr>
+  <td align="center" valign="top">
+    <table role="presentation" width="610" border="0" align="center" cellpadding="0" cellspacing="0" class="wrap003">
+      <common-table-spacer-element style={ "border-bottom": "2px solid #eeeeee" } />
+      <common-table-spacer-element height="12" />
+      <tr>
+        <td align="left" valign="middle" style="font-size:15px;line-height:20px; color:#666666;font-weight:400;text-align: center;">Sponsored</td>
+      </tr>
+      <tr>
+        <td align="center" valign="top">
+          <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <common-table-spacer-element height="12" />
+            <tr>
+              <td align="left" valign="top">
+                <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td align="left" valign="top">
+                      <marko-core-obj-text obj=creative field="name.default" tag=false>
+                        <@link href=creative.clickUrl target="_blank" attrs=nameLinkAttrs class="font1" />
+                      </marko-core-obj-text>
+                    </td>
+                  </tr>
+                  <common-table-spacer-element height="9" />
+                </table>
+                <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td>From <strong>${get(creative, "companyEdge.node.name.default")}</strong></td>
+                    <td align="center">
+                      <marko-core-obj-value|{ value: image }| obj=creative field="companyEdge.node.logoEdge.node" as="object">
+                        <marko-newsletter-imgix
+                          src=get(image, "src.url")
+                          alt=image.alt
+                          options={ w: 50, h: 50, fit: "crop", auto: "format,compress" }
+                          attrs={ border: 0, style: imgStyles }
+                          class="img_resize2"
+                        >
+                          <@link href=creative.clickUrl target="_blank" attrs=imgLinkAttrs />
+                        </marko-newsletter-imgix>
+                      </marko-core-obj-value>
+                    </td>
+                  </tr>
+                  <common-table-spacer-element height="9" />
+                </table>
+                <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" class="hide-on-mobile">
+                  <tr>
+                    <td align="left" valign="top" style="font-size: 17px;line-height: 22px;color: #202022;padding:0 24px 0 0;">${creative.teaser}</td>
+                  </tr>
+                  <common-table-spacer-element height="9" />
+                </table>
+                <ul>
+                  <for|item| of=creative.foobar>
+                    <li>Foobar: ${item}</li>
+                  </for>
+                  <li>Barbaz: ${creative.barbaz}</li>
+                </ul>
+              </td>
+              <td align="right" valign="top" width="200" class="wdt">
+                <marko-core-obj-value|{ value: image }| obj=creative field="imageEdge.node" as="object">
+                  <marko-newsletter-imgix
+                    src=get(image, "src.url")
+                    alt=image.alt
+                    options={ w: 200, h: 133, fit: "crop", auto: "format,compress" }
+                    attrs={ border: 0, style: imgStyles }
+                    class="img_resize2"
+                  >
+                    <@link href=creative.clickUrl target="_blank" attrs=imgLinkAttrs />
+                  </marko-newsletter-imgix>
+                </marko-core-obj-value>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <common-table-spacer-element height="18" style={ "border-bottom": "2px solid #eeeeee" } />
+    </table>
+  </td>
+</tr>
+<common-table-spacer-element height="20" />

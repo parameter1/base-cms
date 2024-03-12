@@ -343,6 +343,7 @@ services:
     environment:
       <<: *env
       GRAPHQL_URI: ${GRAPHQL_URI-http://graphql-server}
+      MINDFUL_QUERY_API_URL: ${MINDFUL_QUERY_API_URL-}
       TENANT_KEY: ${EXAMPLE_TENANT_KEY-p1_sandbox}
       EXPOSED_HOST: newsletters.dev.parameter1.com
       EXPOSED_PORT: 51271

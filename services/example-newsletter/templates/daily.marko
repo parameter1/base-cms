@@ -8,6 +8,10 @@ $ const emailX = config.get("emailX");
 $ const nxUri = config.get("nativeX.uri");
 $ const nxPlacementId = config.get("nativeX.placements.daily.default");
 
+$ const mindfulNamespace = config.get("mindful.namespace");
+$ const mindfulAdunitId = config.get("mindful.adunits.daily.default");
+$ const mindfulLabels = config.getAsObject("mindful.labels");
+
 <marko-newsletter-root
   title=newsletter.name
   description=newsletter.description
@@ -21,6 +25,39 @@ $ const nxPlacementId = config.get("nativeX.placements.daily.default");
   <@body style="padding:0; margin:0;font-family: 'Roboto', Arial, sans-serif; -webkit-text-size-adjust:100%;">
 
     <common-body-wrapper newsletter=newsletter date=date>
+      <common-table-spacer-element />
+
+      <tr>
+        <td>
+          <h3>Mindful Native Email</h3>
+
+          <if(mindfulNamespace && mindfulAdunitId)>
+            <marko-newsletters-mindful-native-email-fetch|{ creative, tenant }|
+              namespace=mindfulNamespace
+              ad-unit-id=mindfulAdunitId
+              date=date
+              debug=true
+              labels=mindfulLabels
+            >
+              <if(creative)>
+                <mindful-native-email-ad
+                  creative=creative
+                  creative-id=creative.id
+                  tenant=tenant
+                />
+              </if>
+              <else>
+                No Mindful Native Email ad was returned!
+              </else>
+            </marko-newsletters-mindful-native-email-fetch>
+          </if>
+          <else>
+            Mindful namespace or adunit was not defined!
+          </else>
+
+        </td>
+      </tr>
+
       <common-table-spacer-element />
 
       <tr>
