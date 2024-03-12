@@ -123,7 +123,7 @@ module.exports = async ({
     'x-namespace': namespace,
   };
   const body = JSON.stringify({ query, variables });
-  log({ headers, body, query });
+  log({ headers, body });
   const res = await fetch(url, { method: 'post', headers, body });
   const obj = await res.json();
   log(obj);
