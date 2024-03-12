@@ -69,39 +69,12 @@ module.exports = (labels = {}) => {
       node { ...FeaturedImageNodeFragment }
     }
 
-    # companyEdge {
-    #   _id
-    #   node {
-    #     _id
-    #     name { default }
-    #     logoEdge { _id node { ...LogoImageNodeFragment } }
-    #   }
-    # }
-
-    lineItemEdge {
+    companyEdge {
       _id
       node {
         _id
-        orderEdge {
-          _id
-          node {
-            _id
-            companyEdge {
-              _id
-              node {
-                _id
-                name { default }
-                logoEdge {
-                  _id
-                  node {
-                    _id
-                    ...LogoImageNodeFragment
-                  }
-                }
-              }
-            }
-          }
-        }
+        name { default }
+        logoEdge { _id node { ...LogoImageNodeFragment } }
       }
     }
   }
