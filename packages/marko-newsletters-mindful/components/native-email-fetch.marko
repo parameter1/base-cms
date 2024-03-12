@@ -1,0 +1,35 @@
+import { logger, fetchNativeEmailAd as fetch } from "../utils";
+
+$ const {
+  adUnitId,
+  date,
+  debug,
+  imageOptions = {},
+  labels = {},
+  limit = 1,
+  logoOptions = {},
+  namespace,
+} = input;
+$ const log = logger(debug);
+
+$ if (debug) log('native-email-fetch input', input);
+$ if (!namespace) throw new Error('Mindful namespace must be supplied.');
+$ if (!adUnitId) throw new Error('Mindful ad unit id must be supplied.');
+$ if (!date || !date.isValid) throw new Error("Invalid `date` parameter supplied.");
+
+<marko-web-resolve|{ resolved }| promise=fetch({
+  adUnitId,
+  day: date.format("YYYY-MM-DD"),
+  debug,
+  imageOptions,
+  labels,
+  limit,
+  logoOptions,
+  namespace,
+})>
+  <for|{ creative }| of=resolved>
+    $ console.log('creative', creative);
+    $ if (!creative || !creative._id) throw new Error('Unable to parse mindful creative id from ad response.');
+    <${input.renderBody} creative=creative tenant=namespace />
+  </for>
+</marko-web-resolve>

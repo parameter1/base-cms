@@ -1,0 +1,26 @@
+{
+  "name": "@parameter1/base-cms-marko-newsletters-mindful",
+  "version": "4.50.0",
+  "description": "Mindful Marko components for BaseCMS newsletters.",
+  "author": "Josh Worden <josh@parameter1.com>",
+  "license": "MIT",
+  "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-newsletters-mindful",
+  "scripts": {
+    "lint:fix": "yarn lint --fix",
+    "lint": "eslint --ext .js --max-warnings 5 ./",
+    "compile": "basecms-marko-compile compile",
+    "prepublish": "yarn compile --silent",
+    "test": "yarn compile --no-clean && yarn lint"
+  },
+  "dependencies": {
+    "@parameter1/base-cms-object-path": "^4.40.3",
+    "@parameter1/base-cms-utils": "^4.40.3",
+    "node-fetch": "^2.6.9"
+  },
+  "peerDependencies": {
+    "@parameter1/base-cms-marko-core": "^4.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

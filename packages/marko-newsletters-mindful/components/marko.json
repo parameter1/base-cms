@@ -1,0 +1,25 @@
+{
+  "<marko-newsletters-mindful-native-email-fetch>": {
+    "template": "./native-email-fetch.marko",
+    "@ad-unit-id": {
+      "type": "string",
+      "required": true
+    },
+    "@namespace": {
+      "type": "string",
+      "required": true
+    },
+    "@date": {
+      "type": "object",
+      "required": true
+    },
+    "@debug": {
+      "type": "boolean",
+      "default-value": false
+    },
+    "@labels": {
+      "type": "array",
+      "default-value": []
+    }
+  }
+}

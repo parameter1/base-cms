@@ -18,6 +18,7 @@
     "@parameter1/base-cms-marko-core": "^4.48.1",
     "@parameter1/base-cms-marko-newsletters": "^4.48.1",
     "@parameter1/base-cms-marko-newsletters-email-x": "^4.50.0",
+    "@parameter1/base-cms-marko-newsletters-mindful": "^4.50.0",
     "@parameter1/base-cms-marko-newsletters-native-x": "^4.50.0",
     "@parameter1/base-cms-newsletter-cli": "^4.40.3"
   }
