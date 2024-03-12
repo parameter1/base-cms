@@ -28,8 +28,6 @@ $ if (!date || !date.isValid) throw new Error("Invalid `date` parameter supplied
   namespace,
 })>
   <for|{ creative }| of=resolved>
-    $ console.log('creative', creative);
-    $ if (!creative || !creative._id) throw new Error('Unable to parse mindful creative id from ad response.');
     <${input.renderBody} creative=creative tenant=namespace />
   </for>
 </marko-web-resolve>

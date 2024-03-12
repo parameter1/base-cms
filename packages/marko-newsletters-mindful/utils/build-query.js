@@ -1,4 +1,4 @@
-const gql = (strings, ...values) => String.raw({ raw: strings }, ...values);
+const gql = require('./gql');
 
 const buildLabelFragment = (labels = {}) => {
   const fields = Object.keys(labels || {}).map((key) => {

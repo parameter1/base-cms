@@ -125,10 +125,9 @@ module.exports = async ({
   const body = JSON.stringify({ query, variables });
   log({ headers, body, query });
   const res = await fetch(url, { method: 'post', headers, body });
-  const json = await res.json();
-  log(json);
-  const msgs = getAsArray(json, 'errors').map((e) => e.message).join(',');
-  if (!res.ok) throw new Error(`Unable to retrieve native email ad: ${msgs || res.statusText}`);
-
-  return json.data.deliverNativeEmailAdvertisingCreatives;
+  const obj = await res.json();
+  log(obj);
+  const msgs = getAsArray(obj, 'errors').map((e) => e.message).join(',');
+  if (!res.ok || msgs.length) throw new Error(`Unable to retrieve native email ad: ${msgs || res.statusText}`);
+  return getAsArray(obj, 'data.deliverNativeEmailAdvertisingCreatives');
 };
