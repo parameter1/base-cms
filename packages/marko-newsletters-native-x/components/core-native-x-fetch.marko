@@ -37,8 +37,18 @@ $ const timestamp = date ? dateToTimestamp(date) : undefined;
     req,
     debug,
   })>
-    $ const mindfulCreativeId = get(resolved, "data.creative.mindfulCreativeId")
-    $ if (resolved.data && !mindfulCreativeId) throw new Error('Unable to parse mindful creative id from ad response.');
+    $ const resolvedData = get(resolved, "data");
+    $ const dataIsArray = Array.isArray(resolvedData);
+    $ if (resolvedData && dataIsArray && resolvedData.length) {
+      if (resolvedData.find((datapoint) => !get(datapoint, 'creative.mindfulCreativeId'))) {
+        throw new Error('Unable to parse mindful creative id(s) from ad response.');
+      }
+    } else if (resolvedData && !dataIsArray) {
+      if (!get(resolved, "data.creative.mindfulCreativeId")) {
+        throw new Error('Unable to parse mindful creative id from ad response.');
+      }
+    }
+    $ const mindfulCreativeId = get(resolved, "data.creative.mindfulCreativeId");
     <${input.renderBody}
       data=resolved.data
       creative-id=mindfulCreativeId
