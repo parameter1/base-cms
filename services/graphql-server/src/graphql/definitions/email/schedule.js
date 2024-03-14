@@ -93,6 +93,7 @@ input EmailScheduleByDayQueryInput {
   newsletterId: ObjectID!
   startingStartOf: Date!
   beforeEndOf: Date!
+  timezone: String # tz database format, e.g. America/Chicago
 }
 
 input QuickCreateEmailSchedulesMutationInput {
