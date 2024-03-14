@@ -48,7 +48,7 @@ module.exports = {
         projection: {
           _id: 1,
           product: 1,
-          content: 1,
+          'content.$id': 1,
           section: 1,
           deploymentDate: 1,
           sequence: 1,
