@@ -1547,8 +1547,7 @@ module.exports = {
       const section = await basedb.strictFindOne('email.Section', sectionQuery, { projection: { _id: 1 } });
 
       const date = momentTZ(input.date).tz(timezone);
-      const startDate = input.startDate ? momentTZ(input.startDate).tz(timezone) : null;
-      const start = startDate ? startDate.startOf('day').toDate() : date.startOf('day').toDate();
+      const start = date.startOf('day').toDate();
       const end = date.endOf('day').toDate();
 
       const scheduleSort = ignoreStartDate

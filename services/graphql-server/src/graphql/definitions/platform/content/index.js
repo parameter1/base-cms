@@ -677,9 +677,6 @@ input NewsletterScheduledContentQueryInput {
   newsletterId: ObjectID!
   sectionId: Int
   sectionName: String
-  "If specified the start of the time range to look for schedules for"
-  startDate: Date
-  "The UNIX timestamp to look for schedules for, if ignoreStartDate is false or startDate is specified this functions as an end date exclusively"
   date: Date!
   timezone: String
   ignoreStartDate: Boolean = false
