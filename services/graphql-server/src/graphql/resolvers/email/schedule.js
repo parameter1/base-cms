@@ -1,7 +1,9 @@
 const { BaseDB, MongoDB } = require('@parameter1/base-cms-db');
 const { Base4RestPayload } = require('@parameter1/base-cms-base4-rest-api');
 const { dasherize } = require('@parameter1/base-cms-inflector');
+const momentTZ = require('moment-timezone');
 const getProjection = require('../../utils/get-projection');
+const defaults = require('../../defaults');
 
 const validateRest = require('../../utils/validate-rest');
 
@@ -15,6 +17,57 @@ const clearSeconds = (date) => {
 };
 
 module.exports = {
+  /**
+   *
+   */
+  Query: {
+
+    emailSchedulesForDateRange: async (_, { input }, { basedb, site }) => {
+      const {
+        newsletterId,
+        beforeEndOf,
+        startingStartOf,
+      } = input;
+
+      // Use input timezone otherwise fallback to site/global timezone.
+      const timezone = input.timezone || site.get('date.timezone', defaults.date.timezone);
+      const startDate = momentTZ(startingStartOf).tz(timezone);
+      const endDate = momentTZ(beforeEndOf).tz(timezone);
+      const start = startDate.startOf('day').toDate();
+      const end = endDate.endOf('day').toDate();
+
+      const scheduleSort = { sequence: 1, deploymentDate: 1 };
+
+      const scheduleQuery = {
+        product: BaseDB.coerceID(newsletterId),
+        status: 1,
+        deploymentDate: { $gte: start, $lte: end },
+      };
+      const schedules = await basedb.find('email.Schedule', scheduleQuery, {
+        sort: scheduleSort,
+        projection: {
+          _id: 1,
+          product: 1,
+          content: 1,
+          section: 1,
+          deploymentDate: 1,
+          sequence: 1,
+          status: 1,
+        },
+      });
+      const contentIds = schedules.map((schedule) => BaseDB.extractRefId(schedule.content));
+
+      if (!contentIds.length) return [];
+      const output = schedules.reduce((array, schedule) => {
+        const { content: contentItem, ...rest } = schedule;
+        if (contentItem && contentItem.oid) {
+          array.push({ ...rest, content: contentItem.oid });
+        }
+        return array;
+      }, []);
+      return output;
+    },
+  },
   /**
    *
    */
