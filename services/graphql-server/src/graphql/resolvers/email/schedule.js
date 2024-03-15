@@ -41,14 +41,7 @@ module.exports = {
         sort: scheduleSort,
         projection,
       });
-      const output = schedules.reduce((array, schedule) => {
-        const { content: contentItem, ...rest } = schedule;
-        if (contentItem && contentItem.oid) {
-          array.push({ ...rest, content: contentItem.oid });
-        }
-        return array;
-      }, []);
-      return output;
+      return schedules;
     },
   },
   /**
