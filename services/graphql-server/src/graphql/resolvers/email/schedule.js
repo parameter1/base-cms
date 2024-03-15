@@ -1,9 +1,9 @@
 const { BaseDB, MongoDB } = require('@parameter1/base-cms-db');
 const { Base4RestPayload } = require('@parameter1/base-cms-base4-rest-api');
 const { dasherize } = require('@parameter1/base-cms-inflector');
-const momentTZ = require('moment-timezone');
+const moment = require('moment');
 const getProjection = require('../../utils/get-projection');
-const defaults = require('../../defaults');
+const buildProjection = require('../../utils/build-projection');
 
 const validateRest = require('../../utils/validate-rest');
 
@@ -22,42 +22,25 @@ module.exports = {
    */
   Query: {
 
-    emailSchedulesForDateRange: async (_, { input }, { basedb, site }) => {
+    newsletterEmailSchedules: async (_, { input }, { basedb }, info) => {
       const {
         newsletterId,
-        beforeEndOf,
-        startingStartOf,
+        before,
+        after,
       } = input;
-
-      // Use input timezone otherwise fallback to site/global timezone.
-      const timezone = input.timezone || site.get('date.timezone', defaults.date.timezone);
-      const startDate = momentTZ(startingStartOf).tz(timezone);
-      const endDate = momentTZ(beforeEndOf).tz(timezone);
-      const start = startDate.startOf('day').toDate();
-      const end = endDate.endOf('day').toDate();
-
+      const start = moment(after).toDate();
+      const end = moment(before).toDate();
       const scheduleSort = { sequence: 1, deploymentDate: 1 };
-
       const scheduleQuery = {
         product: BaseDB.coerceID(newsletterId),
         status: 1,
         deploymentDate: { $gte: start, $lte: end },
       };
+      const projection = buildProjection({ info, type: 'EmailSchedule' });
       const schedules = await basedb.find('email.Schedule', scheduleQuery, {
         sort: scheduleSort,
-        projection: {
-          _id: 1,
-          product: 1,
-          'content.$id': 1,
-          section: 1,
-          deploymentDate: 1,
-          sequence: 1,
-          status: 1,
-        },
+        projection,
       });
-      const contentIds = schedules.map((schedule) => BaseDB.extractRefId(schedule.content));
-
-      if (!contentIds.length) return [];
       const output = schedules.reduce((array, schedule) => {
         const { content: contentItem, ...rest } = schedule;
         if (contentItem && contentItem.oid) {
