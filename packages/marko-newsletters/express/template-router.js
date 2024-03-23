@@ -9,6 +9,11 @@ const { extractFragmentData } = require('@parameter1/base-cms-web-common/utils')
 const { getAsObject } = require('@parameter1/base-cms-object-path');
 const websiteFactory = require('../utils/website-factory');
 
+/**
+ * @typedef ExpressAppLocals
+ * @prop {import("../config/custom")} customConfig
+ */
+
 const buildQuery = ({ queryFragment }) => {
   const { spreadFragmentName, processedFragment } = extractFragmentData(queryFragment);
   return gql`
@@ -126,6 +131,13 @@ module.exports = ({ templates }) => {
         newsletter: newsletter || {},
         isStatic: !newsletter,
       };
+
+      /**
+       * @type {ExpressAppLocals}
+       * */
+      const { customConfig } = req.app.locals;
+      const hook = customConfig.get('onBeforeRenderHook');
+      if (typeof hook === 'function') await hook({ req, res });
 
       res.marko(template, templateData);
     }));
