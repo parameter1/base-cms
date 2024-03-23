@@ -137,7 +137,7 @@ module.exports = ({ templates }) => {
        * */
       const { customConfig } = req.app.locals;
       const hook = customConfig.get('onBeforeRenderHook');
-      if (typeof hook === 'function') await hook({ req, res });
+      if (typeof hook === 'function') await hook({ req, res, templateData });
 
       res.marko(template, templateData);
     }));
