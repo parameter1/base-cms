@@ -25,6 +25,32 @@ const {
 } = require('../env');
 const RedisCacheGraphQLPlugin = require('../graphql/plugins/redis-cache');
 
+/**
+ * @callback LoadFnCallback
+ * @param {string} loader
+ * @param {*} id
+ * @param {object} projection
+ * @param {object} [criteria={}]
+ */
+/**
+ * @typedef CanonicalRule
+ * @prop {string} prefix
+ * @prop {string} parts
+ */
+/**
+ * @typedef GraphQLServerContext
+ * @prop {import("../auth-context/context")} auth
+ * @prop {import("@parameter1/base-cms-base4-rest-api").Base4RestApiClient} base4rest
+ * @prop {import("@parameter1/base-cms-db").BaseDB} basedb
+ * @prop {import("../cache-loaders/index")} cacheLoaders
+ * @prop {Object.<string, CanonicalRule>} canonicalRules
+ * @prop {LoadFnCallback} load
+ * @prop {string} requestId
+ * @prop {import("../site-context")} site
+ * @prop {string} tenant
+ * @prop {import("../user/user-service")} userService
+ */
+
 const { keys } = Object;
 const router = Router();
 
@@ -42,6 +68,9 @@ const config = {
 const server = new ApolloServer({
   schema,
   ...config,
+  /**
+   * @returns {GraphQLServerContext}
+   */
   context: async ({ req }) => {
     const { body } = req;
     const { tenant, siteId } = getFromRequest(req);
