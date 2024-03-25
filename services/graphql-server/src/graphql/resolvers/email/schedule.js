@@ -1,7 +1,9 @@
 const { BaseDB, MongoDB } = require('@parameter1/base-cms-db');
 const { Base4RestPayload } = require('@parameter1/base-cms-base4-rest-api');
 const { dasherize } = require('@parameter1/base-cms-inflector');
+const moment = require('moment');
 const getProjection = require('../../utils/get-projection');
+const buildProjection = require('../../utils/build-projection');
 
 const validateRest = require('../../utils/validate-rest');
 
@@ -15,6 +17,33 @@ const clearSeconds = (date) => {
 };
 
 module.exports = {
+  /**
+   *
+   */
+  Query: {
+
+    newsletterEmailSchedules: async (_, { input }, { basedb }, info) => {
+      const {
+        newsletterId,
+        before,
+        after,
+      } = input;
+      const start = moment(after).toDate();
+      const end = moment(before).toDate();
+      const scheduleSort = { sequence: 1, deploymentDate: 1 };
+      const scheduleQuery = {
+        product: BaseDB.coerceID(newsletterId),
+        status: 1,
+        deploymentDate: { $gte: start, $lte: end },
+      };
+      const projection = buildProjection({ info, type: 'EmailSchedule' });
+      const schedules = await basedb.find('email.Schedule', scheduleQuery, {
+        sort: scheduleSort,
+        projection,
+      });
+      return schedules;
+    },
+  },
   /**
    *
    */

@@ -418,6 +418,8 @@ module.exports = {
 
     magazineSchedules: ({ _id }, _, { basedb }) => basedb.find('magazine.Schedule', { 'content.$id': _id }),
 
+    emailSchedules: ({ _id }, _, { basedb }) => basedb.find('email.Schedule', { 'content.$id': _id, status: 1 }),
+
     /**
      * Load primary section of content.
      * If primary section's site matches the current site, return the section.

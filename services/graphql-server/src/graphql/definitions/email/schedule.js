@@ -11,6 +11,8 @@ extend type Query {
     model: "email.Schedule",
     using: { contentId: "content.$id" },
   )
+  "Query for newsletter schedules by newlsetter product id and specified date range"
+  newsletterEmailSchedules(input: NewsletterEmailSchedulesQueryInput!): [EmailSchedule]!
 }
 
 extend type Mutation {
@@ -86,6 +88,16 @@ input ContentEmailSchedulesQueryInput {
 input EmailScheduleSortInput {
   field: EmailScheduleSortField = id
   order: SortOrder = desc
+}
+
+"Input for retrieiving newsletter schedules for a specified time range"
+input NewsletterEmailSchedulesQueryInput {
+  "The newsletter product id"
+  newsletterId: ObjectID!
+  "The millisecond precision UNIX timestamp to start looking for schedules at (inclusive)"
+  after: Date!
+  "The millsecond precision UNIX timestamp to stop looking for schedules at (inclusive"
+  before: Date!
 }
 
 input QuickCreateEmailSchedulesMutationInput {
