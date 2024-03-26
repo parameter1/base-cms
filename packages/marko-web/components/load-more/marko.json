@@ -10,6 +10,7 @@
     "@query-name": "string",
     "@query-params": "object",
     "@fragment-name": "string",
+    "@fragment-input": "object",
     "@page-input": "object",
     "@header": "string",
     "@trigger-input": "object",

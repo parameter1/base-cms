@@ -421,6 +421,17 @@ module.exports = {
     emailSchedules: ({ _id }, _, { basedb }) => basedb.find('email.Schedule', { 'content.$id': _id, status: 1 }),
 
     /**
+     * Return the oldest start date for the current section
+     */
+    sectionStartDate: async (content, { input }, { basedb }) => {
+      const { sectionQuery } = content;
+      const { sectionId, sectionBubbling } = input;
+      const ids = sectionBubbling ? await getDescendantIds(sectionId, basedb) : [sectionId];
+      const schedules = sectionQuery.filter(section => ids.includes(section.sectionId));
+      return schedules.length ? schedules[0].start : null;
+    },
+
+    /**
      * Load primary section of content.
      * If primary section's site matches the current site, return the section.
      * If not, check for alternative site + section (@todo).

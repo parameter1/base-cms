@@ -824,6 +824,13 @@ input ContentHasWebsiteScheduleInput {
   sectionBubbling: Boolean = true
 }
 
+input SectionStartDateInput {
+  "The id for the section for determining date"
+  sectionId: Int
+  "If descendant sections of the sectionId should be considered"
+  sectionBubbling: Boolean = true
+}
+
 input QueryMostPopularContentInput {
   siteId: ObjectID
   limit: Int! = 10
