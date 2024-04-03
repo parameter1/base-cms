@@ -12,7 +12,7 @@ const momentTZ = require('moment-timezone');
 const cheerio = require('cheerio');
 const fetch = require('node-fetch');
 const readingTime = require('reading-time');
-
+const loadSiteContext = require('../../../site-context/load');
 const newrelic = require('../../../newrelic');
 const defaults = require('../../defaults');
 const validateRest = require('../../utils/validate-rest');
@@ -40,6 +40,27 @@ const SiteContext = require('../../../site-context');
 const { validateYoutubePlaylistId, validateYoutubeChannelId, validateYoutubeUsername } = require('../../utils/youtube');
 const { MOST_POPULAR_CONTENT_API_URL } = require('../../../env');
 const optimizeForRss = require('../../utils/optimize-for-rss');
+
+/**
+ * @typedef {import('../../../routes/graphql').GraphQLServerContext} GraphQLServerContext
+ * @typedef {import("../../../site-context")} SiteContext
+ */
+
+/**
+ *
+ * @param {string} siteId
+ * @param {GraphQLServerContext} context
+ * @returns {SiteContext}
+ */
+const loadSiteContextFrom = async (siteId, context) => {
+  const site = await loadSiteContext({
+    basedb: context.basedb,
+    siteId,
+    tenant: context.tenant,
+    enableCache: true,
+  });
+  return site;
+};
 
 const retrieveYoutubePlaylistId = async ({ youtube }) => {
   const playlistId = get(youtube, 'playlistId');
@@ -320,15 +341,24 @@ module.exports = {
       return links;
     },
 
+    /**
+     *
+     * @param {object} content
+     * @param {object} variables
+     * @param {GraphQLServerContext} ctx
+     * @returns
+     */
     siteContext: async (content, { input }, ctx) => {
-      const { enableLinkUrl } = input;
-      const { site, load, basedb } = ctx;
+      const { enableLinkUrl, siteId } = input;
+      const { load, basedb } = ctx;
+      const site = siteId ? await loadSiteContextFrom(siteId, ctx) : ctx.site;
       if (!site.exists()) throw new UserInputError('A website context must be set to generate `Content.siteContext` fields.');
+      const context = { ...ctx, site };
 
       return {
-        path: () => canonicalPathFor(content, ctx, { enableLinkUrl }),
+        path: () => canonicalPathFor(content, context, { enableLinkUrl }),
         url: async () => {
-          const path = await canonicalPathFor(content, ctx, { enableLinkUrl });
+          const path = await canonicalPathFor(content, context, { enableLinkUrl });
           if (/^http/i.test(path)) return path;
           return `${site.get('origin')}${path}`;
         },
