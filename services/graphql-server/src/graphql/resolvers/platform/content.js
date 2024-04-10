@@ -764,6 +764,14 @@ module.exports = {
         throw e;
       }
     },
+    sidebars: async ({ sidebars }, { imageAttrs }, { site, basedb }) => {
+      if (!isArray(sidebars)) return [];
+      const bodies = await Promise.all(sidebars.map(async ({ body } = {}) => {
+        const value = await prepareSidebarBody(body, { site, imageAttrs, basedb });
+        return value;
+      }));
+      return bodies.filter((v) => v);
+    },
   },
 
   /**
