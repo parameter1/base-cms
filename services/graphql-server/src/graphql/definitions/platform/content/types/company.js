@@ -16,7 +16,7 @@ extend type Mutation {
   updateContentCompanyCustomAttributes(input: UpdateContentCompanyCustomAttributesMutationInput!): ContentCompany! @requiresAuth
 }
 
-type ContentCompany implements Content & PrimaryCategory & Contactable & Addressable & SocialLinkable & Inquirable & OrganizationContactable @applyInterfaceFields {
+type ContentCompany implements Content & PrimaryCategory & Contactable & Addressable & SocialLinkable & Inquirable & OrganizationContactable & SidebarEnabledInterface @applyInterfaceFields {
   # fields directly on platform.model::Content\Company
   companyType: String @projection
   parentCompany(input: ContentCompanyParentCompanyInput = {}): ContentCompany @projection @refOne(loader: "platformContent" criteria: "contentCompany")
