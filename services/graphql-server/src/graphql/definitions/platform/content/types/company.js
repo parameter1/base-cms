@@ -42,8 +42,6 @@ type ContentCompany implements Content & PrimaryCategory & Contactable & Address
 
   # fields directly on platform.model::Content\Company from mutations
   featuredCategories(input: ContentCompanyFeaturedCategoriesInput = {}): TaxonomyConnection! @projection(localField: "mutations.Website.featuredCategories") @refMany(model: "platform.Taxonomy", localField: "mutations.Website.featuredCategories", criteria: "taxonomyCategory")
-
-  sidebars: [String]! @deprecated(reason: "Sidebars now support multiple fields. Use \`ContentArticle.sidebarStubs\` instead.") @projection
 }
 
 type ContentCompanyYoutube {
