@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-web-common",
-  "version": "4.48.1",
+  "version": "4.54.2",
   "description": "Common utilities, queries and functions for BaseCMS website projects.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
