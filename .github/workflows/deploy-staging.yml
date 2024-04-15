@@ -1,0 +1,117 @@
+name: Deploy suite (Staging)
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  ECR_REGISTRY: 598984531759.dkr.ecr.us-east-2.amazonaws.com
+  IMG_PREFIX: base-cms-services-staging
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    steps:
+    - id: tag_version
+      run: |
+        REF=$(echo $GITHUB_REF | cut -d / -f 3)
+        [[ "$GITHUB_REF" =~ ^refs/tags.*$ ]] && VERSION="$REF" || VERSION="${REF}-${GITHUB_SHA::7}"
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+    outputs:
+      version: ${{ steps.tag_version.outputs.version }}
+
+  notify-start:
+    needs: [version]
+    uses: parameter1/actions/.github/workflows/notify-start.yml@main
+    secrets: inherit
+    with:
+      version: ${{ needs.version.outputs.version }}
+
+  post-deploy-failure:
+    if: failure()
+    needs: [notify-start, build, deploy-2]
+    uses: parameter1/actions/.github/workflows/notify-fail.yml@main
+    secrets: inherit
+    with:
+      slack-thread: ${{ needs.notify-start.outputs.slack-thread }}
+
+  post-deploy-complete:
+    if: success()
+    needs: [notify-start, build, deploy-2]
+    uses: parameter1/actions/.github/workflows/notify-complete.yml@main
+    secrets: inherit
+    with:
+      slack-thread: ${{ needs.notify-start.outputs.slack-thread }}
+
+  build:
+    needs: [version]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service:
+          - google-data-api
+          - graphql-server
+          - hooks
+          - oembed
+          - omail-link-processor
+          - rss
+          - sitemaps
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v1
+        name: Login to ECR
+        with:
+          registry: ${{ env.ECR_REGISTRY }}
+          username: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Build docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: services/${{ matrix.service }}/Dockerfile
+          push: true
+          build-args: |
+            SERVICE=${{ matrix.service }}
+          tags: ${{ env.ECR_REGISTRY }}/${{ env.IMG_PREFIX }}:${{ matrix.service }}-${{ needs.version.outputs.version }}
+
+  deploy-1:
+    needs: [version, build]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service:
+          - google-data-api
+          - oembed
+          - rss
+          - sitemaps
+    steps:
+      - name: Deploy to Kubernetes
+        run: |
+          npx @parameter1/rancher2cli dl \
+            --wait basecms-service ${{ matrix.service }} \
+            ${{ env.ECR_REGISTRY }}/${{ env.IMG_PREFIX }}:${{ matrix.service }}-${{ needs.version.outputs.version }}
+        env:
+          RANCHER_CLUSTERID: ${{ secrets.RANCHER_CLUSTERID_STAGING }}
+          RANCHER_TOKEN: ${{ secrets.RANCHER_TOKEN }}
+          RANCHER_URL: ${{ secrets.RANCHER_URL }}
+
+  deploy-2:
+    needs: [version, build, deploy-1]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service:
+          - graphql-server
+          - hooks
+          - omail-link-processor
+    steps:
+      - name: Deploy to Kubernetes
+        run: |
+          npx @parameter1/rancher2cli dl \
+            --wait basecms-service ${{ matrix.service }} \
+            ${{ env.ECR_REGISTRY }}/${{ env.IMG_PREFIX }}:${{ matrix.service }}-${{ needs.version.outputs.version }}
+        env:
+          RANCHER_CLUSTERID: ${{ secrets.RANCHER_CLUSTERID_STAGING }}
+          RANCHER_TOKEN: ${{ secrets.RANCHER_TOKEN }}
+          RANCHER_URL: ${{ secrets.RANCHER_URL }}
