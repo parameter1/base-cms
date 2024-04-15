@@ -191,4 +191,4 @@ Content queries frequently request `primarySection`, `primaryImage` and `company
 
 In addition, the `website.SectionQuery` collection could be written directly onto content itself.
 
-<!-- touch for patch -->
+<!-- touch for patch 2 -->
