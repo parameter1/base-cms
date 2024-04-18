@@ -6,11 +6,8 @@ $ const title = defaultValue(input.title, "Listed In");
 $ const fullNameFind = defaultValue(input.fullNameFind, "");
 $ const fullNameReplace = defaultValue(input.fullNameReplace, "");
 
-$ console.log('NodeMods SectionListIn: ', schedules)
-
 <if(schedules.length)>
   $ const sections = getSectionsFromSchedules(schedules, rootAlias);
-
   <if(sections.length)>
     <marko-web-node-list flush-x=false flush-y=false modifiers=["section-feed", "company-categories-feed"] >
       <@header>
