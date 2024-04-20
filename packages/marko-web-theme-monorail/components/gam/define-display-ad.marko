@@ -8,7 +8,7 @@ $ const { GAM, req } = out.global;
 
 $ const adUnit = GAM.getAdUnit({ name: input.name, aliases: input.aliases });
 $ const { templateName } = adUnit;
-$ const showLabel = defaultValue(input.showLabel, true);
+$ const showLabel = defaultValue(input.showLabel, GAM.showLabel);
 $ const targeting = defaultValue(input.targeting, {});
 $ const modifiers = [
   ...(showLabel ? ["with-label"] : []),

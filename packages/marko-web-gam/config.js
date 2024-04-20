@@ -16,6 +16,7 @@ class GAMConfiguration {
     this.accountId = accountId;
     this.basePath = basePath;
     this.defaultAlias = defaultAlias;
+    this.showLabel = true;
 
     this.templates = {};
     this.adUnits = {};
