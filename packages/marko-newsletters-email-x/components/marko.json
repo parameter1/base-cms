@@ -51,7 +51,8 @@
       "@attrs": "object"
     },
     "<image>": {
-      "@attrs": "object"
+      "@attrs": "object",
+      "@class": "string"
     }
   }
 }
