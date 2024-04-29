@@ -690,6 +690,7 @@ input NewsletterScheduledContentQueryInput {
 
 input WebsiteScheduledContentQueryInput {
   siteId: ObjectID
+  company: Int
   sectionId: Int
   sectionAlias: String
   optionId: [Int] = []
