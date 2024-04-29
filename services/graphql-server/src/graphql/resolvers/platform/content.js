@@ -1516,7 +1516,7 @@ module.exports = {
       }
       const query = { sectionQuery: { $elemMatch }, $and: [] };
 
-      if (company) query.$and.push({ company: company });
+      if (company) query.$and.push({ company });
 
       if (requiresImage) query.primaryImage = { $exists: true };
       if (includeContentTypes.length) {
