@@ -1448,6 +1448,7 @@ module.exports = {
      */
     websiteScheduledContent: async (_, { input }, { basedb, cacheLoaders, site }, info) => {
       const {
+        company,
         sectionId,
         sectionAlias,
         optionId,
@@ -1514,6 +1515,9 @@ module.exports = {
         $elemMatch.$and.push({ sectionId: { $nin: excludeSectionIds } });
       }
       const query = { sectionQuery: { $elemMatch }, $and: [] };
+
+      if (company) query.$and.push({ company });
+
       if (requiresImage) query.primaryImage = { $exists: true };
       if (includeContentTypes.length) {
         query.$and.push({ type: { $in: includeContentTypes } });
