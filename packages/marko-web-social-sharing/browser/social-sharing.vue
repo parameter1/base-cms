@@ -33,11 +33,11 @@ export default {
     },
     title: {
       type: String,
-      default: null,
+      default: '',
     },
     description: {
       type: String,
-      default: null,
+      default: '',
     },
     media: {
       type: String,
