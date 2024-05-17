@@ -12,6 +12,7 @@ fragment ActiveUserFragment on AppUser {
   displayName
   organization
   organizationTitle
+  lastLoggedIn
   countryCode
   regionCode
   postalCode
