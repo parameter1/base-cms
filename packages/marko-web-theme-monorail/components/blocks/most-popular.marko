@@ -1,4 +1,5 @@
 import { getAsArray } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 import gql from "graphql-tag";
 import fetch from "node-fetch";
 import { extractFragmentData } from "@parameter1/base-cms-web-common/utils";
@@ -8,6 +9,8 @@ $ const { MOST_POPULAR_API_URI } = process.env;
 $ const { site, config, apollo, i18n } = out.global;
 
 $ const blockName = "most-popular";
+
+$ const limit = defaultValue(input.limit, 6);
 
 $ const getMostPopular = async () => {
   const uri = MOST_POPULAR_API_URI || 'https://most-popular-content.base.parameter1.com';
@@ -57,7 +60,7 @@ $ const buildContentQuery = () => {
   ) : resolved.map(({ id }) => id);
   <if(ids.length)>
     $ const query = buildContentQuery();
-    $ const variables = { ids, limit: 6 };
+    $ const variables = { ids, limit };
     <marko-web-resolve|{ resolved: response }| promise=apollo.query({ query, variables })>
       $ const nodes = getAsArray(response, "data.allContent.edges").map((edge) => edge.node);
       $ const map = nodes.reduce((m, r) => m.set(`${r.id}`, r), new Map());
