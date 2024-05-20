@@ -419,10 +419,9 @@ class IdentityX {
   async generateEntityId({ appId, userId } = {}) {
     const activeContext = await this.loadActiveContext();
     const applicationId = appId || activeContext.application.id;
-    const uid = userId
-      || (activeContext && activeContext.user)
-      ? activeContext.user.id
-      : await this.getIdentity();
+    const activeUserId = (activeContext && activeContext.user)
+      ? activeContext.user.id : await this.getIdentity();
+    const uid = userId || activeUserId;
     return `identity-x.${applicationId}.app-user*${uid}`;
   }
 
