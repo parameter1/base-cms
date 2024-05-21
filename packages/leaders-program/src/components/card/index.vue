@@ -93,7 +93,7 @@
             :video-id="convertToString(item.id)"
             :title="item.name"
             :href="item.canonicalPath"
-            :image-src="item.primaryImage.src"
+            :image-src="get(item, 'primaryImage.src')"
             @click="handleVideoClick"
           />
         </template>
