@@ -54,7 +54,12 @@
           />
         </template>
       </content-deck>
-      <content-deck :value="videos" :limit="3" :item-modifiers="['video']">
+      <content-deck
+        v-if="featureYoutubeVideos"
+        :value="videos"
+        :limit="3"
+        :item-modifiers="['video']"
+      >
         <template #header-left>
           Featured Videos
         </template>
@@ -76,7 +81,12 @@
           />
         </template>
       </content-deck>
-      <content-deck :value="relatedVideos" :limit="3" :item-modifiers="['video']">
+      <content-deck
+        v-else
+        :value="relatedVideos"
+        :limit="3"
+        :item-modifiers="['video']"
+      >
         <template #header-left>
           Featured Videos
         </template>
@@ -137,6 +147,10 @@ export default {
     featuredProductLabel: {
       type: String,
       default: 'Featured Products',
+    },
+    featureYoutubeVideos: {
+      type: Boolean,
+      default: true,
     },
   },
 
