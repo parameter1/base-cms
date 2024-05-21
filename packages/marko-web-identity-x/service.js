@@ -430,17 +430,17 @@ class IdentityX {
    */
   async sendLoginLink({
     appUser,
+    authUrl,
     source,
     redirectTo,
     additionalEventData,
   }) {
-    const authUrl = `${this.req.protocol}://${this.req.get('host')}${this.config.getEndpointFor('authenticate')}`;
     await this.client.mutate({
       mutation: sendLoginLinkMutation,
       variables: {
         input: {
           email: appUser.email,
-          authUrl,
+          authUrl: authUrl || `${this.req.protocol}://${this.req.get('host')}${this.config.getEndpointFor('authenticate')}`,
           appContextId: this.config.get('appContextId'),
           source,
           redirectTo,
