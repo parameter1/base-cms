@@ -76,6 +76,28 @@
           />
         </template>
       </content-deck>
+      <content-deck :value="relatedVideos" :limit="3" :item-modifiers="['video']">
+        <template #header-left>
+          Featured Videos
+        </template>
+        <template #header-right>
+          <view-more
+            label="videos"
+            :href="profileHref"
+            target="_blank"
+            @click="handleAllVideosClick"
+          />
+        </template>
+        <template #default="{ item }">
+          <video-card
+            :video-id="convertToString(item.id)"
+            :title="item.name"
+            :href="item.canonicalPath"
+            :image-src="item.primaryImage.src"
+            @click="handleVideoClick"
+          />
+        </template>
+      </content-deck>
     </div>
   </div>
 </template>
@@ -137,11 +159,14 @@ export default {
     promotions() {
       return getEdgeNodes(this.company, 'promotions');
     },
+    relatedVideos() {
+      return getEdgeNodes(this.company, 'relatedVideos');
+    },
     videos() {
       return getEdgeNodes(this.company, 'videos');
     },
     displayBody() {
-      return Boolean(this.promotions.length || this.videos.length);
+      return Boolean(this.promotions.length || this.videos.length || this.relatedVideos.length);
     },
     displayRightHeader() {
       return this.displayRightTopHeader || this.displayRightBottomHeader;
@@ -168,6 +193,9 @@ export default {
   },
 
   methods: {
+    convertToString(value) {
+      return String(value);
+    },
     get(obj, path) {
       return get(obj, path);
     },
