@@ -122,6 +122,7 @@ query ContentForLeadersSection(
             queryTypes: [company],
             includeContentTypes: [Video],
             pagination: { limit: $videoLimit },
+            requiresImage: true,
           }) {
             edges {
               node {
