@@ -22,6 +22,7 @@ module.exports = asyncRoute(async (req, res) => {
   /** @type {import('../middleware').IdentityXRequest} */
   const { identityX, body } = req;
   const {
+    authUrl,
     email,
     source,
     redirectTo,
@@ -79,6 +80,7 @@ module.exports = asyncRoute(async (req, res) => {
   // Send login link.
   await identityX.sendLoginLink({
     appUser,
+    authUrl,
     source,
     redirectTo,
     additionalEventData,
