@@ -37,6 +37,7 @@
             :company="item"
             :is-active="isActive"
             :featured-product-label="featuredProductLabel"
+            :feature-youtube-videos="featureYoutubeVideos"
             @action="emitAction"
           />
         </template>
@@ -113,6 +114,10 @@ export default {
     featuredProductLabel: {
       type: String,
       default: 'Featured Products',
+    },
+    featureYoutubeVideos: {
+      type: Boolean,
+      default: true,
     },
     iconStyle: {
       type: String,
