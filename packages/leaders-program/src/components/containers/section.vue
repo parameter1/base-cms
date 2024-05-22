@@ -1,5 +1,5 @@
 <template>
-  <div :class="classes" :data-section-id="sectionId">
+  <div v-if="!collapse" :class="classes" :data-section-id="sectionId">
     <button class="leaders-section__toggle-button" @click="toggleExpanded">
       <component :is="collapsedIcon" v-show="!isExpanded" :modifiers="iconModifiers" />
       <component :is="expandedIcon" v-show="isExpanded" :modifiers="iconModifiers" />
@@ -119,6 +119,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    collapseEmptyCategories: {
+      type: Boolean,
+      default: false,
+    },
     iconStyle: {
       type: String,
       default: 'plus-minus',
@@ -128,6 +132,7 @@ export default {
 
   data: () => ({
     blockName: 'leaders-section',
+    collapse: false,
     items: [],
     isLoading: false,
     hasLoaded: false,
@@ -187,7 +192,10 @@ export default {
     },
 
     emitCategoryItems(items) {
-      if (!items || !items.length) return;
+      if (!items || !items.length) {
+        this.collapse = this.collapseEmptyCategories;
+        return;
+      }
       this.emitAction({
         type: 'viewed',
         label: 'Section Company Items',
