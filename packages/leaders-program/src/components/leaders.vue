@@ -37,6 +37,7 @@
         :video-limit="videoLimit"
         :featured-product-label="featuredProductLabel"
         :feature-youtube-videos="featureYoutubeVideos"
+        :collapse-empty-categories="collapseEmptyCategories"
         :icon-style="iconStyle"
         @action="emitAction"
       />
@@ -192,6 +193,10 @@ export default {
     featureYoutubeVideos: {
       type: Boolean,
       default: true,
+    },
+    collapseEmptyCategories: {
+      type: Boolean,
+      default: false,
     },
     iconStyle: {
       type: String,
