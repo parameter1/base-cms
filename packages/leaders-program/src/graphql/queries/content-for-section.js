@@ -117,6 +117,34 @@ query ContentForLeadersSection(
               }
             }
           }
+          relatedVideos: relatedContent(input: {
+            withSite: false,
+            queryTypes: [company],
+            includeContentTypes: [Video],
+            pagination: { limit: $videoLimit },
+            requiresImage: true,
+          }) {
+            edges {
+              node {
+                id
+                name
+                primaryImage{
+                  id
+                  src(input: {
+                    options: {
+                      auto: "format",
+                      fit: "crop",
+                      h: 180,
+                      w: 240,
+                    }
+                  })
+                  alt
+                  isLogo
+                }
+                canonicalPath
+              }
+            }
+          }
         }
       }
     }

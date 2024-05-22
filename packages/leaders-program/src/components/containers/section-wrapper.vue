@@ -27,6 +27,7 @@
             :promotion-limit="promotionLimit"
             :video-limit="videoLimit"
             :featured-product-label="featuredProductLabel"
+            :feature-youtube-videos="featureYoutubeVideos"
             :icon-style="iconStyle"
             @action="emitAction"
           />
@@ -116,6 +117,10 @@ export default {
     featuredProductLabel: {
       type: String,
       default: 'Featured Products',
+    },
+    featureYoutubeVideos: {
+      type: Boolean,
+      default: true,
     },
   },
 
