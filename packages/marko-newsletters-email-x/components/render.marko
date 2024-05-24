@@ -1,8 +1,9 @@
 import { getAsObject, get } from "@parameter1/base-cms-object-path";
 
 $ const response = getAsObject(input, "response");
-$ const imageSrc = get(input, "response.imageSrc");
 $ const { ad } = response.data;
+$ const imageSrc = get(input, "response.imageSrc");
+$ const adImageSrc = get(ad, "image.src") || imageSrc;
 
 $ const imageAttrs = {
   ...getAsObject(input, "image.attrs"),
@@ -30,6 +31,6 @@ $ const linkAttrs = {
   },
 };
 
-<marko-core-img ...input.image src=imageSrc attrs=imageAttrs>
+<marko-core-img ...input.image src=adImageSrc attrs=imageAttrs>
   <@link target="_blank" ...linkAttrs />
 </marko-core-img>
