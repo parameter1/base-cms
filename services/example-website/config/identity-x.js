@@ -4,6 +4,8 @@ const formDefault = require('./identity-x/default');
 
 const { log } = console;
 
+log('env: ', process.env)
+
 module.exports = new IdentityXConfiguration({
   appId: process.env.IDENTITYX_APP_ID,
   ...(process.env.IDENTITYX_CONTEXT === 'parameter1.io' ? {
@@ -16,11 +18,10 @@ module.exports = new IdentityXConfiguration({
     ],
   } : {
     // Parameter1.dev
-    appContextId: '64483b96361977163db5e286',
+    appContextId: '5d1b86070ce467bff670a052',
     activeCustomFieldIds: [
-      '618ab74dcd3e2f0147386c42', // Favorite games
-      '626fe91c79d99b27544a4c9f', // Pina coladas
-      '628e98dc2da307ff2ef6a8b0', // Rain
+      '628e9333f8dbf1d5cdda43d2', //
+      '6272f0046f7301b6afa14956', //
     ],
   }),
   // custom form field definitions
@@ -57,13 +58,10 @@ module.exports = new IdentityXConfiguration({
     // },
 
     {
-      id: '618a8a62934f8400ad4beb8f',
-    },
-    {
-      id: '626fe91c79d99b27544a4c9f',
-    },
-    {
       id: '628e9333f8dbf1d5cdda43d2',
+    },
+    {
+      id: '6272f0046f7301b6afa14956',
     },
 
   ],
