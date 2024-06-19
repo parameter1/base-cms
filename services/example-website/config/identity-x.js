@@ -4,8 +4,6 @@ const formDefault = require('./identity-x/default');
 
 const { log } = console;
 
-log('env: ', process.env)
-
 module.exports = new IdentityXConfiguration({
   appId: process.env.IDENTITYX_APP_ID,
   ...(process.env.IDENTITYX_CONTEXT === 'parameter1.io' ? {
