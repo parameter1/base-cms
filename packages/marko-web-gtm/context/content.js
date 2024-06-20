@@ -7,6 +7,7 @@ module.exports = ({ obj, req }) => {
   const company = getAsObject(content, 'company');
   const createdBy = getAsObject(content, 'createdBy');
   const section = getAsObject(content, 'primarySection');
+  const userRegistration = getAsObject(content, 'userRegistration');
   const hierarchy = getAsArray(section, 'hierarchy').map((s) => ({
     id: s.id,
     name: s.name,
@@ -32,6 +33,7 @@ module.exports = ({ obj, req }) => {
       name: content.name,
       published: content.published ? new Date(content.published).toISOString() : undefined,
       labels: getAsArray(content, 'labels'),
+      userRegistration,
     },
     created_by: {
       id: createdBy.id,

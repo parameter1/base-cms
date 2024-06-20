@@ -47,6 +47,10 @@ fragment ContentContextFragment on Content {
       }
     }
   }
+  userRegistration {
+    isCurrentlyRequired
+    accessLevels
+  }
   ... on Authorable {
     authors {
       edges {
