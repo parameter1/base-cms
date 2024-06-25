@@ -2148,5 +2148,46 @@ module.exports = {
       const projection = buildProjection({ info, type: 'Content' });
       return basedb.findOne('platform.Content', { _id: contentId }, { projection });
     },
+
+    /**
+     *
+     */
+    addRelatedContentItem: async (_, { input }, { basedb }, info) => {
+      const { id: contentId, idToRelate } = input;
+      const itemToRelate = await basedb.strictFindById('platform.Content', idToRelate, { projection: { type: 1 } });
+      const itemToRelateTo = await basedb.strictFindById('platform.Content', contentId, { projection: { type: 1 } });
+      await basedb.updateOne('platform.Content', { _id: itemToRelate._id }, {
+        $addToSet: {
+          relatedTo: {
+            $ref: 'Content',
+            $id: itemToRelateTo._id,
+            $db: `${basedb.tenant}_platform`,
+            type: itemToRelateTo.type,
+          },
+        },
+      });
+      const projection = buildProjection({ info, type: 'Content' });
+      return basedb.findOne('platform.Content', { _id: contentId }, { projection });
+    },
+    /**
+     *
+     */
+    removeRelatedContentItem: async (_, { input }, { basedb }, info) => {
+      const { id: contentId, idToUnrelate } = input;
+      const itemToUnrelate = await basedb.strictFindById('platform.Content', idToUnrelate, { projection: { type: 1 } });
+      const itemToUnrelateFrom = await basedb.strictFindById('platform.Content', contentId, { projection: { type: 1 } });
+      await basedb.updateOne('platform.Content', { _id: itemToUnrelate._id }, {
+        $pull: {
+          relatedTo: {
+            $ref: 'Content',
+            $id: itemToUnrelateFrom._id,
+            $db: `${basedb.tenant}_platform`,
+            type: itemToUnrelateFrom.type,
+          },
+        },
+      });
+      const projection = buildProjection({ info, type: 'Content' });
+      return basedb.findOne('platform.Content', { _id: contentId }, { projection });
+    },
   },
 };
