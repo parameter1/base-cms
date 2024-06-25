@@ -16,11 +16,10 @@ module.exports = new IdentityXConfiguration({
     ],
   } : {
     // Parameter1.dev
-    appContextId: '64483b96361977163db5e286',
+    appContextId: '5d1b86070ce467bff670a052',
     activeCustomFieldIds: [
-      '618ab74dcd3e2f0147386c42', // Favorite games
-      '626fe91c79d99b27544a4c9f', // Pina coladas
-      '628e98dc2da307ff2ef6a8b0', // Rain
+      '628e9333f8dbf1d5cdda43d2', //
+      '6272f0046f7301b6afa14956', //
     ],
   }),
   // custom form field definitions
@@ -38,6 +37,32 @@ module.exports = new IdentityXConfiguration({
     phoneNumber: 'Mobile Phone',
     organization: 'Company Name',
   },
+  progressiveDelay: 0.1, // hours
+  progressiveQuestions: [
+    {
+      id: 'givenName',
+    },
+    // {
+    //   id: 'familyName',
+    // },
+    // {
+    //   id: 'postalCode',
+    // },
+    // {
+    //   id: 'street',
+    // },
+    // {
+    //   id: 'countryCode',
+    // },
+
+    {
+      id: '628e9333f8dbf1d5cdda43d2',
+    },
+    {
+      id: '6272f0046f7301b6afa14956',
+    },
+
+  ],
   hiddenFields: [],
   onHookError: (e) => {
     log('IDENTITY-X HOOK ERROR!', e);

@@ -25,6 +25,8 @@ class IdentityXConfiguration {
     requiredClientFields = [],
     requiredCreateFields = [],
     activeCustomFieldIds = [],
+    progressiveDelay = 24, // hours
+    progressiveQuestions = [],
     defaultFieldLabels = {},
     hiddenFields = ['city', 'street', 'addressExtra', 'phoneNumber', 'mobileNumber'],
     defaultCountryCode,
@@ -42,6 +44,8 @@ class IdentityXConfiguration {
       requiredClientFields,
       requiredCreateFields,
       activeCustomFieldIds,
+      progressiveDelay,
+      progressiveQuestions,
       defaultFieldLabels,
       hiddenFields,
       defaultCountryCode,
@@ -64,6 +68,7 @@ class IdentityXConfiguration {
       'logout',
       'register',
       'profile',
+      'progressive',
     ];
     this.hooks = validHooks.reduce((o, name) => ({ ...o, [name]: [] }), {});
   }
@@ -137,6 +142,14 @@ class IdentityXConfiguration {
 
   getActiveCustomFieldIds() {
     return this.getAsArray('activeCustomFieldIds');
+  }
+
+  getProgresiveDelay() {
+    return this.get('progressiveDelay');
+  }
+
+  getProgresiveQuestions() {
+    return this.getAsArray('progressiveQuestions');
   }
 
   get(path, def) {

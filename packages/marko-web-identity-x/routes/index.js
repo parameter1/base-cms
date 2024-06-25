@@ -15,6 +15,7 @@ const login = require('./login');
 const loginFields = require('./login-fields');
 const logout = require('./logout');
 const profile = require('./profile');
+const progressive = require('./progressive');
 const regions = require('./regions');
 
 const router = Router();
@@ -35,6 +36,7 @@ router.post('/login-fields', loginFields);
 router.post('/login', login);
 router.post('/logout', logout);
 router.post('/profile', profile);
+router.post('/progressive', progressive);
 router.use(jsonErrorHandler());
 
 module.exports = router;
