@@ -9,6 +9,7 @@
   },
   "<theme-content-card-deck-block>": {
     "template": "./content-card-deck.marko",
+    "@nodes": "array",
     "<node>": {},
     "@alias" : "string",
     "@cols": "number",
