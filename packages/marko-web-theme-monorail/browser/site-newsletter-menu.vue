@@ -146,6 +146,15 @@ export default {
 
   mounted() {
     if (this.initiallyExpanded) this.didLoad = true;
+    const { dataLayer } = window;
+    if (dataLayer) {
+      const payload = (this.initiallyExpanded) ? {
+        'newsletter-pushdown-initially-expanded': true,
+      } : {
+        'newsletter-pushdown-initially-expanded': false,
+      };
+      dataLayer.push(payload);
+    }
     this.EventBus.$on('newsletter-menu-expanded', (expanded) => {
       this.expanded = expanded;
       if (expanded) this.didLoad = true;
