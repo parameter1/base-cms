@@ -50,7 +50,7 @@ export default {
           this.hasLoaded = true;
           const template = document.createElement('template');
           template.innerHTML = html;
-          const toInsert = template.content.firstChild;
+          const toInsert = template.content.firstChild || '';
           this.$el.replaceWith(toInsert);
         } catch (e) {
           this.error = e;
