@@ -78,7 +78,7 @@ extend type Mutation {
   contentSEOTitle(input: ContentSEOTitleMutationInput!): Content! @requiresAuth
   "Add an item to the content relatedTo field"
   addRelatedContentItem(input: ContentAddRelatedContentItemMutationInput!): Content! @requiresAuth
-  "Remoe an item to the content relatedTo field"
+  "Remove an item to the content relatedTo field"
   removeRelatedContentItem(input: ContentRemoveRelatedContentItemMutationInput!): Content! @requiresAuth
 }
 
