@@ -29,7 +29,7 @@ $ const blockName = "content-card-deck";
 $ const linkHeader = input.linkHeader || false;
 $ const link = getAsObject(input, "link");
 
-<if(nodes && nodes.length)>
+<if(input.nodes && input.nodes.length)>
   $ const section = { ...querySection, ...input.section };
   $ const title = input.title || section && section.name;
   $ const description = input.description || section && section.description || input.defaultDescription;
@@ -66,7 +66,7 @@ $ const link = getAsObject(input, "link");
     </if>
 
     <theme-content-card-deck-col-flow
-      nodes=nodes
+      nodes=input.nodes
       modifiers=[blockName]
       cols=cols
       ...(withNativeX && { nativeX })
