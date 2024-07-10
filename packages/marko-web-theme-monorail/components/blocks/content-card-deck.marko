@@ -29,7 +29,7 @@ $ const blockName = "content-card-deck";
 $ const linkHeader = input.linkHeader || false;
 $ const link = getAsObject(input, "link");
 
-<marko-web-query|{ nodes, section: querySection }| name=queryName params=queryParams>
+<if(nodes && nodes.length)>
   $ const section = { ...querySection, ...input.section };
   $ const title = input.title || section && section.name;
   $ const description = input.description || section && section.description || input.defaultDescription;
@@ -82,4 +82,60 @@ $ const link = getAsObject(input, "link");
       </marko-web-element>
     </if>
   </marko-web-block>
-</marko-web-query>
+</if>
+<else>
+  <marko-web-query|{ nodes, section: querySection }| name=queryName params=queryParams>
+    $ const section = { ...querySection, ...input.section };
+    $ const title = input.title || section && section.name;
+    $ const description = input.description || section && section.description || input.defaultDescription;
+    <marko-web-block name=blockName>
+      <if(title)>
+        <marko-web-element block-name=blockName name="header">
+          <marko-web-element block-name=blockName name="header-left">
+            <marko-web-element block-name=blockName name="title">
+              <if(linkHeader && (input.alias || input.title))>
+                <marko-web-link href=`${input.alias}` ...link>
+                  ${title}
+                </marko-web-link>
+              </if>
+              <else>
+                ${title}
+              </else>
+            </marko-web-element>
+            <if(description)>
+              <marko-web-element block-name=blockName name="description">
+                $!{description}
+              </marko-web-element>
+            </if>
+          </marko-web-element>
+          <marko-web-element block-name=blockName name="header-right">
+            <if(viewMore && section && section.canonicalPath)>
+              <marko-web-element block-name=blockName name="view-more">
+                <marko-web-link href=section.canonicalPath>
+                  ${i18n("View more")} &raquo;
+                </marko-web-link>
+              </marko-web-element>
+            </if>
+          </marko-web-element>
+        </marko-web-element>
+      </if>
+
+      <theme-content-card-deck-col-flow
+        nodes=nodes
+        modifiers=[blockName]
+        cols=cols
+        ...(withNativeX && { nativeX })
+      >
+        <@node modifiers=[blockName] ...input.node />
+      </theme-content-card-deck-col-flow>
+
+      <if(viewMore && section && section.canonicalPath)>
+        <marko-web-element block-name=blockName name="view-more-bottom">
+          <marko-web-link href=section.canonicalPath>
+            ${i18n("View more")} &raquo;
+          </marko-web-link>
+        </marko-web-element>
+      </if>
+    </marko-web-block>
+  </marko-web-query>
+</else>
