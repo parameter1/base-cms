@@ -30,7 +30,7 @@ $ const linkHeader = input.linkHeader || false;
 $ const link = getAsObject(input, "link");
 
 <if(input.nodes && input.nodes.length)>
-  $ const section = { ...querySection, ...input.section };
+  $ const section = { ...input.section };
   $ const title = input.title || section && section.name;
   $ const description = input.description || section && section.description || input.defaultDescription;
   <marko-web-block name=blockName>
