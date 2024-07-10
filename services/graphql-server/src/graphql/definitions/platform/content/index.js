@@ -76,6 +76,10 @@ extend type Mutation {
   contentTaxonomy(input: ContentTaxonomyMutationInput!): Content! @requiresAuth
   "Updates the content SEO Title field"
   contentSEOTitle(input: ContentSEOTitleMutationInput!): Content! @requiresAuth
+  "Add an item to the content relatedTo field"
+  addRelatedContentItem(input: ContentAddRelatedContentItemMutationInput!): Content! @requiresAuth
+  "Remove an item to the content relatedTo field"
+  removeRelatedContentItem(input: ContentRemoveRelatedContentItemMutationInput!): Content! @requiresAuth
 }
 
 enum GateableUserRole {
@@ -844,6 +848,20 @@ input ContentSEOTitleMutationInput {
   id: Int!
   "The SEO Title for the content"
   value: String!
+}
+
+input ContentAddRelatedContentItemMutationInput {
+  "The content ID"
+  id: Int!
+  "The ID of the content item to relate to the content ID provided via id"
+  idToRelate: Int!
+}
+
+input ContentRemoveRelatedContentItemMutationInput {
+  "The content ID"
+  id: Int!
+  "The ID of the content item to unrelate to the content ID provided via id"
+  idToUnrelate: Int!
 }
 
 ${interfaces}
