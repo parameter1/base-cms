@@ -15,12 +15,20 @@ $ const placement = nxConfig.getPlacement({ name: placementName, aliases });
       <marko-web-element block-name=blockName name="row">
         <marko-web-element block-name=blockName name="col">
           <if(ads[0] && ads[0].hasCampaign)>
-            <theme-standard-promo-node ...convertAdToNode(ads[0]) />
+            <theme-standard-promo-node
+              ...convertAdToNode(ads[0])
+              image-width=input.imageWidth
+              image-height=input.imageHeight
+            />
           </if>
         </marko-web-element>
         <marko-web-element block-name=blockName name="col" modifiers=["last"]>
           <if(ads[1] && ads[1].hasCampaign)>
-            <theme-standard-promo-node ...convertAdToNode(ads[1]) />
+            <theme-standard-promo-node
+              ...convertAdToNode(ads[1])
+              image-width=input.imageWidth
+              image-height=input.imageHeight
+            />
           </if>
         </marko-web-element>
       </marko-web-element>
