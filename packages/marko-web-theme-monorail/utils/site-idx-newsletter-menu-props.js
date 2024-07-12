@@ -33,6 +33,8 @@ module.exports = ({ out, input }) => {
   return {
     ...((withImage && imageSrc) && { imageSrc }),
     ...((withImage && imageSrcset) && { imageSrcset }),
+    imageWidth: defaultValue(input.imageWidth, ''),
+    imageHeight: defaultValue(input.imageHeight, ''),
     siteName: config.website('name'),
     name,
     description,

@@ -3,7 +3,13 @@
     <div ref="lazyload" class="lazyload" />
     <div :class="bem()">
       <div v-if="imageSrc" :class="bem('left-col')">
-        <img :src="imageSrc" :srcset="imageSrcset" :alt="name">
+        <img
+          :src="imageSrc"
+          :srcset="imageSrcset"
+          :alt="name"
+          :width="imageWidth"
+          :height="imageHeight"
+        >
       </div>
       <div :class="bem('right-col')">
         <div v-if="!submitted" :class="bem('name')">
@@ -94,6 +100,14 @@ export default {
     imageSrcset: {
       type: String,
       default: null,
+    },
+    imageWidth: {
+      type: String,
+      default: '',
+    },
+    imageHeight: {
+      type: String,
+      default: '',
     },
     lang: {
       type: String,

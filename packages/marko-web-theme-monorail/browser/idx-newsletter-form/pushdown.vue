@@ -9,6 +9,8 @@
             :srcset="imageSrcset"
             :alt="name"
             :class="element('image')"
+            :width="imageWidth"
+            :height="imageHeight"
           >
         </div>
         <div :class="element('form-wrapper', ['col-12', 'col-md-6', 'col-lg-7'])">
@@ -90,6 +92,14 @@ export default {
     imageSrcset: {
       type: String,
       default: null,
+    },
+    imageWidth: {
+      type: String,
+      default: '',
+    },
+    imageHeight: {
+      type: String,
+      default: '',
     },
     initiallyExpanded: {
       type: Boolean,

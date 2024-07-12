@@ -1,7 +1,7 @@
 import { get } from "@parameter1/base-cms-object-path";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 
-$ const { node } = input;
+$ const { node, imageWidth, imageHeight } = input;
 
 $ const linkText = get(node, "linkText") || defaultValue(input.linkText, "Read More");
 $ const blockName = defaultValue(input.blockName, "pib-page-card");
@@ -31,6 +31,7 @@ $ const blockName = defaultValue(input.blockName, "pib-page-card");
         src=node.primaryImage.src
         srcset=[`${node.primaryImage.src}&dpr=2 2x`]
         alt=node.primaryImage.alt
+        attrs={ width: imageWidth, height: imageHeight }
       />
     </if>
   </marko-web-element>
