@@ -23,6 +23,7 @@ $ const requestQuote = defaultValue(input.requestQuote, true);
 $ const displayFeaturedSocialLinks = defaultValue(input.displayFeaturedSocialLinks, false);
 $ const socialLinks = getAsArray(content, "socialLinks");
 $ const showSocial = socialLinks.length;
+$ const withCountry = defaultValue(input.withCountry, false);
 // linkOffsite is an object like the following:
 /**
   {
@@ -73,7 +74,9 @@ $ const blockName = "section-feed-content-node";
             <marko-web-content-address1 block-name=blockName obj=content />
             <marko-web-content-address2 block-name=blockName obj=content />
             <marko-web-content-city-state-zip block-name=blockName obj=content />
-            <marko-web-content-country block-name=blockName obj=content />
+            <if(withCountry)>
+              <marko-web-content-country block-name=blockName obj=content />
+            </if>
             <marko-web-content-tollfree block-name=blockName obj=content />
             <if(requestQuote)>
               <marko-web-link
@@ -112,7 +115,9 @@ $ const blockName = "section-feed-content-node";
             <marko-web-content-address1 block-name=blockName obj=content />
             <marko-web-content-address2 block-name=blockName obj=content />
             <marko-web-content-city-state-zip block-name=blockName obj=content />
-            <marko-web-content-country block-name=blockName obj=content />
+            <if(withCountry)>
+              <marko-web-content-country block-name=blockName obj=content />
+            </if>
           </marko-web-block>
         </if>
         <else>
