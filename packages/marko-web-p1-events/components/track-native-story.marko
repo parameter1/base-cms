@@ -4,8 +4,35 @@ $ const { site } = out.global;
 $ const { story } = input;
 $ const config = site.getAsObject("p1events");
 $ const nxConfig = site.get("nativeX");
+$ const mindfulStoriesConfig = site.get("mindfulStories");
 
-<if(config.enabled && nxConfig && nxConfig.enabled)>
+<if(config.enabled && mindfulStoriesConfig && mindfulStoriesConfig.enabled)>
+  $ const { advertiser } = story;
+  $ const entity = {
+    id: story.id,
+    ns: `mindful.${mindfulStoriesConfig.tenantNamespace}.advertising-post`,
+    name: story.title,
+    props: { type: "advertising-post", published: get(story, "publishedAt") },
+    ...(advertiser && advertiser.id && {
+      refs: {
+        advertiser: {
+          id: advertiser.id,
+          ns: `mindful.${mindfulStoriesConfig.tenantNamespace}.advertising-company`,
+          name: advertiser.name
+        }
+      }
+    }),
+  }
+  $ const data = {
+    action: "View",
+    category: "Content",
+    entity,
+  };
+  <script>
+    p1events('track', ${JSON.stringify(data)});
+  </script>
+</if>
+<else-if(config.enabled && nxConfig && nxConfig.enabled)>
   $ const { advertiser } = story;
   $ const entity = {
     id: story.id,
@@ -24,4 +51,4 @@ $ const nxConfig = site.get("nativeX");
   <script>
     p1events('track', ${JSON.stringify(data)});
   </script>
-</if>
+</else-if>
