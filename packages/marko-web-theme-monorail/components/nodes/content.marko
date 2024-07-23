@@ -51,7 +51,7 @@ $ const linkField = get(linkOffsite, contentType) ? "externalContentUrl" : null;
 $ const externalLink = linkField ? get(content, linkField) : null;
 $ const linkTarget = externalLink ? defaultValue(get(linkOffsite, "target"), "") : "";
 $ const href = externalLink ? externalLink : get(content, "siteContext.path");
-$ const imageLink = primaryImage.src ? { href, attrs: linkAttrs } : false;
+$ const imageLink = primaryImage.src ? { href, attrs: linkAttrs, target: linkTarget } : false;
 
 <marko-web-node
   type=`${content.type}-content`
