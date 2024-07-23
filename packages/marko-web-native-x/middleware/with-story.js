@@ -7,11 +7,13 @@ const buildQuery = require('../apollo/graphql/queries/story');
  * @param NativeXConfiguration The NativeX config
  * @param object The Marko template to render
  * @param Document A query fragment to be used with the story query
+ * @param object Headers to send with the API request
  */
 module.exports = ({
   config,
   template,
   queryFragment = defaultFragment,
+  headers = {},
 } = {}) => asyncRoute(async (req, res) => {
   const { path, url } = req;
   if (path.substr(-1) === '/' && path.length > 1) {
@@ -26,6 +28,7 @@ module.exports = ({
   const result = await config.client.query({
     query: buildQuery(queryFragment),
     variables: { input: { id, preview } },
+    headers,
   });
   const story = getAsObject(result, 'data.publishedStory');
   res.marko(template, { story });
