@@ -47,8 +47,8 @@ $ const withSponsored = primarySection && primarySection.name === 'Sponsored' &&
   Keys are content types (all lowercase), values are the field to use when available on that type.
 **/
 $ const linkOffsite = getAsObject(site, "config.linkOffsite");
-$ const linkField = get(linkOffsite, contentType);
-$ const externalLink = get(content, linkField) || get(content, "externalContentUrl") || null;
+$ const linkField = get(linkOffsite, contentType) ? "externalContentUrl" : null;
+$ const externalLink = linkField ? get(content, linkField) : null;
 $ const linkTarget = externalLink ? defaultValue(get(linkOffsite, "target"), "") : "";
 $ const href = externalLink ? externalLink : get(content, "siteContext.path");
 $ const imageLink = primaryImage.src ? { href, attrs: linkAttrs } : false;
@@ -133,7 +133,7 @@ $ const imageLink = primaryImage.src ? { href, attrs: linkAttrs } : false;
         <marko-web-content-teaser
           tag=null
           obj=content
-          link={ field: linkField, target:linkTarget, attrs: linkAttrs }
+          link={ field: linkField, target: linkTarget, attrs: linkAttrs }
         />
       </@text>
       <@text
