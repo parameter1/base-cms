@@ -1,4 +1,5 @@
 import { defaultValue } from "@parameter1/base-cms-marko-web/utils";
+import { getAsObject } from "@parameter1/base-cms-object-path";
 import convertAdToNode from "@parameter1/base-cms-marko-web-native-x/utils/convert-ad-to-node";
 
 $ const { nativeX: nxConfig } = out.global;
@@ -7,6 +8,19 @@ $ const aliases = defaultValue(input.aliases, []);
 $ const blockName = "callout-cards";
 $ const uri = nxConfig.getUri();
 $ const placement = nxConfig.getPlacement({ name: placementName, aliases });
+$ const calculateImageSize = ({ width, height }) => {
+  const aspectRatio = (width / height);
+  if (input.imageWidth && input.imageHeight) {
+    return { width: input.imageWidth, height: input.imageHeight };
+  } else if (input.imageWidth && !input.imageHeight ) {
+    return { width: input.imageWidth, height: input.imageWidth / aspectRatio };
+  } else if (!input.imageWidth && input.imageHeight) {
+    return { width: input.imageHeight * aspectRatio, height: input.imageHeight };
+  }
+  // See https://github.com/parameter1/base-cms/pull/935
+  // For why this is the default
+  return { width: 120, height: (height / (width / 120)) };
+};
 
 <marko-web-native-x-fetch-elements|{ ads }| uri=uri id=placement.id opts={ n: 2 }>
   $ const hasAd = ads && ads.length && ads[0] && ads[0].hasCampaign;
@@ -15,19 +29,23 @@ $ const placement = nxConfig.getPlacement({ name: placementName, aliases });
       <marko-web-element block-name=blockName name="row">
         <marko-web-element block-name=blockName name="col">
           <if(ads[0] && ads[0].hasCampaign)>
+            $ const { width, height } = getAsObject(ads[0], 'image');
+            $ const { width: calculatedWidth, height: calculatedHeight } = calculateImageSize({ width, height });
             <theme-standard-promo-node
+              image-width=calculatedWidth
+              image-height=calculatedHeight
               ...convertAdToNode(ads[0])
-              image-width=input.imageWidth
-              image-height=input.imageHeight
             />
           </if>
         </marko-web-element>
         <marko-web-element block-name=blockName name="col" modifiers=["last"]>
           <if(ads[1] && ads[1].hasCampaign)>
+            $ const { width, height } = getAsObject(ads[1], 'image');
+            $ const { width: calculatedWidth, height: calculatedHeight } = calculateImageSize({ width, height });
             <theme-standard-promo-node
+              image-width=calculatedWidth
+              image-height=calculatedHeight
               ...convertAdToNode(ads[1])
-              image-width=input.imageWidth
-              image-height=input.imageHeight
             />
           </if>
         </marko-web-element>
