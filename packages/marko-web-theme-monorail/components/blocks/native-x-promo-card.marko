@@ -19,7 +19,7 @@ $ const calculateImageSize = ({ width, height }) => {
   }
   // See https://github.com/parameter1/base-cms/pull/935
   // For why this is the default
-  return { width: 120, height: (height / ((width / 120))) };
+  return { width: 120, height: (height / (width / 120)) };
 };
 
 <marko-web-native-x-fetch-elements|{ ads }| uri=uri id=placement.id opts={ n: 2 }>
