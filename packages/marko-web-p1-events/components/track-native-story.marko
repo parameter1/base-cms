@@ -4,20 +4,20 @@ $ const { site } = out.global;
 $ const { story } = input;
 $ const config = site.getAsObject("p1events");
 $ const nxConfig = site.get("nativeX");
-$ const mindfulStoriesConfig = site.get("mindfulStories");
+$ const mindfulConfig = site.getAsObject("mindful");
 
-<if(config.enabled && mindfulStoriesConfig && mindfulStoriesConfig.enabled)>
+<if(config.enabled && mindfulConfig && mindfulConfig.adsEnabled)>
   $ const { advertiser } = story;
   $ const entity = {
     id: story.id,
-    ns: `mindful.${mindfulStoriesConfig.tenantNamespace}.advertising-post`,
+    ns: `mindful.${mindfulConfig.namespace}.advertising-post`,
     name: story.title,
     props: { type: "advertising-post", published: get(story, "publishedAt") },
     ...(advertiser && advertiser.id && {
       refs: {
         advertiser: {
           id: advertiser.id,
-          ns: `mindful.${mindfulStoriesConfig.tenantNamespace}.advertising-company`,
+          ns: `mindful.${mindfulConfig.namespace}.advertising-company`,
           name: advertiser.name
         }
       }
