@@ -1,4 +1,5 @@
 const gql = require('graphql-tag');
+const { getAsObject } = require('@parameter1/base-cms-object-path');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 const tokenCookie = require('../utils/token-cookie');
 const contextCookie = require('../utils/context-cookie');
@@ -16,6 +17,7 @@ const loginAppUser = gql`
         ...ActiveUserFragment
       }
       loginSource
+      additionalEventData
     }
   }
 
@@ -51,7 +53,7 @@ module.exports = asyncRoute(async (req, res) => {
     applicationId: identityX.config.getAppId(),
     user,
     loginSource,
-    additionalEventData,
+    additionalEventData: { ...additionalEventData, ...getAsObject(data, 'loginAppUser.additionalEventData') },
     entity,
   });
 });
