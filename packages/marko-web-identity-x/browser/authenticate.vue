@@ -248,9 +248,9 @@ export default {
           requiresCustomFieldAnswers: this.requiresCustomFieldAnswers,
           actionSource: data.loginSource,
           ...(
-            data.additionalEventData
-            && data.additionalEventData.newsletterSignupType
-            && { newsletterSignupType: data.additionalEventData.newsletterSignupType }
+            data.additionalContext
+            && data.additionalContext.newsletterSignupType
+            && { newsletterSignupType: data.additionalContext.newsletterSignupType }
           ),
           additionalEventData: {
             ...(this.additionalEventData || {}),
