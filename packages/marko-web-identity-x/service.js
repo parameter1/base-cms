@@ -444,7 +444,7 @@ class IdentityX {
           appContextId: this.config.get('appContextId'),
           source,
           redirectTo,
-          additionalEventData,
+          additionalContext: additionalEventData,
         },
       },
     });
