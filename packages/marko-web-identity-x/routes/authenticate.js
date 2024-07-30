@@ -17,7 +17,7 @@ const loginAppUser = gql`
         ...ActiveUserFragment
       }
       loginSource
-      additionalEventData
+      additionalContext
     }
   }
 
@@ -53,7 +53,8 @@ module.exports = asyncRoute(async (req, res) => {
     applicationId: identityX.config.getAppId(),
     user,
     loginSource,
-    additionalEventData: { ...additionalEventData, ...getAsObject(data, 'loginAppUser.additionalEventData') },
+    additionalContext: getAsObject(data, 'loginAppUser.additionalContext'),
+    additionalEventData,
     entity,
   });
 });
