@@ -1,9 +1,7 @@
-$ const { site } = out.global;
+import { getAsArray } from "@parameter1/base-cms-object-path";
+$ const ids = getAsArray(input, "ids");
 
-$ const facebookConnect = site.get("facebookConnect");
-
-<if(facebookConnect && facebookConnect.enabled && facebookConnect.ids && facebookConnect.ids.length)>
-  $ const { ids } = facebookConnect;
+<if(ids.length)>
   $ const inits = ids.map((id) => `fbq('init', '${id}');`).join('');
   <!-- Facebook Pixel Code -->
   <marko-web-deferred-script-loader-register
