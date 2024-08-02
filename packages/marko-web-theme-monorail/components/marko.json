@@ -21,6 +21,9 @@
   "<theme-client-side-block-loader>": {
     "template": "./client-side-block-loader.marko"
   },
+  "<theme-facebook-connect>": {
+    "template": "./facebook-connect.marko"
+  },
   "<theme-menu-toggle-button>": {
     "template": "./menu-toggle-button.marko"
   },
