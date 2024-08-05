@@ -1,0 +1,52 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+$ const ids = getAsArray(input, "ids");
+
+<if(ids.length)>
+  $ const inits = ids.map((id) => `fbq('init', '${id}');`).join('');
+  <!-- Facebook Pixel Code -->
+  <marko-web-deferred-script-loader-register
+    name="facebookConnect"
+    src="https://connect.facebook.net/en_US/fbevents.js"
+    init=`!function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];}(window)`
+    onScriptLoad=`${inits}fbq('track', 'PageView');`
+    on="load"
+    init-only=true
+  />
+
+  <script>
+    window.onload = (event) => {
+      // Create the observed element
+      var scrollDiv = document.createElement("div");
+      scrollDiv.id = "fb-scroll-load";
+      document.body.insertAdjacentElement("afterbegin", scrollDiv);
+
+      var facebookConnectLoad = function(script, distance) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function(entry) {
+            if(entry.boundingClientRect.y < 0) {
+              // Execute scripts
+              script();
+
+              // Remove the listerner
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { rootMargin: distance });
+        observer.observe(document.querySelector("#" + scrollDiv.id));
+      }
+      facebookConnectLoad(function() { deferScript('load', { name: 'facebookConnect' }); }, '50px');
+    };
+  </script>
+
+
+  <noscript>
+    <for|id| of=ids>
+      <img height="1" width="1" style="display:none" src=`https://www.facebook.com/tr?id=${id}&ev=PageView&noscript=1` />
+    </for>
+  </noscript>
+  <!-- End Facebook Pixel Code -->
+</if>
