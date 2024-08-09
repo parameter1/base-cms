@@ -23,6 +23,10 @@ module.exports = ({ obj, req }) => {
     id: node.id,
     name: node.name,
   }));
+  const schedules = getAsArray(content, 'websiteSchedules').map(({ section: s }) => ({
+    id: s.id,
+    name: s.name,
+  }));
   return {
     page_type: 'content',
     canonical_path: get(content, 'siteContext.path'),
@@ -54,5 +58,6 @@ module.exports = ({ obj, req }) => {
     section_hierarchy: hierarchy,
     taxonomy,
     authors,
+    schedules,
   };
 };
