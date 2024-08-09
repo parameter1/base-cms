@@ -1,10 +1,13 @@
 import { getAsObject, getAsArray, get } from "@parameter1/base-cms-object-path";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 
+$ const { site } = out.global;
+
 $ const content = getAsObject(input, "node");
 $ const primaryImage = getAsObject(content, "primaryImage");
 $ const primarySection = getAsObject(content, "primarySection");
 
+$ const contentType = defaultValue(content.type, 'article');
 $ const imageOnly = defaultValue(input.imageOnly, false);
 $ const withTeaser = defaultValue(input.withTeaser, true);
 $ const withBody = defaultValue(input.withBody, false);
@@ -33,9 +36,22 @@ $ if (withSection && alias && withPrimarySectionModifier) {
   modifiers.push(`section-${primarySection.alias}`);
 }
 
-$ const imageLink = primaryImage.src ? { href: content.siteContext.path, attrs: linkAttrs } : false;
-
 $ const withSponsored = primarySection && primarySection.name === 'Sponsored' && input.withSponsored;
+
+// linkOffsite is an object like the following:
+/**
+  {
+    webinar: 'linkUrl',
+    event: 'website'
+  }
+  Keys are content types (all lowercase), values are the field to use when available on that type.
+**/
+$ const linkOffsite = getAsObject(site, "config.linkOffsite");
+$ const linkField = get(linkOffsite, contentType) ? "externalContentUrl" : null;
+$ const externalLink = linkField ? get(content, linkField) : null;
+$ const linkTarget = externalLink ? defaultValue(get(linkOffsite, "target"), "") : "";
+$ const href = externalLink ? externalLink : get(content, "siteContext.path");
+$ const imageLink = primaryImage.src ? { href, attrs: linkAttrs, target: linkTarget } : false;
 
 <marko-web-node
   type=`${content.type}-content`
@@ -82,7 +98,11 @@ $ const withSponsored = primarySection && primarySection.name === 'Sponsored' &&
         </@header>
       </if>
       <@title tag="h5" ...input.title>
-        <marko-web-content-short-name tag=null obj=content link={ attrs: linkAttrs } />
+        <marko-web-content-short-name
+          tag=null
+          obj=content
+          link={ field: linkField, target: linkTarget, attrs: linkAttrs }
+        />
       </@title>
       <@text|{ blockName }|
         modifiers=["event-details"]
@@ -110,7 +130,11 @@ $ const withSponsored = primarySection && primarySection.name === 'Sponsored' &&
         modifiers=["teaser", ...getAsArray(input, "teaser.modifiers").map(mod => `teaser-${mod}`)]
         show=(Boolean(withTeaser && content.teaser))
       >
-        <marko-web-content-teaser tag=null obj=content link={ attrs: linkAttrs } />
+        <marko-web-content-teaser
+          tag=null
+          obj=content
+          link={ field: linkField, target: linkTarget, attrs: linkAttrs }
+        />
       </@text>
       <@text
         modifiers=["body"]

@@ -23,6 +23,12 @@ fragment TopStoriesBlockFragment on Content {
     alt
     isLogo
   }
+  ... on ContentWebinar {
+    externalContentUrl: linkUrl
+  }
+  ... on ContentEvent {
+    externalContentUrl: website
+  }
 }
 
 `;
