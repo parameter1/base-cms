@@ -27,7 +27,7 @@ module.exports = (context = {}, identity = null) => {
     return `return 'identity-x.${context.application.id}.app-user*' + '${context.user.id}';`;
   }
   if (identity) {
-    return `return 'identity-x.${context.application.id}.app-user*' + '${identity};'`;
+    return `return 'identity-x.${context.application.id}.app-user*' + '${identity}';`;
   }
   return '';
 };
