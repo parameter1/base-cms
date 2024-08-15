@@ -131,19 +131,15 @@
         />
 
         <div v-if="customTextFieldAnswers.length" class="row mt-3">
-          <div
+          <custom-text
             v-for="fieldAnswer in customTextFieldAnswers"
+            :id="fieldAnswer.id"
             :key="fieldAnswer.id"
-            class="col-12"
-          >
-            <custom-text
-              :id="fieldAnswer.id"
-              :label="fieldAnswer.field.label"
-              :required="fieldAnswer.field.required"
-              :value="fieldAnswer.value"
-              @change="onCustomTextChange(fieldAnswer.id, $event)"
-            />
-          </div>
+            :label="fieldAnswer.field.label"
+            :required="fieldAnswer.field.required"
+            :value="fieldAnswer.value"
+            @change="onCustomTextChange(fieldAnswer.id, $event)"
+          />
         </div>
 
         <div v-if="customSelectFieldAnswers.length" class="row">
