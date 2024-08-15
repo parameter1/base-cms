@@ -24,6 +24,9 @@ module.exports = {
   search,
   idxNavItems: { enable: true },
   company: 'Parameter1, LLC',
+  mindful: {
+    namespace: 'im/default',
+  },
   p1events: {
     enabled: true,
     tenant: 'p1',
