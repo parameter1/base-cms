@@ -84,6 +84,25 @@ fragment ActiveUserFragment on AppUser {
       }
     }
   }
+  customTextFieldAnswers(input: {
+    onlyActive: true
+    sort: { field: createdAt, order: asc }
+  }) {
+    id
+    hasAnswered
+    value
+    field {
+      id
+      label
+      active
+      required
+      externalId {
+        id
+        namespace { provider tenant type }
+        identifier { value type }
+      }
+    }
+  }
 }
 
 `;
