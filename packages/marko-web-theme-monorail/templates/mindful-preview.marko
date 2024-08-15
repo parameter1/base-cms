@@ -100,7 +100,7 @@ $ const title = `Customer Preview - ${creativeId}` ;
         $ const creative = getAsObject(resolved, 'advertisingCreativeInterfaceById');
         <if(creative)>
           $ const creativeNode = converter(creative);
-          <if(get(creative, '_form.label' === 'Native Website'))>
+          <if(get(creative, '_form.label') === 'Native Website')>
 
             <div class="node-list node-list--latest-content-list node-list--flush-x">
               <div class="node-list__header">List/Section Feed Preview</div>
@@ -142,7 +142,7 @@ $ const title = `Customer Preview - ${creativeId}` ;
               </@slot>
             </theme-card-deck-flow>
           </if>
-          <else-if(get(creative, '_form.label' === 'Native Email'))>
+          <else-if(get(creative, '_form.label') === 'Native Email')>
 
           </else-if>
         </if>
