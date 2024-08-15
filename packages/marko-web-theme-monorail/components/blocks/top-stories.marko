@@ -24,6 +24,7 @@ $ const queryName = (queryParams.optionName) ? "website-optioned-content" : "web
       type: heroNode.type,
       siteContext: heroNode.siteContext,
       primaryImage: heroNode.primaryImage,
+      ...(heroNode.externalContentUrl && { externalContentUrl: heroNode.externalContentUrl }),
     };
     $ const cardNodes = nodes.slice(1);
 
