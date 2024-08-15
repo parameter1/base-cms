@@ -130,6 +130,22 @@
           :default-field-labels="defaultFieldLabels"
         />
 
+        <div v-if="customTextFieldAnswers.length" class="row mt-3">
+          <div
+            v-for="fieldAnswer in customTextFieldAnswers"
+            :key="fieldAnswer.id"
+            class="col-12"
+          >
+            <custom-text
+              :id="fieldAnswer.id"
+              :label="fieldAnswer.field.label"
+              :required="fieldAnswer.field.required"
+              :value="fieldAnswer.value"
+              @change="onCustomTextChange(fieldAnswer.id, $event)"
+            />
+          </div>
+        </div>
+
         <div v-if="customSelectFieldAnswers.length" class="row">
           <custom-select
             v-for="fieldAnswer in customSelectFieldAnswers"
@@ -242,6 +258,7 @@ import AddressBlock from './form/address-block.vue';
 import FormConsent from './form/consent.vue';
 import CustomBoolean from './form/fields/custom-boolean.vue';
 import CustomSelect from './form/fields/custom-select.vue';
+import CustomText from './form/fields/custom-text.vue';
 import GivenName from './form/fields/given-name.vue';
 import FamilyName from './form/fields/family-name.vue';
 import Organization from './form/fields/organization.vue';
@@ -262,6 +279,7 @@ export default {
     AddressBlock,
     CustomBoolean,
     CustomSelect,
+    CustomText,
     GivenName,
     FamilyName,
     FormConsent,
@@ -450,6 +468,17 @@ export default {
         .sort(this.sortByActiveCustomFieldIds);
     },
 
+    /**
+     *
+     */
+    customTextFieldAnswers() {
+      const { activeCustomFieldIds: ids } = this;
+      const { customTextFieldAnswers } = this.user;
+      const answers = isArray(customTextFieldAnswers) ? customTextFieldAnswers : [];
+      return answers.filter(ids.length > 0 ? ({ field }) => ids.includes(field.id) : () => true)
+        .sort(this.sortByActiveCustomFieldIds);
+    },
+
     showAddressBlock() {
       // Don't show at all until country is selected.
       if (!this.countryCode) return false;
@@ -586,6 +615,12 @@ export default {
       const ids = Array.isArray($event) ? [...$event] : [...($event ? [$event] : [])];
       answers.splice(0);
       if (ids.length) answers.push(...ids.map((id) => ({ id })));
+    },
+
+    onCustomTextChange(id, customText) {
+      const objIndex = this.customTextFieldAnswers.findIndex(((obj) => obj.id === id));
+      this.customTextFieldAnswers[objIndex].value = customText;
+      this.user.customTextFieldAnswers = this.customTextFieldAnswers;
     },
 
     customSelectIsRequired(fieldAnswer) {
