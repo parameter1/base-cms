@@ -7,11 +7,13 @@ $ const { NODE_ENV, DEBUG } = process.env;
 $ const debug = `${DEBUG}`.includes('p1events');
 
 $ const { on } = input;
-$ const scriptSrc = defaultValue(input.scriptSrc, "https://cdn.parameter1.com/p1-events/v1.3.4/lib.min.js");
+$ const scriptSrc = defaultValue(input.scriptSrc, "https://cdn.parameter1.com/p1-events/v1.4.1/lib.min.js");
 $ const uri = defaultValue(input.uri, "https://db0y8smio0.execute-api.us-east-2.amazonaws.com/default/p1-website-events-enqueue");
 $ const identityQueryBuilder = `identityQueryBuilder: function(query, cookies) { ${input.identityQueryBuilder ? input.identityQueryBuilder.split("\n").map((l) => l.trim()).join(" ") : ""} }`;
 $ const enableGamPlugin = defaultValue(input.enableGamPlugin, false);
+$ const enableMindfulPlugin = defaultValue(input.enableMindfulPlugin, false);
 $ const gamPluginOptions = defaultValue(input.gamPluginOptions, {});
+$ const mindfulPluginOptions = defaultValue(input.mindfulPluginOptions, {});
 
 <if(enabled && tenant)>
   <if(on)>
@@ -36,5 +38,5 @@ $ const gamPluginOptions = defaultValue(input.gamPluginOptions, {});
     </script>
     <script type="module" src=scriptSrc async defer></script>
   </else>
-  <script>p1events('init', { tenant: '${tenant}', realm: '${realm}', env: '${NODE_ENV}', debug: ${debug}, uri: '${uri}', cookieDomain: '${cookieDomain}', ${identityQueryBuilder}, enableGamPlugin: ${enableGamPlugin}, gamPluginOptions: ${JSON.stringify(gamPluginOptions)} });</script>
+  <script>p1events('init', { tenant: '${tenant}', realm: '${realm}', env: '${NODE_ENV}', debug: ${debug}, uri: '${uri}', cookieDomain: '${cookieDomain}', ${identityQueryBuilder}, enableMindfulPlugin: ${enableMindfulPlugin}, mindfulPluginOptions: ${JSON.stringify(mindfulPluginOptions)}, enableGamPlugin: ${enableGamPlugin}, gamPluginOptions: ${JSON.stringify(gamPluginOptions)} });</script>
 </if>

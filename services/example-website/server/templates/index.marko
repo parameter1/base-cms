@@ -13,11 +13,9 @@ import ns from "@parameter1/base-cms-marko-web-p1-events/utils/create-namespace"
     <marko-web-page-wrapper>
       <@section>
         <div class="ad-container ad-container--inline text-center py-5">
-          <marko-web-gam-define-display-ad
-            path="/142181607/ovd/leaderboard"
-            size=[[970,90]]
-            targeting={ pos: 'home_page|1', referrer: 'internal' }
-            collapse=false
+          <marko-web-mindful-ads-website-banner
+            namespace="parameter1/default"
+            ad-unit-id="66bfa8780e2f7fcd27993cd8"
           />
         </div>
       </@section>
@@ -82,6 +80,17 @@ import ns from "@parameter1/base-cms-marko-web-p1-events/utils/create-namespace"
         <div class="row">
           <div class="col">
             <identity-x-newsletter-form-inline type="inlineSection" />
+          </div>
+        </div>
+      </@section>
+
+      <@section>
+        <div class="row">
+          <div class="col">
+            <marko-web-mindful-ads-website-banner
+              namespace="parameter1/default"
+              ad-unit-id="66bfa8780e2f7fcd27993cd8"
+            />
           </div>
         </div>
       </@section>
