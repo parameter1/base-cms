@@ -1,9 +1,12 @@
 const gql = require('graphql-tag');
+const { get } = require('@parameter1/base-cms-object-path');
 const { withContent, withWebsiteSection } = require('@parameter1/base-cms-marko-web/middleware');
 const renderBlock = require('@parameter1/base-cms-marko-web-theme-monorail/routes/render-block');
 const search = require('@parameter1/base-cms-marko-web-theme-monorail/routes/search');
 const print = require('@parameter1/base-cms-marko-web-theme-monorail/routes/print');
 const contentMetering = require('@parameter1/base-cms-marko-web-theme-monorail/middleware/content-metering');
+const adPreview = require('@parameter1/base-cms-marko-web-theme-monorail/routes/ad-preview');
+
 const nativeX = require('./native-x');
 const contentMeteringCfg = require('../../config/content-meter');
 const { formatContentResponse } = require('../../middleware/format-content-response');
@@ -33,6 +36,8 @@ const loaderQueryFragment = gql`
 `;
 
 module.exports = (app, config) => {
+  const namespace = get(config, 'mindful.namespace');
+  adPreview(app, namespace);
   // NativeX
   nativeX(app);
 
