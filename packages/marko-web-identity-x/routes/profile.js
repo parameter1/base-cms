@@ -38,6 +38,14 @@ const customSelectFieldsMutation = gql`
   }
 `;
 
+const customTextFieldsMutation = gql`
+  mutation SetAppUserCustomTextFields($input: UpdateOwnAppUserCustomTextAnswersMutationInput!) {
+    updateOwnAppUserCustomTextAnswers(input: $input) {
+      id
+    }
+  }
+`;
+
 module.exports = asyncRoute(async (req, res) => {
   /** @type {import('../middleware').IdentityXRequest} */
   const { identityX, body } = req;
@@ -58,6 +66,7 @@ module.exports = asyncRoute(async (req, res) => {
     regionalConsentAnswers,
     customBooleanFieldAnswers,
     customSelectFieldAnswers,
+    customTextFieldAnswers,
     additionalEventData = {},
   } = body;
   const input = {
@@ -120,6 +129,23 @@ module.exports = asyncRoute(async (req, res) => {
     await identityX.client.mutate({
       mutation: customSelectFieldsMutation,
       variables: { input: { answers: customSelectFieldsInput } },
+    });
+  }
+
+  if (customTextFieldAnswers.length) {
+    // only update custom questions when there some :)
+    const customTextFieldsInput = customTextFieldAnswers.map((fieldAnswer) => ({
+      fieldId: fieldAnswer.field.id,
+      // the form submit is effectively answers the question.
+      value: fieldAnswer.value,
+    })).filter(
+      activeCustomFieldIds.length > 0
+        ? ({ fieldId }) => activeCustomFieldIds.includes(fieldId)
+        : () => true,
+    );
+    await identityX.client.mutate({
+      mutation: customTextFieldsMutation,
+      variables: { input: { answers: customTextFieldsInput } },
     });
   }
 

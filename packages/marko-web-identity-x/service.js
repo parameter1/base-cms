@@ -60,6 +60,7 @@ const IDENTITY_COOKIE_NAME = '__idx_idt';
  * @prop {RegionalConsentAnswer[]} regionalConsentAnswers
  * @prop {CustomBooleanFieldAnswer[]} customBooleanFieldAnswers
  * @prop {CustomSelectFieldAnswer[]} customSelectFieldAnswers
+ * @prop {CustomTextFieldAnswer[]} customTextFieldAnswers
  *
  * @typedef ExternalId
  * @prop {String} id
