@@ -4,7 +4,6 @@ import { logger, fetchAds } from "../utils";
 $ const {
   adUnitId,
   debug,
-  imageOptions = {},
   sizes = [],
   limit = 1,
   namespace,
@@ -20,7 +19,6 @@ $ const elementId = randomElementId({ prefix: 'mindful' });
 <marko-web-resolve|{ resolved }| promise=fetchAds({
   adUnitId,
   debug,
-  imageOptions,
   sizes,
   limit,
   namespace,
