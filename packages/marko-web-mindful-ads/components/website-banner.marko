@@ -27,7 +27,7 @@ $ const elementId = randomElementId({ prefix: 'mindful' });
   <for|creative| of=resolved.results>
     <div
       id=elementId
-      data-unit-form=resolved.unit.form
+      data-unit-form="WEBSITE_BANNER"
       data-channel-id=resolved.unit.websiteChannel._id
       data-creative-id=creative._id
       data-unit-id=resolved.unit._id
@@ -45,7 +45,7 @@ $ const elementId = randomElementId({ prefix: 'mindful' });
   <if(!resolved.results || !resolved.results.length)>
     <div
       id=elementId
-      data-unit-form=resolved.unit.form
+      data-unit-form="WEBSITE_BANNER"
       data-channel-id=resolved.unit.websiteChannel._id
       data-unit-id=resolved.unit._id
     />
