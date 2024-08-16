@@ -4,15 +4,17 @@
   ],
   "<marko-web-p1-events-init>": {
     "template": "./init.marko",
-    "@script-src": "string",
-    "@uri": "string",
-    "@identity-query-builder": "string",
-    "@on": "string",
-    "@target-tag": "string",
-    "@request-frame": "boolean",
-    "@init-only": "boolean",
     "@enable-gam-plugin": "boolean",
-    "@gam-plugin-options": "object"
+    "@enable-mindful-plugin": "boolean",
+    "@gam-plugin-options": "object",
+    "@identity-query-builder": "string",
+    "@init-only": "boolean",
+    "@mindful-plugin-options": "object",
+    "@on": "string",
+    "@request-frame": "boolean",
+    "@script-src": "string",
+    "@target-tag": "string",
+    "@uri": "string"
   },
   "<marko-web-p1-events-track-content>": {
     "template": "./track-content.marko",
