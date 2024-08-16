@@ -5,7 +5,7 @@ const renderBlock = require('@parameter1/base-cms-marko-web-theme-monorail/route
 const search = require('@parameter1/base-cms-marko-web-theme-monorail/routes/search');
 const print = require('@parameter1/base-cms-marko-web-theme-monorail/routes/print');
 const contentMetering = require('@parameter1/base-cms-marko-web-theme-monorail/middleware/content-metering');
-const mindfulPreview = require('@parameter1/base-cms-marko-web-theme-monorail/routes/mindful-preview');
+const adPreview = require('@parameter1/base-cms-marko-web-theme-monorail/routes/ad-preview');
 
 const nativeX = require('./native-x');
 const contentMeteringCfg = require('../../config/content-meter');
@@ -37,7 +37,7 @@ const loaderQueryFragment = gql`
 
 module.exports = (app, config) => {
   const namespace = get(config, 'mindful.namespace');
-  mindfulPreview(app, namespace);
+  adPreview(app, namespace);
   // NativeX
   nativeX(app);
 
