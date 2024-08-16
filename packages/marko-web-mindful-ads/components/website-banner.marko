@@ -56,31 +56,3 @@ $ const elementId = randomElementId({ prefix: 'mindful' });
     />
   </if>
 </marko-web-resolve>
-
-<!--
-website implementation
-html
-wrapper component...
-<div data-mindful-... data-mindful-element-id=uniqueElementId()>
-  $ // if empty, do nothing!
-  <a href=clickUrl target=_blank>
-    <img src=imgSrc alt=creativeName />
-  </a>
-</div>
-
-generate inline styles on div to handle show/hide based on configs
-
-<div
-  id="mindful-1723828017764-487"
-  data-unit-form="WEBSITE_BANNER"
-  data-channel-id="some-website-channel"
-  data-creative-id="5678"
-  data-unit-id="1234"
->
-  $ // if no creative found, leave div above but empty
-  <a href="https://google.com" target="_blank">
-    <img src="" />
-  </a>
-</div>
-
-if no creative found, do not append the data-mindful-creative-id= attr -->
