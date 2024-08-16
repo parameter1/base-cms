@@ -1,0 +1,25 @@
+{
+  "<marko-web-mindful-ads-website-banner>": {
+    "template": "./website-banner.marko",
+    "@ad-unit-id": {
+      "type": "string",
+      "required": true
+    },
+    "@limit": {
+      "type": "number",
+      "default-value": 1
+    },
+    "@namespace": {
+      "type": "string",
+      "required": true
+    },
+    "@sizes": {
+      "type": "array",
+      "default-value": []
+    },
+    "@debug": {
+      "type": "boolean",
+      "default-value": false
+    }
+  }
+}
