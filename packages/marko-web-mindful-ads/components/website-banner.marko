@@ -11,9 +11,6 @@ $ const {
 $ const log = logger(debug);
 
 $ if (debug) log('website-banner-fetch input', input);
-$ if (!namespace) throw new Error('Mindful namespace must be supplied.');
-$ if (!adUnitId) throw new Error('Mindful ad unit id must be supplied.');
-
 $ const elementId = randomElementId({ prefix: 'mindful' });
 
 <marko-web-resolve|{ resolved }| promise=fetchAds({

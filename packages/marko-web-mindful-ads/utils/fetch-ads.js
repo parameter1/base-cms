@@ -15,6 +15,8 @@ module.exports = async ({
   sizes = [],
   namespace,
 } = {}) => {
+  if (!namespace) throw new Error('Mindful namespace must be supplied.');
+  if (!adUnitId) throw new Error('Mindful ad unit id must be supplied.');
   const log = logger(debug);
   log({
     adUnitId,
