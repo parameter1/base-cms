@@ -25,7 +25,7 @@ function arguments() {
 [[ -d $COMPOSEDIR ]] || compose
 
 echo -e "\nStarting dev environment for $1\n"
-docker-compose \
+docker compose \
   run \
     --rm \
     --service-ports \
