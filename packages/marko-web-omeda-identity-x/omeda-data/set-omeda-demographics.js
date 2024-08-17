@@ -13,6 +13,12 @@ const SET_OMEDA_BOOLEAN_FIELD_ANSWERS = gql`
   }
 `;
 
+const SET_OMEDA_TEXT_FIELD_ANSWERS = gql`
+  mutation SetOmedaTextFieldAnswers($input: UpdateAppUserCustomTextAnswersMutationInput!) {
+    updateAppUserCustomTextAnswers(input: $input) { id }
+  }
+`;
+
 /**
  * Sets IdentityX custom select answers based on the Omeda customer's demographics
  */
@@ -25,7 +31,16 @@ module.exports = async ({
   const answeredQuestionMap = getAnsweredQuestionMap(user);
 
   const omedaCustomerDemoValuesMap = omedaCustomer.demographics
-    .reduce((map, { demographic, value, writeInDesc }) => {
+    .reduce((map, {
+      demographic,
+      value,
+      valueText,
+      writeInDesc,
+    }) => {
+      if (valueText) {
+        map.set(`${demographic.id}`, { valueText });
+        return map;
+      }
       if (!value || !value.id) return map; // skip demos without value IDs
       const id = `${demographic.id}`;
       const ids = map.has(id) ? map.get(id).ids : new Set();
@@ -36,12 +51,17 @@ module.exports = async ({
 
   const booleanAnswerMap = new Map();
   const selectAnswerMap = new Map();
+  const textAnswerMap = new Map();
   fields.forEach((field) => {
     if (answeredQuestionMap.has(field.id)) return;
     const { value: demoId } = field.externalId.identifier;
     if (!omedaCustomerDemoValuesMap.has(demoId)) return;
     const value = omedaCustomerDemoValuesMap.get(demoId);
-    const { ids: valueIdSet, writeInDesc } = value;
+    const { ids: valueIdSet, valueText, writeInDesc } = value;
+
+    if (field.type === 'text' && valueText) {
+      textAnswerMap.set(field.id, valueText);
+    }
 
     if (field.type === 'select') {
       field.options.forEach((option) => {
@@ -97,6 +117,19 @@ module.exports = async ({
     });
     await identityX.client.mutate({
       mutation: SET_OMEDA_BOOLEAN_FIELD_ANSWERS,
+      variables: { input: { id: user.id, answers } },
+      context: { apiToken: identityX.config.getApiToken() },
+    });
+  })();
+
+  await (async () => {
+    if (!textAnswerMap.size) return;
+    const answers = [];
+    textAnswerMap.forEach((value, fieldId) => {
+      answers.push({ fieldId, value });
+    });
+    await identityX.client.mutate({
+      mutation: SET_OMEDA_TEXT_FIELD_ANSWERS,
       variables: { input: { id: user.id, answers } },
       context: { apiToken: identityX.config.getApiToken() },
     });
