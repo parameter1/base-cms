@@ -11,5 +11,9 @@ module.exports = (user) => {
     if (!boolean.hasAnswered) return;
     answeredQuestionMap.set(boolean.field.id, true);
   });
+  user.customTextFieldAnswers.forEach((field) => {
+    if (!field.hasAnswered) return;
+    answeredQuestionMap.set(field.field.id, true);
+  });
   return answeredQuestionMap;
 };
