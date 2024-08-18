@@ -11,7 +11,7 @@ $ const {
 $ const log = logger(debug);
 
 $ if (debug) log('website-banner-fetch input', input);
-$ const elementId = randomElementId({ prefix: 'mindful' });
+$ const createElementId = () => randomElementId({ prefix: 'mindful' });
 
 <marko-web-resolve|{ resolved }| promise=fetchAds({
   adUnitId,
@@ -26,7 +26,7 @@ $ const elementId = randomElementId({ prefix: 'mindful' });
   $ /** @type {import("../utils/fetch-ads").MindfulWebsiteBannerCreative} **/
   <for|creative| of=resolved.results>
     <div
-      id=elementId
+      id=createElementId()
       data-unit-form="WEBSITE_BANNER"
       data-channel-id=resolved.unit.websiteChannel._id
       data-creative-id=creative._id
@@ -44,7 +44,7 @@ $ const elementId = randomElementId({ prefix: 'mindful' });
   </for>
   <if(!resolved.results || !resolved.results.length)>
     <div
-      id=elementId
+      id=createElementId()
       data-unit-form="WEBSITE_BANNER"
       data-channel-id=resolved.unit.websiteChannel._id
       data-unit-id=resolved.unit._id
