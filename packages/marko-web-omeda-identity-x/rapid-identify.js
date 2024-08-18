@@ -85,6 +85,18 @@ module.exports = async ({
     };
   });
 
+  getAsArray(appUser, 'customTextFieldAnswers').forEach((text) => {
+    const { field, hasAnswered } = text;
+    const { externalId } = field;
+    if (!field.active || !externalId || !hasAnswered) return;
+
+    const { identifier } = field.externalId;
+    const id = parseInt(identifier.value, 10);
+    if (isOmedaDemographicId({ externalId, brandKey })) {
+      demographics.push({ id, values: [`${text.value}`] });
+    }
+  });
+
   const subscriptions = [];
   getAsArray(appUser, 'customBooleanFieldAnswers').forEach((boolean) => {
     const { field, hasAnswered } = boolean;

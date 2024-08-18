@@ -25,6 +25,7 @@ const query = gql`
       demographics {
         demographic { id description }
         value { id description }
+        valueText
         writeInDesc
       }
       primaryEmailAddress {
