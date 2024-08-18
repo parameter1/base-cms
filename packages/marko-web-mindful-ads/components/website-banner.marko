@@ -11,7 +11,6 @@ $ const {
 $ const log = logger(debug);
 
 $ if (debug) log('website-banner-fetch input', input);
-$ const createElementId = () => randomElementId({ prefix: 'mindful' });
 
 <marko-web-resolve|{ resolved }| promise=fetchAds({
   adUnitId,
@@ -23,31 +22,11 @@ $ const createElementId = () => randomElementId({ prefix: 'mindful' });
   <if(resolved.error && process.env.NODE_ENV === 'development')>
     $ throw resolved.error;
   </if>
-  $ /** @type {import("../utils/fetch-ads").MindfulWebsiteBannerCreative} **/
-  <for|creative| of=resolved.results>
-    <div
-      id=createElementId()
-      data-unit-form="WEBSITE_BANNER"
-      data-channel-id=resolved.unit.websiteChannel._id
-      data-creative-id=creative._id
-      data-unit-id=resolved.unit._id
-    >
-      <if(input.renderBody)>
-        <${input.renderBody} unit=resolved.unit creative=creative />
-      </if>
-      <else>
-        <a href=creative.clickUrl target="_blank">
-          <img src=creative.src alt=creative.name />
-        </a>
-      </else>
-    </div>
-  </for>
-  <if(!resolved.results || !resolved.results.length)>
-    <div
-      id=createElementId()
-      data-unit-form="WEBSITE_BANNER"
-      data-channel-id=resolved.unit.websiteChannel._id
-      data-unit-id=resolved.unit._id
+  <else>
+    <marko-web-mindful-ads-render
+      debug=debug
+      results=resolved.results
+      unit=resolved.unit
     />
-  </if>
+  </else>
 </marko-web-resolve>

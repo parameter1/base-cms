@@ -1,0 +1,31 @@
+import { randomElementId } from "@parameter1/base-cms-utils";
+import { logger } from "../utils";
+
+$ const { debug, results, unit } = input;
+$ const log = logger(debug);
+
+$ if (debug) log('render input', input);
+$ const createElementId = () => randomElementId({ prefix: 'mindful' });
+
+$ /** @type {import("../utils/fetch-ads").MindfulWebsiteBannerCreative} **/
+<for|creative| of=results>
+  <div
+    id=createElementId()
+    data-unit-form="WEBSITE_BANNER"
+    data-channel-id=unit.websiteChannel._id
+    data-creative-id=creative._id
+    data-unit-id=unit._id
+  >
+    <a href=creative.clickUrl target="_blank">
+      <img src=creative.src alt=creative.name />
+    </a>
+  </div>
+</for>
+<if(!results || !results.length)>
+  <div
+    id=createElementId()
+    data-unit-form="WEBSITE_BANNER"
+    data-channel-id=unit.websiteChannel._id
+    data-unit-id=unit._id
+  />
+</if>
