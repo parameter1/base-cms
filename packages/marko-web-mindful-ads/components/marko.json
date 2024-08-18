@@ -1,4 +1,19 @@
 {
+  "<marko-web-mindful-ads-render>": {
+    "template": "./render.marko",
+    "@debug": {
+      "type": "boolean",
+      "default-value": false
+    },
+    "@results": {
+      "type": "array",
+      "default-value": []
+    },
+    "@unit": {
+      "type": "object",
+      "required": "true"
+    }
+  },
   "<marko-web-mindful-ads-website-banner>": {
     "template": "./website-banner.marko",
     "@ad-unit-id": {
