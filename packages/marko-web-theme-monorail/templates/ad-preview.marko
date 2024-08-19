@@ -132,6 +132,29 @@ $ const title = `${get(creative, 'companyEdge.node.name.default')}'s ad preview`
                 <@slot|{ node, index }|>
                   <theme-content-node
                     node=node
+                    with-teaser=false
+                    image-position="top"
+                    card=true
+                    flush=true
+                    modifiers=["section-tag"]
+                  >
+                    <@image fluid=true width=330 ar="3:2" />
+                  </theme-content-node>
+                </@slot>
+              </theme-card-deck-flow>
+
+              <hr>
+              <div class="node-list node-list--latest-content-list node-list--flush-x">
+                <div class="node-list__header">Preview #4</div>
+              </div>
+              <theme-card-deck-flow
+                cols=3
+                nodes=[creativeNode]
+              >
+                <@slot|{ node, index }|>
+                  <theme-content-node
+                    node=node
+                    with-teaser=true
                     image-position="top"
                     card=true
                     flush=true
