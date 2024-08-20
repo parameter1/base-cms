@@ -1,5 +1,6 @@
-$ const { get } = require('@parameter1/base-cms-object-path');
-$ const converter = require('../utils/convert-mindful-ad-preview');
+import { get } from "@parameter1/base-cms-object-path";
+import converter from "../utils/convert-mindful-ad-preview";
+
 $ const { creativeId, namespace } = input;
 <theme-ad-preview-layout
   creative-id=creativeId
@@ -11,7 +12,7 @@ $ const { creativeId, namespace } = input;
       <div class="node-list node-list--latest-content-list node-list--flush-x">
         <div class="node-list__header">Preview #1</div>
       </div>
-      <theme-section-feed-flow nodes=[creativeNode] header="Standard Setion Feed List Flow">
+      <theme-section-feed-flow nodes=[creativeNode]>
         <@node-list inner-justified=false />
         <@node with-dates=false with-section/>
       </theme-section-feed-flow>

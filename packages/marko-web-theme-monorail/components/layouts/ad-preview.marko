@@ -1,8 +1,9 @@
-$ const { log } = console;
-$ const { get, getAsObject, getAsArray } = require('@parameter1/base-cms-object-path');
-$ const fetch = require('node-fetch');
-$ const fs = require('fs');
-$ const now = new Date();
+import fetch from "node-fetch";
+import { get, getAsObject, getAsArray } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { site, i18n } = out.global;
+$ const graphURl = defaultValue("site.mindful.graphURL", "https://graphql.mindfulcms.com/query");
 
 $ const sections = getAsArray(input, "sections");
 $ const { creativeId, namespace = "parameter1/default" } = input;
