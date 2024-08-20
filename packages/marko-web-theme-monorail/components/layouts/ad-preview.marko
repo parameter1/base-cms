@@ -1,0 +1,84 @@
+import fetch from "node-fetch";
+import { get, getAsObject, getAsArray } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+
+$ const { site, i18n } = out.global;
+$ const graphURl = defaultValue("site.mindful.graphURL", "https://graphql.mindfulcms.com/query");
+
+$ const sections = getAsArray(input, "sections");
+$ const { creativeId, namespace = "parameter1/default" } = input;
+
+$ async function batchQuery({
+  graphURL,
+  creativeId,
+  namespace
+}) {
+  const query = `
+  query {
+    advertisingCreativeInterfaceById(_id: "${creativeId}") {
+      _id
+      _form {
+        label
+      }
+      url
+      name {
+        default
+      }
+      companyEdge {
+        _id
+        node {
+          name {
+            default
+          }
+        }
+      }
+      ... on NativeWebsiteAdvertisingCreative {
+        teaser
+      }
+      clickUrl
+      imageEdge {
+        node {
+          _id
+          src {
+            url
+          }
+        }
+      }
+    }
+  }
+`;
+  const results = await fetch(graphURL, {
+    body: JSON.stringify({ query }),
+    headers: { 'content-type': 'application/json', 'X-Namespace': namespace },
+    method: 'POST',
+  });
+  const res = await results.json();
+  const { data } = res;
+  return data;
+};
+
+
+<marko-web-resolve|{ resolved }| promise=batchQuery({graphURL: 'https://graphql.mindfulcms.com/query', creativeId, namespace})>
+  $ const creative = getAsObject(resolved, 'advertisingCreativeInterfaceById');
+  $ const title = `${get(creative, 'companyEdge.node.name.default')}'s ad preview` ;
+  <marko-web-default-page-layout type="Mindful Ad Preview" title=title>
+    <@head>
+      <${input.head} />
+    </@head>
+    <@page>
+      <marko-web-page-wrapper>
+        <@section>
+          <h1>${title}</h1>
+        </@section>
+        <for|s| of=sections>
+          <@section|{ blockName }| modifiers=s.modifiers>
+            <${s.renderBody}
+              block-name=blockName
+              creative=creative
+            />
+          </@section>
+        </for>
+      </marko-web-page-wrapper>
+    </@page>
+  </marko-web-default-page-layout>
+</marko-web-resolve>

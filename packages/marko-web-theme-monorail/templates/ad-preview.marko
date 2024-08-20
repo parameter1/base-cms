@@ -1,153 +1,79 @@
-$ const { req, GAM } = out.global;
-$ const now = new Date();
-$ const { creativeId, namespace = "parameter1/default" } = input;
-$ const fetch = require('node-fetch');
-$ const fs = require('fs');
-$ const { get, getAsObject } = require('@parameter1/base-cms-object-path');
+import { get } from "@parameter1/base-cms-object-path";
+import converter from "../utils/convert-mindful-ad-preview";
 
-$ const converter = (creative) => {
-  const { _id, url } = creative;
-  return {
-    id: _id,
-    name: get(creative, 'name.default'),
-    // linkText: creative.linkText,
-    shortName: get(creative, 'name.default'),
-    typeTitled: 'Mindful',
-    type: 'mindful',
-    teaser: get(creative, 'teaser'),
-    published: now,
-    siteContext: {
-      path: url,
-      canonicalUrl: url,
-      url,
-    },
-    primaryImage: {
-      id: get(creative, 'imageEdge.node.id'),
-      src: get(creative, 'imageEdge.node.src.url'),
-    },
-    primarySection: {
-      name: 'Sponsored',
-      fullName: 'Sponsored',
-    },
-    company: {
-      id: get(creative, 'companyEdge.node.id'),
-      name: get(creative, 'companyEdge.node.name.default'),
-    },
-  }
-}
+$ const { creativeId, namespace } = input;
+<theme-ad-preview-layout
+  creative-id=creativeId
+  namespace=namespace
+>
+  <@section|{creative}| >
+    $ const creativeNode = converter(creative);
+    <if(creative && get(creative, '_form.label') === 'Native Website')>
+      <div class="node-list node-list--latest-content-list node-list--flush-x">
+        <div class="node-list__header">Preview #1</div>
+      </div>
+      <theme-section-feed-flow nodes=[creativeNode]>
+        <@node-list inner-justified=false />
+        <@node with-dates=false with-section/>
+      </theme-section-feed-flow>
+      <hr>
+    </if>
+  </@section>
 
-$ const { log } = console;
-$ async function batchQuery({
-  graphURL,
-  creativeId,
-  namespace
-}) {
-  const query = `
-  query {
-    advertisingCreativeInterfaceById(_id: "${creativeId}") {
-      _id
-      _form {
-        label
-      }
-      url
-      name {
-        default
-      }
-      companyEdge {
-        _id
-        node {
-          name {
-            default
-          }
-        }
-      }
-      ... on NativeWebsiteAdvertisingCreative {
-        teaser
-      }
-      clickUrl
-      imageEdge {
-        node {
-          _id
-          src {
-            url
-          }
-        }
-      }
-    }
-  }
-`;
-  const results = await fetch(graphURL, {
-    body: JSON.stringify({ query }),
-    headers: { 'content-type': 'application/json', 'X-Namespace': namespace },
-    method: 'POST',
-  });
-  const res = await results.json();
-  const { data } = res;
-  return data;
-};
+  <@section|{creative}| >
+    $ const creativeNode = converter(creative);
+    <if(creative && get(creative, '_form.label') === 'Native Website')>
+      <div class="row">
+        <div class="col-lg-4" >
+          <theme-latest-content-list-block
+            title="Preview #2"
+            alias="home"
+            nodes=[creativeNode]
+          />
+        </div>
+      </div>
+      <hr>
+    </if>
+  </@section>
 
-$ const type = "preview";
-$ const title = `Customer Preview - ${creativeId}` ;
-
-<marko-web-default-page-layout type=type title=title>
-  <@page>
-    <marko-web-page-wrapper>
-      <@section>
-        <h1>${title}</h1>
-      </@section>
-      <@section>
-      <marko-web-resolve|{ resolved }| promise=batchQuery({graphURL: 'https://graphql.mindfulcms.com/query', creativeId, namespace})>
-        $ const creative = getAsObject(resolved, 'advertisingCreativeInterfaceById');
-        <if(creative)>
-          $ const creativeNode = converter(creative);
-          <if(get(creative, '_form.label') === 'Native Website')>
-
-            <div class="node-list node-list--latest-content-list node-list--flush-x">
-              <div class="node-list__header">List/Section Feed Preview</div>
-            </div>
-            <theme-section-feed-flow nodes=[creativeNode] header="Standard Setion Feed List Flow">
-              <@node-list inner-justified=false />
-              <@node with-dates=false with-section/>
-            </theme-section-feed-flow>
-
-            <hr>
-            <div class="row">
-              <div class="col-lg-4" >
-                <theme-latest-content-list-block
-                  title="Related Content Preview"
-                  alias="home"
-                  nodes=[creativeNode]
-                />
-              </div>
-            </div>
-
-            <hr>
-            <div class="node-list node-list--latest-content-list node-list--flush-x">
-              <div class="node-list__header">Loadmore/Section Feed Preview</div>
-            </div>
-            <theme-card-deck-flow
-              cols=3
-              nodes=[creativeNode]
+  <@section|{creative}| >
+    $ const creativeNode = converter(creative);
+    <if(creative && get(creative, '_form.label') === 'Native Website')>
+      <div class="node-list node-list--latest-content-list node-list--flush-x">
+        <div class="node-list__header">Preview #3<span class="small">(with/without teaser)</span></div>
+      </div>
+      <theme-card-deck-flow
+        cols=3
+        nodes=[creativeNode, creativeNode]
+      >
+        <@slot|{ node, index }|>
+          <if(index === 0)>
+            <theme-content-node
+              node=node
+              with-teaser=true
+              image-position="top"
+              card=true
+              flush=true
+              modifiers=["section-tag"]
             >
-              <@slot|{ node, index }|>
-                <theme-content-node
-                  node=node
-                  image-position="top"
-                  card=true
-                  flush=true
-                  modifiers=["section-tag"]
-                >
-                  <@image fluid=true width=330 ar="3:2" />
-                </theme-content-node>
-              </@slot>
-            </theme-card-deck-flow>
+              <@image fluid=true width=330 ar="3:2" />
+            </theme-content-node>
           </if>
-          <else-if(get(creative, '_form.label') === 'Native Email')>
+          <else>
+            <theme-content-node
+              node=node
+              with-teaser=false
+              image-position="top"
+              card=true
+              flush=true
+              modifiers=["section-tag"]
+            >
+              <@image fluid=true width=330 ar="3:2" />
+            </theme-content-node>
+          </else>
+        </@slot>
+      </theme-card-deck-flow>
+    </if>
+  </@section>
 
-          </else-if>
-        </if>
-      </marko-web-resolve>
-      </@section>
-    </marko-web-page-wrapper>
-  </@page>
-</marko-web-default-page-layout>
+</theme-ad-preview-layout>

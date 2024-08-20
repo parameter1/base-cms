@@ -10,6 +10,7 @@
     "./flows/marko.json",
     "./gam/marko.json",
     "./identity-x/marko.json",
+    "./layouts/marko.json",
     "./native-x/marko.json",
     "./nodes/marko.json",
     "./page/marko.json",
