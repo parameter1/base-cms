@@ -1,0 +1,15 @@
+{
+  "<theme-ad-preview-layout>": {
+    "template": "./ad-preview.marko",
+    "<head>": {},
+    "@creative-id" : {
+      "type": "Strin",
+      "required": true
+    },
+    "@namespace" : {
+      "type": "Strin",
+      "required": true
+    },
+    "@sections <section>[]": {}
+  }
+}
