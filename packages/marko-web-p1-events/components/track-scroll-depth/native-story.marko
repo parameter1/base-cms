@@ -8,8 +8,36 @@ $ const {
 } = input;
 $ const config = site.getAsObject("p1events");
 $ const nxConfig = site.get("nativeX");
+$ const mindfulConfig = site.getAsObject("mindful");
 
-<if(config.enabled && nxConfig && nxConfig.enabled && story)>
+<if(config.enabled && mindfulConfig && mindfulConfig.adsEnabled && story)>
+  $ const { advertiser } = story;
+  $ const entity = {
+    id: story.id,
+    ns: `mindful.${mindfulConfig.namespace}.advertising-post`,
+    name: story.title,
+    props: { type: "advertising-post", published: get(story, "publishedAt") },
+    ...(advertiser && advertiser.id && {
+      refs: {
+        advertiser: {
+          id: advertiser.id,
+          ns: `mindful.${mindfulConfig.namespace}.advertising-company`,
+          name: advertiser.name
+        }
+      }
+    }),
+  }
+  <marko-web-browser-component
+    name="P1EventsTrackScrollDepth"
+    props={
+      entity,
+      category: 'Content',
+      selector,
+      targetScrollDepths,
+    }
+  />
+</if>
+<else-if(config.enabled && nxConfig && nxConfig.enabled && story)>
   $ const { advertiser } = story;
   $ const entity = {
     id: story.id,
@@ -29,4 +57,4 @@ $ const nxConfig = site.get("nativeX");
       targetScrollDepths,
     }
   />
-</if>
+</else-if>
