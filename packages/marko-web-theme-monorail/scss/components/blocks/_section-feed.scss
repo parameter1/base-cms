@@ -2,6 +2,9 @@
   $self: &;
 
   $image-size: 112px;
+  $image-width: $image-size;
+  $image-height: $image-size;
+
   $image-desktop-width: 250px;
   $image-desktop-height: 167px;
 
@@ -30,9 +33,9 @@
   }
 
   &__image-wrapper {
-    width: $image-size;
-    min-width: $image-size;
-    height: $image-size;
+    width: $image-width;
+    min-width: $image-width;
+    height: $image-height;
     margin-left: 15px;
     @include media-breakpoint-up(md) {
       width: $image-desktop-width;
@@ -44,8 +47,8 @@
   }
 
   &__image {
-    width: $image-size;
-    height: $image-size;
+    width: $image-width;
+    height: $image-height;
     object-fit: cover;
     object-position: left;
     border: 1px solid rgba(239, 239, 239, .9);
