@@ -1,12 +1,22 @@
 .section-feed-content-node {
   $self: &;
 
-  $image-size: 112px;
-  $image-width: $image-size;
-  $image-height: $image-size;
+  @function ab($a, $b: null) {
+    @if $b != null {
+        @return $b;
+    }
+    @return $a;
+  }
+
+  $image-size: 112px ;
+  $image-mobile-width: null !default;
+  $image-mobile-height: null !default;
+  $image-width: ab($image-size, $image-mobile-width);
+  $image-height: ab($image-size, $image-mobile-height);
 
   $image-desktop-width: 250px;
   $image-desktop-height: 167px;
+
 
   display: flex;
   width: 100%;
@@ -219,6 +229,24 @@
       &__node {
         padding-top: .5rem;
         padding-bottom: 0;
+      }
+    }
+  }
+  //@todo this should also be dependend on the image width/height differing from 112
+  @include media-breakpoint-down(sm) {
+    &--section-feed-mobile-cards {
+      .section-feed-content-node {
+        &:first-child {
+          border-top: none;
+        }
+        flex-direction: column-reverse;
+        .section-feed-content-node__image-wrapper {
+          margin-left: 0;
+          margin-bottom: map-get($spacers, block);
+        }
+        .section-feed-content-node__content-teaser {
+          display: initial;
+        }
       }
     }
   }
