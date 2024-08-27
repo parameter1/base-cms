@@ -241,14 +241,14 @@ $ const blockName = "section-feed-content-node";
       $ const link = linkField && get(content, linkField) ? get(content, linkField) : get(content, "siteContext.path");
       <marko-web-picture>
         <@link href=link target=linkTarget attrs=linkAttrs />
-        <@source srcset=srcset media="(min-width: 768px)" width=250 height=167 />
+        <@source srcset=srcset media="(min-width: 768px)" width=imageOptions.w height=imageOptions.h />
         <@image
           src=srcMobile
           srcset=srcsetMobile
           class=[`${blockName}__image`]
           alt=primaryImage.alt
           lazyload=lazyload
-          attrs={ width: "112", height: "112" }
+          attrs={ width: mobileImageOptions.w, height: mobileImageOptions.h }
         />
       </marko-web-picture>
     </marko-web-element>
