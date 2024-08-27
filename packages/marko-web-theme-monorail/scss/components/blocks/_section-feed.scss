@@ -14,8 +14,8 @@
   $image-width: ab($image-size, $image-mobile-width);
   $image-height: ab($image-size, $image-mobile-height);
 
-  $image-desktop-width: 250px;
-  $image-desktop-height: 167px;
+  $image-desktop-width: 250px !default;
+  $image-desktop-height: 167px !default;
 
 
   display: flex;
