@@ -51,7 +51,7 @@ $ const blockName = "related-stories";
             modifiers=[blockName]
             ...(withNativeX && { nativeX })
           >
-            <@node modifiers=[blockName] />
+            <@node modifiers=[blockName] ...input.node />
           </theme-content-card-deck-col-flow>
         </marko-web-block>
       </if>
@@ -67,7 +67,7 @@ $ const blockName = "related-stories";
         modifiers=[blockName]
         ...(withNativeX && { nativeX })
       >
-        <@node modifiers=[blockName] />
+        <@node modifiers=[blockName] ...input.node />
       </theme-content-card-deck-col-flow>
     </marko-web-block>
   </else>
