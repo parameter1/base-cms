@@ -11,7 +11,11 @@ $ const { document } = out.global;
 
 <${document} ...rest>
   <@head>
-    <marko-web-content-page-metadata id=id />
+    <marko-web-content-page-metadata
+      id=id
+      structured-data-query-fragment=input.structuredDataQueryFragment
+      build-structured-data=input.buildStructuredData
+    />
     <${head} />
   </@head>
   <!-- Note: camelcased vars due to nest input of dynamic document. perhaps a marko bug -->
