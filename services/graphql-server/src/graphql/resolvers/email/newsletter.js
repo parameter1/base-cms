@@ -16,17 +16,13 @@ module.exports = {
     updateEmailNewsletterProvider: async (_, { input }, { base4rest, basedb }) => {
       validateRest(base4rest);
       const type = 'email/product/newsletter';
-      const {
-        id,
-        type: providerType,
-        providerId,
-        attributes,
-      } = input;
+      const { id, type: providerType, providerId } = input;
 
       const product = await basedb.strictFindById('platform.Product', id, { projection: { provider: 1 } });
+      const attributesFromInput = getAsObject(input, 'attributes');
       const existingAttributes = getAsObject(product, 'provider.attributes');
-      const mergedAttributes = { ...existingAttributes, ...attributes };
-      Object.entries(attributes).forEach(([key, value]) => {
+      const mergedAttributes = { ...existingAttributes, ...attributesFromInput };
+      Object.entries(attributesFromInput).forEach(([key, value]) => {
         if (value === null) delete mergedAttributes[key];
       });
 
