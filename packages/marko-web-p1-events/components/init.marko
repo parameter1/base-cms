@@ -7,7 +7,7 @@ $ const { NODE_ENV, DEBUG } = process.env;
 $ const debug = `${DEBUG}`.includes('p1events');
 
 $ const { on } = input;
-$ const scriptSrc = defaultValue(input.scriptSrc, "https://cdn.parameter1.com/p1-events/v1.4.1/lib.min.js");
+$ const scriptSrc = defaultValue(input.scriptSrc, "https://cdn.parameter1.com/p1-events/v1.4.3/lib.min.js");
 $ const uri = defaultValue(input.uri, "https://db0y8smio0.execute-api.us-east-2.amazonaws.com/default/p1-website-events-enqueue");
 $ const identityQueryBuilder = `identityQueryBuilder: function(query, cookies) { ${input.identityQueryBuilder ? input.identityQueryBuilder.split("\n").map((l) => l.trim()).join(" ") : ""} }`;
 $ const enableGamPlugin = defaultValue(input.enableGamPlugin, false);
