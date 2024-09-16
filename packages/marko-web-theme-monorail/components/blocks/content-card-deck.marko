@@ -6,6 +6,7 @@ import sectionFragment from "../../graphql/fragments/section-info";
 $ const { i18n } = out.global;
 
 $ const viewMore = defaultValue(input.viewMore, true);
+$ const viewMoreText = defaultValue(input.viewMoreText, "View More");
 $ const withNativeX = defaultValue(input.withNativeX, false);
 $ const queryName = defaultValue(input.queryName, "website-scheduled-content");
 $ const nativeX = {
@@ -57,7 +58,7 @@ $ const link = getAsObject(input, "link");
           <if(viewMore && section && section.canonicalPath)>
             <marko-web-element block-name=blockName name="view-more">
               <marko-web-link href=section.canonicalPath>
-                ${i18n("View more")} &raquo;
+                ${i18n(viewMoreText)} &raquo;
               </marko-web-link>
             </marko-web-element>
           </if>

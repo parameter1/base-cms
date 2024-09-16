@@ -20,6 +20,7 @@
     "@section": "object",
     "@title": "string",
     "@view-more": "boolean",
+    "@view-more-text": "string",
     "@with-native-x": "boolean",
     "<link>": {},
     "<native-x>": {
