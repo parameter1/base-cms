@@ -78,7 +78,7 @@ $ const link = getAsObject(input, "link");
     <if(viewMore && section && section.canonicalPath)>
       <marko-web-element block-name=blockName name="view-more-bottom">
         <marko-web-link href=section.canonicalPath>
-          ${i18n("View more")} &raquo;
+          ${i18n(viewMoreText)} &raquo;
         </marko-web-link>
       </marko-web-element>
     </if>
@@ -113,7 +113,7 @@ $ const link = getAsObject(input, "link");
             <if(viewMore && section && section.canonicalPath)>
               <marko-web-element block-name=blockName name="view-more">
                 <marko-web-link href=section.canonicalPath>
-                  ${i18n("View more")} &raquo;
+                  ${i18n(viewMoreText)} &raquo;
                 </marko-web-link>
               </marko-web-element>
             </if>
@@ -133,7 +133,7 @@ $ const link = getAsObject(input, "link");
       <if(viewMore && section && section.canonicalPath)>
         <marko-web-element block-name=blockName name="view-more-bottom">
           <marko-web-link href=section.canonicalPath>
-            ${i18n("View more")} &raquo;
+            ${i18n(viewMoreText)} &raquo;
           </marko-web-link>
         </marko-web-element>
       </if>
