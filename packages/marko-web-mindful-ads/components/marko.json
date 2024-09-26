@@ -20,6 +20,10 @@
       "type": "string",
       "required": true
     },
+    "@advertiser-ids": {
+      "type": "array",
+      "default-value": []
+    },
     "@limit": {
       "type": "number",
       "default-value": 1
