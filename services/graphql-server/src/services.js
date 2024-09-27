@@ -1,6 +1,7 @@
 const { filterDsn } = require('@parameter1/base-cms-db/utils');
 const basedb = require('./basedb')('test');
 const redis = require('./redis');
+const gqlOpLogger = require('./graphql/operation-logger');
 const { log } = require('./output');
 const pkg = require('../package.json');
 
@@ -34,10 +35,12 @@ module.exports = {
   start: () => Promise.all([
     start('BaseDB', basedb.client.connect(), filterDsn),
     start('Redis', redisConnect),
+    gqlOpLogger.enabled ? start('GraphQL Request Logger', gqlOpLogger.connect()) : Promise.resolve(),
   ]),
   stop: () => Promise.all([
     stop('BaseDB', basedb.client.close()),
     stop('Redis', redis.quit()),
+    gqlOpLogger.enabled ? start('GraphQL Request Logger', gqlOpLogger.close()) : Promise.resolve(),
   ]),
   ping: async () => {
     const collection = await basedb.client.collection('platform', 'pings');
