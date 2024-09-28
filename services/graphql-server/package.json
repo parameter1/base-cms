@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-graphql-server",
-  "version": "4.65.3",
+  "version": "4.67.0",
   "description": "The BaseCMS GraphQL server using Apollo and Express.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
@@ -16,8 +16,8 @@
     "@godaddy/terminus": "^4.11.2",
     "@parameter1/base-cms-async": "^4.5.12",
     "@parameter1/base-cms-base4-rest-api": "^4.40.3",
-    "@parameter1/base-cms-canonical-path": "^4.40.3",
-    "@parameter1/base-cms-db": "^4.40.3",
+    "@parameter1/base-cms-canonical-path": "^4.67.0",
+    "@parameter1/base-cms-db": "^4.67.0",
     "@parameter1/base-cms-embedded-media": "^4.47.1",
     "@parameter1/base-cms-html": "^4.5.12",
     "@parameter1/base-cms-image": "^4.47.1",

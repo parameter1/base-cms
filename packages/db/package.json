@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-db",
-  "version": "4.40.3",
+  "version": "4.67.0",
   "description": "The BaseCMS database driver. Requires direct MongoDB access.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
