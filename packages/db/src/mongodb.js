@@ -15,6 +15,7 @@ class Client {
    *
    * @param {string} name
    * @param {object} [options]
+   * @returns {Promise<Db>}
    */
   async db(name, options) {
     const client = await this.connect();
@@ -27,6 +28,7 @@ class Client {
    * @param {string} name
    * @param {object} [options]
    * @param {function} [cb]
+   * @returns {Promise<Collection>}
    */
   async collection(dbName, name, options, cb) {
     const db = await this.db(dbName);
@@ -65,7 +67,7 @@ class Client {
   }
 
   /**
-   *
+   * @returns {Promise<CoreMongoClient>}
    */
   async connect() {
     if (!this.promise) {
@@ -75,6 +77,12 @@ class Client {
     return client;
   }
 }
+
+/**
+ * @typedef {import("mongodb/lib/db")} Db
+ * @typedef {import("mongodb/lib/collection")} Collection
+ * @typedef {import("mongodb/lib/mongo_client")} CoreMongoClient
+ */
 
 module.exports = {
   Client,

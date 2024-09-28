@@ -101,6 +101,7 @@ services:
     entrypoint: ["/base-cms/node_modules/.bin/gulp"]
     environment:
       <<: [*env, *env-mongo, *env-newrelic]
+      MONGO_URL_GRAPHQL_LOGGING: ${MONGO_URL_GRAPHQL_LOGGING-}
       REDIS_CACHE_DSN: ${REDIS_CACHE_DSN-redis://redis}
       GRAPHQL_CACHE_CONTROL_ENABLED: ${GRAPHQL_CACHE_CONTROL_ENABLED-false}
       GRAPHQL_DEBUG_ENABLED: ${GRAPHQL_DEBUG_ENABLED-false}
@@ -130,6 +131,7 @@ services:
       <<: [*env, *env-newrelic]
       GRAPHQL_PLAYGROUND_ENABLED: 1
       MONGO_DSN: ${MONGO_DSN_LEONIS-mongodb://mongodb:27017}
+      MONGO_URL_GRAPHQL_LOGGING: ${MONGO_URL_GRAPHQL_LOGGING-}
       REDIS_CACHE_DSN: ${REDIS_CACHE_DSN_LEONIS-redis://redis}
       ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
       BASE4_REST_USERNAME: ${BASE4_REST_USERNAME-}
@@ -153,6 +155,7 @@ services:
       <<: [*env, *env-newrelic]
       GRAPHQL_PLAYGROUND_ENABLED: 1
       MONGO_DSN: ${MONGO_DSN_TAURON-mongodb://mongodb:27017}
+      MONGO_URL_GRAPHQL_LOGGING: ${MONGO_URL_GRAPHQL_LOGGING-}
       REDIS_CACHE_DSN: ${REDIS_CACHE_DSN_TAURON-redis://redis}
       ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
       BASE4_REST_USERNAME: ${BASE4_REST_USERNAME-}
@@ -176,6 +179,7 @@ services:
       <<: [*env, *env-newrelic]
       GRAPHQL_PLAYGROUND_ENABLED: 1
       MONGO_DSN: ${MONGO_DSN_VIRGON-mongodb://mongodb:27017}
+      MONGO_URL_GRAPHQL_LOGGING: ${MONGO_URL_GRAPHQL_LOGGING-}
       REDIS_CACHE_DSN: ${REDIS_CACHE_DSN_VIRGON-redis://redis}
       ENABLE_BASEDB_LOGGING: ${ENABLE_BASEDB_LOGGING-}
       BASE4_REST_USERNAME: ${BASE4_REST_USERNAME-}

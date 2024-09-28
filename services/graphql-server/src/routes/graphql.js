@@ -24,6 +24,7 @@ const {
   GRAPHQL_TRACING_ENABLED,
 } = require('../env');
 const RedisCacheGraphQLPlugin = require('../graphql/plugins/redis-cache');
+const operationLoggerPlugin = require('../graphql/plugins/operation-logger');
 
 /**
  * @callback LoadFnCallback
@@ -106,6 +107,7 @@ const server = new ApolloServer({
     const auth = await createAuthContext({ req, userService });
 
     return {
+      req,
       requestId: req.id,
       tenant,
       basedb,
@@ -141,6 +143,7 @@ const server = new ApolloServer({
   },
   plugins: [
     new RedisCacheGraphQLPlugin({ onCacheError: newrelic.noticeError.bind(newrelic) }),
+    operationLoggerPlugin(),
   ],
 });
 server.applyMiddleware({ app: router, path: GRAPHQL_ENDPOINT });
