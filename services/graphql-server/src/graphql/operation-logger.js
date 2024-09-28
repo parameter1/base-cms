@@ -105,6 +105,8 @@ class GraphQLOperationLogger {
     const variableHash = hashObject(data.request.variables || {});
     const variableKeys = objectDeepKeys(request.variables || {}).sort();
 
+    const selectionNames = operation.selectionSet.selections.map((selection) => (selection.name ? selection.name.value : '(none)'));
+
     await Promise.all([
       fragments.length ? collection.fragments.bulkWrite(fragments.map((frag) => ({
         updateOne: {
@@ -112,8 +114,10 @@ class GraphQLOperationLogger {
           update: {
             $addToSet: {
               clients: client,
-              operations: hash,
               environments: data.request.environment,
+              operations: hash,
+              operationNames: operationName || '(none)',
+              selections: { $each: selectionNames },
             },
             $inc: { n: 1 },
             $set: { '_meta.lastSeen': new Date() },
@@ -161,7 +165,9 @@ class GraphQLOperationLogger {
         $addToSet: {
           clients: client,
           operations: hash,
+          operationNames: operationName || '(none)',
           environments: data.request.environment,
+          selections: { $each: selectionNames },
         },
         $inc: { n: 1 },
         $set: { '_meta.lastSeen': new Date() },
