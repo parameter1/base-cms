@@ -1,8 +1,17 @@
 const { createMongoClient } = require('@parameter1/base-cms-db');
 const { print } = require('graphql');
 const { createHash } = require('crypto');
+const hashObject = require('object-hash');
 
 const sha256 = (value) => createHash('sha256').update(value).digest('hex');
+
+function objectDeepKeys(obj) {
+  return Object
+    .keys(obj)
+    .filter((key) => obj[key] instanceof Object && !Array.isArray(obj[key]))
+    .map((key) => objectDeepKeys(obj[key]).map((k) => `${key}.${k}`))
+    .reduce((x, y) => x.concat(y), Object.keys(obj));
+}
 
 class GraphQLOperationLogger {
   /**
@@ -49,6 +58,17 @@ class GraphQLOperationLogger {
       return { body: frag, hash: sha256(frag), type };
     });
 
+    const { headers } = context.req;
+
+    const client = headers['apollographql-client-name'] || '(none)';
+    const config = (() => {
+      try {
+        return JSON.parse(process.env.GRAPHQL_LOGGER_CONFIG);
+      } catch (e) {
+        return {};
+      }
+    })();
+
     const data = {
       fragments,
       operation: {
@@ -64,9 +84,9 @@ class GraphQLOperationLogger {
       },
       request: {
         environment: process.env.NODE_ENV,
-        headers: Object.keys(context.req.headers).sort().reduce((o, k) => ({
+        headers: Object.keys(headers).sort().reduce((o, k) => ({
           ...o,
-          [k]: context.req.headers[k],
+          [k]: headers[k],
         }), {}),
         ip: context.req.ip,
         variables: request.variables || null,
@@ -77,16 +97,24 @@ class GraphQLOperationLogger {
       fragments: await this.collection('fragments'),
       operations: await this.collection('operations'),
       requests: await this.collection('requests'),
+      variables: await this.collection('variables'),
     };
 
     const hash = sha256([data.operation.hash, ...fragments.map((frag) => frag.hash)].join());
     const requestHash = sha256(JSON.stringify(data.request));
+    const variableHash = hashObject(data.request.variables || {});
+    const variableKeys = objectDeepKeys(request.variables || {}).sort();
 
     await Promise.all([
       fragments.length ? collection.fragments.bulkWrite(fragments.map((frag) => ({
         updateOne: {
           filter: { _id: frag.hash },
           update: {
+            $addToSet: {
+              clients: client,
+              operations: hash,
+              environments: data.request.environment,
+            },
             $inc: { n: 1 },
             $set: { '_meta.lastSeen': new Date() },
             $setOnInsert: {
@@ -102,6 +130,11 @@ class GraphQLOperationLogger {
       collection.operations.updateOne({
         _id: hash,
       }, {
+        $addToSet: {
+          clients: client,
+          environments: data.request.environment,
+          variables: variableKeys,
+        },
         $inc: { n: 1 },
         $set: { '_meta.lastSeen': new Date() },
         $setOnInsert: {
@@ -111,7 +144,7 @@ class GraphQLOperationLogger {
           fragments: data.fragments,
         },
       }, { upsert: true }),
-      collection.requests.updateOne({
+      !config.disableRequests ? collection.requests.updateOne({
         _id: { operation: hash, request: requestHash },
       }, {
         $inc: { n: 1 },
@@ -121,7 +154,24 @@ class GraphQLOperationLogger {
           '_meta.firstSeen': new Date(),
           ...data.request,
         },
-      }, { upsert: true }),
+      }, { upsert: true }) : Promise.resolve(),
+      data.request.variables ? collection.variables.updateOne({
+        _id: variableHash,
+      }, {
+        $addToSet: {
+          clients: client,
+          operations: hash,
+          environments: data.request.environment,
+        },
+        $inc: { n: 1 },
+        $set: { '_meta.lastSeen': new Date() },
+        $setOnInsert: {
+          _id: variableHash,
+          '_meta.firstSeen': new Date(),
+          keys: variableKeys,
+          variables: data.request.variables,
+        },
+      }, { upsert: true }) : Promise.resolve(),
     ]);
 
     return data;
