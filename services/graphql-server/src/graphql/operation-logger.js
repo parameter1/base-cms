@@ -159,7 +159,7 @@ class GraphQLOperationLogger {
           ...data.request,
         },
       }, { upsert: true }) : Promise.resolve(),
-      data.request.variables ? collection.variables.updateOne({
+      data.request.variables && !config.disableRequests ? collection.variables.updateOne({
         _id: variableHash,
       }, {
         $addToSet: {
