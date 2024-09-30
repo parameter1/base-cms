@@ -197,7 +197,7 @@ export default {
     showRelated: {
       type: Boolean,
       default: true,
-    }
+    },
   },
 
   /**
