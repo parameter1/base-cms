@@ -42,6 +42,7 @@ $ const title = defaultValue(input.title, "Complete the form to download this co
         emailConsentRequest: get(application, "organization.emailConsentRequest"),
         emailConsentRequestEnabled: defaultValue(input.emailConsentRequest, true),
         regionalConsentPolicies: get(application, "organization.regionalConsentPolicies"),
+        showRelated: defaultValue(input.showRelated, true),
       };
       <marko-web-browser-component name="IdentityXDownload" props=props />
     </marko-web-identity-x-context>

@@ -57,7 +57,7 @@
               target="_blank"
             >Download</a>
           </p>
-          <download-related :content="content" @submit="download" />
+          <download-related v-if="showRelated" :content="content" @submit="download" />
         </div>
       </template>
     </template>
@@ -194,6 +194,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    showRelated: {
+      type: Boolean,
+      default: true,
+    }
   },
 
   /**

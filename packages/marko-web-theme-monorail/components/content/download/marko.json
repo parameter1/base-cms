@@ -2,6 +2,7 @@
   "<theme-content-download>": {
     "template": "./index.marko",
     "@obj": "object",
+    "@show-related": "boolean",
     "<link>": {},
     "<wufoo>": {},
     "<form-dot-com>": {}
@@ -10,7 +11,8 @@
     "template": "./identity-x.marko",
     "<link>": {},
     "@content": "object",
-    "@form-id": "string"
+    "@form-id": "string",
+    "@show-related": "boolean"
   },
   "<theme-content-download-link>": {
     "template": "./link.marko"
