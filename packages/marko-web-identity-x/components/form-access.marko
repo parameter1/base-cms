@@ -11,6 +11,7 @@ $ const callToAction = defaultValue(input.callToAction, `${ctaPrefix}, please fi
 $ const callToActionLoggedOut = defaultValue(input.callToAction, `${ctaPrefix}, please enter your email address below. You will receive an email containing a verification link.`);
 $ const buttonLabel = defaultValue(input.buttonLabel, "Submit & Access");
 $ const title = defaultValue(input.title, "Complete the form to access this content");
+$ const updateProfileOnAccess = defaultValue(input.updateProfileOnAccess, false);
 $ const { displayForm, cookie } = getAsObject(out, "global.contentIdxFormState");
 $ const consentPolicy = defaultValue(form.consentPolicy, get(application, "organization.consentPolicy"));
 $ const emailConsentRequest = defaultValue(form.emailConsentRequest, get(application, "organization.emailConsentRequest"));
@@ -24,6 +25,7 @@ $ const emailConsentRequest = defaultValue(form.emailConsentRequest, get(applica
       fieldRows: form.fieldRows,
       loginSource: "contentAccess",
       title: title,
+      updateProfileOnAccess,
       cookie,
       displayForm,
       callToAction: callToAction,

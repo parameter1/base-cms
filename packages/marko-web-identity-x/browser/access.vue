@@ -192,6 +192,10 @@ export default {
       type: String,
       default: null,
     },
+    updateProfileOnAccess: {
+      type: Boolean,
+      default: false,
+    },
     enableChangeEmail: {
       type: Boolean,
       default: false,
@@ -314,6 +318,19 @@ export default {
           userId: this.user.id,
           additionalEventData,
         }, data.entity);
+
+        // @todo investigate if this should just be on by default or finalize optin????
+        if (this.updateProfileOnAccess) {
+          const profileRes = await post('/profile', {
+            ...this.user,
+            additionalEventData: {
+              ...this.additionalEventData,
+              actionSource: this.loginSource,
+            },
+          });
+          const profileData = await profileRes.json();
+          if (!profileData.ok) throw new FormError(profileData.message, profileRes.status);
+        }
 
         if (withReload) {
           this.handleReload();
