@@ -235,7 +235,7 @@ export default {
         this.requiresCustomFieldAnswers = this.activeUser.customSelectFieldAnswers
           .filter(!ids.length ? ({ field }) => ids.includes(field.id) : () => true)
           .some(({ hasAnswered, field }) => field.required && !hasAnswered);
-        this.bypassProfileForm = data.loginSource === 'contentDownload';
+        this.bypassProfileForm = (data.loginSource === 'contentDownload' || data.loginSource === 'contentAccess');
 
         this.emitAutoSignup(data);
         this.emit('authenticated', {
