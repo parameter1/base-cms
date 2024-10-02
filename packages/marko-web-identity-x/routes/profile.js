@@ -85,7 +85,12 @@ module.exports = asyncRoute(async (req, res) => {
     receiveEmail,
   };
 
-  const customFieldIds = [...getAsArray(identityX, 'config.options.activeCustomFieldIds'), ...getAsArray(identityX, 'config.options.additionalCustomFieldIds')];
+  const customFieldIds = [
+    ...new Set([
+      ...getAsArray(identityX, 'config.options.activeCustomFieldIds'),
+      ...getAsArray(identityX, 'config.options.additionalCustomFieldIds'),
+    ]),
+  ];
 
   const answers = regionalConsentAnswers
     .map((answer) => ({ policyId: answer.id, given: answer.given }));
