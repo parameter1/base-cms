@@ -285,7 +285,7 @@ export default {
         }
       } catch (e) {
         this.error = e;
-        this.emit('download-errored', { message: e.message });
+        this.emit('access-errored', { message: e.message });
       } finally {
         this.isLoading = false;
       }
