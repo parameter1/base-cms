@@ -267,9 +267,34 @@ export default {
       this.error = null;
       this.isLoading = true;
       this.didSubmit = false;
-      const { content } = this;
       try {
         const additionalEventData = { ...this.additionalEventData, actionSource: this.loginSource };
+        const res = await post('/profile', { ...this.user, additionalEventData });
+        const data = await res.json();
+        if (!res.ok) throw new FormError(data.message, res.status);
+
+        this.user = data.user;
+        this.didSubmit = true;
+
+        // Perform and notify about the download
+        const eventData = { ...additionalEventData, ...(data.additionalEventData || {}) };
+        await this.access(this.content, eventData);
+
+        if (withReload) {
+          this.handleReload();
+        }
+      } catch (e) {
+        this.error = e;
+        this.emit('access-errored', { message: e.message });
+      } finally {
+        this.isLoading = false;
+      }
+    },
+    /**
+     *
+     */
+    async access(content, additionalEventData) {
+      try {
         const res = await post('/access', {
           contentId: content.id,
           contentType: content.type,
@@ -306,18 +331,12 @@ export default {
         const data = await res.json();
         if (!res.ok) throw new FormError(data.message, res.status);
 
-        this.didSubmit = true;
-
         this.emit('access-submitted', {
           contentId: content.id,
           contentType: content.type,
           userId: this.user.id,
           additionalEventData,
         }, data.entity);
-
-        if (withReload) {
-          this.handleReload();
-        }
       } catch (e) {
         this.error = e;
         this.emit('access-errored', { message: e.message });
@@ -325,7 +344,6 @@ export default {
         this.isLoading = false;
       }
     },
-
   },
 };
 </script>
