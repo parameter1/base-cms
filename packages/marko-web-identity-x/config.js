@@ -25,6 +25,7 @@ class IdentityXConfiguration {
     requiredClientFields = [],
     requiredCreateFields = [],
     activeCustomFieldIds = [],
+    additionalCustomFieldIds = [],
     defaultFieldLabels = {},
     hiddenFields = ['city', 'street', 'addressExtra', 'phoneNumber', 'mobileNumber'],
     defaultCountryCode,
@@ -42,6 +43,7 @@ class IdentityXConfiguration {
       requiredClientFields,
       requiredCreateFields,
       activeCustomFieldIds,
+      additionalCustomFieldIds,
       defaultFieldLabels,
       hiddenFields,
       defaultCountryCode,
@@ -137,6 +139,10 @@ class IdentityXConfiguration {
 
   getActiveCustomFieldIds() {
     return this.getAsArray('activeCustomFieldIds');
+  }
+
+  getAdditionalCustomFieldIds() {
+    return this.getAsArray('additionalCustomFieldIds');
   }
 
   get(path, def) {
