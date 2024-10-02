@@ -85,7 +85,12 @@ module.exports = asyncRoute(async (req, res) => {
     receiveEmail,
   };
 
-  const activeCustomFieldIds = getAsArray(identityX, 'config.options.activeCustomFieldIds');
+  const customFieldIds = [
+    ...new Set([
+      ...getAsArray(identityX, 'config.options.activeCustomFieldIds'),
+      ...getAsArray(identityX, 'config.options.additionalCustomFieldIds'),
+    ]),
+  ];
 
   const answers = regionalConsentAnswers
     .map((answer) => ({ policyId: answer.id, given: answer.given }));
@@ -102,8 +107,8 @@ module.exports = asyncRoute(async (req, res) => {
       // the form submit is effectively answers the question.
       value: Boolean(fieldAnswer.answer),
     })).filter(
-      activeCustomFieldIds.length > 0
-        ? ({ fieldId }) => activeCustomFieldIds.includes(fieldId)
+      customFieldIds.length > 0
+        ? ({ fieldId }) => customFieldIds.includes(fieldId)
         : () => true,
     );
     await identityX.client.mutate({
@@ -122,8 +127,8 @@ module.exports = asyncRoute(async (req, res) => {
         ...(writeInValue ? [{ optionId: id, value: writeInValue }] : []),
       ]), []),
     })).filter(
-      activeCustomFieldIds.length > 0
-        ? ({ fieldId }) => activeCustomFieldIds.includes(fieldId)
+      customFieldIds.length > 0
+        ? ({ fieldId }) => customFieldIds.includes(fieldId)
         : () => true,
     );
     await identityX.client.mutate({
@@ -139,8 +144,8 @@ module.exports = asyncRoute(async (req, res) => {
       // the form submit is effectively answers the question.
       value: fieldAnswer.value,
     })).filter(
-      activeCustomFieldIds.length > 0
-        ? ({ fieldId }) => activeCustomFieldIds.includes(fieldId)
+      customFieldIds.length > 0
+        ? ({ fieldId }) => customFieldIds.includes(fieldId)
         : () => true,
     );
     await identityX.client.mutate({
