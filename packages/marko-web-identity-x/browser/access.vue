@@ -196,6 +196,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    updateProfileOnSubmit: {
+      type: Boolean,
+      default: true,
+    },
   },
 
   /**
@@ -227,6 +231,13 @@ export default {
      */
     hasActiveUser() {
       return this.user && this.user.email;
+    },
+
+    /**
+     *
+     */
+    canUpdateProfile() {
+      return this.hasActiveUser && this.updateProfileOnSubmit;
     },
 
     /**
@@ -269,16 +280,19 @@ export default {
       this.didSubmit = false;
       try {
         const additionalEventData = { ...this.additionalEventData, actionSource: this.loginSource };
-        const res = await post('/profile', { ...this.user, additionalEventData });
-        const data = await res.json();
-        if (!res.ok) throw new FormError(data.message, res.status);
-
-        this.user = data.user;
-        this.didSubmit = true;
+        let data = {};
+        if (this.canUpdateProfile) {
+          const res = await post('/profile', { ...this.user, additionalEventData });
+          data = await res.json();
+          if (!res.ok) throw new FormError(data.message, res.status);
+          this.user = data.user;
+        }
 
         // Perform and notify about the download
         const eventData = { ...additionalEventData, ...(data.additionalEventData || {}) };
         await this.access(this.content, eventData);
+
+        this.didSubmit = true;
 
         if (withReload) {
           this.handleReload();
