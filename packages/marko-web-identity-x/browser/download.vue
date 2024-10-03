@@ -198,6 +198,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    updateProfileOnSubmit: {
+      type: Boolean,
+      defualt: true,
+    }
   },
 
   /**
@@ -235,6 +239,13 @@ export default {
     /**
      *
      */
+    canUpdateProfile() {
+      return this.hasActiveUser && this.updateProfileOnSubmit;
+    },
+
+    /**
+     *
+     */
     countryCode() {
       if (this.user && this.user.countryCode) return this.user.countryCode;
       return this.defaultCountryCode;
@@ -267,12 +278,15 @@ export default {
       this.didSubmit = false;
       try {
         const additionalEventData = { ...this.additionalEventData, actionSource: this.loginSource };
-        const res = await post('/profile', { ...this.user, additionalEventData });
-        const data = await res.json();
-        if (!res.ok) throw new FormError(data.message, res.status);
+        let data = {};
 
-        this.user = data.user;
-        this.didSubmit = true;
+        if ( this.canUpdateProfile) {
+          const res = await post('/profile', { ...this.user, additionalEventData });
+          const data = await res.json();
+          if (!res.ok) throw new FormError(data.message, res.status);
+
+          this.user = data.user;
+        }
 
         // Re-focus on the form
         document.getElementById('content-download-idx-form').scrollIntoView({ behavior: 'smooth' });
@@ -280,6 +294,7 @@ export default {
         // Perform and notify about the download
         const eventData = { ...additionalEventData, ...(data.additionalEventData || {}) };
         await this.download(this.content, eventData);
+        this.didSubmit = true;
       } catch (e) {
         this.error = e;
         this.emit('download-errored', { message: e.message });
