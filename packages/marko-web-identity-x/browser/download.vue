@@ -202,7 +202,7 @@ export default {
     updateProfileOnSubmit: {
       type: Boolean,
       defualt: true,
-    }
+    },
   },
 
   /**
@@ -293,12 +293,10 @@ export default {
       try {
         const additionalEventData = { ...this.additionalEventData, actionSource: this.loginSource };
         let data = {};
-
         if ( this.canUpdateProfile) {
           const res = await post('/profile', { ...this.user, additionalEventData });
-          const data = await res.json();
+          data = await res.json();
           if (!res.ok) throw new FormError(data.message, res.status);
-
           this.user = data.user;
         }
 
