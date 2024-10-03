@@ -15,7 +15,6 @@ $ const title = defaultValue(input.title, "Complete the form to download this co
 <if(identityX && form.fieldRows)>
   <div class="content-download-idx__wrapper">
     <marko-web-identity-x-context|{ hasUser, user, isEnabled, application }|>
-      $ console.log('content-download: ', hasUser, user);
       $ const props = {
         // Download form props
         content: content,
