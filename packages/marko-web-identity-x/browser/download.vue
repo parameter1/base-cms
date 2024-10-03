@@ -68,6 +68,7 @@
         :additional-event-data="additionalEventData"
         :source="loginSource"
         :endpoints="endpoints"
+        :redirect="redirect"
         :app-context-id="appContextId"
         :consent-policy="consentPolicy"
         :consent-policy-enabled="consentPolicyEnabled"
@@ -234,6 +235,19 @@ export default {
      */
     hasActiveUser() {
       return this.user && this.user.email;
+    },
+
+    /**
+     *
+     */
+    redirect() {
+      if (this.content.siteContext && this.content.siteContext.url) {
+        return this.content.siteContext.url;
+      }
+      if (this.content) {
+        return this.content.id;
+      }
+      return '/';
     },
 
     /**
