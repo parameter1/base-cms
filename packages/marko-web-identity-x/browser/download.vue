@@ -293,7 +293,7 @@ export default {
       try {
         const additionalEventData = { ...this.additionalEventData, actionSource: this.loginSource };
         let data = {};
-        if ( this.canUpdateProfile) {
+        if (this.canUpdateProfile) {
           const res = await post('/profile', { ...this.user, additionalEventData });
           data = await res.json();
           if (!res.ok) throw new FormError(data.message, res.status);
