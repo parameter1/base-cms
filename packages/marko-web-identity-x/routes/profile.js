@@ -88,15 +88,12 @@ module.exports = asyncRoute(async (req, res) => {
   // get identity-x.forms custom-select question ids to append to ActiveCustomQuestionIds
   const customFormFieldIds = Object.values(getAsObject(identityX, 'config.options.forms')).reduce((questions, form) => {
     // loop over the fieldRows
-    const newQuestions = getAsArray(form, 'fieldRows').reduce((q, row) => {
-      // push the custom-select form being used with those forms to accaptable profile inputs
-      // @todo fiugre out if other types should also make it... custom-boolean specifically.
-      row.forEach((question) => {
-        if (question.type === 'custom-select') q.push(question.id);
-      });
-      return q;
-    }, []);
-    return questions.concat(newQuestions);
+    getAsArray(form, 'fieldRows').forEach((row) => row.forEach((question) => {
+      // push the custom-select form being used with those forms to acceptable profile inputs
+      // @todo figure out if other types should also make it... custom-boolean specifically.
+      if (question.type === 'custom-select') questions.push(question.id);
+    }));
+    return questions;
   }, []);
 
   const customFieldIds = [
