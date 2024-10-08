@@ -4,6 +4,7 @@ module.exports = gql`
 
 extend type Query {
   activeUser: User
+  isUserAuthTokenValid(value: String!): Boolean!
 }
 
 extend type Mutation {
