@@ -1,9 +1,11 @@
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 import { getAsObject } from "@parameter1/base-cms-object-path";
 
 $ const blockName = "content-download";
 $ const content = getAsObject(input, "obj");
 $ const { fileSrc } = content;
 $ const { surveyId, surveyType } = getAsObject(content, "gating");
+$ const showRelatedDownloads = defaultValue(input.showRelated, true);
 
 <if(fileSrc)>
   <marko-web-block name=blockName>
@@ -19,7 +21,12 @@ $ const { surveyId, surveyType } = getAsObject(content, "gating");
       </else-if>
       <else-if(surveyType === "idx")>
         <marko-web-p1-events-track-download-submission content=content event-name="identity-x-download-submitted" />
-        <theme-content-download-identity-x link=input.link content=content form-id=surveyId />
+        <theme-content-download-identity-x
+          link=input.link
+          content=content
+          form-id=surveyId
+          show-related=showRelatedDownloads
+        />
       </else-if>
       <else>
         $ console.log("Unknown form provider ", surveyType);
