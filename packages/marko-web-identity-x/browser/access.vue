@@ -65,8 +65,8 @@
       <login
         :additional-event-data="additionalEventData"
         :source="loginSource"
-        :endpoints="endpoints"
         :redirect="redirect"
+        :endpoints="endpoints"
         :app-context-id="appContextId"
         :consent-policy="consentPolicy"
         :consent-policy-enabled="consentPolicyEnabled"
@@ -242,7 +242,7 @@ export default {
         return this.content.siteContext.url;
       }
       if (this.content) {
-        return this.content.id;
+        return `/${this.content.id}`;
       }
       return '/';
     },

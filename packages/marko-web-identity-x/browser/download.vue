@@ -245,7 +245,7 @@ export default {
         return this.content.siteContext.url;
       }
       if (this.content) {
-        return this.content.id;
+        return `/${this.content.id}`;
       }
       return '/';
     },
