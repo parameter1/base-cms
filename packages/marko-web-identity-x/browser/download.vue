@@ -201,7 +201,7 @@ export default {
     },
     updateProfileOnSubmit: {
       type: Boolean,
-      defualt: true,
+      default: true,
     },
   },
 
