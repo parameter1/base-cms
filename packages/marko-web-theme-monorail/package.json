@@ -35,7 +35,7 @@
     "@parameter1/base-cms-web-common": "^4.55.4",
     "@parameter1/joi": "^1.2.10",
     "@trevoreyre/autocomplete-vue": "^2.4.1",
-    "bootstrap": "^4.6.2",
+    "bootstrap": "^5.0.0",
     "cheerio": "^1.0.0-rc.12",
     "debug": "^4.3.4",
     "graphql-tag": "^2.12.6",
