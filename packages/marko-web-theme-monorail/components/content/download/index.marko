@@ -5,7 +5,7 @@ $ const blockName = "content-download";
 $ const content = getAsObject(input, "obj");
 $ const { fileSrc } = content;
 $ const { surveyId, surveyType } = getAsObject(content, "gating");
-$ const showRelatedDownloads = defaultValue(input.showRelated, false);
+$ const showRelatedDownloads = defaultValue(input.showRelated, true);
 
 <if(fileSrc)>
   <marko-web-block name=blockName>
