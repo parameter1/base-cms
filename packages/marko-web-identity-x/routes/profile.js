@@ -1,6 +1,6 @@
 const gql = require('graphql-tag');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
-const { getAsArray } = require('@parameter1/base-cms-object-path');
+const { getAsArray, getAsObject } = require('@parameter1/base-cms-object-path');
 const userFragment = require('../api/fragments/active-user');
 const callHooksFor = require('../utils/call-hooks-for');
 
@@ -85,10 +85,21 @@ module.exports = asyncRoute(async (req, res) => {
     receiveEmail,
   };
 
+  // get identity-x.forms custom-select question ids to append to ActiveCustomQuestionIds
+  const customFormFieldIds = Object.values(getAsObject(identityX, 'config.options.forms')).reduce((questions, form) => {
+    // loop over the fieldRows
+    getAsArray(form, 'fieldRows').forEach((row) => row.forEach((question) => {
+      // push the custom-select form being used with those forms to acceptable profile inputs
+      // @todo figure out if other types should also make it... custom-boolean specifically.
+      if (question.type === 'custom-select') questions.push(question.id);
+    }));
+    return questions;
+  }, []);
+
   const customFieldIds = [
     ...new Set([
       ...getAsArray(identityX, 'config.options.activeCustomFieldIds'),
-      ...getAsArray(identityX, 'config.options.additionalCustomFieldIds'),
+      ...customFormFieldIds,
     ]),
   ];
 
