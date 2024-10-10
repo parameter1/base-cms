@@ -26,6 +26,9 @@
   "<identity-x-newsletter-form-pushdown>": {
     "template": "./newsletter-pushdown.marko"
   },
+  "<identity-x-newsletter-modal>": {
+    "template": "./newsletter-modal.marko"
+  },
   "<identity-x-newsletter-form-inline>": {
     "template": "./newsletter-inline.marko"
   },

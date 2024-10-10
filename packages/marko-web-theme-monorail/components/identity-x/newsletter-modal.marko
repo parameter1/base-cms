@@ -1,0 +1,18 @@
+<marko-web-identity-x-context|{ hasUser }|>
+  <if(!hasUser)>
+    <div class="popup-modal-wrapper popup-modal-wrapper--display-overlay" id="newsletter-signup-modal">
+      <div class="popup-modal-wrapper__overlay">
+        <div class="newsletter-signup-modal-center-column-outer">
+          <identity-x-newsletter-form-inline config-name="modal" type="modal" modifiers=["modal"] />
+          <div id="newsletter-signup-modal-center-column-inner">
+            <div class="d-flex flex-column">
+            <button class="btn newsletter-signup-modal-button" onclick="(function() {document.getElementById('newsletter-signup-modal').remove();})()">
+              <marko-web-icon name="x"/>
+            </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </if>
+</marko-web-identity-x-context>

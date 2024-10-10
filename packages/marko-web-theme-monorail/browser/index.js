@@ -22,6 +22,7 @@ const SiteNewsletterMenu = () => import(/* webpackChunkName: "theme-site-newslet
 const WufooForm = () => import(/* webpackChunkName: "theme-wufoo-form" */ './wufoo-form.vue');
 const TopStoriesMenu = () => import(/* webpackChunkName: "theme-top-stories-menu" */ './top-stories-menu.vue');
 const RevealAdHandler = () => import(/* webpackChunkName: "reveal-ad-handler" */ './reveal-ad-handler.vue');
+const NewsletterSignupModalListener = () => import(/* webpackChunkName: "newsletter-signup-modal-listener" */ './newsletter-signup-modal-listener.vue');
 
 const setP1EventsIdentity = ({ p1events, brandKey, encryptedId }) => {
   if (!p1events || !brandKey || !encryptedId) return;
@@ -165,4 +166,5 @@ export default (Browser, configOverrides = {}) => {
   Browser.register('ContentMeterTrack', ContentMeterTrack, {
     provide: { EventBus },
   });
+  Browser.register('NewsletterSignupModalListener', NewsletterSignupModalListener);
 };
