@@ -1,7 +1,7 @@
 const { get } = require('@parameter1/base-cms-object-path');
 
 const cookieNamePrefix = '__idx_form';
-const days = 0;
+const maxAge = process.env.IDX_CONTENT_DOWNLOAD_MAXAGE || 0;
 
 const contentDownloadState = ({ res, content }) => {
   // Handle setting of contentDownloadState Object
@@ -15,7 +15,6 @@ const contentDownloadState = ({ res, content }) => {
     displayForm: false,
     setFormDisplay,
   };
-  const maxAge = days * 24 * 60 * 60 * 1000;
   const cookie = { name: cookieName, maxAge };
   res.locals.contentDownloadState.formId = surveyId;
   res.locals.contentDownloadState.cookie = cookie;

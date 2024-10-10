@@ -1,7 +1,8 @@
 const { get, getAsObject } = require('@parameter1/base-cms-object-path');
 
 const cookieNamePrefix = '__idx_form';
-const days = 1;
+// default is one day
+const maxAge = process.env.IDX_CONTENT_ACCESS_MAXAGE || (24 * 60 * 60 * 1000);
 
 const contentAccessState = ({ res, content }) => {
   // Handle setting of contentAccessState Object
@@ -17,7 +18,6 @@ const contentAccessState = ({ res, content }) => {
   };
 
   if (surveyType === 'idx') {
-    const maxAge = days * 24 * 60 * 60 * 1000;
     const cookie = { name: cookieName, maxAge };
     res.locals.contentAccessState.formId = surveyId;
     res.locals.contentAccessState.cookie = cookie;
