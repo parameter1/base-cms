@@ -9,6 +9,7 @@ import OmedaIdentityX from '@parameter1/base-cms-marko-web-omeda-identity-x/brow
 import P1Events from '@parameter1/base-cms-marko-web-p1-events/browser';
 import IdentityXNewsletterForms from './idx-newsletter-form/index';
 import ContentMeterTrack from './content-meter-track.vue';
+import NewsletterSignupModalListener from './newsletter-signup-modal-listener.vue';
 
 const CommentToggleButton = () => import(/* webpackChunkName: "theme-comment-toggle-button" */ './comment-toggle-button.vue');
 const BlockLoader = () => import(/* webpackChunkName: "theme-block-loader" */ './block-loader.vue');
@@ -22,7 +23,6 @@ const SiteNewsletterMenu = () => import(/* webpackChunkName: "theme-site-newslet
 const WufooForm = () => import(/* webpackChunkName: "theme-wufoo-form" */ './wufoo-form.vue');
 const TopStoriesMenu = () => import(/* webpackChunkName: "theme-top-stories-menu" */ './top-stories-menu.vue');
 const RevealAdHandler = () => import(/* webpackChunkName: "reveal-ad-handler" */ './reveal-ad-handler.vue');
-const NewsletterSignupModalListener = () => import(/* webpackChunkName: "newsletter-signup-modal-listener" */ './newsletter-signup-modal-listener.vue');
 
 const setP1EventsIdentity = ({ p1events, brandKey, encryptedId }) => {
   if (!p1events || !brandKey || !encryptedId) return;
