@@ -4,8 +4,8 @@
       <h5 class="content-page-gate__title">
         {{ title }}
       </h5>
-      <p v-if="!didSubmit" v-html="callToAction" />
-      <form v-if="!didSubmit" @submit.prevent="handleSubmit">
+      <p v-if="!didSubmit && displayForm" v-html="callToAction" />
+      <form v-if="!didSubmit && displayForm" @submit.prevent="handleSubmit">
         <fieldset :disabled="isLoading">
           <div v-for="(row, ridx) in fieldRows" :key="ridx" class="row">
             <custom-column
@@ -134,6 +134,14 @@ export default {
     callToActionLoggedOut: {
       type: String,
       default: 'To download this content, please enter your email address below.',
+    },
+    cookie: {
+      type: Object,
+      required: true,
+    },
+    displayForm: {
+      type: Boolean,
+      default: true,
     },
 
     /**
@@ -324,6 +332,7 @@ export default {
         const { entity } = await post('/download', {
           contentId: content.id,
           contentType: content.type,
+          cookie: this.cookie,
           companyId: company.id,
           userId: this.user.id,
           additionalEventData,
