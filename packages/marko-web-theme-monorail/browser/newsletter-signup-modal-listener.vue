@@ -27,7 +27,6 @@ export default {
   created() {
     setTimeout(() => {
       const newsletterSignupModalElement = document.getElementById('newsletter-signup-modal');
-      console.log('element: ', newsletterSignupModalElement)
       if (!window.location.pathname.match(/^\/user|\/page/)) {
         if (
           this.hasCookie
