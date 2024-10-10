@@ -1,7 +1,7 @@
 const { get, getAsObject } = require('@parameter1/base-cms-object-path');
 
 const cookieNamePrefix = '__idx_form';
-const days = 0; // make them submit everytime for now untile we decide to chenge functionality.
+const days = 1;
 
 const contentAccessState = ({ res, content }) => {
   // Handle setting of contentAccessState Object
