@@ -12,7 +12,7 @@ $ const callToActionLoggedOut = defaultValue(input.callToAction, `${ctaPrefix}, 
 $ const buttonLabel = defaultValue(input.buttonLabel, "Submit & Access");
 $ const title = defaultValue(input.title, "Complete the form to access this content");
 $ const updateProfileOnSubmit = defaultValue(input.updateProfileOnSubmit, true);
-$ const { displayForm, cookie } = getAsObject(out, "global.contentIdxFormState");
+$ const { displayForm, cookie } = getAsObject(out, "global.contentAccessState");
 $ const consentPolicy = defaultValue(form.consentPolicy, get(application, "organization.consentPolicy"));
 $ const emailConsentRequest = defaultValue(form.emailConsentRequest, get(application, "organization.emailConsentRequest"));
 
