@@ -9,6 +9,7 @@ import OmedaIdentityX from '@parameter1/base-cms-marko-web-omeda-identity-x/brow
 import P1Events from '@parameter1/base-cms-marko-web-p1-events/browser';
 import IdentityXNewsletterForms from './idx-newsletter-form/index';
 import ContentMeterTrack from './content-meter-track.vue';
+import NewsletterSignupModalListener from './newsletter-signup-modal-listener.vue';
 
 const CommentToggleButton = () => import(/* webpackChunkName: "theme-comment-toggle-button" */ './comment-toggle-button.vue');
 const BlockLoader = () => import(/* webpackChunkName: "theme-block-loader" */ './block-loader.vue');
@@ -165,4 +166,5 @@ export default (Browser, configOverrides = {}) => {
   Browser.register('ContentMeterTrack', ContentMeterTrack, {
     provide: { EventBus },
   });
+  Browser.register('NewsletterSignupModalListener', NewsletterSignupModalListener);
 };

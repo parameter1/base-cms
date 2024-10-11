@@ -1,0 +1,133 @@
+$theme-signup-modal-bg: $gray-200 !default;
+
+.popup-modal-wrapper {
+  $self: &;
+  &--display-overlay {
+    ~ .site-footer {
+      display: none;
+      margin-bottom: 0;
+    }
+    ~ .document-container {
+      height: 0;
+      overflow: hidden;
+    }
+  }
+  &__overlay {
+    z-index: 1499;
+    position: fixed;
+    background-color: rgba(0, 0, 0, .7);
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    visibility: visible;
+    transition: visibility 0s, opacity 0.5s linear;
+    display: flex;
+    align-items: center;
+    .newsletter-signup-modal-button {
+      align-self: flex-end;
+    }
+  }
+}
+.popup-modal-wrapper__overlay {
+  #newsletter-signup-modal-center-column-inner {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    background-color: $white;
+  }
+  .newsletter-signup-banner {
+    background-color: $theme-signup-modal-bg;
+    display: flex;
+    flex-direction: row;
+    margin-top: 0;
+    padding: 3rem;
+    border: 5px solid $gray-800;
+    @include media-breakpoint-down(md) {
+      padding: 1.5rem;
+    }
+  }
+  .newsletter-signup-modal-center-column-outer {
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+    width: 640px;
+    @include media-breakpoint-down(md) {
+      width: 320px;
+      max-width: calc(100 - $marko-web-document-container-gutter);
+    }
+  }
+}
+
+#newsletter-signup-modal {
+  display: none;
+}
+
+.newsletter-signup-banner {
+  $self: &;
+  &--modal {
+
+    #{ $self }__name {
+      @include skin-typography($style: "header-1");
+      margin-bottom: map-get($spacers, 2);
+      @include media-breakpoint-down(md) {
+        line-height: 1.25;
+      }
+    }
+
+    #{ $self }__description {
+      @include skin-typography($style: "teaser-text-1");
+      margin-bottom: map-get($spacers, block);
+    }
+
+    #{ $self }__left-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      @include media-breakpoint-down(md) {
+        display: none;
+      }
+    }
+    label[for="sign-on-email"] {
+      display: none;
+    }
+  }
+}
+
+.newsletter-signup-modal-fade-in {
+  display: block !important;
+  // PUT AT SAME LEVEL AS HEADER SO IT SITS ON TOP
+  z-index: 15000;
+  animation: fadeIn 0.5s;
+  -webkit-animation: fadeIn 0.5s;
+  -moz-animation: fadeIn 0.5s;
+  -o-animation: fadeIn 0.5s;
+  -ms-animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@-moz-keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@-webkit-keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@-o-keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@-ms-keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
