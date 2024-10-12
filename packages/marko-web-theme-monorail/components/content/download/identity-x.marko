@@ -1,14 +1,18 @@
 
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
-import { get } from "@parameter1/base-cms-object-path";
+import { get, getAsObject } from "@parameter1/base-cms-object-path";
 
-$ const { req: { identityX } } = out.global;
+$ const { req } = out.global;
+$ const { identityX } = req;
 $ const { content, formId } = input;
 $ const form = identityX.config.getAsObject(`forms.${formId}`);
 $ const additionalEventData = defaultValue(input.additionalEventData, {});
 $ const ctaPrefix = `To download "${content.name}"`;
 $ const callToAction = defaultValue(input.callToAction, `${ctaPrefix}, please fill out the form below.`);
 $ const callToActionLoggedOut = defaultValue(input.callToAction, `${ctaPrefix}, please enter your email address below. You will receive an email containing a verification link.`);
+$ const contentDownloadState = getAsObject(out, "global.contentDownloadState");
+$ contentDownloadState.setFormDisplay({ req });
+$ const { cookie, displayForm } = contentDownloadState;
 $ const buttonLabel = defaultValue(input.buttonLabel, "Submit & Download");
 $ const title = defaultValue(input.title, "Complete the form to download this content");
 
@@ -22,6 +26,8 @@ $ const title = defaultValue(input.title, "Complete the form to download this co
         fieldRows: form.fieldRows,
         loginSource: "contentDownload",
         title: title,
+        cookie,
+        displayForm,
         callToAction: callToAction,
         callToActionLoggedOut: callToActionLoggedOut,
 
