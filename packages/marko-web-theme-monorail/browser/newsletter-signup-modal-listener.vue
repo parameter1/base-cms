@@ -13,7 +13,7 @@ export default {
     },
     cookieValue: {
       type: Number,
-      default: 0,
+      default: 1,
     },
     cookieValueToMatch: {
       type: Number,
@@ -25,6 +25,7 @@ export default {
     },
   },
   created() {
+    const initialValue = 1;
     setTimeout(() => {
       const newsletterSignupModalElement = document.getElementById('newsletter-signup-modal');
       if (!window.location.pathname.match(/^\/user|\/page/)) {
@@ -38,7 +39,7 @@ export default {
           )
         ) {
           newsletterSignupModalElement.classList.add('newsletter-signup-modal-fade-in');
-          const value = !this.hasCookie ? 0 : (Number(this.cookieValue) + 1);
+          const value = !this.hasCookie ? initialValue : (Number(this.cookieValue) + 1);
           // Set cookie, expires is in days so we have to divide by 24 for hours
           cookies.set(this.cookieName, value, { expires: 1 / 24 });
         } else if (
@@ -49,7 +50,7 @@ export default {
         } else if (
           !this.hasCookie
         ) {
-          cookies.set(this.cookieName, 0, { expires: 1 });
+          cookies.set(this.cookieName, initialValue, { expires: 1 });
         }
       }
     }, 2500);
