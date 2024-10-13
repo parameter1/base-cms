@@ -6,6 +6,9 @@ $ const modifiers = ["latest-content-list", ...(input.modifiers ? input.modifier
 $ const title = defaultValue(input.title, 'Latest in');
 $ const withSection = defaultValue(input.withSection, false);
 $ const withNativeXSection = defaultValue(input.withNativeXSection, true);
+$ const linkHeader = input.linkHeader || false;
+$ const link = getAsObject(input, "link");
+
 $ const nodeInput = {
   withTeaser: false,
   imagePosition: "right",
@@ -31,7 +34,16 @@ $ const nodeImageInput = {
     with-native-x-section=withNativeXSection
     class=input.class
   >
-    <@header>${title}</@header>
+    <@header>
+      <if(linkHeader && (input.alias || input.title))>
+        <marko-web-link href=`${input.alias}` ...link>
+          ${title}
+        </marko-web-link>
+      </if>
+      <else>
+        ${title}
+      </else>
+    </@header>
     <@node ...nodeInput >
       <@image ...nodeImageInput />
     </@node>
@@ -59,7 +71,16 @@ $ const nodeImageInput = {
       with-native-x-section=withNativeXSection
       class=input.class
     >
-      <@header>${title}</@header>
+      <@header>
+        <if(linkHeader && (input.alias || input.title))>
+          <marko-web-link href=`${input.alias}` ...link>
+            ${title}
+          </marko-web-link>
+        </if>
+        <else>
+          ${title}
+        </else>
+      </@header>
       <@node ...nodeInput >
         <@image ...nodeImageInput />
       </@node>
