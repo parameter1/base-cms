@@ -2,6 +2,8 @@ const { apolloClient } = require('@parameter1/base-cms-express-apollo');
 const { parseBooleanHeader } = require('@parameter1/base-cms-utils');
 const pkg = require('../package.json');
 
+const { MINDFUL_NAMESPACE } = process.env;
+
 module.exports = (app, uri, config = {}) => {
   /**
    * Force sets GraphQL cache headers when cookies are present on the site.
@@ -23,6 +25,7 @@ module.exports = (app, uri, config = {}) => {
         path: req.path,
         query: req.query,
       }),
+      ...(MINDFUL_NAMESPACE && { 'x-namespace': MINDFUL_NAMESPACE }),
       'user-agent': `marko-web-express-apollo/${pkg.version} via node-fetch/1.0`,
     });
     return { headers };
