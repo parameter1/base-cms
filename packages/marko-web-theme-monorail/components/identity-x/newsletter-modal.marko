@@ -1,5 +1,24 @@
+import { getAsObject } from "@parameter1/base-cms-object-path";
+
+$ const { site, req } = out.global;
+$ const { cookieName, cookieValue, hasCookie } = getAsObject(out.global, "newsletterModalState");
+$ const { enabled: modalEnabled, cookieValueToMatch } =  site.getAsObject("newsletter.modal");
+$ const exclusions = ["user", "page", "subscribe"]
+$ const siteExclusions = site.getAsArray("newsletter.modal.routesToExclude");
+$ const routesToExclude = siteExclusions.length ? [...new Set(exclusions.concat(siteExclusions))] : exclusions;
+$ const excludeRoute = req.path.match(`^\/${routesToExclude.join('|')}`)
+
 <marko-web-identity-x-context|{ hasUser }|>
-  <if(!hasUser)>
+  <if(
+    !hasUser
+    && !excludeRoute
+    && modalEnabled
+    && (
+      (!hasCookie && Number(cookieValueToMatch) === 0)
+      ||
+      (hasCookie && (Number(cookieValue) === Number(cookieValueToMatch)))
+    )
+  )>
     <div class="popup-modal-wrapper popup-modal-wrapper--display-overlay" id="newsletter-signup-modal">
       <div class="popup-modal-wrapper__overlay">
         <div class="newsletter-signup-modal-center-column-outer">
@@ -16,3 +35,8 @@
     </div>
   </if>
 </marko-web-identity-x-context>
+
+<marko-web-browser-component
+  name="NewsletterSignupModalListener"
+  props={ cookieName, cookieValue: Number(cookieValue), cookieValueToMatch, hasCookie }
+/>
