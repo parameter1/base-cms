@@ -1,7 +1,7 @@
 import { getAsArray, getAsObject } from "@parameter1/base-cms-object-path";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 
-$ const { site } = out.global;
+$ const { site, i18n } = out.global;
 $ const buttons = input.buttons || defaultValue(site.get("magazine.buttons"), ["subscribe", "digital-edition", "pdf", "archives", "change-address", "renewal", "cancel", "reprints", "e-inquiry"]);
 
 $ const link = { class: "btn btn-primary" };
@@ -15,47 +15,47 @@ $ const issue = getAsObject(input, "issue");
 <for|button| of=buttons>
   <if(button === "subscribe")>
     <marko-web-magazine-publication-subscribe-url tag=null obj=issue.publication link=targetBlankLink>
-      Subscribe
+      ${i18n("Subscribe")}
     </marko-web-magazine-publication-subscribe-url>
   </if>
   <if(button === "renewal")>
     <marko-web-magazine-publication-renewal-url tag=null obj=issue.publication link=targetBlankLink>
-      Renew
+      ${i18n("Renew")}
     </marko-web-magazine-publication-renewal-url>
   </if>
   <if(button === "cancel")>
     <marko-web-magazine-publication-cancel-url tag=null obj=issue.publication link=targetBlankLink>
-      Cancel
+      ${i18n("Cancel")}
     </marko-web-magazine-publication-cancel-url>
   </if>
   <if(button === "change-address")>
     <marko-web-magazine-publication-change-address-url tag=null obj=issue.publication link=targetBlankLink>
-      Change Address
+      ${i18n("Change Address")}
     </marko-web-magazine-publication-change-address-url>
   </if>
   <if(button === "digital-edition")>
     <marko-web-magazine-issue-digital-edition-url tag=null obj=issue link=targetBlankLink>
-      Digital Edition
+      ${i18n("Digital Edition")}
     </marko-web-magazine-issue-digital-edition-url>
   </if>
   <if(button === "pdf")>
     <marko-web-magazine-issue-pdf-url tag=null obj=issue link=targetBlankLink>
-      Download PDF
+      ${i18n("Download PDF")}
     </marko-web-magazine-issue-pdf-url>
   </if>
   <if(button === "archives")>
     <marko-web-magazine-publication-name tag=null obj=issue.publication link=link>
-      Archives
+      ${i18n("Archives")}
     </marko-web-magazine-publication-name>
   </if>
   <if(button === "reprints")>
     <marko-web-magazine-publication-reprints-url tag=null obj=issue.publication link=targetBlankLink>
-      Reprints
+      ${i18n("Reprints")}
     </marko-web-magazine-publication-reprints-url>
   </if>
   <if(button === "e-inquiry")>
     <marko-web-magazine-publication-einquiry-url tag=null obj=issue.publication link=targetBlankLink>
-      E-Inquiry
+      ${i18n("E-Inquiry")}
     </marko-web-magazine-publication-einquiry-url>
   </if>
 </for>

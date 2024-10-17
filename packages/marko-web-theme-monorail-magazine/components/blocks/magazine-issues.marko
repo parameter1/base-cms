@@ -1,7 +1,7 @@
 import { getAsObject } from "@parameter1/base-cms-object-path";
 import queryFragment from "../../graphql/fragments/magazine-latest-issue";
 
-$ const { site } = out.global;
+$ const { site, i18n } = out.global;
 $ const { publicationId } = input;
 $ const blockName = "magazine-issues"
 $ const linkHeader = input.linkHeader || false;
@@ -42,10 +42,10 @@ $ const title = input.title || "In Print";
             target: "_blank",
           }
         >
-          Subscribe
+          ${i18n("Subscribe")}
         </marko-web-magazine-publication-subscribe-url>
         <marko-web-link href=`/magazine/${publicationId}` class="btn btn-secondary" >
-          Archives
+          ${i18n("Archives")}
         </marko-web-link>
       </marko-web-element>
     </marko-web-element>
