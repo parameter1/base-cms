@@ -2,7 +2,7 @@ import issueFragment from "../graphql/fragments/magazine-issue-archive";
 import contentListFragment from "../graphql/fragments/magazine-content-feed-block";
 import { get, getAsObject } from "@parameter1/base-cms-object-path";
 
-$ const { site, pagination: p, } = out.global;
+$ const { site, pagination: p, i18n } = out.global;
 $ const { id, pageNode } = data;
 
 <marko-web-magazine-issue-page-layout id=id>
@@ -77,14 +77,14 @@ $ const { id, pageNode } = data;
             collapsible=false
           >
             <@header>
-              Past Issues
+              ${i18n("Past Issues")}
             </@header>
             <@body>
               <theme-magazine-issue-archive-flow nodes=nodes flush=true />
             </@body>
             <@footer>
               <marko-web-magazine-publication-name tag=null obj=issue.publication link={ class: "btn btn-primary" }>
-                View All Past Issues
+                ${i18n("View All Past Issues")}
               </marko-web-magazine-publication-name>
             </@footer>
           </marko-web-node-list>
