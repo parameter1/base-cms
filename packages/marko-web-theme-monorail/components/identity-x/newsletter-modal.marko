@@ -5,7 +5,7 @@ $ const { cookieName, cookieValue, hasCookie } = getAsObject(out.global, "newsle
 $ const { enabled: modalEnabled, cookieValueToMatch } =  site.getAsObject("newsletter.modal");
 $ const exclusions = ["user", "page", "subscribe"]
 $ const siteExclusions = site.getAsArray("newsletter.modal.routesToExclude");
-$ const routesToExclude = siteExclusions.length ? [...new Set(...exclusions.concat(siteExclusions))] : exclusions;
+$ const routesToExclude = siteExclusions.length ? [...new Set(exclusions.concat(siteExclusions))] : exclusions;
 $ const excludeRoute = req.path.match(`^\/${routesToExclude.join('|')}`)
 
 <marko-web-identity-x-context|{ hasUser }|>
