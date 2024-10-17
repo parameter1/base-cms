@@ -3,7 +3,12 @@ import { getAsObject } from "@parameter1/base-cms-object-path";
 $ const { site, req } = out.global;
 $ const { cookieName, cookieValue, hasCookie } = getAsObject(out.global, "newsletterModalState");
 $ const { enabled: modalEnabled, cookieValueToMatch } =  site.getAsObject("newsletter.modal");
-$ const routesToExclude =  site.getAsArray("newsletter.modal.routesToExclude");
+$ const routesToExclude =  [...new Set(
+  // by default exclude /user, /subscribe & /page
+  ...['user', 'page', 'subscribe'],
+  // aditional site specific routes to exclude
+  ...site.getAsArray("newsletter.modal.routesToExclude")
+)];
 $ const excludeRoute = req.path.match(`^\/${routesToExclude.join('|')}`)
 
 <marko-web-identity-x-context|{ hasUser }|>
