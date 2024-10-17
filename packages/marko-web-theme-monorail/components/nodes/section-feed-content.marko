@@ -186,7 +186,7 @@ $ const blockName = "section-feed-content-node";
       <marko-web-element block-name=blockName name="content-sponsors" modifiers=sponsorsModifiers>
         <marko-web-obj-nodes|{ node, index, length }| type="content" block-name=blockName obj=content field="sponsors" tag="span">
           <if(index === 0)>
-            <marko-web-element tag="span" block-name=blockName name="content-sponsors-label">Sponsored By: </marko-web-element>
+            <marko-web-element tag="span" block-name=blockName name="content-sponsors-label">${i18n("Sponsored By")}: </marko-web-element>
           </if>
           <if(withSponsorLogo && node.primaryImage)>
             $ const src = buildImgixUrl(node.primaryImage.src, imageOptions, null, true);
