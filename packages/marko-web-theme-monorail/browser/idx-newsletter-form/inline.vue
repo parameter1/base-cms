@@ -12,9 +12,8 @@
         >
       </div>
       <div :class="bem('right-col')">
-        <div v-if="!submitted" :class="bem('name')">
-          {{ name }}
-        </div>
+        <!-- eslint-disable-next-line vue/no-v-html -->
+        <div v-if="!submitted" :class="bem('name')" v-html="name" />
         <!-- eslint-disable-next-line vue/no-v-html -->
         <div v-if="!submitted" :class="bem('description')" v-html="description" />
         <div :class="bem('form-wrapper')">
