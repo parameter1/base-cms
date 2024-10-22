@@ -28,7 +28,10 @@ module.exports = ({ obj, req }) => {
     name: s.name,
   }));
   const emailSchedules = getAsArray(content, 'emailSchedules')
-    .map((schedule) => ({ name: schedule.newsletter.name, deploymentDate: schedule.deploymentDate }))
+    .map((schedule) => ({
+      name: schedule.newsletter.name,
+      deploymentDate: schedule.deploymentDate,
+    }))
     .sort((a, b) => a.deploymentDate - b.deploymentDate);
   const magazineSchedules = getAsArray(content, 'magazineSchedules')
     .map(({ issue: i }) => ({ name: i.name, mailDate: i.mailDate }))
