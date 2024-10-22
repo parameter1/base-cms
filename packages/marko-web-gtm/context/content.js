@@ -27,6 +27,12 @@ module.exports = ({ obj, req }) => {
     id: s.id,
     name: s.name,
   }));
+  const emailSchedules = getAsArray(content, 'emailSchedules')
+    .map((schedule) => ({ name: schedule.newsletter.name, deploymentDate: schedule.deploymentDate}))
+    .sort((a, b) => a.deploymentDate - b.deploymentDate);
+  const magazineSchedules = getAsArray(content, 'magazineSchedules')
+    .map(({ issue: i }) => ({ name: i.name, mailDate: i.mailDate }))
+    .sort((a, b) => new Date(a.mailDate) - new Date(b.mailDate));
   return {
     page_type: 'content',
     canonical_path: get(content, 'siteContext.path'),
@@ -59,5 +65,7 @@ module.exports = ({ obj, req }) => {
     taxonomy,
     authors,
     schedules,
+    emailSchedules,
+    magazineSchedules
   };
 };
