@@ -5,7 +5,6 @@ $ const { path } = input;
 $ const config = site.getAsObject("p1events");
 
 <if(config.enabled)>
-  $ const { type, primarySection, company, createdBy } = node;
   $ const entity = {
     id: path.replace(/^\//, ""),
     ns: ns("user-route"),
