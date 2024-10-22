@@ -1,0 +1,22 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+import ns from "../utils/create-namespace";
+
+$ const { site } = out.global;
+$ const { path } = input;
+$ const config = site.getAsObject("p1events");
+
+<if(config.enabled)>
+  $ const { type, primarySection, company, createdBy } = node;
+  $ const entity = {
+    id: path.replace(/^\//, ""),
+    ns: ns("user-route"),
+  };
+  $ const data = {
+    action: 'View',
+    category: 'User Route',
+    entity,
+  };
+  <script>
+    p1events('track', ${JSON.stringify(data)});
+  </script>
+</if>

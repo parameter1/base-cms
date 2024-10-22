@@ -70,6 +70,14 @@
     },
     "@event-name": "string"
   },
+  "<marko-web-p1-events-track-static-route-view>": {
+    "template": "./track-static-route-view.marko",
+    "@path": "string"
+  },
+  "<marko-web-p1-events-track-user-route-view>": {
+    "template": "./track-user-route-view.marko",
+    "@path": "string"
+  },
   "<marko-web-p1-events-track-website-section>": {
     "template": "./track-website-section.marko",
     "@node": "object"
