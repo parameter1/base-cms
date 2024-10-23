@@ -63,7 +63,7 @@ input ContentContactOwnedContentInput {
 
 input ContentContactSortInput {
   field: ContentContactSortField = id
-  order: SortOrder = desc
+  order: SortOrder = values
 }
 
 input CreateContentContactMutationInput {
