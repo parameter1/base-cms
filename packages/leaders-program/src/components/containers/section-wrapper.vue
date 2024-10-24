@@ -30,6 +30,7 @@
             :feature-youtube-videos="featureYoutubeVideos"
             :collapse-empty-categories="collapseEmptyCategories"
             :icon-style="iconStyle"
+            :lang="lang"
             @action="emitAction"
           />
         </leaders-columns>
@@ -55,6 +56,7 @@
         :promotion-limit="promotionLimit"
         :video-limit="videoLimit"
         :icon-style="iconStyle"
+        :lang="lang"
         @action="emitAction"
       />
     </leaders-columns>
@@ -126,6 +128,10 @@ export default {
     collapseEmptyCategories: {
       type: Boolean,
       default: false,
+    },
+    lang: {
+      type: String,
+      default: 'en',
     },
   },
 
