@@ -32,7 +32,7 @@
     <div v-if="displayBody" class="leaders-card__body">
       <content-deck :value="promotions" :limit="4" :item-modifiers="['promo']">
         <template #header-left>
-          {{ featuredProductLabel }}
+          {{ finalizedFeaturedProductsLabel }}
         </template>
         <template #header-right>
           <view-more
@@ -61,13 +61,14 @@
         :item-modifiers="['video']"
       >
         <template #header-left>
-          Featured Videos
+          {{ translate("featuredVideosLabel") }}
         </template>
         <template #header-right>
           <view-more
             label="videos"
             :href="youtubeHref"
             target="_blank"
+            :lang="lang"
             @click="handleAllVideosClick"
           />
         </template>
@@ -88,13 +89,14 @@
         :item-modifiers="['video']"
       >
         <template #header-left>
-          Featured Videos
+          {{ translate("featuredVideosLabel") }}
         </template>
         <template #header-right>
           <view-more
             label="videos"
             :href="profileHref"
             target="_blank"
+            :lang="lang"
             @click="handleAllVideosClick"
           />
         </template>
@@ -123,6 +125,7 @@ import VideoCard from './blocks/video-card.vue';
 import ViewMore from './blocks/view-more.vue';
 import getAsObject from '../../utils/get-as-object';
 import getEdgeNodes from '../../utils/get-edge-nodes';
+import i18n from '../../utils/i18n-vue';
 
 export default {
   components: {
@@ -151,6 +154,10 @@ export default {
     featureYoutubeVideos: {
       type: Boolean,
       default: true,
+    },
+    lang: {
+      type: String,
+      default: 'en',
     },
   },
 
@@ -196,6 +203,12 @@ export default {
       const classes = [blockName];
       if (this.isActive) classes.push(`${blockName}--active`);
       return classes;
+    },
+    finalizedFeaturedProductsLabel() {
+      if (this.lang !== 'en') {
+        return i18n(this.lang, 'featuredProductsLabel');
+      }
+      return this.featuredProductLabel || i18n(this.lang, 'featuredProductsLabel');
     },
   },
 
@@ -260,6 +273,9 @@ export default {
         companyName: this.company.name,
         date: Date.now(),
       }, event);
+    },
+    translate(key) {
+      return i18n(this.lang, key);
     },
   },
 };
