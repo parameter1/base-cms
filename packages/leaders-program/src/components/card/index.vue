@@ -7,6 +7,7 @@
           :logo-src="logo.src"
           :profile-href="profileHref"
           :company-href="company.website"
+          :lang="lang"
           @profile-click="handleProfileClick"
           @website-click="handleWebsiteClick"
         />
@@ -39,6 +40,7 @@
             label="products"
             :href="productsHref"
             target="_blank"
+            :lang="lang"
             @click="handleAllProductsClick"
           />
         </template>
