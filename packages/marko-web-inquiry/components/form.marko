@@ -1,8 +1,7 @@
 import { getAsObject } from "@parameter1/base-cms-object-path";
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
-import i18n from '../i18n-marko'
 
-$ const { site } = out.global;
+$ const { site, i18n } = out.global;
 $ const inquiry = site.getAsObject("inquiry");
 
 $ const content = getAsObject(input, "content");
@@ -11,7 +10,7 @@ $ const withDescription = defaultValue(input.withDescription, true);
 
 $ const blockName = "inquiry-form";
 $ const { RECAPTCHA_V3_SITE_KEY } = require('../env');
-$ const lang = defaultValue(input.lang, "en");
+$ const lang = defaultValue(site.config.lang, "en");
 
 <if(inquiry.enabled)>
   <marko-web-block name=blockName modifiers=input.modifiers>
@@ -21,7 +20,7 @@ $ const lang = defaultValue(input.lang, "en");
           <${input.header} inquiry=inquiry />
         </if>
         <else>
-          Request More Information
+          ${i18n("Request More Information")}
         </else>
       </marko-web-element>
     </if>
@@ -31,7 +30,7 @@ $ const lang = defaultValue(input.lang, "en");
           <${input.description} inquiry=inquiry />
         </if>
         <else>
-          ${i18n(lang, "fillOutLabel")}<marko-web-content-name tag="span" block-name=blockName obj=content />
+          ${i18n("Fill out the form below to request more information about ")}<marko-web-content-name tag="span" block-name=blockName obj=content />
         </else>
       </marko-web-element>
     </if>

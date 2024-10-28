@@ -1,9 +1,11 @@
 import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
 
+$ const { i18n } = out.global
 $ const { content, consentCheckboxes } = input;
 $ const initiallyExpanded = defaultValue(input.initiallyExpanded, true);
 $ const modifiers = defaultValue(input.modifiers, []);
 $ if (initiallyExpanded) modifiers.push("open");
+$ const before = i18n("Request More Info");
 
 <marko-web-node-list class="node-list" block-name="inquiry-form" modifiers=modifiers collapsible=false>
   <@header>
@@ -11,7 +13,7 @@ $ if (initiallyExpanded) modifiers.push("open");
       name="ThemeMenuToggleButton"
       props={
         className: 'inquiry-form-button btn btn-primary',
-        before: 'Request More Info',
+        before: before,
         targets: ['.node-list.inquiry-form'],
         toggleClass: 'inquiry-form--open',
         iconName: 'chevron-down',
