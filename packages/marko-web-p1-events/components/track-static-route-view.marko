@@ -1,0 +1,20 @@
+import ns from "../utils/create-namespace";
+
+$ const { site } = out.global;
+$ const { path } = input;
+$ const config = site.getAsObject("p1events");
+
+<if(config.enabled)>
+  $ const entity = {
+    id: path.replace(/^\//, ""),
+    ns: ns("static-route"),
+  };
+  $ const data = {
+    action: 'View',
+    category: 'Static Route',
+    entity,
+  };
+  <script>
+    p1events('track', ${JSON.stringify(data)});
+  </script>
+</if>
