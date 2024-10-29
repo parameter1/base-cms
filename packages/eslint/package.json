@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-eslint",
-  "version": "4.5.12",
+  "version": "4.74.0",
   "description": "Configuration settings for eslint within BaseCMS.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",

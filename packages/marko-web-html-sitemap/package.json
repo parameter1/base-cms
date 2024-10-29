@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-html-sitemap",
-  "version": "4.40.3",
+  "version": "4.74.0",
   "author": "Brian Miller <brian@parameter1.com>",
   "license": "MIT",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-html-sitemap",
@@ -12,9 +12,9 @@
     "test": "yarn compile --no-clean && yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-dayjs": "^4.5.12",
-    "@parameter1/base-cms-object-path": "^4.40.3",
-    "@parameter1/base-cms-utils": "^4.40.3",
+    "@parameter1/base-cms-dayjs": "^4.74.0",
+    "@parameter1/base-cms-object-path": "^4.74.0",
+    "@parameter1/base-cms-utils": "^4.74.0",
     "graphql": "^14.5.4",
     "graphql-tag": "^2.12.6"
   },

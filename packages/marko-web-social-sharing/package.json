@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-social-sharing",
-  "version": "4.55.4",
+  "version": "4.74.0",
   "description": "Social Sharing Marko/Vue components for BaseCMS websites",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
@@ -13,7 +13,7 @@
     "test": "yarn compile --no-clean && yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-utils": "^4.40.3"
+    "@parameter1/base-cms-utils": "^4.74.0"
   },
   "peerDependencies": {
     "@parameter1/base-cms-marko-core": "^4.0.0",

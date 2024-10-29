@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-newsletters-email-x",
-  "version": "4.57.0",
+  "version": "4.74.0",
   "description": "EmailX Marko components for BaseCMS newsletters.",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "license": "MIT",
@@ -13,8 +13,8 @@
     "test": "yarn compile --no-clean && yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-object-path": "^4.40.3",
-    "@parameter1/base-cms-utils": "^4.40.3",
+    "@parameter1/base-cms-object-path": "^4.74.0",
+    "@parameter1/base-cms-utils": "^4.74.0",
     "moment": "^2.29.1",
     "node-fetch": "^2.6.9"
   },

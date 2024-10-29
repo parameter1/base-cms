@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-recaptcha",
-  "version": "4.5.12",
+  "version": "4.74.0",
   "description": "Utility functions for accessing JavaScript objects by path.",
   "main": "src/index.js",
   "author": "Brian Miller <brian@parameter1.com>",

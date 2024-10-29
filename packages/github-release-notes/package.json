@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-github-release-notes",
-  "version": "4.5.12",
+  "version": "4.74.0",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/github-release-notes",
   "license": "MIT",
@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@octokit/rest": "^16.43.2",
-    "@parameter1/base-cms-env": "^4.5.12",
+    "@parameter1/base-cms-env": "^4.74.0",
     "numeral": "^2.0.6"
   },
   "publishConfig": {

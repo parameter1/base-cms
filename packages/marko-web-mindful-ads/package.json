@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-mindful-ads",
-  "version": "4.71.2",
+  "version": "4.74.0",
   "description": "Mindful Ads Marko components for BaseCMS websites.",
   "author": "Josh Worden <josh@parameter1.com>",
   "license": "MIT",
@@ -13,7 +13,7 @@
     "test": "yarn compile --no-clean && yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-utils": "^4.40.3",
+    "@parameter1/base-cms-utils": "^4.74.0",
     "node-fetch": "^2.6.9"
   },
   "peerDependencies": {

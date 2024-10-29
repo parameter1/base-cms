@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-example-export",
-  "version": "4.55.4",
+  "version": "4.74.0",
   "description": "Example BaseCMS export.",
   "main": "src/index.js",
   "author": "Josh Worden <josh@parameter1.com>",
@@ -15,7 +15,7 @@
     "test": "yarn lint && yarn compile --no-clean"
   },
   "dependencies": {
-    "@parameter1/base-cms-export-cli": "^4.40.3",
-    "@parameter1/base-cms-export-framework": "^4.55.4"
+    "@parameter1/base-cms-export-cli": "^4.74.0",
+    "@parameter1/base-cms-export-framework": "^4.74.0"
   }
 }

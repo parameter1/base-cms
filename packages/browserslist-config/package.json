@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/browserslist-config-base-cms",
-  "version": "4.5.12",
+  "version": "4.74.0",
   "description": "Shareable browserslist config for BaseCMS projects.",
   "main": "index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",

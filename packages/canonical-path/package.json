@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-canonical-path",
-  "version": "4.67.0",
+  "version": "4.74.0",
   "description": "Canonical path library for BaseCMS projects.",
   "main": "src/index.js",
   "author": "Josh Worden <josh@parameter1.com>",
@@ -12,10 +12,10 @@
     "test": "yarn run lint && ../../node_modules/.bin/mocha --reporter spec"
   },
   "dependencies": {
-    "@parameter1/base-cms-db": "^4.67.0",
-    "@parameter1/base-cms-inflector": "^4.5.12",
-    "@parameter1/base-cms-object-path": "^4.40.3",
-    "@parameter1/base-cms-utils": "^4.40.3"
+    "@parameter1/base-cms-db": "^4.74.0",
+    "@parameter1/base-cms-inflector": "^4.74.0",
+    "@parameter1/base-cms-object-path": "^4.74.0",
+    "@parameter1/base-cms-utils": "^4.74.0"
   },
   "devDependencies": {
     "chai": "^4.3.7",

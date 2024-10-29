@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-env",
-  "version": "4.5.12",
+  "version": "4.74.0",
   "description": "Enviroment variable management and validation.",
   "main": "src/index.js",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/env",

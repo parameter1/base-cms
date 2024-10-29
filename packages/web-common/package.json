@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-web-common",
-  "version": "4.55.4",
+  "version": "4.74.0",
   "description": "Common utilities, queries and functions for BaseCMS website projects.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
@@ -12,9 +12,9 @@
     "test": "yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-inflector": "^4.5.12",
-    "@parameter1/base-cms-object-path": "^4.40.3",
-    "@parameter1/base-cms-utils": "^4.40.3",
+    "@parameter1/base-cms-inflector": "^4.74.0",
+    "@parameter1/base-cms-object-path": "^4.74.0",
+    "@parameter1/base-cms-utils": "^4.74.0",
     "graphql": "^14.7.0",
     "graphql-tag": "^2.12.6",
     "http-errors": "^1.8.1"
