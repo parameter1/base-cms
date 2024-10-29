@@ -15,7 +15,6 @@ module.exports = ({ advertisingPost, preview }) => {
     const primaryImage = {
       id: imageId,
       src: src.url,
-      // @todo Determine if these are the correct values for focal point
       focalPoint: {
         x: src.settings.fpX,
         y: src.settings.fpY,
@@ -29,7 +28,6 @@ module.exports = ({ advertisingPost, preview }) => {
       logo: {
         id: logoId,
         src: logoSrc.url,
-        // @todo Determine if these are the correct values for focal point
         focalPoint: {
           x: logoSrc.settings.fpX,
           y: logoSrc.settings.fpY,
