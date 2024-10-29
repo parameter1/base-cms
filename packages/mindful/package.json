@@ -1,0 +1,34 @@
+{
+  "name": "@parameter1/base-cms-mindful",
+  "version": "0.0.1",
+  "author": "Brian Miller <brian@parameter1.com>",
+  "repository": "https://github.com/parameter1/base-cms-mindful",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "lint": "eslint --ext .js --ext .vue --max-warnings 5 --config ../../.eslintrc.js --ignore-path ../../.eslintignore ./",
+    "lint:fix": "yarn lint --fix",
+    "test": "yarn lint"
+  },
+  "dependencies": {
+    "@parameter1/base-cms-env": "^4.5.12",
+    "@parameter1/base-cms-object-path": "^4.40.3",
+    "@parameter1/base-cms-utils": "^4.40.3",
+    "@parameter1/joi": "^1.2.10",
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "graphql": "^14.5.4",
+    "graphql-tag": "^2.12.6",
+    "joi": "^17.7.0",
+    "newrelic": "^9.10.2",
+    "node-fetch": "^2.6.1"
+  },
+  "engines": {
+    "node": ">=14.15"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ]
+}
