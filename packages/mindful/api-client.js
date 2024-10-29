@@ -79,7 +79,7 @@ class MindfulApiClient {
 
     const res = await r.json();
     const dbg = {
-      req: { url, ...{ method, headers, opts: { variables, query }} },
+      req: { url, ...{ method, headers, opts: { variables, query } } },
       res: { headers: r.headers.raw(), body: res },
     };
     if (!r.ok || res.errors) {
