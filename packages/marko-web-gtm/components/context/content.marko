@@ -67,6 +67,22 @@ fragment ContentContextFragment on Content {
       name
     }
   }
+   emailSchedules {
+      id
+      deploymentDate
+      newsletter {
+        id
+        name
+      }
+    }
+    magazineSchedules {
+      id
+      issue {
+        id
+        name
+        mailDate(input: {format:"MM/DD/YYYY"})
+      }
+    }
 }
 `;
 
