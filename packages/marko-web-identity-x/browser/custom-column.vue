@@ -55,6 +55,13 @@
       :required="required"
       :label="label"
     />
+    <phone-number
+      v-else-if="fieldKey === 'mobileNumber'"
+      v-model="user.mobileNumber"
+      :class-name="className"
+      :required="required"
+      :label="label"
+    />
     <country-code
       v-else-if="fieldKey === 'countryCode'"
       v-model="user.countryCode"
