@@ -24,20 +24,21 @@
         type="accent"
         @click="emitWebsiteClick"
       >
-        Visit Site
+        {{ translate("visitSiteLabel") }}
       </button-link>
       <button-link
         :href="profileHref"
         :block="true"
         @click="emitProfileClick('View Profile Button', ...arguments)"
       >
-        View Profile
+        {{ translate("viewProfileLabel") }}
       </button-link>
     </div>
   </div>
 </template>
 
 <script>
+import i18n from '../../../utils/i18n-vue';
 import ButtonLink from '../../common/button-link.vue';
 import CommonLink from '../../common/link.vue';
 
@@ -57,6 +58,10 @@ export default {
       type: String,
       default: null,
     },
+    lang: {
+      type: String,
+      default: 'en',
+    },
     logoSrc: {
       type: String,
       default: null,
@@ -75,6 +80,9 @@ export default {
     },
     emitProfileClick(sourceLabel, data, event) {
       this.$emit('profile-click', { sourceLabel, ...data }, event);
+    },
+    translate(key) {
+      return i18n(this.lang, key);
     },
   },
 };

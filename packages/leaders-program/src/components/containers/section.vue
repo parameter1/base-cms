@@ -38,6 +38,7 @@
             :is-active="isActive"
             :featured-product-label="featuredProductLabel"
             :feature-youtube-videos="featureYoutubeVideos"
+            :lang="lang"
             @action="emitAction"
           />
         </template>
@@ -127,6 +128,10 @@ export default {
       type: String,
       default: 'plus-minus',
       validator: (v) => ['plus-minus', 'chevron'].includes(v),
+    },
+    lang: {
+      type: String,
+      default: 'en',
     },
   },
 

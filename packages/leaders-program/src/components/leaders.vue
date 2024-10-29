@@ -39,6 +39,7 @@
         :feature-youtube-videos="featureYoutubeVideos"
         :collapse-empty-categories="collapseEmptyCategories"
         :icon-style="iconStyle"
+        :lang="lang"
         @action="emitAction"
       />
     </div>
@@ -202,6 +203,10 @@ export default {
       type: String,
       default: 'plus-minus',
       validator: (v) => ['plus-minus', 'chevron'].includes(v),
+    },
+    lang: {
+      type: String,
+      default: 'en',
     },
   },
 

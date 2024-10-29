@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import i18n from '../../../utils/i18n-vue';
 import CommonLink from '../../common/link.vue';
 
 export default {
@@ -23,6 +24,10 @@ export default {
       type: String,
       default: null,
     },
+    lang: {
+      type: String,
+      default: 'en',
+    },
     prefix: {
       type: String,
       default: 'View more',
@@ -31,7 +36,12 @@ export default {
 
   computed: {
     value() {
-      const { prefix, label } = this;
+      const { prefix, label, lang } = this;
+      if (this.lang !== 'en') {
+        const translatedPrefix = i18n(lang, prefix.toLowerCase());
+        const translatedLabel = i18n(lang, label.toLowerCase());
+        return [translatedPrefix, translatedLabel].filter((v) => v).join(' ');
+      }
       return [prefix, label].filter((v) => v).join(' ');
     },
   },

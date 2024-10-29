@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import i18n from '../i18n-vue';
+import i18n from '@parameter1/base-cms-leaders-program/src/utils/i18n-vue';
 
 export default {
   props: {
