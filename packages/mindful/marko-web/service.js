@@ -3,7 +3,7 @@ const convertAdvertisingPostToNativeStory = require(('./utils/convert-advertisin
 class MindfulMarkoWebService {
   /**
  * @param {object} params
- * @param {import("./api-client.js").MindfulApiClient} params.client
+ * @param {import("../api-client.js").MindfulApiClient} params.client
  */
   constructor({ client }) {
     this.client = client;
