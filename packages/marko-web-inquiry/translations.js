@@ -16,7 +16,7 @@ export default {
     firstNameLabel: 'Nombre',
     surnameLabel: 'Apellido',
     emailLabel: 'Dirección de correo electrónico',
-    phoneLabel: 'Telefóno',
+    phoneLabel: 'Teléfono',
     companyLabel: 'Nombre de la compañía',
     jobTitleLabel: 'Cargo/Posición',
     countryLabel: 'País',
