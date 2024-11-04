@@ -1,5 +1,5 @@
-const { MindfulApiClient } = require('../api-client');
-const { MindfulMarkoWebService } = require('./service');
+const { MindfulApiClient } = require('../../api-client');
+const { MindfulMarkoWebService } = require('../service');
 
 module.exports = (params = {}) => (req, res, next) => {
   const client = new MindfulApiClient(params);
