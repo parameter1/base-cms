@@ -27,11 +27,19 @@ class MindfulMarkoWebService {
    * @param {string} externalId
    * @returns {Promise}
    */
-  async getAdvertisingPostByIdOrImportEntity({ _id, provider, tenant, type = 'story' }, fragment) {
-    const post = await this.client.getAdvertisingPostByIdOrImportEntity({ _id, provider, tenant, type }, fragment);
+  async getAdvertisingPostByIdOrImportEntity({
+    _id,
+    provider,
+    tenant,
+    type = 'story',
+  }, fragment) {
+    const post = await this.client.getAdvertisingPostByIdOrImportEntity({
+      _id,
+      provider,
+      tenant,
+      type,
+    }, fragment);
     return post;
   }
-
-
 }
 module.exports = { MindfulMarkoWebService };
