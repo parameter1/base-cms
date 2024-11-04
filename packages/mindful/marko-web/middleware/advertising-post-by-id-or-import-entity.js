@@ -13,7 +13,11 @@ module.exports = (app, {
     const { service } = req.mindful;
     const { id: _id } = req.params;
     const { namespace } = tenant;
-    const result = await service.getAdvertisingPostByIdOrImportEntity({ _id, provider, tenant: namespace }, fragment);
+    const result = await service.getAdvertisingPostByIdOrImportEntity({
+      _id,
+      provider,
+      tenant: namespace,
+    }, fragment);
     const story = service.convertAdvertisingPostToNativeStory({
       advertisingPost: getAsObject(result, 'data.advertisingPostByIdOrImportEntity'),
       preview: Boolean(req.query.preview),
