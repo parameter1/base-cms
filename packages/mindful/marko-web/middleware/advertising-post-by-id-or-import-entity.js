@@ -1,13 +1,13 @@
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 const { getAsObject } = require('@parameter1/base-cms-object-path');
-const advertisingPostById = require('../../graphql/fragments/advertising-post-by-id');
+const defaultFragment = require('../../graphql/fragments/advertising-post');
 
 module.exports = (app, {
   route,
   template,
   tenant,
   provider,
-  fragment = advertisingPostById,
+  fragment = defaultFragment,
 }) => {
   app.get(route, asyncRoute(async (req, res) => {
     const { service } = req.mindful;
