@@ -16,4 +16,5 @@ module.exports = (app, {
       preview: Boolean(req.query.preview),
     });
     res.marko(template, { story });
-}))};
+  }));
+};
