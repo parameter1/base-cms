@@ -1,6 +1,6 @@
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 const { get } = require('@parameter1/base-cms-object-path');
-const defaultFragment = require('../../graphql/fragments/advertising-post');
+const defaultFragment = require('../../graphql/fragments/advertising-post-by-id');
 
 module.exports = (app, {
   route,
