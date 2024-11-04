@@ -77,7 +77,12 @@ class MindfulApiClient {
         }
         ${fragment}
       `,
-      variables: { _id, provider, tenant, type },
+      variables: {
+        _id,
+        provider,
+        tenant,
+        type,
+      },
     });
   }
 
