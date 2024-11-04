@@ -5,14 +5,11 @@ const advertisingPostById = require('../../graphql/fragments/advertising-post-by
 module.exports = (app, {
   route,
   template,
-  tenant,
-  provider,
   fragment = advertisingPostById,
 }) => {
   app.get(route, asyncRoute(async (req, res) => {
     const { service } = req.mindful;
     const { id: _id } = req.params;
-    const { namespace } = tenant;
     const result = await service.getAdvertisingPostById({ _id }, fragment);
     const story = service.convertAdvertisingPostToNativeStory({
       advertisingPost: get(result, 'data.advertisingPostById'),
