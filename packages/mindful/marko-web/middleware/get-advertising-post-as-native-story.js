@@ -24,8 +24,6 @@ module.exports = (app, {
       _id,
       preview: Boolean(req.query.preview),
       tenant,
-      provider: 'native-x',
-      type: 'story',
     }, fragment);
     if (!story) throw createError(404, `No advertising post was found for id '${_id}'`);
 

@@ -20,16 +20,14 @@ class MindfulMarkoWebService {
   async getAdvertisingPostAsNativeStory({
     _id,
     preview,
-    provider,
     tenant,
-    type = 'story',
   }, fragment) {
     const response = await this.client.getAdvertisingPostByIdOrImportEntity({
       _id,
       preview,
-      provider,
+      provider: 'native-x',
       tenant,
-      type,
+      type: 'story',
     }, fragment);
     const advertisingPost = getAsObject(response, 'data.advertisingPostByIdOrImportEntity');
     return this.convertAdvertisingPostToNativeStory({ advertisingPost, preview });
