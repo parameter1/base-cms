@@ -1,6 +1,6 @@
 const debug = require('debug')('mindful:api');
 const fetch = require('node-fetch');
-const { get, getAsObject } = require('@parameter1/base-cms-object-path');
+const { get } = require('@parameter1/base-cms-object-path');
 const GraphQLError = require('graphql');
 const gql = require('graphql-tag');
 const Joi = require('joi');
@@ -34,11 +34,31 @@ class MindfulApiClient {
   /**
    * @param {object} args
    * @param {string} args._id
+   * @param {import("graphql").DocumentNode|string} fragment
+   */
+  async getAdvertisingPostById({ _id }, fragment) {
+    const fragmentName = extractFragmentName({ fragment, throwOnEmpty: true });
+    return this.query({
+      query: gql`
+        query GetAdvertisingPostById($_id: ObjectID!) {
+          advertisingPostById(_id: $_id){
+            ...${fragmentName}
+          }
+        }
+        ${fragment}
+      `,
+      variables: { _id },
+    });
+  }
+
+  /**
+   * @param {object} args
+   * @param {string} args._id
    * @param {string} args.provider
    * @param {string} args.tenant
    * @param {import("graphql").DocumentNode|string} fragment
    */
-  async getAdvertisingPostAsNativeStory(
+  async getAdvertisingPostByIdOrImportEntity(
     {
       _id,
       provider,
@@ -57,7 +77,7 @@ class MindfulApiClient {
     }
     ${fragment}
   `;
-    const response = await this.query({
+    return this.query({
       query,
       variables: {
         _id,
@@ -66,7 +86,6 @@ class MindfulApiClient {
         type,
       },
     });
-    return getAsObject(response, `data.${queryName}`);
   }
 
   /**

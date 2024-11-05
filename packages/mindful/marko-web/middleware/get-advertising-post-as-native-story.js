@@ -21,7 +21,7 @@ module.exports = (app, {
 
     const { service } = req.mindful;
     const { id: _id } = req.params;
-    const story = await service.getAdvertisingPostAsNativeStory({
+    const story = await service.getAdvertisingPostByIdOrImportEntity({
       _id,
       preview: Boolean(req.query.preview),
       tenant,
