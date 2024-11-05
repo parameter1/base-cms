@@ -28,6 +28,15 @@ module.exports = (app, {
       provider,
     }, fragment);
     if (!story) throw createError(404, `No advertising post was found for id '${_id}'`);
+
+    // redirect path to story url if url does not match.
+    const storyURL = new URL(story.url);
+    if (storyURL.pathname !== path) {
+      // @todo determin if this should be story.url vs storyURL.pathname... fullURL vs /path
+      res.redirect(301, storyURL.pathname);
+      return;
+    }
+
     res.marko(template, { story });
   }));
 };
