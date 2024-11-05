@@ -1,14 +1,10 @@
-const convertAdvertisingPostToNativeStory = require(('./utils/convert-advertising-post-to-native-story'));
-
 class MindfulMarkoWebService {
   /**
  * @param {object} params
  * @param {import("../api-client.js").MindfulApiClient} params.client
  */
   constructor({ client }) {
-    this.client = client;
-    this.convertAdvertisingPostToNativeStory = convertAdvertisingPostToNativeStory;
-  }
+    this.client = client;  }
 
   /**
    * Get post by Id
@@ -16,30 +12,20 @@ class MindfulMarkoWebService {
    * @param {string} externalId
    * @returns {Promise}
    */
-  async getAdvertisingPostById({ _id }, fragment) {
-    const post = await this.client.getAdvertisingPostById({ _id }, fragment);
-    return post;
-  }
-
-  /**
-   * Get post by Id
-   *
-   * @param {string} externalId
-   * @returns {Promise}
-   */
-  async getAdvertisingPostByIdOrImportEntity({
+  async getAdvertisingPostAsNativeStory({
     _id,
+    preview,
     provider,
     tenant,
     type = 'story',
   }, fragment) {
-    const post = await this.client.getAdvertisingPostByIdOrImportEntity({
+    return await this.client.getAdvertisingPostAsNativeStory({
       _id,
+      preview,
       provider,
       tenant,
       type,
     }, fragment);
-    return post;
   }
 }
 module.exports = { MindfulMarkoWebService };
