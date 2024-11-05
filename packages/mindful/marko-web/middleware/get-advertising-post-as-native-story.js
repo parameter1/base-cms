@@ -1,3 +1,4 @@
+const createError = require('http-errors');
 const { asyncRoute } = require('@parameter1/base-cms-utils');
 const defaultFragment = require('../../graphql/fragments/advertising-post-by-id');
 
@@ -17,6 +18,7 @@ module.exports = (app, {
       tenant,
       provider,
     }, fragment);
+    if (!story) throw createError(404, `No advertising post was found for id '${_id}'`);
     res.marko(template, { story });
   }));
 };
