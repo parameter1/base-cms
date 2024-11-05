@@ -30,7 +30,6 @@ module.exports = (app, {
     // redirect path to story url if url does not match.
     const storyURL = new URL(story.url);
     if (storyURL.pathname !== path) {
-      // @todo determin if this should be story.url vs storyURL.pathname... fullURL vs /path
       res.redirect(301, storyURL.pathname);
       return;
     }
