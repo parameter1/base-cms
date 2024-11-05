@@ -67,11 +67,10 @@ class MindfulApiClient {
     },
     fragment,
   ) {
-    const queryName = 'advertisingPostByIdOrImportEntity';
     const fragmentName = extractFragmentName({ fragment, throwOnEmpty: true });
     const query = gql`
     query GetAdvertisingPostByIdOrImportEntity($_id: ObjectID!, $provider: String!, $tenant: String!, $type: String!){
-      ${queryName}(_id: $_id, provider: $provider, tenant: $tenant, type: $type){
+      advertisingPostByIdOrImportEntity(_id: $_id, provider: $provider, tenant: $tenant, type: $type){
         ...${fragmentName}
       }
     }
