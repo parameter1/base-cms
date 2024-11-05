@@ -30,7 +30,7 @@ class MindfulMarkoWebService {
       tenant,
       type,
     }, fragment);
-    return this.convertAdvertisingPostToNativeStory({ advertisingPost, preview })
+    return this.convertAdvertisingPostToNativeStory({ advertisingPost, preview });
   }
 }
 module.exports = { MindfulMarkoWebService };
