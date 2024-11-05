@@ -45,5 +45,5 @@ module.exports = ({ advertisingPost, preview }) => {
     };
     return story;
   }
-  return;
+  return null;
 };
