@@ -3,8 +3,7 @@ class MindfulMarkoWebService {
  * @param {object} params
  * @param {import("../api-client.js").MindfulApiClient} params.client
  */
-  constructor({ client }) {
-    this.client = client;  }
+  constructor({ client }) { this.client = client; }
 
   /**
    * Get post by Id
@@ -19,7 +18,7 @@ class MindfulMarkoWebService {
     tenant,
     type = 'story',
   }, fragment) {
-    return await this.client.getAdvertisingPostAsNativeStory({
+    return this.client.getAdvertisingPostAsNativeStory({
       _id,
       preview,
       provider,
