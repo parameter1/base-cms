@@ -2,6 +2,7 @@ $ const {
   type = "default",
   title,
   description,
+  cononicalUrl,
   head,
   page,
   abovePage,
@@ -12,7 +13,7 @@ $ const { document } = out.global;
 
 <${document} ...rest>
   <@head>
-    <marko-web-default-page-metadata title=title description=description />
+    <marko-web-default-page-metadata title=title description=description canonical-url=cononicalUrl/>
     <${head} />
   </@head>
   <!-- Note: camelcased vars due to nest input of dynamic document. perhaps a marko bug -->

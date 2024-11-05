@@ -52,6 +52,42 @@ class MindfulApiClient {
   }
 
   /**
+   * @param {object} args
+   * @param {string} args._id
+   * @param {string} args.provider
+   * @param {string} args.tenant
+   * @param {import("graphql").DocumentNode|string} fragment
+   */
+  async getAdvertisingPostByIdOrImportEntity(
+    {
+      _id,
+      provider,
+      tenant,
+      type,
+    },
+    fragment,
+  ) {
+    const fragmentName = extractFragmentName({ fragment, throwOnEmpty: true });
+    const query = gql`
+    query GetAdvertisingPostByIdOrImportEntity($_id: ObjectID!, $provider: String!, $tenant: String!, $type: String!){
+      advertisingPostByIdOrImportEntity(_id: $_id, provider: $provider, tenant: $tenant, type: $type){
+        ...${fragmentName}
+      }
+    }
+    ${fragment}
+  `;
+    return this.query({
+      query,
+      variables: {
+        _id,
+        provider,
+        tenant,
+        type,
+      },
+    });
+  }
+
+  /**
    * @param {object} params
    * @param {import("graphql").DocumentNode} params.query
    * @param {object} [params.variables]
@@ -63,12 +99,12 @@ class MindfulApiClient {
       'content-type': 'application/json',
       'x-namespace': namespace,
     };
-
     const body = JSON.stringify({
       operationName: getOperationName(query),
       variables,
       query: get(query, 'loc.source.body', query),
     });
+
     const r = await fetch(url, {
       method,
       headers,
@@ -76,7 +112,6 @@ class MindfulApiClient {
       variables,
       body,
     });
-
     const res = await r.json();
     const dbg = {
       req: { url, ...{ method, headers, opts: { variables, query } } },

@@ -1,14 +1,4 @@
 /**
- * @param {string} param
- * @returns {?string}
-*/
-const getOperationName = (string) => {
-  const matches = /query\s+([a-z0-9]+)[(]?.+{/gi.exec(string);
-  if (matches && matches[1]) return matches[1];
-  return undefined;
-};
-
-/**
  * @param {object} params
  * @param {import("graphql").DocumentNode|string} params.fragment
  * @param {boolean} [params.throwOnEmpty]
@@ -22,6 +12,16 @@ const extractFragmentName = ({ fragment, throwOnEmpty }) => {
   }
   if (throwOnEmpty) throw new Error('Unable to extract fragment');
   return null;
+};
+
+/**
+ * @param {string} param
+ * @returns {?string}
+*/
+const getOperationName = (string) => {
+  const matches = /query\s+([a-z0-9]+)[(]?.+{/gi.exec(string);
+  if (matches && matches[1]) return matches[1];
+  return undefined;
 };
 
 module.exports = {
