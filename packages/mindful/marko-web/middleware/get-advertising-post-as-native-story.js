@@ -10,6 +10,15 @@ module.exports = (app, {
   fragment = defaultFragment,
 }) => {
   app.get(route, asyncRoute(async (req, res) => {
+    // redirect to remove trailing / for analytic puposes(pageviews)
+    const { path, url } = req;
+    if (path.substr(-1) === '/' && path.length > 1) {
+      const queryParams = url.slice(path.length);
+      const safe = path.slice(0, -1).replace(/\/+/g, '/');
+      res.redirect(301, `${safe}${queryParams}`);
+      return;
+    }
+
     const { service } = req.mindful;
     const { id: _id } = req.params;
     const story = await service.getAdvertisingPostAsNativeStory({
