@@ -4,6 +4,7 @@
     "@title": "string",
     "@description": "string",
     "@canonical-path": "string",
+    "@canonical-url": "string",
     "@image-src": "string"
   },
   "<marko-web-content-page-metadata>": {
