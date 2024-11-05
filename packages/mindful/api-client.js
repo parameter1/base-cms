@@ -67,8 +67,7 @@ class MindfulApiClient {
         type,
       },
     });
-    const advertisingPost = getAsObject(response, `data.${queryName}`);
-    return convertAdvertisingPostToNativeStory({ advertisingPost, preview });
+    return getAsObject(response, `data.${queryName}`);
   }
 
   /**
