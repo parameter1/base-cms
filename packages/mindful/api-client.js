@@ -5,7 +5,7 @@ const GraphQLError = require('graphql');
 const gql = require('graphql-tag');
 const Joi = require('joi');
 
-const { extractFragmentName, getOperationName, convertAdvertisingPostToNativeStory } = require('./utils');
+const { extractFragmentName, getOperationName } = require('./utils');
 
 const schemas = {
   constructor: Joi.object({
@@ -41,7 +41,6 @@ class MindfulApiClient {
   async getAdvertisingPostAsNativeStory(
     {
       _id,
-      preview,
       provider,
       tenant = 'native-x',
       type = 'story',
