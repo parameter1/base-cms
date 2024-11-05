@@ -6,7 +6,6 @@ module.exports = (app, {
   route,
   template,
   tenant,
-  provider,
   fragment = defaultFragment,
 }) => {
   app.get(route, asyncRoute(async (req, res) => {
@@ -25,7 +24,8 @@ module.exports = (app, {
       _id,
       preview: Boolean(req.query.preview),
       tenant,
-      provider,
+      provider: 'native-x',
+      type: 'story',
     }, fragment);
     if (!story) throw createError(404, `No advertising post was found for id '${_id}'`);
 

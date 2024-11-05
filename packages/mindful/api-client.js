@@ -62,8 +62,8 @@ class MindfulApiClient {
     {
       _id,
       provider,
-      tenant = 'native-x',
-      type = 'story',
+      tenant,
+      type,
     },
     fragment,
   ) {
