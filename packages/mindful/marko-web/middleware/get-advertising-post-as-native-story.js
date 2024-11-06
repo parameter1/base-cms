@@ -30,7 +30,12 @@ module.exports = (app, {
     // redirect path to story url if url does not match.
     const storyURL = new URL(story.url);
     if (storyURL.pathname !== path) {
-      res.redirect(301, storyURL.pathname);
+      // account for redirecting with all of the queryParams
+      const newUrl = req.query && Object.keys(req.query).length !== 0
+        ? `${storyURL.pathname}?${new URLSearchParams(req.query).toString()}`
+        : storyURL.pathname
+      ;
+      res.redirect(301, newUrl);
       return;
     }
 
