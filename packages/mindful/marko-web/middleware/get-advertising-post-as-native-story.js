@@ -33,8 +33,7 @@ module.exports = (app, {
       // account for redirecting with all of the queryParams
       const newUrl = req.query && Object.keys(req.query).length !== 0
         ? `${storyURL.pathname}?${new URLSearchParams(req.query).toString()}`
-        : storyURL.pathname
-      ;
+        : storyURL.pathname;
       res.redirect(301, newUrl);
       return;
     }
