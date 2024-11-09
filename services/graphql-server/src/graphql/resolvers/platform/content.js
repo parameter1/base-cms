@@ -1361,11 +1361,13 @@ module.exports = {
 
       if (requiresImage) query.primaryImage = { $exists: true };
 
+      const sort = input.sort.field ? input.sort : { field: 'published', order: 'desc' };
+
       const projection = connectionProjection(info);
       return basedb.paginate('platform.Content', {
         query,
         projection,
-        sort: { field: 'published', order: 'desc' },
+        sort,
         ...pagination,
       });
     },
