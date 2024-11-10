@@ -663,7 +663,7 @@ input MagazineScheduledContentQueryInput {
   excludeContentTypes: [ContentType!] = []
   includeContentTypes: [ContentType!] = []
   requiresImage: Boolean = false
-  sort: ContentSortInput = {}
+  sort: ContentSortInput = { field: published, order: desc }
   pagination: PaginationInput = {}
 }
 
