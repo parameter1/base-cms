@@ -1,0 +1,15 @@
+import { get } from "@parameter1/base-cms-object-path";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import moment from "moment";
+
+$ const { newsletter, date } = input;
+
+$ const newsletterSiteName = get(newsletter, "site.name") || "Homepage";
+$ const linkText = defaultValue(input.linkText, newsletterSiteName);
+$ const unixTimestamp = moment(date).unix();
+$ const position = defaultValue(input.position, "top");
+$ const linkUrl = `${newsletter.site.origin}/email-preview?newsletterId=${newsletter.id}&timestamp=${unixTimestamp}&position=${position}`;
+
+<div name="divPreviewLink" style="display:none;height:0px;width:0px;overflow:hidden;visibility:hidden;mso-hide:all">
+  <a href=linkUrl>${linkText}</a>
+</div>

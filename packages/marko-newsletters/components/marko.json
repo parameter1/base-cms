@@ -22,5 +22,8 @@
     "@title": "string",
     "@description": "string",
     "@date": "object"
+  },
+  "<marko-newsletter-stealth-link>": {
+    "template": "./stealth-link.marko"
   }
 }
