@@ -26,14 +26,19 @@ $ const setTextVariables = () => {
   if (viewLimit === views && !displayOverlay) dynamicTitle = `This is your last free article.`;
   if (viewLimit === 1 && !displayOverlay) dynamicTitle = 'Enjoy this free article.';
 
-  return [
-    dynamicTitle,
-    "Create a free account",
-    `Create a free <span class="content-meter__call-to-action--site-name">${config.siteName()}</span> account to continue reading`,
-    "Continue",
-  ];
+  return {
+    title: dynamicTitle,
+    collapsedTitle: "Create a free account",
+    callToAction: `Create a free <span class="content-meter__call-to-action--site-name">${config.siteName()}</span> account to continue reading`,
+  };
 }
-$ const [title, collapsedTitle, callToAction, registerText] = setTextVariables();
+$ const textVariables = setTextVariables();
+$ const customTextVariables = input.customSetTextVariablesFunction && typeof input.customSetTextVariablesFunction === 'function' ? input.customSetTextVariablesFunction(contentMeterState) : {};
+$ const allTextVariables = {
+  ...textVariables,
+  ...customTextVariables,
+};
+$ const { title, collapsedTitle, callToAction } = allTextVariables;
 
 $ const classes = [
   "content-meter",
