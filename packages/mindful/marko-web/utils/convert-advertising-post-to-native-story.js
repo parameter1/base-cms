@@ -11,7 +11,9 @@ module.exports = ({ advertisingPost, preview }) => {
   const { label } = statusEdge && statusEdge.node ? statusEdge.node : {};
   const isPublished = label === 'Published' && (new Date() >= new Date(publishedDay));
   if (id && (isPublished || preview)) {
-    const { _id: imageId, src } = featuredImageEdge.node || { src: { settings: {} } };
+    const { _id: imageId, src } = (featuredImageEdge && featuredImageEdge.node)
+      ? featuredImageEdge.node
+      : { src: { settings: {} } };
     const primaryImage = {
       id: imageId,
       src: src.url,
@@ -20,8 +22,12 @@ module.exports = ({ advertisingPost, preview }) => {
         y: src.settings.fpY,
       },
     };
-    const { _id: companyId, name, logoEdge } = companyEdge.node || { logoEdge: {} };
-    const { _id: logoId, src: logoSrc } = logoEdge.node || { src: { settings: {} } };
+    const { _id: companyId, name, logoEdge } = (companyEdge && companyEdge.node)
+      ? companyEdge.node
+      : { logoEdge: {} };
+    const { _id: logoId, src: logoSrc } = (logoEdge && logoEdge.node)
+      ? logoEdge.node
+      : { src: { settings: {} } };
     const advertiser = {
       id: companyId,
       name,
