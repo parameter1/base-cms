@@ -52,6 +52,13 @@ module.exports = async (apolloClient, {
 
   const { data } = await apolloClient.query({ query, variables });
   if (!data || !data.newsletterScheduledContent) return { nodes: [] };
-  const nodes = data.newsletterScheduledContent;
+  const regex = /^\s+<p/;
+  const nodes = data.newsletterScheduledContent.map((node) => ({
+    ...node,
+    ...(node.teaser && !regex.test(node.teaser) && {
+      teaser: `<p>${node.teaser}</p>`,
+    }),
+  }));
+
   return { nodes };
 };
