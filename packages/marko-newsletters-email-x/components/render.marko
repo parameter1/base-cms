@@ -1,7 +1,7 @@
 import { getAsObject, get } from "@parameter1/base-cms-object-path";
 
 $ const response = getAsObject(input, "response");
-$ const { ad } = response.data;
+$ const { ad, elements } = response.data;
 $ const imageSrc = get(input, "response.imageSrc");
 $ const adImageSrc = get(ad, "image.src") || imageSrc;
 
@@ -28,6 +28,7 @@ $ const linkAttrs = {
     ...(getAsObject(input, "link.attrs")),
     "data-mindful-tenant": mindfulTenant,
     "data-mindful-creative-id": mindfulCreativeId,
+    ...elements.a,
   },
 };
 
