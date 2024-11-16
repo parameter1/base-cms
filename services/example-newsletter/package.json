@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-example-newsletter",
-  "version": "4.80.0",
+  "version": "4.80.1",
   "description": "Example BaseCMS newsletter.",
   "main": "src/index.js",
   "author": "Josh Worden <josh@parameter1.com>",
@@ -19,7 +19,7 @@
     "@parameter1/base-cms-marko-newsletters": "^4.80.0",
     "@parameter1/base-cms-marko-newsletters-email-x": "^4.79.0",
     "@parameter1/base-cms-marko-newsletters-mindful": "^4.74.0",
-    "@parameter1/base-cms-marko-newsletters-native-x": "^4.74.0",
+    "@parameter1/base-cms-marko-newsletters-native-x": "^4.80.1",
     "@parameter1/base-cms-newsletter-cli": "^4.74.0"
   }
 }
