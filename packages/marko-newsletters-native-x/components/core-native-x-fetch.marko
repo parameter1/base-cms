@@ -37,39 +37,10 @@ $ const timestamp = date ? dateToTimestamp(date) : undefined;
     req,
     debug,
   })>
-    $ const regex = /^\s+<p/;
-    <if(Array.isArray(resolved.data))>
-      $ const results = resolved.data.map((node) => ({
-        ...node,
-        ...(node.teaser && !regex.test(node.teaser) && {
-          teaser: `<p>${node.teaser}</p>`,
-        }),
-      }));
-      <${input.renderBody}
-        data=results
-        tenant=mindfulTenant
-      />
-    </if>
-    <else-if(resolved.data && resolved.data.teaser && !regex.test(resolved.data.teaser))>
-      $ const results = {
-        data: {
-          ...resolved.data,
-          teaser: `<p>${resolved.data.teaser}</p>`,
-        },
-        tenant: mindfulTenant,
-      };
-      <${input.renderBody}
-        data=results
-        tenant=mindfulTenant
-      />
-    </else-if>
-    <else>
-      <${input.renderBody}
-        data=resolved.data
-        tenant=mindfulTenant
-      />
-    </else>
-
+    <${input.renderBody}
+      data=resolved.data
+      tenant=mindfulTenant
+    />
   </marko-web-resolve>
 </if>
 <else>
