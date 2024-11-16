@@ -30,5 +30,33 @@ module.exports = async ({
     err.body = json;
     throw err;
   }
+  const regex = /^\s+<p/;
+  if (Array.isArray(json.data)) {
+    const results = json.data.map((node) => ({
+      ...node,
+      creative: {
+        ...node.creative,
+        ...(node.creative.teaser && !regex.test(node.creative.teaser) && {
+          teaser: `<p>${node.creative.teaser}</p>`,
+        }),
+      },
+    }));
+    return results;
+  }
+  if (json.data && json.data.creative) {
+    const results = {
+      ...json,
+      data: {
+        ...json.data,
+        creative: {
+          ...json.data.creative,
+          ...(json.data.creative.teaser && !regex.test(json.data.creative.teaser) && {
+            teaser: `<p>${json.data.creative.teaser}</p>`,
+          }),
+        },
+      },
+    };
+    return results;
+  }
   return json;
 };
