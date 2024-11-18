@@ -2,6 +2,13 @@ const { AuthenticationError } = require('apollo-server-express');
 const bcrypt = require('bcryptjs');
 const TokenService = require('./token-service');
 
+const activeCriteria = {
+  accountNonExpired: true,
+  accountNonLocked: true,
+  credentialsNonExpired: true,
+  enabled: true,
+};
+
 const UserService = class UserService {
   constructor({ basedb }) {
     this.basedb = basedb;
@@ -11,10 +18,7 @@ const UserService = class UserService {
   async login(username, plaintext) {
     const criteria = {
       username,
-      accountNonExpired: true,
-      accountNonLocked: true,
-      credentialsNonExpired: true,
-      enabled: true,
+      ...activeCriteria,
     };
     const user = await this.basedb.findOne('platform.User', criteria);
     if (!user || !user.password) throw new AuthenticationError('The provided user credentials are invalid.');
@@ -32,7 +36,10 @@ const UserService = class UserService {
 
   async checkAuth(token) {
     const { uid } = await this.tokenService.validate(token);
-    return this.basedb.findOne('platform.User', { _id: uid });
+    return this.basedb.strictFindOne('platform.User', {
+      _id: uid,
+      ...activeCriteria,
+    });
   }
 };
 
