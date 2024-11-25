@@ -13,6 +13,7 @@
 
 <script>
 import IconWrapper from './_wrapper.vue';
+
 export default {
   components: { IconWrapper },
   props: {
