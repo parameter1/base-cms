@@ -55,6 +55,7 @@ export default {
               overlayDisplayed,
             },
           };
+          this.trackP1Event('view');
           dataLayer.push(payload);
           const { searchParams } = new URL(window.location.href);
           if (searchParams.has('idxDebugger')) {
@@ -69,8 +70,22 @@ export default {
     this.EventBus.$on('identity-x-login-link-sent', ({ actionSource }) => {
       if (actionSource === 'content_meter_login') {
         this.classes.push('login-link-sent');
+        this.trackP1Event('login-login-link-sent');
       }
     });
+  },
+  methods: {
+    trackP1Event(action) {
+      console.warn('action: ', action, window.p1events);
+      // triggercall here
+      window.p1events('track', {
+        category: 'Identity',
+        action,
+        label: 'content-meter',
+        // ctx,
+        // entity,
+      });
+    },
   },
 };
 </script>
