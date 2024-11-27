@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-theme-default",
-  "version": "4.74.0",
+  "version": "4.80.4",
   "description": "Default theme for Marko BaseCMS websites",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "main": "index.js",
@@ -14,7 +14,7 @@
     "test": "yarn compile --no-clean && yarn lint"
   },
   "dependencies": {
-    "@parameter1/base-cms-marko-web-icons": "^4.74.0",
+    "@parameter1/base-cms-marko-web-icons": "^4.80.4",
     "@parameter1/base-cms-object-path": "^4.74.0",
     "@parameter1/base-cms-utils": "^4.74.0",
     "bootstrap": "^4.6.2",

@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/base-cms-marko-web-search",
-  "version": "4.80.0",
+  "version": "4.80.4",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "repository": "https://github.com/parameter1/base-cms/tree/master/packages/marko-web-search",
   "license": "MIT",
@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@parameter1/base-cms-inflector": "^4.74.0",
-    "@parameter1/base-cms-marko-web-icons": "^4.74.0",
+    "@parameter1/base-cms-marko-web-icons": "^4.80.4",
     "@parameter1/base-cms-object-path": "^4.74.0",
     "@parameter1/base-cms-utils": "^4.74.0",
     "@parameter1/base-cms-web-common": "^4.80.0",
