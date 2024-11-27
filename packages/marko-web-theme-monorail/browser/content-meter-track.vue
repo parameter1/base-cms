@@ -70,7 +70,7 @@ export default {
     this.EventBus.$on('identity-x-login-link-sent', ({ actionSource }) => {
       if (actionSource === 'content_meter_login') {
         this.classes.push('login-link-sent');
-        this.trackP1Event('login-login-link-sent');
+        this.trackP1Event('login-link-sent');
       }
     });
   },
@@ -78,12 +78,16 @@ export default {
     trackP1Event(action) {
       console.warn('action: ', action, window.p1events);
       // triggercall here
+      const { views, remaining, overlayDisplayed } = this;
       window.p1events('track', {
         category: 'Identity',
         action,
         label: 'content-meter',
-        // ctx,
-        // entity,
+        props: {
+          views,
+          remaining,
+          overlayDisplayed,
+        },
       });
     },
   },
