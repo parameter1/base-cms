@@ -55,7 +55,7 @@ export default {
               overlayDisplayed,
             },
           };
-          this.trackP1Event('view');
+          this.emitP1Event('View');
           dataLayer.push(payload);
           const { searchParams } = new URL(window.location.href);
           if (searchParams.has('idxDebugger')) {
@@ -70,25 +70,22 @@ export default {
     this.EventBus.$on('identity-x-login-link-sent', ({ actionSource }) => {
       if (actionSource === 'content_meter_login') {
         this.classes.push('login-link-sent');
-        this.trackP1Event('login-link-sent');
+        this.emitP1Event('Submit');
       }
     });
   },
   methods: {
-    trackP1Event(action) {
-      console.warn('action: ', action, window.p1events);
-      // triggercall here
+    emitP1Event(action) {
+      if (!window.p1events) return;
       const { views, remaining, overlayDisplayed } = this;
+      const lab = !overlayDisplayed ? null : 'Gated';
       window.p1events('track', {
-        category: 'Identity',
+        category: 'Content Meter',
         action,
-        label: 'content-meter',
-        props: {
-          views,
-          remaining,
-          overlayDisplayed,
-        },
+        lab,
+        props: { n: views },
       });
+      this.EventBus.$emit(`identity-x-content-meter-${action}`, { payload: { views, remaining, overlayDisplayed }});
     },
   },
 };
