@@ -77,14 +77,13 @@ export default {
   methods: {
     emitP1Event({ action }) {
       if (!window.p1events) return;
-      const { views, remaining, overlayDisplayed } = this;
+      const { views, overlayDisplayed } = this;
       window.p1events('track', {
         category: 'Content Meter',
         action,
         ...(overlayDisplayed && { label: 'Gated' }),
         props: { n: views },
       });
-      this.EventBus.$emit(`identity-x-content-meter-${action}`, { payload: { views, remaining, overlayDisplayed }});
     },
   },
 };
