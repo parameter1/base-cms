@@ -247,6 +247,11 @@ export default {
           isProfileComplete: this.isProfileComplete,
           requiresCustomFieldAnswers: this.requiresCustomFieldAnswers,
           actionSource: data.loginSource,
+          ...(
+            data.additionalContext
+            && data.additionalContext.newsletterSignupType
+            && { newsletterSignupType: data.additionalContext.newsletterSignupType }
+          ),
           additionalEventData: {
             ...(this.additionalEventData || {}),
             ...(data.additionalEventData || {}),
