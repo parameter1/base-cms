@@ -14,7 +14,7 @@
   "dependencies": {
     "object-path": "^0.11.8",
     "portal-vue": "^2.1.7",
-    "vue": "^2.7.14"
+    "vue": "^3.0.0"
   },
   "publishConfig": {
     "access": "public"
