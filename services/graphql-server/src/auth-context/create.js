@@ -1,4 +1,7 @@
-const { AuthenticationError } = require('apollo-server-express');
+const {
+  AuthenticationError,
+  ForbiddenError,
+} = require('apollo-server-express');
 const UserContext = require('./context');
 
 const expression = /^Bearer (?<token>.+)/;
@@ -9,6 +12,10 @@ module.exports = async ({ req, userService }) => {
 
   if (!expression.test(authorization)) throw new AuthenticationError('The provided credentials are invalid.');
   const { token } = authorization.match(expression).groups;
-  const user = await userService.checkAuth(token);
-  return new UserContext({ user, token });
+  try {
+    const user = await userService.checkAuth(token);
+    return new UserContext({ user, token });
+  } catch (e) {
+    throw new ForbiddenError('The provided credentials are no longer valid.');
+  }
 };
