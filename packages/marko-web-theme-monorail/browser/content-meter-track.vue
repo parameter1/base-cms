@@ -55,6 +55,7 @@ export default {
               overlayDisplayed,
             },
           };
+          this.emitP1Event({ action: 'View' });
           dataLayer.push(payload);
           const { searchParams } = new URL(window.location.href);
           if (searchParams.has('idxDebugger')) {
@@ -69,8 +70,21 @@ export default {
     this.EventBus.$on('identity-x-login-link-sent', ({ actionSource }) => {
       if (actionSource === 'content_meter_login') {
         this.classes.push('login-link-sent');
+        this.emitP1Event({ action: 'Submit' });
       }
     });
+  },
+  methods: {
+    emitP1Event({ action }) {
+      if (!window.p1events) return;
+      const { views, overlayDisplayed } = this;
+      window.p1events('track', {
+        category: 'Content Meter',
+        action,
+        ...(overlayDisplayed && { label: 'Gated' }),
+        props: { n: views },
+      });
+    },
   },
 };
 </script>
